@@ -1,0 +1,83 @@
+﻿<Window x:Class="WpfInvestigate.TestViews.NumericBoxTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="NumericBoxTests" Height="450" Width="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Slider Grid.Column="0"
+                x:Name="uiScaleSlider"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100"
+                Value="1" Minimum="0.5" Maximum="4"
+                Orientation="Vertical"
+                Ticks="1"
+                IsSnapToTickEnabled="False"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
+
+        <Grid Grid.Column="1">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" Click="XButtonBase_OnClick">Set new Value</Button>
+
+            <controls:NumericBox Grid.Row="3" x:Name="AA" Width="200" controls:WatermarkEffect.Watermark="No value"
+                                 Height="64" VisibleButtons="Close,Calculator,UpDown"
+                                 IsNullable="True" Value="23"/>
+
+            <Label Grid.Row="4" Content="{Binding ElementName=AA, Path=Value}" Background="Yellow" Margin="8" Focusable="True"/>
+
+            <WrapPanel Grid.Row="6" Orientation="Horizontal" Margin="0 2">
+                <Label Content="IsEnabled:" Margin="5 0"/>
+                <CheckBox x:Name="cbEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
+
+                <controls:NumericBox Width="200" x:Name="nb" controls:WatermarkEffect.Watermark="No value"
+                                     BorderThickness="8" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
+                                     IsNullable="True" Focusable="True" Value="323"/>
+            </WrapPanel>
+
+            <controls:NumericBox Grid.Row="7" Width="200" controls:WatermarkEffect.Watermark="No value"
+                                 FontSize="9" Focusable="True"
+                                 IsNullable="True" Value="323"/>
+
+            <controls:NumericBox Grid.Row="8" Width="200" controls:WatermarkEffect.Watermark="No value"
+                                 FontSize="24" Focusable="True"
+                                 IsNullable="True" Value="323"/>
+
+            <controls:NumericBox Grid.Row="9" Width="200" controls:WatermarkEffect.Watermark="No value" IsReadOnly="True"
+                                 IsNullable="True" Value="323"/>
+            <controls:NumericBox Grid.Row="10" Width="200" controls:WatermarkEffect.Watermark="No value" IsEnabled="False"
+                                 IsNullable="True" Value="323"/>
+            <Label Grid.Row="11" Content="Value:"/>
+            <TextBlock Grid.Row="11" Margin="50 0 0 0" Text="{Binding Path=Value, ElementName=nb}" Background="Yellow" VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>

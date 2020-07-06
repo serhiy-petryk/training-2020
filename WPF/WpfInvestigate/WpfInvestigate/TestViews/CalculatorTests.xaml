@@ -1,0 +1,69 @@
+﻿<Window x:Class="WpfInvestigate.TestViews.CalculatorTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfInvestigate.TestViews"
+        xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        mc:Ignorable="d"
+        Title="CalculatorTests" Height="900" Width="500">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Slider Grid.Column="0"
+                x:Name="uiScaleSlider"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100"
+                Value="1" Minimum="0.5" Maximum="4"
+                Orientation="Vertical"
+                Ticks="1"
+                IsSnapToTickEnabled="False"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
+
+        <Grid Grid.Column="1">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" Click="OnSetValueButtonClick">Set new Value</Button>
+
+            <controls:Calculator x:Name="Calc" Grid.Row="2"/>
+
+            <Label Grid.Row="3" Content="{Binding ElementName=Calc, Path=Value}" Background="Yellow"/>
+
+            <StackPanel Grid.Row="6" Orientation="Horizontal">
+                <Viewbox Width="120" UseLayoutRounding="False" SnapsToDevicePixels="False">
+                    <controls:Calculator UseLayoutRounding="False" SnapsToDevicePixels="False"/>
+                </Viewbox>
+                <Viewbox Width="100" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                    <controls:Calculator UseLayoutRounding="True" SnapsToDevicePixels="True"/>
+                </Viewbox>
+            </StackPanel>
+
+            <Viewbox Grid.Row="7" Width="250" Height="330">
+                <controls:Calculator/>
+            </Viewbox>
+
+        </Grid>
+    </Grid>
+</Window>

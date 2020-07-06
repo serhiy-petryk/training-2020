@@ -1,0 +1,40 @@
+﻿/*
+; Для работы программы необходима таблица в базе данных.
+; Строка подключения к базе данных этой таблицы - это первая строка подключения из раздела Connection String (параметр CS: - см. ниже)
+; Запрос для создания этой таблицы приведен ниже
+  CREATE TABLE [dbo].[_UserSettings](
+	[Kind] [nvarchar](50) NOT NULL,
+	[Key] [nvarchar](50) NOT NULL,
+	[ID] [nvarchar](100) NOT NULL,
+	[data] [nvarchar](max) NULL,
+	[AllowViewOthers] [bit] NULL,
+	[AllowEditOthers] [bit] NULL,
+	[created] [nvarchar](50) NOT NULL,
+	[dcreated] [datetime] NOT NULL,
+	[updated] [nvarchar](50) NULL,
+	[dupdated] [datetime] NULL,
+ CONSTRAINT [PK__UserSettings] PRIMARY KEY CLUSTERED 
+(
+	[Kind] ASC,
+	[Key] ASC,
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+; Для начала работы таблица не имеет записей. Они создаются автоматически при эксплуатации программы.
+;
+;=====================================================
+1. Title of application. Format: Title: "string of title"
+2. "DbConnections" (dictionary of connection string objects): {id1: {}, id2: {}}
+  Connection string object: connID: {"provider": "id of data provider", "cs": "text of connection string"}
+  id of data provider - как правило, это последний элемент из namespace of data provider. Для System.Data.SqlClient - это SqlClient
+3. "Lookups" (dictionary of lookup objects): {id1: {}, id2: {}}
+
+*/
+{
+  "Title": "Chalkable - Lernosity",
+
+  "Menu": {
+    "Системні дані": "config.system.json",
+    "SAP": "config.sap.json"
+  }
+}

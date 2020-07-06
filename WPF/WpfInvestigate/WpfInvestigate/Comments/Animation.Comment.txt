@@ -1,0 +1,19 @@
+﻿Refactore animation:
+===================
+Aim:
+1. One line creation of Timeline
+2. One line run animation
+
+How to do:
+=========
+1. Define enum for Animation property: Opacity, Margin, Width, Height, Left, Top, WindowLeft, WindowTop, ..
+2. Constructor+Instance(Property, Element, To) + якщо необхідно From, Duration
+3. To run animation execute method: public static void BeginAnimation(IEnumerable<AnimationHelper> helpers)
+or
+1. Change existing AnimationHelper (add instance code)
+
+Problem:
+=======
+1. Other type of animation (ColorAnimation, FrameAnimation, ScrollViewer.HorizontalOffset/VerticalOffset):
+  - separate file or add to AnimationHelper file
+

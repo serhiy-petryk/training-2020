@@ -1,0 +1,56 @@
+﻿
+-- Convert svg file to XAML: (use Inkscape: see https://stackoverflow.com/questions/34908051/convert-multipath-svg-to-geometry-to-wpf)
+++ The best way to convert svg file to XAML:
+	use https://github.com/BerndK/SvgToXaml tool:
+		run SvgToXaml project (windows app)
+		open folder with svg files
+		click button "Export all SVG to XAML file" and specify the XAML file
+		manually create canvas using saved Geometry (only for simple images):
+			<Canvas x:Key="FlagUA" Width="640" Height="480">
+		        <Path Fill="#FFFFD500" Data="F0 M640,480z M0,0z M0,0L640,0 640,480 0,480z" />
+				<Path Fill="#FF005BBB" Data="F0 M640,480z M0,0z M0,0L640,0 640,240 0,240z" />
+			</Canvas>
+
+Effectifity of SVG to XAML convertors (test file is ad.svg (Andora flag from flag-icon-css-master) - 32.6KB):
+==========================================
++?(заметил небольшии неточности для ad.svg)1.1 Inkscape (file format: compatible with Silverlight): 42159 bytes / 158 lines, root element: Canvas (ще можна зменшити десь на 2КБ, якщо вилучити назви елементів)
+
+-1.2. Inkscape (file format: compatible with Silverlight): 53821 bytes / 648 lines, root element: Canvas (ще можна зменшити десь на 2КБ, якщо вилучити назви елементів)
+1.3 Imkscape: не працює у мене експорт файлів з командного рядка під Windows7 => можливо потрібна Windows10
+
+-- 2. Open SVG file by Chrome and save as XPS document: 106 KB / 773 lines
+
++- (+ идеальное изображение, -incompatible format(imagesource),  many duplicates data) 3. https://github.com/BerndK/SvgToXaml tool: 106245 bytes / 773 lines, many duplicates data, format: imagesource
+Short form of SvgToXaml: (no duplicates, GeometryDrawing format): 101808 bytes / 633 lines; ~150 elements
+-- (bad conversion) 4. https://github.com/harshmaurya/vectortoxaml: 55902 bytes /122 lines 
+Можлива оптимізація: перенести елементи другого рівня (типу Pen), як items of ResourceDictionary і ссилатися на них,
+або (можливі неточності) спростити елементи типу Pen (брати до уваги тільки колір) і силатися у Path.Brush не на складний елемент Pen, а вказувати властивість кольору, ...  і т.д.
+
+Висновок:
+========
+1. В першу чергу використовувати Inkscape; export to Xaml (comatible with Silverlight) (компактні дані, легко читаються, формат Canvas/?Viewbox)
+2. Перевірити чи вийшло правильне зображення на кроці 1. Якщо ні, то використати SvgToXaml. Вручну можна зробити Canvas для нескладних малюнків, або використати сгенерований DrawingGroup:
+SvgToXaml.ConverterLogic.SvgDirToXaml викрную генерацію xaml
+
+Convert DrawingGroup to Viewbox/Canvas:
+=======================================
+            <Viewbox Grid.Row="0"  Width="400" Height="150" Stretch="Uniform" Margin="0 10">
+                <Image>
+                    <Image.Source>
+                        <DrawingImage Drawing="{StaticResource adDrawingGroup}" />
+                    </Image.Source>
+                </Image>
+            </Viewbox>
+
+            <Canvas Grid.Row="1" Width="400" Height="150" Margin="0 10" Background="Gray">
+                <Image Width="400" Height="150" Stretch="Uniform">
+                    <Image.Source>
+                        <DrawingImage Drawing="{StaticResource adDrawingGroup}" />
+                    </Image.Source>
+                </Image>
+            </Canvas>
+
+- (искажения) 1. svg-flags-rails-master: (480x360) svg - 9549KB (265 items)
+- (искажения) 2. FlagKit-master (PNG/SVG): (21x15) svg - 811KB (255 items)
++ 3. flag-icon-css-master: svg - (640x480) 2390KB (258 items); flags are taken from Panayiotis Lipiridis and Jakob Flierl (also see https://github.com/datawrapper/datawrapper/wiki/Country-flag-icons) 
+- (different proportions) 4. country-flags-master (PNG/SVG): svg (1000x700, 60x30, 9x6, 1200x800) - 2896KB (256 items)

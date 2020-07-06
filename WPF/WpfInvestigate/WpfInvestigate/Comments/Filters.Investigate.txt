@@ -1,0 +1,30 @@
+﻿
+1. Filter types:
+	 List (see DGV.2.1 for preloaded and data filters)
+	 Complex (And/Or + filter items) like https://docs.telerik.com/devtools/wpf/controls/raddatafilter/datafilter-getting-started (see picture in the end of page)
+	 Inline; see:
+		https://github.com/hur1can3/FancyGrid (простий inline фільтр на = і contains) 
+		https://github.com/nosalan/wpf-mvvm-datagrid-with-filtering (вроді непоганий інлайн(в заголовку) автофільтер для таблиці)
+
+2. List & Complex filter can be done with Tabs (? ComplexFilter can't be converted to ListFilter)
+
+3. See ComplexFilter implementation in my old code.
+
+4. https://www.codeproject.com/Articles/42227/Automatic-WPF-Toolkit-DataGrid-Filtering
+	https://github.com/qusma/DataGridFilter
+	? inline filter
+	+ 4.93 rating (105 votes)
+	- не красивий UI
+
+-5. https://github.com/SashaMomotuik/WpfApp_FilterBase - пустий проект
+-6. https://github.com/macgile/WpfFilter - нічого цікавого (три поля із списком значень)
+-7. https://github.com/lokeshlal/WPFDynamicFilters - нічого цікавого (вибір поля із списку + вказується його значення)
+-8. https://github.com/nickkhan/WPFGroupFiltering - незрозумыло де фыльтр/група, - великий проект
+9. https://github.com/vinro21/FilterableDataGridColumnHeader - inline + список значень
+10. https://github.com/ilison/FilterDataGrid - inline 'contains' filter in datagrid headers
+11. https://archive.codeplex.com/?p=itemsfilter
+	+ micro app based on Northwind.mdb: 3 project => Core, EntityFramework, Demo
+	Core: 50 cs files(148KB), 2 xaml files(103KB)
+	5 datasets, inline header filter for diferent datatypes/operands + value list for filter select
+	filter by nested properties
+	sync views of different dataset

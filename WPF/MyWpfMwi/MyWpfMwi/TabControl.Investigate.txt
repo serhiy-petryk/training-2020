@@ -1,0 +1,38 @@
+﻿2020-02-24
+1. IsTextTrimmed (for TextBlock)
+ (very simple )https://www.cnblogs.com/lonelyxmas/p/9067031.html
+ ?complex: https://www.codeproject.com/Articles/309927/WPF-TextBox-With-Ellipsis
+ (simple + demo + attachedproperty) https://blog.scottlogic.com/2011/01/31/automatically-showing-tooltips-on-a-trimmed-textblock-silverlight-wpf.html
+ ?(no code file) http://tranxcoder.wordpress.com/2008/10/12/customizing-lookful-wpf-controls-take-2/
+                 http://tranxcoder.wordpress.com/2008/10/12/customizing-lookful-wpf-controls-take-2/
+ (code + usage example for previous article) comment of Scott Chamberlain in https://stackoverflow.com/questions/1041820/how-can-i-determine-if-my-textblock-text-is-being-trimmed
+
+
+2020-02-08
+!!++ very simple и со всемя функциями: vortexwolf comment for https://stackoverflow.com/questions/5690594/want-to-make-scrollable-tabs-for-a-tabcontrol
+https://www.dropbox.com/s/3y9q8y1nbiwfc2y/WpfScrollableTabControl.zip?dl=0
+
+2020-02-04
++ навороченная анимация (very big xaml) 1. https://web.archive.org/web/20160413124206/http://www.blogs.intuidev.com/post/2010/02/10/TabControlStyling_PartThree.aspx
+ 3 files(32K) cs, 1 file (50K) XAML
+    + smooth scrolling
+    + tab list
+    +- design with animation
+
+ 2. https://www.codeproject.com/Articles/598123/WPF-Flexible-StackPanel
+ 7 files(29K) cs, 1 file (22K) XAML
+    + different overflow strategy: tab autosize
+    + tab list
+    + simple design
+
++ (scroll bar) very simple 3. https://stackoverflow.com/questions/26764401/make-tabcontrol-headers-scrollable-in-wpf (10 lines of xaml)
+-- 3. https://github.com/autozimu/WPF-TabControl
++- (very big xaml) 3. https://github.com/FluentNotepad/TabControl
+ + tab autosize
+ 6 files(64K) cs, 1 file (42K) XAML
+ 
+ 5. Dragablez (trapezoid tab item)
+
+ //================================
+ WPF PropertyGrid
+1. https://www.codeproject.com/Articles/1092748/WPF-PropertyGrid-2 4.94 (14 votes)

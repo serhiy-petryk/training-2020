@@ -1,0 +1,156 @@
+﻿ToDo: 2020-03-21
+1. Arrange windows for Wnd 10 style.
+2. IsTabStop="False" Focusable="False"
+3. Color themes for Wnd10
+4. Localization
+5. Split C# code: remove MwiContainer references in MwiChild.cs
+6. Drag&drop without windows calls: see articles of https://www.codeproject.com/script/Articles/MemberArticles.aspx?amid=2514552
+
+
+ToDo: 2020-03-14
++1. ResourceKey as <A>.<B>.<C> (see MwiChild.Colors.xlsx for MwiChild.xaml)
++2. Wnd10 style background & size
++ 3. Wnd10 buttons
+- (lost image quality) 4. Svg for window button (see https://archive.codeplex.com/?p=wpfwindow E:\Users\System\Downloads\WPFWindow\sourceCode\sourceCode\CustomWindow)
+- (not working) 5. Remove AllowsTransparency in Window. Use NoBorder & opacity=0.01 + no radius for external window
+- (not working) 6. Use TextOptions.TextRenderingMode="ClearType" TextOptions.TextFormattingMode="Display" (see https://habr.com/ru/post/158561/ or E:\Users\System\Downloads\whosh-master\Whush Solution\Whush.Demo\Styles\CustomizedWindow)
++7. Bug: for MoveThumb_OnMouseDoubleClick (bad maximize size).
++8. Wnd buttons: срабатывание когда отпущена клавиша
++9. bug: Scale for External MwiChild Windows doen't work
++10. bug: Double click on header => bug with maximized external window
++11. bug: MwiChild doesn't activated after cancel detach
++12. A lot of error in output window (after startup)
++13. Remove flick while detach child
++14. Подивитися де можна використати nexttick instead of timer.
++15. Якість шрифту при zoom
++16. Restore image for Wnd10 maximized button
++17. Wnd10 deactivated window colors
++18. Bug: invalid color of 6px wnd7 border of deactivated window
++19. Bug: window right header button of unfocused window => bad color (is like focused window)
++20. Check: red background of close button for Wnd10 theme
++21. Bug: bad fill for window right header button
+? 22. Arrange windows for Wnd 10 style.
+
+ToDo: 2020-03-09
++1. Drug maximized window => normal window
+- (дуже складно: поганий border (якщо є stroke) або дуже контрасно (без stroke)) 2. Window buttons => use svg
+5. Apply Style approach for:
+  +MwiStartup.xaml
+  +MwiContainer.xaml
+  MwiChild.xaml
+  +others xaml files
+3. IsTabStop="False" Focusable="False"
+4. Localization
+
+ToDo: 2020-03-04
++1. Перевести converters on instance
++2. Bug: Window Menu doesn't scale
++3. Add Program Icon for MwiStartup
++4. Add SystemMenu for MwiStartup
++6. Синхронізація іконок for MwiChild & MwiChild.ExternalWindow
+- not need 7. Icon based on geometry (see PathIcon for UWP, Windows.UI.Xaml.Controls assembly)
++8. Remove Windows1.xaml
++9. Refactored toggle detach
++10. Add default icon
++11. Add sysmenu to internal windows
++12. Icon, title for MwiChild in OnVisualParentChanged
++13. (after Wnd10 theme creation) Check size of detached maximized window
+??? 14. Fozzy (automate INotifyPropertyChange)
+  custom call of PropertyChnged
+  call PropertyChanged from other class
+  VS designer error that INotifyPropertyChange doesn't implemented
++15. Check size & position of detached maximized window
++ (17x31) 16. Check height of window button: may be 16px (not 17px); also check ( UseLayoutRounding="True") 
+
+ToDo: 2020-03-01
++1. Templates:
+ plus: ? може менше коду
+ plus: можна використовувати Name
+ minus: запізнення з OnApplyTemplate для активованих в XAML єлементів
+ minus for Tempalte: підтримка подій
+ minus: VS XAML designer не показує активовані в XAML єлементи
+ minus: помилки в проектах, які використовують Template approach
+ Conclusion:
+ взяти за основу style approach (not template!!) і спробувати замість Name для binding використати Uid
+
+ToDo: 2020-02-23
++1. Color animation for window tab buttons
+  - very complicated: see example on https://docs.microsoft.com/en-us/dotnet/framework/wpf/controls/button-styles-and-templates?redirectedfrom=MSDN
+  - easy example: https://www.c-sharpcorner.com/Resources/893/color-animation-in-lineargradientbrush-using-xaml.aspx
+2. Split C# code: remove MwiContainer references in MwiChild.cs
+
+ToDo: 2020-02-14:
++1. Left panel
+  як зробити ширину + зміна ширина
+
+--2. (не потрібно: багато стандартних контролів мають таку властивість: StackPanel/Canvas) Replace Children on items in MwiContainer
+3. Animation до всіх actions
+	+Leftpanel: aniamtion for opacity + width
+	+Visibility anaimation:
+	++ https://www.codeproject.com/Articles/57175/WPF-How-To-Animate-Visibility-Property
+	-- https://docs.microsoft.com/en-us/archive/blogs/llobo/collapsing-animation-in-wpf
+	+- https://social.msdn.microsoft.com/Forums/en-US/0326b55a-64a8-4e0a-b0ce-f2b3100ca052/how-to-animate-a-control-when-it-becomes-hiddencollapsed?forum=wpf
+	https://stackoverflow.com/questions/25278653/apply-animation-on-wpf-control-visibility-change
+
+4. Remove close/closing events in Mwi
++5. Стандартизвція controls of window tab panel (based on toolbar).
+6. Inject MwiContainer in MwiChild, LeftPanel, .. (or use interface ???).
+7. Drag&drop without windows calls: see articles of https://www.codeproject.com/script/Articles/MemberArticles.aspx?amid=2514552
+
+ToDo: 2020-02-11:
++1. Arrange Windows
+- потрібно реалізувати на базі windows internal controls (не використовувати старий стандартний інтерфейс drag&drop: немає сумісністі і поганий дизайн) 2. Drag & drop tabs.
++3. Refresh thumbnail.
++4. Ограничить ширину таба.
++5. tab tooltip only if tab text is > width.
++6. Tooltip logic: thumbnail & text.
+7. Replace all # colors with system colors.
++8. Remove beigue color in the desktop
+
+ToDo: 2020-02-06:
++ 1. WindowTabControl (WindowsBar)
+
+Done: 2020-02-06 (no WindowTabControl)
+XAML: 3 files (34.5KB)
+CS: 4 files (48.2KB)
+
+ToDo 2020-01-27:
+++1. Support detached windows
+2. Steps:
+	+Close application => close all windows
+	+Close for detached window
+	+Заборонити move/resize for min/max windows
+	+Min for detached window
+	+Max for detached window
+	+Attach for detached window
+	+Max/min/normal strategy for internal windows (see Excel, Windows)
+		Max/min/normal strategy => select window startegy
+	+resize strategy for internal windows (see Excel, Windows)
+		case when X/Y<0 or/and X/T>maxSize
+	+resize strategy for external windows
+	+not possible Remove MwiContainer reference from MwiChild
+	+bonus: WindowTab tooltip => show small window image (see MdIContainer project)
+	+bonus: Max/min/normal window animation
+
+Bug:
++1. Resize global window with max window
++2. Maximize => два однакових фокуса
++3. Detached window is not activated (is focusing only) when window tab is press.
+	як буде зроблено move detached window:  var w = Window.GetWindow(_activeMwiChild);
+                        if (!w.IsActive) w.Activate();
++4. Maximize -> hide borders
+
+To Do:
+++ (rough)1. Attached window.
+++2. Use XAML instead of template for MwiParent, MwiChild
+- 3. All images convert into SVG.
+- (mahapps uses WinAPI => буде несумісний з іншими ОС) 4. Integrate with Mahapps.
++5. Window header style from Mahapps.
++6. Try to use calculated properties:
+	- AttachedWindwos (where Items.isAttached)
+	- Internal windows (where not Items.isAttached)
+	- focused (where window.zindex == zIndexCount)
++7. Change logic for minimized/maximized windows
+++8. Add window toolbar.
+9. Refactor the code
+++10. Remove menu & toppanel from wmiParent.

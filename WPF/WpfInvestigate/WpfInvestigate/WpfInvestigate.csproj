@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{63D9EE61-8D0E-4D40-9CB1-A6DDC081F088}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>WpfInvestigate</RootNamespace>
+    <AssemblyName>WpfInvestigate</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Common\AnimationHelper.cs" />
+    <Compile Include="Common\DataTypeMetadata.cs" />
+    <Compile Include="Controls\AdornerControl.cs" />
+    <Compile Include="Controls\Calculator.xaml.cs">
+      <DependentUpon>Calculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DatePickerExtension.cs" />
+    <Compile Include="Controls\DropDownButton.cs" />
+    <Compile Include="Controls\DualPathToggleButtonEffect.cs" />
+    <Compile Include="Controls\FlatButton.xaml.cs">
+      <DependentUpon>FlatButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FlatButtonConverters\FlatButtonConverters.cs" />
+    <Compile Include="Controls\KeyAssignmentSet.cs" />
+    <Compile Include="Controls\NumericBox.xaml.cs">
+      <DependentUpon>NumericBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Others\VirtualKeyboard.xaml.cs">
+      <DependentUpon>VirtualKeyboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Others\VirtualKeyboard.Models.cs" />
+    <Compile Include="Controls\Others\VirtualKeyboard.KeyDefinition.cs" />
+    <Compile Include="Controls\xxPathContent.cs" />
+    <Compile Include="Obsolete\AnimationHelper.cs" />
+    <Compile Include="Obsolete\Events.cs" />
+    <Compile Include="Obsolete\NumericUpDown.xaml.cs">
+      <DependentUpon>NumericUpDown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RippleEffect.cs" />
+    <Compile Include="Obsolete\TextBoxExtensions.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WatermarkEffect.cs" />
+    <Compile Include="Controls\DateTimePicker.cs" />
+    <Compile Include="Temp\ColorUtilities.cs" />
+    <Compile Include="Temp\OriginalVirtualKeyboard.xaml.cs">
+      <DependentUpon>OriginalVirtualKeyboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\CalculatorTests.xaml.cs">
+      <DependentUpon>CalculatorTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DualPathToggleButtonEffectTests.xaml.cs">
+      <DependentUpon>DualPathToggleButtonEffectTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\FlatButtonTests.xaml.cs">
+      <DependentUpon>FlatButtonTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DatePickerExtensionTests.xaml.cs">
+      <DependentUpon>DatePickerExtensionTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\NumericBoxTests.xaml.cs">
+      <DependentUpon>NumericBoxTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\NumericUpDownTests.xaml.cs">
+      <DependentUpon>NumericUpDownTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ObjectEditorTests.xaml.cs">
+      <DependentUpon>ObjectEditorTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ObjectEditor.xaml.cs">
+      <DependentUpon>ObjectEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TimePicker.cs" />
+    <Compile Include="Controls\TimePickerBase.xaml.cs">
+      <DependentUpon>TimePickerBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\RippleButtonTests.xaml.cs">
+      <DependentUpon>RippleButtonTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\RippleEffectTests.xaml.cs">
+      <DependentUpon>RippleEffectTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DropDownButtonTests.xaml.cs">
+      <DependentUpon>DropDownButtonTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\VirtualKeyboardTests.xaml.cs">
+      <DependentUpon>VirtualKeyboardTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\WatermarkTests.xaml.cs">
+      <DependentUpon>WatermarkTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\TimePickerTests.xaml.cs">
+      <DependentUpon>TimePickerTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\WiPTests.xaml.cs">
+      <DependentUpon>WiPTests.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\Calculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FlatButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NumericBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Others\VirtualKeyboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Obsolete\ControlLibrary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Converters.cs" />
+    <Compile Include="Common\Tips.cs" />
+    <Compile Include="Obsolete\ControlLibrary.xaml.cs">
+      <DependentUpon>ControlLibrary.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Obsolete\PathToggleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Obsolete\RippleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Obsolete\NumericUpDown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Temp\OriginalVirtualKeyboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\CalculatorTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\DualPathToggleButtonEffectTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\FlatButtonTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\DatePickerExtensionTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\NumericBoxTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Obsolete\NumericUpDownTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\ObjectEditorTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ObjectEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TimePickerBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Obsolete\RippleButtonTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\RippleEffectTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\DropDownButtonTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\VirtualKeyboardTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\WatermarkTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\WiPTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\Common.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\TimePickerTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\Flags.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Obsolete\PathToggleButton.xaml.cs">
+      <DependentUpon>PathToggleButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\RippleButton.xaml.cs">
+      <DependentUpon>RippleButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\ToggleButtonHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\Controls.Investigate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\Filters.Investigate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\ToDo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\ZDone.NumericEditor.Comment.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\ZDone.TimePicker.Comment.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\ZDone.Watermark.Comment.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\ZDone.Adorner.Comment.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\ZDone.FlatButton.Investigate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\Animation.Comment.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\ZWiPCollor.Investigate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\ZWiPVirtualKeyboard.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\ZWiPFlag.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\Dialog.Investigate.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

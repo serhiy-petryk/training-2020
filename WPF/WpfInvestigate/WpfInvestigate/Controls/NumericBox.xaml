@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="WpfInvestigate.Controls.NumericBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfInvestigate.Controls"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:common="clr-namespace:WpfInvestigate.Common"
+             mc:Ignorable="d" 
+             GotFocus="OnNumericBoxGotFocus">
+
+    <UserControl.Resources>
+
+        <System:Double x:Key="ButtonsWidth">16</System:Double>
+
+        <Style TargetType="local:NumericBox">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="MinHeight" Value="16" />
+            <Setter Property="MinWidth" Value="60" />
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Focusable" Value="True" />
+            <Setter Property="IsTabStop" Value="True" />
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:NumericBox}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid Background="{TemplateBinding Background}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" BorderThickness="1" Padding="0" Margin="{TemplateBinding Padding}">
+                                    <TextBox x:Name="PART_TextBox" BorderThickness="0" Margin="0" Padding="0"
+                                                 VerticalAlignment="Center"
+                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                 Background="Transparent" Foreground="{TemplateBinding Foreground}"
+                                                 IsTabStop="{TemplateBinding IsTabStop}"
+                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                 TabIndex="{TemplateBinding TabIndex}"/>
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="BorderBrush" Value="Transparent"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="BorderBrush" Value="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                </Border>
+
+                                <ToggleButton Grid.Column="1" x:Name="PART_ToggleButton" IsTabStop="False" Focusable="False" Style="{StaticResource FlatButtonStyle}"
+                                              Padding="2" IsThreeState="False" Width="{StaticResource ButtonsWidth}"
+                                              IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"
+                                              Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCalculatorButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                              Content="M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M7,4V8H17V4H7M7,10V12H9V10H7M11,10V12H13V10H11M15,10V12H17V10H15M7,14V16H9V14H7M11,14V16H13V14H11M15,14V16H17V14H15M7,18V20H9V18H7M11,18V20H13V18H11M15,18V20H17V18H15Z"/>
+
+                                <RepeatButton Grid.Column="2" x:Name="PART_DownButton" IsTabStop="False" Focusable="False" Style="{StaticResource FlatButtonStyle}"
+                                              Width="{StaticResource ButtonsWidth}" Delay="500" Interval="30" Padding="2"
+                                              Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsUpDownButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                              Content="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z"/>
+                                <RepeatButton Grid.Column="3" x:Name="PART_UpButton" IsTabStop="False" Focusable="False" Style="{StaticResource FlatButtonStyle}"
+                                              Width="{StaticResource ButtonsWidth}" Delay="500" Interval="30" Padding="2"
+                                              Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsUpDownButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                              Content="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
+
+                                <Button Grid.Column="4" x:Name="PART_ClearButton" IsTabStop="False" Focusable="False" Style="{StaticResource ClearButtonStyle}"
+                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                        Width="{StaticResource ButtonsWidth}" Padding="2.5"/>
+
+                                <Popup x:Name="PART_Popup"
+                                       IsOpen="{Binding ElementName=PART_ToggleButton, Path=IsChecked}"
+                                       AllowsTransparency="True"
+                                       Focusable="False"
+                                       Placement="Bottom"
+                                       PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                       PopupAnimation="Fade"
+                                       StaysOpen="False">
+                                    <Grid>
+                                        <Border Margin="0 0 10 10" Effect="{StaticResource ShadowEffect}" BorderThickness="0" Background="White"/>
+                                        <local:Calculator Focusable="True" Margin="0,0,10,10" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
+                                    </Grid>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsReadOnly" Value="True">
+                                <Setter TargetName="PART_TextBox" Property="IsReadOnly" Value="True" />
+                                <Setter TargetName="PART_DownButton" Property="IsEnabled" Value="False" />
+                                <Setter TargetName="PART_UpButton" Property="IsEnabled" Value="False" />
+                                <Setter TargetName="PART_ClearButton" Property="IsEnabled" Value="False" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+</UserControl>

@@ -1,0 +1,19 @@
+﻿<Window x:Class="IconViewer.NamedContentError"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IconViewer"
+        mc:Ignorable="d"
+        Title="NamedContentError" Height="450" Width="800">
+
+    <StackPanel Orientation="Horizontal">
+        <local:MyFunkyControl2>
+            <Label Name="Label" >Some cool content</Label>
+        </local:MyFunkyControl2>
+        <local:MyFunkyControl>
+            <Label>XXX</Label>
+        </local:MyFunkyControl>
+
+    </StackPanel>
+</Window>

@@ -1,0 +1,41 @@
+﻿
+2 схеми реалізації:
+==================
+1. Чистий XAML (135 xaml lines)
+2. XAML(65 lines) + CS(40 lines) - більш простіше робити кнопки з custom shapes
+Done: XAML(57 lines) + CS(50 lines)
+
+Варіації кнопок:
+===============
+1. Border
+	- as usual => not useful
+	- only on MouseOver
+2. Click behaviour (condition for trigger => IsPressed=true):
+	- color inversion
+	- ripple effect + opacity=0.7
+	- normal stage
+3. Animation
+?4.Change button on MouseOver (border radius, etc..)
+
+Ripple effect
+=============
+Реалізувати як attachment property for any FrameworkElement
+
+Implementation
+==============
+1. Pure XAML because we do not need to change content foreground color
+2. States:
+  - Normal (opacity=0.7)
+  - MouseOver (opacity=1, change background color, show border)
+  - IsPressed => see normal (opacity 0.7)
+  - Disabled (opacity=0.35)
+3. Animation обовязково
+4. Ripple effect on click.
+
+ToDo (2020-05-28)
+=================
++1. Move current code to "Old" folder.
++2. Make XAML with new implementation + change test forms
++3. Make animation
++4. Make ripple attached property.
++5. Apply ripple to button

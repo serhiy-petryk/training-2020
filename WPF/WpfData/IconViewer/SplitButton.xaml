@@ -1,0 +1,93 @@
+﻿<Window x:Class="IconViewer.SplitButton"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IconViewer"
+        mc:Ignorable="d"
+        Title="SplitButton" Height="250" Width="800">
+  <Window.Resources>
+    <Geometry x:Key="UpArrowGeometry">M 0 4 L 4 0 L 8 4 Z</Geometry>
+    <Geometry x:Key="DownArrowGeometry">M 0 0 L 4 4 L 8 0 Z</Geometry>
+  </Window.Resources>
+  <Grid>
+    <StackPanel>
+      <!-- =================================== -->
+      <TextBlock>Toolbar</TextBlock>
+      <ToolBar>
+        <ToolBar.Resources>
+          <Style TargetType="{x:Type Popup}">
+            <Setter Property="StaysOpen" Value="False"></Setter>
+            <EventSetter Event="Button.Click" Handler="EventSetter_OnHandler"></EventSetter>
+          </Style>
+          <Style TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="{StaticResource {x:Static SystemColors.MenuBrushKey}}"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Padding" Value="2"></Setter>
+          </Style>
+          <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+          </Style>
+        </ToolBar.Resources>
+        <Button ToolTip="Tooltip" >
+          <StackPanel Orientation="Horizontal">
+            <Viewbox Width="24" Height="24">
+              <Path Width="48" Height="50" Fill="Black" Data="M39.964,18.432c-0.192-0.476-0.284-0.938-0.517-1.392l4.238-7.648l-1.838-1.87l-1.387-1.401L38.6,4.252  l-8.193,4.727c-0.048-0.019-0.096-0.026-0.144-0.029L27.635,0h-2.644H24h-0.991h-2.644l-2.628,8.95  c-0.048,0.002-0.096,0.01-0.144,0.029L9.4,4.252l-1.861,1.87L6.152,7.523l-1.838,1.87l4.238,7.648  c-0.232,0.454-0.324,0.916-0.517,1.392L0,20.865v2.644v1.982v2.644l7.626,2.314c0.224,0.682,0.245,1.342,0.547,1.984l-3.921,7.184  l1.87,1.877l1.401,1.417l1.869,1.901l7.181-3.859c0.462,0.218,0.936,0.539,1.419,0.716L20.365,50h2.644H24h0.991h2.644l2.373-8.331  c0.483-0.177,0.957-0.498,1.419-0.716l7.181,3.859l1.869-1.901l1.401-1.417l1.87-1.877l-3.921-7.184  c0.302-0.643,0.323-1.303,0.547-1.984L48,28.135v-2.644v-1.982v-2.644L39.964,18.432z M24,33.475c-4.736-0.261-8.5-4.174-8.5-8.975  c0-4.801,3.764-8.714,8.5-8.975c4.736,0.261,8.5,4.173,8.5,8.975C32.5,29.301,28.736,33.214,24,33.475z"></Path>
+            </Viewbox>
+            <TextBlock Margin="2" VerticalAlignment="Center">Button</TextBlock>
+          </StackPanel>
+        </Button>
+        <Separator/>
+
+        <!-- Print button -->
+        <ToggleButton ToolTip="Print" Name="BtnPrint" Click="BtnPrint_OnClick" >
+          <StackPanel Orientation="Horizontal">
+            <Path Fill="Black" Width="24" Height="24" Data="M18,3H6V7H18M19,12A1,1 0 0,1 18,11A1,1 0 0,1 19,10A1,1 0 0,1 20,11A1,1 0 0,1 19,12M16,19H8V14H16M19,8H5A3,3 0 0,0 2,11V17H6V21H18V17H22V11A3,3 0 0,0 19,8Z"></Path>
+            <Path Data="{StaticResource DownArrowGeometry}" Fill="Black" VerticalAlignment="Center" Margin="2 0 0 0" />
+          </StackPanel>
+        </ToggleButton>
+      </ToolBar>
+      <!-- Print popup -->
+      <Popup x:Name="PopupPrint" PlacementTarget="{Binding ElementName=BtnPrint}">
+        <Border>
+          <StackPanel Orientation="Vertical">
+            <Button Content="Option1"></Button>
+            <Button Content="Option2"></Button>
+          </StackPanel>
+        </Border>
+      </Popup>
+
+      <!-- ================================ -->
+      <!-- ================================ -->
+      <TextBlock>Bold set</TextBlock>
+      <WrapPanel Orientation="Horizontal">
+        <Button  Background="Transparent" BorderBrush="Transparent">
+          <ContentControl>
+            <Viewbox Width="24" Height="24">
+              <Path Width="48" Height="50" Fill="Black" Data="M39.964,18.432c-0.192-0.476-0.284-0.938-0.517-1.392l4.238-7.648l-1.838-1.87l-1.387-1.401L38.6,4.252  l-8.193,4.727c-0.048-0.019-0.096-0.026-0.144-0.029L27.635,0h-2.644H24h-0.991h-2.644l-2.628,8.95  c-0.048,0.002-0.096,0.01-0.144,0.029L9.4,4.252l-1.861,1.87L6.152,7.523l-1.838,1.87l4.238,7.648  c-0.232,0.454-0.324,0.916-0.517,1.392L0,20.865v2.644v1.982v2.644l7.626,2.314c0.224,0.682,0.245,1.342,0.547,1.984l-3.921,7.184  l1.87,1.877l1.401,1.417l1.869,1.901l7.181-3.859c0.462,0.218,0.936,0.539,1.419,0.716L20.365,50h2.644H24h0.991h2.644l2.373-8.331  c0.483-0.177,0.957-0.498,1.419-0.716l7.181,3.859l1.869-1.901l1.401-1.417l1.87-1.877l-3.921-7.184  c0.302-0.643,0.323-1.303,0.547-1.984L48,28.135v-2.644v-1.982v-2.644L39.964,18.432z M24,33.475c-4.736-0.261-8.5-4.174-8.5-8.975  c0-4.801,3.764-8.714,8.5-8.975c4.736,0.261,8.5,4.173,8.5,8.975C32.5,29.301,28.736,33.214,24,33.475z"></Path>
+            </Viewbox>
+          </ContentControl>
+        </Button>
+        <Button  Background="Transparent" BorderBrush="Transparent">
+          <ContentControl>
+            <Path Stretch="Uniform" Fill="Black" Width="24" Height="24" Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"></Path>
+          </ContentControl>
+        </Button>
+        <Button  Background="Transparent" BorderBrush="Transparent">
+          <ContentControl>
+            <Viewbox Width="24" Height="24">
+              <Canvas Width="200" Height="200">
+                <Path Fill="Black" Data="M49.186,158.672c0,1.231,1.003,2.239,2.235,2.239h65.668v-4.475H51.421   C50.189,156.437,49.186,157.444,49.186,158.672z"></Path>
+                <Path Fill="Black" Data="M105.018,138.252H51.421c-1.231,0-2.235,1.008-2.235,2.235c0,1.231,1.003,2.239,2.235,2.239h65.668v-1.592   h-4.254C109.896,141.135,107.149,140.075,105.018,138.252z"></Path>
+                <Path Fill="Black" Data="M33.806,173.43v-65.881c0-2.459,2.017-4.47,4.472-4.47h83.549l23.63-23.635   c2.291-2.283,5.31-3.526,8.517-3.526c3.211,0,6.233,1.248,8.505,3.519l16.381,16.377V50.064c0-1.711-0.324-3.451-1.02-5.134   c-0.7-1.679-1.695-3.139-2.911-4.35l-30.083-30.083c-1.212-1.212-2.671-2.211-4.351-2.907c-1.684-0.695-3.423-1.023-5.134-1.023   H13.417c-3.435,0-6.871,1.312-9.486,3.931C1.308,13.116,0,16.55,0,19.981v152.03c0,3.435,1.308,6.869,3.931,9.487   c2.615,2.619,6.051,3.927,9.486,3.927h103.672V177.9H38.278C35.823,177.9,33.806,175.889,33.806,173.43z M43.716,19.089   c0-1.147,0.434-2.291,1.309-3.163c0.874-0.876,2.02-1.312,3.159-1.312h82.487c1.144,0,2.291,0.436,3.163,1.312   c0.872,0.872,1.304,2.015,1.304,3.163v35.098c0,1.147-0.432,2.291-1.304,3.163s-2.02,1.312-3.163,1.312H48.184   c-1.139,0-2.285-0.44-3.159-1.312c-0.875-0.872-1.309-2.015-1.309-3.163V19.089z M13.417,177.9c-3.254,0-5.892-2.636-5.892-5.89   c0-3.251,2.637-5.886,5.892-5.886c3.249,0,5.888,2.635,5.888,5.886C19.304,175.265,16.665,177.9,13.417,177.9z"></Path>
+                <Path Fill="Black" Data="M49.186,122.303c0,1.231,1.003,2.239,2.235,2.239h50.27c0.593-1.451,1.477-2.803,2.632-3.958l0.512-0.513   H51.421C50.189,120.071,49.186,121.075,49.186,122.303z"></Path>
+                <Path Fill="Black" Data="M198.567,125.642l-41.14-41.139c-0.883-0.884-2.103-1.432-3.454-1.432s-2.571,0.548-3.459,1.432   l-41.139,41.139c-1.355,1.355-1.835,3.446-1.056,5.325c0.775,1.88,2.599,3.016,4.515,3.016h11.411v54.569   c0,1.247,0.479,2.499,1.432,3.45c0.955,0.956,2.203,1.432,3.454,1.432h49.68c1.251,0,2.503-0.476,3.458-1.432   c0.952-0.951,1.432-2.203,1.432-3.45v-54.569h11.411c1.92,0,3.734-1.136,4.515-3.016   C200.406,129.088,199.923,126.997,198.567,125.642z"></Path>
+              </Canvas>
+            </Viewbox>
+          </ContentControl>
+        </Button>
+      </WrapPanel>
+    </StackPanel>
+  </Grid>
+</Window>

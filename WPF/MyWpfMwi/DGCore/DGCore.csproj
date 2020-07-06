@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3FB6C766-BD2F-45DF-A535-C4EAAECF0E71}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DGCore</RootNamespace>
+    <AssemblyName>DGCore</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.10.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.10.9\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Attributes.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\Enums.FilterOperand.cs" />
+    <Compile Include="Common\Enums.TotalFunction.cs" />
+    <Compile Include="Common\Interfaces.cs" />
+    <Compile Include="CSV\TestCsvDataSource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DB\DbCmd.cs" />
+    <Compile Include="DB\DbColumnMapElement.cs" />
+    <Compile Include="DB\DbDynamicType.cs" />
+    <Compile Include="DB\DbMetaData.ColumnDescriptions.cs" />
+    <Compile Include="DB\DbMetaData.cs" />
+    <Compile Include="DB\DbSchemaColumn.cs" />
+    <Compile Include="DB\DbSchemaColumnProperty.cs" />
+    <Compile Include="DB\DbSchemaTable.cs" />
+    <Compile Include="DB\DbUtils.cs" />
+    <Compile Include="DB\DbUtils.Reader.cs" />
+    <Compile Include="DB\LookupTableTypeConverter.cs" />
+    <Compile Include="DGVList\DGVList.Actions.cs" />
+    <Compile Include="DGVList\DGVList.cs" />
+    <Compile Include="DGVList\DGVList.Group.cs" />
+    <Compile Include="DGVList\DGVList.Settings.cs" />
+    <Compile Include="DGVList\DGVList_GroupItem.cs" />
+    <Compile Include="DGVList\IDGVList.cs" />
+    <Compile Include="DGVList\SortHelper.cs" />
+    <Compile Include="Filters\DbWhereFilter.cs" />
+    <Compile Include="Filters\FilterEmit.cs" />
+    <Compile Include="Filters\FilterLine.cs" />
+    <Compile Include="Filters\FilterLineSubitem.cs" />
+    <Compile Include="Filters\FilterList.cs" />
+    <Compile Include="Filters\PredicateItem.cs" />
+    <Compile Include="Menu\DbParameter.cs" />
+    <Compile Include="Menu\MenuOption.cs" />
+    <Compile Include="Menu\RootMenu.cs" />
+    <Compile Include="Menu\RootMenu.MainObject.cs" />
+    <Compile Include="Menu\RootMenu.OtherClasses.cs" />
+    <Compile Include="Menu\SqlObject.cs" />
+    <Compile Include="Menu\SubMenu.cs" />
+    <Compile Include="Misc\AppSettings.cs" />
+    <Compile Include="Misc\DataDefiniton.cs" />
+    <Compile Include="Misc\DependentObjectManager.cs" />
+    <Compile Include="Misc\TotalLine.cs" />
+    <Compile Include="PD\Converters.cs" />
+    <Compile Include="PD\Converter_Dictionary.cs" />
+    <Compile Include="PD\DynamicType.cs" />
+    <Compile Include="PD\MemberDescriptor.cs" />
+    <Compile Include="PD\MemberDescriptorUtils.cs" />
+    <Compile Include="PD\MemberElement.cs" />
+    <Compile Include="PD\MemberElement.Emit.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sql\ArrayDataSource.cs" />
+    <Compile Include="Sql\DataSourceBase.cs" />
+    <Compile Include="Sql\DbDataSource.cs" />
+    <Compile Include="Sql\DbDataSource.Extension.cs" />
+    <Compile Include="Sql\Parameter.cs" />
+    <Compile Include="Sql\Test_notused.cs" />
+    <Compile Include="UserSettings\DGV.cs" />
+    <Compile Include="UserSettings\UserSettings.cs" />
+    <Compile Include="UserSettings\UserSettingsUtils.cs" />
+    <Compile Include="Utils\Dgv.cs" />
+    <Compile Include="Utils\DGVColumnHelper.cs" />
+    <Compile Include="Utils\Emit.cs" />
+    <Compile Include="Utils\Events.cs" />
+    <Compile Include="Utils\ExcelApp.cs" />
+    <Compile Include="Utils\Json.cs" />
+    <Compile Include="Utils\Tips.cs" />
+    <Compile Include="Utils\Types.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Menu\NewVersion\config.main.json" />
+    <None Include="Menu\NewVersion\config.new1.json" />
+    <None Include="Menu\NewVersion\config.sap.json" />
+    <None Include="Menu\NewVersion\config.sap.master.json" />
+    <None Include="Menu\NewVersion\config.system.json" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

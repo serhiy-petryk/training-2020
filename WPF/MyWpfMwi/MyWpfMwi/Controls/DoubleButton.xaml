@@ -1,0 +1,67 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:common="clr-namespace:MyWpfMwi.Common">
+
+    <!-- Usage 
+                <Button Template="{StaticResource LeftUpDoubleButtonTemplate}" Style="{StaticResource DoubleButtonStyle}" Width="24" Height="24" BorderThickness="1" Click="ButtonLeft_OnClick">
+                    <Path Margin="-12 -10 0 0" Fill="White" Data="M 4 0 L 0 4 L 4 8 Z" Width="4" Height="8"></Path>
+                </Button>
+
+                <Button x:Name="AA" Template="{StaticResource RightDownDoubleButtonTemplate}" Style="{StaticResource DoubleButtonStyle}" Margin="-24 0 0 0" Width="24" Height="24" BorderThickness="1" Click="ButtonRight_OnClick">
+                    <Path Margin="12 10 0 0" Fill="Black" Data="M 0 0 L 4 4 L 0 8 Z" Width="4" Height="8"></Path>
+                </Button>
+    
+                            <RepeatButton Grid.Column="3" Template="{StaticResource LeftUpDoubleButtonTemplate}" Style="{StaticResource DoubleButtonStyle}"
+                                          Margin="0" Width="24" Height="24" BorderThickness="1" Focusable="False" Click="ButtonLeft_OnClick">
+                                <Path Margin="-12 -10 0 0" Fill="White" Data="M 4 0 L 0 4 L 4 8 Z" Width="4" Height="8"></Path>
+                            </RepeatButton>
+
+                            <RepeatButton Grid.Column="4" Template="{StaticResource RightDownDoubleButtonTemplate}" Style="{StaticResource DoubleButtonStyle}"
+                                          Margin="-24 0 0 0" Width="24" Height="24" BorderThickness="1" Focusable="False" Click="ButtonRight_OnClick">
+                                <Path Margin="12 10 0 0" Fill="White" Data="M 0 0 L 4 4 L 0 8 Z" Width="4" Height="8"></Path>
+                            </RepeatButton>
+    -->
+
+    <ControlTemplate x:Key="RightDownDoubleButtonTemplate" TargetType="{x:Type ButtonBase}">
+        <Grid>
+            <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
+                         StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
+                         Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.Instance}, ConverterParameter=RightDownButton}" >
+            </Polygon>
+            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  RecognizesAccessKey ="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="LeftUpDoubleButtonTemplate" TargetType="{x:Type ButtonBase}">
+        <Grid>
+            <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
+                         StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
+                         Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.Instance}, ConverterParameter=LeftUpButton}" >
+            </Polygon>
+            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  RecognizesAccessKey ="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="DoubleButtonStyle" TargetType="ButtonBase">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="BorderBrush" Value="{DynamicResource DoubleButton.BorderBrush}" />
+                <Setter Property="Background" Value="{DynamicResource DoubleButton.BackgroundBrush}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource DoubleButton.MouseOver.BorderBrush}" />
+                <Setter Property="Background" Value="{DynamicResource DoubleButton.MouseOver.BackgroundBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource DoubleButton.Pressed.BorderBrush}" />
+                <Setter Property="Background" Value="{DynamicResource DoubleButton.Pressed.BackgroundBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.3" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

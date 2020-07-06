@@ -1,0 +1,67 @@
+﻿<Window x:Class="WpfInvestigate.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="LIVE MainWindow" Height="600" Width="1000">
+
+    <Grid Margin="0 20 0 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5">
+            <Label Content="Current culture:"/>
+            <ComboBox x:Name="cbCulture" SelectionChanged="CbCulture_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type globalization:CultureInfo}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding DisplayName, Mode=OneWay}" />
+                            <TextBlock Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding IetfLanguageTag, StringFormat=(\{0\})}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Label Content="WiP controls:" Margin="0 10 0 0"/>
+            <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
+            <Label>Ready:</Label>
+            <Button x:Name="ObjectEditorTest" Margin="5" Content="Ready: ObjectEditor" Click="ObjectEditorTest_OnClick"/>
+            <Button x:Name="DualPathToggleButtonEffectTest" Width="200" Margin="0 5" Content="Ready: DualPathToggleButtonEffect" Click="DualPathToggleButtonEffectTest_OnClick"/>
+            <Button x:Name="DropDownButtonTest" Width="200" Margin="0 5" Content="Ready: DropDownButton" Click="DropDownButtonTest_OnClick"/>
+            <Button x:Name="NumericBoxTest" Width="200" Margin="0 5" Content="Ready: NumericBox" Click="NumericBoxTest_OnClick"/>
+            <Button x:Name="TimePickerTest" Width="200" Margin="0 5" Content="Ready: TimePicker" Click="TimepickerTest_OnClick"/>
+            <Button x:Name="DatePickerExtensionTest" Width="200" Margin="0 5" Content="Ready: DatePickerExtension" Click="DatePickerExtensionTest_OnClick"/>
+            <Button x:Name="CalculatorTest" Width="200" Margin="0 5" Content="Ready: Calculator" Click="CalculatorTest_OnClick"/>
+            <Button x:Name="WatermarkTest" Width="200" Margin="0 5" Content="Watermark Tests" Click="WatermarkTest_OnClick"/>
+            <Button x:Name="RippleEffectTest" Width="200" Margin="0 5" Content="Ready: RippleEffect" Click="RippleEffectTest_OnClick"/>
+            <Button x:Name="FlatButtonTest" Width="200" Margin="0 5" Content="Ready: FlatButton" Click="FlatButtonTest_OnClick"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
+            <Label>Others:</Label>
+            <Button x:Name="KeyboardTest" Margin="5" Content="Others: Keyboard" Click="KeyboardTest_OnClick"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
+            <Label>Tests:</Label>
+            <Button x:Name="WiPTest" Margin="5" Content="WiP Tests" Click="WiPTest_OnClick"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="4" Orientation="Vertical" Margin="5">
+            <Label>Obsolete:</Label>
+            <Button x:Name="ObsoleteNumericUpDownTest" Width="200" Margin="0 5" Content="Obsolete: NumericUpDown" Click="ObsoleteNumericUpDownTest_OnClick"/>
+            <Button x:Name="ObsoleteRippleButtonTest" Width="250" Margin="0 5" Content="Obsolete (use RippleEffect): RippleButton" Click="ObsoleteRippleButtonTest_OnClick"/>
+            <Button x:Name="ObsoleteTests" Width="200" Margin="0 5" Content="Obsolete: ControlLibrary" Click="ObsoleteControlLibrary_OnClick"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

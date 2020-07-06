@@ -1,0 +1,74 @@
+﻿<Window x:Class="LightySample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="MainWindow"
+        Width="525"
+        Height="350"
+        MinWidth="400"
+        MinHeight="300"
+        mc:Ignorable="d">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Text="Basic Usage" />
+            <TextBlock Text="How to show lightbox" />
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="5" Width="100"
+                        Click="OnClickShowButton"
+                        Content="Show" />
+                <Button Margin="5" Width="100"
+                        Click="OnClickShowDialogButton"
+                        Content="ShowDialog" />
+                <Button Margin="5" Width="100"
+                        Click="OnClickShowAsyncButton"
+                        Content="ShowAsync" />
+            </StackPanel>
+
+            <TextBlock Text="Show FrameworkElement/UserControl" />
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="5" Width="100"
+                        Click="OnClickShowUserControl"
+                        Content="Show UserControl" />
+                <Button Margin="5" Width="100"
+                        Click="OnClickShowImage"
+                        Content="Show Image" />
+            </StackPanel>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Advanced Usage" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Margin="5" Width="100"
+                        Click="OnClickShowInGrid"
+                        Content="Show into Grid" />
+                    <Button Margin="5"
+                        Click="OnClickShowMultiple"
+                        Content="Show multiple lightbox" />
+                </StackPanel>
+                <TextBlock Text="Builtin Styles" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Margin="5" Width="100"
+                        Click="ShowBuiltinStyleWindow"
+                        Content="Builtin Style" />
+                    <Button Margin="5" Width="100"
+                        Click="ShowCustomStyleWindow"
+                        Content="Custom Style" />
+                </StackPanel>
+            </StackPanel>
+
+            <Grid Grid.Column="1" x:Name="subGrid"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:viewModels="clr-namespace:MyWpfMwi.ViewModels">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Controls/Dialog/Lighty.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <DropShadowEffect x:Key="ShadowEffect" BlurRadius="10" ShadowDepth="2" po:Freeze="True" />
+
+    <!-- Left button of Container -->
+    <Geometry x:Key="Mwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
+    <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
+
+    <Geometry x:Key="Mwi.Container.WindowMenuNormalGeometry">M 0 1 L 2 3 L 4 1 Z</Geometry>
+    <Geometry x:Key="Mwi.Container.WindowMenuOpenGeometry">M22 4 L 18 0 L 11 7 L 4 0 L 0 4 L 7 11 L 0 18 L 4 22 L 11 15 L 18 22 L 22 18 L 15 11 L 22 4Z</Geometry>
+    <Geometry x:Key="Mwi.Container.WindowMenuScrolledGeometry">M 0 0.5 L 10 0.5 L 10 2.5 L 0 2.5 Z M 0 4.5 L 5 9.5 L 10 4.5 Z</Geometry>
+
+    <!-- =======  Window wrapper  ======= -->
+    <Style x:Key="HeadlessWindow" TargetType="Window">
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style TargetType="ToolTip">
+        <Setter Property="FontFamily" Value="{Binding Source={x:Static viewModels:ApplicationViewModel.Instance}, Path=DefaultFontFamily}"/>
+    </Style>
+
+    <ScaleTransform x:Key="ScaleTransform" CenterX="0" CenterY="0"
+                    ScaleX="{Binding Source={x:Static viewModels:ApplicationViewModel.Instance}, Path=ScaleValue}"
+                    ScaleY="{Binding Source={x:Static viewModels:ApplicationViewModel.Instance}, Path=ScaleValue}" />
+
+</ResourceDictionary>

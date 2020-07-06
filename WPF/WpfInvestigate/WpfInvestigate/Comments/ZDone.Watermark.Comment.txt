@@ -1,0 +1,21 @@
+﻿
+3 types:
+- (bad to catch real text changes) 1. Direct text edition
+- 2. Use second TextBox
+- 3. Use AdornerDecorator
++ (simplest interface) 4. Use Adorner
+
+For:
+-+ (only textbox) 1. TextBoxBase
++ 2. PasswordBox
++ 3. ComboBox
++ 4. DatePicker
+5. TimePickerBase
++ 6. NumericUpDown
+
+How to implement:
++ 1. Use Adorner
++ 2. CS code of service must to find target TextBoxBase + attach all necessarily actions.
++ 3. Interface:
+	text
+	option: foreground color

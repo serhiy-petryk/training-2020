@@ -1,0 +1,23 @@
+﻿
+Must be:
+1. As Textbox, not like button (Can enter number in textbox)
+2. +/- spinners
+3. Decimal places
+4. ? ValueType property: integer, byte, long, double, decimal, ... (or convert value before/after editing and have 2 base types: long & decimal)
+5. Min/max
+6. Nullable
+7. Culture
+8. Validation: error=>red border
+9. Investigate Binding.ValidationRules (red border as in 1-st project in https://github.com/billchungiii/NumericTextBoxSamples)
+
+Urls:
+- (глюки, як кнопка, великий розмір, який не масштабується) 1. https://github.com/Stopbyte/WPF-Numeric-Spinner-NumericUpDown
+- (very big: cs file has 1280 lines) 2. Myhapps
+++ (my base) 3. Simple based on textbox: https://github.com/wwwIgorNet/NumericUpDown
+4. AttachedProperty (maskKind(Integer/Decimal), min, max) for TextBox: https://www.codeproject.com/Articles/34228/WPF-Maskable-TextBox-for-Numeric-Values
+5. Mask for TextBox (predefined list of masks): https://www.codeproject.com/Tips/1080813/How-To-Implement-a-Mask-for-a-Text-Box-in-W-P-F
+6. Good as sample: MahApps.Metro\Controls\NumericUpDown.cs(1280 lines) + MahApps.Metro\Themes\NumericUpDown.xaml(186 lines)
+7. Simple: https://github.com/billchungiii/NumericTextBoxSamples
+	+1-th project: based on Binding.ValidationRules (mode TwoWay) => red border in case of error
+	2-d project: based on Behaviour with Regex.IsMatch(e.Text, "^[0-9]*$")
+	3-d project: based on 'override void OnPreviewTextInput' with Regex.IsMatch(e.Text, "^[0-9]*$")

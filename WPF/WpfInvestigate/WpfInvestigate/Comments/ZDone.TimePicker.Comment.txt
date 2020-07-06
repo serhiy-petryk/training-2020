@@ -1,0 +1,10 @@
+﻿
+-+ 1. https://marlongrech.wordpress.com/2007/11/18/time-picker/
+
+2. https://github.com/dotnetprojects/wpftoolkit
+28 themes (>3000 lines per theme for 9 controls, moonuicore has yes/no theme), tree map, data visualization, accordion, autocomplete, suggestion, rating control, ..
+
+3. https://archive.codeplex.com/?p=avaloncontrolslib
+very simple: InputPrompt, Docky, RatingControl, MaskedTextBox, ListViewSorting, DataGridView,
+RangeSlider, Magnifier, DatePicker, TimePicker, TimeSpanPicker, DateTimePicker, TreeListBox
+

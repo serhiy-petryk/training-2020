@@ -1,0 +1,62 @@
+﻿<Window x:Class="LightySample.MultipleLightBoxWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:source="clr-namespace:LightyTest.Source" 
+        Title="MultipleLightBoxWindow"
+        Width="525"
+        Height="350"
+        MinWidth="400"
+        MinHeight="300"
+        mc:Ignorable="d">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type source:LightBox}">
+            <!--<Setter Property="Template" Value="{StaticResource DarkBackgroundTemplate}" />
+            <Setter Property="ItemsPanel" Value="{StaticResource HorizontalPanel}" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource PhotoCardStyle}" />
+
+            <Setter Property="InitializeStoryboard" Value="{StaticResource ZoomInAnimation}" />
+            <Setter Property="DisposeStoryboard" Value="{StaticResource ZoomOutAnimation}" />
+            <Setter Property="OpenStoryboard" Value="{StaticResource ZoomInAnimation}" />
+            <Setter Property="CloseStoryboard" Value="{StaticResource ZoomOutAnimation}" />
+
+            <Setter Property="CloseOnClickBackground" Value="False" />
+
+            <Setter Property="IsParallelInitialize" Value="False" />
+            <Setter Property="IsParallelDispose" Value="False" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <ScaleTransform />
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />-->
+            <Setter Property="Template" Value="{StaticResource DarkBackgroundTemplate}" />
+            <Setter Property="ItemsPanel" Value="{StaticResource HorizontalPanel}" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource PhotoCardStyle}" />
+
+            <Setter Property="InitializeStoryboard" Value="{StaticResource ZoomInAnimation}" />
+            <Setter Property="DisposeStoryboard" Value="{StaticResource ZoomOutAnimation}" />
+            <Setter Property="OpenStoryboard" Value="{StaticResource ZoomInAnimation}" />
+            <Setter Property="CloseStoryboard" Value="{StaticResource ZoomOutAnimation}" />
+
+            <Setter Property="CloseOnClickBackground" Value="False" />
+
+            <Setter Property="IsParallelInitialize" Value="False" />
+            <Setter Property="IsParallelDispose" Value="False" />
+
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Button Width="75"
+                Margin="10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="button_Click"
+                Content="Button" />
+    </Grid>
+</Window>

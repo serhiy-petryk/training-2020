@@ -1,0 +1,59 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Window Header -->
+    <SolidColorBrush x:Key="Mwi.WindowHeader.ForegroundBrush" Color="{x:Static SystemColors.GrayTextColor}"/>
+    <SolidColorBrush x:Key="Mwi.WindowHeader.MouseOver.ForegroundBrush" Color="{x:Static SystemColors.ActiveCaptionTextColor}"/>
+
+    <!-- Mwi Container -->
+    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{x:Static SystemColors.AppWorkspaceColor}"/>
+
+    <!-- Windows Bar -->
+    <SolidColorBrush x:Key="Mwi.WindowBar.ForegroundBrush" Color="Black"/>
+    <SolidColorBrush x:Key="Mwi.WindowBar.BackgroundBrush" Color="#FF8194AA"/>
+    <SolidColorBrush x:Key="Mwi.WindowBar.BorderBrush" Color="{x:Static SystemColors.HotTrackColor}"/>
+
+    <!-- Window Tab -->
+    <SolidColorBrush x:Key="Mwi.WindowTab.ForegroundBrush" Color="White"/>
+    <LinearGradientBrush x:Key="Mwi.WindowTab.BackgroundBrush" EndPoint="0,1">
+        <GradientStop Color="#FFCCD3CC" Offset="0" />
+        <GradientStop Color="#FF8B9DB1" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Mwi.WindowTab.Selected.BackgroundBrush" EndPoint="0,1">
+        <GradientStop Color="LightSkyBlue" Offset="0"/>
+        <!--<GradientStop Color="SkyBlue" Offset="1"/>-->
+        <!--<GradientStop Color="CornflowerBlue" Offset="1"/>-->
+        <GradientStop Color="#FF59BAF2" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Mwi.WindowTab.MouseOver.BackgroundBrush" EndPoint="0,1">
+        <GradientStop Color="#FFD3B380" Offset="0"/>
+        <GradientStop Color="#FFEBCD77" Offset="1"/>
+        <!--<GradientStop Color="#FFD3B380" Offset="0"/>
+            <GradientStop Color="#FFEBCD77" Offset="0.5"/>
+            <GradientStop Color="#FFD3B380" Offset="1"/>-->
+        <!--<GradientStop Color="#FFC28D1D" Offset="0"/>
+            <GradientStop Color="#FFEBC33D" Offset="0.5"/>
+            <GradientStop Color="#FFC28D1D" Offset="1"/>-->
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="Mwi.WindowTab.BorderBrush" Color="#FF444444"/>
+    <SolidColorBrush x:Key="Mwi.WindowTab.Thumbnail.BackgroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="Mwi.WindowTab.DeleteButton.ForegroundBrush" Color="#FF444444"/>
+
+    <!-- Windows Menu -->
+    <SolidColorBrush x:Key="Mwi.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
+
+    <!-- Double button -->
+    <SolidColorBrush x:Key="DoubleButton.BorderBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="DoubleButton.BackgroundBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="DoubleButton.MouseOver.BorderBrush" Color="#FF3399FF"/>
+    <SolidColorBrush x:Key="DoubleButton.MouseOver.BackgroundBrush" Color="#FFC2E0FF"/>
+    <SolidColorBrush x:Key="DoubleButton.Pressed.BorderBrush" Color="#FF3399FF"/>
+    <SolidColorBrush x:Key="DoubleButton.Pressed.BackgroundBrush" Color="#FF99CCFF"/>
+
+    <!-- MwiChild -->
+    <SolidColorBrush x:Key="MwiChild.Button.BorderBrush" Color="#FF6A7A93" />
+    <SolidColorBrush x:Key="MwiChild.CloseButton.BorderBrush" Color="#FF431422" />
+    <SolidColorBrush x:Key="MwiChild.Button.Unfocused.BorderBrush" Color="#FFD1DBE5" />
+    <SolidColorBrush x:Key="MwiChild.Button.Unfocused.SubBorderBrush" Color="#FF838EA8" />
+
+</ResourceDictionary>

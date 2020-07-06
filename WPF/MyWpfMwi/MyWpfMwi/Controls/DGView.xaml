@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="MyWpfMwi.Controls.DGView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <DataGrid x:Name="DataGrid"
+              ScrollViewer.CanContentScroll="True"
+              ScrollViewer.VerticalScrollBarVisibility="Auto"
+              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+              EnableRowVirtualization="True"
+              EnableColumnVirtualization="True"
+              AutoGenerateColumns="True"
+              SelectionMode="Extended"
+              SelectionUnit="CellOrRowHeader"
+              CanUserReorderColumns="True"
+              CanUserResizeColumns="True"
+              CanUserResizeRows="False" />
+
+</UserControl>

@@ -1,0 +1,51 @@
+﻿<Window x:Class="WpfInvestigate.TestViews.VirtualKeyboardTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:temp="clr-namespace:WpfInvestigate.Temp"
+        mc:Ignorable="d"
+        Title="VirtualKeyboardTests" Height="900" Width="1000">
+
+    <!-- Design from https://github.com/simple0812/keyboard (no license) -->
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Slider Grid.Column="0"
+                x:Name="uiScaleSlider"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100"
+                Value="1" Minimum="0.5" Maximum="4"
+                Orientation="Vertical"
+                Ticks="1"
+                IsSnapToTickEnabled="False"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
+
+        <Grid Grid.Column="1">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <controls:VirtualKeyboard x:Name="Keyboard" Grid.Row="0" Grid.Column="0" Margin="5"/>
+            <Label Grid.Row="1" Margin="0 10 0 0" Content="Original design from https://github.com/simple0812/keyboard (no license):"/>
+            <temp:OriginalVirtualKeyboard x:Name="OriginalKeyboard" Grid.Row="2" Grid.Column="0" Margin="5"/>
+        </Grid>
+    </Grid>
+</Window>

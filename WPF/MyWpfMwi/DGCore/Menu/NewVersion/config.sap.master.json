@@ -1,0 +1,30 @@
+﻿{
+  "Menu": {
+    "План рахунків": {"layoutId": "vcube_mastaccount", "sql": "select * from vcube_mastaccount"},
+    "Альтернативний План рахунків": {"layoutId": "vcube_mastaltacc", "sql": "select * from vcube_mastaltacc"},
+    "Центри витрат": {"layoutId": "mast_cc", "sql": "select * from vcube_mastcc"},
+    "WBS": {"layoutId": "mast_wbs", "sql": "select * from mast_WBS"},
+    "Партнери": {"layoutId": "mast_partner", "sql": "select * from vcube_mastpartner"},
+    "Типи партнерів": {"layoutId": "MASTPARTNERKIND", "sql": "select * from mmast_partner_kind"},
+    "Матеріали": {"layoutId": "mast_material", "sql": "select * from mast_material"},
+    "Українські назви матеріалів": {"layoutId": "v_mast_material_ukrname", "sql": "select * from mast_material_ukrname"},
+    "Класи матеріалів": {"layoutId": "MASTMATCLASS", "sql": "select * from mmast_material_class"},
+    "Типи матеріалів": {"layoutId": "MASTMATTYPE", "sql": "select * from mmast_material_type"},
+    "Групи матеріалів": {"layoutId": "MASTMATGROUP", "sql": "select * from mmast_material_group"},
+    "Типи руху Книги Матеріалів": {"layoutId": "mat_ledger_mov_type", "sql": "select * from mat_ledger_mov_type"},
+    "Виробничі завдання": {"layoutId": "MAST_PMO", "sql": "select * from mast_pmo"},
+    "Коди ПДВ": {"layoutId": "MAST_VAT", "sql": "select * from mast_tax"},
+    "Курси валют": {"layoutId": "sap_nbu_rates", "sql": "select * from curr_nbu_rates"},
+    "Курси валют для одного кода": {
+      "layoutId": "sap_nbu_rates1",
+      "sql": "select * from curr_nbu_rates where curr=@curr and date between @start_date and @end_date",
+      "parameters": {
+        "@curr": {"label": "Код валюти", "type": "System.String", "defValue": "USD"},
+        "@start_date": {"label": "Дата з", "type": "System.DateTime", "defValue": "FirstDayOfPreviousMonth"},
+        "@end_date": {"label": "Дата по", "type": "System.DateTime", "defValue": "LastDayOfPreviousMonth"}
+      }
+    },
+    "Коди валют НБУ": {"layoutId": "sap_nbu_codes", "sql": "select * from curr_nbu_codes"},
+    "OneviewID користувачів": {"sql": "select * from mmast_users"}
+  }
+}

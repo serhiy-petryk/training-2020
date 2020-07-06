@@ -1,0 +1,31 @@
+﻿
+Займатися localization в самому кінці проекту.
+
+Список проектів:
+===============
+++ (based on Resource.resx)
+- (null binding errors)
+1. WPFLocalizationExtension-master.zip
+https://github.com/XAMLMarkupExtensions/WPFLocalizationExtension
+
++ (based on ResourceDictionary)
+----(language dynamic update: only через hidden textblock)
+2.1 WPF-Localization-master.zip
+	(https://habr.com/ru/post/256193/ (2015 year) https://github.com/Epsil0neR/WPF-Localization)
+	2.2 https://habr.com/ru/post/86778/ (2010 year)
+
+2.a. Binding StringFormat: 
+https://docs.microsoft.com/en-us/dotnet/api/system.windows.data.bindingbase.stringformat?view=netframework-4.8
+https://stackoverflow.com/questions/11852050/stringformat-concatenates-databinding-and-resources-value
+
+3. Microsoft example by Uid:
+https://docs.microsoft.com/ru-ru/dotnet/framework/wpf/advanced/wpf-globalization-and-localization-overview
+E:\Apps\original\wpf-controls\WPF-Samples-netframework\Globalization and Localization
+
++ very simple/markup/partialy stringformat/updatable
+- не хватає StringFormat, але здається можна доробити
+4. https://github.com/zHaytam/EasyLocalization
+
+--5. https://github.com/rasyidf/Rasyidf.Localization
+
+Ще можна знайти проекти на github (keys: wpf localization/localize)

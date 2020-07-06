@@ -1,0 +1,74 @@
+﻿
+1. Get Container from model item (TabControl/? ItemsControl): see WindowsBar.cs
+ItemContainerGenerator.ContainerFromItem(model) as TabItem;
+
+2. Difference between Trigger & DataTtrigger:
+  - Trigger => watch Property of current control
+  - DataTrigger => uses binding, may binds to another control and not necessarily dependency properties
+See: https://www.wpf-tutorial.com/styles/trigger-datatrigger-event-trigger/
+Data triggers, represented by the <DataTrigger> element, are used for properties that are not necessarily dependency properties.
+They work by creating a binding to a regular property, which is then monitored for changes. This also opens up for binding your trigger to a property on a different control. 
+
+3. NextTick: see https://medium.com/the-curious-coder/wpf-tip-executing-code-after-ui-has-finished-updating-b6a8bc28f547
+Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => { code ... }));
+
+4. DesignMode: if (!DesignerProperties.GetIsInDesignMode(dep)) (see https://www.codeproject.com/Tips/1233106/WPF-MarkupExtension-to-allow-Strings-with-Multiple)
+
+5. Injects INotifyPropertyChanged code into properties at compile time
+    (1100 stars, fresh) https://github.com/Fody/PropertyChanged
+    (25 stars, 4 years ago) https://github.com/demigor/kindofmagic https://habr.com/ru/post/95211/
+
+6. SuspendLayout: Для MwiChild використовувалося:
+     using (Window.GetWindow(this).Dispatcher.DisableProcessing()) // Suspend layout
+     using (window.Dispatcher.DisableProcessing()) // Suspend layout
+     { ... }
+
+7. XAML: ??? clone element from ResourceDictionary
+  ++ <Static/DynamicResource Key> (example):
+        <ToggleButton.Resources>
+           <StaticResource ResourceKey="WindowsMenu" x:Key="cm" /> 
+        </ToggleButton.Resources>
+      where WindowsMenu defines as (in windows.Resources):
+        <ContextMenu x:Key="WindowsMenu" StaysOpen="False" 
+OR
+  ++ (use ContentPresenter): <UserControl x:Key="AA" Background="Aqua" Width="100" Height="20"/>
+         <ContentPresenter Grid.Row="2" Content="{StaticResource AA}" HorizontalAlignment="Left"/>
+            
+8. Refresh UI (see https://social.msdn.microsoft.com/Forums/vstudio/en-US/878ea631-c76e-49e8-9e25-81e76a3c4fe3/refresh-the-gui-in-a-wpf-application?forum=wpf):
+private static Action EmptyDelegate = delegate() { };
+public static void Refresh(this UIElement uiElement) {
+    uiElement.Dispatcher.Invoke(DispatcherPriority.Render, EmptyDelegate);
+}
+
+9. Get the top-most element that is under the mouse: Mouse.DirectlyOver 
+
+10. Find element from Template: (protected) => element.GetTemplateChild(name), element.Template
+
+11. ?Invalidate canvas: AppViewModel.Instance.MwiContainer.MwiCanvas.InvalidateArrange();
+
+12. Event for DependencyProperty change:
+var dpd = DependencyPropertyDescriptor.FromProperty(MultiplyByTwo.ResultProperty, typeof(MultiplyByTwo));
+        dpd.AddValueChanged(_multiplier, (o, e) => RecalculateStars());
+
+13. Trace Bindings: PresentationTraceSources.TraceLevel
+
+14. Get Element(s) under mouse click: https://stackoverflow.com/questions/45813/wpf-get-elements-under-mouse
+example: https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.visualtreehelper.hittest?redirectedfrom=MSDN&view=netcore-3.1#System_Windows_Media_VisualTreeHelper_HitTest_System_Windows_Media_Visual_System_Windows_Media_HitTestFilterCallback_System_Windows_Media_HitTestResultCallback_System_Windows_Media_HitTestParameters_
+        public static List<DependencyObject> GetElementsUnderMouseClick(UIElement sender, MouseButtonEventArgs e)
+        {
+            var hitTestResults = new List<DependencyObject>();
+            VisualTreeHelper.HitTest(sender , null, result => GetHitTestResult(result, hitTestResults), new PointHitTestParameters(e.GetPosition(sender)));
+            return hitTestResults;
+        }
+        private static HitTestResultBehavior GetHitTestResult(HitTestResult result, List<DependencyObject> hitTestResults)
+        {
+            hitTestResults.Add(result.VisualHit);
+            return HitTestResultBehavior.Continue;
+        }
+
+15. Rounding pixels: UseLayoutRounding / SnapsToDevicePixels; (ClipToBounds - show/hide children за пределами контрола); 
+  UseLayoutRounding = SnapsToDevicePixels, difference: UseLayoutRounding is using on layout, SnapsToDevicePixels is using on rendering
+  recomended: use UseLayoutRounding
+
+16. Close and hide Popup on outside click: AllowsTransparency must be "True" => <Popup AllowsTransparency="True" />
+If AllowsTransparency=false the popup after closing is visible

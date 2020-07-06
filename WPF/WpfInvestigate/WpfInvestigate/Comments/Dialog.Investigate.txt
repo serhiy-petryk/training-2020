@@ -1,0 +1,15 @@
+﻿
+Plan:
+Base on:
+var wnd = Window.GetWindow(this)
+wnd.Opacity = 0.75
+wnd.IsHitVisible = false;
+
+Review:
+=======
+
+1. Controlz: based on Windows API
+2. https://github.com/WPF-Forge/Forge.Forms: based on Controlz
+3. https://github.com/augustoproiete/ookii-dialogs-wpf: based on Interop
+!!!+++ 4. https://github.com/sourcechord/Lighty: 20KB cs + 13.3KB xaml(5 files)
+5. https://github.com/schdck/SimpleDialogs: based on Mahapps.Metro

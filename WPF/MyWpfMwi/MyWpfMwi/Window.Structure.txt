@@ -1,0 +1,42 @@
+﻿
+Window Structure
+Border x:Name="BaseBorder => Color=Black thickness=1
+	Grid
+		<!-- Border of activated/deactivated window (6px) -->
+        Wnd7: Border x:Name="DarkenBackground" Height="28" VerticalAlignment="Top" CornerRadius="5,5,0,0" Background="{DynamicResource DarkenBackgroundBrush}" />
+        Wnd7: Border x:Name="HighlightBackground" Height="1" VerticalAlignment="Top" CornerRadius="5,5,0,0" Background="{DynamicResource HighlightBackgroundBrush}" />
+
+		<Grid x:Name="HeaderAndContent" Margin="7">
+			<Thumb Grid.Column="0" Grid.ColumnSpan="5" x:Name="MoveThumb"
+			<ToggleButton Grid.Column="0" Width="16" Height="16" : Window Icon
+			<ContentPresenter Grid.Column="1" Content="{Binding LeftHeaderPanel}" UseLayoutRounding="False"/> : Left Header Panel
+			<TextBlock Grid.Column="2" x:Name="Header" Margin="3 0 0 0"/> : Window Title
+			<ContentPresenter Grid.Column="3" Content="{Binding RightHeaderPanel}"/> : Left Header panel
+			<Button Grid.Column="4" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}" : Wnd buttons
+			...
+			<Border Grid.Row="1" x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">: Wnd Content
+
+		<Rectangle x:Name="LeftBorder" Width="1" HorizontalAlignment="Left" RadiusX="9" RadiusY="9" Fill="{DynamicResource NearBorderBrush}" /> Second line of wnd border
+		...
+		<Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" Margin="0,7,0,7" Opacity="0" Cursor="SizeWE" DragStarted="MoveThumb_OnDragStarted" DragDelta="ResizeLeft_OnDragDelta" IsHitTestVisible="{TemplateBinding Resizable}"/>
+		...
+
+Wnd10
+Grid
+	Border
+		Grid
+			Header
+			Content
+	Thumb x:Name="ResizeLeft" Width="10" Opacity="0.01" Cursor="SizeWE" Background="GreenYellow" Margin="-10 0 0 0" BorderThickness="0" VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
+
+Wnd7
+Border
+	Grid
+		Header
+		Content
+	Thumb
+
+Events:
+	Thumb: DragStart, DragDelta
+	MoveThumb
+	Buttons

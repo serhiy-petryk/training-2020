@@ -1,0 +1,82 @@
+﻿Global:
+======
+1. Multicolumn combobox
++ 2. Object editor
+3. Refactoring animation
+
+ToDo 2020-05-07:
++ 1. TimePicker selectors code -> copy шлях визовів методів із старого коду
++ 2. Different datagridrow background
++ 3. Clock changes animation
++ 4. data change test:
+	two modes: date & datetime
+	programatically
+	text editor
+	picker
+
+
+ToDo 2020-04-29:
++ 1. DatePicker: IsNullable - використати стандартний DatePicker + добавити стиль
++ 2. DatePicker: ClearButton
++ 3. Center for icon of TimePicker, test for high height (see DatePicker as example) 
++ 4. Center for clock image of TimePicker
++ 5. Take hour/minute list from cs file (not from xaml). Simplify xaml.
++ 6. Analog clock (with digits) - as Window gadget (see gauge)
++ 7. Hours/minutes/seconds: зразу показати список без popup.
+  - (not need in this case) спочатку зробити multicolumn combobox
++ 8. Sync input date and calendar date in DateTimePicker
++ 9. Space between second &amp; am/pm buttons
++ 10. Check colors for pressed clear button
++ (done RippleEffect for any control) 11. RippleButton as template
++ 12. Bug of timePickerBase: change language between AM and UA => the 12 hour value in hour combobox is not changing
++ 13. Fix  повторное нажатие ToggleButton for TimePicker.
+
+ToDo 2020-04-28:
++ 1. TimePicker: IsNullable, check
++ 2. Watermark for Date/Time pickers (DatePickerTextBox)
++ 3. DateTimePicker
+
+ToDo 2020-04-23:
++1. TimePicker
+-- 2. Control extensions from myhapps. Extensions розраховані на перероблені контроли.
+3. Multiple picker for IN operator
+4. MulticolumnItem combobox (multiply column of item) (ItemPanel = WrapPanel)
+5. Multicolumn combobox (multiply elements in one row)
++ 6. ObjectEditor
+	- copy properties from NumericBox (Culture, data converters, etc).
+	- watermark for DatePicker
+
+ToDo 2020-04-11:
+Object editor:
++ 1. Different types -> textbox (string, integer), datepicker (date), checkbox (yes/no)
+2. Red frame if error (Binding.ValidationRules)
++ 3. Numeric: +/- buttons, decimal/integer support
+4. Clear button: nullbal, strings
+5. Masks/Regex
+6. Зразок: Myhapps
+
+ToDo 2020-04-09:
++1. цікаво: кнопка з анімацією (поворот і зміна зображення) як у MaterialDesign
++2. цікаво: ripple button (?attached property)
+	- MaterialDesign: складно і різні реалізації для різних типів контролів
+	+ https://github.com/Taka414/RippleEffectControl : просто, можна викоритовувати для декількох типів контролів, не працює з PathToggleButton, але можна подумати як це зробити
+3. Людський combobox
+	+ нормальний стиль
+	очистка
+	список у вигляді таблиці
+	online settings (column list, column width, sorting, ?filter, save settings)
+4. Object editor (see WindowsForm infrastructure: converter, UI, ..)
+	+ number editor (можливо з кнопками +/-)
+    + date editor
+    + bool editor
+    editor with list
+	enums support
+5. Filter (inline(?), можливо використовувати також ComplexFilter/PropertyListFilter)
+6. Починати робити UI + можливо максимум використовувати inline settings with saving
+
+Urls list:
+1. Maskable TextBox for Numeric Values: https://www.codeproject.com/Articles/34228/WPF-Maskable-TextBox-for-Numeric-Values
+
+2. Є цікаві речі, які дуже просто зроблені: https://takachan.hatenablog.com/archive/category/WPF , наприклад:
+	Ripple button: https://takachan.hatenablog.com/entry/2017/12/21/234425
+	Chart із буфером: https://takachan.hatenablog.com/entry/2017/10/20/002352

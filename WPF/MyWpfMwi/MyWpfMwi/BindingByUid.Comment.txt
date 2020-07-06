@@ -1,0 +1,41 @@
+﻿
+BindingByUid (звязка не за Name, а за Uid) необхідно у сценаріях, де для UserControl будуються 
+
+Я би відмітив 2 сценарія побудови UserControl^
+1. На основі Template: (так як це робиться у багатьох проектах, наприклад, Mahapps, MaterialDesign)
+  - створюється файл UserControl.cs і окремо файл шаблону UserControl.xaml
+  - даля вони звязуються, або в конструкторі контрола (Template = Resources[key]), або у xaml (<Style TargetType="{x:Type ...}"> + <Setter Property="Template" Value="...">)
+2. На основі Styles
+  - створюється пара звязаних файлів UserControl.cs і UserControl.xaml.cs
+
+Де проявляється різниця:
+ plus for Template: можна використовувати Name
+ minus for Tempalte: запізнення з OnApplyTemplate для активованих в XAML єлементів
+ minus for Tempalte: підтримка подій
+ minus for Tempalte: VS XAML designer не показує активовані в XAML єлементи
+ minus for Tempalte: помилки в проектах, які використовують Template approach
+ Conclusion:
+ !!! взяти за основу style approach (not template!!) і спробувати замість Name для binding використати Uid
+
+Для bindingByUid розглянув декілька сценаріїв:
+1. Побудувати binding типу {binding ElementUid=XXX, Path=...}:
+  не знайшов методу, тому що:
+    BindingBase клас закритий для використання його як базового класу
+    наслідування Binding класу не має жодного сенсу
+    на базі MarkupExtension: на момент створення байдингу не створене ще дерево елемениів (іде парсинг xaml файлу)
+    довизначити байдинг після парсингу неможливо, так як існуючи байдинги залочені і потрібно створювати нові байдинги і викоритсання MarkupExtension втрачає сенс.
+
+2. Вихід знайшов наступним чином:
+2.1 У коді еелементу визначаю силку на Source, як DependencyProperty
+    public static readonly DependencyProperty ScaleSliderProperty = DependencyProperty.Register(nameof(ScaleSlider), typeof(Slider), typeof(MwiStartup), new UIPropertyMetadata(null));
+        public Slider ScaleSlider
+        {
+            get => (Slider)GetValue(ScaleSliderProperty);
+            set => SetValue(ScaleSliderProperty, value);
+        }
+2.2 Активую цю силку на OnLoaded події:
+        private void MwiStartup_OnLoaded(object sender, RoutedEventArgs e) => ScaleSlider = Tips.FindVisualChildren<Slider>(this).First(s => s.Uid == "ScaleSlider");
+2.3 Приклад Xaml коду:
+    Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=ScaleSlider.IsMouseOver}"
+
+Усі байдинги при цьому підході працюють нормально.

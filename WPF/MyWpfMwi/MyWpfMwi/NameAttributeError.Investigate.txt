@@ -1,0 +1,27 @@
+﻿
+ERROR: Cannot set Name attribute value 'Slider' on element 'Slider'. 'Slider' is under the scope of element 'MwiChild', which already had a name registered when it was defined in another scope. 
+
+XAML (Named child inside in UserControl):
+<mwi:MwiChild.RightHeaderPanel>
+   <Slider x:Name="Slider"/>
+</mwi:MwiChild.RightHeaderPanel>
+
+1. Якщо я іменую елемент у коді, наприклад, при Initialized, то у XAML не працюють bindings з цим іменем.
+2. Опис проблеми у 
+https://social.msdn.microsoft.com/Forums/vstudio/en-US/ab9c6393-a3fb-4e31-b08c-13514a95004f/name-scope-error?forum=wpf
+https://stackoverflow.com/questions/751325/how-to-create-a-wpf-usercontrol-with-named-content
+
+Мікрософт каже, що: Unfortunately, You cannot set Name attribute on the children of the control which has been created as UserControl.
+Даються якісь приклади вирішення, напрклад, іменування у коді, і т.п., але у цьому випадку не працює bindings in XAML, etc...
+
+Така ж помилка виникає, коли я використовую не UserControl, а наприклад ButtonBase.
+
+2. MahApps не має цієї проблеми (клас MetroWindow, який наслідує Window і не є UserControl).
+3. Dragablz.Layout:ContentControl також не має цієї проблеми.
+
+Вирішення проблеми.
+1. Стоврюються окремий файл cs з кодом UserControl і ResourceDictionary з Template для цього UserControl.
+2. В конструкторі UserControl робиться визов:
+    this.Template = Application.Current.Resources["BBB2"] as ControlTemplate;
+3. Готово. Іншими словами визначення UserControl не повинно мати xaml файла.
+]

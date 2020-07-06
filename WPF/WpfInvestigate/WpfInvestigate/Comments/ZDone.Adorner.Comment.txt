@@ -1,0 +1,36 @@
+﻿Urls:
+=======
+1. Waiting: https://www.codeproject.com/Articles/57984/WPF-Loading-Wait-Adorner + https://www.codeproject.com/Articles/1159552/WPF-Loading-Wait-Adorner-2
+2. Header of ListView(?move/drag) https://www.codeproject.com/Articles/29001/Group-Sort-Adorner-ListView
+
+AdornerControl:
+==============
+1. 3 samples: https://www.codeproject.com/Articles/54472/Defining-WPF-Adorners-in-XAML
+	 FrameworkElementAdorner.cs based on http://www.codeproject.com/KB/WPF/WPFJoshSmith.aspx
+
+2. https://www.codeproject.com/Articles/16342/WPF-JoshSmith (2008 july) - 1 dll + 8 app test projects
+	DragAdorner: used in http://www.codeproject.com/KB/WPF/ListViewDragDropManager.aspx
+		https://www.codeproject.com/Articles/17266/Drag-and-Drop-Items-in-a-WPF-ListView (2007 april) uses Adorner
+
+	SingleChildAdornerBase: Initial Concept http://blogs.msdn.com/marcelolr/archive/2006/03/03/543301.aspx
+		+ (https://blogs.msdn.microsoft.com/marcelolr/2006/10/19/wpf-dragdrop-sample-and-viewbox-beware/)
+		   https://docs.microsoft.com/en-us/archive/blogs/marcelolr/wpf-dragdrop-sample-and-viewbox-beware
+		-- marcelolr has only code fragments; SingleChildAdornerBase is very similar to marcelolr implementation
+	
+	UIElementAdorner: Used In http://www.codeproject.com/KB/WPF/SmartTextBox.aspx
+
+
++++ Adorner articles (4 parts) -> Adorner + service (attached properties):
+==========================
+1. https://www.nbdtech.com/Blog/archive/2010/06/21/wpf-adorners-part-1-ndash-what-are-adorners.aspx
+!!+++ 2. https://www.nbdtech.com/Blog/archive/2010/06/28/wpf-adorners-part-2-ndash-placing-any-control-on-the.aspx
+
+Comment for https://stackoverflow.com/questions/833943/watermark-hint-text-placeholder-textbox
+=======================================================
+1. See comment of Vadim Ovchinnikov (2010?)
+	2 classes: Adorner + service (attached properties)
+
+Microsoft Adorner:
+=================
+Adorning the Children: https://docs.microsoft.com/en-us/dotnet/framework/wpf/controls/adorners-overview?redirectedfrom=MSDN
+

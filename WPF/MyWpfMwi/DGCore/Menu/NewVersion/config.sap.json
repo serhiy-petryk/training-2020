@@ -1,0 +1,13 @@
+﻿{
+  "DbConnections": {
+    "[default]": {"provider": "SqlClient", "cs": "initial catalog=dbOneSAP_DW;Pooling=false;Data Source=localhost;Integrated Security=SSPI"}
+  },
+
+  "Menu": {
+    "Довідники": "config.sap.master.json",
+    "Операції": "config.sap.transactions.json",
+    "Звіти з залишками": "config.sap.balance.reports.json",
+    "Книга Кредиторів": "config.sap.creditor.balance.json",
+    "SAP Тести": "config.sap.tests.json"
+  }
+}

@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Themes/Common.xaml"/>
+        <ResourceDictionary Source="/Controls/DoubleButton.xaml"/>
+        <ResourceDictionary Source="/Mwi/Themes/MwiColors.Wnd7.xaml"/>
+        <ResourceDictionary Source="/Mwi/Themes/MwiStartup.Wnd7.xaml"/>
+        <ResourceDictionary Source="/Mwi/Themes/MwiChild.Wnd7.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

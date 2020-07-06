@@ -1,0 +1,20 @@
+﻿
+-- Invert color:
+============
+see comment of ThibThib in https://stackoverflow.com/questions/1165107/how-do-i-invert-a-colour +
+decomplier code for System.Drawing.Color.GetHue method
+
+Трохи неправильний підхід:
+для червоного кольору протилежним є ціан, але якщо використовувати ці кольори як background/foreground, то вигляд не дуже красивий.
+
+-- Negative color
+=============
+NegativeColor =  (255,255,255) - Color.RGB
+
+
+Віддінки кольору
+===============
+У проекті MaterialDesignColors у папці Theme визначенні набори віддінків + foreground для 19 кольорів.
+Крім того, там є папка Recomended для Accent/Primary.
+
+

@@ -1,0 +1,76 @@
+﻿
+Support:
+=======
+  multilanguage
+  text position
+  cursor visibility
+  inject to external program
+  attached to textbox
+
+ToDo (2020-06-30):
+=================
+Windows7/10 already has virtual keyboards => no sense to изобретать велосипед
+Not easy:
+1. Change logic for Caps/Shift: do not change character position, change only color and size characters when Caps/Shift is changing
+2. Support accent keys ^, ´, ` (German layout)
+
+(not easy) 1. Change logic for Caps/Shift: do not change character position, change only color and size characters when Caps/Shift is changing
+2. Add Event for key press.
+3. Attach VirtualKeyboard to textbox of EditorBox (one way: use custom style with template for textbox)
+4. ? Create DigitKeyboard for NumericBox or change design for Calculator
+5. Replace "Extra" key on "Alt Gr" + take extra chars from German keyboard
+
+Online keyboards for many languages (>100): https://gate2home.com/
+==================================
+
+Urls:
+====
+1. https://github.com/maximcus/WPFTabTip ??? Не зрозуміло, що це
+
+2. https://github.com/snmslavk/WPF-Keyboard-Control
+    - no multilanguage, text position; +: rus
+3. https://github.com/mesta1/WPF-on-screen-keyboard-and-keypad
+    -+ no cursor/position, inline textbox,
+4. https://github.com/pauldotknopf/WPFKeyboard ???
+    big project, C++, ??? multilanguage
+    can't run => error (can not load DLL: VS2013 version); may be need to try VS2010 version
+
+5. https://www.codeproject.com/Articles/145579/A-Software-Virtual-Keyboard-for-Your-WPF-Apps-2
+    https://designforge.wordpress.com/2011/01/06/jhvirtualkeyboard/
+    https://archive.codeplex.com/?p=jhvirtualkeyboard 
+    https://github.com/jogibear9988/JhVirtualKeyboard - fork of https://jhvirtualkeyboard.codeplex.com/
+    JhVirtualKeyboard.zip - codeplex; no jhlib project; 2018-01-07; 127543 bytes of language set 
+    + VirtualKeyboard.zip/.rar - codeproject; 2014-02-13; 128388 bytes of language set 
+    JhVirtualKeyboard-master.zip; demo is not working; 2014-01-27; 128307 bytes of language set 
+    very big projects: 75 cs files (>1MB)
+
+
+7. https://github.com/jogibear9988/osk: there are bugs, support text position
+    45 files(114K)
+
+8. https://github.com/naveedmurtuza/VirtualKeyboardControl: English/Arabic
+    bad position (error), ..
+
+9. https://github.com/HeBianGu/WPF-SystemKeyboard: Chinese
+    + inject to external program,
+    - no attachment to textbox
+
+10. https://github.com/brianlagunas/WpfTouchKeyboard: System.Runtime.InteropServices.COMException
+
+11. https://github.com/chris-evans/Wpf-Keyboard: --
+    need focused textbox for input
+    -- interop
+    small projecr: ~20KB
+11-1. https://github.com/brianlagunas/WpfTouchKeyboard -- ???? не зрозуміло
+11-2. https://github.com/imasm/wpfkb великий проект
+12. https://github.com/daeyeol/wpf-virtual-keyboard --
+    need focused textbox for input
+    -- interop
+13. https://github.com/simple0812/keyboard (no license) --
+    +++ design(46KB xaml), small cs (20KB)
+    + inject to external program,
+    - no attachment to textbox
+
+14. https://github.com/lamest/ScreenKeyboard EN/RU, ? BUGS
+    -- interop
+15. https://github.com/ChargeProduction/AcrylicKeyboard --

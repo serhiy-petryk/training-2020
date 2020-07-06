@@ -1,0 +1,105 @@
+﻿<Window x:Class="First.MainWindowSort"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:First"
+        mc:Ignorable="d"
+        x:Name="mainWindow"
+        Title="MainWindowSort" Height="450" Width="800" Loaded="MainWindowSort_OnLoaded">
+
+  <Window.Resources>
+    <DataGridTextColumn x:Key="TextColumn" x:Shared="False">
+      <DataGridTextColumn.ElementStyle>
+        <Style>
+          <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+        </Style>
+      </DataGridTextColumn.ElementStyle>
+    </DataGridTextColumn>
+
+    <DataGridTextColumn x:Key="NumberColumn" x:Shared="False">
+      <DataGridTextColumn.ElementStyle>
+        <Style>
+          <Setter Property="TextBlock.TextAlignment" Value="Right"/>
+        </Style>
+      </DataGridTextColumn.ElementStyle>
+    </DataGridTextColumn>
+  </Window.Resources>
+
+  <DockPanel LastChildFill="True">
+    <WrapPanel Name="CommandBar" DockPanel.Dock="Top" Orientation="Horizontal"  IsEnabled="{Binding IsCommandBarEnabled, ElementName=mainWindow}" >
+      <TextBox Name ="Records" Width="100px" PreviewTextInput="Records_OnPreviewTextInput">1000</TextBox>
+      <Button Name="Load" Content="Load data" Click="Load_OnClick"/>
+      <Button Name="LoadGlDocList" Content="Load GlDocList" Click="LoadGlDocList_OnClick" />
+      <Button Name="Clear" Content="Clear" Click="Clear_OnClick"/>
+      <Button Name="MemoryInUse" Content="Memory In Use" Click="MemoryInUse_OnClick"/>
+      <Button Name="Debug" Content="Debug" Click="Debug_OnClick"/>
+    </WrapPanel>
+
+    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+      <ComboBox Name="Log" Width="200px"></ComboBox>
+      <TextBlock Width="200px">Status bar</TextBlock>
+      <Button  Background="Transparent" BorderBrush="Transparent">
+        <ContentControl>
+          <Path Fill="Black" Width="24" Height="24" Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"></Path>
+        </ContentControl>
+      </Button>
+      <Button  Background="Transparent" BorderBrush="Transparent">
+        <ContentControl>
+          <Path Fill="Black" Width="24" Height="24" Data="M15,9H5V5H15M12,19C10.34,19 9,17.66 9,16C9,14.34 10.34,13 12,13C13.66,13 15,14.34 15,16C15,17.66 13.66,19 12,19M17,3H5C3.89,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V7L17,3Z"></Path>
+        </ContentControl>
+      </Button>
+      <Button  Background="Transparent" BorderBrush="Transparent">
+        <ContentControl>
+          <Viewbox Width="24" Height="24">
+          <Path Fill="Black" Width="30" Height="30" Data="M23.335,21.887h-5.052l-3.446-4.874l-3.621,4.874H6.142  l6.295-7.917L7.354,7.046h5.125l2.381,3.765l2.537-3.765h5.215l-5.329,6.924L23.335,21.887 M30,28.652H0V0h30V28.652z M2.882,25.77  h24.231V2.884H2.882"></Path>
+            </Viewbox>
+        </ContentControl>
+      </Button>
+      <Button  Background="Transparent" BorderBrush="Transparent">
+        <ContentControl>
+          <Viewbox Width="24" Height="24">
+            <Path Fill="Black" Width="512" Height="512" Data="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"></Path>
+          </Viewbox>
+        </ContentControl>
+      </Button>
+    </StackPanel>
+
+    <DockPanel LastChildFill="True" HorizontalAlignment="Left"
+               VerticalAlignment="Top">
+      <WrapPanel DockPanel.Dock="Top" Background="AliceBlue" Margin="0px"  Name="GroupPanel">
+        <WrapPanel.Resources>
+          <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Padding" Value="2,0" />
+          </Style>
+        </WrapPanel.Resources>
+        <Button>Group</Button>
+        <Button>panel</Button>
+      </WrapPanel>
+      <DataGrid Name="DataGrid"
+              ScrollViewer.CanContentScroll="True" 
+              ScrollViewer.VerticalScrollBarVisibility="Auto"
+              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+              EnableRowVirtualization="True"
+              EnableColumnVirtualization="True"
+              AutoGenerateColumns="False"
+              SelectionMode="Extended"
+              SelectionUnit="CellOrRowHeader"
+              CanUserReorderColumns="True"
+              CanUserResizeColumns="True"
+              CanUserResizeRows="False"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top" Background="Aqua"
+              Sorting="FilteringDataGrid_Sorting">
+        <!--<DataGrid.RowHeaderTemplate>
+        <DataTemplate>
+          <ToggleButton x:Name="RowHeaderToggleButton"
+                        Cursor="Hand" />
+        </DataTemplate>
+      </DataGrid.RowHeaderTemplate>-->
+      </DataGrid>
+    </DockPanel>
+
+  </DockPanel>
+</Window>

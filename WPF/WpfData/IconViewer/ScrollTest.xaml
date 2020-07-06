@@ -1,0 +1,31 @@
+﻿<Window x:Class="IconViewer.ScrollTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IconViewer"
+        mc:Ignorable="d"
+        Title="ScrollTest" Height="650" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Height="20" Background="Yellow"></Grid>
+
+        <Canvas Grid.Row="1" Background="Gainsboro" Height="200">
+            <Rectangle Fill="LightBlue" Canvas.Left="25" Canvas.Top="25" Width="50" Height="50" />
+        </Canvas>
+
+        <ScrollViewer Grid.Row="2" Background="Gray" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <local:ScrollCanvas Background="DarkGray">
+                <Rectangle Fill="LightBlue" local:ScrollCanvas.Left="200" local:ScrollCanvas.Top="200" Width="50" Height="50" />
+            </local:ScrollCanvas>
+        </ScrollViewer>
+
+        <Grid Grid.Row="3" Height="20" Background="Yellow"></Grid>
+    </Grid>
+</Window>
