@@ -62,6 +62,8 @@
     <Compile Include="SampleDialog.xaml.cs">
       <DependentUpon>SampleDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\AdornerControl.cs" />
+    <Compile Include="Source\DialogBlock.cs" />
     <Compile Include="Source\LightBox.cs" />
     <Compile Include="Source\LightBoxAdorner.cs" />
     <Compile Include="Source\LightBoxExtensions.cs" />

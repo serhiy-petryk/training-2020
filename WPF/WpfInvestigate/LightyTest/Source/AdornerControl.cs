@@ -1,18 +1,19 @@
 ﻿// based on: https://www.nbdtech.com/Blog/archive/2010/06/28/wpf-adorners-part-2-ndash-placing-any-control-on-the.aspx
 // see comment in https://stackoverflow.com/questions/833943/watermark-hint-text-placeholder-textbox
+
 using System;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace WpfInvestigate.Controls
+namespace LightyTest.Source
 {
     public class AdornerControl : Adorner
     {
+        public bool UseAdornedElementSize { get; set; }
         private FrameworkElement _child;
 
-        public AdornerControl(UIElement adornedElement) : base(adornedElement)
-        { }
+        public AdornerControl(UIElement adornedElement) : base(adornedElement) => UseAdornedElementSize = true;
 
         protected override int VisualChildrenCount => 1;
 
@@ -38,6 +39,11 @@ namespace WpfInvestigate.Controls
 
         protected override Size MeasureOverride(Size constraint)
         {
+            if (UseAdornedElementSize)
+                constraint = this.AdornedElement.RenderSize;
+
+            _child.Width = constraint.Width;
+            _child.Height = constraint.Height;
             _child.Measure(constraint);
             return _child.DesiredSize;
         }

@@ -115,7 +115,7 @@
                 </Grid.CacheMode>
                 <Grid>
                     <Grid.Background>
-                        <VisualBrush Visual="{Binding AdornedElement, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LightBoxAdorner}}}"
+                        <VisualBrush Visual="{Binding AdornedElement, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AdornerControl}}}"
                                      Stretch="None"
                                      AlignmentX="Left"
                                      AlignmentY="Top"
@@ -138,7 +138,7 @@
                 </Grid.CacheMode>
                 <Grid>
                     <Grid.Background>
-                        <VisualBrush Visual="{Binding AdornedElement, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LightBoxAdorner}}}"
+                        <VisualBrush Visual="{Binding AdornedElement, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AdornerControl}}}"
                                      Stretch="None"
                                      AlignmentX="Left"
                                      AlignmentY="Top"
@@ -155,7 +155,7 @@
     </ControlTemplate>
 
     <!-- Animation -->
-    <Duration x:Key="StoryboardDuration">00:00:00.15</Duration>
+    <Duration x:Key="StoryboardDuration">00:00:00.24</Duration>
     <Storyboard x:Key="FadeInAnimation">
         <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="{StaticResource StoryboardDuration}">
             <DoubleAnimation.EasingFunction>

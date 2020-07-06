@@ -8,17 +8,17 @@ namespace LightyTest.Source
     /// <summary>
     /// Adorner definition to display over LightBox on existing UI
     /// </summary>
-    public class LightBoxAdorner : Adorner
+    public class XLightBoxAdorner : Adorner
     {
         public LightBox Root { get; private set; }
 
         public bool UseAdornedElementSize { get; set; }
 
-        static LightBoxAdorner()
+        static XLightBoxAdorner()
         {
         }
 
-        public LightBoxAdorner(UIElement adornedElement) : base(adornedElement)
+        public XLightBoxAdorner(UIElement adornedElement) : base(adornedElement)
         {
             this.UseAdornedElementSize = true;
         }
