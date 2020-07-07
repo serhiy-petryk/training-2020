@@ -5,6 +5,6 @@
 
     <Application.Resources>
         <!--<ResourceDictionary Source="pack://application:,,,/Lighty;component/Styles.xaml" />-->
-        <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/Lighty.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/DialogItemsCommon.xaml" />
     </Application.Resources>
 </Application>

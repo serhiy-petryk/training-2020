@@ -34,24 +34,24 @@ namespace LightyTest.Source
     ///     <MyNamespace:LightBox/>
     ///
     /// </summary>
-    public class LightBox : ItemsControl
+    public class DialogItems : ItemsControl
     {
         private Action<FrameworkElement> _closedDelegate;
 
         public EventHandler AllDialogClosed;
 
-        public EventHandler CompleteInitializeLightBox;
+        public EventHandler CompleteInitializeDialogItems;
 
-        static LightBox()
+        static DialogItems()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(LightBox), new FrameworkPropertyMetadata(typeof(LightBox)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogItems), new FrameworkPropertyMetadata(typeof(DialogItems)));
         }
 
         protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
         protected override bool IsItemItsOwnContainerOverride(object item) => false;
 
         /// <summary>
-        /// Displays the LightBox modelessly.
+        /// Displays the DialogItems modelessly.
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
@@ -59,12 +59,12 @@ namespace LightyTest.Source
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) { adorner = await CreateAdornerAsync(owner); }
-            if (adorner.Child != null && adorner.Child is LightBox)
-                ((LightBox)adorner.Child).AddDialog(content);
+            if (adorner.Child != null && adorner.Child is DialogItems)
+                ((DialogItems)adorner.Child).AddDialog(content);
         }
 
         /// <summary>
-        /// Display LightBox asynchronously and modeless.
+        /// Display DialogItems asynchronously and modeless.
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
@@ -73,12 +73,12 @@ namespace LightyTest.Source
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) { adorner = await CreateAdornerAsync(owner); }
-            if (adorner.Child != null && adorner.Child is LightBox)
-                await ((LightBox)adorner.Child).AddDialogAsync(content);
+            if (adorner.Child != null && adorner.Child is DialogItems)
+                await ((DialogItems)adorner.Child).AddDialogAsync(content);
         }
 
         /// <summary>
-        /// Display the LightBox modally.
+        /// Display the DialogItems modally.
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
@@ -88,9 +88,9 @@ namespace LightyTest.Source
             if (adorner == null) { adorner = CreateAdornerModal(owner); }
 
             var frame = new DispatcherFrame();
-            ((LightBox)adorner.Child).AllDialogClosed += (s, e) => { frame.Continue = false; };
-            if (adorner.Child != null && adorner.Child is LightBox)
-                ((LightBox)adorner.Child).AddDialog(content);
+            ((DialogItems)adorner.Child).AllDialogClosed += (s, e) => { frame.Continue = false; };
+            if (adorner.Child != null && adorner.Child is DialogItems)
+                ((DialogItems)adorner.Child).AddDialog(content);
 
             Dispatcher.PushFrame(frame);
         }
@@ -109,7 +109,7 @@ namespace LightyTest.Source
             return current;
         }
 
-        private static AdornerControl CreateAdornerCore(UIElement element, LightBox lightbox)
+        private static AdornerControl CreateAdornerCore(UIElement element, DialogItems dialogItems)
         {
             // If it is a Window class, use the Content property.
             var win = element as Window;
@@ -121,7 +121,7 @@ namespace LightyTest.Source
 
             // Since there is no Adorner for the dialog, create a new one and set and return it.
             var adorner = new AdornerControl(target);
-            adorner.Child = lightbox;
+            adorner.Child = dialogItems;
 
             // If Adorner is set for Window, set margin to cancel Margin of Content element.
             if (win != null)
@@ -136,37 +136,37 @@ namespace LightyTest.Source
             if (target.IsEnabled)
             {
                 target.IsEnabled = false;
-                lightbox.AllDialogClosed += (s, e) => { target.IsEnabled = true; };
+                dialogItems.AllDialogClosed += (s, e) => { target.IsEnabled = true; };
             }
             // Added a process to remove Adorner when all dialogs are cleared
-            lightbox.AllDialogClosed += (s, e) => { layer?.Remove(adorner); };
+            dialogItems.AllDialogClosed += (s, e) => { layer?.Remove(adorner); };
             layer.Add(adorner);
             return adorner;
         }
 
         protected static AdornerControl CreateAdorner(UIElement element)
         {
-            return CreateAdornerCore(element, new LightBox());
+            return CreateAdornerCore(element, new DialogItems());
         }
 
         protected static Task<AdornerControl> CreateAdornerAsync(UIElement element)
         {
             var tcs = new TaskCompletionSource<AdornerControl>();
 
-            var lightbox = new LightBox();
-            var adorner = CreateAdornerCore(element, lightbox);
-            lightbox.Loaded += (s, e) =>
+            var dialogItems = new DialogItems();
+            var adorner = CreateAdornerCore(element, dialogItems);
+            dialogItems.Loaded += (s, e) =>
             {
-                // When executing animations in parallel or when there is no lightbox background animation,
+                // When executing animations in parallel or when there is no dialogitems background animation,
                 // this asynchronous method is completed immediately.
-                if (lightbox.IsParallelInitialize ||
-                    lightbox.InitializeStoryboard == null)
+                if (dialogItems.IsParallelInitialize ||
+                    dialogItems.InitializeStoryboard == null)
                 {
                     tcs.SetResult(adorner);
                 }
                 else
                 {
-                    lightbox.CompleteInitializeLightBox += (_s, _e) =>
+                    dialogItems.CompleteInitializeDialogItems += (_s, _e) =>
                     {
                         tcs.SetResult(adorner);
                     };
@@ -178,13 +178,13 @@ namespace LightyTest.Source
 
         protected static AdornerControl CreateAdornerModal(UIElement element)
         {
-            var lightbox = new LightBox();
+            var dialogItems = new DialogItems();
 
-            var adorner = CreateAdornerCore(element, lightbox);
-            if (!lightbox.IsParallelInitialize)
+            var adorner = CreateAdornerCore(element, dialogItems);
+            if (!dialogItems.IsParallelInitialize)
             {
                 var frame = new DispatcherFrame();
-                lightbox.CompleteInitializeLightBox += (s, e) =>
+                dialogItems.CompleteInitializeDialogItems += (s, e) =>
                 {
                     frame.Continue = false;
                 };
@@ -208,7 +208,7 @@ namespace LightyTest.Source
                 var container = this.ContainerFromElement(dialog) as FrameworkElement;
                 container.Focus();
 
-                // Prevent MouseLeftButtonDown event in lightbox from bubbling up when CloseOnClickBackground is enabled.
+                // Prevent MouseLeftButtonDown event in dialogitems from bubbling up when CloseOnClickBackground is enabled.
                 container.MouseLeftButtonDown += (s, e) => { e.Handled = true; };
 
                 var transform = new TransformGroup();
@@ -307,7 +307,7 @@ namespace LightyTest.Source
         {
             var animation = this.InitializeStoryboard;
             await animation.BeginAsync(this);
-            this.CompleteInitializeLightBox?.Invoke(this, null);
+            this.CompleteInitializeDialogItems?.Invoke(this, null);
         }
 
         protected async Task<bool> DestroyAdornerAsync()
@@ -337,7 +337,7 @@ namespace LightyTest.Source
         }
         // Using a DependencyProperty as the backing store for IsParallelInitialize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsParallelInitializeProperty =
-            DependencyProperty.Register("IsParallelInitialize", typeof(bool), typeof(LightBox), new PropertyMetadata(false));
+            DependencyProperty.Register("IsParallelInitialize", typeof(bool), typeof(DialogItems), new PropertyMetadata(false));
 
         public bool IsParallelDispose
         {
@@ -346,7 +346,7 @@ namespace LightyTest.Source
         }
         // Using a DependencyProperty as the backing store for IsParallelDispose.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsParallelDisposeProperty =
-            DependencyProperty.Register("IsParallelDispose", typeof(bool), typeof(LightBox), new PropertyMetadata(false));
+            DependencyProperty.Register("IsParallelDispose", typeof(bool), typeof(DialogItems), new PropertyMetadata(false));
 
         public Storyboard OpenStoryboard
         {
@@ -355,7 +355,7 @@ namespace LightyTest.Source
         }
         // Using a DependencyProperty as the backing store for OpenStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OpenStoryboardProperty =
-            DependencyProperty.Register("OpenStoryboard", typeof(Storyboard), typeof(LightBox), new PropertyMetadata(null));
+            DependencyProperty.Register("OpenStoryboard", typeof(Storyboard), typeof(DialogItems), new PropertyMetadata(null));
 
         public Storyboard CloseStoryboard
         {
@@ -364,7 +364,7 @@ namespace LightyTest.Source
         }
         // Using a DependencyProperty as the backing store for CloseStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CloseStoryboardProperty =
-            DependencyProperty.Register("CloseStoryboard", typeof(Storyboard), typeof(LightBox), new PropertyMetadata(null));
+            DependencyProperty.Register("CloseStoryboard", typeof(Storyboard), typeof(DialogItems), new PropertyMetadata(null));
 
         public Storyboard InitializeStoryboard
         {
@@ -373,7 +373,7 @@ namespace LightyTest.Source
         }
         // Using a DependencyProperty as the backing store for InitializeStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty InitializeStoryboardProperty =
-            DependencyProperty.Register("InitializeStoryboard", typeof(Storyboard), typeof(LightBox), new PropertyMetadata(null));
+            DependencyProperty.Register("InitializeStoryboard", typeof(Storyboard), typeof(DialogItems), new PropertyMetadata(null));
 
         public Storyboard DisposeStoryboard
         {
@@ -382,7 +382,7 @@ namespace LightyTest.Source
         }
         // Using a DependencyProperty as the backing store for DisposeStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DisposeStoryboardProperty =
-            DependencyProperty.Register("DisposeStoryboard", typeof(Storyboard), typeof(LightBox), new PropertyMetadata(null));
+            DependencyProperty.Register("DisposeStoryboard", typeof(Storyboard), typeof(DialogItems), new PropertyMetadata(null));
 
         public bool CloseOnClickBackground
         {
@@ -391,7 +391,7 @@ namespace LightyTest.Source
         }
         // Using a DependencyProperty as the backing store for CloseOnClickBackground.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CloseOnClickBackgroundProperty =
-            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(LightBox), new PropertyMetadata(true));
+            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogItems), new PropertyMetadata(true));
 
         #endregion
     }

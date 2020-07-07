@@ -17,13 +17,13 @@ namespace LightySample
 
         private async void button_Click(object sender, RoutedEventArgs e)
         {
-            LightBox.Show(this, new SampleDialog());
+            DialogItems.Show(this, new SampleDialog());
 
             await Task.Delay(1000);
-            LightBox.Show(this, new SampleDialog());
+            DialogItems.Show(this, new SampleDialog());
 
             await Task.Delay(1000);
-            LightBox.Show(this, new SampleDialog());
+            DialogItems.Show(this, new SampleDialog());
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace LightyTest.Source
 {
-    public static class LightBoxExtensions
+    public static class DialogItemsExtensions
     {
         public static void Close(this FrameworkElement dialog)
         {

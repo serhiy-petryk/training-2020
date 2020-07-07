@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:LightyTest.Source">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/Lighty.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/DialogItemsCommon.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <ControlTemplate x:Key="DefaultTemplate">
@@ -24,7 +24,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:LightBox}">
+    <Style TargetType="{x:Type local:DialogItems}">
         <Setter Property="Template" Value="{StaticResource DefaultTemplate}" />
         <Setter Property="ItemsPanel" Value="{StaticResource DefaultPanel}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource DefaultContainerStyle}" />

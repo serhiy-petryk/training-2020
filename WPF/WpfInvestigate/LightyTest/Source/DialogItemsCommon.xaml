@@ -155,7 +155,7 @@
     </ControlTemplate>
 
     <!-- Animation -->
-    <Duration x:Key="StoryboardDuration">00:00:00.24</Duration>
+    <Duration x:Key="StoryboardDuration">00:00:00.5</Duration>
     <Storyboard x:Key="FadeInAnimation">
         <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="{StaticResource StoryboardDuration}">
             <DoubleAnimation.EasingFunction>

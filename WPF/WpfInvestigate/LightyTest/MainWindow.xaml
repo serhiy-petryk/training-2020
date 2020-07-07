@@ -13,11 +13,14 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="20">
+        <TextBlock Grid.Row="0" Margin="0 20 0 0" Text=" //////////// DialogItems (ItemsControl) /////////////////" />
+        <StackPanel Grid.Row="1">
             <TextBlock Text="Basic Usage" />
-            <TextBlock Text="How to show lightbox" />
+            <TextBlock Text="How to show DialogItems" />
             <StackPanel Orientation="Horizontal">
                 <Button Margin="5" Width="100" Click="OnClickShowButton" Content="Show" />
                 <Button Margin="5" Width="100" Click="OnClickShowDialogButton" Content="ShowDialog" />
@@ -31,7 +34,7 @@
             </StackPanel>
         </StackPanel>
 
-        <Grid Grid.Row="1" Margin="5">
+        <Grid Grid.Row="2" Margin="0 5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -40,7 +43,7 @@
                 <TextBlock Text="Advanced Usage" />
                 <StackPanel Orientation="Horizontal">
                     <Button Margin="5" Width="100" Click="OnClickShowInGrid" Content="Show into Grid" />
-                    <Button Margin="5" Click="OnClickShowMultiple" Content="Show multiple lightbox" />
+                    <Button Margin="5" Click="OnClickShowMultiple" Content="Show multiple dialogs" />
                 </StackPanel>
                 <TextBlock Text="Builtin Styles" />
                 <StackPanel Orientation="Horizontal">
@@ -52,9 +55,10 @@
             <Grid Grid.Column="1" x:Name="subGrid"/>
         </Grid>
 
-        <StackPanel Grid.Row="2" Margin="20">
+        <TextBlock Grid.Row="3" Margin="0 20 0 0" Text=" /////////////// DialogBlock (ContentControl): not need => ItemsControl is better /////////////////" />
+        <StackPanel Grid.Row="4">
             <TextBlock Text="Basic Usage" />
-            <TextBlock Text="How to show lightbox" />
+            <TextBlock Text="How to show DialogItems" />
             <StackPanel Orientation="Horizontal">
                 <Button Margin="5" Width="100" Click="OnClickShowButtonDB" Content="Show" />
                 <Button Margin="5" Width="100" Click="OnClickShowDialogButtonDB" Content="ShowDialog" />
@@ -68,7 +72,7 @@
             </StackPanel>
         </StackPanel>
 
-        <Grid Grid.Row="3" Margin="5">
+        <Grid Grid.Row="5" Margin="0 5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -77,7 +81,6 @@
                 <TextBlock Text="Advanced Usage" />
                 <StackPanel Orientation="Horizontal">
                     <Button Margin="5" Width="100" Click="OnClickShowInGridDB" Content="Show into Grid" />
-                    <!--<Button Margin="5" Click="OnClickShowMultiple" Content="Show multiple lightbox" />-->
                 </StackPanel>
                 <TextBlock Text="Builtin Styles" />
                 <StackPanel Orientation="Horizontal">
@@ -85,8 +88,6 @@
                     <Button Margin="5" Width="100" Click="ShowCustomStyleWindowDB" Content="Custom Style" />
                 </StackPanel>
             </StackPanel>
-
-            <!--<Grid Grid.Column="1" x:Name="subGrid"/>-->
         </Grid>
 
     </Grid>

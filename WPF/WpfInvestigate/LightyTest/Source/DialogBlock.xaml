@@ -3,10 +3,10 @@
                     xmlns:local="clr-namespace:LightyTest.Source">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/Lighty.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/DialogItemsCommon.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <ControlTemplate x:Key="DefaultTemplate">
+    <!--<ControlTemplate x:Key="DefaultTemplate">
         <Grid Background="#88000000">
             <ItemsPresenter />
         </Grid>
@@ -22,16 +22,25 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 
     <Style TargetType="{x:Type local:DialogBlock}">
-        <Setter Property="Template" Value="{StaticResource DefaultTemplate}" />
-        <Setter Property="ItemsPanel" Value="{StaticResource DefaultPanel}" />
-        <Setter Property="ItemContainerStyle" Value="{StaticResource DefaultContainerStyle}" />
+        <!--<Setter Property="ItemsPanel" Value="{StaticResource DefaultPanel}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource DefaultContainerStyle}" />-->
         <Setter Property="InitializeStoryboard" Value="{StaticResource FadeInAnimation}" />
         <Setter Property="DisposeStoryboard" Value="{StaticResource FadeOutAnimation}" />
         <Setter Property="OpenStoryboard" Value="{StaticResource FadeInAnimation}" />
         <Setter Property="CloseStoryboard" Value="{StaticResource FadeOutAnimation}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DialogBlock">
+                    <Grid x:Name="Container" Background="LightBlue">
+                        <!--<ContentControl Content="{TemplateBinding Content}"></ContentControl>-->
+                        <ContentPresenter/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="RenderTransform">
             <Setter.Value>
                 <TransformGroup>
@@ -43,5 +52,5 @@
             </Setter.Value>
         </Setter>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
-    </Style>    
+    </Style>
 </ResourceDictionary>

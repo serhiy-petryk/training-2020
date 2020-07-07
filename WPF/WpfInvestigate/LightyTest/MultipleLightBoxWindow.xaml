@@ -12,7 +12,7 @@
         mc:Ignorable="d">
 
     <Window.Resources>
-        <Style TargetType="{x:Type source:LightBox}">
+        <Style TargetType="{x:Type source:DialogItems}">
             <!--<Setter Property="Template" Value="{StaticResource DarkBackgroundTemplate}" />
             <Setter Property="ItemsPanel" Value="{StaticResource HorizontalPanel}" />
             <Setter Property="ItemContainerStyle" Value="{StaticResource PhotoCardStyle}" />

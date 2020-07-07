@@ -8,10 +8,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using LightyTest.Service;
 
 namespace LightyTest.Source
 {
-    public class DialogBlock:  ItemsControl //  ContentControl
+    public class DialogBlock:  ContentControl
     {
         private Action<FrameworkElement> _closedDelegate;
 
@@ -24,8 +25,8 @@ namespace LightyTest.Source
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogBlock), new FrameworkPropertyMetadata(typeof(DialogBlock)));
         }
 
-        protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
-        protected override bool IsItemItsOwnContainerOverride(object item) => false;
+        // protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
+        // protected override bool IsItemItsOwnContainerOverride(object item) => false;
 
         /// <summary>
         /// Displays the DialogBlock modelessly.
@@ -180,27 +181,34 @@ namespace LightyTest.Source
         protected void AddDialog(FrameworkElement dialog)
         {
             var animation = this.OpenStoryboard;
+            var a1 = dialog.IsLoaded;
             dialog.Loaded += (sender, args) =>
             {
-                var container = this.ContainerFromElement(dialog) as FrameworkElement;
-                container.Focus();
+                var aa1 = Tips.GetVisualParents(dialog).ToArray();
+                //var container = this.ContainerFromElement(dialog) as FrameworkElement;
+                var container = Tips.GetVisualParents(dialog).OfType<FrameworkElement>().FirstOrDefault(a => a.Name == "Container");
+                if (container != null)
+                {
+                    container.Focus();
 
-                // Prevent MouseLeftButtonDown event in dialogblock from bubbling up when CloseOnClickBackground is enabled.
-                container.MouseLeftButtonDown += (s, e) => { e.Handled = true; };
+                    // Prevent MouseLeftButtonDown event in dialogblock from bubbling up when CloseOnClickBackground is enabled.
+                    container.MouseLeftButtonDown += (s, e) => { e.Handled = true; };
 
-                var transform = new TransformGroup();
-                transform.Children.Add(new ScaleTransform());
-                transform.Children.Add(new SkewTransform());
-                transform.Children.Add(new RotateTransform());
-                transform.Children.Add(new TranslateTransform());
-                container.RenderTransform = transform;
-                container.RenderTransformOrigin = new Point(0.5, 0.5);
+                    var transform = new TransformGroup();
+                    transform.Children.Add(new ScaleTransform());
+                    transform.Children.Add(new SkewTransform());
+                    transform.Children.Add(new RotateTransform());
+                    transform.Children.Add(new TranslateTransform());
+                    container.RenderTransform = transform;
+                    container.RenderTransformOrigin = new Point(0.5, 0.5);
 
-                animation?.BeginAsync(container);
+                    animation?.BeginAsync(container);
+                }
             };
 
             // Add item
-            this.Items.Add(dialog);
+            // this.Items.Add(dialog);
+            this.Content = dialog;
 
             // For the added dialog, set the handler for ApplicationCommands.Close command.
             dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) =>
@@ -224,14 +232,14 @@ namespace LightyTest.Source
             var tcs = new TaskCompletionSource<bool>();
 
             var closedHandler = new Action<FrameworkElement>((d) => { });
-            closedHandler = new Action<FrameworkElement>((d) =>
+            closedHandler = (d) =>
             {
                 if (d == dialog)
                 {
                     tcs.SetResult(true);
                     this._closedDelegate -= closedHandler;
                 }
-            });
+            };
             this._closedDelegate += closedHandler;
 
             this.AddDialog(dialog);
@@ -241,8 +249,8 @@ namespace LightyTest.Source
 
         protected async Task RemoveDialogAsync(FrameworkElement dialog)
         {
-            var index = this.Items.IndexOf(dialog);
-            var count = this.Items.Count;
+            // /*var index = this.Items.IndexOf(dialog);
+            // var count = this.Items.Count;
 
             if (this.IsParallelDispose)
             {
@@ -253,7 +261,7 @@ namespace LightyTest.Source
                 await this.DestroyDialogAsync(dialog);
             }
 
-            if (index != -1 && count == 1)
+            // if (index != -1 && count == 1)
             {
                 await this.DestroyAdornerAsync();
             }
@@ -272,9 +280,10 @@ namespace LightyTest.Source
             {
                 MouseLeftButtonDown += (s, e) =>
                 {
-                    foreach (FrameworkElement item in Items.Cast<object>().ToList())
+                    ApplicationCommands.Close.Execute(Content, null);
+                    //foreach (FrameworkElement item in Items.Cast<object>().ToList())
                         // ToList - prevent error: 'Collection was modified; enumeration operation may not execute.'
-                        ApplicationCommands.Close.Execute(item, null);
+                      //  ApplicationCommands.Close.Execute(item, null);
                 };
             }
             await InitializeAdornerAsync();
@@ -295,11 +304,15 @@ namespace LightyTest.Source
             return ret;
         }
 
-        protected async Task<bool> DestroyDialogAsync(FrameworkElement item)
+        protected async Task<bool> DestroyDialogAsync(FrameworkElement dialog)
         {
-            var container = this.ContainerFromElement(item) as FrameworkElement;
+            /*var container = this.ContainerFromElement(item) as FrameworkElement;
             await this.CloseStoryboard.BeginAsync(container);
-            this.Items.Remove(item);
+            this.Items.Remove(item);*/
+            var container = Tips.GetVisualParents(dialog).OfType<FrameworkElement>().FirstOrDefault(a => a.Name == "Container");
+            if (container != null)
+                await CloseStoryboard.BeginAsync(container);
+            Content = null;
             return true;
         }
 

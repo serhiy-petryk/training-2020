@@ -11,7 +11,7 @@
         MinHeight="300"
         mc:Ignorable="d">
     <Window.Resources>
-        <Style TargetType="{x:Type source:LightBox}">
+        <Style TargetType="{x:Type source:DialogItems}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>

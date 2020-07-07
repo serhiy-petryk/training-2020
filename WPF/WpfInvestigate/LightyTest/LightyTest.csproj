@@ -68,10 +68,11 @@
     <Compile Include="SampleDialog.xaml.cs">
       <DependentUpon>SampleDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Service\Tips.cs" />
     <Compile Include="Source\AdornerControl.cs" />
     <Compile Include="Source\DialogBlock.cs" />
-    <Compile Include="Source\LightBox.cs" />
-    <Compile Include="Source\LightBoxExtensions.cs" />
+    <Compile Include="Source\DialogItems.cs" />
+    <Compile Include="Source\DialogItemsExtensions.cs" />
     <Compile Include="Source\StoryboardExtensions.cs" />
     <Page Include="BuiltinStyleWindowDB.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -113,11 +114,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Source\LightBox.xaml">
+    <Page Include="Source\DialogItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\Lighty.xaml">
+    <Page Include="Source\DialogItemsCommon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

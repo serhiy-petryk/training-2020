@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/LightBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/DialogItems.xaml" />
         <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/DialogBlock.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
