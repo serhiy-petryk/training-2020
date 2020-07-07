@@ -73,6 +73,9 @@
     <Compile Include="Controls\DGView.xaml.cs">
       <DependentUpon>DGView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AdornerControl.cs" />
+    <Compile Include="Controls\DialogItems\DialogItems.cs" />
+    <Compile Include="Controls\DialogItems\StoryboardExtensions.cs" />
     <Compile Include="Controls\Dialog\LightBox.cs" />
     <Compile Include="Controls\Dialog\LightBoxAdorner.cs" />
     <Compile Include="Controls\Dialog\StoryboardExtensions.cs" />
@@ -115,6 +118,14 @@
     </Compile>
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Page Include="Controls\DGView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DialogItems\DialogItems.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DialogItems\DialogItemsCommon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -179,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Common.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
