@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ===============================================================
+// Taken from https://github.com/sourcechord/Lighty (MIT licence)
+// ===============================================================
+
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
