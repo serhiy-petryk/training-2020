@@ -43,7 +43,6 @@ namespace LightyTest.Source
         private Action<FrameworkElement> _closedDelegate;
 
         public EventHandler AllDialogClosed;
-
         public EventHandler CompleteInitializeDialogItems;
 
         static DialogItems()
@@ -62,7 +61,9 @@ namespace LightyTest.Source
         public static async void Show(UIElement owner, FrameworkElement content)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) { adorner = await CreateAdornerAsync(owner); }
+            if (adorner == null) 
+                adorner = await CreateAdornerAsync(owner);
+
             if (adorner.Child != null && adorner.Child is DialogItems)
                 ((DialogItems)adorner.Child).AddDialog(content);
         }
@@ -76,7 +77,9 @@ namespace LightyTest.Source
         public static async Task ShowAsync(UIElement owner, FrameworkElement content)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) { adorner = await CreateAdornerAsync(owner); }
+            if (adorner == null) 
+                adorner = await CreateAdornerAsync(owner);
+
             if (adorner.Child != null && adorner.Child is DialogItems)
                 await ((DialogItems)adorner.Child).AddDialogAsync(content);
         }
@@ -89,10 +92,11 @@ namespace LightyTest.Source
         public static void ShowDialog(UIElement owner, FrameworkElement content)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) { adorner = CreateAdornerModal(owner); }
+            if (adorner == null) 
+                adorner = CreateAdornerModal(owner);
 
             var frame = new DispatcherFrame();
-            ((DialogItems)adorner.Child).AllDialogClosed += (s, e) => { frame.Continue = false; };
+            ((DialogItems)adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
             if (adorner.Child != null && adorner.Child is DialogItems)
                 ((DialogItems)adorner.Child).AddDialog(content);
 
@@ -105,9 +109,11 @@ namespace LightyTest.Source
             var win = element as Window;
             var target = win?.Content as UIElement ?? element;
 
-            if (target == null) return null;
+            if (target == null) 
+                return null;
             var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null) return null;
+            if (layer == null) 
+                return null;
 
             var current = layer.GetAdorners(target)?.OfType<AdornerControl>()?.SingleOrDefault();
             return current;
@@ -119,9 +125,11 @@ namespace LightyTest.Source
             var win = element as Window;
             var target = win?.Content as UIElement ?? element;
 
-            if (target == null) return null;
+            if (target == null) 
+                return null;
             var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null) return null;
+            if (layer == null) 
+                return null;
 
             // Since there is no Adorner for the dialog, create a new one and set and return it.
             var adorner = new AdornerControl(target);
@@ -140,59 +148,44 @@ namespace LightyTest.Source
             if (target.IsEnabled)
             {
                 target.IsEnabled = false;
-                dialogItems.AllDialogClosed += (s, e) => { target.IsEnabled = true; };
+                dialogItems.AllDialogClosed += (s, e) => target.IsEnabled = true;
             }
             // Added a process to remove Adorner when all dialogs are cleared
-            dialogItems.AllDialogClosed += (s, e) => { layer?.Remove(adorner); };
+            dialogItems.AllDialogClosed += (s, e) => layer.Remove(adorner);
             layer.Add(adorner);
             return adorner;
-        }
-
-        protected static AdornerControl CreateAdorner(UIElement element)
-        {
-            return CreateAdornerCore(element, new DialogItems());
         }
 
         protected static Task<AdornerControl> CreateAdornerAsync(UIElement element)
         {
             var tcs = new TaskCompletionSource<AdornerControl>();
-
             var dialogItems = new DialogItems();
             var adorner = CreateAdornerCore(element, dialogItems);
-            dialogItems.Loaded += (s, e) =>
+
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
                 // When executing animations in parallel or when there is no dialogitems background animation,
                 // this asynchronous method is completed immediately.
-                if (dialogItems.IsParallelInitialize ||
-                    dialogItems.InitializeStoryboard == null)
-                {
+                if (dialogItems.IsParallelInitialize || dialogItems.InitializeStoryboard == null)
                     tcs.SetResult(adorner);
-                }
                 else
                 {
-                    dialogItems.CompleteInitializeDialogItems += (_s, _e) =>
-                    {
+                    dialogItems.CompleteInitializeDialogItems += (s, e) =>
                         tcs.SetResult(adorner);
-                    };
                 }
-            };
-
+            })); 
             return tcs.Task;
         }
 
         protected static AdornerControl CreateAdornerModal(UIElement element)
         {
             var dialogItems = new DialogItems();
-
             var adorner = CreateAdornerCore(element, dialogItems);
+
             if (!dialogItems.IsParallelInitialize)
             {
                 var frame = new DispatcherFrame();
-                dialogItems.CompleteInitializeDialogItems += (s, e) =>
-                {
-                    frame.Continue = false;
-                };
-
+                dialogItems.CompleteInitializeDialogItems += (s, e) => frame.Continue = false;
                 Dispatcher.PushFrame(frame);
             }
 
@@ -206,14 +199,14 @@ namespace LightyTest.Source
         /// <param name="dialog"></param>
         protected void AddDialog(FrameworkElement dialog)
         {
-            var animation = this.OpenStoryboard;
+            var animation = OpenStoryboard;
             dialog.Loaded += (sender, args) =>
             {
-                var container = this.ContainerFromElement(dialog) as FrameworkElement;
+                var container = ContainerFromElement(dialog) as FrameworkElement;
                 container.Focus();
 
                 // Prevent MouseLeftButtonDown event in dialogitems from bubbling up when CloseOnClickBackground is enabled.
-                container.MouseLeftButtonDown += (s, e) => { e.Handled = true; };
+                container.MouseLeftButtonDown += (s, e) => e.Handled = true;
 
                 var transform = new TransformGroup();
                 transform.Children.Add(new ScaleTransform());
@@ -227,65 +220,54 @@ namespace LightyTest.Source
             };
 
             // Add item
-            this.Items.Add(dialog);
+            Items.Add(dialog);
 
             // For the added dialog, set the handler for ApplicationCommands.Close command.
-            dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) =>
-            {
-                await this.RemoveDialogAsync(dialog);
-            }));
+            dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(dialog)));
 
             // Set a handler for ApplicationCommands.Close command in ItemsControl.
             // (ItemsContainer In order to send it a Close command so that it can be closed.)
             var parent = dialog.Parent as FrameworkElement;
-            parent.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) =>
-            {
-                await this.RemoveDialogAsync(e.Parameter as FrameworkElement);
-            }));
+            parent?.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(e.Parameter as FrameworkElement)));
 
-            this.InvalidateVisual();
+            InvalidateVisual();
         }
 
         protected async Task<bool> AddDialogAsync(FrameworkElement dialog)
         {
             var tcs = new TaskCompletionSource<bool>();
-
-            var closedHandler = new Action<FrameworkElement>((d) => { });
-            closedHandler = new Action<FrameworkElement>((d) =>
+            var closedHandler = new Action<FrameworkElement>(d => { });
+            closedHandler = d =>
             {
                 if (d == dialog)
                 {
                     tcs.SetResult(true);
-                    this._closedDelegate -= closedHandler;
+                    _closedDelegate -= closedHandler;
                 }
-            });
-            this._closedDelegate += closedHandler;
+            };
+            _closedDelegate += closedHandler;
 
-            this.AddDialog(dialog);
+            AddDialog(dialog);
 
             return await tcs.Task;
         }
 
         protected async Task RemoveDialogAsync(FrameworkElement dialog)
         {
-            var index = this.Items.IndexOf(dialog);
-            var count = this.Items.Count;
+            var index = Items.IndexOf(dialog);
+            var count = Items.Count;
 
-            if (this.IsParallelDispose)
+            if (IsParallelDispose)
             {
-                var _ = this.DestroyDialogAsync(dialog);
+                var _ = DestroyDialogAsync(dialog);
             }
             else
-            {
-                await this.DestroyDialogAsync(dialog);
-            }
+                await DestroyDialogAsync(dialog);
 
-            if (index != -1 && count == 1)
-            {
-                await this.DestroyAdornerAsync();
-            }
+            if (index != -1 && count == 1) 
+                await DestroyAdornerAsync();
 
-            this._closedDelegate?.Invoke(dialog);
+            _closedDelegate?.Invoke(dialog);
         }
         #endregion
 
@@ -309,24 +291,24 @@ namespace LightyTest.Source
 
         protected async Task InitializeAdornerAsync()
         {
-            var animation = this.InitializeStoryboard;
+            var animation = InitializeStoryboard;
             await animation.BeginAsync(this);
-            this.CompleteInitializeDialogItems?.Invoke(this, null);
+            CompleteInitializeDialogItems?.Invoke(this, null);
         }
 
         protected async Task<bool> DestroyAdornerAsync()
         {
-            var ret = await this.DisposeStoryboard.BeginAsync(this);
+            var ret = await DisposeStoryboard.BeginAsync(this);
             // Issues an event asking you to delete this Adorner.
-            this.AllDialogClosed?.Invoke(this, null);
+            AllDialogClosed?.Invoke(this, null);
             return ret;
         }
 
         protected async Task<bool> DestroyDialogAsync(FrameworkElement item)
         {
-            var container = this.ContainerFromElement(item) as FrameworkElement;
-            await this.CloseStoryboard.BeginAsync(container);
-            this.Items.Remove(item);
+            var container = ContainerFromElement(item) as FrameworkElement;
+            await CloseStoryboard.BeginAsync(container);
+            Items.Remove(item);
             return true;
         }
 
@@ -336,8 +318,8 @@ namespace LightyTest.Source
 
         public bool IsParallelInitialize
         {
-            get { return (bool)GetValue(IsParallelInitializeProperty); }
-            set { SetValue(IsParallelInitializeProperty, value); }
+            get => (bool)GetValue(IsParallelInitializeProperty);
+            set => SetValue(IsParallelInitializeProperty, value);
         }
         // Using a DependencyProperty as the backing store for IsParallelInitialize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsParallelInitializeProperty =
@@ -345,8 +327,8 @@ namespace LightyTest.Source
 
         public bool IsParallelDispose
         {
-            get { return (bool)GetValue(IsParallelDisposeProperty); }
-            set { SetValue(IsParallelDisposeProperty, value); }
+            get => (bool)GetValue(IsParallelDisposeProperty);
+            set => SetValue(IsParallelDisposeProperty, value);
         }
         // Using a DependencyProperty as the backing store for IsParallelDispose.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsParallelDisposeProperty =
@@ -354,8 +336,8 @@ namespace LightyTest.Source
 
         public Storyboard OpenStoryboard
         {
-            get { return (Storyboard)GetValue(OpenStoryboardProperty); }
-            set { SetValue(OpenStoryboardProperty, value); }
+            get => (Storyboard)GetValue(OpenStoryboardProperty);
+            set => SetValue(OpenStoryboardProperty, value);
         }
         // Using a DependencyProperty as the backing store for OpenStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OpenStoryboardProperty =
@@ -363,8 +345,8 @@ namespace LightyTest.Source
 
         public Storyboard CloseStoryboard
         {
-            get { return (Storyboard)GetValue(CloseStoryboardProperty); }
-            set { SetValue(CloseStoryboardProperty, value); }
+            get => (Storyboard)GetValue(CloseStoryboardProperty);
+            set => SetValue(CloseStoryboardProperty, value);
         }
         // Using a DependencyProperty as the backing store for CloseStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CloseStoryboardProperty =
@@ -372,8 +354,8 @@ namespace LightyTest.Source
 
         public Storyboard InitializeStoryboard
         {
-            get { return (Storyboard)GetValue(InitializeStoryboardProperty); }
-            set { SetValue(InitializeStoryboardProperty, value); }
+            get => (Storyboard)GetValue(InitializeStoryboardProperty);
+            set => SetValue(InitializeStoryboardProperty, value);
         }
         // Using a DependencyProperty as the backing store for InitializeStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty InitializeStoryboardProperty =
@@ -381,8 +363,8 @@ namespace LightyTest.Source
 
         public Storyboard DisposeStoryboard
         {
-            get { return (Storyboard)GetValue(DisposeStoryboardProperty); }
-            set { SetValue(DisposeStoryboardProperty, value); }
+            get => (Storyboard)GetValue(DisposeStoryboardProperty);
+            set => SetValue(DisposeStoryboardProperty, value);
         }
         // Using a DependencyProperty as the backing store for DisposeStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DisposeStoryboardProperty =
@@ -390,8 +372,8 @@ namespace LightyTest.Source
 
         public bool CloseOnClickBackground
         {
-            get { return (bool)GetValue(CloseOnClickBackgroundProperty); }
-            set { SetValue(CloseOnClickBackgroundProperty, value); }
+            get => (bool)GetValue(CloseOnClickBackgroundProperty);
+            set => SetValue(CloseOnClickBackgroundProperty, value);
         }
         // Using a DependencyProperty as the backing store for CloseOnClickBackground.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CloseOnClickBackgroundProperty =
