@@ -15,29 +15,6 @@ using System.Windows.Threading;
 
 namespace LightyTest.Source
 {
-    /// <summary>
-    /// To use this custom control in your XAML file, follow steps 1a or 1b, then step 2.
-    ///
-    /// Step 1a) If you want to use this custom control in a XAML file that exists in your current project
-    /// This XmlNamespace attribute to the root element of the markup file where it is used
-    /// add:
-    ///     xmlns:MyNamespace="clr-namespace:SourceChord.Lighty"
-    ///
-    /// Step 1b) If you want to use this custom control in XAML files that are in different projects
-    /// This XmlNamespace attribute to the root element of the markup file where it is used
-    /// add:
-    ///     xmlns:MyNamespace="clr-namespace:SourceChord.Lighty;assembly=SourceChord.Lighty"
-    ///
-    /// Also add a project reference to this project from the project with the XAML file,
-    /// You need to rebuild to prevent compilation errors:
-    ///     Right-click the target project in Solution Explorer,
-    ///     In Add Reference, select Project, then browse to and select this project.
-    ///
-    /// Step 2)
-    /// Use the control in a XAML file.
-    ///     <MyNamespace:LightBox/>
-    ///
-    /// </summary>
     public class DialogItems : ItemsControl
     {
         private Action<FrameworkElement> _closedDelegate;
@@ -169,10 +146,7 @@ namespace LightyTest.Source
                 if (dialogItems.IsParallelInitialize || dialogItems.InitializeStoryboard == null)
                     tcs.SetResult(adorner);
                 else
-                {
-                    dialogItems.CompleteInitializeDialogItems += (s, e) =>
-                        tcs.SetResult(adorner);
-                }
+                    dialogItems.CompleteInitializeDialogItems += (s, e) => tcs.SetResult(adorner);
             })); 
             return tcs.Task;
         }

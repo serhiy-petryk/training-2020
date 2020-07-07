@@ -146,10 +146,7 @@ namespace MyWpfMwi.Controls.DialogItems
                 if (dialogItems.IsParallelInitialize || dialogItems.InitializeStoryboard == null)
                     tcs.SetResult(adorner);
                 else
-                {
-                    dialogItems.CompleteInitializeDialogItems += (s, e) =>
-                        tcs.SetResult(adorner);
-                }
+                    dialogItems.CompleteInitializeDialogItems += (s, e) => tcs.SetResult(adorner);
             })); 
             return tcs.Task;
         }

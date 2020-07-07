@@ -72,7 +72,6 @@
     <Compile Include="Source\AdornerControl.cs" />
     <Compile Include="Source\DialogBlock.cs" />
     <Compile Include="Source\DialogItems.cs" />
-    <Compile Include="Source\DialogItemsExtensions.cs" />
     <Compile Include="Source\StoryboardExtensions.cs" />
     <Page Include="BuiltinStyleWindowDB.xaml">
       <Generator>MSBuild:Compile</Generator>
