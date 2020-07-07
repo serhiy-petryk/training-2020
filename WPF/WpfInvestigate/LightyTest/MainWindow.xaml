@@ -4,45 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="MainWindow"
-        Width="525"
-        Height="350"
-        MinWidth="400"
-        MinHeight="300"
+        Width="525" Height="600"
         mc:Ignorable="d">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel>
+        <StackPanel Grid.Row="0" Margin="20">
             <TextBlock Text="Basic Usage" />
             <TextBlock Text="How to show lightbox" />
             <StackPanel Orientation="Horizontal">
-                <Button Margin="5" Width="100"
-                        Click="OnClickShowButton"
-                        Content="Show" />
-                <Button Margin="5" Width="100"
-                        Click="OnClickShowDialogButton"
-                        Content="ShowDialog" />
-                <Button Margin="5" Width="100"
-                        Click="OnClickShowAsyncButton"
-                        Content="ShowAsync" />
+                <Button Margin="5" Width="100" Click="OnClickShowButton" Content="Show" />
+                <Button Margin="5" Width="100" Click="OnClickShowDialogButton" Content="ShowDialog" />
+                <Button Margin="5" Width="100" Click="OnClickShowAsyncButton" Content="ShowAsync" />
             </StackPanel>
 
             <TextBlock Text="Show FrameworkElement/UserControl" />
             <StackPanel Orientation="Horizontal">
-                <Button Margin="5" Width="100"
-                        Click="OnClickShowUserControl"
-                        Content="Show UserControl" />
-                <Button Margin="5" Width="100"
-                        Click="OnClickShowImage"
-                        Content="Show Image" />
+                <Button Margin="5" Width="100" Click="OnClickShowUserControl" Content="Show UserControl" />
+                <Button Margin="5" Width="100" Click="OnClickShowImage" Content="Show Image" />
             </StackPanel>
         </StackPanel>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -50,25 +39,55 @@
             <StackPanel>
                 <TextBlock Text="Advanced Usage" />
                 <StackPanel Orientation="Horizontal">
-                    <Button Margin="5" Width="100"
-                        Click="OnClickShowInGrid"
-                        Content="Show into Grid" />
-                    <Button Margin="5"
-                        Click="OnClickShowMultiple"
-                        Content="Show multiple lightbox" />
+                    <Button Margin="5" Width="100" Click="OnClickShowInGrid" Content="Show into Grid" />
+                    <Button Margin="5" Click="OnClickShowMultiple" Content="Show multiple lightbox" />
                 </StackPanel>
                 <TextBlock Text="Builtin Styles" />
                 <StackPanel Orientation="Horizontal">
-                    <Button Margin="5" Width="100"
-                        Click="ShowBuiltinStyleWindow"
-                        Content="Builtin Style" />
-                    <Button Margin="5" Width="100"
-                        Click="ShowCustomStyleWindow"
-                        Content="Custom Style" />
+                    <Button Margin="5" Width="100" Click="ShowBuiltinStyleWindow" Content="Builtin Style" />
+                    <Button Margin="5" Width="100" Click="ShowCustomStyleWindow" Content="Custom Style" />
                 </StackPanel>
             </StackPanel>
 
             <Grid Grid.Column="1" x:Name="subGrid"/>
         </Grid>
+
+        <StackPanel Grid.Row="2" Margin="20">
+            <TextBlock Text="Basic Usage" />
+            <TextBlock Text="How to show lightbox" />
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="5" Width="100" Click="OnClickShowButtonDB" Content="Show" />
+                <Button Margin="5" Width="100" Click="OnClickShowDialogButtonDB" Content="ShowDialog" />
+                <Button Margin="5" Width="100" Click="OnClickShowAsyncButtonDB" Content="ShowAsync" />
+            </StackPanel>
+
+            <TextBlock Text="Show FrameworkElement/UserControl" />
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="5" Width="100" Click="OnClickShowUserControlDB" Content="Show UserControl" />
+                <Button Margin="5" Width="100" Click="OnClickShowImageDB" Content="Show Image" />
+            </StackPanel>
+        </StackPanel>
+
+        <Grid Grid.Row="3" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Advanced Usage" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Margin="5" Width="100" Click="OnClickShowInGridDB" Content="Show into Grid" />
+                    <!--<Button Margin="5" Click="OnClickShowMultiple" Content="Show multiple lightbox" />-->
+                </StackPanel>
+                <TextBlock Text="Builtin Styles" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Margin="5" Width="100" Click="ShowBuiltinStyleWindowDB" Content="Builtin Style" />
+                    <Button Margin="5" Width="100" Click="ShowCustomStyleWindowDB" Content="Custom Style" />
+                </StackPanel>
+            </StackPanel>
+
+            <!--<Grid Grid.Column="1" x:Name="subGrid"/>-->
+        </Grid>
+
     </Grid>
 </Window>

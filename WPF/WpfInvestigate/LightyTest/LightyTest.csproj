@@ -50,8 +50,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BuiltinStyleWindowDB.xaml.cs">
+      <DependentUpon>BuiltinStyleWindowDB.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BuiltinStyleWindow.xaml.cs">
       <DependentUpon>BuiltinStyleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomStyleWindowDB.xaml.cs">
+      <DependentUpon>CustomStyleWindowDB.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomStyleWindow.xaml.cs">
       <DependentUpon>CustomStyleWindow.xaml</DependentUpon>
@@ -65,12 +71,19 @@
     <Compile Include="Source\AdornerControl.cs" />
     <Compile Include="Source\DialogBlock.cs" />
     <Compile Include="Source\LightBox.cs" />
-    <Compile Include="Source\LightBoxAdorner.cs" />
     <Compile Include="Source\LightBoxExtensions.cs" />
     <Compile Include="Source\StoryboardExtensions.cs" />
+    <Page Include="BuiltinStyleWindowDB.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="BuiltinStyleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomStyleWindowDB.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="CustomStyleWindow.xaml">
       <SubType>Designer</SubType>
@@ -95,6 +108,10 @@
     <Page Include="SampleDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\DialogBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Source\LightBox.xaml">
       <SubType>Designer</SubType>

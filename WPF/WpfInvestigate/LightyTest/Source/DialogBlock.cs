@@ -11,21 +11,21 @@ using System.Windows.Threading;
 
 namespace LightyTest.Source
 {
-    public class DialogBlock: ContentControl
+    public class DialogBlock:  ItemsControl //  ContentControl
     {
-        /*private Action<FrameworkElement> _closedDelegate;
+        private Action<FrameworkElement> _closedDelegate;
 
         public EventHandler AllDialogClosed;
 
-        public EventHandler CompleteInitializeLightBox;
+        public EventHandler CompleteInitializeDialogBlock;
 
         static DialogBlock()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogBlock), new FrameworkPropertyMetadata(typeof(DialogBlock)));
         }
 
-        // protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
-        // protected override bool IsItemItsOwnContainerOverride(object item) => false;
+        protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
+        protected override bool IsItemItsOwnContainerOverride(object item) => false;
 
         /// <summary>
         /// Displays the DialogBlock modelessly.
@@ -36,7 +36,8 @@ namespace LightyTest.Source
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) { adorner = await CreateAdornerAsync(owner); }
-            adorner.Root?.AddDialog(content);
+            if (adorner.Child != null && adorner.Child is DialogBlock)
+                ((DialogBlock)adorner.Child).AddDialog(content);
         }
 
         /// <summary>
@@ -49,7 +50,8 @@ namespace LightyTest.Source
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) { adorner = await CreateAdornerAsync(owner); }
-            await adorner.Root?.AddDialogAsync(content);
+            if (adorner.Child != null && adorner.Child is DialogBlock)
+                await ((DialogBlock)adorner.Child).AddDialogAsync(content);
         }
 
         /// <summary>
@@ -63,13 +65,14 @@ namespace LightyTest.Source
             if (adorner == null) { adorner = CreateAdornerModal(owner); }
 
             var frame = new DispatcherFrame();
-            adorner.Root.AllDialogClosed += (s, e) => { frame.Continue = false; };
-            adorner.Root?.AddDialog(content);
+            ((DialogBlock)adorner.Child).AllDialogClosed += (s, e) => { frame.Continue = false; };
+            if (adorner.Child != null && adorner.Child is DialogBlock)
+                ((DialogBlock)adorner.Child).AddDialog(content);
 
             Dispatcher.PushFrame(frame);
         }
 
-        protected static LightBoxAdorner GetAdorner(UIElement element)
+        protected static AdornerControl GetAdorner(UIElement element)
         {
             // If it is a Window class, use the Content property.
             var win = element as Window;
@@ -79,11 +82,11 @@ namespace LightyTest.Source
             var layer = AdornerLayer.GetAdornerLayer(target);
             if (layer == null) return null;
 
-            var current = layer.GetAdorners(target)?.OfType<LightBoxAdorner>()?.SingleOrDefault();
+            var current = layer.GetAdorners(target)?.OfType<AdornerControl>()?.SingleOrDefault();
             return current;
         }
 
-        private static LightBoxAdorner CreateAdornerCore(UIElement element, LightBox lightbox)
+        private static AdornerControl CreateAdornerCore(UIElement element, DialogBlock dialogBlock)
         {
             // If it is a Window class, use the Content property.
             var win = element as Window;
@@ -94,8 +97,8 @@ namespace LightyTest.Source
             if (layer == null) return null;
 
             // Since there is no Adorner for the dialog, create a new one and set and return it.
-            var adorner = new LightBoxAdorner(target);
-            adorner.SetRoot(lightbox);
+            var adorner = new AdornerControl(target);
+            adorner.Child = dialogBlock;
 
             // If Adorner is set for Window, set margin to cancel Margin of Content element.
             if (win != null)
@@ -110,37 +113,37 @@ namespace LightyTest.Source
             if (target.IsEnabled)
             {
                 target.IsEnabled = false;
-                lightbox.AllDialogClosed += (s, e) => { target.IsEnabled = true; };
+                dialogBlock.AllDialogClosed += (s, e) => { target.IsEnabled = true; };
             }
             // Added a process to remove Adorner when all dialogs are cleared
-            lightbox.AllDialogClosed += (s, e) => { layer?.Remove(adorner); };
+            dialogBlock.AllDialogClosed += (s, e) => { layer?.Remove(adorner); };
             layer.Add(adorner);
             return adorner;
         }
 
-        protected static LightBoxAdorner CreateAdorner(UIElement element)
+        protected static AdornerControl CreateAdorner(UIElement element)
         {
-            return CreateAdornerCore(element, new LightBox());
+            return CreateAdornerCore(element, new DialogBlock());
         }
 
-        protected static Task<LightBoxAdorner> CreateAdornerAsync(UIElement element)
+        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element)
         {
-            var tcs = new TaskCompletionSource<LightBoxAdorner>();
+            var tcs = new TaskCompletionSource<AdornerControl>();
 
-            var lightbox = new LightBox();
-            var adorner = CreateAdornerCore(element, lightbox);
-            lightbox.Loaded += (s, e) =>
+            var dialogBlock = new DialogBlock();
+            var adorner = CreateAdornerCore(element, dialogBlock);
+            dialogBlock.Loaded += (s, e) =>
             {
-                // When executing animations in parallel or when there is no lightbox background animation,
+                // When executing animations in parallel or when there is no dialogblock background animation,
                 // this asynchronous method is completed immediately.
-                if (lightbox.IsParallelInitialize ||
-                    lightbox.InitializeStoryboard == null)
+                if (dialogBlock.IsParallelInitialize ||
+                    dialogBlock.InitializeStoryboard == null)
                 {
                     tcs.SetResult(adorner);
                 }
                 else
                 {
-                    lightbox.CompleteInitializeLightBox += (_s, _e) =>
+                    dialogBlock.CompleteInitializeDialogBlock += (_s, _e) =>
                     {
                         tcs.SetResult(adorner);
                     };
@@ -150,15 +153,15 @@ namespace LightyTest.Source
             return tcs.Task;
         }
 
-        protected static LightBoxAdorner CreateAdornerModal(UIElement element)
+        protected static AdornerControl CreateAdornerModal(UIElement element)
         {
-            var lightbox = new LightBox();
+            var dialogBlock = new DialogBlock();
 
-            var adorner = CreateAdornerCore(element, lightbox);
-            if (!lightbox.IsParallelInitialize)
+            var adorner = CreateAdornerCore(element, dialogBlock);
+            if (!dialogBlock.IsParallelInitialize)
             {
                 var frame = new DispatcherFrame();
-                lightbox.CompleteInitializeLightBox += (s, e) =>
+                dialogBlock.CompleteInitializeDialogBlock += (s, e) =>
                 {
                     frame.Continue = false;
                 };
@@ -182,7 +185,7 @@ namespace LightyTest.Source
                 var container = this.ContainerFromElement(dialog) as FrameworkElement;
                 container.Focus();
 
-                // Prevent MouseLeftButtonDown event in lightbox from bubbling up when CloseOnClickBackground is enabled.
+                // Prevent MouseLeftButtonDown event in dialogblock from bubbling up when CloseOnClickBackground is enabled.
                 container.MouseLeftButtonDown += (s, e) => { e.Handled = true; };
 
                 var transform = new TransformGroup();
@@ -196,8 +199,8 @@ namespace LightyTest.Source
                 animation?.BeginAsync(container);
             };
 
-            // Set content
-            this.Content = dialog;
+            // Add item
+            this.Items.Add(dialog);
 
             // For the added dialog, set the handler for ApplicationCommands.Close command.
             dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) =>
@@ -281,7 +284,7 @@ namespace LightyTest.Source
         {
             var animation = this.InitializeStoryboard;
             await animation.BeginAsync(this);
-            this.CompleteInitializeLightBox?.Invoke(this, null);
+            this.CompleteInitializeDialogBlock?.Invoke(this, null);
         }
 
         protected async Task<bool> DestroyAdornerAsync()
@@ -367,6 +370,6 @@ namespace LightyTest.Source
         public static readonly DependencyProperty CloseOnClickBackgroundProperty =
             DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogBlock), new PropertyMetadata(true));
 
-        #endregion*/
+        #endregion
     }
 }

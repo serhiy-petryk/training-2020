@@ -76,5 +76,58 @@ namespace LightySample
             win.Show();
         }
         #endregion
+
+        // ================================================
+        private void OnClickShowButtonDB(object sender, RoutedEventArgs e)
+        {
+            DialogBlock.Show(this, new SampleDialog());
+            MessageBox.Show("Hello.");
+        }
+
+        private void OnClickShowDialogButtonDB(object sender, RoutedEventArgs e)
+        {
+            DialogBlock.ShowDialog(this, new SampleDialog());
+            MessageBox.Show("Hello.");
+        }
+
+        private async void OnClickShowAsyncButtonDB(object sender, RoutedEventArgs e)
+        {
+            await DialogBlock.ShowAsync(this, new SampleDialog());
+            MessageBox.Show("Hello.");
+        }
+
+        private void OnClickShowUserControlDB(object sender, RoutedEventArgs e)
+        {
+            DialogBlock.Show(this, new SampleDialog());
+        }
+        private void OnClickShowImageDB(object sender, RoutedEventArgs e)
+        {
+            var image = new Image();
+            image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
+            DialogBlock.Show(this, image);
+        }
+
+        private void OnClickShowInGridDB(object sender, RoutedEventArgs e)
+        {
+            var image = new Image();
+            image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
+            DialogBlock.Show(this.subGrid, image);
+        }
+
+        private void ShowBuiltinStyleWindowDB(object sender, RoutedEventArgs e)
+        {
+            var win = new BuiltinStyleWindowDB();
+            win.Owner = this;
+            win.Show();
+        }
+
+        private void ShowCustomStyleWindowDB(object sender, RoutedEventArgs e)
+        {
+            var win = new CustomStyleWindowDB();
+            win.Owner = this;
+            win.Show();
+        }
+
+
     }
 }
