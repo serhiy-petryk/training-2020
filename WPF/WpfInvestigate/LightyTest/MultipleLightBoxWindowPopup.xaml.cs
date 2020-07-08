@@ -1,0 +1,29 @@
+﻿using System.Threading.Tasks;
+using System.Windows;
+using LightyTest.Source;
+
+namespace LightySample
+{
+    /// <summary>
+    /// MultipleLightBoxWindow.xaml の相互作用ロジック
+    /// </summary>
+    public partial class MultipleLightBoxWindowPopup : Window
+    {
+        public MultipleLightBoxWindowPopup()
+        {
+            InitializeComponent();
+            DataContext = this;
+        }
+
+        private async void button_Click(object sender, RoutedEventArgs e)
+        {
+            DialogItems.Show(this, new SampleDialog(), true);
+
+            await Task.Delay(1000);
+            DialogItems.Show(this, new SampleDialog(), true);
+
+            await Task.Delay(1000);
+            DialogItems.Show(this, new SampleDialog(), true);
+        }
+    }
+}

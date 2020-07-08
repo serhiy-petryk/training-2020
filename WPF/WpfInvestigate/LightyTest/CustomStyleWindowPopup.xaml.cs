@@ -7,11 +7,11 @@ using LightyTest.Source;
 namespace LightySample
 {
     /// <summary>
-    /// BuiltinStyleWindow.xaml の相互作用ロジック
+    /// CustomStyleWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class BuiltinStyleWindowDB : Window
+    public partial class CustomStyleWindowPopup : Window
     {
-        public BuiltinStyleWindowDB()
+        public CustomStyleWindowPopup()
         {
             InitializeComponent();
         }
@@ -20,7 +20,7 @@ namespace LightySample
         {
             var image = new Image();
             image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
-            DialogBlock.Show(this, image);
+            DialogItems.Show(this, image, true);
         }
     }
 }
