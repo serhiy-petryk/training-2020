@@ -70,7 +70,7 @@
     </Compile>
     <Compile Include="Service\Tips.cs" />
     <Compile Include="Source\AdornerControl.cs" />
-    <Compile Include="Source\DialogBlock.cs" />
+    <Compile Include="Source\xDialogBlock.cs" />
     <Compile Include="Source\DialogItems.cs" />
     <Compile Include="Source\StoryboardExtensions.cs" />
     <Page Include="BuiltinStyleWindowDB.xaml">
@@ -109,7 +109,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\DialogBlock.xaml">
+    <Page Include="Source\xDialogBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
