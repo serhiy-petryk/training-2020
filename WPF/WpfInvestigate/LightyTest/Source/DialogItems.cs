@@ -173,13 +173,12 @@ namespace LightyTest.Source
         /// <param name="dialog"></param>
         protected void AddDialog(FrameworkElement dialog)
         {
-            var animation = OpenStoryboard;
             dialog.Loaded += (sender, args) =>
             {
+                var parent = dialog.Parent as FrameworkElement;
+                var animation = OpenStoryboard;
                 var container = ContainerFromElement(dialog) as FrameworkElement;
                 container.Focus();
-
-                // Prevent MouseLeftButtonDown event in dialogitems from bubbling up when CloseOnClickBackground is enabled.
                 container.MouseLeftButtonDown += (s, e) => e.Handled = true;
 
                 var transform = new TransformGroup();
@@ -190,20 +189,18 @@ namespace LightyTest.Source
                 container.RenderTransform = transform;
                 container.RenderTransformOrigin = new Point(0.5, 0.5);
 
+                // For the added dialog, set the handler for ApplicationCommands.Close command.
+                dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(dialog)));
+
+                // Set a handler for ApplicationCommands.Close command in ItemsControl.
+                // (ItemsContainer In order to send it a Close command so that it can be closed.)
+                parent?.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(e.Parameter as FrameworkElement)));
+
                 animation?.BeginAsync(container);
             };
 
             // Add item
             Items.Add(dialog);
-
-            // For the added dialog, set the handler for ApplicationCommands.Close command.
-            dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(dialog)));
-
-            // Set a handler for ApplicationCommands.Close command in ItemsControl.
-            // (ItemsContainer In order to send it a Close command so that it can be closed.)
-            var parent = dialog.Parent as FrameworkElement;
-            parent?.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(e.Parameter as FrameworkElement)));
-
             InvalidateVisual();
         }
 
