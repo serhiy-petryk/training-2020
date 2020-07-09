@@ -8,14 +8,14 @@ using MyWpfMwi.Themes;
 
 namespace MyWpfMwi.ViewModels
 {
-    public class ApplicationViewModel : DependencyObject, INotifyPropertyChanged
+    public class AppViewModel : DependencyObject, INotifyPropertyChanged
     {
         //==========  Static section  ===========
-        public static ApplicationViewModel Instance = new ApplicationViewModel();
+        public static AppViewModel Instance = new AppViewModel();
 
         //=========================================
         //==========  Instance section  ===========
-        public static readonly DependencyProperty ScaleValueProperty = DependencyProperty.Register(nameof(ScaleValue), typeof(double), typeof(ApplicationViewModel), new UIPropertyMetadata(1.0));
+        public static readonly DependencyProperty ScaleValueProperty = DependencyProperty.Register(nameof(ScaleValue), typeof(double), typeof(AppViewModel), new UIPropertyMetadata(1.0));
         public double ScaleValue
         {
             get => (double)GetValue(ScaleValueProperty);
@@ -28,7 +28,7 @@ namespace MyWpfMwi.ViewModels
 
         private ThemeInfo _currentTheme;
 
-        public ApplicationViewModel() => CmdToggleScheme = new RelayCommand(ToggleTheme);
+        public AppViewModel() => CmdToggleScheme = new RelayCommand(ToggleTheme);
 
         //=========================
         private void ToggleTheme(object parameter)

@@ -8,6 +8,6 @@ namespace MyWpfMwi
     /// </summary>
     public partial class App
     {
-        private void Application_OnStartup(object sender, StartupEventArgs e) => ApplicationViewModel.Instance.CmdToggleScheme.Execute(null);
+        private void Application_OnStartup(object sender, StartupEventArgs e) => AppViewModel.Instance.CmdToggleScheme.Execute(null);
     }
 }

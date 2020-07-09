@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
              Focusable="False"
              IsTabStop="False"
-             FontFamily="{Binding Source={x:Static viewModels:ApplicationViewModel.Instance}, Path=DefaultFontFamily}"
+             FontFamily="{Binding Source={x:Static viewModels:AppViewModel.Instance}, Path=DefaultFontFamily}"
              GotFocus="MwiChild_OnGotFocus"
              Loaded="MwiChild_OnLoaded"
              MinWidth="{x:Static mwi:MwiChild.MIN_WIDTH}" MinHeight="{x:Static mwi:MwiChild.MIN_HEIGHT}"

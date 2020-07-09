@@ -27,11 +27,11 @@
     </Style>
 
     <Style TargetType="ToolTip">
-        <Setter Property="FontFamily" Value="{Binding Source={x:Static viewModels:ApplicationViewModel.Instance}, Path=DefaultFontFamily}"/>
+        <Setter Property="FontFamily" Value="{Binding Source={x:Static viewModels:AppViewModel.Instance}, Path=DefaultFontFamily}"/>
     </Style>
 
     <ScaleTransform x:Key="ScaleTransform" CenterX="0" CenterY="0"
-                    ScaleX="{Binding Source={x:Static viewModels:ApplicationViewModel.Instance}, Path=ScaleValue}"
-                    ScaleY="{Binding Source={x:Static viewModels:ApplicationViewModel.Instance}, Path=ScaleValue}" />
+                    ScaleX="{Binding Source={x:Static viewModels:AppViewModel.Instance}, Path=ScaleValue}"
+                    ScaleY="{Binding Source={x:Static viewModels:AppViewModel.Instance}, Path=ScaleValue}" />
 
 </ResourceDictionary>

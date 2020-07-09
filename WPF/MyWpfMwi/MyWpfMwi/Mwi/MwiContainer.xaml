@@ -30,7 +30,7 @@
         </ControlTemplate>
 
         <!-- Windows Menu -->
-        <ContextMenu x:Key="WindowsMenu" StaysOpen="False" FontFamily="{Binding Source={x:Static viewModels:ApplicationViewModel.Instance}, Path=DefaultFontFamily}" LayoutTransform="{StaticResource ScaleTransform}">
+        <ContextMenu x:Key="WindowsMenu" StaysOpen="False" FontFamily="{Binding Source={x:Static viewModels:AppViewModel.Instance}, Path=DefaultFontFamily}" LayoutTransform="{StaticResource ScaleTransform}">
             <ContextMenu.Resources>
                 <Style TargetType="Image">
                     <Setter Property="Width" Value="16" />
@@ -53,7 +53,7 @@
     </UserControl.Resources>
 
     <DockPanel>
-        <Grid DockPanel.Dock="{Binding Source={x:Static viewModels:ApplicationViewModel.Instance}, Path=WindowsBarLocation}">
+        <Grid DockPanel.Dock="{Binding Source={x:Static viewModels:AppViewModel.Instance}, Path=WindowsBarLocation}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
