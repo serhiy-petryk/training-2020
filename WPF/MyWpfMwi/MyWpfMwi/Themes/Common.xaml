@@ -4,7 +4,7 @@
                     xmlns:viewModels="clr-namespace:MyWpfMwi.ViewModels">
 
     <ResourceDictionary.MergedDictionaries>
-<!--        <ResourceDictionary Source="/Controls/Dialog/Lighty.xaml"/>-->
+        <ResourceDictionary Source="/Controls/Dialog/Lighty.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <DropShadowEffect x:Key="ShadowEffect" BlurRadius="10" ShadowDepth="2" po:Freeze="True" />

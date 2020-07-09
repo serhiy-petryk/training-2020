@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using MyWpfMwi.Common;
-using MyWpfMwi.Mwi;
 using MyWpfMwi.Themes;
 
 namespace MyWpfMwi.ViewModels
@@ -23,7 +22,6 @@ namespace MyWpfMwi.ViewModels
             set => SetValue(ScaleValueProperty, value);
         }
 
-        public MwiContainer ContainerControl { get; set; }
         public FontFamily DefaultFontFamily { get; } = new FontFamily("Segoe UI");
         public Dock WindowsBarLocation { get; } = Dock.Top;
         public RelayCommand CmdToggleScheme { get; }

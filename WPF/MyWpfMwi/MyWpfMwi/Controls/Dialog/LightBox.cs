@@ -1,5 +1,5 @@
 ﻿// ===============================================================
-// Taken from https://github.com/sourcechord/Lighty (MIT licence)
+// Taking from https://github.com/sourcechord/Lighty (MIT licence)
 // ===============================================================
 
 using System;
@@ -13,40 +13,60 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace MyWpfMwi.Controls.DialogItems
+namespace MyWpfMwi.Controls.Dialog
 {
-    public class DialogItems : ItemsControl
+    /// <summary>
+    /// To use this custom control in your XAML file, follow steps 1a or 1b, then step 2.
+    ///
+    /// Step 1a) If you want to use this custom control in a XAML file that exists in your current project
+    /// This XmlNamespace attribute to the root element of the markup file where it is used
+    /// add:
+    ///     xmlns:MyNamespace="clr-namespace:SourceChord.Lighty"
+    ///
+    /// Step 1b) If you want to use this custom control in XAML files that are in different projects
+    /// This XmlNamespace attribute to the root element of the markup file where it is used
+    /// add:
+    ///     xmlns:MyNamespace="clr-namespace:SourceChord.Lighty;assembly=SourceChord.Lighty"
+    ///
+    /// Also add a project reference to this project from the project with the XAML file,
+    /// You need to rebuild to prevent compilation errors:
+    ///     Right-click the target project in Solution Explorer,
+    ///     In Add Reference, select Project, then browse to and select this project.
+    ///
+    /// Step 2)
+    /// Use the control in a XAML file.
+    ///     <MyNamespace:LightBox/>
+    ///
+    /// </summary>
+    public class LightBox : ItemsControl
     {
         private Action<FrameworkElement> _closedDelegate;
 
         public EventHandler AllDialogClosed;
-        public EventHandler CompleteInitializeDialogItems;
+        public EventHandler CompleteInitializeLightBox;
 
-        static DialogItems()
+        static LightBox()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogItems), new FrameworkPropertyMetadata(typeof(DialogItems)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(LightBox), new FrameworkPropertyMetadata(typeof(LightBox)));
         }
 
         protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
         protected override bool IsItemItsOwnContainerOverride(object item) => false;
 
         /// <summary>
-        /// Displays the DialogItems modelessly.
+        /// Displays the LightBox modelessly.
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
         public static async void Show(UIElement owner, FrameworkElement content)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner);
-
-            if (adorner.Child != null && adorner.Child is DialogItems)
-                ((DialogItems)adorner.Child).AddDialog(content);
+            if (adorner == null) { adorner = await CreateAdornerAsync(owner); }
+            adorner.Root?.AddDialog(content);
         }
 
         /// <summary>
-        /// Display DialogItems asynchronously and modeless.
+        /// Display LightBox asynchronously and modeless.
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
@@ -54,63 +74,54 @@ namespace MyWpfMwi.Controls.DialogItems
         public static async Task ShowAsync(UIElement owner, FrameworkElement content)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner);
-
-            if (adorner.Child != null && adorner.Child is DialogItems)
-                await ((DialogItems)adorner.Child).AddDialogAsync(content);
+            if (adorner == null) { adorner = await CreateAdornerAsync(owner); }
+            await adorner.Root?.AddDialogAsync(content);
         }
 
         /// <summary>
-        /// Display the DialogItems modally.
+        /// Display the LightBox modally.
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
         public static void ShowDialog(UIElement owner, FrameworkElement content)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) 
-                adorner = CreateAdornerModal(owner);
+            if (adorner == null) { adorner = CreateAdornerModal(owner); }
 
             var frame = new DispatcherFrame();
-            ((DialogItems)adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
-            if (adorner.Child != null && adorner.Child is DialogItems)
-                ((DialogItems)adorner.Child).AddDialog(content);
+            adorner.Root.AllDialogClosed += (s, e) => { frame.Continue = false; };
+            adorner.Root?.AddDialog(content);
 
             Dispatcher.PushFrame(frame);
         }
 
-        protected static AdornerControl GetAdorner(UIElement element)
+        protected static LightBoxAdorner GetAdorner(UIElement element)
         {
             // If it is a Window class, use the Content property.
             var win = element as Window;
             var target = win?.Content as UIElement ?? element;
 
-            if (target == null) 
-                return null;
+            if (target == null) return null;
             var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null) 
-                return null;
+            if (layer == null) return null;
 
-            var current = layer.GetAdorners(target)?.OfType<AdornerControl>()?.SingleOrDefault();
+            var current = layer.GetAdorners(target)?.OfType<LightBoxAdorner>().SingleOrDefault();
             return current;
         }
 
-        private static AdornerControl CreateAdornerCore(UIElement element, DialogItems dialogItems)
+        private static LightBoxAdorner CreateAdornerCore(UIElement element, LightBox lightbox)
         {
             // If it is a Window class, use the Content property.
             var win = element as Window;
             var target = win?.Content as UIElement ?? element;
 
-            if (target == null) 
-                return null;
+            if (target == null) return null;
             var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null) 
-                return null;
+            if (layer == null) return null;
 
             // Since there is no Adorner for the dialog, create a new one and set and return it.
-            var adorner = new AdornerControl(target);
-            adorner.Child = dialogItems;
+            var adorner = new LightBoxAdorner(target);
+            adorner.SetRoot(lightbox);
 
             // If Adorner is set for Window, set margin to cancel Margin of Content element.
             if (win != null)
@@ -125,41 +136,46 @@ namespace MyWpfMwi.Controls.DialogItems
             if (target.IsEnabled)
             {
                 target.IsEnabled = false;
-                dialogItems.AllDialogClosed += (s, e) => target.IsEnabled = true;
+                lightbox.AllDialogClosed += (s, e) => { target.IsEnabled = true; };
             }
             // Added a process to remove Adorner when all dialogs are cleared
-            dialogItems.AllDialogClosed += (s, e) => layer.Remove(adorner);
+            lightbox.AllDialogClosed += (s, e) => { layer.Remove(adorner); };
             layer.Add(adorner);
             return adorner;
         }
 
-        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element)
+        protected static Task<LightBoxAdorner> CreateAdornerAsync(UIElement element)
         {
-            var tcs = new TaskCompletionSource<AdornerControl>();
-            var dialogItems = new DialogItems();
-            var adorner = CreateAdornerCore(element, dialogItems);
+            var tcs = new TaskCompletionSource<LightBoxAdorner>();
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            var lightbox = new LightBox();
+            var adorner = CreateAdornerCore(element, lightbox);
+            lightbox.Loaded += (s, e) =>
             {
-                // When executing animations in parallel or when there is no dialogitems background animation,
+                // When executing animations in parallel or when there is no lightbox background animation,
                 // this asynchronous method is completed immediately.
-                if (dialogItems.IsParallelInitialize || dialogItems.InitializeStoryboard == null)
+                if (lightbox.IsParallelInitialize || lightbox.InitializeStoryboard == null)
                     tcs.SetResult(adorner);
                 else
-                    dialogItems.CompleteInitializeDialogItems += (s, e) => tcs.SetResult(adorner);
-            })); 
+                    lightbox.CompleteInitializeLightBox += (_s, _e) => tcs.SetResult(adorner);
+            };
+
             return tcs.Task;
         }
 
-        protected static AdornerControl CreateAdornerModal(UIElement element)
+        protected static LightBoxAdorner CreateAdornerModal(UIElement element)
         {
-            var dialogItems = new DialogItems();
-            var adorner = CreateAdornerCore(element, dialogItems);
+            var lightbox = new LightBox();
 
-            if (!dialogItems.IsParallelInitialize)
+            var adorner = CreateAdornerCore(element, lightbox);
+            if (!lightbox.IsParallelInitialize)
             {
                 var frame = new DispatcherFrame();
-                dialogItems.CompleteInitializeDialogItems += (s, e) => frame.Continue = false;
+                lightbox.CompleteInitializeLightBox += (s, e) =>
+                {
+                    frame.Continue = false;
+                };
+
                 Dispatcher.PushFrame(frame);
             }
 
@@ -173,13 +189,13 @@ namespace MyWpfMwi.Controls.DialogItems
         /// <param name="dialog"></param>
         protected void AddDialog(FrameworkElement dialog)
         {
-            var animation = OpenStoryboard;
+            var animation = this.OpenStoryboard;
             dialog.Loaded += (sender, args) =>
             {
-                var container = ContainerFromElement(dialog) as FrameworkElement;
+                var container = this.ContainerFromElement(dialog) as FrameworkElement;
                 container.Focus();
 
-                // Prevent MouseLeftButtonDown event in dialogitems from bubbling up when CloseOnClickBackground is enabled.
+                // Prevent MouseLeftButtonDown event in lightbox from bubbling up when CloseOnClickBackground is enabled.
                 container.MouseLeftButtonDown += (s, e) => e.Handled = true;
 
                 var transform = new TransformGroup();
@@ -194,56 +210,68 @@ namespace MyWpfMwi.Controls.DialogItems
             };
 
             // Add item
-            Items.Add(dialog);
+            this.Items.Add(dialog);
 
             // For the added dialog, set the handler for ApplicationCommands.Close command.
-            dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(dialog)));
+            dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) =>
+            {
+                await this.RemoveDialogAsync(dialog);
+            }));
 
             // Set a handler for ApplicationCommands.Close command in ItemsControl.
             // (ItemsContainer In order to send it a Close command so that it can be closed.)
             var parent = dialog.Parent as FrameworkElement;
-            parent?.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(e.Parameter as FrameworkElement)));
+            parent.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) =>
+            {
+                await this.RemoveDialogAsync(e.Parameter as FrameworkElement);
+            }));
 
-            InvalidateVisual();
+            this.InvalidateVisual();
         }
 
         protected async Task<bool> AddDialogAsync(FrameworkElement dialog)
         {
             var tcs = new TaskCompletionSource<bool>();
-            var closedHandler = new Action<FrameworkElement>(d => { });
-            closedHandler = d =>
+
+            var closedHandler = new Action<FrameworkElement>((d) => { });
+            closedHandler = (d) =>
             {
                 if (d == dialog)
                 {
                     tcs.SetResult(true);
-                    _closedDelegate -= closedHandler;
+                    this._closedDelegate -= closedHandler;
                 }
             };
-            _closedDelegate += closedHandler;
+            this._closedDelegate += closedHandler;
 
-            AddDialog(dialog);
+            this.AddDialog(dialog);
 
             return await tcs.Task;
         }
 
         protected async Task RemoveDialogAsync(FrameworkElement dialog)
         {
-            var index = Items.IndexOf(dialog);
-            var count = Items.Count;
+            var index = this.Items.IndexOf(dialog);
+            var count = this.Items.Count;
 
-            if (IsParallelDispose)
+            if (this.IsParallelDispose)
             {
-                var _ = DestroyDialogAsync(dialog);
+                var _ = this.DestroyDialogAsync(dialog);
             }
             else
-                await DestroyDialogAsync(dialog);
+            {
+                await this.DestroyDialogAsync(dialog);
+            }
 
-            if (index != -1 && count == 1) 
-                await DestroyAdornerAsync();
+            if (index != -1 && count == 1)
+            {
+                await this.DestroyAdornerAsync();
+            }
 
-            _closedDelegate?.Invoke(dialog);
+            this._closedDelegate?.Invoke(dialog);
         }
         #endregion
+
 
         #region Various methods to execute Animation related Storyboard
 
@@ -251,38 +279,37 @@ namespace MyWpfMwi.Controls.DialogItems
         {
             base.OnApplyTemplate();
             // Added a process to delete Adorner by clicking the background
-            if (CloseOnClickBackground)
+            if (this.CloseOnClickBackground)
             {
-                MouseLeftButtonDown += (s, e) =>
+                this.MouseLeftButtonDown += (s, e) =>
                 {
-                    foreach (FrameworkElement item in Items.Cast<object>().ToList())
-                        // ToList - prevent error: 'Collection was modified; enumeration operation may not execute.'
+                    foreach (FrameworkElement item in Items)
                         ApplicationCommands.Close.Execute(item, null);
                 };
             }
-            await InitializeAdornerAsync();
+            await this.InitializeAdornerAsync();
         }
 
         protected async Task InitializeAdornerAsync()
         {
-            var animation = InitializeStoryboard;
+            var animation = this.InitializeStoryboard;
             await animation.BeginAsync(this);
-            CompleteInitializeDialogItems?.Invoke(this, null);
+            this.CompleteInitializeLightBox?.Invoke(this, null);
         }
 
         protected async Task<bool> DestroyAdornerAsync()
         {
-            var ret = await DisposeStoryboard.BeginAsync(this);
+            var ret = await this.DisposeStoryboard.BeginAsync(this);
             // Issues an event asking you to delete this Adorner.
-            AllDialogClosed?.Invoke(this, null);
+            this.AllDialogClosed?.Invoke(this, null);
             return ret;
         }
 
         protected async Task<bool> DestroyDialogAsync(FrameworkElement item)
         {
-            var container = ContainerFromElement(item) as FrameworkElement;
-            await CloseStoryboard.BeginAsync(container);
-            Items.Remove(item);
+            var container = this.ContainerFromElement(item) as FrameworkElement;
+            await this.CloseStoryboard.BeginAsync(container);
+            this.Items.Remove(item);
             return true;
         }
 
@@ -292,66 +319,66 @@ namespace MyWpfMwi.Controls.DialogItems
 
         public bool IsParallelInitialize
         {
-            get => (bool)GetValue(IsParallelInitializeProperty);
-            set => SetValue(IsParallelInitializeProperty, value);
+            get { return (bool)GetValue(IsParallelInitializeProperty); }
+            set { SetValue(IsParallelInitializeProperty, value); }
         }
         // Using a DependencyProperty as the backing store for IsParallelInitialize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsParallelInitializeProperty =
-            DependencyProperty.Register("IsParallelInitialize", typeof(bool), typeof(DialogItems), new PropertyMetadata(false));
+            DependencyProperty.Register("IsParallelInitialize", typeof(bool), typeof(LightBox), new PropertyMetadata(false));
 
         public bool IsParallelDispose
         {
-            get => (bool)GetValue(IsParallelDisposeProperty);
-            set => SetValue(IsParallelDisposeProperty, value);
+            get { return (bool)GetValue(IsParallelDisposeProperty); }
+            set { SetValue(IsParallelDisposeProperty, value); }
         }
         // Using a DependencyProperty as the backing store for IsParallelDispose.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsParallelDisposeProperty =
-            DependencyProperty.Register("IsParallelDispose", typeof(bool), typeof(DialogItems), new PropertyMetadata(false));
+            DependencyProperty.Register("IsParallelDispose", typeof(bool), typeof(LightBox), new PropertyMetadata(false));
 
         public Storyboard OpenStoryboard
         {
-            get => (Storyboard)GetValue(OpenStoryboardProperty);
-            set => SetValue(OpenStoryboardProperty, value);
+            get { return (Storyboard)GetValue(OpenStoryboardProperty); }
+            set { SetValue(OpenStoryboardProperty, value); }
         }
         // Using a DependencyProperty as the backing store for OpenStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OpenStoryboardProperty =
-            DependencyProperty.Register("OpenStoryboard", typeof(Storyboard), typeof(DialogItems), new PropertyMetadata(null));
+            DependencyProperty.Register("OpenStoryboard", typeof(Storyboard), typeof(LightBox), new PropertyMetadata(null));
 
         public Storyboard CloseStoryboard
         {
-            get => (Storyboard)GetValue(CloseStoryboardProperty);
-            set => SetValue(CloseStoryboardProperty, value);
+            get { return (Storyboard)GetValue(CloseStoryboardProperty); }
+            set { SetValue(CloseStoryboardProperty, value); }
         }
         // Using a DependencyProperty as the backing store for CloseStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CloseStoryboardProperty =
-            DependencyProperty.Register("CloseStoryboard", typeof(Storyboard), typeof(DialogItems), new PropertyMetadata(null));
+            DependencyProperty.Register("CloseStoryboard", typeof(Storyboard), typeof(LightBox), new PropertyMetadata(null));
 
         public Storyboard InitializeStoryboard
         {
-            get => (Storyboard)GetValue(InitializeStoryboardProperty);
-            set => SetValue(InitializeStoryboardProperty, value);
+            get { return (Storyboard)GetValue(InitializeStoryboardProperty); }
+            set { SetValue(InitializeStoryboardProperty, value); }
         }
         // Using a DependencyProperty as the backing store for InitializeStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty InitializeStoryboardProperty =
-            DependencyProperty.Register("InitializeStoryboard", typeof(Storyboard), typeof(DialogItems), new PropertyMetadata(null));
+            DependencyProperty.Register("InitializeStoryboard", typeof(Storyboard), typeof(LightBox), new PropertyMetadata(null));
 
         public Storyboard DisposeStoryboard
         {
-            get => (Storyboard)GetValue(DisposeStoryboardProperty);
-            set => SetValue(DisposeStoryboardProperty, value);
+            get { return (Storyboard)GetValue(DisposeStoryboardProperty); }
+            set { SetValue(DisposeStoryboardProperty, value); }
         }
         // Using a DependencyProperty as the backing store for DisposeStoryboard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DisposeStoryboardProperty =
-            DependencyProperty.Register("DisposeStoryboard", typeof(Storyboard), typeof(DialogItems), new PropertyMetadata(null));
+            DependencyProperty.Register("DisposeStoryboard", typeof(Storyboard), typeof(LightBox), new PropertyMetadata(null));
 
         public bool CloseOnClickBackground
         {
-            get => (bool)GetValue(CloseOnClickBackgroundProperty);
-            set => SetValue(CloseOnClickBackgroundProperty, value);
+            get { return (bool)GetValue(CloseOnClickBackgroundProperty); }
+            set { SetValue(CloseOnClickBackgroundProperty, value); }
         }
         // Using a DependencyProperty as the backing store for CloseOnClickBackground.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CloseOnClickBackgroundProperty =
-            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogItems), new PropertyMetadata(true));
+            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(LightBox), new PropertyMetadata(true));
 
         #endregion
     }
