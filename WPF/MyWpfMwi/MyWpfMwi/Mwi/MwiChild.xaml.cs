@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -10,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using MyWpfMwi.Common;
+using MyWpfMwi.Controls.DialogItems;
 using MyWpfMwi.Examples;
 
 namespace MyWpfMwi.Mwi
@@ -181,7 +184,7 @@ namespace MyWpfMwi.Mwi
         /// Identifies the MwiChild.PositionProperty dependency property.
         /// </summary>
         /// <returns>The identifier for the MwiChild.PositionProperty property.</returns>
-        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Point), typeof(MwiChild), new UIPropertyMetadata(new Point(-1, -1), OnPositionValueChanged));
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Point), typeof(MwiChild), new UIPropertyMetadata(new Point(-1, -1), OnPositionValueChanged, OnPositionValueCoerce));
 
         #endregion
 
@@ -545,7 +548,7 @@ namespace MyWpfMwi.Mwi
             var newLeft = Position.X + e.HorizontalChange;
             var newTop = Position.Y + e.VerticalChange;
 
-            if (!IsWindowed)
+            if (!IsWindowed && Container != null)
             {
                 // Check is mouse in outside of container
                 var mousePosition = Mouse.GetPosition(Container);
@@ -559,7 +562,7 @@ namespace MyWpfMwi.Mwi
             Position = new Point(newLeft, newTop);
             Container?.InvalidateSize();
 
-            if (!IsWindowed)
+            if (!IsWindowed && Container != null)
             {
                 // Smooth container scrolling
                 var sv = Container.ScrollViewer;
@@ -686,11 +689,22 @@ namespace MyWpfMwi.Mwi
                 Window.GetWindow(this)?.Focus();
         }
 
-        /// <summary>
-        /// Dependency property event once the position value has changed.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        private static object OnPositionValueCoerce(DependencyObject d, object basevalue)
+        {
+            var mwiChild = d as MwiChild;
+            if (mwiChild.Container == null) // DialogItems
+            {
+                var position = (Point)basevalue;
+                var newPosition = new Point(Math.Max(0, position.X), Math.Max(0, position.Y));
+                if (newPosition == new Point(0, 0))
+                {
+
+                }
+                Debug.Print($"OnPositionValueCoerce: {newPosition}");
+                return newPosition;
+            }
+            return basevalue;
+        }
         private static void OnPositionValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             if ((Point)e.NewValue == (Point)e.OldValue)
@@ -698,6 +712,8 @@ namespace MyWpfMwi.Mwi
 
             var mwiChild = (MwiChild)sender;
             var newPosition = (Point)e.NewValue;
+
+            var aa1 = Tips.GetVisualParents(mwiChild).ToArray();
 
             if (mwiChild.IsWindowed)
             {
@@ -711,8 +727,25 @@ namespace MyWpfMwi.Mwi
             }
             else
             {
-                Canvas.SetTop(mwiChild, newPosition.Y);
-                Canvas.SetLeft(mwiChild, newPosition.X);
+                var panel = Tips.GetVisualParents(mwiChild).OfType<Panel>().FirstOrDefault();
+                if (panel is Canvas)
+                {
+                    Canvas.SetTop(mwiChild, newPosition.Y);
+                    Canvas.SetLeft(mwiChild, newPosition.X);
+                }
+                else if (panel is Grid)
+                {
+                    /*FrameworkElement mwiChildHost = null;
+                    foreach (var control in Tips.GetVisualParents(mwiChild))
+                    {
+                        if (control is Grid) break;
+                        mwiChildHost = control as FrameworkElement;
+                    }*/
+
+                    // FrameworkElement mwiChildHost = Tips.GetVisualParents(mwiChild).OfType<FrameworkElement>().FirstOrDefault(a => a.Name == "ContentPresenter");
+                    // FrameworkElement mwiChildHost = Tips.GetVisualParents(mwiChild).OfType<Grid>().FirstOrDefault();
+                    panel.Margin = new Thickness {Left = newPosition.X, Top = newPosition.Y};
+                }
             }
         }
 

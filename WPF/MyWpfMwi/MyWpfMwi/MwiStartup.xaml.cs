@@ -5,9 +5,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using MyWpfMwi.Common;
-using MyWpfMwi.Controls.Dialog;
+using MyWpfMwi.Controls.DialogItems;
 using MyWpfMwi.Examples;
 using MyWpfMwi.Mwi;
+using MyWpfMwi.ViewModels;
 
 namespace MyWpfMwi
 {
@@ -16,7 +17,6 @@ namespace MyWpfMwi
     /// </summary>
     public partial class MwiStartup
     {
-        private MwiContainer MwiContainer { get; set; }
         public RelayCommand CmdScaleSliderReset { get; private set; }
 
         public static readonly DependencyProperty ScaleSliderProperty = DependencyProperty.Register(nameof(ScaleSlider), typeof(Slider), typeof(MwiStartup), new UIPropertyMetadata(null));
@@ -37,9 +37,8 @@ namespace MyWpfMwi
         private void MwiStartup_OnLoaded(object sender, RoutedEventArgs e)
         {
             ScaleSlider = Tips.GetVisualChildren(this).OfType<Slider>().First(s => s.Uid == "ScaleSlider");
-            MwiContainer = Tips.GetVisualChildren(this).OfType<MwiContainer>().First(s => s.Uid == "Container");
-            Cont = MwiContainer;
-            Window1 = MwiContainer?.Children.FirstOrDefault(w => w.Title == "Window Using XAML");
+            ApplicationViewModel.Instance.ContainerControl = Tips.GetVisualChildren(this).OfType<MwiContainer>().First(s => s.Uid == "Container");
+            Window1 = ApplicationViewModel.Instance.ContainerControl?.Children.FirstOrDefault(w => w.Title == "Window Using XAML");
             CmdScaleSliderReset = new RelayCommand(p => ScaleSlider.Value = 1.0);
         }
 
@@ -47,9 +46,11 @@ namespace MyWpfMwi
 
         private void MwiStartup_OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (Keyboard.Modifiers == ModifierKeys.Control && Keyboard.IsKeyDown(Key.F4) && MwiContainer.ActiveMwiChild != null && !MwiContainer.ActiveMwiChild.IsWindowed) // Is Ctrl+F4 key pressed
+            if (Keyboard.Modifiers == ModifierKeys.Control && Keyboard.IsKeyDown(Key.F4) &&
+                ApplicationViewModel.Instance.ContainerControl.ActiveMwiChild != null && 
+                !ApplicationViewModel.Instance.ContainerControl.ActiveMwiChild.IsWindowed) // Is Ctrl+F4 key pressed
             {
-                MwiContainer.ActiveMwiChild.CmdClose.Execute(null);
+                ApplicationViewModel.Instance.ContainerControl.ActiveMwiChild.CmdClose.Execute(null);
                 e.Handled = true;
             }
         }
@@ -58,7 +59,6 @@ namespace MyWpfMwi
 
         //============  Test window  =============
         private static MwiChild Window1;
-        private static MwiContainer Cont;
         public RelayCommand CmdDisableDetach { get; } = new RelayCommand(o => Window1.AllowDetach = false);
         public RelayCommand CmdEnableDetach { get; } = new RelayCommand(o => Window1.AllowDetach = true);
         public RelayCommand CmdDisableMinimize { get; } = new RelayCommand(o => Window1.AllowMinimize = false);
@@ -85,11 +85,16 @@ namespace MyWpfMwi
 
         public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
         {
-            var a1 = new MwiChild();
+            var container = ApplicationViewModel.Instance.ContainerControl;
+            var a1 = new MwiChild {AllowMaximize = false, AllowMinimize = false, AllowDetach = false};
             a1.Content = new TextBlock {Text = "AAAAAAAAAAAAAAAAAA", Background = new SolidColorBrush(Colors.Red)};
             // Cont.Children.Add(a1);
             a1.Title = "AAAAA";
-            LightBox.ShowDialog(Cont, a1);
+            if (container.ActiveMwiChild.IsWindowed)
+                DialogItems.ShowDialog(container.ActiveMwiChild, a1);
+            else
+                DialogItems.ShowDialog(container, a1);
+
             /*var wnd = Window.GetWindow(Cont);
             Cont.Opacity = 0.5;
             Cont.IsHitTestVisible = false;

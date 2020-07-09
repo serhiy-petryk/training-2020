@@ -255,11 +255,11 @@ namespace LightyTest.Source
             // Added a process to delete Adorner by clicking the background
             if (CloseOnClickBackground)
             {
-                MouseLeftButtonDown += (s, e) =>
+                MouseLeftButtonDown += async (s, e) =>
                 {
-                    foreach (FrameworkElement item in Items.Cast<object>().ToList())
-                        // ToList - prevent error: 'Collection was modified; enumeration operation may not execute.'
-                        ApplicationCommands.Close.Execute(item, null);
+                    var tasks = Items.Cast<FrameworkElement>().Select(RemoveDialogAsync);
+                    await Task.WhenAll(tasks);
+                    await DestroyAdornerAsync();
                 };
             }
             await InitializeAdornerAsync();

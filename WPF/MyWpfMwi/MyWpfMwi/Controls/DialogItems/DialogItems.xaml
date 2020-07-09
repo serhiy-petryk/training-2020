@@ -43,5 +43,5 @@
             </Setter.Value>
         </Setter>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
-    </Style>    
+    </Style>
 </ResourceDictionary>

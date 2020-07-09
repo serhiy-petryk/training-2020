@@ -76,9 +76,6 @@
     <Compile Include="Controls\AdornerControl.cs" />
     <Compile Include="Controls\DialogItems\DialogItems.cs" />
     <Compile Include="Controls\DialogItems\StoryboardExtensions.cs" />
-    <Compile Include="Controls\Dialog\LightBox.cs" />
-    <Compile Include="Controls\Dialog\LightBoxAdorner.cs" />
-    <Compile Include="Controls\Dialog\StoryboardExtensions.cs" />
     <Compile Include="Controls\DualPathToggleButtonEffect.cs" />
     <Compile Include="Controls\ToggleButtonHelper.cs" />
     <Compile Include="Examples\CommandBarExample.xaml.cs">
@@ -128,10 +125,6 @@
     <Page Include="Controls\DialogItems\DialogItemsCommon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Dialog\Lighty.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DoubleButton.xaml">
       <SubType>Designer</SubType>

@@ -38,7 +38,7 @@ namespace MyWpfMwi.Controls.DialogItems
         public static async void Show(UIElement owner, FrameworkElement content)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) 
+            if (adorner == null)
                 adorner = await CreateAdornerAsync(owner);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
@@ -54,7 +54,7 @@ namespace MyWpfMwi.Controls.DialogItems
         public static async Task ShowAsync(UIElement owner, FrameworkElement content)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) 
+            if (adorner == null)
                 adorner = await CreateAdornerAsync(owner);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
@@ -69,7 +69,7 @@ namespace MyWpfMwi.Controls.DialogItems
         public static void ShowDialog(UIElement owner, FrameworkElement content)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) 
+            if (adorner == null)
                 adorner = CreateAdornerModal(owner);
 
             var frame = new DispatcherFrame();
@@ -86,10 +86,10 @@ namespace MyWpfMwi.Controls.DialogItems
             var win = element as Window;
             var target = win?.Content as UIElement ?? element;
 
-            if (target == null) 
+            if (target == null)
                 return null;
             var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null) 
+            if (layer == null)
                 return null;
 
             var current = layer.GetAdorners(target)?.OfType<AdornerControl>()?.SingleOrDefault();
@@ -102,10 +102,10 @@ namespace MyWpfMwi.Controls.DialogItems
             var win = element as Window;
             var target = win?.Content as UIElement ?? element;
 
-            if (target == null) 
+            if (target == null)
                 return null;
             var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null) 
+            if (layer == null)
                 return null;
 
             // Since there is no Adorner for the dialog, create a new one and set and return it.
@@ -147,7 +147,7 @@ namespace MyWpfMwi.Controls.DialogItems
                     tcs.SetResult(adorner);
                 else
                     dialogItems.CompleteInitializeDialogItems += (s, e) => tcs.SetResult(adorner);
-            })); 
+            }));
             return tcs.Task;
         }
 
@@ -173,13 +173,12 @@ namespace MyWpfMwi.Controls.DialogItems
         /// <param name="dialog"></param>
         protected void AddDialog(FrameworkElement dialog)
         {
-            var animation = OpenStoryboard;
             dialog.Loaded += (sender, args) =>
             {
+                var parent = dialog.Parent as FrameworkElement;
+                var animation = OpenStoryboard;
                 var container = ContainerFromElement(dialog) as FrameworkElement;
                 container.Focus();
-
-                // Prevent MouseLeftButtonDown event in dialogitems from bubbling up when CloseOnClickBackground is enabled.
                 container.MouseLeftButtonDown += (s, e) => e.Handled = true;
 
                 var transform = new TransformGroup();
@@ -190,20 +189,18 @@ namespace MyWpfMwi.Controls.DialogItems
                 container.RenderTransform = transform;
                 container.RenderTransformOrigin = new Point(0.5, 0.5);
 
+                // For the added dialog, set the handler for ApplicationCommands.Close command.
+                dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(dialog)));
+
+                // Set a handler for ApplicationCommands.Close command in ItemsControl.
+                // (ItemsContainer In order to send it a Close command so that it can be closed.)
+                parent?.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(e.Parameter as FrameworkElement)));
+
                 animation?.BeginAsync(container);
             };
 
             // Add item
             Items.Add(dialog);
-
-            // For the added dialog, set the handler for ApplicationCommands.Close command.
-            dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(dialog)));
-
-            // Set a handler for ApplicationCommands.Close command in ItemsControl.
-            // (ItemsContainer In order to send it a Close command so that it can be closed.)
-            var parent = dialog.Parent as FrameworkElement;
-            parent?.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(e.Parameter as FrameworkElement)));
-
             InvalidateVisual();
         }
 
@@ -238,7 +235,7 @@ namespace MyWpfMwi.Controls.DialogItems
             else
                 await DestroyDialogAsync(dialog);
 
-            if (index != -1 && count == 1) 
+            if (index != -1 && count == 1)
                 await DestroyAdornerAsync();
 
             _closedDelegate?.Invoke(dialog);
