@@ -35,12 +35,12 @@ namespace LightyTest.Source
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
-        /// <param name="popupMode"></param>
-        public static async void Show(UIElement owner, FrameworkElement content, bool popupMode = false)
+        /// <param name="closeOnClickBackground"></param>
+        public static async void Show(UIElement owner, FrameworkElement content, bool closeOnClickBackground = false)
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner, popupMode);
+                adorner = await CreateAdornerAsync(owner, closeOnClickBackground);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
                 ((DialogItems)adorner.Child).AddDialog(content);
@@ -51,13 +51,13 @@ namespace LightyTest.Source
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
-        /// <param name="popupMode"></param>
+        /// <param name="closeOnClickBackground"></param>
         /// <returns></returns>
-        public static async Task ShowAsync(UIElement owner, FrameworkElement content, bool popupMode = false)
+        public static async Task ShowAsync(UIElement owner, FrameworkElement content, bool closeOnClickBackground = false)
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner, popupMode);
+                adorner = await CreateAdornerAsync(owner, closeOnClickBackground);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
                 await ((DialogItems)adorner.Child).AddDialogAsync(content);
@@ -68,12 +68,12 @@ namespace LightyTest.Source
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
-        /// <param name="popupMode"></param>
-        public static void ShowDialog(UIElement owner, FrameworkElement content, bool popupMode = false)
+        /// <param name="closeOnClickBackground"></param>
+        public static void ShowDialog(UIElement owner, FrameworkElement content, bool closeOnClickBackground = false)
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = CreateAdornerModal(owner, popupMode);
+                adorner = CreateAdornerModal(owner, closeOnClickBackground);
 
             var frame = new DispatcherFrame();
             ((DialogItems)adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
@@ -136,12 +136,12 @@ namespace LightyTest.Source
             return adorner;
         }
 
-        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element, bool popupFlag)
+        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element, bool closeOnClickBackground)
         {
             var tcs = new TaskCompletionSource<AdornerControl>();
             var dialogItems = new DialogItems();
             var adorner = CreateAdornerCore(element, dialogItems);
-            dialogItems.CloseOnClickBackground = popupFlag;
+            dialogItems.CloseOnClickBackground = closeOnClickBackground;
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
@@ -155,11 +155,11 @@ namespace LightyTest.Source
             return tcs.Task;
         }
 
-        protected static AdornerControl CreateAdornerModal(UIElement element, bool popupFlag)
+        protected static AdornerControl CreateAdornerModal(UIElement element, bool closeOnClickBackground)
         {
             var dialogItems = new DialogItems();
             var adorner = CreateAdornerCore(element, dialogItems);
-            dialogItems.CloseOnClickBackground = popupFlag;
+            dialogItems.CloseOnClickBackground = closeOnClickBackground;
 
             if (!dialogItems.IsParallelInitialize)
             {
