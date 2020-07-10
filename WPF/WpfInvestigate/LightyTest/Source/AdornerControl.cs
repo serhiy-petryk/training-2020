@@ -15,7 +15,7 @@ namespace LightyTest.Source
 
         public AdornerControl(UIElement adornedElement) : base(adornedElement) => UseAdornedElementSize = true;
 
-        protected override int VisualChildrenCount => 1;
+        protected override int VisualChildrenCount => _child == null ? 0 : 1;
 
         protected override Visual GetVisualChild(int index)
         {

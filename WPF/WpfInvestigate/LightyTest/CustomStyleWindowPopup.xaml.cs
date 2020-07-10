@@ -20,7 +20,7 @@ namespace LightySample
         {
             var image = new Image();
             image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
-            DialogItems.Show(this, image, true);
+            DialogItems.Show(this, image);
         }
     }
 }

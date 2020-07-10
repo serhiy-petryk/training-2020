@@ -26,6 +26,11 @@ namespace LightyTest.Source
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogItems), new FrameworkPropertyMetadata(typeof(DialogItems)));
         }
+        public DialogItems()
+        {
+            if (CloseOnClickBackground)
+                MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
+        }
 
         protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
         protected override bool IsItemItsOwnContainerOverride(object item) => false;
@@ -35,12 +40,12 @@ namespace LightyTest.Source
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
-        /// <param name="closeOnClickBackground"></param>
-        public static async void Show(UIElement owner, FrameworkElement content, bool closeOnClickBackground = false)
+        /// <param name="afterCreationCallback"></param>
+        public static async void Show(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner, closeOnClickBackground);
+                adorner = await CreateAdornerAsync(owner, afterCreationCallback);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
                 ((DialogItems)adorner.Child).AddDialog(content);
@@ -51,13 +56,13 @@ namespace LightyTest.Source
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
-        /// <param name="closeOnClickBackground"></param>
+        /// <param name="afterCreationCallback"></param>
         /// <returns></returns>
-        public static async Task ShowAsync(UIElement owner, FrameworkElement content, bool closeOnClickBackground = false)
+        public static async Task ShowAsync(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner, closeOnClickBackground);
+                adorner = await CreateAdornerAsync(owner, afterCreationCallback);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
                 await ((DialogItems)adorner.Child).AddDialogAsync(content);
@@ -68,17 +73,16 @@ namespace LightyTest.Source
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
-        /// <param name="closeOnClickBackground"></param>
-        public static void ShowDialog(UIElement owner, FrameworkElement content, bool closeOnClickBackground = false)
+        /// <param name="afterCreationCallback"></param>
+        public static void ShowDialog(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = CreateAdornerModal(owner, closeOnClickBackground);
+                adorner = CreateAdornerModal(owner, afterCreationCallback);
 
             var frame = new DispatcherFrame();
-            ((DialogItems)adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
-            if (adorner.Child != null && adorner.Child is DialogItems)
-                ((DialogItems)adorner.Child).AddDialog(content);
+            ((DialogItems) adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
+            ((DialogItems) adorner.Child).AddDialog(content);
 
             Dispatcher.PushFrame(frame);
         }
@@ -132,16 +136,19 @@ namespace LightyTest.Source
             }
             // Added a process to remove Adorner when all dialogs are cleared
             dialogItems.AllDialogClosed += (s, e) => layer.Remove(adorner);
+            // Microsoft bug???: CloseOnClickBackground is changing after "layer.Add(adorner)" in MultipleLightBoxWindow example
+            var temp = dialogItems.CloseOnClickBackground;
             layer.Add(adorner);
+            dialogItems.CloseOnClickBackground = temp;
             return adorner;
         }
 
-        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element, bool closeOnClickBackground)
+        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element, Action<DialogItems> afterCreationCallback)
         {
             var tcs = new TaskCompletionSource<AdornerControl>();
             var dialogItems = new DialogItems();
             var adorner = CreateAdornerCore(element, dialogItems);
-            dialogItems.CloseOnClickBackground = closeOnClickBackground;
+            afterCreationCallback?.Invoke(dialogItems);
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
@@ -155,11 +162,11 @@ namespace LightyTest.Source
             return tcs.Task;
         }
 
-        protected static AdornerControl CreateAdornerModal(UIElement element, bool closeOnClickBackground)
+        protected static AdornerControl CreateAdornerModal(UIElement element, Action<DialogItems> afterCreationCallback)
         {
             var dialogItems = new DialogItems();
             var adorner = CreateAdornerCore(element, dialogItems);
-            dialogItems.CloseOnClickBackground = closeOnClickBackground;
+            afterCreationCallback?.Invoke(dialogItems);
 
             if (!dialogItems.IsParallelInitialize)
             {
@@ -245,6 +252,15 @@ namespace LightyTest.Source
 
             _closedDelegate?.Invoke(dialog);
         }
+
+        private static async void DialogItems_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var dialogItems = (DialogItems)sender;
+            var tasks = dialogItems.Items.Cast<FrameworkElement>().Select(dialogItems.RemoveDialogAsync);
+            await Task.WhenAll(tasks);
+            await dialogItems.DestroyAdornerAsync();
+        }
+
         #endregion
 
         #region Various methods to execute Animation related Storyboard
@@ -252,16 +268,6 @@ namespace LightyTest.Source
         public override async void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            // Added a process to delete Adorner by clicking the background
-            if (CloseOnClickBackground)
-            {
-                MouseLeftButtonDown += async (s, e) =>
-                {
-                    var tasks = Items.Cast<FrameworkElement>().Select(RemoveDialogAsync);
-                    await Task.WhenAll(tasks);
-                    await DestroyAdornerAsync();
-                };
-            }
             await InitializeAdornerAsync();
         }
 
@@ -277,6 +283,7 @@ namespace LightyTest.Source
             var ret = await DisposeStoryboard.BeginAsync(this);
             // Issues an event asking you to delete this Adorner.
             AllDialogClosed?.Invoke(this, null);
+            MouseLeftButtonDown -= DialogItems_MouseLeftButtonDown;
             return ret;
         }
 
@@ -290,7 +297,7 @@ namespace LightyTest.Source
 
         #endregion
 
-        #region Animation related properties
+        #region Properties
 
         public bool IsParallelInitialize
         {
@@ -353,8 +360,15 @@ namespace LightyTest.Source
         }
         // Using a DependencyProperty as the backing store for CloseOnClickBackground.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CloseOnClickBackgroundProperty =
-            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogItems), new PropertyMetadata(true));
-
+            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogItems), new PropertyMetadata(true, CloseOnClickBackgroundChanged ));
+        private static void CloseOnClickBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var dialogItems = (DialogItems)d;
+            dialogItems.MouseLeftButtonDown -= DialogItems_MouseLeftButtonDown;
+            // Added a process to delete Adorner by clicking the background
+            if (Equals(e.NewValue, true))
+                dialogItems.MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
+        }
         #endregion
     }
 }

@@ -21,6 +21,9 @@
         <TextBlock Grid.Row="0" FontSize="16" FontWeight="SemiBold" Margin="0 10 0 0" Text="Taken from https://github.com/sourcechord/Lighty (MIT licence)" />
         <TextBlock Grid.Row="1" FontSize="14" FontWeight="SemiBold" Margin="0 10 0 0" Text="//////// DialogItems: closeOnClickBackground = true" />
         <!-- <Button Grid.Row="2" Margin="5" Width="100" Click="OnClickShowButtonPopup" Content="Show" />-->
+        <!--<Button Grid.Row="2" Margin="5" Width="100" Click="OnClickShowMovablePopup" Content="Movable Style" />-->
+        <!--<Button Grid.Row="2" Margin="5" Click="OnClickShowMultiplePopup" Content="Show multiple dialogs" />-->
+
         <StackPanel Grid.Row="2">
             <TextBlock Text="Basic Usage" />
             <TextBlock Text="How to show DialogItems" />
@@ -53,6 +56,7 @@
                     <Button Margin="5" Width="100" Click="ShowBuiltinStyleWindowPopup" Content="Builtin Style" />
                     <Button Margin="5" Width="100" Click="ShowCustomStyleWindowPopup" Content="Custom Style" />
                 </StackPanel>
+                <Button Margin="5" Width="100" Click="OnClickShowMovablePopup" Content="Movable Style" />
             </StackPanel>
 
             <Grid Grid.Column="1" x:Name="subGrid"/>

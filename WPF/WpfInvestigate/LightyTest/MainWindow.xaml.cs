@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,38 +19,38 @@ namespace LightySample
 
         private void OnClickShowButtonPopup(object sender, RoutedEventArgs e)
         {
-            DialogItems.Show(this, new SampleDialog(), true);
+            DialogItems.Show(this, new SampleDialog());
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowDialogButtonPopup(object sender, RoutedEventArgs e)
         {
-            DialogItems.ShowDialog(this, new SampleDialog(), true);
+            DialogItems.ShowDialog(this, new SampleDialog());
             MessageBox.Show("dialog item already shown");
         }
 
         private async void OnClickShowAsyncButtonPopup(object sender, RoutedEventArgs e)
         {
-            await DialogItems.ShowAsync(this, new SampleDialog(), true);
+            await DialogItems.ShowAsync(this, new SampleDialog());
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowUserControlPopup(object sender, RoutedEventArgs e)
         {
-            DialogItems.Show(this, new SampleDialog(), true);
+            DialogItems.Show(this, new SampleDialog());
         }
         private void OnClickShowImagePopup(object sender, RoutedEventArgs e)
         {
             var image = new Image();
             image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
-            DialogItems.Show(this, image, true);
+            DialogItems.Show(this, image);
         }
 
         private void OnClickShowInGridPopup(object sender, RoutedEventArgs e)
         {
             var image = new Image();
             image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
-            DialogItems.Show(this.subGrid, image, true);
+            DialogItems.Show(this.subGrid, image);
         }
 
         #region 別ウィンドウで開くサンプルなど
@@ -75,46 +74,53 @@ namespace LightySample
             win.Owner = this;
             win.Show();
         }
+        private void OnClickShowMovablePopup(object sender, RoutedEventArgs e)
+        {
+            DialogItems.Show(this, new SampleDialog(), a =>
+            {
+                var a1 = Application.Current.FindResource("DefaultPanelForMovable") as ItemsPanelTemplate;
+                a.ItemsPanel = a1;
+            });
+        }
         #endregion
 
         // ================================================
+        private Action<DialogItems> _closeOnClickBackgroundCallback = items => items.CloseOnClickBackground = false;
         private void OnClickShowButton(object sender, RoutedEventArgs e)
         {
-            DialogItems.Show(this, new SampleDialog());
+            DialogItems.Show(this, new SampleDialog(), _closeOnClickBackgroundCallback);
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowDialogButton(object sender, RoutedEventArgs e)
         {
-            DialogItems.ShowDialog(this, new SampleDialog());
+            DialogItems.ShowDialog(this, new SampleDialog(), _closeOnClickBackgroundCallback);
             MessageBox.Show("dialog item already shown");
         }
 
         private async void OnClickShowAsyncButton(object sender, RoutedEventArgs e)
         {
-            await DialogItems.ShowAsync(this, new SampleDialog());
+            await DialogItems.ShowAsync(this, new SampleDialog(), _closeOnClickBackgroundCallback);
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowUserControl(object sender, RoutedEventArgs e)
         {
-            DialogItems.Show(this, new SampleDialog());
+            DialogItems.Show(this, new SampleDialog(), _closeOnClickBackgroundCallback);
         }
         private void OnClickShowImage(object sender, RoutedEventArgs e)
         {
             var image = new Image();
             image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
             image.PreviewMouseLeftButtonDown += (o, args) => ApplicationCommands.Close.Execute(null, image);
-            // var cmd = ((ICommand)(TypeDescriptor.GetConverter(typeof(ICommand)).ConvertFromInvariantString("ApplicationCommands.Close")));
-            // image.PreviewMouseLeftButtonDown += (o, args) => cmd.Execute(image);
-            DialogItems.Show(this, image);
+            DialogItems.Show(this, image, _closeOnClickBackgroundCallback);
         }
 
         private void OnClickShowInGrid(object sender, RoutedEventArgs e)
         {
             var image = new Image();
             image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
-            DialogItems.Show(this.subGrid, image);
+            DialogItems.Show(this.subGrid, image, _closeOnClickBackgroundCallback);
         }
 
         #region 別ウィンドウで開くサンプルなど
