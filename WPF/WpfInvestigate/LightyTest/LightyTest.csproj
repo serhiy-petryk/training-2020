@@ -68,6 +68,9 @@
     <Compile Include="MultipleLightBoxWindow.xaml.cs">
       <DependentUpon>MultipleLightBoxWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SampleDialogMovable.xaml.cs">
+      <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SampleDialog.xaml.cs">
       <DependentUpon>SampleDialog.xaml</DependentUpon>
     </Compile>
@@ -111,6 +114,10 @@
     <Page Include="MultipleLightBoxWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SampleDialogMovable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SampleDialog.xaml">
       <SubType>Designer</SubType>

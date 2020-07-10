@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using LightyTest.Service;
 using LightyTest.Source;
 
 namespace LightySample
@@ -76,10 +79,22 @@ namespace LightySample
         }
         private void OnClickShowMovablePopup(object sender, RoutedEventArgs e)
         {
-            DialogItems.Show(this, new SampleDialog(), a =>
+            DialogItems.Show(this, new SampleDialogMovable(), a =>
             {
-                var a1 = Application.Current.FindResource("DefaultPanelForMovable") as ItemsPanelTemplate;
-                a.ItemsPanel = a1;
+                Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+                {
+                    var itemsPanel = Tips.GetVisualChildren(a).OfType<FrameworkElement>().FirstOrDefault(x => x.Name == "ItemsPanel");
+                    if (itemsPanel != null)
+                    {
+                        itemsPanel.HorizontalAlignment = HorizontalAlignment.Left;
+                        itemsPanel.VerticalAlignment = VerticalAlignment.Top;
+                    }
+                    a.ItemContainerStyle = null;
+                    a.CloseOnClickBackground = false;
+
+                    // var aa1 = Tips.GetVisualParents(a).ToArray();
+                    // var aa2 = Tips.GetVisualChildren(a).ToArray();
+                }));
             });
         }
         #endregion
