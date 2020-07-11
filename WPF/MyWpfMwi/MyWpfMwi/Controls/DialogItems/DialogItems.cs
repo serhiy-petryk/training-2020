@@ -1,9 +1,10 @@
 ﻿// ===============================================================
-// Taken from https://github.com/sourcechord/Lighty (MIT licence)
+// Based on the https://github.com/sourcechord/Lighty (MIT licence)
 // ===============================================================
 
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,23 +27,67 @@ namespace MyWpfMwi.Controls.DialogItems
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogItems), new FrameworkPropertyMetadata(typeof(DialogItems)));
         }
+        public DialogItems()
+        {
+            if (CloseOnClickBackground)
+                MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
+        }
 
         protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
         protected override bool IsItemItsOwnContainerOverride(object item) => false;
+
+        /// <summary>
+        /// Usage example: DialogItems.Show(owner, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="closeOnClickBackground"></param>
+        /// <returns></returns>
+        public static Action<DialogItems> GetAfterCreationCallbackForMovableDialog(FrameworkElement content, bool closeOnClickBackground)
+        {
+            return dialogItems =>
+            {
+                content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+                {
+                    dialogItems.CloseOnClickBackground = closeOnClickBackground;
+
+                    // set absolute positioning for moving
+                    if (dialogItems.ItemsHostPanel != null)
+                    {
+                        dialogItems.ItemsHostPanel.HorizontalAlignment = HorizontalAlignment.Left;
+                        dialogItems.ItemsHostPanel.VerticalAlignment = VerticalAlignment.Top;
+                    }
+
+                    // clear moving area margin
+                    if (VisualTreeHelper.GetParent(content) is ContentPresenter contentPresenter)
+                        contentPresenter.Margin = new Thickness(0);
+
+                    // center content position
+                    if (dialogItems.ItemsPresenter != null)
+                        dialogItems.ItemsPresenter.Margin = new Thickness
+                        {
+                            Left = Math.Max(0, (dialogItems.ItemsPresenter.ActualWidth - content.ActualWidth) / 2),
+                            Top = Math.Max(0, (dialogItems.ItemsPresenter.ActualHeight - content.ActualHeight) / 2)
+                        };
+                }));
+            };
+        }
 
         /// <summary>
         /// Displays the DialogItems modelessly.
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
-        public static async void Show(UIElement owner, FrameworkElement content)
+        /// <param name="afterCreationCallback"></param>
+        public static async void Show(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) 
+            if (adorner == null)
                 adorner = await CreateAdornerAsync(owner);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
                 ((DialogItems)adorner.Child).AddDialog(content);
+
+            afterCreationCallback?.Invoke((DialogItems)adorner.Child);
         }
 
         /// <summary>
@@ -50,15 +95,20 @@ namespace MyWpfMwi.Controls.DialogItems
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
+        /// <param name="afterCreationCallback"></param>
         /// <returns></returns>
-        public static async Task ShowAsync(UIElement owner, FrameworkElement content)
+        public static async Task ShowAsync(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) 
+            if (adorner == null)
                 adorner = await CreateAdornerAsync(owner);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
-                await ((DialogItems)adorner.Child).AddDialogAsync(content);
+            {
+                var task = ((DialogItems)adorner.Child).AddDialogAsync(content);
+                afterCreationCallback?.Invoke((DialogItems)adorner.Child);
+                await task;
+            }
         }
 
         /// <summary>
@@ -66,16 +116,18 @@ namespace MyWpfMwi.Controls.DialogItems
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="content"></param>
-        public static void ShowDialog(UIElement owner, FrameworkElement content)
+        /// <param name="afterCreationCallback"></param>
+        public static void ShowDialog(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
         {
             var adorner = GetAdorner(owner);
-            if (adorner == null) 
+            if (adorner == null)
                 adorner = CreateAdornerModal(owner);
 
             var frame = new DispatcherFrame();
             ((DialogItems)adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
-            if (adorner.Child != null && adorner.Child is DialogItems)
-                ((DialogItems)adorner.Child).AddDialog(content);
+            ((DialogItems)adorner.Child).AddDialog(content);
+
+            afterCreationCallback?.Invoke((DialogItems)adorner.Child);
 
             Dispatcher.PushFrame(frame);
         }
@@ -86,10 +138,10 @@ namespace MyWpfMwi.Controls.DialogItems
             var win = element as Window;
             var target = win?.Content as UIElement ?? element;
 
-            if (target == null) 
+            if (target == null)
                 return null;
             var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null) 
+            if (layer == null)
                 return null;
 
             var current = layer.GetAdorners(target)?.OfType<AdornerControl>()?.SingleOrDefault();
@@ -102,10 +154,10 @@ namespace MyWpfMwi.Controls.DialogItems
             var win = element as Window;
             var target = win?.Content as UIElement ?? element;
 
-            if (target == null) 
+            if (target == null)
                 return null;
             var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null) 
+            if (layer == null)
                 return null;
 
             // Since there is no Adorner for the dialog, create a new one and set and return it.
@@ -129,7 +181,10 @@ namespace MyWpfMwi.Controls.DialogItems
             }
             // Added a process to remove Adorner when all dialogs are cleared
             dialogItems.AllDialogClosed += (s, e) => layer.Remove(adorner);
+            // Microsoft bug???: CloseOnClickBackground is changing after "layer.Add(adorner)" in MultipleLightBoxWindow example
+            var temp = dialogItems.CloseOnClickBackground;
             layer.Add(adorner);
+            dialogItems.CloseOnClickBackground = temp;
             return adorner;
         }
 
@@ -147,7 +202,7 @@ namespace MyWpfMwi.Controls.DialogItems
                     tcs.SetResult(adorner);
                 else
                     dialogItems.CompleteInitializeDialogItems += (s, e) => tcs.SetResult(adorner);
-            })); 
+            }));
             return tcs.Task;
         }
 
@@ -166,6 +221,21 @@ namespace MyWpfMwi.Controls.DialogItems
             return adorner;
         }
 
+        private Panel _itemsHostPanel;
+        public Panel ItemsHostPanel
+        {
+            get
+            {
+                if (_itemsHostPanel == null)
+                    _itemsHostPanel = typeof(DialogItems).InvokeMember("ItemsHost",
+                        BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance, null, this,
+                        null) as Panel;
+                return _itemsHostPanel;
+            }
+        }
+
+        public ItemsPresenter ItemsPresenter => ItemsHostPanel?.TemplatedParent as ItemsPresenter;
+
         #region Dialog display related processing
         /// <summary>
         /// FrameworkElement passed as an argument is added to the displayed dialog item.
@@ -173,13 +243,12 @@ namespace MyWpfMwi.Controls.DialogItems
         /// <param name="dialog"></param>
         protected void AddDialog(FrameworkElement dialog)
         {
-            var animation = OpenStoryboard;
             dialog.Loaded += (sender, args) =>
             {
+                var parent = dialog.Parent as FrameworkElement;
+                var animation = OpenStoryboard;
                 var container = ContainerFromElement(dialog) as FrameworkElement;
                 container.Focus();
-
-                // Prevent MouseLeftButtonDown event in dialogitems from bubbling up when CloseOnClickBackground is enabled.
                 container.MouseLeftButtonDown += (s, e) => e.Handled = true;
 
                 var transform = new TransformGroup();
@@ -190,20 +259,18 @@ namespace MyWpfMwi.Controls.DialogItems
                 container.RenderTransform = transform;
                 container.RenderTransformOrigin = new Point(0.5, 0.5);
 
+                // For the added dialog, set the handler for ApplicationCommands.Close command.
+                dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(dialog)));
+
+                // Set a handler for ApplicationCommands.Close command in ItemsControl.
+                // (ItemsContainer In order to send it a Close command so that it can be closed.)
+                parent?.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(e.Parameter as FrameworkElement)));
+
                 animation?.BeginAsync(container);
             };
 
             // Add item
             Items.Add(dialog);
-
-            // For the added dialog, set the handler for ApplicationCommands.Close command.
-            dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(dialog)));
-
-            // Set a handler for ApplicationCommands.Close command in ItemsControl.
-            // (ItemsContainer In order to send it a Close command so that it can be closed.)
-            var parent = dialog.Parent as FrameworkElement;
-            parent?.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(e.Parameter as FrameworkElement)));
-
             InvalidateVisual();
         }
 
@@ -238,11 +305,20 @@ namespace MyWpfMwi.Controls.DialogItems
             else
                 await DestroyDialogAsync(dialog);
 
-            if (index != -1 && count == 1) 
+            if (index != -1 && count == 1)
                 await DestroyAdornerAsync();
 
             _closedDelegate?.Invoke(dialog);
         }
+
+        private static async void DialogItems_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var dialogItems = (DialogItems)sender;
+            var tasks = dialogItems.Items.Cast<FrameworkElement>().Select(dialogItems.RemoveDialogAsync);
+            await Task.WhenAll(tasks);
+            await dialogItems.DestroyAdornerAsync();
+        }
+
         #endregion
 
         #region Various methods to execute Animation related Storyboard
@@ -250,16 +326,6 @@ namespace MyWpfMwi.Controls.DialogItems
         public override async void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            // Added a process to delete Adorner by clicking the background
-            if (CloseOnClickBackground)
-            {
-                MouseLeftButtonDown += (s, e) =>
-                {
-                    foreach (FrameworkElement item in Items.Cast<object>().ToList())
-                        // ToList - prevent error: 'Collection was modified; enumeration operation may not execute.'
-                        ApplicationCommands.Close.Execute(item, null);
-                };
-            }
             await InitializeAdornerAsync();
         }
 
@@ -275,6 +341,7 @@ namespace MyWpfMwi.Controls.DialogItems
             var ret = await DisposeStoryboard.BeginAsync(this);
             // Issues an event asking you to delete this Adorner.
             AllDialogClosed?.Invoke(this, null);
+            MouseLeftButtonDown -= DialogItems_MouseLeftButtonDown;
             return ret;
         }
 
@@ -288,7 +355,7 @@ namespace MyWpfMwi.Controls.DialogItems
 
         #endregion
 
-        #region Animation related properties
+        #region Properties
 
         public bool IsParallelInitialize
         {
@@ -351,8 +418,15 @@ namespace MyWpfMwi.Controls.DialogItems
         }
         // Using a DependencyProperty as the backing store for CloseOnClickBackground.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CloseOnClickBackgroundProperty =
-            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogItems), new PropertyMetadata(true));
-
+            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogItems), new PropertyMetadata(true, CloseOnClickBackgroundChanged));
+        private static void CloseOnClickBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var dialogItems = (DialogItems)d;
+            dialogItems.MouseLeftButtonDown -= DialogItems_MouseLeftButtonDown;
+            // Added a process to delete Adorner by clicking the background
+            if (Equals(e.NewValue, true))
+                dialogItems.MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
+        }
         #endregion
     }
 }

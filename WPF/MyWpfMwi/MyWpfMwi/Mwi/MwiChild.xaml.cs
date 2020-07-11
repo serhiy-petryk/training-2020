@@ -559,7 +559,7 @@ namespace MyWpfMwi.Mwi
             Position = new Point(newLeft, newTop);
             Container?.InvalidateSize();
 
-            if (!IsWindowed)
+            if (!IsWindowed && Container!=null)
             {
                 // Smooth container scrolling
                 var sv = Container.ScrollViewer;

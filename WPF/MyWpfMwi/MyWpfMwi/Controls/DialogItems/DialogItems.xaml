@@ -12,7 +12,7 @@
         </Grid>
     </ControlTemplate>
     <ItemsPanelTemplate x:Key="DefaultPanel">
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid x:Name="ItemsPanel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </ItemsPanelTemplate>
     <Style x:Key="DefaultContainerStyle" TargetType="{x:Type ContentControl}">
         <Setter Property="ContentTemplate">
@@ -43,5 +43,5 @@
             </Setter.Value>
         </Setter>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
-    </Style>    
+    </Style>
 </ResourceDictionary>
