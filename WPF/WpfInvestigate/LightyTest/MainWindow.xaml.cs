@@ -89,7 +89,7 @@ namespace LightySample
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.Show(subGrid, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+            DialogItems.Show(subGrid, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
         }
         #endregion
 
@@ -153,6 +153,12 @@ namespace LightySample
             var win = new CustomStyleWindow();
             win.Owner = this;
             win.Show();
+        }
+        private void OnClickShowMovable(object sender, RoutedEventArgs e)
+        {
+            ClearSubGrid();
+            var content = new SampleDialogMovable();
+            DialogItems.Show(subGrid, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
         }
         #endregion
     }
