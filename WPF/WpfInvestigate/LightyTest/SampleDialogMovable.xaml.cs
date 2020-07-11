@@ -25,10 +25,20 @@ namespace LightyTest
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
             var itemsPresenter = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
-            if (itemsPresenter != null)
+            var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
+            if (itemsPresenter != null && container != null)
             {
-                var oldMargin = itemsPresenter.Margin;
-                itemsPresenter.Margin = new Thickness { Left = Math.Max(0, oldMargin.Left + e.HorizontalChange), Top = Math.Max(0, oldMargin.Top + e.VerticalChange) };
+                var newX = itemsPresenter.Margin.Left + e.HorizontalChange;
+                if (newX + ActualWidth > container.ActualWidth)
+                    newX = container.ActualWidth - ActualWidth;
+                if (newX < 0) newX = 0;
+
+                var newY = itemsPresenter.Margin.Top + e.VerticalChange;
+                if (newY + ActualHeight > container.ActualHeight)
+                    newY = container.ActualHeight - ActualHeight;
+                if (newY < 0) newY = 0;
+
+                itemsPresenter.Margin = new Thickness {Left = newX, Top = newY};
             }
             e.Handled = true;
         }
@@ -58,12 +68,12 @@ namespace LightyTest
                 var change = Math.Min(horizontalChange, ActualWidth - MinWidth);
                 if (itemsPresenter.Margin.Left + change < 0)
                     change = -itemsPresenter.Margin.Left;
-                if ((Width - change) > MaxWidth)
-                    change = Width - MaxWidth;
+                if ((ActualWidth - change) > MaxWidth)
+                    change = ActualWidth - MaxWidth;
 
                 if (!Tips.AreEqual(0.0, change))
                 {
-                    Width -= change;
+                    Width = ActualWidth - change;
                     itemsPresenter.Margin = new Thickness(itemsPresenter.Margin.Left + change, itemsPresenter.Margin.Top, 0, 0);
                 }
             }
@@ -81,7 +91,7 @@ namespace LightyTest
 
                 if (!Tips.AreEqual(0.0, change))
                 {
-                    Height -= change;
+                    Height = ActualHeight - change;
                     itemsPresenter.Margin = new Thickness(itemsPresenter.Margin.Left, itemsPresenter.Margin.Top + change, 0, 0);
                 }
             }
@@ -97,7 +107,7 @@ namespace LightyTest
                 change = itemsPresenter.Margin.Left + ActualWidth - container.ActualWidth;
 
             if (!Tips.AreEqual(0.0, change))
-                Width -= change;
+                Width = ActualWidth - change;
         }
         private void OnResizeBottom(double verticalChange, FrameworkElement itemsPresenter)
         {
@@ -110,7 +120,7 @@ namespace LightyTest
                 change = itemsPresenter.Margin.Top + ActualHeight - container.ActualHeight;
 
             if (!Tips.AreEqual(0.0, change))
-                Height -= change;
+                Height = ActualHeight - change;
         }
     }
 }
