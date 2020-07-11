@@ -4,19 +4,48 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             Width="120" Height="80"
+             Width="120" Height="120" MinWidth="50" MinHeight="50" MaxWidth="200"
              Background="Orange">
+
+    <UserControl.Resources>
+        <!-- Resize Thumbs -->
+        <Style x:Key="ResizeThumb" TargetType="Thumb">
+            <Setter Property="Opacity" Value="0.01"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <EventSetter Event="DragStarted" Handler="Thumb_OnDragStarted"/>
+            <EventSetter Event="DragDelta" Handler="ResizeThumb_OnDragDelta"/>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
-        <TextBlock Margin="10"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Text="Dialog contents"
-                   TextWrapping="Wrap" />
-        <Button Width="75"
-                Margin="10"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Command="ApplicationCommands.Close"
-                Content="Close" />
+        <Border BorderBrush="YellowGreen" BorderThickness="7">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ItemsPresenter/>
+
+                <TextBlock Grid.Row="0" Height="18" Padding="5 0 0 0" Background="GreenYellow" Text="Header"/>
+                <Thumb Grid.Row="0" x:Name="MoveThumb" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta" Background="Yellow"/>
+
+                <TextBlock Grid.Row="1" Margin="10 10 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Dialog contents" TextWrapping="NoWrap" />
+                <Button Grid.Row="1" Width="75" Margin="10 0 0 10" HorizontalAlignment="Center" VerticalAlignment="Bottom" Command="ApplicationCommands.Close" Content="Close" />
+
+                <ItemsPresenter Grid.Row="2"/>
+            </Grid>
+        </Border>
+
+        <Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+        <Thumb x:Name="ResizeTop" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+        <Thumb x:Name="ResizeRight" Width="7" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+        <Thumb x:Name="ResizeBottom" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+        <Thumb x:Name="ResizeTopLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+        <Thumb x:Name="ResizeTopRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+        <Thumb x:Name="ResizeBottomLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+        <Thumb x:Name="ResizeBottomRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
     </Grid>
 </UserControl>

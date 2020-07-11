@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
-using LightyTest.Service;
 using LightyTest.Source;
 
 namespace LightySample
@@ -18,6 +16,14 @@ namespace LightySample
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ClearSubGrid()
+        {
+            var layer = AdornerLayer.GetAdornerLayer(subGrid);
+            if (layer != null && layer.GetAdorners(subGrid) != null)
+                foreach (var toRemove in layer.GetAdorners(subGrid))
+                    layer.Remove(toRemove);
         }
 
         private void OnClickShowButtonPopup(object sender, RoutedEventArgs e)
@@ -51,6 +57,7 @@ namespace LightySample
 
         private void OnClickShowInGridPopup(object sender, RoutedEventArgs e)
         {
+            ClearSubGrid();
             var image = new Image();
             image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
             DialogItems.Show(this.subGrid, image);
@@ -77,25 +84,12 @@ namespace LightySample
             win.Owner = this;
             win.Show();
         }
+
         private void OnClickShowMovablePopup(object sender, RoutedEventArgs e)
         {
-            DialogItems.Show(this, new SampleDialogMovable(), a =>
-            {
-                Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
-                {
-                    var itemsPanel = Tips.GetVisualChildren(a).OfType<FrameworkElement>().FirstOrDefault(x => x.Name == "ItemsPanel");
-                    if (itemsPanel != null)
-                    {
-                        itemsPanel.HorizontalAlignment = HorizontalAlignment.Left;
-                        itemsPanel.VerticalAlignment = VerticalAlignment.Top;
-                    }
-                    a.ItemContainerStyle = null;
-                    a.CloseOnClickBackground = false;
-
-                    // var aa1 = Tips.GetVisualParents(a).ToArray();
-                    // var aa2 = Tips.GetVisualChildren(a).ToArray();
-                }));
-            });
+            ClearSubGrid();
+            var content = new SampleDialogMovable();
+            DialogItems.Show(subGrid, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
         }
         #endregion
 
@@ -133,6 +127,7 @@ namespace LightySample
 
         private void OnClickShowInGrid(object sender, RoutedEventArgs e)
         {
+            ClearSubGrid();
             var image = new Image();
             image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
             DialogItems.Show(this.subGrid, image, _closeOnClickBackgroundCallback);

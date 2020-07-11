@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using LightyTest.Service;
 
 namespace LightyTest.Source
 {
@@ -36,6 +37,41 @@ namespace LightyTest.Source
         protected override bool IsItemItsOwnContainerOverride(object item) => false;
 
         /// <summary>
+        /// Usage example: DialogItems.Show(owner, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="closeOnClickBackground"></param>
+        /// <returns></returns>
+        public static Action<DialogItems> GetAfterCreationCallbackForMovableDialog(FrameworkElement content, bool closeOnClickBackground)
+        {
+            return dialogItems =>
+            {
+                content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+                {
+                    var itemsPanel = Tips.GetVisualChildren(dialogItems).OfType<FrameworkElement>().FirstOrDefault(x => x.Name == "ItemsPanel");
+                    if (itemsPanel != null)
+                    {
+                        itemsPanel.HorizontalAlignment = HorizontalAlignment.Left;
+                        itemsPanel.VerticalAlignment = VerticalAlignment.Top;
+                    }
+                    dialogItems.ItemContainerStyle = null;
+                    dialogItems.CloseOnClickBackground = closeOnClickBackground;
+
+                    // center content position
+                    var panel = Tips.GetVisualChildren(dialogItems).OfType<ItemsPresenter>().FirstOrDefault();
+                    if (panel != null)
+                    {
+                        panel.Margin = new Thickness
+                        {
+                            Left = Math.Max(0, (panel.ActualWidth - content.ActualWidth) / 2),
+                            Top = Math.Max(0, (panel.ActualHeight - content.ActualHeight) / 2)
+                        };
+                    }
+                }));
+            };
+        }
+
+        /// <summary>
         /// Displays the DialogItems modelessly.
         /// </summary>
         /// <param name="owner"></param>
@@ -45,10 +81,12 @@ namespace LightyTest.Source
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner, afterCreationCallback);
+                adorner = await CreateAdornerAsync(owner);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
                 ((DialogItems)adorner.Child).AddDialog(content);
+
+            afterCreationCallback?.Invoke((DialogItems)adorner.Child);
         }
 
         /// <summary>
@@ -62,10 +100,14 @@ namespace LightyTest.Source
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner, afterCreationCallback);
+                adorner = await CreateAdornerAsync(owner);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
-                await ((DialogItems)adorner.Child).AddDialogAsync(content);
+            {
+                var task = ((DialogItems) adorner.Child).AddDialogAsync(content);
+                afterCreationCallback?.Invoke((DialogItems)adorner.Child);
+                await task;
+            }
         }
 
         /// <summary>
@@ -78,11 +120,13 @@ namespace LightyTest.Source
         {
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = CreateAdornerModal(owner, afterCreationCallback);
+                adorner = CreateAdornerModal(owner);
 
             var frame = new DispatcherFrame();
             ((DialogItems) adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
             ((DialogItems) adorner.Child).AddDialog(content);
+
+            afterCreationCallback?.Invoke((DialogItems)adorner.Child);
 
             Dispatcher.PushFrame(frame);
         }
@@ -143,12 +187,11 @@ namespace LightyTest.Source
             return adorner;
         }
 
-        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element, Action<DialogItems> afterCreationCallback)
+        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element)
         {
             var tcs = new TaskCompletionSource<AdornerControl>();
             var dialogItems = new DialogItems();
             var adorner = CreateAdornerCore(element, dialogItems);
-            afterCreationCallback?.Invoke(dialogItems);
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
@@ -162,11 +205,10 @@ namespace LightyTest.Source
             return tcs.Task;
         }
 
-        protected static AdornerControl CreateAdornerModal(UIElement element, Action<DialogItems> afterCreationCallback)
+        protected static AdornerControl CreateAdornerModal(UIElement element)
         {
             var dialogItems = new DialogItems();
             var adorner = CreateAdornerCore(element, dialogItems);
-            afterCreationCallback?.Invoke(dialogItems);
 
             if (!dialogItems.IsParallelInitialize)
             {
