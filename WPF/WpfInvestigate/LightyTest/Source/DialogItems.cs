@@ -1,9 +1,11 @@
 ﻿// ===============================================================
-// Taken from https://github.com/sourcechord/Lighty (MIT licence)
+// Based on the https://github.com/sourcechord/Lighty (MIT licence)
 // ===============================================================
 
+using LightyTest.Service;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +14,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using LightyTest.Service;
 
 namespace LightyTest.Source
 {
@@ -48,25 +49,26 @@ namespace LightyTest.Source
             {
                 content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
                 {
-                    var itemsPanel = Tips.GetVisualChildren(dialogItems).OfType<FrameworkElement>().FirstOrDefault(x => x.Name == "ItemsPanel");
-                    if (itemsPanel != null)
-                    {
-                        itemsPanel.HorizontalAlignment = HorizontalAlignment.Left;
-                        itemsPanel.VerticalAlignment = VerticalAlignment.Top;
-                    }
-                    dialogItems.ItemContainerStyle = null;
                     dialogItems.CloseOnClickBackground = closeOnClickBackground;
 
-                    // center content position
-                    var panel = Tips.GetVisualChildren(dialogItems).OfType<ItemsPresenter>().FirstOrDefault();
-                    if (panel != null)
+                    // set absolute positioning for moving
+                    if (dialogItems.ItemsHostPanel != null)
                     {
-                        panel.Margin = new Thickness
-                        {
-                            Left = Math.Max(0, (panel.ActualWidth - content.ActualWidth) / 2),
-                            Top = Math.Max(0, (panel.ActualHeight - content.ActualHeight) / 2)
-                        };
+                        dialogItems.ItemsHostPanel.HorizontalAlignment = HorizontalAlignment.Left;
+                        dialogItems.ItemsHostPanel.VerticalAlignment = VerticalAlignment.Top;
                     }
+
+                    // clear moving area margin
+                    if (VisualTreeHelper.GetParent(content) is ContentPresenter contentPresenter)
+                        contentPresenter.Margin = new Thickness(0);
+                    
+                    // center content position
+                    if (dialogItems.ItemsPresenter != null)
+                        dialogItems.ItemsPresenter.Margin = new Thickness
+                        {
+                            Left = Math.Max(0, (dialogItems.ItemsPresenter.ActualWidth - content.ActualWidth) / 2),
+                            Top = Math.Max(0, (dialogItems.ItemsPresenter.ActualHeight - content.ActualHeight) / 2)
+                        };
                 }));
             };
         }
@@ -219,6 +221,21 @@ namespace LightyTest.Source
 
             return adorner;
         }
+
+        private Panel _itemsHostPanel;
+        public Panel ItemsHostPanel
+        {
+            get
+            {
+                if (_itemsHostPanel == null)
+                    _itemsHostPanel = typeof(DialogItems).InvokeMember("ItemsHost",
+                        BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance, null, this,
+                        null) as Panel;
+                return _itemsHostPanel;
+            }
+        }
+
+        public ItemsPresenter ItemsPresenter => ItemsHostPanel?.TemplatedParent as ItemsPresenter;
 
         #region Dialog display related processing
         /// <summary>

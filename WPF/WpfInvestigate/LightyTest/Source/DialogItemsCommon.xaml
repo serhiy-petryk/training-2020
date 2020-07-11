@@ -15,7 +15,7 @@
     </ControlTemplate>
 
     <ItemsPanelTemplate x:Key="HorizontalPanel">
-        <StackPanel Orientation="Horizontal" Background="Aqua" Margin="10" Opacity="0.5"/>
+        <StackPanel Orientation="Horizontal"/>
     </ItemsPanelTemplate>
     <ItemsPanelTemplate x:Key="VerticalPanel">
         <StackPanel Orientation="Vertical" />

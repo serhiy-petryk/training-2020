@@ -2,7 +2,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/DialogItems.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/xDialogBlock.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
