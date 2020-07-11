@@ -56,6 +56,8 @@ namespace LightySample
                 var change = Math.Min(horizontalChange, ActualWidth - MinWidth);
                 if (panel.Margin.Left + change < 0)
                     change = -panel.Margin.Left;
+                if ((Width - change) > MaxWidth)
+                    change = Width - MaxWidth;
 
                 if (!Tips.AreEqual(0.0, change))
                 {
@@ -73,6 +75,8 @@ namespace LightySample
                 var change = Math.Min(verticalChange, ActualHeight - MinHeight);
                 if (panel.Margin.Top + change < 0)
                     change = -panel.Margin.Top;
+                if ((Height - change) > MaxHeight)
+                    change = Height - MaxHeight;
 
                 if (!Tips.AreEqual(0.0, change))
                 {
