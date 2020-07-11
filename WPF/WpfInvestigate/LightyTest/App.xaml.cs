@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace LightySample
+namespace LightyTest
 {
     /// <summary>
     /// App.xaml の相互作用ロジック

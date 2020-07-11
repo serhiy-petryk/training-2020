@@ -2,7 +2,6 @@
 // Based on the https://github.com/sourcechord/Lighty (MIT licence)
 // ===============================================================
 
-using LightyTest.Service;
 using System;
 using System.Linq;
 using System.Reflection;

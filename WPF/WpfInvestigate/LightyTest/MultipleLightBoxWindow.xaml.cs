@@ -2,7 +2,7 @@
 using System.Windows;
 using LightyTest.Source;
 
-namespace LightySample
+namespace LightyTest
 {
     /// <summary>
     /// MultipleLightBoxWindow.xaml の相互作用ロジック

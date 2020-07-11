@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using LightyTest.Source;
 
-namespace LightySample
+namespace LightyTest
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック

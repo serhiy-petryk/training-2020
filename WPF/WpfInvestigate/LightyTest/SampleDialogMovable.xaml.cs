@@ -3,9 +3,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using LightyTest.Service;
 
-namespace LightySample
+namespace LightyTest
 {
     public partial class SampleDialogMovable : UserControl
     {
@@ -23,11 +24,11 @@ namespace LightySample
 
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var panel = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
-            if (panel != null)
+            var itemsPresenter = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
+            if (itemsPresenter != null)
             {
-                var oldMargin = panel.Margin;
-                panel.Margin = new Thickness { Left = Math.Max(0, oldMargin.Left + e.HorizontalChange), Top = Math.Max(0, oldMargin.Top + e.VerticalChange) };
+                var oldMargin = itemsPresenter.Margin;
+                itemsPresenter.Margin = new Thickness { Left = Math.Max(0, oldMargin.Left + e.HorizontalChange), Top = Math.Max(0, oldMargin.Top + e.VerticalChange) };
             }
             e.Handled = true;
         }
@@ -35,69 +36,79 @@ namespace LightySample
         private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
             var thumb = (Thumb)sender;
+            var itemsPresenter = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
+
             if (thumb.HorizontalAlignment == HorizontalAlignment.Left)
-                OnResizeLeft(e.HorizontalChange);
+                OnResizeLeft(e.HorizontalChange, itemsPresenter);
             else if (thumb.HorizontalAlignment == HorizontalAlignment.Right)
-                OnResizeRight(e.HorizontalChange);
+                OnResizeRight(e.HorizontalChange, itemsPresenter);
 
             if (thumb.VerticalAlignment == VerticalAlignment.Top)
-                OnResizeTop(e.VerticalChange);
+                OnResizeTop(e.VerticalChange, itemsPresenter);
             else if (thumb.VerticalAlignment == VerticalAlignment.Bottom)
-                OnResizeBottom(e.VerticalChange);
+                OnResizeBottom(e.VerticalChange, itemsPresenter);
 
             e.Handled = true;
         }
 
-        private void OnResizeLeft(double horizontalChange)
+        private void OnResizeLeft(double horizontalChange, FrameworkElement itemsPresenter)
         {
-            var panel = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
-            if (panel != null)
+            if (itemsPresenter != null)
             {
                 var change = Math.Min(horizontalChange, ActualWidth - MinWidth);
-                if (panel.Margin.Left + change < 0)
-                    change = -panel.Margin.Left;
+                if (itemsPresenter.Margin.Left + change < 0)
+                    change = -itemsPresenter.Margin.Left;
                 if ((Width - change) > MaxWidth)
                     change = Width - MaxWidth;
 
                 if (!Tips.AreEqual(0.0, change))
                 {
                     Width -= change;
-                    panel.Margin = new Thickness(panel.Margin.Left + change, panel.Margin.Top, 0, 0);
+                    itemsPresenter.Margin = new Thickness(itemsPresenter.Margin.Left + change, itemsPresenter.Margin.Top, 0, 0);
                 }
             }
         }
 
-        private void OnResizeTop(double verticalChange)
+        private void OnResizeTop(double verticalChange, FrameworkElement itemsPresenter)
         {
-            var panel = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
-            if (panel != null)
+            if (itemsPresenter != null)
             {
                 var change = Math.Min(verticalChange, ActualHeight - MinHeight);
-                if (panel.Margin.Top + change < 0)
-                    change = -panel.Margin.Top;
+                if (itemsPresenter.Margin.Top + change < 0)
+                    change = -itemsPresenter.Margin.Top;
                 if ((Height - change) > MaxHeight)
                     change = Height - MaxHeight;
 
                 if (!Tips.AreEqual(0.0, change))
                 {
                     Height -= change;
-                    panel.Margin = new Thickness(panel.Margin.Left, panel.Margin.Top + change, 0, 0);
+                    itemsPresenter.Margin = new Thickness(itemsPresenter.Margin.Left, itemsPresenter.Margin.Top + change, 0, 0);
                 }
             }
         }
-        private void OnResizeRight(double horizontalChange)
+        private void OnResizeRight(double horizontalChange, FrameworkElement itemsPresenter)
         {
+            var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
             var change = Math.Min(-horizontalChange, ActualWidth - MinWidth);
-            if (Width - change > MaxWidth)
-                change = -(MaxWidth - Width);
+            
+            if ((ActualWidth - change) > MaxWidth)
+                change = ActualWidth - MaxWidth;
+            if (container != null && (itemsPresenter.Margin.Left + ActualWidth - change) > container.ActualWidth)
+                change = itemsPresenter.Margin.Left + ActualWidth - container.ActualWidth;
+
             if (!Tips.AreEqual(0.0, change))
                 Width -= change;
         }
-        private void OnResizeBottom(double verticalChange)
+        private void OnResizeBottom(double verticalChange, FrameworkElement itemsPresenter)
         {
+            var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
             var change = Math.Min(-verticalChange, ActualHeight - MinHeight);
-            if (Height - change > MaxHeight)
-                change = -(MaxHeight - Height); 
+
+            if ((ActualHeight - change) > MaxHeight)
+                change = ActualHeight - MaxHeight;
+            if (container != null && (itemsPresenter.Margin.Top + ActualHeight - change) > container.ActualHeight)
+                change = itemsPresenter.Margin.Top + ActualHeight - container.ActualHeight;
+
             if (!Tips.AreEqual(0.0, change))
                 Height -= change;
         }
