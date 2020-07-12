@@ -515,7 +515,11 @@ namespace MyWpfMwi.Mwi
             if (eventArgs.Cancel)
                 return;
 
-            Close();
+            if (IsDialog)
+                ApplicationCommands.Close.Execute(this, (DialogItems)Parent);
+            else
+                Close();
+
             RaiseEvent(new RoutedEventArgs(ClosedEvent));
         }
 
