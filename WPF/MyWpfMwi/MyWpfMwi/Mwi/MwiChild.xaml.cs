@@ -574,7 +574,7 @@ namespace MyWpfMwi.Mwi
                 }
             }
 
-                Position = new Point(newX, newY);
+            Position = new Point(newX, newY);
             Container?.InvalidateSize();
 
             if (!IsWindowed && !IsDialog)
@@ -611,39 +611,82 @@ namespace MyWpfMwi.Mwi
         private void OnResizeLeft(double horizontalChange)
         {
             var change = Math.Min(horizontalChange, ActualWidth - MinWidth);
-            var oldLeft = Position.X;
-            var leftMargin = ((FrameworkElement)GetTemplateChild("BaseBorder")).Margin.Left;
-            if (oldLeft + change < leftMargin)
-                change = -leftMargin - oldLeft;
+            var oldX = Position.X;
+            if (oldX + change < 0) change = -oldX;
+
+            if (IsDialog)
+            {
+                var itemsPresenter = ((DialogItems) Parent).ItemsPresenter;
+                if (itemsPresenter != null)
+                {
+                    if (itemsPresenter.Margin.Left + change < 0)
+                        change = -itemsPresenter.Margin.Left;
+                    if ((ActualWidth - change) > MaxWidth)
+                        change = ActualWidth - MaxWidth;
+                }
+            }
 
             if (!Tips.AreEqual(0.0, change))
             {
                 Width = ActualWidth - change;
-                Position = new Point(oldLeft + change, Position.Y);
+                Position = new Point(oldX + change, Position.Y);
             }
         }
         private void OnResizeTop(double verticalChange)
         {
             var change = Math.Min(verticalChange, ActualHeight - MinHeight);
-            var oldTop = Position.Y;
-            if (oldTop + change < 0)
-                change = -oldTop;
+            var oldY = Position.Y;
+            if (oldY + change < 0) change = -oldY;
+
+            if (IsDialog)
+            {
+                var itemsPresenter = ((DialogItems)Parent).ItemsPresenter;
+                if (itemsPresenter != null)
+                {
+                    if (itemsPresenter.Margin.Top + change < 0)
+                        change = -itemsPresenter.Margin.Top;
+                    if ((Height - change) > MaxHeight)
+                        change = Height - MaxHeight;
+                }
+            }
 
             if (!Tips.AreEqual(0.0, change))
             {
                 Height = ActualHeight - change;
-                Position = new Point(Position.X, oldTop + change);
+                Position = new Point(Position.X, oldY + change);
             }
         }
         private void OnResizeRight(double horizontalChange)
         {
             var change = Math.Min(-horizontalChange, ActualWidth - MinWidth);
+            if ((ActualWidth - change) > MaxWidth)
+                change = ActualWidth - MaxWidth;
+
+            if (IsDialog)
+            {
+                var itemsPresenter = ((DialogItems)Parent).ItemsPresenter;
+                var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
+                if (itemsPresenter != null && container != null && (itemsPresenter.Margin.Left + ActualWidth - change) > container.ActualWidth)
+                    change = itemsPresenter.Margin.Left + ActualWidth - container.ActualWidth;
+            }
+
             if (!Tips.AreEqual(0.0, change))
                 Width = ActualWidth - change;
         }
         private void OnResizeBottom(double verticalChange)
         {
             var change = Math.Min(-verticalChange, ActualHeight - MinHeight);
+            if ((ActualHeight - change) > MaxHeight)
+                change = ActualHeight - MaxHeight;
+
+            if (IsDialog)
+            {
+                var itemsPresenter = ((DialogItems)Parent).ItemsPresenter;
+                var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
+                if (itemsPresenter != null && container != null && (itemsPresenter.Margin.Top + ActualHeight - change) > container.ActualHeight)
+                    change = itemsPresenter.Margin.Top + ActualHeight - container.ActualHeight;
+            }
+
             if (!Tips.AreEqual(0.0, change))
                 Height = ActualHeight - change;
         }
