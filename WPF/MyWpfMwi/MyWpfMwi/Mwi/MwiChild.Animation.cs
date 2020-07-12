@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using MyWpfMwi.Common;
+using MyWpfMwi.Controls.DialogItems;
 
 namespace MyWpfMwi.Mwi
 {
@@ -43,7 +45,16 @@ namespace MyWpfMwi.Mwi
             if (WindowState == WindowState.Normal)
                 to = new Rect(_attachedPosition.X, _attachedPosition.Y, _lastNormalSize.Width, _lastNormalSize.Height);
             else if (WindowState == WindowState.Maximized)
-                to = new Rect(0, 0, Container.ActualWidth, Container.InnerHeight);
+            {
+                if (IsDialog)
+                {
+                    var itemsPresenter = ((DialogItems) Parent).ItemsPresenter;
+                    var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
+                    to = new Rect(0, 0, container.ActualWidth, container.ActualHeight);
+                }
+                else
+                    to = new Rect(0, 0, Container.ActualWidth, Container.InnerHeight);
+            }
             else
                 to = new Rect(Position.X, 0, ActualWidth, MinHeight);
 

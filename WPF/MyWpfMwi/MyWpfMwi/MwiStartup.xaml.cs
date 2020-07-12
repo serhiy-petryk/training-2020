@@ -87,13 +87,9 @@ namespace MyWpfMwi
         public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
         {
             var container = AppViewModel.Instance.ContainerControl;
-            var dialog = new MwiChild {AllowMaximize = false, AllowMinimize = false, AllowDetach = false};
+            var dialog = new MwiChild {Title = "Dialog"};
             dialog.Content = new TextBlock { Text = "Test dialog window", Background = new SolidColorBrush(Colors.Green) };
-            dialog.Title = "Dialog";
-            if (container.ActiveMwiChild.IsWindowed)
-                DialogItems.Show(container.ActiveMwiChild, dialog, GetAfterCreationCallbackForDialog(dialog, true));
-            else
-                DialogItems.Show(container, dialog, GetAfterCreationCallbackForDialog(dialog, true));
+            DialogItems.Show(container.ContainerForDialog, dialog, GetAfterCreationCallbackForDialog(dialog, true));
         });
 
         private static Action<DialogItems> GetAfterCreationCallbackForDialog(FrameworkElement content, bool closeOnClickBackground)
@@ -117,6 +113,7 @@ namespace MyWpfMwi
 
                     // center content position
                     var mwiChild = (MwiChild)dialogItems.Items[0];
+                    mwiChild.Focused = true;
                     mwiChild.Position = new Point(Math.Max(0, (dialogItems.ItemsPresenter.ActualWidth - content.ActualWidth) / 2),
                         Math.Max(0, (dialogItems.ItemsPresenter.ActualHeight - content.ActualHeight) / 2));
                 }));

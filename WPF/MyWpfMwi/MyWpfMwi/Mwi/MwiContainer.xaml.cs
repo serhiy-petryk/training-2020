@@ -31,6 +31,9 @@ namespace MyWpfMwi.Mwi
         public static MwiContainer GetMwiContainer(DependencyObject element) => element?.GetValue(MwiContainerProperty) as MwiContainer; // NotNull propagation need to prevent VS designer error
 
         //==============================
+        public FrameworkElement ContainerForDialog => ActiveMwiChild != null && ActiveMwiChild.IsWindowed
+            ? (FrameworkElement) ActiveMwiChild
+            : this;
         public RelayCommand CmdSetLayout { get; }
         public bool WindowShowLock = false; // lock for async window.Show()
 
