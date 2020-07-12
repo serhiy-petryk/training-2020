@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using MyWpfMwi.Common;
+using MyWpfMwi.Controls.DialogItems;
 using MyWpfMwi.Examples;
 
 namespace MyWpfMwi.Mwi
@@ -709,10 +710,15 @@ namespace MyWpfMwi.Mwi
                 if (!Tips.AreEqual(newLeft, window.Left))
                     window.Left = newLeft;
             }
-            else
+            else if (mwiChild.Parent is Canvas)
             {
                 Canvas.SetTop(mwiChild, newPosition.Y);
                 Canvas.SetLeft(mwiChild, newPosition.X);
+            }
+            else if (mwiChild.Parent is DialogItems)
+            {
+                var dialogItems = (DialogItems)mwiChild.Parent;
+                dialogItems.ItemsPresenter.Margin = new Thickness(newPosition.X, newPosition.Y, 0, 0);
             }
         }
 

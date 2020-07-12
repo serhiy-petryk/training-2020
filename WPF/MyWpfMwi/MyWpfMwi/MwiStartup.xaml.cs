@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using MyWpfMwi.Common;
 using MyWpfMwi.Controls.DialogItems;
 using MyWpfMwi.Examples;
@@ -86,14 +87,41 @@ namespace MyWpfMwi
         public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
         {
             var container = AppViewModel.Instance.ContainerControl;
-            var a1 = new MwiChild { AllowMaximize = false, AllowMinimize = false, AllowDetach = false };
-            a1.Content = new TextBlock { Text = "AAAAAAAAAAAAAAAAAA", Background = new SolidColorBrush(Colors.Red) };
-            // Cont.Children.Add(a1);
-            a1.Title = "AAAAA";
+            var dialog = new MwiChild { AllowMaximize = false, AllowMinimize = false, AllowDetach = false };
+            dialog.Content = new TextBlock { Text = "AAAAAAAAAAAAAAAAAA", Background = new SolidColorBrush(Colors.Green) };
+            dialog.Title = "Dialog";
             if (container.ActiveMwiChild.IsWindowed)
-                DialogItems.ShowDialog(container.ActiveMwiChild, a1);
+                DialogItems.Show(container.ActiveMwiChild, dialog, GetAfterCreationCallbackForDialog(dialog, true));
             else
-                DialogItems.ShowDialog(container, a1);
+                DialogItems.Show(container, dialog, GetAfterCreationCallbackForDialog(dialog, true));
         });
+
+        private static Action<DialogItems> GetAfterCreationCallbackForDialog(FrameworkElement content, bool closeOnClickBackground)
+        {
+            return dialogItems =>
+            {
+                content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+                {
+                    dialogItems.CloseOnClickBackground = closeOnClickBackground;
+
+                    // set absolute positioning for moving
+                    if (dialogItems.ItemsHostPanel != null)
+                    {
+                        dialogItems.ItemsHostPanel.HorizontalAlignment = HorizontalAlignment.Left;
+                        dialogItems.ItemsHostPanel.VerticalAlignment = VerticalAlignment.Top;
+                    }
+
+                    // clear moving area margin
+                    if (VisualTreeHelper.GetParent(content) is ContentPresenter contentPresenter)
+                        contentPresenter.Margin = new Thickness(0);
+
+                    // center content position
+                    var mwiChild = (MwiChild)dialogItems.Items[0];
+                    mwiChild.Position = new Point(Math.Max(0, (dialogItems.ItemsPresenter.ActualWidth - content.ActualWidth) / 2),
+                        Math.Max(0, (dialogItems.ItemsPresenter.ActualHeight - content.ActualHeight) / 2));
+                }));
+            };
+        }
+
     }
 }
