@@ -130,6 +130,7 @@
             <ItemsPresenter />
         </Grid>
     </ControlTemplate>
+
     <ControlTemplate x:Key="DarkGlassTemplate">
         <Grid Background="White">
             <Grid>
