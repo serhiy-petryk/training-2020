@@ -102,7 +102,7 @@
                                                         <MenuItem Header="Maximize" Command="{Binding SysCmdMaximize}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource MaximizeGeometry}"/>
                                                         <Separator Height="12" Margin="0 -2"/>
                                                         <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
-                                                              Visibility="{Binding IsWindowed, Converter={x:Static common:InverseVisibilityConverter.Instance}}" InputGestureText="Ctrl+F4"/>
+                                                              Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.InverseInstance}}" InputGestureText="Ctrl+F4"/>
                                                         <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
                                                               Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.Instance}}" InputGestureText="Alt+F4"/>
                                                     </ContextMenu>

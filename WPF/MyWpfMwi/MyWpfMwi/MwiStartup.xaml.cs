@@ -88,7 +88,7 @@ namespace MyWpfMwi
         {
             var container = AppViewModel.Instance.ContainerControl;
             var dialog = new MwiChild {AllowMaximize = false, AllowMinimize = false, AllowDetach = false};
-            dialog.Content = new TextBlock { Text = "AAAAAAAAAAAAAAAAAA", Background = new SolidColorBrush(Colors.Green) };
+            dialog.Content = new TextBlock { Text = "Test dialog window", Background = new SolidColorBrush(Colors.Green) };
             dialog.Title = "Dialog";
             if (container.ActiveMwiChild.IsWindowed)
                 DialogItems.Show(container.ActiveMwiChild, dialog, GetAfterCreationCallbackForDialog(dialog, true));

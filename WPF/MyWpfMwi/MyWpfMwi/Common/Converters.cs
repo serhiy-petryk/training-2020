@@ -9,22 +9,14 @@ namespace MyWpfMwi.Common
     public class VisibilityConverter : IValueConverter
     {
         public static VisibilityConverter Instance = new VisibilityConverter();
+        public static VisibilityConverter InverseInstance = new VisibilityConverter { _inverse = true };
+        private bool _inverse;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null || Equals(value, false) || Equals(value, 0)
+            return _inverse ^ (value == null || Equals(value, false) || Equals(value, 0) || Equals(value, ""))
                 ? (Equals(parameter, "Hide") ? Visibility.Hidden : Visibility.Collapsed)
                 : Visibility.Visible;
         }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
-
-    public class InverseVisibilityConverter : IValueConverter
-    {
-        public static InverseVisibilityConverter Instance = new InverseVisibilityConverter();
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
-            value == null || Equals(value, false)
-                ? Visibility.Visible
-                : (Equals(parameter, "Hide") ? Visibility.Hidden : Visibility.Collapsed);
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
