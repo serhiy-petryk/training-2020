@@ -87,7 +87,7 @@ namespace MyWpfMwi
         public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
         {
             var container = AppViewModel.Instance.ContainerControl;
-            var dialog = new MwiChild { AllowMaximize = false, AllowMinimize = false, AllowDetach = false };
+            var dialog = new MwiChild {AllowMaximize = false, AllowMinimize = false, AllowDetach = false};
             dialog.Content = new TextBlock { Text = "AAAAAAAAAAAAAAAAAA", Background = new SolidColorBrush(Colors.Green) };
             dialog.Title = "Dialog";
             if (container.ActiveMwiChild.IsWindowed)

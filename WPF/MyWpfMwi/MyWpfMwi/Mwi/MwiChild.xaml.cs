@@ -58,6 +58,7 @@ namespace MyWpfMwi.Mwi
         //=====================================
         public readonly int Id = MwiContainer.MwiUniqueCount++;
         public bool IsWindowed => Parent is Window;
+        public bool IsDialog => Parent is DialogItems;
         public MwiContainer Container => MwiContainer.GetMwiContainer(this);
         public bool IsSelected => Container?.ActiveMwiChild == this;
 
@@ -543,30 +544,46 @@ namespace MyWpfMwi.Mwi
                 return;
             }
 
-            var newLeft = Position.X + e.HorizontalChange;
-            var newTop = Position.Y + e.VerticalChange;
+            var newX = Position.X + e.HorizontalChange;
+            var newY = Position.Y + e.VerticalChange;
 
             if (!IsWindowed)
             {
                 // Check is mouse in outside of container
                 var mousePosition = Mouse.GetPosition(Container);
                 var childPosition = TranslatePoint(new Point(0, 0), Container);
-                if (newLeft < (childPosition.X - mousePosition.X))
-                    newLeft -= e.HorizontalChange; // is outside => restore old value
-                if (newTop < (childPosition.Y - mousePosition.Y))
-                    newTop -= e.VerticalChange; // is outside => restore old value
+                if (newX < (childPosition.X - mousePosition.X))
+                    newX -= e.HorizontalChange; // is outside => restore old value
+                if (newY < (childPosition.Y - mousePosition.Y))
+                    newY -= e.VerticalChange; // is outside => restore old value
             }
 
-            Position = new Point(newLeft, newTop);
+            if (IsDialog)
+            {
+                var itemsPresenter = ((DialogItems)Parent).ItemsPresenter;
+                var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
+                if (itemsPresenter != null && container != null)
+                {
+                    if (newX + ActualWidth > container.ActualWidth)
+                        newX = container.ActualWidth - ActualWidth;
+                    if (newX < 0) newX = 0;
+
+                    if (newY + ActualHeight > container.ActualHeight)
+                        newY = container.ActualHeight - ActualHeight;
+                    if (newY < 0) newY = 0;
+                }
+            }
+
+                Position = new Point(newX, newY);
             Container?.InvalidateSize();
 
-            if (!IsWindowed && Container!=null)
+            if (!IsWindowed && !IsDialog)
             {
                 // Smooth container scrolling
                 var sv = Container.ScrollViewer;
-                if (Math.Abs(e.HorizontalChange) > Tips.SCREEN_TOLERANCE && (newLeft + ActualWidth) > Container.ActualWidth)
+                if (Math.Abs(e.HorizontalChange) > Tips.SCREEN_TOLERANCE && (newX + ActualWidth) > Container.ActualWidth)
                     sv.ScrollToHorizontalOffset(Math.Max(0, sv.HorizontalOffset + e.HorizontalChange * 0.25));
-                if (Math.Abs(e.VerticalChange) > Tips.SCREEN_TOLERANCE && (newTop + ActualHeight) > Container.InnerHeight)
+                if (Math.Abs(e.VerticalChange) > Tips.SCREEN_TOLERANCE && (newY + ActualHeight) > Container.InnerHeight)
                     sv.ScrollToVerticalOffset(Math.Max(0, sv.VerticalOffset + e.VerticalChange * 0.25));
             }
             e.Handled = true;
@@ -715,7 +732,7 @@ namespace MyWpfMwi.Mwi
                 Canvas.SetTop(mwiChild, newPosition.Y);
                 Canvas.SetLeft(mwiChild, newPosition.X);
             }
-            else if (mwiChild.Parent is DialogItems)
+            else if (mwiChild.IsDialog)
             {
                 var dialogItems = (DialogItems)mwiChild.Parent;
                 dialogItems.ItemsPresenter.Margin = new Thickness(newPosition.X, newPosition.Y, 0, 0);
