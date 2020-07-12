@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace LightyTest
+namespace LightyTest.Examples
 {
     /// <summary>
     /// SampleDialog.xaml の相互作用ロジック

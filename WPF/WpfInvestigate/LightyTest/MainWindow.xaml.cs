@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using LightyTest.Examples;
 using LightyTest.Source;
 
 namespace LightyTest

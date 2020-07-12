@@ -50,47 +50,47 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BuiltinStyleWindowPopup.xaml.cs">
+    <Compile Include="Examples\BuiltinStyleWindowPopup.xaml.cs">
       <DependentUpon>BuiltinStyleWindowPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BuiltinStyleWindow.xaml.cs">
+    <Compile Include="Examples\BuiltinStyleWindow.xaml.cs">
       <DependentUpon>BuiltinStyleWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomStyleWindowPopup.xaml.cs">
+    <Compile Include="Examples\CustomStyleWindowPopup.xaml.cs">
       <DependentUpon>CustomStyleWindowPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomStyleWindow.xaml.cs">
+    <Compile Include="Examples\CustomStyleWindow.xaml.cs">
       <DependentUpon>CustomStyleWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MultipleLightBoxWindowPopup.xaml.cs">
+    <Compile Include="Examples\MultipleLightBoxWindowPopup.xaml.cs">
       <DependentUpon>MultipleLightBoxWindowPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MultipleLightBoxWindow.xaml.cs">
+    <Compile Include="Examples\MultipleLightBoxWindow.xaml.cs">
       <DependentUpon>MultipleLightBoxWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SampleDialogMovable.xaml.cs">
+    <Compile Include="Examples\SampleDialogMovable.xaml.cs">
       <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SampleDialog.xaml.cs">
+    <Compile Include="Examples\SampleDialog.xaml.cs">
       <DependentUpon>SampleDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service\Tips.cs" />
     <Compile Include="Source\AdornerControl.cs" />
     <Compile Include="Source\DialogItems.cs" />
     <Compile Include="Source\StoryboardExtensions.cs" />
-    <Page Include="BuiltinStyleWindowPopup.xaml">
+    <Page Include="Examples\BuiltinStyleWindowPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="BuiltinStyleWindow.xaml">
+    <Page Include="Examples\BuiltinStyleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CustomStyleWindowPopup.xaml">
+    <Page Include="Examples\CustomStyleWindowPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomStyleWindow.xaml">
+    <Page Include="Examples\CustomStyleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -106,19 +106,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MultipleLightBoxWindowPopup.xaml">
+    <Page Include="Examples\MultipleLightBoxWindowPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MultipleLightBoxWindow.xaml">
+    <Page Include="Examples\MultipleLightBoxWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SampleDialogMovable.xaml">
+    <Page Include="Examples\SampleDialogMovable.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SampleDialog.xaml">
+    <Page Include="Examples\SampleDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

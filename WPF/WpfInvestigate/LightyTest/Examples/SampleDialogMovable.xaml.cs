@@ -6,7 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using LightyTest.Service;
 
-namespace LightyTest
+namespace LightyTest.Examples
 {
     public partial class SampleDialogMovable : UserControl
     {
