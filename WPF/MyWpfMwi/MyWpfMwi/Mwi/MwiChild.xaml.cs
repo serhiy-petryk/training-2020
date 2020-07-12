@@ -601,7 +601,7 @@ namespace MyWpfMwi.Mwi
 
             if (!Tips.AreEqual(0.0, change))
             {
-                Width -= change;
+                Width = ActualWidth - change;
                 Position = new Point(oldLeft + change, Position.Y);
             }
         }
@@ -614,7 +614,7 @@ namespace MyWpfMwi.Mwi
 
             if (!Tips.AreEqual(0.0, change))
             {
-                Height -= change;
+                Height = ActualHeight - change;
                 Position = new Point(Position.X, oldTop + change);
             }
         }
@@ -622,13 +622,13 @@ namespace MyWpfMwi.Mwi
         {
             var change = Math.Min(-horizontalChange, ActualWidth - MinWidth);
             if (!Tips.AreEqual(0.0, change))
-                Width -= change;
+                Width = ActualWidth - change;
         }
         private void OnResizeBottom(double verticalChange)
         {
             var change = Math.Min(-verticalChange, ActualHeight - MinHeight);
             if (!Tips.AreEqual(0.0, change))
-                Height -= change;
+                Height = ActualHeight - change;
         }
 
         #endregion
