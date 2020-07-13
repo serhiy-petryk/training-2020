@@ -154,7 +154,7 @@
         <Setter Property="Height" Value="17"/>
         <Setter Property="Margin" Value="0,0,2,0"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
-        <!--<Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"></Setter>-->
+        <!--<Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />-->
         <Setter Property="Foreground" Value="#FF535666"/>
         <Setter Property="Template">
             <Setter.Value>
