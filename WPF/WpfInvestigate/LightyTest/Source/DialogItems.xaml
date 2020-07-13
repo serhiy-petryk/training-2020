@@ -6,6 +6,7 @@
         <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/DialogItemsCommon.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!-- Default Styles -->
     <ControlTemplate x:Key="DefaultTemplate">
         <Grid Background="#88000000">
             <ItemsPresenter />
@@ -24,6 +25,31 @@
         </Setter>
     </Style>
 
+    <!-- Styles for dialogs -->
+    <ItemsPanelTemplate x:Key="ItemsPanelForDialogTemplate">
+        <Grid x:Name="ItemsPanel" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    </ItemsPanelTemplate>
+    <Style x:Key="ItemContainerForDialogStyle" TargetType="{x:Type ContentControl}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ContentPresenter Content="{Binding}"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="DialogStyle" TargetType="{x:Type local:DialogItems}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <Grid x:Name="ItemsPanel" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle" Value="{x:Null}" />
+    </Style>
+
+    <!-- DialogItems default style -->
     <Style TargetType="{x:Type local:DialogItems}">
         <Setter Property="Template" Value="{StaticResource DefaultTemplate}" />
         <Setter Property="ItemsPanel" Value="{StaticResource DefaultPanel}" />

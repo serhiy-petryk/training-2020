@@ -50,17 +50,10 @@ namespace LightyTest.Source
                 {
                     dialogItems.CloseOnClickBackground = closeOnClickBackground;
 
-                    // set absolute positioning for moving
-                    if (dialogItems.ItemsHostPanel != null)
-                    {
-                        dialogItems.ItemsHostPanel.HorizontalAlignment = HorizontalAlignment.Left;
-                        dialogItems.ItemsHostPanel.VerticalAlignment = VerticalAlignment.Top;
-                    }
+                    dialogItems.ItemsPanel = dialogItems.FindResource("ItemsPanelForDialogTemplate") as ItemsPanelTemplate;
+                    // dialogItems.ItemContainerStyle = dialogItems.FindResource("ItemContainerForDialogStyle") as Style;
+                    dialogItems.ItemContainerStyle = null;
 
-                    // clear moving area margin
-                    if (VisualTreeHelper.GetParent(content) is ContentPresenter contentPresenter)
-                        contentPresenter.Margin = new Thickness(0);
-                    
                     // center content position
                     if (dialogItems.ItemsPresenter != null)
                         dialogItems.ItemsPresenter.Margin = new Thickness
@@ -80,6 +73,7 @@ namespace LightyTest.Source
         /// <param name="afterCreationCallback"></param>
         public static async void Show(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
         {
+            owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
             if (adorner == null) 
                 adorner = await CreateAdornerAsync(owner);
@@ -99,6 +93,7 @@ namespace LightyTest.Source
         /// <returns></returns>
         public static async Task ShowAsync(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
         {
+            owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
             if (adorner == null) 
                 adorner = await CreateAdornerAsync(owner);
@@ -119,6 +114,7 @@ namespace LightyTest.Source
         /// <param name="afterCreationCallback"></param>
         public static void ShowDialog(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
         {
+            owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
             if (adorner == null) 
                 adorner = CreateAdornerModal(owner);

@@ -12,7 +12,7 @@ namespace LightyTest
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow 
     {
         public MainWindow()
         {
@@ -29,19 +29,19 @@ namespace LightyTest
 
         private void OnClickShowButtonPopup(object sender, RoutedEventArgs e)
         {
-            DialogItems.Show(this, new SampleDialog());
+            DialogItems.Show(null, new SampleDialog());
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowDialogButtonPopup(object sender, RoutedEventArgs e)
         {
-            DialogItems.ShowDialog(this, new SampleDialog());
+            DialogItems.ShowDialog(null, new SampleDialog());
             MessageBox.Show("dialog item already shown");
         }
 
         private async void OnClickShowAsyncButtonPopup(object sender, RoutedEventArgs e)
         {
-            await DialogItems.ShowAsync(this, new SampleDialog());
+            await DialogItems.ShowAsync(null, new SampleDialog());
             MessageBox.Show("dialog item already shown");
         }
 
