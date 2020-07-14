@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using MyWpfMwi.Common;
 using MyWpfMwi.Controls.DialogItems;
 using MyWpfMwi.Examples;
+using MyWpfMwi.ViewModels;
 
 namespace MyWpfMwi.Mwi
 {
@@ -43,6 +44,7 @@ namespace MyWpfMwi.Mwi
             SysCmdRestore = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState == WindowState.Maximized);
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
             CmdClose = new RelayCommand(DoClose, _ => AllowClose);
+            AppViewModel.Instance.ThemeChanged += (sender, args) => OnPropertyChanged(new[] { nameof(OuterBorderMargin) });
         }
 
         #endregion
@@ -58,6 +60,11 @@ namespace MyWpfMwi.Mwi
         //=====================================
         public readonly int Id = MwiContainer.MwiUniqueCount++;
         public bool IsWindowed => Parent is Window;
+
+        public Thickness OuterBorderMargin => IsWindowed
+            ? (Thickness?) TryFindResource("Mwi.Child.OuterBorderMargin") ?? new Thickness()
+            : new Thickness();
+
         public bool IsDialog => Parent is DialogItems;
         public MwiContainer Container => MwiContainer.GetMwiContainer(this);
         public bool IsSelected => Container?.ActiveMwiChild == this;

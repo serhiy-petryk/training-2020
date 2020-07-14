@@ -37,7 +37,7 @@ namespace MyWpfMwi.Controls.DialogItems
         protected override bool IsItemItsOwnContainerOverride(object item) => false;
 
         /// <summary>
-        /// Usage example: DialogItems.Show(owner, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+        /// Usage example: DialogItems.Show(owner, content, style, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
         /// </summary>
         /// <param name="content"></param>
         /// <param name="closeOnClickBackground"></param>
@@ -49,17 +49,6 @@ namespace MyWpfMwi.Controls.DialogItems
                 content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
                 {
                     dialogItems.CloseOnClickBackground = closeOnClickBackground;
-
-                    // set absolute positioning for moving
-                    if (dialogItems.ItemsHostPanel != null)
-                    {
-                        dialogItems.ItemsHostPanel.HorizontalAlignment = HorizontalAlignment.Left;
-                        dialogItems.ItemsHostPanel.VerticalAlignment = VerticalAlignment.Top;
-                    }
-
-                    // clear moving area margin
-                    if (VisualTreeHelper.GetParent(content) is ContentPresenter contentPresenter)
-                        contentPresenter.Margin = new Thickness(0);
 
                     // center content position
                     if (dialogItems.ItemsPresenter != null)
@@ -78,11 +67,12 @@ namespace MyWpfMwi.Controls.DialogItems
         /// <param name="owner"></param>
         /// <param name="content"></param>
         /// <param name="afterCreationCallback"></param>
-        public static async void Show(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
+        public static async void Show(UIElement owner, FrameworkElement content, Style style, Action<DialogItems> afterCreationCallback = null)
         {
+            owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
             if (adorner == null)
-                adorner = await CreateAdornerAsync(owner);
+                adorner = await CreateAdornerAsync(owner, style);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
                 ((DialogItems)adorner.Child).AddDialog(content);
@@ -97,15 +87,16 @@ namespace MyWpfMwi.Controls.DialogItems
         /// <param name="content"></param>
         /// <param name="afterCreationCallback"></param>
         /// <returns></returns>
-        public static async Task ShowAsync(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
+        public static async Task ShowAsync(UIElement owner, FrameworkElement content, Style style, Action<DialogItems> afterCreationCallback = null)
         {
+            owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
             if (adorner == null)
-                adorner = await CreateAdornerAsync(owner);
+                adorner = await CreateAdornerAsync(owner, style);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
             {
-                var task = ((DialogItems)adorner.Child).AddDialogAsync(content);
+                var task = ((DialogItems) adorner.Child).AddDialogAsync(content);
                 afterCreationCallback?.Invoke((DialogItems)adorner.Child);
                 await task;
             }
@@ -117,15 +108,16 @@ namespace MyWpfMwi.Controls.DialogItems
         /// <param name="owner"></param>
         /// <param name="content"></param>
         /// <param name="afterCreationCallback"></param>
-        public static void ShowDialog(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
+        public static void ShowDialog(UIElement owner, FrameworkElement content, Style style, Action<DialogItems> afterCreationCallback = null)
         {
+            owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
             if (adorner == null)
-                adorner = CreateAdornerModal(owner);
+                adorner = CreateAdornerModal(owner, style);
 
             var frame = new DispatcherFrame();
-            ((DialogItems)adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
-            ((DialogItems)adorner.Child).AddDialog(content);
+            ((DialogItems) adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
+            ((DialogItems) adorner.Child).AddDialog(content);
 
             afterCreationCallback?.Invoke((DialogItems)adorner.Child);
 
@@ -169,8 +161,8 @@ namespace MyWpfMwi.Controls.DialogItems
             {
                 var content = win.Content as FrameworkElement;
                 var margin = content.Margin;
-                adorner.Margin = new Thickness(-margin.Left, -margin.Top, margin.Right, margin.Bottom);
-                adorner.UseAdornedElementSize = false;
+                // adorner.Margin = new Thickness(-margin.Left, -margin.Top, margin.Right, margin.Bottom);
+                // adorner.UseAdornedElementSize = false;
             }
 
             // If the target is Enable when the dialog is displayed, disable it only while the dialog is displayed.
@@ -188,10 +180,10 @@ namespace MyWpfMwi.Controls.DialogItems
             return adorner;
         }
 
-        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element)
+        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element, Style style)
         {
             var tcs = new TaskCompletionSource<AdornerControl>();
-            var dialogItems = new DialogItems();
+            var dialogItems = new DialogItems { Style = style };
             var adorner = CreateAdornerCore(element, dialogItems);
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
@@ -206,9 +198,9 @@ namespace MyWpfMwi.Controls.DialogItems
             return tcs.Task;
         }
 
-        protected static AdornerControl CreateAdornerModal(UIElement element)
+        protected static AdornerControl CreateAdornerModal(UIElement element, Style style)
         {
-            var dialogItems = new DialogItems();
+            var dialogItems = new DialogItems {Style = style};
             var adorner = CreateAdornerCore(element, dialogItems);
 
             if (!dialogItems.IsParallelInitialize)

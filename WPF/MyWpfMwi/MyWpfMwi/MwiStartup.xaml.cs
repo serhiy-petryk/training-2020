@@ -86,10 +86,12 @@ namespace MyWpfMwi
 
         public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
         {
-            var container = AppViewModel.Instance.ContainerControl;
             var dialog = new MwiChild {Title = "Dialog"};
             dialog.Content = new TextBlock { Text = "Test dialog window", Background = new SolidColorBrush(Colors.Green) };
-            DialogItems.Show(container.ContainerForDialog, dialog, GetAfterCreationCallbackForDialog(dialog, true));
+
+            var style = dialog.TryFindResource("MovableDialogStyle") as Style;
+            DialogItems.Show(AppViewModel.Instance.ContainerControl.ContainerForDialog, dialog, style,
+                GetAfterCreationCallbackForDialog(dialog, true));
         });
 
         private static Action<DialogItems> GetAfterCreationCallbackForDialog(FrameworkElement content, bool closeOnClickBackground)
@@ -100,21 +102,11 @@ namespace MyWpfMwi
                 {
                     dialogItems.CloseOnClickBackground = closeOnClickBackground;
 
-                    // set absolute positioning for moving
-                    if (dialogItems.ItemsHostPanel != null)
-                    {
-                        dialogItems.ItemsHostPanel.HorizontalAlignment = HorizontalAlignment.Left;
-                        dialogItems.ItemsHostPanel.VerticalAlignment = VerticalAlignment.Top;
-                    }
-
-                    // clear moving area margin
-                    if (VisualTreeHelper.GetParent(content) is ContentPresenter contentPresenter)
-                        contentPresenter.Margin = new Thickness(0);
-
                     // center content position
                     var mwiChild = (MwiChild)dialogItems.Items[0];
                     mwiChild.Focused = true;
-                    mwiChild.Position = new Point(Math.Max(0, (dialogItems.ItemsPresenter.ActualWidth - content.ActualWidth) / 2),
+                    mwiChild.Position = new Point(
+                        Math.Max(0, (dialogItems.ItemsPresenter.ActualWidth - content.ActualWidth) / 2),
                         Math.Max(0, (dialogItems.ItemsPresenter.ActualHeight - content.ActualHeight) / 2));
                 }));
             };

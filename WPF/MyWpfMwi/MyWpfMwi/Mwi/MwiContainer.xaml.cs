@@ -32,8 +32,7 @@ namespace MyWpfMwi.Mwi
 
         //==============================
         public FrameworkElement ContainerForDialog => ActiveMwiChild != null && ActiveMwiChild.IsWindowed
-            ? (FrameworkElement) ActiveMwiChild
-            : this;
+            ? (FrameworkElement) ActiveMwiChild : this;
         public RelayCommand CmdSetLayout { get; }
         public bool WindowShowLock = false; // lock for async window.Show()
 

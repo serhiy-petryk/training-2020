@@ -6,8 +6,9 @@
         <ResourceDictionary Source="pack://application:,,,/MyWpfMwi;component/Controls/DialogItems/DialogItemsCommon.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!-- Default Styles -->
     <ControlTemplate x:Key="DefaultTemplate">
-        <Grid Background="#88000000">
+        <Grid Background="#88000000" UseLayoutRounding="True" SnapsToDevicePixels="True">
             <ItemsPresenter />
         </Grid>
     </ControlTemplate>
@@ -24,6 +25,19 @@
         </Setter>
     </Style>
 
+    <!-- Style for movable dialogs -->
+    <Style x:Key="MovableDialogStyle" TargetType="{x:Type dialogItems:DialogItems}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <Grid x:Name="ItemsPanel" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle" Value="{x:Null}" />
+    </Style>
+
+    <!-- DialogItems default style -->
     <Style TargetType="{x:Type dialogItems:DialogItems}">
         <Setter Property="Template" Value="{StaticResource DefaultTemplate}" />
         <Setter Property="ItemsPanel" Value="{StaticResource DefaultPanel}" />

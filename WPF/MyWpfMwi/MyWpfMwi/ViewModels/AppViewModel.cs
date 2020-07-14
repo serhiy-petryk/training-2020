@@ -9,7 +9,7 @@ using MyWpfMwi.Themes;
 
 namespace MyWpfMwi.ViewModels
 {
-    public class AppViewModel : DependencyObject, INotifyPropertyChanged
+    public class AppViewModel : UIElement, INotifyPropertyChanged
     {
         //==========  Static section  ===========
         public static AppViewModel Instance = new AppViewModel();
@@ -17,10 +17,19 @@ namespace MyWpfMwi.ViewModels
         //=========================================
         //==========  Instance section  ===========
         public static readonly DependencyProperty ScaleValueProperty = DependencyProperty.Register(nameof(ScaleValue), typeof(double), typeof(AppViewModel), new UIPropertyMetadata(1.0));
+        public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent("ThemeChanged", RoutingStrategy.Bubble,
+                typeof(RoutedPropertyChangedEventHandler<ThemeInfo>), typeof(AppViewModel));
+
         public double ScaleValue
         {
             get => (double)GetValue(ScaleValueProperty);
             set => SetValue(ScaleValueProperty, value);
+        }
+
+        public event RoutedPropertyChangedEventHandler<ThemeInfo> ThemeChanged
+        {
+            add => AddHandler(ThemeChangedEvent, value);
+            remove => RemoveHandler(ThemeChangedEvent, value);
         }
 
         public MwiContainer ContainerControl { get; set; }
@@ -35,8 +44,12 @@ namespace MyWpfMwi.ViewModels
         //=========================
         private void ToggleTheme(object parameter)
         {
+            var oldTheme = _currentTheme;
             _currentTheme = ThemeInfo.Themes.First(t => t != _currentTheme);
             _currentTheme.ApplyTheme();
+
+            var args = new RoutedPropertyChangedEventArgs<ThemeInfo>(oldTheme, _currentTheme) { RoutedEvent = ThemeChangedEvent };
+            RaiseEvent(args);
         }
 
 

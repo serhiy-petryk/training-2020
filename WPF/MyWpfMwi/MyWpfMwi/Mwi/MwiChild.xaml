@@ -61,9 +61,10 @@
                     <ControlTemplate TargetType="{x:Type mwi:MwiChild}">
                         <Grid>
                             <!-- Shadow -->
-                            <Border x:Name="ShadowBorder" Margin="{DynamicResource Mwi.Child.OuterBorderMargin}" Background="White" Effect="{StaticResource ShadowEffect}" Visibility="{DynamicResource Mwi.Child.OnlyWnd10}"/>
+                            <Border x:Name="ShadowBorder" Margin="{Binding OuterBorderMargin}" Background="White" Effect="{StaticResource ShadowEffect}"
+                                    Visibility="{DynamicResource Mwi.Child.OnlyWnd10}"/>
                             <!-- Main border -->
-                            <Border x:Name="BaseBorder" Margin="{DynamicResource Mwi.Child.OuterBorderMargin}" BorderThickness="1" CornerRadius="{DynamicResource Mwi.Child.BaseBorderCornerRadius}" 
+                            <Border x:Name="BaseBorder" Margin="{Binding OuterBorderMargin}" BorderThickness="1" CornerRadius="{DynamicResource Mwi.Child.BaseBorderCornerRadius}" 
                                     Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="{DynamicResource Mwi.Child.BaseBorderBrush}">
                                 <Grid>
                                     <!-- Window 7 thick border -->
@@ -137,28 +138,28 @@
                                         </Grid>
 
                                         <Border Grid.Row="1" x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                        <Grid Grid.Row="1">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
-                                            <!-- Command bar -->
-                                            <ContentPresenter Grid.Row="0" Content="{Binding CommandBar}"/>
-                                            <!-- Window content -->
-                                            <ContentControl Grid.Row="1" Content="{TemplateBinding Content}" />
-                                            <!-- Status bar -->
-                                            <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>
-                                        </Grid>
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsWindowed}" Value="true">
-                                                        <Setter Property="LayoutTransform" Value="{StaticResource ScaleTransform}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
+                                            <Grid Grid.Row="1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <!-- Command bar -->
+                                                <ContentPresenter Grid.Row="0" Content="{Binding CommandBar}"/>
+                                                <!-- Window content -->
+                                                <ContentControl Grid.Row="1" Content="{TemplateBinding Content}" />
+                                                <!-- Status bar -->
+                                                <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>
+                                            </Grid>
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsWindowed}" Value="true">
+                                                            <Setter Property="LayoutTransform" Value="{StaticResource ScaleTransform}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
                                         </Border>
                                     </Grid>
 
