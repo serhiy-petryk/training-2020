@@ -25,8 +25,7 @@ namespace LightyTest.Examples
             DataContext = Data;
             CmdClickButton = new RelayCommand(OnButtonClick);
 
-            if (data.Icon != null)
-                IconBox.Child = data.Icon;
+            IconBox.Child = data.Icon;
 
             if (data.Buttons != null && data.Buttons.Length > 0)
             {
