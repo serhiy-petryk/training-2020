@@ -4,12 +4,12 @@
              StartupUri="MainWindow.xaml">
 
     <Application.Resources>
-    <ResourceDictionary>
-        <ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/DialogItemsCommon.xaml" />
-            <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/DialogItems.xaml" />
-            <!--<ResourceDictionary Source="pack://application:,,,/Lighty;component/Styles.xaml" />-->
-        </ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/DialogItemsCommon.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LightyTest;component/Source/DialogItems.xaml" />
+                <!--<ResourceDictionary Source="pack://application:,,,/Lighty;component/Styles.xaml" />-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
