@@ -18,11 +18,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <Grid Background="White">
-            <Grid.Effect>
-                <DropShadowEffect BlurRadius="6" Direction="330" Opacity="1" ShadowDepth="2" Color="Black"/>
-            </Grid.Effect>
-        </Grid>
+        <Grid Effect="{StaticResource ShadowEffect}"/>
         <Border BorderBrush="YellowGreen" BorderThickness="7" Background="Orange">
             <Grid>
                 <Grid.RowDefinitions>

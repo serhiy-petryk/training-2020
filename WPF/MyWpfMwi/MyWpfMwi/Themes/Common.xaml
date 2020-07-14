@@ -8,7 +8,7 @@
         <ResourceDictionary Source="pack://application:,,,/MyWpfMwi;component/Controls/DialogItems/DialogItems.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <DropShadowEffect x:Key="ShadowEffect" BlurRadius="10" ShadowDepth="2" po:Freeze="True" />
+    <DropShadowEffect x:Key="ShadowEffect" BlurRadius="8" Direction="330" Opacity="0.8" ShadowDepth="2" Color="Black" po:Freeze="True" />
 
     <!-- Left button of Container -->
     <Geometry x:Key="Mwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
