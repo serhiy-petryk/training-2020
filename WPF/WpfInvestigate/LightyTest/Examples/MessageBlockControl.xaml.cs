@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using LightyTest.Common;
 using LightyTest.Source;
@@ -11,24 +12,49 @@ namespace LightyTest.Examples
 {
     public partial class MessageBlockControl : UserControl
     {
-        private MessageBlock Data;
+        private MessageBlock Data { get; }
+        private RelayCommand CmdClickButton { get; }
+
         private MessageBlockControl()
         {
             InitializeComponent();
         }
-
-        public MessageBlockControl(MessageBlock data ): this()
+        public MessageBlockControl(MessageBlock data) : this()
         {
             Data = data;
             DataContext = Data;
+            CmdClickButton = new RelayCommand(OnButtonClick);
+
             if (data.Icon != null)
                 IconBox.Child = data.Icon;
+
+            if (data.Buttons != null && data.Buttons.Length > 0)
+            {
+                Buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                for (var k = 0; k < data.Buttons.Length; k++)
+                {
+                    Buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+                    var btn = new Button { Margin = new Thickness(8, 4, 8, 4), Content = data.Buttons[k] };
+                    Grid.SetColumn(btn, k + 1);
+                    Buttons.Children.Add(btn);
+                    btn.Command = CmdClickButton;
+                    btn.CommandParameter = data.Buttons[k];
+                }
+                Buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            }
 
             var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             if (currentWindow != null)
                 MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);
         }
 
+        private void OnButtonClick(object parameter)
+        {
+            Data.Result = parameter?.ToString();
+            ApplicationCommands.Close.Execute(null, ((DialogItems)Parent).Items[0] as FrameworkElement);
+        }
+
+        #region ==========  Moving && resizing  =========
         private void Thumb_OnDragStarted(object sender, DragStartedEventArgs e)
         {
             if (!Focusable)
@@ -52,7 +78,7 @@ namespace LightyTest.Examples
                     newY = container.ActualHeight - ActualHeight;
                 if (newY < 0) newY = 0;
 
-                itemsPresenter.Margin = new Thickness {Left = newX, Top = newY};
+                itemsPresenter.Margin = new Thickness { Left = newX, Top = newY };
             }
             e.Handled = true;
         }
@@ -114,7 +140,7 @@ namespace LightyTest.Examples
         {
             var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
             var change = Math.Min(-horizontalChange, ActualWidth - MinWidth);
-            
+
             if ((ActualWidth - change) > MaxWidth)
                 change = ActualWidth - MaxWidth;
             if (container != null && (itemsPresenter.Margin.Left + ActualWidth - change) > container.ActualWidth)
@@ -136,5 +162,6 @@ namespace LightyTest.Examples
             if (!Tips.AreEqual(0.0, change))
                 Height = ActualHeight - change;
         }
+        #endregion
     }
 }

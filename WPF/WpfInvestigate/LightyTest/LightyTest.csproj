@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Examples\BuiltinStyleWindowPopup.xaml.cs">
       <DependentUpon>BuiltinStyleWindowPopup.xaml</DependentUpon>
     </Compile>
