@@ -183,7 +183,9 @@ namespace MyWpfMwi.Controls.DialogItems
         protected static Task<AdornerControl> CreateAdornerAsync(UIElement element, Style style)
         {
             var tcs = new TaskCompletionSource<AdornerControl>();
-            var dialogItems = new DialogItems { Style = style };
+            var dialogItems = new DialogItems();
+            if (style != null)
+                dialogItems.Style = style;
             var adorner = CreateAdornerCore(element, dialogItems);
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
@@ -200,7 +202,9 @@ namespace MyWpfMwi.Controls.DialogItems
 
         protected static AdornerControl CreateAdornerModal(UIElement element, Style style)
         {
-            var dialogItems = new DialogItems {Style = style};
+            var dialogItems = new DialogItems();
+            if (style != null)
+                dialogItems.Style = style;
             var adorner = CreateAdornerCore(element, dialogItems);
 
             if (!dialogItems.IsParallelInitialize)
