@@ -44,7 +44,7 @@ namespace MyWpfMwi.Mwi
             SysCmdRestore = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState == WindowState.Maximized);
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
             CmdClose = new RelayCommand(DoClose, _ => AllowClose);
-            AppViewModel.Instance.ThemeChanged += (sender, args) => OnPropertyChanged(new[] { nameof(OuterBorderMargin) });
+            AppViewModel.Instance.ThemeChanged += (sender, args) => OnPropertiesChanged(new[] { nameof(OuterBorderMargin) });
         }
 
         #endregion
@@ -409,7 +409,7 @@ namespace MyWpfMwi.Mwi
                         Position = _attachedPosition;
 
                     OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
-                    OnPropertyChanged(new[] { nameof(IsWindowed) });
+                    OnPropertiesChanged(new[] { nameof(IsWindowed) });
 
                     var storyboard = new Storyboard();
                     storyboard.Children.Add(AnimationHelper.GetOpacityAnimation(this, 0, 1));
@@ -455,7 +455,7 @@ namespace MyWpfMwi.Mwi
                     OnWindowStateValueChanged(this,
                         new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState,
                             WindowState));
-                    OnPropertyChanged(new[] { nameof(IsWindowed) });
+                    OnPropertiesChanged(new[] { nameof(IsWindowed) });
 
                     Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
                     {
@@ -748,7 +748,7 @@ namespace MyWpfMwi.Mwi
             if (!IsWindowed || isDetachEvent)
             {
                 Container?.InvalidateSize();
-                Container?.OnPropertyChanged(new[] { nameof(MwiContainer.ScrollBarKind) });
+                Container?.OnPropertiesChanged(new[] { nameof(MwiContainer.ScrollBarKind) });
             }
 
             // Activate main window (in case of attach)
@@ -909,7 +909,7 @@ namespace MyWpfMwi.Mwi
         }
 
         public void RefreshThumbnail() =>
-            OnPropertyChanged(new[] { nameof(Thumbnail), nameof(ThumbnailWidth), nameof(ThumbnailHeight) });
+            OnPropertiesChanged(new[] { nameof(Thumbnail), nameof(ThumbnailWidth), nameof(ThumbnailHeight) });
         private Point GetThumbnailSize()
         {
             var width = Thumbnail?.Width ?? 0;
@@ -948,7 +948,7 @@ namespace MyWpfMwi.Mwi
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string[] propertyNames)
+        private void OnPropertiesChanged(string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
