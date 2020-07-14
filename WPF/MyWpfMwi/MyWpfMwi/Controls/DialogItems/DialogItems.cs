@@ -67,7 +67,7 @@ namespace MyWpfMwi.Controls.DialogItems
         /// <param name="owner"></param>
         /// <param name="content"></param>
         /// <param name="afterCreationCallback"></param>
-        public static async void Show(UIElement owner, FrameworkElement content, Style style, Action<DialogItems> afterCreationCallback = null)
+        public static async void Show(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
@@ -87,7 +87,7 @@ namespace MyWpfMwi.Controls.DialogItems
         /// <param name="content"></param>
         /// <param name="afterCreationCallback"></param>
         /// <returns></returns>
-        public static async Task ShowAsync(UIElement owner, FrameworkElement content, Style style, Action<DialogItems> afterCreationCallback = null)
+        public static async Task ShowAsync(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
@@ -108,7 +108,7 @@ namespace MyWpfMwi.Controls.DialogItems
         /// <param name="owner"></param>
         /// <param name="content"></param>
         /// <param name="afterCreationCallback"></param>
-        public static void ShowDialog(UIElement owner, FrameworkElement content, Style style, Action<DialogItems> afterCreationCallback = null)
+        public static void ShowDialog(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
