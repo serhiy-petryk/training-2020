@@ -8,7 +8,7 @@
 
     <!-- Default Styles -->
     <ControlTemplate x:Key="DefaultTemplate">
-        <Grid Background="#88000000">
+        <Grid Background="#88000000" UseLayoutRounding="True" SnapsToDevicePixels="True">
             <ItemsPresenter />
         </Grid>
     </ControlTemplate>

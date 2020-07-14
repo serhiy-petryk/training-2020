@@ -4,12 +4,12 @@
     
     <!-- Basic -->
     <ControlTemplate x:Key="DarkBackgroundTemplate">
-        <Grid Background="#88000000">
+        <Grid Background="#88000000" UseLayoutRounding="True" SnapsToDevicePixels="True">
             <ItemsPresenter />
         </Grid>
     </ControlTemplate>
     <ControlTemplate x:Key="LightBackgroundTemplate">
-        <Grid Background="#88FFFFFF">
+        <Grid Background="#88FFFFFF" UseLayoutRounding="True" SnapsToDevicePixels="True">
             <ItemsPresenter />
         </Grid>
     </ControlTemplate>
