@@ -434,7 +434,7 @@ namespace WpfInvestigate.Controls
 
         private static void OnVisibleButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((NumericBox)d).OnPropertyChanged(new[] { nameof(IsCloseButtonVisible), nameof(IsCalculatorButtonVisible), nameof(IsUpDownButtonsVisible) });
+            ((NumericBox)d).OnPropertiesChanged(new[] { nameof(IsCloseButtonVisible), nameof(IsCalculatorButtonVisible), nameof(IsUpDownButtonsVisible) });
         }
 
         // ================================================
@@ -653,7 +653,7 @@ namespace WpfInvestigate.Controls
 
         #region ===========  INotifyPropertyChanged  ===============
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string[] propertyNames)
+        private void OnPropertiesChanged(string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

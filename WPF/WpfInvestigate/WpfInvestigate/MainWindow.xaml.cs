@@ -120,9 +120,6 @@ namespace WpfInvestigate
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
-            var wnd = Window.GetWindow(this);
-            wnd.Opacity = 0.75;
-            wnd.IsHitTestVisible = false;
         }
     }
 }

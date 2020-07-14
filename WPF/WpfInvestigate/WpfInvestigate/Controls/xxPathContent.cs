@@ -11,12 +11,12 @@ namespace WpfInvestigate.Controls
     public class xxPathContent
     {
         public static readonly DependencyProperty DataProperty = DependencyProperty.RegisterAttached(
-            "Data", typeof(Geometry), typeof(xxPathContent), new UIPropertyMetadata(Geometry.Empty, OnPropertyChanged));
+            "Data", typeof(Geometry), typeof(xxPathContent), new UIPropertyMetadata(Geometry.Empty, OnPropertiesChanged));
         public static Geometry GetData(DependencyObject obj) => (Geometry)obj.GetValue(DataProperty);
         public static void SetData(DependencyObject obj, Geometry value) => obj.SetValue(DataProperty, value);
 
         //=====================================
-        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ContentControl cc)
             {

@@ -172,7 +172,7 @@ namespace WpfInvestigate.Controls
         #region ===========  INotifyPropertyChanged  ===============
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string[] propertyNames)
+        private void OnPropertiesChanged(string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -195,7 +195,7 @@ namespace WpfInvestigate.Controls
 
         private void RefreshUI()
         {
-            OnPropertyChanged(new[] {nameof(Metadata)});
+            OnPropertiesChanged(new[] {nameof(Metadata)});
         }
     }
 }

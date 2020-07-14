@@ -40,17 +40,17 @@ namespace WpfInvestigate.Controls
             if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_CAPITAL)
             {
                 IsCapsLock = !IsCapsLock;
-                OnPropertyChanged(new[] { nameof(IsCapsLock) });
+                OnPropertiesChanged(new[] { nameof(IsCapsLock) });
             }
             else if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_LSHIFT || model.Id == KeyModel.KeyDefinition.KeyCode.VK_RSHIFT)
             {
                 IsShifted = !IsShifted;
-                OnPropertyChanged(new[] { nameof(IsShifted) });
+                OnPropertiesChanged(new[] { nameof(IsShifted) });
             }
             else if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_EXTRA)
             {
                 IsExtra = !IsExtra;
-                OnPropertyChanged(new[] { nameof(IsExtra) });
+                OnPropertiesChanged(new[] { nameof(IsExtra) });
             }
         }
 
@@ -65,14 +65,14 @@ namespace WpfInvestigate.Controls
             KeyboardSet = KeyModel.GetKeyboardSet(language);
             foreach (var item in AvailableKeyboardLayouts)
                 item.IsSelected = item.Id == language;
-            OnPropertyChanged(new[] { nameof(KeyboardSet), nameof(AvailableKeyboardLayouts), nameof(SelectedKeyboardLayout) });
+            OnPropertiesChanged(new[] { nameof(KeyboardSet), nameof(AvailableKeyboardLayouts), nameof(SelectedKeyboardLayout) });
         }
 
         //===========  INotifyPropertyChanged  =======================
         #region ===========  INotifyPropertyChanged  ===============
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string[] propertyNames)
+        private void OnPropertiesChanged(string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

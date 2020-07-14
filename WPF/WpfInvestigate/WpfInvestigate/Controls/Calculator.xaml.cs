@@ -344,14 +344,14 @@ namespace WpfInvestigate.Controls
 
         private void RefrestUI()
         {
-            OnPropertyChanged(new[] { nameof(IndicatorText), nameof(StatusText), nameof(ErrorText), nameof(DecimalSeparator) });
+            OnPropertiesChanged(new[] { nameof(IndicatorText), nameof(StatusText), nameof(ErrorText), nameof(DecimalSeparator) });
         }
 
         //===========  INotifyPropertyChanged  =======================
         #region ===========  INotifyPropertyChanged  ===============
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string[] propertyNames)
+        private void OnPropertiesChanged(string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

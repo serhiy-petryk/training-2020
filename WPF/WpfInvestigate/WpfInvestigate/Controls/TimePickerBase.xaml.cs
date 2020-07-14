@@ -189,7 +189,7 @@ namespace WpfInvestigate.Controls
             SetSelectorValues(); // ???
             _isTimeChanging = false;
 
-            OnPropertyChanged(new[] {nameof(AMText), nameof(PMText), nameof(IsAmPmMode)});
+            OnPropertiesChanged(new[] {nameof(AMText), nameof(PMText), nameof(IsAmPmMode)});
             WriteValueToTextBox();
         }
 
@@ -466,7 +466,7 @@ namespace WpfInvestigate.Controls
 
         private static void OnVisibleButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePicker) d).OnPropertyChanged(new[] {nameof(IsPopupButtonVisible), nameof(IsClearButtonVisible)});
+            ((TimePicker) d).OnPropertiesChanged(new[] {nameof(IsPopupButtonVisible), nameof(IsClearButtonVisible)});
         }
 
 
@@ -542,7 +542,7 @@ namespace WpfInvestigate.Controls
 
         #region ===========  INotifyPropertyChanged  ===============
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string[] propertyNames)
+        private void OnPropertiesChanged(string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

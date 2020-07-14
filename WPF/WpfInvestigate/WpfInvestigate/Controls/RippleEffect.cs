@@ -20,12 +20,12 @@ namespace WpfInvestigate.Controls
     public class RippleEffect
     {
         public static readonly DependencyProperty RippleColorProperty = DependencyProperty.RegisterAttached("RippleColor",
-            typeof(Color?), typeof(RippleEffect), new UIPropertyMetadata(null, OnPropertyChanged));
+            typeof(Color?), typeof(RippleEffect), new UIPropertyMetadata(null, OnPropertiesChanged));
         public static Color? GetRippleColor(DependencyObject obj) => (Color?) obj.GetValue(RippleColorProperty);
         public static void SetRippleColor(DependencyObject obj, Color? value) => obj.SetValue(RippleColorProperty, value);
 
         //=====================================
-        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is FrameworkElement fe)
             {

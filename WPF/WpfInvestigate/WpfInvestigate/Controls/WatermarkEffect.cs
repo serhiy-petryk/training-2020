@@ -19,17 +19,17 @@ namespace WpfInvestigate.Controls
     public class WatermarkEffect
     {
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached(
-            "Watermark", typeof(string), typeof(WatermarkEffect), new UIPropertyMetadata(string.Empty, OnPropertyChanged));
+            "Watermark", typeof(string), typeof(WatermarkEffect), new UIPropertyMetadata(string.Empty, OnPropertiesChanged));
         public static string GetWatermark(DependencyObject obj) => (string)obj.GetValue(WatermarkProperty);
         public static void SetWatermark(DependencyObject obj, string value) => obj.SetValue(WatermarkProperty, value);
         
         public static readonly DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(
-            "Foreground", typeof(Brush), typeof(WatermarkEffect), new FrameworkPropertyMetadata(null, OnPropertyChanged));
+            "Foreground", typeof(Brush), typeof(WatermarkEffect), new FrameworkPropertyMetadata(null, OnPropertiesChanged));
         public static Brush GetForeground(DependencyObject obj) => (Brush)obj.GetValue(ForegroundProperty);
         public static void SetForeground(DependencyObject obj, Brush value) => obj.SetValue(ForegroundProperty, value);
 
         //=====================================
-        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is FrameworkElement fe)
             {
