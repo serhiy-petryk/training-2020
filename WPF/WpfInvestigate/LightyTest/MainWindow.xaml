@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="MainWindow"
-        Width="1000" Height="720"
+        Width="1000" Height="750"
         mc:Ignorable="d">
 
-    <Grid Margin="30">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -99,6 +100,19 @@
         </StackPanel>
 
         <Grid Grid.Row="2" Grid.RowSpan="5" Grid.Column="1" x:Name="subGrid" Width="450" Height="400"/>
+
+        <StackPanel Grid.Row="7" Grid.Column="0" Orientation="Vertical">
+            <TextBlock Text="Message blocks" />
+            <StackPanel Orientation="Horizontal">
+            <Button Margin="5" Width="100" Click="OnClickMessageBlock" Content="Message" />
+            <Button Margin="5" Width="100" Click="OnClickQuestionMessageBlock" Content="Question" />
+            <Button Margin="5" Width="100" Click="OnClickStopMessageBlock" Content="Stop" />
+            <Button Margin="5" Width="100" Click="OnClickErrorMessageBlock" Content="Error" />
+            <Button Margin="5" Width="100" Click="OnClickWarningMessageBlock" Content="Warning" />
+            <Button Margin="5" Width="100" Click="OnClickInformationMessageBlock" Content="Information" />
+            <Button Margin="5" Width="100" Click="OnClickOkMessageBlock" Content="Ok" />
+            </StackPanel>
+        </StackPanel>
 
     </Grid>
 </Window>

@@ -194,5 +194,40 @@ namespace LightyTest
         }
         #endregion
 
+        private void OnClickMessageBlock(object sender, RoutedEventArgs e)
+        {
+            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block");
+        }
+        private void OnClickQuestionMessageBlock(object sender, RoutedEventArgs e)
+        {
+            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block", MessageBlock.MessageBlockIcon.Question);
+        }
+        private void OnClickStopMessageBlock(object sender, RoutedEventArgs e)
+        {
+            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block", MessageBlock.MessageBlockIcon.Stop);
+        }
+        private void OnClickErrorMessageBlock(object sender, RoutedEventArgs e)
+        {
+            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block", MessageBlock.MessageBlockIcon.Error);
+        }
+        private void OnClickWarningMessageBlock(object sender, RoutedEventArgs e)
+        {
+            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block", MessageBlock.MessageBlockIcon.Warning);
+        }
+        private void OnClickInformationMessageBlock(object sender, RoutedEventArgs e)
+        {
+            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block", MessageBlock.MessageBlockIcon.Information);
+        }
+        private void OnClickOkMessageBlock(object sender, RoutedEventArgs e)
+        {
+            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block", MessageBlock.MessageBlockIcon.Ok);
+        }
     }
 }

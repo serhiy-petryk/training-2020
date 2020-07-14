@@ -5,6 +5,14 @@
 
     <DropShadowEffect x:Key="ShadowEffect" BlurRadius="8" Direction="330" Opacity="0.75" ShadowDepth="2" Color="Black" po:Freeze="True" />
 
+    <!-- Message Block -->
+    <Path x:Key="MessageBlockQuestionIcon" Fill="Blue" x:Shared="False" Data="M12,2C8.14,2 5,5.14 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9C19,5.14 15.86,2 12,2M12.88,15.75H11.13V14H12.88M12.88,12.88H11.13C11.13,10.04 13.75,10.26 13.75,8.5A1.75,1.75 0 0,0 12,6.75A1.75,1.75 0 0,0 10.25,8.5H8.5A3.5,3.5 0 0,1 12,5A3.5,3.5 0 0,1 15.5,8.5C15.5,10.69 12.88,10.91 12.88,12.88Z"/>
+    <Path x:Key="MessageBlockStopIcon" Fill="Red" x:Shared="False" Data="M8.27,3L3,8.27V15.73L8.27,21H15.73L21,15.73V8.27L15.73,3M8.41,7L12,10.59L15.59,7L17,8.41L13.41,12L17,15.59L15.59,17L12,13.41L8.41,17L7,15.59L10.59,12L7,8.41"/>
+    <Path x:Key="MessageBlockErrorIcon" Fill="Red" x:Shared="False" Data="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+    <Path x:Key="MessageBlockWarningIcon" Fill="Orange" x:Shared="False" Data="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+    <Path x:Key="MessageBlockInformationIcon" Fill="#FF0078D7" x:Shared="False" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+    <Path x:Key="MessageBlockOkIcon" Fill="Green" x:Shared="False" Data="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+
     <!-- Basic -->
     <ControlTemplate x:Key="DarkBackgroundTemplate">
         <Grid Background="#88000000" UseLayoutRounding="True" SnapsToDevicePixels="True">
@@ -25,7 +33,7 @@
     </ItemsPanelTemplate>
 
     <!-- Style for text buttons -->
-    <Style x:Key="textButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="TextButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="TextBlock.FontSize" Value="16" />
@@ -64,7 +72,7 @@
                 <DataTemplate>
                     <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Button DockPanel.Dock="Bottom"
-                                Style="{StaticResource textButtonStyle}"
+                                Style="{StaticResource TextButtonStyle}"
                                 HorizontalAlignment="Right"
                                 Command="ApplicationCommands.Close" CommandParameter="{Binding}"
                                 FontFamily="Marlett" Content="r" />
@@ -88,7 +96,7 @@
                         <StackPanel Grid.Row="1" Margin="0,0,10,5" Orientation="Horizontal" HorizontalAlignment="Right">
                             <TextBlock Text="Close" />
                             <Button DockPanel.Dock="Bottom"
-                                    Style="{StaticResource textButtonStyle}"
+                                    Style="{StaticResource TextButtonStyle}"
                                     HorizontalAlignment="Right"
                                     Command="ApplicationCommands.Close" CommandParameter="{Binding}"
                                     Foreground="Black"

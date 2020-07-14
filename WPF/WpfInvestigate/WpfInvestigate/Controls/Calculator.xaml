@@ -167,7 +167,7 @@
                                                  PreviewKeyUp="Indicator_OnPreviewKeyUp"
                                                  TextChanged="TextBox_OnTextChanged"
                                                  PreviewMouseWheel="Indicator_OnPreviewMouseWheel"
-                                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Converter={x:Static common:InverseVisibilityConverter.Instance} }"
+                                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Converter={x:Static common:InverseVisibilityConverter.Instance}}"
                                                  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndicatorText, Mode=OneWay}">
                                             <TextBox.Style>
                                                 <Style TargetType="TextBox">

@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace LightyTest.Service
+namespace LightyTest.Common
 {
     public static class Tips
     {

@@ -5,14 +5,28 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using LightyTest.Common;
+using LightyTest.Source;
 
 namespace LightyTest.Examples
 {
-    public partial class SampleDialogMovable : UserControl
+    public partial class MessageBlockControl : UserControl
     {
-        public SampleDialogMovable()
+        private MessageBlock Data;
+        private MessageBlockControl()
         {
             InitializeComponent();
+        }
+
+        public MessageBlockControl(MessageBlock data ): this()
+        {
+            Data = data;
+            DataContext = Data;
+            if (data.Icon != null)
+                IconBox.Child = data.Icon;
+
+            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            if (currentWindow != null)
+                MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);
         }
 
         private void Thumb_OnDragStarted(object sender, DragStartedEventArgs e)

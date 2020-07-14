@@ -36,7 +36,7 @@
                                                     DockPanel.Dock="Bottom"
                                                     FontFamily="Marlett"
                                                     Foreground="Black"
-                                                    Style="{StaticResource textButtonStyle}" />
+                                                    Style="{StaticResource TextButtonStyle}" />
                                             <ContentPresenter Content="{Binding}" />
                                         </DockPanel>
                                     </Border>
