@@ -20,7 +20,8 @@ namespace LightyTest.Examples
             DialogItems.Show(this, new SampleDialog());
 
             await Task.Delay(1000);
-            DialogItems.Show(this, new SampleDialog(), items => items.CloseOnClickBackground = false);
+            // DialogItems.Show(this, new SampleDialog(), null, items => items.CloseOnClickBackground = false);
+            DialogItems.Show(this, new SampleDialog());
 
             await Task.Delay(1000);
             DialogItems.Show(this, new SampleDialog());

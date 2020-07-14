@@ -25,20 +25,8 @@
         </Setter>
     </Style>
 
-    <!-- Styles for dialogs -->
-    <ItemsPanelTemplate x:Key="ItemsPanelForDialogTemplate">
-        <Grid x:Name="ItemsPanel" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-    </ItemsPanelTemplate>
-    <Style x:Key="ItemContainerForDialogStyle" TargetType="{x:Type ContentControl}">
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <ContentPresenter Content="{Binding}"/>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="DialogStyle" TargetType="{x:Type local:DialogItems}">
+    <!-- Style for movable dialogs -->
+    <Style x:Key="MovableDialogStyle" TargetType="{x:Type local:DialogItems}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -70,5 +58,4 @@
         </Setter>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
     </Style>
-
 </ResourceDictionary>

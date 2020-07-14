@@ -20,7 +20,7 @@ namespace LightyTest.Examples
         {
             var image = new Image();
             image.Source = new BitmapImage(new Uri("/Images/1.jpg", UriKind.Relative));
-            DialogItems.Show(null, image, items => items.CloseOnClickBackground = false);
+            DialogItems.Show(null, image, null, items => items.CloseOnClickBackground = false);
         }
     }
 }

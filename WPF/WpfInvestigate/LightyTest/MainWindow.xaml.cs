@@ -19,6 +19,7 @@ namespace LightyTest
             InitializeComponent();
         }
 
+        private Style MovableDialogStyle => TryFindResource("MovableDialogStyle") as Style;
         private void ClearSubGrid()
         {
             var layer = AdornerLayer.GetAdornerLayer(subGrid);
@@ -90,21 +91,21 @@ namespace LightyTest
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.Show(subGrid, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            DialogItems.Show(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
             MessageBox.Show("dialog item already shown");
         }
         private void OnClickShowDialogMovableButtonPopup(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.ShowDialog(subGrid, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            DialogItems.ShowDialog(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
             MessageBox.Show("dialog item already shown");
         }
         private async void OnClickShowAsyncMovableButtonPopup(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            await DialogItems.ShowAsync(subGrid, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            await DialogItems.ShowAsync(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
             MessageBox.Show("dialog item already shown");
         }
         #endregion
@@ -113,32 +114,32 @@ namespace LightyTest
         private Action<DialogItems> _closeOnClickBackgroundCallback = items => items.CloseOnClickBackground = false;
         private void OnClickShowButton(object sender, RoutedEventArgs e)
         {
-            DialogItems.Show(this, new SampleDialog(), _closeOnClickBackgroundCallback);
+            DialogItems.Show(this, new SampleDialog(), null, _closeOnClickBackgroundCallback);
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowDialogButton(object sender, RoutedEventArgs e)
         {
-            DialogItems.ShowDialog(this, new SampleDialog(), _closeOnClickBackgroundCallback);
+            DialogItems.ShowDialog(this, new SampleDialog(), null, _closeOnClickBackgroundCallback);
             MessageBox.Show("dialog item already shown");
         }
 
         private async void OnClickShowAsyncButton(object sender, RoutedEventArgs e)
         {
-            await DialogItems.ShowAsync(this, new SampleDialog(), _closeOnClickBackgroundCallback);
+            await DialogItems.ShowAsync(this, new SampleDialog(), null, _closeOnClickBackgroundCallback);
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowUserControl(object sender, RoutedEventArgs e)
         {
-            DialogItems.Show(this, new SampleDialog(), _closeOnClickBackgroundCallback);
+            DialogItems.Show(this, new SampleDialog(), null, _closeOnClickBackgroundCallback);
         }
         private void OnClickShowImage(object sender, RoutedEventArgs e)
         {
             var image = new Image();
             image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
             image.PreviewMouseLeftButtonDown += (o, args) => ApplicationCommands.Close.Execute(null, image);
-            DialogItems.Show(this, image, _closeOnClickBackgroundCallback);
+            DialogItems.Show(this, image, null, _closeOnClickBackgroundCallback);
         }
 
         private void OnClickShowInGrid(object sender, RoutedEventArgs e)
@@ -146,7 +147,7 @@ namespace LightyTest
             ClearSubGrid();
             var image = new Image();
             image.Source = new BitmapImage(new Uri("Images/1.jpg", UriKind.Relative));
-            DialogItems.Show(this.subGrid, image, _closeOnClickBackgroundCallback);
+            DialogItems.Show(this.subGrid, image, null, _closeOnClickBackgroundCallback);
         }
 
         #region 別ウィンドウで開くサンプルなど
@@ -174,21 +175,21 @@ namespace LightyTest
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.Show(subGrid, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+            DialogItems.Show(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
             MessageBox.Show("dialog item already shown");
         }
         private void OnClickShowDialogMovableButton(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.ShowDialog(subGrid, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+            DialogItems.ShowDialog(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
             MessageBox.Show("dialog item already shown");
         }
         private async void OnClickShowAsyncMovableButton(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            await DialogItems.ShowAsync(subGrid, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+            await DialogItems.ShowAsync(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
             MessageBox.Show("dialog item already shown");
         }
         #endregion

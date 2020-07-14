@@ -17,13 +17,13 @@ namespace LightyTest.Examples
 
         private async void button_Click(object sender, RoutedEventArgs e)
         {
-            DialogItems.Show(this, new SampleDialog(), items => items.CloseOnClickBackground = false);
+            DialogItems.Show(this, new SampleDialog(), null, items => items.CloseOnClickBackground = false);
 
             await Task.Delay(1000);
-            DialogItems.Show(this, new SampleDialog(), items => items.CloseOnClickBackground = false);
+            DialogItems.Show(this, new SampleDialog(), null, items => items.CloseOnClickBackground = false);
 
             await Task.Delay(1000);
-            DialogItems.Show(this, new SampleDialog(), items => items.CloseOnClickBackground = false);
+            DialogItems.Show(this, new SampleDialog(), null, items => items.CloseOnClickBackground = false);
         }
     }
 }

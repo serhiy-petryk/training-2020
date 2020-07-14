@@ -37,7 +37,7 @@ namespace LightyTest.Source
         protected override bool IsItemItsOwnContainerOverride(object item) => false;
 
         /// <summary>
-        /// Usage example: DialogItems.Show(owner, content, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+        /// Usage example: DialogItems.Show(owner, content, style, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
         /// </summary>
         /// <param name="content"></param>
         /// <param name="closeOnClickBackground"></param>
@@ -49,10 +49,6 @@ namespace LightyTest.Source
                 content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
                 {
                     dialogItems.CloseOnClickBackground = closeOnClickBackground;
-
-                    dialogItems.ItemsPanel = dialogItems.FindResource("ItemsPanelForDialogTemplate") as ItemsPanelTemplate;
-                    // dialogItems.ItemContainerStyle = dialogItems.FindResource("ItemContainerForDialogStyle") as Style;
-                    dialogItems.ItemContainerStyle = null;
 
                     // center content position
                     if (dialogItems.ItemsPresenter != null)
@@ -71,12 +67,12 @@ namespace LightyTest.Source
         /// <param name="owner"></param>
         /// <param name="content"></param>
         /// <param name="afterCreationCallback"></param>
-        public static async void Show(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
+        public static async void Show(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner);
+                adorner = await CreateAdornerAsync(owner, style);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
                 ((DialogItems)adorner.Child).AddDialog(content);
@@ -91,12 +87,12 @@ namespace LightyTest.Source
         /// <param name="content"></param>
         /// <param name="afterCreationCallback"></param>
         /// <returns></returns>
-        public static async Task ShowAsync(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
+        public static async Task ShowAsync(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner);
+                adorner = await CreateAdornerAsync(owner, style);
 
             if (adorner.Child != null && adorner.Child is DialogItems)
             {
@@ -112,12 +108,12 @@ namespace LightyTest.Source
         /// <param name="owner"></param>
         /// <param name="content"></param>
         /// <param name="afterCreationCallback"></param>
-        public static void ShowDialog(UIElement owner, FrameworkElement content, Action<DialogItems> afterCreationCallback = null)
+        public static void ShowDialog(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             var adorner = GetAdorner(owner);
             if (adorner == null) 
-                adorner = CreateAdornerModal(owner);
+                adorner = CreateAdornerModal(owner, style);
 
             var frame = new DispatcherFrame();
             ((DialogItems) adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
@@ -165,8 +161,8 @@ namespace LightyTest.Source
             {
                 var content = win.Content as FrameworkElement;
                 var margin = content.Margin;
-                adorner.Margin = new Thickness(-margin.Left, -margin.Top, margin.Right, margin.Bottom);
-                adorner.UseAdornedElementSize = false;
+                // adorner.Margin = new Thickness(-margin.Left, -margin.Top, margin.Right, margin.Bottom);
+                // adorner.UseAdornedElementSize = false;
             }
 
             // If the target is Enable when the dialog is displayed, disable it only while the dialog is displayed.
@@ -184,10 +180,12 @@ namespace LightyTest.Source
             return adorner;
         }
 
-        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element)
+        protected static Task<AdornerControl> CreateAdornerAsync(UIElement element, Style style)
         {
             var tcs = new TaskCompletionSource<AdornerControl>();
             var dialogItems = new DialogItems();
+            if (style != null)
+                dialogItems.Style = style;
             var adorner = CreateAdornerCore(element, dialogItems);
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
@@ -202,9 +200,11 @@ namespace LightyTest.Source
             return tcs.Task;
         }
 
-        protected static AdornerControl CreateAdornerModal(UIElement element)
+        protected static AdornerControl CreateAdornerModal(UIElement element, Style style)
         {
             var dialogItems = new DialogItems();
+            if (style != null)
+                dialogItems.Style = style;
             var adorner = CreateAdornerCore(element, dialogItems);
 
             if (!dialogItems.IsParallelInitialize)
