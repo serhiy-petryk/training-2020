@@ -5,90 +5,164 @@ using System.Windows.Media;
 
 namespace WpfInvestigate.Temp
 {
-    public class ColorUtilities
+    class ColorUtilities
     {
-        public static void Test()
-        {
-            var a0 = Colors.Red;
-            var a01 = InvertColor(a0);
-            var a02 = InvertColor(Colors.Aqua);
-        }
+        private const double DefaultPrecision = 0.0001;
+        private const double OneThird = 1.0 / 3.0;
+        private const double TwoThirds = 2.0 / 3.0;
+        private const double OneSixth = 1.0 / 6.0;
+
+        public static Color StringToColor(string hexStringOfColor) => (Color)ColorConverter.ConvertFromString(hexStringOfColor);
 
         public static Color InvertColor(Color color)
         {
-            double hue;
-            double saturation;
-            double value;
-            ColorToHSV(color, out hue, out saturation, out value);
-            double newHue = (hue + 180.0) % 360.0;
-            var newColor = ColorFromHSV(newHue, saturation, value);
-            return newColor;
+            var hsv = ColorToHsv(color);
+            return HsvToColor((hsv.Item1 + 180.0) % 360.0, hsv.Item2, hsv.Item3);
         }
 
-        public static void ColorToHSV(Color color, out double hue, out double saturation, out double value)
+        /**
+         * Converts an RGB color to HSL.
+         * Conversion formula adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+         * Returns h, s, and l in the set [0, 1].
+         *
+         * @param   Color
+         * @return  Tuple<double, double, double> The HSL representation
+         */
+        public static Tuple<double, double, double> ColorToHsl(Color color)
         {
-            byte max = Math.Max(color.R, Math.Max(color.G, color.B));
-            byte min = Math.Min(color.R, Math.Min(color.G, color.B));
+            var r = color.R / 255.0;
+            var g = color.G / 255.0;
+            var b = color.B / 255.0;
+            var max = threeway_max(r, g, b);
+            var min = threeway_min(r, g, b);
+            double h = 0.0, s = 0.0, l = (max + min) / 2;
 
-            hue = GetHue(color);
-            saturation = (max == 0) ? 0 : 1d - (1d * min / max);
-            value = max / 255d;
-        }
-
-        public static Color ColorFromHSV(double hue, double saturation, double value)
-        {
-            var hi = Convert.ToByte(Convert.ToInt32(Math.Floor(hue / 60)) % 6);
-            var f = hue / 60.0 - Math.Floor(hue / 60.0);
-
-            value = value * 255;
-            var v = Convert.ToByte(value);
-            var p = Convert.ToByte(value * (1 - saturation));
-            var q = Convert.ToByte(value * (1 - f * saturation));
-            var t = Convert.ToByte(value * (1 - (1 - f) * saturation));
-
-            if (hi == 0)
-                return Color.FromArgb(255, v, t, p);
-            if (hi == 1)
-                return Color.FromArgb(255, q, v, p);
-            if (hi == 2)
-                return Color.FromArgb(255, p, v, t);
-            if (hi == 3)
-                return Color.FromArgb(255, p, q, v);
-            if (hi == 4)
-                return Color.FromArgb(255, t, p, v);
-            return Color.FromArgb(255, v, p, q);
-        }
-
-        private static double GetHue(Color color)
-        {
-            if (color.R == color.G && color.G == color.B)
-                return 0.0;
-
-            var num = color.R / 255.0;
-            var num2 = color.G / 255.0;
-            var num3 = color.B / 255.0;
-            var num4 = 0.0;
-            var num5 = num;
-            var num6 = num;
-            if (num2 > num5) num5 = num2;
-            if (num3 > num5) num5 = num3;
-            if (num2 < num6) num6 = num2;
-            if (num3 < num6) num6 = num3;
-            var num7 = num5 - num6;
-            if (num == num5)
-                num4 = (num2 - num3) / num7;
+            if (is_equal(max, min))
+                h = s = 0.0; // achromatic
             else
             {
-                if (num2 == num5)
-                    num4 = 2.0 + (num3 - num) / num7;
-                else if 
-                    (num3 == num5) num4 = 4.0 + (num - num2) / num7;
+                var d = max - min;
+                s = l > 0.5 ? d / (2.0 - max - min) : d / (max + min);
+                if (is_equal(max, r))
+                    h = (g - b) / d + (g < b ? 6.0 : 0.0);
+                else if (is_equal(max, g))
+                    h = (b - r) / d + 2.0;
+                else if (is_equal(max, b))
+                    h = (r - g) / d + 4.0;
+                h /= 6.0;
             }
-            num4 *= 60.0;
-            if (num4 < 0.0) num4 += 360.0;
 
-            return num4;
+            return new Tuple<double, double, double>(h, s, l);
         }
 
-	}
+        /**
+         * Converts an HSL color value to Color.
+         * Conversion formula adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+         * Assumes h, s, and l are contained in the set [0, 1].
+         *
+         * @param   Number  h       The hue
+         * @param   Number  s       The saturation
+         * @param   Number  l       The lightness
+         * @return  Color
+         */
+        public static Color HslToColor(double h, double s, double l)
+        {
+            double r, g, b;
+
+            if (is_equal(s, 0.0))
+                r = g = b = l; // achromatic
+            else
+            {
+                var q = l < 0.5 ? l * (1.0 + s) : l + s - l * s;
+                var p = 2.0 * l - q;
+                r = hue2rgb(p, q, h + OneThird);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - OneThird);
+            }
+
+            return Color.FromRgb(Convert.ToByte(r * 255.0), Convert.ToByte(g * 255.0), Convert.ToByte(b * 255.0));
+        }
+
+        /**
+         * Converts an RGB color to HSV.
+         * Conversion formula adapted from http://en.wikipedia.org/wiki/HSV_color_space.
+         * Returns h, s, and v in the set [0, 1].
+         *
+         * @param   Color
+         * @return  Tuple<double, double, double> The HSV representation
+         */
+        public static Tuple<double, double, double> ColorToHsv(Color color)
+        {
+            var r = color.R / 255.0;
+            var g = color.G / 255.0;
+            var b = color.B / 255.0;
+            double max = threeway_max(r, g, b), min = threeway_min(r, g, b);
+            double h = 0.0, s = 0, v = max;
+
+            var d = max - min;
+            s = is_equal(max, 0.0) ? 0.0 : d / max;
+
+            if (is_equal(max, min))
+                h = 0.0; // achromatic
+            else
+            {
+                if (is_equal(max, r))
+                    h = (g - b) / d + (g < b ? 6.0 : 0.0);
+                else if (is_equal(max, g))
+                    h = (b - r) / d + 2.0;
+                else if (is_equal(max, b))
+                    h = (r - g) / d + 4.0;
+                h /= 6.0;
+            }
+
+            return new Tuple<double, double, double>(h, s, v);
+        }
+
+        /**
+         * Converts an HSV color value to Color.
+         * Conversion formula adapted from http://en.wikipedia.org/wiki/HSV_color_space.
+         * Assumes h, s, and v are contained in the set [0, 1].
+         *
+         * @param   Number  h       The hue
+         * @param   Number  s       The saturation
+         * @param   Number  v       The value
+         * @return  Color
+         */
+        public static Color HsvToColor(double h, double s, double v)
+        {
+            double r = 0.0, g = 0.0, b = 0.0;
+
+            var i = (int)(h * 6.0);
+            var f = h * 6.0 - i;
+            var p = v * (1.0 - s);
+            var q = v * (1.0 - f * s);
+            var t = v * (1.0 - (1.0 - f) * s);
+
+            switch (i % 6.0)
+            {
+                case 0: r = v; g = t; b = p; break;
+                case 1: r = q; g = v; b = p; break;
+                case 2: r = p; g = v; b = t; break;
+                case 3: r = p; g = q; b = v; break;
+                case 4: r = t; g = p; b = v; break;
+                case 5: r = v; g = p; b = q; break;
+            }
+
+            return Color.FromRgb(Convert.ToByte(r * 255.0), Convert.ToByte(g * 255.0), Convert.ToByte(b * 255.0));
+        }
+
+        private static double threeway_max(double a, double b, double c) => Math.Max(a, Math.Max(b, c));
+        private static double threeway_min(double a, double b, double c) => Math.Min(a, Math.Min(b, c));
+        private static bool is_equal(double d1, double d2) => Math.Abs(d1 - d2) < DefaultPrecision;
+
+        private static double hue2rgb(double p, double q, double t)
+        {
+            if (t < 0) t += 1.0;
+            if (t > 1) t -= 1.0;
+            if (t < OneSixth) return p + (q - p) * 6.0 * t;
+            if (t < 0.5) return q;
+            if (t < TwoThirds) return p + (q - p) * (TwoThirds - t) * 6.0;
+            return p;
+        }
+    }
 }

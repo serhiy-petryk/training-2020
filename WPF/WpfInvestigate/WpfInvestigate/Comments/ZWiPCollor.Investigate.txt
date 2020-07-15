@@ -1,4 +1,50 @@
 ﻿
+Online investigators:
+https://www.colorhexa.com/0014ab
+https://www.w3schools.com/colors/colors_picker.asp
+====================================
+
+https://www.colorhexa.com/0014ab utilities:
+=========
+Gradient generator
+Color blender
+Color subtraction
+216 web safe colors
+Colors by name (746 names)
+
+w3.com standard and C# Colors definition: there are 147 named colors
+
+For each color:
+==============
++Complementary Color
+	змінюється на 180 hue of color HSV (?HSL)
+Analogous Color
+Split Complementary Color
+Triadic Color
+Tetradic Color
++7 Monochromatic Color
+	змінюється на 5% Lightness of color HSL
+7 Similar Colors
++13 Shade Color Variation - mix black and current colors with lightness<=50
++13 Tint Color Variation - mix white and current colors with lightness>50
+13 Tone Color Variation
+
+https://www.w3schools.com/colors/colors_picker.asp uilities:
+===========================================================
+Lighter / Darker (== step by Lightness)
+step by Hue
+step by Saturation
+step by Lightness
+
+Algorithms:
+==========
++++ https://github.com/muak/ColorMinePortable (MIT license. Many standards)
+++ https://github.com/waesteve/Color-RGB_HSL_HSV_XY/blob/master/RGBConverter.cs (HSL/HSV converters)
+
+
+============
+///  OLD  //
+===========
 -- Invert color:
 ============
 see comment of ThibThib in https://stackoverflow.com/questions/1165107/how-do-i-invert-a-colour +
@@ -12,9 +58,11 @@ decomplier code for System.Drawing.Color.GetHue method
 NegativeColor =  (255,255,255) - Color.RGB
 
 
-Віддінки кольору
+Відтінки кольору
 ===============
 У проекті MaterialDesignColors у папці Theme визначенні набори віддінків + foreground для 19 кольорів.
 Крім того, там є папка Recomended для Accent/Primary.
+
+
 
 
