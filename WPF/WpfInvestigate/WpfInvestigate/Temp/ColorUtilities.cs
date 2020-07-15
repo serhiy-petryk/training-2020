@@ -97,7 +97,7 @@ namespace WpfInvestigate.Temp
             var g = color.G / 255.0;
             var b = color.B / 255.0;
             double max = threeway_max(r, g, b), min = threeway_min(r, g, b);
-            double h = 0.0, s = 0, v = max;
+            double h = 0.0, s = 0.0, v = max;
 
             var d = max - min;
             s = is_equal(max, 0.0) ? 0.0 : d / max;
