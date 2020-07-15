@@ -73,8 +73,8 @@
     <Compile Include="Examples\MultipleLightBoxWindow.xaml.cs">
       <DependentUpon>MultipleLightBoxWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Examples\MessageBlockControl.xaml.cs">
-      <DependentUpon>MessageBlockControl.xaml</DependentUpon>
+    <Compile Include="Examples\MessageBlock.xaml.cs">
+      <DependentUpon>MessageBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="Examples\SampleDialogMovable.xaml.cs">
       <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
@@ -82,11 +82,9 @@
     <Compile Include="Examples\SampleDialog.xaml.cs">
       <DependentUpon>SampleDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\Tips.cs" />
     <Compile Include="Source\AdornerControl.cs" />
     <Compile Include="Source\DialogItems.cs" />
-    <Compile Include="Source\MessageBlock.cs" />
     <Compile Include="Source\StoryboardExtensions.cs" />
     <Page Include="Examples\BuiltinStyleWindowPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -104,7 +102,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Examples\MessageBlockControl.xaml">
+    <Page Include="Examples\MessageBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

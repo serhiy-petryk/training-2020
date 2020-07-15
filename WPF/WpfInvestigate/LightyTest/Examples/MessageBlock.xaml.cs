@@ -10,36 +10,51 @@ using LightyTest.Source;
 
 namespace LightyTest.Examples
 {
-    public partial class MessageBlockControl : UserControl
+    public partial class MessageBlock : UserControl
     {
-        private MessageBlock Data { get; }
-        private RelayCommand CmdClickButton { get; }
+        public enum MessageBlockIcon { Question, Stop, Error, Warning, Information, Ok }
 
-        private MessageBlockControl()
+        public static string Show(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
+        {
+            var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
+            var content = new MessageBlock(messageText, caption, icon, buttons);
+            DialogItems.ShowDialog(null, content, style, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            return content._result;
+        }
+
+        // =================  Instance  ================
+        private string _result;
+        private RelayCommand _cmdClickButton { get; }
+
+        private MessageBlock()
         {
             InitializeComponent();
         }
-        public MessageBlockControl(MessageBlock data) : this()
+        private MessageBlock(string messageText, string caption, MessageBlockIcon? icon, string[] buttons) : this()
         {
-            Data = data;
-            DataContext = Data;
-            CmdClickButton = new RelayCommand(OnButtonClick);
+            // Data = data;
+            DataContext = this;
+            _cmdClickButton = new RelayCommand(OnButtonClick);
 
-            IconBox.Child = data.Icon;
+            MessageTextControl.Text = messageText;
+            CaptionControl.Text = caption;
+            if (icon != null)
+                IconBox.Child = Application.Current.TryFindResource($"MessageBlock{icon.Value}Icon") as FrameworkElement;
+            IconBox.Visibility = IconBox.Child == null ? Visibility.Collapsed : Visibility.Visible;
 
-            if (data.Buttons != null && data.Buttons.Length > 0)
+            if (buttons != null && buttons.Length > 0)
             {
-                Buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                for (var k = 0; k < data.Buttons.Length; k++)
+                ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                for (var k = 0; k < buttons.Length; k++)
                 {
-                    Buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
-                    var btn = new Button { Margin = new Thickness(8, 4, 8, 4), Content = data.Buttons[k] };
+                    ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+                    var btn = new Button { Margin = new Thickness(8, 4, 8, 4), Content = buttons[k] };
                     Grid.SetColumn(btn, k + 1);
-                    Buttons.Children.Add(btn);
-                    btn.Command = CmdClickButton;
-                    btn.CommandParameter = data.Buttons[k];
+                    ButtonsArea.Children.Add(btn);
+                    btn.Command = _cmdClickButton;
+                    btn.CommandParameter = buttons[k];
                 }
-                Buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             }
 
             var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -49,7 +64,7 @@ namespace LightyTest.Examples
 
         private void OnButtonClick(object parameter)
         {
-            Data.Result = parameter?.ToString();
+            _result = parameter?.ToString();
             ApplicationCommands.Close.Execute(null, ((DialogItems)Parent).Items[0] as FrameworkElement);
         }
 
@@ -117,7 +132,6 @@ namespace LightyTest.Examples
                 }
             }
         }
-
         private void OnResizeTop(double verticalChange, FrameworkElement itemsPresenter)
         {
             if (itemsPresenter != null)

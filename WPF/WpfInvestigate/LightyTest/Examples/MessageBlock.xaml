@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="LightyTest.Examples.MessageBlockControl"
+﻿<UserControl x:Class="LightyTest.Examples.MessageBlock"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,32 +15,36 @@
             <EventSetter Event="DragStarted" Handler="Thumb_OnDragStarted"/>
             <EventSetter Event="DragDelta" Handler="ResizeThumb_OnDragDelta"/>
         </Style>
+
+        <SolidColorBrush x:Key="BorderBrush" Color="#FF749DCA" />
+        <SolidColorBrush x:Key="HeaderBrush" Color="#FFABC4DF" />
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#FFE2EBF4" />
     </UserControl.Resources>
 
     <Grid>
         <Grid Effect="{StaticResource ShadowEffect}"/>
-        <Border BorderBrush="#FF749DCA" BorderThickness="7" Background="#FFE2EBF4">
+        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="7" Background="{StaticResource BackgroundBrush}">
             <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="15"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0" Background="#FFABC4DF">
+                <Grid Grid.Row="0" Background="{StaticResource HeaderBrush}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" x:Name="Caption" Height="30" VerticalAlignment="Top" Foreground="White" Padding="5"
-                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{Binding Caption}"/>
-                    <Button Grid.Column="1" Foreground="Black" Style="{StaticResource TextButtonStyle}"
+                    <TextBlock Grid.Column="0" x:Name="CaptionControl" Height="30" VerticalAlignment="Top" Foreground="White" Padding="5"
+                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                    <Button Grid.Column="1" Margin="0 0 4 0" Foreground="Black" Style="{StaticResource TextButtonStyle}"
                             HorizontalAlignment="Right" VerticalAlignment="Center"
                             FontFamily="Marlett" Content="r"
                             Command="ApplicationCommands.Close" CommandParameter="{Binding}" />
-                    <Thumb Grid.Column="0" x:Name="MoveThumb" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta" Background="Yellow"/>
+                    <Thumb Grid.Column="0" x:Name="MoveThumb" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>
                 </Grid>
 
                 <Grid Grid.Row="1">
@@ -48,11 +52,11 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Viewbox Grid.Column="0" x:Name="IconBox" Width="28" Margin="4 0 0 0" Visibility="{Binding Path=Icon, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                    <TextBlock Grid.Column="1" x:Name="MessageText" Margin="8" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding MessageText}" FontSize="14"/>
+                    <Viewbox Grid.Column="0" x:Name="IconBox" Width="28" Margin="4 0 0 0" />
+                    <TextBlock Grid.Column="1" x:Name="MessageTextControl" Margin="8" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="14"/>
                 </Grid>
 
-                <Grid Grid.Row="2" x:Name="Buttons" Margin="0 5 0 0"/>
+                <Grid Grid.Row="2" x:Name="ButtonsArea" Margin="0 5 0 0"/>
 
             </Grid>
         </Border>
