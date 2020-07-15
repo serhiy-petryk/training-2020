@@ -11,9 +11,10 @@
     <Path x:Key="MessageBlockErrorIcon" Fill="Red" x:Shared="False" Data="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
     <Path x:Key="XMessageBlockWarningIcon" Stroke="Black" StrokeThickness="0.3" Fill="Orange" x:Shared="False" Data="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
     <Viewbox x:Key="MessageBlockWarningIcon" x:Shared="False" UseLayoutRounding="True">
-        <Canvas Width="64" Height="64">
+        <Canvas Width="54" Height="54">
             <Path Fill="#FFEFCC00" Data="M30.16,11.51,6.84,51.9a2.13,2.13,0,0,0,1.84,3.19H55.32a2.13,2.13,0,0,0,1.84-3.19L33.84,11.51A2.13,2.13,0,0,0,30.16,11.51Z"/>
-            <Path Fill="#FF353535" Data="M29,46a3,3,0,1,1,3,3A2.88,2.88,0,0,1,29,46Zm1.09-4.66-.76-15h5.26l-.73,15Z"/>
+            <!--<Path Fill="#FF353535" Data="M29,46a3,3,0,1,1,3,3A2.88,2.88,0,0,1,29,46Zm1.09-4.66-.76-15h5.26l-.73,15Z"/>-->
+            <Path Fill="#FF353535" Data="M29.5,46a3,3,0,1,1,3,3A2.88,2.88,0,0,1,29,46Zm1.09-4.66-.76-15h5.26l-.73,15Z"/>
         </Canvas>
     </Viewbox>
     <Path x:Key="MessageBlockInformationIcon" Fill="#FF0078D7" x:Shared="False" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
