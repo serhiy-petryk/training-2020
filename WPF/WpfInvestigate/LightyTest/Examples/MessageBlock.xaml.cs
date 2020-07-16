@@ -12,7 +12,7 @@ namespace LightyTest.Examples
 {
     public partial class MessageBlock : UserControl
     {
-        public enum MessageBlockIcon { Question, Stop, Error, Warning, Information, Ok }
+        public enum MessageBlockIcon { Question, Stop, Error, Warning, Information, Success }
 
         public static string Show(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
         {

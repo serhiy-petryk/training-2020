@@ -110,7 +110,7 @@
             <Button Margin="5" Width="100" Click="OnClickErrorMessageBlock" Content="Error" />
             <Button Margin="5" Width="100" Click="OnClickWarningMessageBlock" Content="Warning" />
             <Button Margin="5" Width="100" Click="OnClickInformationMessageBlock" Content="Information" />
-            <Button Margin="5" Width="100" Click="OnClickOkMessageBlock" Content="Ok" />
+            <Button Margin="5" Width="100" Click="OnClickSuccessMessageBlock" Content="Success" />
             </StackPanel>
         </StackPanel>
 

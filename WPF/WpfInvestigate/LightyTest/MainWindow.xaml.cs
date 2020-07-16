@@ -224,10 +224,10 @@ namespace LightyTest
             var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
                 "Caption of Message block", MessageBlock.MessageBlockIcon.Information);
         }
-        private void OnClickOkMessageBlock(object sender, RoutedEventArgs e)
+        private void OnClickSuccessMessageBlock(object sender, RoutedEventArgs e)
         {
             var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
-                "Caption of Message block", MessageBlock.MessageBlockIcon.Ok, new []{"OK", "Cancel"});
+                "Caption of Message block", MessageBlock.MessageBlockIcon.Success, new []{"OK", "Cancel"});
             if (aa != null)
                 MessageBlock.Show($"You pressed '{aa}' button", null, MessageBlock.MessageBlockIcon.Information, new[] { "OK" });
         }
