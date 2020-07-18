@@ -1,0 +1,55 @@
+﻿<Window x:Class="ColorInvestigation.Views.GrayScaleDiff"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="GrayScale Difference" Height="450" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Sorted"/>
+            <CheckBox x:Name="Sorted" Click="OnCheckBoxClick" IsThreeState="False"/>
+            <Button Click="OnUpdateDtaButtonClick" Content="Update data"/>
+            <TextBlock x:Name="Count"/>
+
+            <TextBlock Text="Set1" Margin="5 0 0 0"/>
+            <ComboBox Name="Function1" Height="30" VerticalAlignment="Top">
+                <TextBlock>ColorToGrayScale</TextBlock>
+                <TextBlock>ColorToGrayScale 1</TextBlock>
+                <TextBlock>ColorToGrayScale 2</TextBlock>
+                <TextBlock>ColorToGrayScale 3</TextBlock>
+                <TextBlock>ColorToGrayScale 4</TextBlock>
+                <TextBlock>ColorToGrayScale 5</TextBlock>
+                <TextBlock>ColorToGrayScale 6</TextBlock>
+                <TextBlock>ContrastingForegroundColor</TextBlock>
+            </ComboBox>
+            <TextBlock Text="Split1" Margin="5 0"/>
+            <TextBox x:Name="Split1" Text="55"/>
+
+            <TextBlock Text="Set2" Margin="15 0 0 0"/>
+            <ComboBox Name="Function2" Height="30" VerticalAlignment="Top">
+                <TextBlock>ColorToGrayScale</TextBlock>
+                <TextBlock>ColorToGrayScale 1</TextBlock>
+                <TextBlock>ColorToGrayScale 2</TextBlock>
+                <TextBlock>ColorToGrayScale 3</TextBlock>
+                <TextBlock>ColorToGrayScale 4</TextBlock>
+                <TextBlock>ColorToGrayScale 5</TextBlock>
+                <TextBlock>ColorToGrayScale 6</TextBlock>
+                <TextBlock>ContrastingForegroundColor</TextBlock>
+            </ComboBox>
+            <TextBlock Text="Split2" Margin="5 0 0 5"/>
+            <TextBox x:Name="Split2" Text="35"/>
+
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1">
+            <StackPanel x:Name="Panel" Orientation="Vertical"></StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
