@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
-using ColorInvestigation.Lib;
+﻿using System.Windows;
 using ColorInvestigation.Temp;
 using ColorInvestigation.Views;
 

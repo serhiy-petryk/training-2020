@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using ColorInvestigation.Lib;
+using ColorInvestigation.Temp;
 
 namespace ColorInvestigation.Views
 {
@@ -48,8 +48,8 @@ namespace ColorInvestigation.Views
             // var colors = pp.Select(p => (Color)p.GetValue(null)).Distinct().ToArray();
             var colors = GetColors();
             var colors1 = Sorted.IsChecked == true
-                ? colors.OrderBy(ColorUtilities.ColorToGrayScale1)
-                : colors.OrderBy(ColorUtilities.ContrastingForegroundColor);
+                ? colors.OrderBy(GrayScales.ColorToGrayScale1)
+                : colors.OrderBy(GrayScales.ContrastingForegroundColor);
 
             var cnt = 0;
 
@@ -113,21 +113,21 @@ namespace ColorInvestigation.Views
                 case "":
                     return null;
                 case "ColorToGrayScale":
-                    return ColorUtilities.ColorToGrayScale;
+                    return GrayScales.ColorToGrayScale;
                 case "ColorToGrayScale 1":
-                    return ColorUtilities.ColorToGrayScale1;
+                    return GrayScales.ColorToGrayScale1;
                 case "ColorToGrayScale 2":
-                    return ColorUtilities.ColorToGrayScale2;
+                    return GrayScales.ColorToGrayScale2;
                 case "ColorToGrayScale 3":
-                    return ColorUtilities.ColorToGrayScale3;
+                    return GrayScales.ColorToGrayScale3;
                 case "ColorToGrayScale 4":
-                    return ColorUtilities.ColorToGrayScale4;
+                    return GrayScales.ColorToGrayScale4;
                 case "ColorToGrayScale 5":
-                    return ColorUtilities.ColorToGrayScale5;
+                    return GrayScales.ColorToGrayScale5;
                 case "ColorToGrayScale 6":
-                    return ColorUtilities.ColorToGrayScale6;
+                    return GrayScales.ColorToGrayScale6;
                 case "ContrastingForegroundColor":
-                    return ColorUtilities.ContrastingForegroundColor;
+                    return GrayScales.ContrastingForegroundColor;
                 default:
                     throw new Exception("DDDDDDDD");
             }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ColorInvestigation.Lib;
 using ColorInvestigation.Views;
 
 namespace ColorInvestigation.Temp
@@ -24,7 +23,7 @@ namespace ColorInvestigation.Temp
                 foreach (var color in colors)
                 {
                     var gray1 = (r * color.R + g * color.G + b * color.B) / 256.0;
-                    var gray2 = ColorUtilities.ContrastingForegroundColor(color);
+                    var gray2 = GrayScales.ContrastingForegroundColor(color);
                     var cnt = 0;
                     var a1 = gray1 < split1 ? 0 : 1;
                     var a2 = gray2 < split2 ? 0 : 1;

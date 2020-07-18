@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using ColorInvestigation.Lib;
+using ColorInvestigation.Temp;
 
 namespace ColorInvestigation.Views
 {
@@ -29,28 +29,28 @@ namespace ColorInvestigation.Views
                 case "":
                     return;
                 case "ColorToGrayScale":
-                    func = ColorUtilities.ColorToGrayScale;
+                    func = GrayScales.ColorToGrayScale;
                     break;
                 case "ColorToGrayScale 1":
-                    func = ColorUtilities.ColorToGrayScale1;
+                    func = GrayScales.ColorToGrayScale1;
                     break;
                 case "ColorToGrayScale 2":
-                    func = ColorUtilities.ColorToGrayScale2;
+                    func = GrayScales.ColorToGrayScale2;
                     break;
                 case "ColorToGrayScale 3":
-                    func = ColorUtilities.ColorToGrayScale3;
+                    func = GrayScales.ColorToGrayScale3;
                     break;
                 case "ColorToGrayScale 4":
-                    func = ColorUtilities.ColorToGrayScale4;
+                    func = GrayScales.ColorToGrayScale4;
                     break;
                 case "ColorToGrayScale 5":
-                    func = ColorUtilities.ColorToGrayScale5;
+                    func = GrayScales.ColorToGrayScale5;
                     break;
                 case "ColorToGrayScale 6":
-                    func = ColorUtilities.ColorToGrayScale6;
+                    func = GrayScales.ColorToGrayScale6;
                     break;
                 case "ContrastingForegroundColor":
-                    func = ColorUtilities.ContrastingForegroundColor;
+                    func = GrayScales.ContrastingForegroundColor;
                     break;
                 default:
                     throw new Exception("DDDDDDDD");
