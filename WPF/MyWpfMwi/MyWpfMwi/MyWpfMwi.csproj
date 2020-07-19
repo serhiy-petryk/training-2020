@@ -77,6 +77,9 @@
     <Compile Include="Controls\DialogItems\DialogItems.cs" />
     <Compile Include="Controls\DialogItems\StoryboardExtensions.cs" />
     <Compile Include="Controls\DualPathToggleButtonEffect.cs" />
+    <Compile Include="Controls\MessageBlock.xaml.cs">
+      <DependentUpon>MessageBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ToggleButtonHelper.cs" />
     <Compile Include="Examples\CommandBarExample.xaml.cs">
       <DependentUpon>CommandBarExample.xaml</DependentUpon>
@@ -134,6 +137,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Controls\MessageBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Examples\CommandBarExample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
