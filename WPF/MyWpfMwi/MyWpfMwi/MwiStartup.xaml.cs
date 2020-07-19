@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using MyWpfMwi.Common;
+using MyWpfMwi.Controls;
 using MyWpfMwi.Controls.DialogItems;
 using MyWpfMwi.Examples;
 using MyWpfMwi.Mwi;
@@ -86,12 +87,20 @@ namespace MyWpfMwi
 
         public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
         {
-            var dialog = new MwiChild {Title = "Dialog"};
+            var dialog = new MwiChild { Title = "Dialog" };
             dialog.Content = new TextBlock { Text = "Test dialog window", Background = new SolidColorBrush(Colors.Green) };
 
             var style = dialog.TryFindResource("MovableDialogStyle") as Style;
             DialogItems.Show(AppViewModel.Instance.ContainerControl.ContainerForDialog, dialog, style,
                 GetAfterCreationCallbackForDialog(dialog, true));
+        });
+
+        public RelayCommand CmdShowMessage { get; } = new RelayCommand(o =>
+        {
+            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block", MessageBlock.MessageBlockIcon.Warning, new[] { "OK", "Cancel" });
+            if (aa != null)
+                MessageBlock.Show($"You pressed '{aa}' button", null, MessageBlock.MessageBlockIcon.Information);
         });
 
         private static Action<DialogItems> GetAfterCreationCallbackForDialog(FrameworkElement content, bool closeOnClickBackground)

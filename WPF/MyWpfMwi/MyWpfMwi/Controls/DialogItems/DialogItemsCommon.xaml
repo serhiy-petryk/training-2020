@@ -1,8 +1,55 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!-- Message Block -->
+    <Path x:Key="MessageBlockQuestionIcon" Fill="Blue" x:Shared="False" Data="M12,2C8.14,2 5,5.14 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9C19,5.14 15.86,2 12,2M12.88,15.75H11.13V14H12.88M12.88,12.88H11.13C11.13,10.04 13.75,10.26 13.75,8.5A1.75,1.75 0 0,0 12,6.75A1.75,1.75 0 0,0 10.25,8.5H8.5A3.5,3.5 0 0,1 12,5A3.5,3.5 0 0,1 15.5,8.5C15.5,10.69 12.88,10.91 12.88,12.88Z"/>
+    <Path x:Key="MessageBlockStopIcon" Fill="Red" x:Shared="False" Data="M8.27,3L3,8.27V15.73L8.27,21H15.73L21,15.73V8.27L15.73,3M8.41,7L12,10.59L15.59,7L17,8.41L13.41,12L17,15.59L15.59,17L12,13.41L8.41,17L7,15.59L10.59,12L7,8.41"/>
+    <Path x:Key="MessageBlockErrorIcon" Fill="Red" x:Shared="False" Data="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+    <Path x:Key="XMessageBlockWarningIcon" Stroke="Black" StrokeThickness="0.3" Fill="Orange" x:Shared="False" Data="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+    <Viewbox x:Key="MessageBlockWarningIcon" x:Shared="False" UseLayoutRounding="True">
+        <Canvas Width="52" Height="52">
+            <Path Fill="#FFEFCC00" Data="M30.16,11.51,6.84,51.9a2.13,2.13,0,0,0,1.84,3.19H55.32a2.13,2.13,0,0,0,1.84-3.19L33.84,11.51A2.13,2.13,0,0,0,30.16,11.51Z"/>
+            <Path Fill="#FF353535" Data="M30.5,46a3,3,0,1,1,3,3A2.88,2.88,0,0,1,30.5,46Zm1.09-4.66-.76-15h5.26l-.73,15Z"/>
+        </Canvas>
+    </Viewbox>
+    <Path x:Key="MessageBlockInformationIcon" Fill="#FF0078D7" x:Shared="False" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+    <Path x:Key="MessageBlockSuccessIcon" Fill="Green" x:Shared="False" Data="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+
+    <!-- Style for text buttons -->
+    <Style x:Key="TextButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="TextBlock.FontSize" Value="16" />
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="TextBlock.Foreground" Value="White" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <ContentPresenter x:Name="content"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Opacity="0.7" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True" />
+                        <Trigger Property="IsDefaulted" Value="True" />
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="content" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Animation -->
-    <Duration x:Key="StoryboardDuration">00:00:00.5</Duration>
+    <Duration x:Key="StoryboardDuration">00:00:00.25</Duration>
     <Storyboard x:Key="FadeInAnimation">
         <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="{StaticResource StoryboardDuration}">
             <DoubleAnimation.EasingFunction>
