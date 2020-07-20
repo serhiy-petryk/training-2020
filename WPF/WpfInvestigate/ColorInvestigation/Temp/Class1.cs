@@ -22,7 +22,7 @@ namespace ColorInvestigation.Temp
             for (var b = 0.0; b < 0.2; b += step2)
                 foreach (var color in colors)
                 {
-                    var gray1 = (r * color.R + g * color.G + b * color.B) / 256.0;
+                    var gray1 = (r * color.R + g * color.G + b * color.B) / 255.0;
                     var gray2 = GrayScales.ContrastingForegroundColor(color);
                     var cnt = 0;
                     var a1 = gray1 < split1 ? 0 : 1;

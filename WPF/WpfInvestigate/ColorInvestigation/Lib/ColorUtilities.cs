@@ -13,7 +13,7 @@ namespace ColorInvestigation.Lib
 
         public static Color StringToColor(string hexStringOfColor) => (Color)ColorConverter.ConvertFromString(hexStringOfColor);
 
-        public static double ColorToGrayScale(Color color) => (0.17 * color.R + 0.78 * color.G + 0.01 * color.B) / 256.0;
+        public static double ColorToGrayScale(Color color) => (0.17 * color.R + 0.78 * color.G + 0.01 * color.B) / 255.0;
         public static Color GetForegroundColor(Color color) => 0.17 * color.R + 0.78 * color.G + 0.01 * color.B < 155 ? Colors.White : Colors.Black;
 
         public static Color InvertColor(Color color)
