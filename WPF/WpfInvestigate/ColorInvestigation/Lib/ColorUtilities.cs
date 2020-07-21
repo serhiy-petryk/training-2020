@@ -1,4 +1,5 @@
 ﻿// Based on from https://github.com/waesteve/Color-RGB_HSL_HSV_XY/blob/master/RGBConverter.cs
+// https://github.com/muak/ColorMinePortable
 using System;
 using System.Windows.Media;
 
