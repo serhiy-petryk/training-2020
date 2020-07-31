@@ -1,0 +1,42 @@
+﻿<Window x:Class="ColorInvestigation.Views.Foreground"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Foreground" Height="450" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <ComboBox Name="Function" Height="30" VerticalAlignment="Top" Margin="10 0 5 0">
+                <TextBlock>HSL</TextBlock>
+                <TextBlock>YCbCr.BT601</TextBlock>
+                <TextBlock>YCbCr.BT709</TextBlock>
+                <TextBlock>YCbCr.BT2020</TextBlock>
+                <TextBlock>YCbCr.My</TextBlock>
+                <TextBlock>ContrastingForegroundColor</TextBlock>
+            </ComboBox>
+
+            <TextBlock Text="Data set"/>
+            <CheckBox x:Name="DataSet" IsThreeState="False" IsChecked="True"/>
+
+            <TextBlock Text="Gray level from" Margin="10 0 5 0"/>
+            <TextBox x:Name="From" Text="40"/>
+
+            <TextBlock Text="To" Margin="10 0 5 0"/>
+            <TextBox x:Name="To" Text="60"/>
+
+            <Button Click="OnUpdateDtaButtonClick" Content="Update data"/>
+            <TextBlock x:Name="Count"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" >
+            <StackPanel x:Name="Panel" Orientation="Vertical"/>
+        </ScrollViewer>
+    </Grid>
+</Window>

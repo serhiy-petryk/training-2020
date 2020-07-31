@@ -55,13 +55,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Temp\Class1.cs" />
+    <Compile Include="Common\ColorConverters.cs" />
+    <Compile Include="Lib\ColorSpacesTests.cs" />
+    <Compile Include="Temp\Calc.cs" />
+    <Compile Include="Temp\DynamicResourceBinding.cs" />
     <Compile Include="Temp\GrayScales.cs" />
+    <Compile Include="Views\ColorSpaces.xaml.cs">
+      <DependentUpon>ColorSpaces.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Foreground.xaml.cs">
+      <DependentUpon>Foreground.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ForegroundDiff.xaml.cs">
+      <DependentUpon>ForegroundDiff.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GrayScale.xaml.cs">
       <DependentUpon>GrayScale.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GrayScaleDiff.xaml.cs">
       <DependentUpon>GrayScaleDiff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HslMonoStyle.xaml.cs">
+      <DependentUpon>HslMonoStyle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MonoChromatic.xaml.cs">
+      <DependentUpon>MonoChromatic.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -72,19 +90,37 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\Tips.cs" />
-    <Compile Include="Lib\ColorHsl.cs" />
-    <Compile Include="Lib\ColorHsv.cs" />
     <Compile Include="Lib\ColorUtilities.cs" />
     <Compile Include="Lib\RGBConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ColorSpaces.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Foreground.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ForegroundDiff.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\GrayScale.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\GrayScaleDiff.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HslMonoStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MonoChromatic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

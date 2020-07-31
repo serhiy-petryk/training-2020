@@ -1,8 +1,15 @@
-﻿
+﻿Conclusion:
+==========
+Для тонів потрібно брати HSL, так як він має крайні кольори - чорний(L=0) і білий(L=100), а остальні стандарти (HSV, LAB, XYZ, YCbCr) не мають такої властивості.
+Тони із сайтів https://www.colorhexa.com/0c0e12 (26 тонів) і https://coolors.co/152614-1e441e-2a7221-119822-31cb00 (25 тонів, немає чорного)
+основані на HSL (HS-постійне, а L змінюється від 0 до 100 з кроком 4.0)
+
 Online investigators:
+====================================
 https://www.colorhexa.com/0014ab
 https://www.w3schools.com/colors/colors_picker.asp
-====================================
+Тони: https://coolors.co/152614-1e441e-2a7221-119822-31cb00
+
 
 https://www.colorhexa.com/0014ab utilities:
 =========
@@ -16,18 +23,26 @@ w3.com standard and C# Colors definition: there are 147 named colors
 
 For each color:
 ==============
-+Complementary Color
-	змінюється на 180 hue of color HSV (?HSL)
-Analogous Color
-Split Complementary Color
-Triadic Color
-Tetradic Color
+1+1 Complementary Color
+	based on HSL (H is changing on 180)
+2+1 Analogous Color
+	based on HSL (H is changing on +/-30)
+2+1 Split Complementary Color
+	based on HSL (H is changing on +/-150)
+2+1 Triadic Color
+	based on HSL (H is changing on +/-120)
+3+1 Tetradic Color
+	based on HSL (H is changing on 60, 120, 180)
 +7 Monochromatic Color
 	змінюється на 5% Lightness of color HSL
-7 Similar Colors
+6+1 Alternatives/Similar Colors
+	based on HSL (H is changing with step 5%)
 +13 Shade Color Variation - mix black and current colors with lightness<=50
+	based on HSL (L is changing with step 4%)
 +13 Tint Color Variation - mix white and current colors with lightness>50
-13 Tone Color Variation
+	based on HSL (L is changing with step 4%)
+12+1 Tone Color Variation
+	based on HSL (Saturation is changing with step 8%)
 
 https://www.w3schools.com/colors/colors_picker.asp uilities:
 ===========================================================
@@ -57,8 +72,4 @@ MaterialDesign має таку функцію ContrastingForegroundColor, де �
 Проект для конвертації малюнків у сірий кольор:
 https://github.com/ferenckovacsx/CS_Grayscale_Converter/tree/master/GreyscaleImageConverter
 
-ToDo:
-====
-1. Зробити controls на базі одного кольору (включачи white/black), використовуючи тони.
-Для foreground можливо також використовувати тони, а не white/black (дивись як зроблено у WebStorm).
-Потренуватися можна на MessageBlock. Причому у MessageBlock можна використовувати різні базові кольори в залежності від типу.
+

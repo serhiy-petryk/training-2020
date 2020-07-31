@@ -1,21 +1,106 @@
-﻿// Based on from https://github.com/waesteve/Color-RGB_HSL_HSV_XY/blob/master/RGBConverter.cs
-// https://github.com/muak/ColorMinePortable
+﻿/* Interface
+Color   StringToColor(string hexStringOfColor)
+double  ColorToGrayLevel(Color color)
+bool    IsDarkColor(Color color)
+Color   InvertColor(Color color)
+
+HSL:    Tuple<double, double, double> ColorToHsl(Color color)
+        Color HslToColor(double h, double s, double l)
+HSV:    Tuple<double, double, double> ColorToHsv(Color color)
+        Color HsvToColor(double h, double s, double v)
+XYZ:    Tuple<double, double, double> ColorToXyz(Color color)
+        Color XyzToColor(double x, double y, double z)
+LAB:    Tuple<double, double, double> ColorToLab(Color color)
+        Color LabToColor(double l, double a, double b)
+YCbCr:  Tuple<double, double, double> ColorToYCbCr(Color color, YCbCrType yCbCrType = YCbCrType.BT709)
+        Color YCbCrToColor(double y, double cB, double cR, YCbCrType yCbCrType = YCbCrType.BT709)
+ */
+
 using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Media;
 
 namespace ColorInvestigation.Lib
 {
+    public class ColorHSL: DependencyObject// , INotifyPropertyChanged
+    {
+        private double l;
+        /// <summary>
+        /// Hue property (0-360)
+        /// </summary>
+        public double H { get; set; }
+        /// <summary>
+        /// Saturation property (0-100)
+        /// </summary>
+        public double S { get; set; }
+        /// <summary>
+        /// Lightness property (0-100)
+        /// </summary>
+        /*public double L
+        {
+            get => l;
+            set
+            {
+                l = value;
+                OnPropertiesChanged(new []{nameof(Brush), nameof(H), nameof(S), nameof(L)});
+            } }*/
+
+        public static readonly DependencyProperty LProperty = DependencyProperty.Register(
+            nameof(L), typeof(double), typeof(ColorHSL), new FrameworkPropertyMetadata(double.MinValue, AAA));
+
+        private static void AAA(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            // var hsl = (ColorHSL)d;
+            // hsl.OnPropertiesChanged(new []{ nameof(Brush), nameof(S), nameof(H), nameof(L) });
+        }
+
+        public double L
+        {
+            get => (double)GetValue(LProperty);
+            set => SetValue(LProperty, value);
+        }
+
+        public SolidColorBrush Brush => new SolidColorBrush(ColorUtilities.HslToColor(H / 360.0, S / 100.0, L / 100.0));
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertiesChanged(string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+    }
+
+    //==============================
+
     public class ColorUtilities
     {
+        #region ===========  Old code  ===============
+        // public const double OldDarkSplit = 155.0;
+        public const double OldDarkSplit = 150.0;
+        public static double OldColorToGrayLevel(Color color) => (0.299 * color.R + 0.587 * color.G + 0.114 * color.B);
+        public static bool OldIsDarkColor(Color color) => OldColorToGrayLevel(color) < OldDarkSplit;
+        #endregion
+
+        public const double DarkSplit = 148.4;
+
         private const double DefaultPrecision = 0.0001;
         private const double OneThird = 1.0 / 3.0;
         private const double TwoThirds = 2.0 / 3.0;
         private const double OneSixth = 1.0 / 6.0;
+        private const YCbCrType DefaultYCbCr = YCbCrType.BT709;
 
         public static Color StringToColor(string hexStringOfColor) => (Color)ColorConverter.ConvertFromString(hexStringOfColor);
+        /* Returns double [0, 255]. */
+        public static double ColorToGrayLevel(Color color)
+        {
+            var kB = yCbCrMultipliers[(int)DefaultYCbCr, 0];
+            var kR = yCbCrMultipliers[(int)DefaultYCbCr, 1];
+            return kR * color.R + (1.0 - kB - kR) * color.G + kB * color.B;
+        }
+        public static bool IsDarkColor(Color color) => ColorToGrayLevel(color) < DarkSplit;
 
-        public static double ColorToGrayScale(Color color) => (0.17 * color.R + 0.78 * color.G + 0.01 * color.B) / 255.0;
-        public static Color GetForegroundColor(Color color) => 0.17 * color.R + 0.78 * color.G + 0.01 * color.B < 155 ? Colors.White : Colors.Black;
 
         public static Color InvertColor(Color color)
         {
@@ -23,6 +108,7 @@ namespace ColorInvestigation.Lib
             return HsvToColor((hsv.Item1 + 180.0) % 360.0, hsv.Item2, hsv.Item3);
         }
 
+        #region =========  HSL  =========
         /**
          * Converts an RGB color to HSL.
          * Conversion formula adapted from http://en.wikipedia.org/wiki/HSL_color_space.
@@ -85,6 +171,9 @@ namespace ColorInvestigation.Lib
 
             return Color.FromRgb(Convert.ToByte(r * 255.0), Convert.ToByte(g * 255.0), Convert.ToByte(b * 255.0));
         }
+        #endregion
+
+        #region =========  HSV  =========
 
         /**
          * Converts an RGB color to HSV.
@@ -167,5 +256,133 @@ namespace ColorInvestigation.Lib
             if (t < TwoThirds) return p + (q - p) * (TwoThirds - t) * 6.0;
             return p;
         }
+        #endregion
+
+        #region =========  XYZ  =========
+        public static Tuple<double, double, double> XyzWhiteReference { get; } = new Tuple<double, double, double>(95.047, 100.000, 108.883);
+        internal const double Epsilon = 216.0 / 24389.0; // Intent is 0.008856 = 216/24389
+        internal const double Kappa = 24389.0 / 27.0; // Intent is 903.3 = 24389/27
+
+        /**
+        * Converts an RGB color to XYZ.
+        * @param   Color
+        * @return  Tuple<double, double, double> The XYZ representation: x[0-95.5], y[0-100], and z[0-108.9]
+        */
+        public static Tuple<double, double, double> ColorToXyz(Color color)
+        {
+            var r = PivotRgb(color.R / 255.0);
+            var g = PivotRgb(color.G / 255.0);
+            var b = PivotRgb(color.B / 255.0);
+
+            // Observer. = 2°, Illuminant = D65
+            var x = r * 0.4124 + g * 0.3576 + b * 0.1805;
+            var y = r * 0.2126 + g * 0.7152 + b * 0.0722;
+            var z = r * 0.0193 + g * 0.1192 + b * 0.9505;
+            return new Tuple<double, double, double>(x, y, z);
+        }
+
+        public static Color XyzToColor(double x, double y, double z)
+        {
+            // (Observer = 2°, Illuminant = D65)
+            x = x / 100.0;
+            y = y / 100.0;
+            z = z / 100.0;
+
+            var r = x * 3.2406 + y * -1.5372 + z * -0.4986;
+            var g = x * -0.9689 + y * 1.8758 + z * 0.0415;
+            var b = x * 0.0557 + y * -0.2040 + z * 1.0570;
+
+            r = r > 0.0031308 ? 1.055 * Math.Pow(r, 1 / 2.4) - 0.055 : 12.92 * r;
+            g = g > 0.0031308 ? 1.055 * Math.Pow(g, 1 / 2.4) - 0.055 : 12.92 * g;
+            b = b > 0.0031308 ? 1.055 * Math.Pow(b, 1 / 2.4) - 0.055 : 12.92 * b;
+
+            return Color.FromRgb(ToRgb(r), ToRgb(g), ToRgb(b));
+        }
+
+        private static byte ToRgb(double n)
+        {
+            var result = Convert.ToInt32(255.0 * n);
+            if (result < 0) return 0;
+            if (result > 255) return 255;
+            return (byte)result;
+        }
+        private static double PivotRgb(double n) => (n > 0.04045 ? Math.Pow((n + 0.055) / 1.055, 2.4) : n / 12.92) * 100.0;
+        #endregion
+
+        #region =========  LAB  =========
+        /* l = [0-100], a = [-128,128], b = [-128, 128] */
+        public static Tuple<double, double, double> ColorToLab(Color color)
+        {
+            var xyz = ColorToXyz(color);
+            var white = XyzWhiteReference;
+
+            var x = PivotXyz(xyz.Item1 / white.Item1);
+            var y = PivotXyz(xyz.Item2 / white.Item2);
+            var z = PivotXyz(xyz.Item3 / white.Item3);
+
+            var l = Math.Max(0, 116 * y - 16);
+            var a = 500 * (x - y);
+            var b = 200 * (y - z);
+            return new Tuple<double, double, double>(l, a, b);
+        }
+        /* l = [0-100], a = [-128,128], b = [-128, 128] */
+        public static Color LabToColor(double l, double a, double b)
+        {
+            var y = (l + 16.0) / 116.0;
+            var x = a / 500.0 + y;
+            var z = y - b / 200.0;
+
+            var white = XyzWhiteReference;
+            var x3 = x * x * x;
+            var z3 = z * z * z;
+
+            var xyzX = white.Item1 * (x3 > Epsilon ? x3 : (x - 16.0 / 116.0) / 7.787);
+            var xyzY = white.Item2 * (l > (Kappa * Epsilon)
+                           ? Math.Pow(((l + 16.0) / 116.0), 3)
+                           : l / Kappa);
+            var xyzZ = white.Item3 * (z3 > Epsilon ? z3 : (z - 16.0 / 116.0) / 7.787);
+            return XyzToColor(xyzX, xyzY, xyzZ);
+        }
+
+        private static double CubicRoot(double n) => Math.Pow(n, OneThird);
+        private static double PivotXyz(double n) => n > Epsilon ? CubicRoot(n) : (Kappa * n + 16) / 116;
+        #endregion
+
+        #region =========  YCbCr  =========
+
+        public enum YCbCrType
+        {
+            BT601 = 0,
+            BT709 = 1,
+            BT2020 = 2,
+            My = 3
+        }
+
+        private static double[,] yCbCrMultipliers = { { 0.114, 0.299 }, { 0.0722, 0.2126 }, { 0.0593, 0.2627 }, { 0.0102, 0.1736 } };
+
+        /* y = [0-255], cB = [-127.5, 127.5], cR = [-127.5, 127.5] */
+        public static Tuple<double, double, double> ColorToYCbCr(Color color, YCbCrType yCbCrType)
+        {
+            var kB = yCbCrMultipliers[(int)yCbCrType, 0];
+            var kR = yCbCrMultipliers[(int)yCbCrType, 1];
+            var y = kR * color.R + (1 - kR - kB) * color.G + kB * color.B;
+            var cB = 0.5 / (1.0 - kB) * (1.0 * color.B - y);
+            var cR = 0.5 / (1.0 - kR) * (1.0 * color.R - y);
+            return new Tuple<double, double, double>(y, cB, cR);
+        }
+
+        /* y = [0-255], cB = [-127.5, 127.5], cR = [-127.5, 127.5] */
+        public static Color YCbCrToColor(double y, double cB, double cR, YCbCrType yCbCrType)
+        {
+            var kB = yCbCrMultipliers[(int)yCbCrType, 0];
+            var kR = yCbCrMultipliers[(int)yCbCrType, 1];
+            var r = Convert.ToByte(Math.Min(255, Math.Max(0.0, y + (1 - kR) / 0.5 * cR)));
+            var g = Convert.ToByte(Math.Min(255, Math.Max(0.0, y - 2 * kB * (1 - kB) / (1 - kB - kR) * cB - 2 * kR * (1 - kR) / (1 - kB - kR) * cR)));
+            var b = Convert.ToByte(Math.Min(255, Math.Max(0.0, y + (1 - kB) / 0.5 * cB)));
+            return Color.FromRgb(r, g, b);
+        }
+        #endregion
+
+
     }
 }

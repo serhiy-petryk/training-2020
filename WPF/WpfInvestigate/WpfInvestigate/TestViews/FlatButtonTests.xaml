@@ -48,8 +48,9 @@
                 <WrapPanel>
                     <DatePicker Width="150" controls:DatePickerExtension.IsNullable="True" controls:DatePickerExtension.ClearButton="True"
                     DisplayDateStart="2022/1/1" controls:WatermarkEffect.Watermark="watermark" BorderBrush="Red"/>
-                    <DatePicker Background="Blue" Foreground="Blue" Width="150" controls:DatePickerExtension.IsNullable="True" controls:DatePickerExtension.ClearButton="True"
+                    <DatePicker x:Name="dp" Background="Blue" Foreground="Blue" Width="150" controls:DatePickerExtension.IsNullable="True" controls:DatePickerExtension.ClearButton="True"
                     DisplayDateStart="2022/1/1" controls:WatermarkEffect.Watermark="watermark" BorderBrush="Red"/>
+                    <Button Margin="10 0" Click="OnChangeBackgroundClick">Change background</Button>
                 </WrapPanel>
 
                 <WrapPanel>
