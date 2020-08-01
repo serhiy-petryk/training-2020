@@ -116,14 +116,14 @@ namespace ColorInvestigation.Lib
             }
         }
 
-        public static void YCbCrTest(ColorUtilities.YCbCrType yCbCrType)
+        public static void YCbCrTest(ColorUtilities.YCbCrStandard yCbCrStandard)
         {
             for (var r = 0; r < 256; r++)
             for (var g = 0; g < 256; g++)
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var yCbCr = ColorUtilities.ColorToYCbCr(color, yCbCrType);
+                var yCbCr = ColorUtilities.ColorToYCbCr(color, yCbCrStandard);
 
                 if (yCbCr.Item1 < MinX) MinX = yCbCr.Item1;
                 if (yCbCr.Item1 > MaxX) MaxX = yCbCr.Item1;
@@ -132,7 +132,7 @@ namespace ColorInvestigation.Lib
                 if (yCbCr.Item3 < MinZ) MinZ = yCbCr.Item3;
                 if (yCbCr.Item3 > MaxZ) MaxZ = yCbCr.Item3;
 
-                var backColor = ColorUtilities.YCbCrToColor(yCbCr.Item1, yCbCr.Item2, yCbCr.Item3, yCbCrType);
+                var backColor = ColorUtilities.YCbCrToColor(yCbCr.Item1, yCbCr.Item2, yCbCr.Item3, yCbCrStandard);
                 if (color != backColor)
                     throw new Exception("Check!!!");
             }

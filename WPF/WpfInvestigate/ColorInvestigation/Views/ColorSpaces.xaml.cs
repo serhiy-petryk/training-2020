@@ -177,7 +177,7 @@ namespace ColorInvestigation.Views
             if (wnd != null) wnd.Width = 1400;
         }
 
-        private void ShowYCbCr_CbCrOrder(ColorUtilities.YCbCrType yCbCrType)
+        private void ShowYCbCr_CbCrOrder(ColorUtilities.YCbCrStandard yCbCrStandard)
         {
             Panel.Children.Clear();
             var step = 16;
@@ -186,7 +186,7 @@ namespace ColorInvestigation.Views
             for (var cB = -128; cB <= 128; cB += step2)
             for (var cR = -128; cR <= 128; cR += step2)
             {
-                var back = ColorUtilities.YCbCrToColor(Y, cB, cR, yCbCrType);
+                var back = ColorUtilities.YCbCrToColor(Y, cB, cR, yCbCrStandard);
                 var fore = Y < 128 ? Color.FromRgb(0xCC, 0xCC, 0xCC) : Color.FromRgb(0x33, 0x33, 0x33);
                 var btn = new Button
                 {
@@ -201,7 +201,7 @@ namespace ColorInvestigation.Views
             var wnd = GetWindow(this);
             if (wnd != null) wnd.Width = 1400;
         }
-        private void ShowYCbCr_YOrder(ColorUtilities.YCbCrType yCbCrType)
+        private void ShowYCbCr_YOrder(ColorUtilities.YCbCrStandard yCbCrStandard)
         {
             Panel.Children.Clear();
             var step = 16;
@@ -210,7 +210,7 @@ namespace ColorInvestigation.Views
             for (var cR = -128; cR <= 128; cR += step2)
             for (var Y = 0; Y <= 256; Y += step)
             {
-                var back = ColorUtilities.YCbCrToColor(Y, cB, cR, yCbCrType);
+                var back = ColorUtilities.YCbCrToColor(Y, cB, cR, yCbCrStandard);
                 var fore = Y < 128 ? Color.FromRgb(0xCC, 0xCC, 0xCC) : Color.FromRgb(0x33, 0x33, 0x33);
                 var btn = new Button
                 {
@@ -228,32 +228,32 @@ namespace ColorInvestigation.Views
 
         private void OnShowBT601Click_YOrder(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_YOrder(ColorUtilities.YCbCrType.BT601);
+            ShowYCbCr_YOrder(ColorUtilities.YCbCrStandard.BT601);
         }
 
         private void OnShowBT709Click_YOrder(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_YOrder(ColorUtilities.YCbCrType.BT709);
+            ShowYCbCr_YOrder(ColorUtilities.YCbCrStandard.BT709);
         }
 
         private void OnShowBT2020Click_YOrder(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_YOrder(ColorUtilities.YCbCrType.BT2020);
+            ShowYCbCr_YOrder(ColorUtilities.YCbCrStandard.BT2020);
         }
 
         private void OnShowBT601Click(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_CbCrOrder(ColorUtilities.YCbCrType.BT601);
+            ShowYCbCr_CbCrOrder(ColorUtilities.YCbCrStandard.BT601);
         }
 
         private void OnShowBT709Click(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_CbCrOrder(ColorUtilities.YCbCrType.BT709);
+            ShowYCbCr_CbCrOrder(ColorUtilities.YCbCrStandard.BT709);
         }
 
         private void OnShowBT2020Click(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_CbCrOrder(ColorUtilities.YCbCrType.BT2020);
+            ShowYCbCr_CbCrOrder(ColorUtilities.YCbCrStandard.BT2020);
         }
 
     }

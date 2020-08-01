@@ -12,8 +12,8 @@ XYZ:    Tuple<double, double, double> ColorToXyz(Color color)
         Color XyzToColor(double x, double y, double z)
 LAB:    Tuple<double, double, double> ColorToLab(Color color)
         Color LabToColor(double l, double a, double b)
-YCbCr:  Tuple<double, double, double> ColorToYCbCr(Color color, YCbCrType yCbCrType = YCbCrType.BT709)
-        Color YCbCrToColor(double y, double cB, double cR, YCbCrType yCbCrType = YCbCrType.BT709)
+YCbCr:  Tuple<double, double, double> ColorToYCbCr(Color color, YCbCrStandard yCbCrStandard)
+        Color YCbCrToColor(double y, double cB, double cR, YCbCrStandard yCbCrStandard)
  */
 
 using System;
@@ -23,25 +23,38 @@ namespace ColorInvestigation.Lib
 {
     public class ColorUtilities
     {
-        public const double DarkSplit = 148.4;
-
+        private const double DarkSplit = 0.582 * 255.0; // ~148.4
         private const double DefaultPrecision = 0.0001;
         private const double OneThird = 1.0 / 3.0;
         private const double TwoThirds = 2.0 / 3.0;
         private const double OneSixth = 1.0 / 6.0;
-        private const YCbCrType DefaultYCbCr = YCbCrType.BT709;
+        private const YCbCrStandard DefaultYCbCr = YCbCrStandard.BT709;
 
         public static Color StringToColor(string hexStringOfColor) => (Color)ColorConverter.ConvertFromString(hexStringOfColor);
-        /* Returns double [0, 255]. */
+
+        /// <summary>
+        /// Get gray level based on the BT.709 standard of YCbCr color space
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns>Gray level representation: double [0, 255]</returns>
         public static double ColorToGrayLevel(Color color)
         {
             var kB = yCbCrMultipliers[(int)DefaultYCbCr, 0];
             var kR = yCbCrMultipliers[(int)DefaultYCbCr, 1];
             return kR * color.R + (1.0 - kB - kR) * color.G + kB * color.B;
         }
+        /// <summary>
+        /// Define is color dark based on the BT.709 standard of YCbCr color space
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public static bool IsDarkColor(Color color) => ColorToGrayLevel(color) < DarkSplit;
 
-
+        /// <summary>
+        /// Get invert color based on hue of HSV color space
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public static Color InvertColor(Color color)
         {
             var hsv = ColorToHsv(color);
@@ -114,7 +127,6 @@ namespace ColorInvestigation.Lib
         #endregion
 
         #region =========  HSV  =========
-
         /**
          * Converts an RGB color to HSV.
          * Conversion formula adapted from http://en.wikipedia.org/wiki/HSV_color_space.
@@ -199,9 +211,9 @@ namespace ColorInvestigation.Lib
         #endregion
 
         #region =========  XYZ  =========
-        public static Tuple<double, double, double> XyzWhiteReference { get; } = new Tuple<double, double, double>(95.047, 100.000, 108.883);
-        internal const double Epsilon = 216.0 / 24389.0; // Intent is 0.008856 = 216/24389
-        internal const double Kappa = 24389.0 / 27.0; // Intent is 903.3 = 24389/27
+        private static Tuple<double, double, double> XyzWhiteReference { get; } = new Tuple<double, double, double>(95.047, 100.000, 108.883);
+        private const double Epsilon = 216.0 / 24389.0; // Intent is 0.008856 = 216/24389
+        private const double Kappa = 24389.0 / 27.0; // Intent is 903.3 = 24389/27
 
         /**
         * Converts an RGB color to XYZ.
@@ -250,7 +262,11 @@ namespace ColorInvestigation.Lib
         #endregion
 
         #region =========  LAB  =========
-        /* l = [0-100], a = [-128,128], b = [-128, 128] */
+        /// <summary>
+        /// Convert color to CIELAB color space components
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns>The CIELAB representation: Item1 = L*: lightness [0-100], Item2 = a*: from green (−) to red (+) component [-127.5, 127.5], Item3 = b*: from blue (−) to yellow (+) component [-127.5, 127.5]</returns>
         public static Tuple<double, double, double> ColorToLab(Color color)
         {
             var xyz = ColorToXyz(color);
@@ -265,7 +281,13 @@ namespace ColorInvestigation.Lib
             var b = 200 * (y - z);
             return new Tuple<double, double, double>(l, a, b);
         }
-        /* l = [0-100], a = [-128,128], b = [-128, 128] */
+        /// <summary>
+        /// Get color from CIELAB color space components
+        /// </summary>
+        /// <param name="l">L* (lightness) component [0-100]</param>
+        /// <param name="a">a* (from green (−) to red (+)) component [-127.5, 127.5]</param>
+        /// <param name="b">b* (from blue (−) to yellow (+)) component [-127.5, 127.5]</param>
+        /// <returns></returns>
         public static Color LabToColor(double l, double a, double b)
         {
             var y = (l + 16.0) / 116.0;
@@ -288,9 +310,9 @@ namespace ColorInvestigation.Lib
         private static double PivotXyz(double n) => n > Epsilon ? CubicRoot(n) : (Kappa * n + 16) / 116;
         #endregion
 
-        #region =========  YCbCr  =========
 
-        public enum YCbCrType
+        #region =========  YCbCr  =========
+        public enum YCbCrStandard
         {
             BT601 = 0,
             BT709 = 1,
@@ -300,22 +322,34 @@ namespace ColorInvestigation.Lib
 
         private static double[,] yCbCrMultipliers = { { 0.114, 0.299 }, { 0.0722, 0.2126 }, { 0.0593, 0.2627 }, { 0.0102, 0.1736 } };
 
-        /* y = [0-255], cB = [-127.5, 127.5], cR = [-127.5, 127.5] */
-        public static Tuple<double, double, double> ColorToYCbCr(Color color, YCbCrType yCbCrType)
+        /// <summary>
+        /// Convert color to YCbCr/YPbCb/YPrCr color space components
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="yCbCrStandard">BT601, BT709 or BT2020 standard</param>
+        /// <returns>The YCbCr/YPbCb/YPrCr representation: Item1 = Y: luma component [0-255], Item2 = Cb: blue-difference chroma component [-127.5, 127.5], Item3 = Cr: red-difference chroma component [-127.5, 127.5]</returns>
+        public static Tuple<double, double, double> ColorToYCbCr(Color color, YCbCrStandard yCbCrStandard)
         {
-            var kB = yCbCrMultipliers[(int)yCbCrType, 0];
-            var kR = yCbCrMultipliers[(int)yCbCrType, 1];
+            var kB = yCbCrMultipliers[(int)yCbCrStandard, 0];
+            var kR = yCbCrMultipliers[(int)yCbCrStandard, 1];
             var y = kR * color.R + (1 - kR - kB) * color.G + kB * color.B;
             var cB = 0.5 / (1.0 - kB) * (1.0 * color.B - y);
             var cR = 0.5 / (1.0 - kR) * (1.0 * color.R - y);
             return new Tuple<double, double, double>(y, cB, cR);
         }
 
-        /* y = [0-255], cB = [-127.5, 127.5], cR = [-127.5, 127.5] */
-        public static Color YCbCrToColor(double y, double cB, double cR, YCbCrType yCbCrType)
+        /// <summary>
+        /// Get color from YCbCr/YPbCb/YPrCr color space components
+        /// </summary>
+        /// <param name="y">Y: luma component [0-255]</param>
+        /// <param name="cB">Cb: blue-difference chroma component [-127.5, 127.5]</param>
+        /// <param name="cR">Cr: red-difference chroma component [-127.5, 127.5]</param>
+        /// <param name="yCbCrStandard">BT601, BT709 or BT2020 standard</param>
+        /// <returns></returns>
+        public static Color YCbCrToColor(double y, double cB, double cR, YCbCrStandard yCbCrStandard)
         {
-            var kB = yCbCrMultipliers[(int)yCbCrType, 0];
-            var kR = yCbCrMultipliers[(int)yCbCrType, 1];
+            var kB = yCbCrMultipliers[(int)yCbCrStandard, 0];
+            var kR = yCbCrMultipliers[(int)yCbCrStandard, 1];
             var r = Convert.ToByte(Math.Min(255, Math.Max(0.0, y + (1 - kR) / 0.5 * cR)));
             var g = Convert.ToByte(Math.Min(255, Math.Max(0.0, y - 2 * kB * (1 - kB) / (1 - kB - kR) * cB - 2 * kR * (1 - kR) / (1 - kB - kR) * cR)));
             var b = Convert.ToByte(Math.Min(255, Math.Max(0.0, y + (1 - kB) / 0.5 * cB)));

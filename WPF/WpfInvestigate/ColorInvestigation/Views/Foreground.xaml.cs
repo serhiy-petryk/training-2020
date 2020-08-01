@@ -29,25 +29,25 @@ namespace ColorInvestigation.Views
 
         public static double YCbCrBT601(Color color)
         {
-            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrType.BT601);
+            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrStandard.BT601);
             return yCbCr.Item1 / 255;
         }
 
         public static double YCbCrBT709(Color color)
         {
-            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrType.BT709);
+            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrStandard.BT709);
             return yCbCr.Item1 / 255;
         }
 
         public static double YCbCrBT2020(Color color)
         {
-            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrType.BT2020);
+            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrStandard.BT2020);
             return yCbCr.Item1 / 255;
         }
 
         public static double YCbCrMy(Color color)
         {
-            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrType.My);
+            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrStandard.My);
             return yCbCr.Item1 / 255;
         }
 
