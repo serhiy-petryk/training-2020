@@ -23,7 +23,8 @@ namespace ColorInvestigation.Lib
 {
     public class ColorUtilities
     {
-        private const double DarkSplit = 0.582 * 255.0; // ~148.4
+        public const double DarkSplit = 0.582 * 255.0; // ~148.4
+
         private const double DefaultPrecision = 0.0001;
         private const double OneThird = 1.0 / 3.0;
         private const double TwoThirds = 2.0 / 3.0;

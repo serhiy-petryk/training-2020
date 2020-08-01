@@ -138,10 +138,16 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Margin="10 0 5 0">HslMonoStyle</TextBlock>
                 <Button Width="70" Height="30" Background="#FF00FFFF" Style="{StaticResource HslMonoStyle}">Test style</Button>
                 <Button Width="100" Height="30" Background="White" Style="{StaticResource HslMonoStyle}">White button</Button>
                 <Button Width="100" Height="30" Background="Black" Style="{StaticResource HslMonoStyle}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Black button</Button>
                 <Button Width="100" Height="30" Background="Black" Foreground="#FF808080" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Black button</Button>
+
+                <TextBlock Margin="10 0 5 0">TestColorStyle</TextBlock>
+                <Button Width="70" Height="30" Background="#FF00FFFF" Style="{StaticResource TestColorStyle}">Test style</Button>
+                <Button Width="100" Height="30" Background="White" Style="{StaticResource TestColorStyle}">White button</Button>
+                <Button Width="100" Height="30" Background="Black" Style="{StaticResource TestColorStyle}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Black button</Button>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">

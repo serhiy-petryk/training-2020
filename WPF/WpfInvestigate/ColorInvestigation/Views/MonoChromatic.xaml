@@ -18,6 +18,7 @@
             <Button Click="OnBlackAndWhiteAbsoluteStyleClick">BlackAndWhite Absolute style (HSL)</Button>
             <Button Click="OnBlackAndWhiteRelativeStyleClick">BlackAndWhite Relative style (HSL)</Button>
             <Button Click="OnLabStyleClick">LAB style</Button>
+            <Button Click="OnTestStyleClick">Test style</Button>
         </WrapPanel>
 
         <ScrollViewer Grid.Row="1">
