@@ -244,42 +244,44 @@ namespace ColorInvestigation.Common
              split is double in range [0-1.0] or null
 
             1. split = null ( no split):
-             =NN[%] return = NN / 100
-             [+]NN  return = value + NN / 100
+             NN[%] return = NN / 100
+             +NN  return = value + NN / 100
              -NN    return = value - NN / 100
-             [+]NN% return = value + (1 - value) * NN/100
+             +NN% return = value + (1 - value) * NN/100
              -NN%:  return = value - value * NN/100
 
             2. split has value:
-             =NN[%] return = NN / 100
+             NN[%] return = NN / 100
 
              if (value < split)
-             [+]NN  return = value + NN / 100
+             +NN  return = value + NN / 100
              -NN    return = value - NN / 100
-             [+]NN% return = value + (1 - value) * NN/100
+             +NN% return = value + (1 - value) * NN/100
              -NN%:  return = value - value * NN/100
 
              if (value >= split)
-             [+]NN  return = value - NN / 100
+             +NN  return = value - NN / 100
              -NN    return = value + NN / 100
-             [+]NN% return = value - value * NN/100
+             +NN% return = value - value * NN/100
              -NN%:  return = value + (1 - value) * NN/100
 
              return: double in [0-1.0]  or null(if bad parameter)
-
              */
+
             if (parameter is string sParameter)
             {
-                var isEqual = false;
+                var isEqual = true;
                 var isPlus = true;
                 var isPercent = false;
 
-                if (sParameter.StartsWith("="))
-                    isEqual = true;
-                else if (sParameter.StartsWith("+"))
+                if (sParameter.StartsWith("+"))
+                {
+                    isEqual = false;
                     sParameter = sParameter.Substring(1);
+                }
                 else if (sParameter.StartsWith("-"))
                 {
+                    isEqual = false;
                     isPlus = false;
                     sParameter = sParameter.Substring(1);
                 }
@@ -423,10 +425,51 @@ namespace ColorInvestigation.Common
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
-    public class ColorBlackAndWhiteBrush : IValueConverter
+    public class ColorLabBrush : IValueConverter
     {
-        public static ColorBlackAndWhiteBrush Instance = new ColorBlackAndWhiteBrush();
-        public static ColorBlackAndWhiteBrush InstanceWithSplit = new ColorBlackAndWhiteBrush { _isSplit = true };
+        public static ColorLabBrush Instance = new ColorLabBrush();
+        public static ColorLabBrush InstanceWithSplit = new ColorLabBrush { _isSplit = true };
+
+        private bool _isSplit = false;
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Tuple<double, double, double> lab = null;
+            string[] ss = null;
+
+            if (value is string)
+                ss = ((string)value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+            else if ((value as BindingProxy)?.Value is string)
+                ss = ((string)((BindingProxy)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (ss != null && ss.Length == 2)
+                lab = new Tuple<double, double, double>(double.Parse(ss[0], Tips.InvariantCulture), double.Parse(ss[1], Tips.InvariantCulture), 0);
+            else if (value is Brush brush)
+                lab = ColorUtilities.ColorToLab(Tips.GetColorFromBrush(brush));
+            else if (value is DependencyObject d)
+                lab = ColorUtilities.ColorToLab(Tips.GetActualBackgroundColor(d));
+
+            if (lab != null)
+            {
+                var newL = ColorConverterHelper.ConvertValue(lab.Item1 / 100.0, parameter, _isSplit ? 0.5 : (double?) null);
+                if (newL.HasValue)
+                {
+                    Debug.Print($"LabBrush. Lab: {lab}. Parameter: {parameter}. NewL: {newL.Value * 100}");
+                    return new SolidColorBrush(ColorUtilities.LabToColor( newL.Value * 100.0,  lab.Item2, lab.Item3));
+                }
+            }
+
+            Debug.Print($"LabBrush. LAB: {lab}. Parameter: {parameter}. Transparent.");
+            return new SolidColorBrush(Colors.Transparent);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+
+    public class ColorGrayScaleBrush : IValueConverter
+    {
+        public static ColorGrayScaleBrush Instance = new ColorGrayScaleBrush();
+        public static ColorGrayScaleBrush InstanceWithSplit = new ColorGrayScaleBrush { _isSplit = true };
 
         private bool _isSplit = false;
 
@@ -444,13 +487,13 @@ namespace ColorInvestigation.Common
                 var newGrayLevel = ColorConverterHelper.ConvertValue(oldGrayLevel, parameter, _isSplit ? ColorUtilities.DarkSplit/255.0 : (double?)null);
                 if (newGrayLevel.HasValue)
                 {
-                    Debug.Print($"BlackAndWhite. GrayLevel: {oldGrayLevel}. Parameter: {parameter}. NewL: {newGrayLevel}");
+                    Debug.Print($"GrayScale. GrayLevel: {oldGrayLevel}. Parameter: {parameter}. NewL: {newGrayLevel}");
                     var newGrayValue = System.Convert.ToByte(newGrayLevel * 255.0);
                     return new SolidColorBrush(Color.FromRgb(newGrayValue, newGrayValue, newGrayValue));
                 }
             }
 
-            Debug.Print($"BlackAndWhite. Transparent");
+            Debug.Print($"GrayScale. Transparent");
             return new SolidColorBrush(Colors.Transparent);
         }
 

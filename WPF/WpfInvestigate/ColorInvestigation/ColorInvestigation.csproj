@@ -58,7 +58,6 @@
     <Compile Include="Common\ColorConverters.cs" />
     <Compile Include="Lib\ColorSpacesTests.cs" />
     <Compile Include="Temp\Calc.cs" />
-    <Compile Include="Temp\DynamicResourceBinding.cs" />
     <Compile Include="Temp\GrayScales.cs" />
     <Compile Include="Views\ColorSpaces.xaml.cs">
       <DependentUpon>ColorSpaces.xaml</DependentUpon>
