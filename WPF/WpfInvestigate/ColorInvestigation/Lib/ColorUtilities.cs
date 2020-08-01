@@ -1,4 +1,7 @@
-﻿/* Interface
+﻿// Some algorithms taken from https://github.com/waesteve/Color-RGB_HSL_HSV_XY/blob/master/RGBConverter.cs (no license)
+// and https://github.com/muak/ColorMinePortable (MIT license)
+
+/* Interface
 Color   StringToColor(string hexStringOfColor)
 double  ColorToGrayLevel(Color color)
 bool    IsDarkColor(Color color)

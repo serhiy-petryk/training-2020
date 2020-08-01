@@ -87,7 +87,6 @@
     </Compile>
     <Compile Include="Common\Tips.cs" />
     <Compile Include="Lib\ColorUtilities.cs" />
-    <Compile Include="Lib\RGBConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
