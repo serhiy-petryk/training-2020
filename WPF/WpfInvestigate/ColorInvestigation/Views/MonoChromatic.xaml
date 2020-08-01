@@ -13,14 +13,11 @@
         </Grid.RowDefinitions>
 
         <WrapPanel Grid.Row="0" Orientation="Horizontal" Margin="0 5">
-            <Button Click="OnConverterTestClick">Converter Test</Button>
-            <Button Click="OnConverterTestWithSplitClick">Converter Test With Split</Button>
-            <Button Click="OnConverterTestWithSplitRelativeStyleClick">Converter Test With Split (relative)</Button>
-            <Button Click="OnNewLabStyleClick">New LAB style</Button>
+            <TextBlock Text="Digits show background color components (HSL or LAB) and gray level" Margin="5 0" VerticalAlignment="Center"></TextBlock>
             <Button Click="OnHslMonoStyleClick">Mono style (HSL)</Button>
             <Button Click="OnBlackAndWhiteAbsoluteStyleClick">BlackAndWhite Absolute style (HSL)</Button>
             <Button Click="OnBlackAndWhiteRelativeStyleClick">BlackAndWhite Relative style (HSL)</Button>
-            <Button Click="OnLabStyleClick">Lab style</Button>
+            <Button Click="OnLabStyleClick">LAB style</Button>
         </WrapPanel>
 
         <ScrollViewer Grid.Row="1">

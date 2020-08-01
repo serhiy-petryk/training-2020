@@ -17,72 +17,12 @@ YCbCr:  Tuple<double, double, double> ColorToYCbCr(Color color, YCbCrType yCbCrT
  */
 
 using System;
-using System.ComponentModel;
-using System.Windows;
 using System.Windows.Media;
 
 namespace ColorInvestigation.Lib
 {
-    public class ColorHSL: DependencyObject// , INotifyPropertyChanged
-    {
-        private double l;
-        /// <summary>
-        /// Hue property (0-360)
-        /// </summary>
-        public double H { get; set; }
-        /// <summary>
-        /// Saturation property (0-100)
-        /// </summary>
-        public double S { get; set; }
-        /// <summary>
-        /// Lightness property (0-100)
-        /// </summary>
-        /*public double L
-        {
-            get => l;
-            set
-            {
-                l = value;
-                OnPropertiesChanged(new []{nameof(Brush), nameof(H), nameof(S), nameof(L)});
-            } }*/
-
-        public static readonly DependencyProperty LProperty = DependencyProperty.Register(
-            nameof(L), typeof(double), typeof(ColorHSL), new FrameworkPropertyMetadata(double.MinValue, AAA));
-
-        private static void AAA(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            // var hsl = (ColorHSL)d;
-            // hsl.OnPropertiesChanged(new []{ nameof(Brush), nameof(S), nameof(H), nameof(L) });
-        }
-
-        public double L
-        {
-            get => (double)GetValue(LProperty);
-            set => SetValue(LProperty, value);
-        }
-
-        public SolidColorBrush Brush => new SolidColorBrush(ColorUtilities.HslToColor(H / 360.0, S / 100.0, L / 100.0));
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertiesChanged(string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-    }
-
-    //==============================
-
     public class ColorUtilities
     {
-        #region ===========  Old code  ===============
-        // public const double OldDarkSplit = 155.0;
-        public const double OldDarkSplit = 150.0;
-        public static double OldColorToGrayLevel(Color color) => (0.299 * color.R + 0.587 * color.G + 0.114 * color.B);
-        public static bool OldIsDarkColor(Color color) => OldColorToGrayLevel(color) < OldDarkSplit;
-        #endregion
-
         public const double DarkSplit = 148.4;
 
         private const double DefaultPrecision = 0.0001;
@@ -382,7 +322,5 @@ namespace ColorInvestigation.Lib
             return Color.FromRgb(r, g, b);
         }
         #endregion
-
-
     }
 }

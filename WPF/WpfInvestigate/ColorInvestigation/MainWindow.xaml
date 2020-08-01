@@ -135,17 +135,12 @@
                 <Button Click="OnForegroundButtonClick" Margin="5">Foreground</Button>
                 <Button Click="OnForegroundDiffButtonClick" Margin="5">Foreground difference</Button>
                 <Button Click="OnMonoChromaticButtonClick" Margin="5">MonoChromatic</Button>
-                <Button Click="OnHslMonoStyleButtonClick" Margin="5">Hsl Mono Style</Button>
-
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
-                <Button Width="70" Height="30" Background="#FF00FFFF" Style="{StaticResource OldHslMonoStyle}">Test style</Button>
-                <Button Width="100" Height="30" Background="White" Style="{StaticResource OldHslMonoStyle}">White button</Button>
-                <Button Width="100" Height="30" Background="Black" Style="{StaticResource OldHslMonoStyle}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Black button</Button>
-                <!--                <Button Width="100" Height="30" Background="White" Foreground="#FF808080" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">White button</Button>
-                <Button Width="100" Height="30" Background="White" Foreground="#FF5A5A5A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">White button</Button>
-                <Button Width="100" Height="30" Background="White" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">White button</Button>-->
+                <Button Width="70" Height="30" Background="#FF00FFFF" Style="{StaticResource HslMonoStyle}">Test style</Button>
+                <Button Width="100" Height="30" Background="White" Style="{StaticResource HslMonoStyle}">White button</Button>
+                <Button Width="100" Height="30" Background="Black" Style="{StaticResource HslMonoStyle}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Black button</Button>
                 <Button Width="100" Height="30" Background="Black" Foreground="#FF808080" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Black button</Button>
             </StackPanel>
 

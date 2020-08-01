@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup.Primitives;
 using System.Windows.Media;
 using ColorInvestigation.Lib;
 using ColorInvestigation.Views;
@@ -52,8 +48,6 @@ namespace ColorInvestigation
         private void OnForegroundButtonClick(object sender, RoutedEventArgs e) => new Foreground().Show();
         private void OnForegroundDiffButtonClick(object sender, RoutedEventArgs e) => new ForegroundDiff().Show();
         private void OnMonoChromaticButtonClick(object sender, RoutedEventArgs e) => new MonoChromatic().Show();
-
-        private void OnHslMonoStyleButtonClick(object sender, RoutedEventArgs e) => new HslMonoStyle().Show();
 
         private void OnRefreshClick(object sender, RoutedEventArgs e)
         {

@@ -74,9 +74,6 @@
     <Compile Include="Views\GrayScaleDiff.xaml.cs">
       <DependentUpon>GrayScaleDiff.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HslMonoStyle.xaml.cs">
-      <DependentUpon>HslMonoStyle.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MonoChromatic.xaml.cs">
       <DependentUpon>MonoChromatic.xaml</DependentUpon>
     </Compile>
@@ -112,10 +109,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\GrayScaleDiff.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\HslMonoStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

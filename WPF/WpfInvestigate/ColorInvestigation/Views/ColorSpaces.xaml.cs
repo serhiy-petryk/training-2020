@@ -130,7 +130,6 @@ namespace ColorInvestigation.Views
         private void OnShowXYZClick_XOrder(object sender, RoutedEventArgs e)
         {
             Panel.Children.Clear();
-            var style = Application.Current.TryFindResource("BlackAndWhiteRelativeStyle") as Style;
             var step = 10;
             for (var y = 0; y <= 100; y += step)
                 for (var z = 0; z <= 110; z += step)
@@ -147,7 +146,6 @@ namespace ColorInvestigation.Views
         private void OnShowLabClick_LOrder(object sender, RoutedEventArgs e)
         {
             Panel.Children.Clear();
-            var style = Application.Current.TryFindResource("BlackAndWhiteRelativeStyle") as Style;
             var step = 10;
             var step2 = 16;
             for (var a = -128; a <= 128; a += step2)
@@ -165,7 +163,6 @@ namespace ColorInvestigation.Views
         private void OnShowLabClick(object sender, RoutedEventArgs e)
         {
             Panel.Children.Clear();
-            var style = Application.Current.TryFindResource("BlackAndWhiteRelativeStyle") as Style;
             var step = 10;
             var step2 = 16;
             for (var l = 0; l <= 100; l += step)
@@ -183,7 +180,6 @@ namespace ColorInvestigation.Views
         private void ShowYCbCr_CbCrOrder(ColorUtilities.YCbCrType yCbCrType)
         {
             Panel.Children.Clear();
-            // var style = Application.Current.TryFindResource("BlackAndWhiteRelativeStyle") as Style;
             var step = 16;
             var step2 = 16;
             for (var Y = 0; Y <= 256; Y += step)
@@ -208,7 +204,6 @@ namespace ColorInvestigation.Views
         private void ShowYCbCr_YOrder(ColorUtilities.YCbCrType yCbCrType)
         {
             Panel.Children.Clear();
-            // var style = Application.Current.TryFindResource("BlackAndWhiteRelativeStyle") as Style;
             var step = 16;
             var step2 = 16;
             for (var cB = -128; cB <= 128; cB += step2)
