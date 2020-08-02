@@ -126,6 +126,18 @@
                 </Button>
             </StackPanel>
 
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="10 0 5 0">Flat buttons</TextBlock>
+                <Button Style="{StaticResource FlatMonoButtonStyle}" Background="Blue" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="FlatMonoButtonStyle"/>
+                <Button Style="{StaticResource FlatMonoButtonStyle}" Background="Yellow" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="FlatMonoButtonStyle"/>
+                <Button Style="{StaticResource FlatMonoButtonStyle}" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="FlatMonoButtonStyle"
+                        Background="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
+                <Button Style="{StaticResource FlatMonoButtonStyle}" Width="200" Height="30" Margin="5 0" BorderThickness="3" Content="FlatMonoButtonStyle (disabled)"
+                        Background="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"
+                        IsEnabled="False"/>
+                <Button Style="{StaticResource ClearButtonStyle}" Background="Blue" Foreground="Yellow" Width="30" Height="30" BorderBrush="Red"/>
+            </StackPanel>
+
             <StackPanel Orientation="Horizontal" Margin="5">
                 <Button Click="OnTestButtonClick">Test</Button>
                 <Button Click="OnGrayScaleButtonClick" Margin="5">GrayScale</Button>

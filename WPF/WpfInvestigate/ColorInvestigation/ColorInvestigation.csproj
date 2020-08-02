@@ -55,8 +55,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\AnimationHelper.cs" />
     <Compile Include="Common\ColorConverters.cs" />
+    <Compile Include="Common\FlatButtonConverters.cs" />
     <Compile Include="Lib\ColorSpacesTests.cs" />
+    <Compile Include="Lib\FlatButton.xaml.cs">
+      <DependentUpon>FlatButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Temp\Calc.cs" />
     <Compile Include="Temp\GrayScales.cs" />
     <Compile Include="Views\ColorSpaces.xaml.cs">
@@ -77,6 +82,10 @@
     <Compile Include="Views\MonoChromatic.xaml.cs">
       <DependentUpon>MonoChromatic.xaml</DependentUpon>
     </Compile>
+    <Page Include="Lib\FlatButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

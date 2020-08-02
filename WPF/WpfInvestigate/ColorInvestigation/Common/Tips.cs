@@ -84,5 +84,18 @@ namespace ColorInvestigation.Common
                 current = VisualTreeHelper.GetParent(current) ?? (current as FrameworkElement)?.Parent;
             }
         }
+
+        public static IEnumerable<DependencyObject> GetVisualChildren(DependencyObject current)
+        {
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
+            {
+                var child = VisualTreeHelper.GetChild(current, i);
+                yield return child;
+
+                foreach (var childOfChild in GetVisualChildren(child))
+                    yield return childOfChild;
+            }
+        }
+
     }
 }

@@ -25,7 +25,7 @@ namespace ColorInvestigation.Common
 
     public class ColorConverterHelper
     {
-        public static double? ConvertValue(double value, object parameter, double? split)
+        public static double? ConvertValue(double value, object parameter, double? split, bool? isUp = null)
         {
             /*
              value is double in range [0-1.0]
@@ -93,6 +93,8 @@ namespace ColorInvestigation.Common
                     if (split.HasValue)
                     {
                         var isValueLess = value < split.Value;
+                        if (isUp.HasValue)
+                            isValueLess = isUp.Value;
                         if ((isPercent && isPlus && isValueLess) || isPercent && !isPlus && !isValueLess)
                             result = value + (1.0 - value) * dParameter;
                         else if (isPercent)
@@ -177,8 +179,10 @@ namespace ColorInvestigation.Common
     {
         public static ColorHslBrush Instance = new ColorHslBrush();
         public static ColorHslBrush InstanceWithSplit = new ColorHslBrush { _isSplit = true };
+        public static ColorHslBrush ColorInstanceWithSplit = new ColorHslBrush { _isSplit = true, _isReturnColor = true };
 
         private bool _isSplit = false;
+        private bool _isReturnColor = false;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -199,15 +203,21 @@ namespace ColorInvestigation.Common
 
             if (hsl != null)
             {
-                var newL = ColorConverterHelper.ConvertValue(hsl.Item3, parameter, _isSplit ? 0.5 : (double?)null);
+                var color = ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, hsl.Item3);
+                var isDarkColor = ColorUtilities.IsDarkColor(color);
+                var newL = ColorConverterHelper.ConvertValue(hsl.Item3, parameter, _isSplit ? 0.5 : (double?)null, isDarkColor);
                 if (newL.HasValue)
                 {
                     Debug.Print($"HslBrush. HSL: {hsl}. Parameter: {parameter}. NewL: {newL}");
+                    if (_isReturnColor)
+                        return ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL.Value);
                     return new SolidColorBrush(ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL.Value));
                 }
             }
 
             Debug.Print($"HslBrush. HSL: {hsl}. Parameter: {parameter}. Transparent.");
+            if (_isReturnColor)
+                return Colors.Transparent;
             return new SolidColorBrush(Colors.Transparent);
         }
 
@@ -218,8 +228,10 @@ namespace ColorInvestigation.Common
     {
         public static ColorLabBrush Instance = new ColorLabBrush();
         public static ColorLabBrush InstanceWithSplit = new ColorLabBrush { _isSplit = true };
+        public static ColorLabBrush ColorInstanceWithSplit = new ColorLabBrush { _isSplit = true, _isReturnColor = true };
 
         private bool _isSplit = false;
+        private bool _isReturnColor = false;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -244,11 +256,15 @@ namespace ColorInvestigation.Common
                 if (newL.HasValue)
                 {
                     Debug.Print($"LabBrush. Lab: {lab}. Parameter: {parameter}. NewL: {newL.Value * 100}");
+                    if (_isReturnColor)
+                        return ColorUtilities.LabToColor(newL.Value * 100.0, lab.Item2, lab.Item3);
                     return new SolidColorBrush(ColorUtilities.LabToColor( newL.Value * 100.0,  lab.Item2, lab.Item3));
                 }
             }
 
             Debug.Print($"LabBrush. LAB: {lab}. Parameter: {parameter}. Transparent.");
+            if (_isReturnColor)
+                return Colors.Transparent;
             return new SolidColorBrush(Colors.Transparent);
         }
 
