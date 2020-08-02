@@ -37,7 +37,7 @@ namespace ColorInvestigation.Lib
         public static Color StringToColor(string hexStringOfColor) => (Color)ColorConverter.ConvertFromString(hexStringOfColor);
 
         /// <summary>
-        /// Get gray level based on the BT.709 standard of YCbCr color space
+        /// Get color gray level based on the BT.709 standard of YCbCr color space
         /// </summary>
         /// <param name="color"></param>
         /// <returns>Gray level representation: double [0, 255]</returns>
@@ -267,7 +267,7 @@ namespace ColorInvestigation.Lib
 
         #region =========  LAB  =========
         /// <summary>
-        /// Convert color to CIELAB color space components
+        /// Convert an RGB color to CIELAB color space components
         /// </summary>
         /// <param name="color"></param>
         /// <returns>The CIELAB representation: Item1 = L*: lightness [0-100], Item2 = a*: from green (−) to red (+) component [-127.5, 127.5], Item3 = b*: from blue (−) to yellow (+) component [-127.5, 127.5]</returns>
@@ -286,7 +286,7 @@ namespace ColorInvestigation.Lib
             return new Tuple<double, double, double>(l, a, b);
         }
         /// <summary>
-        /// Get color from CIELAB color space components
+        /// Get an RGB color from CIELAB color space components
         /// </summary>
         /// <param name="l">L* (lightness) component [0-100]</param>
         /// <param name="a">a* (from green (−) to red (+)) component [-127.5, 127.5]</param>
@@ -327,7 +327,7 @@ namespace ColorInvestigation.Lib
         private static double[,] yCbCrMultipliers = { { 0.114, 0.299 }, { 0.0722, 0.2126 }, { 0.0593, 0.2627 }, { 0.0102, 0.1736 } };
 
         /// <summary>
-        /// Convert color to YCbCr/YPbCb/YPrCr color space components
+        /// Convert an RGB color to YCbCr/YPbCb/YPrCr color space components
         /// </summary>
         /// <param name="color"></param>
         /// <param name="yCbCrStandard">BT601, BT709 or BT2020 standard</param>
@@ -343,7 +343,7 @@ namespace ColorInvestigation.Lib
         }
 
         /// <summary>
-        /// Get color from YCbCr/YPbCb/YPrCr color space components
+        /// Get an RGB color from YCbCr/YPbCb/YPrCr color space components
         /// </summary>
         /// <param name="y">Y: luma component [0-255]</param>
         /// <param name="cB">Cb: blue-difference chroma component [-127.5, 127.5]</param>
