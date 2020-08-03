@@ -22,9 +22,9 @@ namespace ColorInvestigation.Common
     }
     #endregion BindingProxy
 
-    public class ColorConverterHelper
+    internal static class ColorConverterHelper
     {
-        public static double? ConvertValue(double value, object parameter, double? split, bool? isUp = null)
+        internal static double? ConvertValue(double value, object parameter, bool? isUp = null)
         {
             /*
              value is double in range [0-1.0]
@@ -89,11 +89,9 @@ namespace ColorInvestigation.Common
                     if (isEqual)
                         return dParameter;
 
-                    if (split.HasValue)
+                    if (isUp.HasValue)
                     {
-                        var isValueLess = value < split.Value;
-                        if (isUp.HasValue)
-                            isValueLess = isUp.Value;
+                        var isValueLess = isUp.Value;
                         if ((isPercent && isPlus && isValueLess) || isPercent && !isPlus && !isValueLess)
                             result = value + (1.0 - value) * dParameter;
                         else if (isPercent)
@@ -202,7 +200,7 @@ namespace ColorInvestigation.Common
             {
                 var color = ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, hsl.Item3);
                 var isDarkColor = ColorUtilities.IsDarkColor(color);
-                var newL = ColorConverterHelper.ConvertValue(hsl.Item3, parameter, _isSplit ? 0.5 : (double?)null, isDarkColor);
+                var newL = ColorConverterHelper.ConvertValue(hsl.Item3, parameter, _isSplit ? isDarkColor : (bool?) null);
                 if (newL.HasValue)
                 {
                     if (Tips.GetNotNullableType(targetType) == typeof(Color))
@@ -245,7 +243,9 @@ namespace ColorInvestigation.Common
 
             if (lab != null)
             {
-                var newL = ColorConverterHelper.ConvertValue(lab.Item1 / 100.0, parameter, _isSplit ? 0.5 : (double?) null);
+                var color = ColorUtilities.LabToColor(lab.Item1, lab.Item2, lab.Item3);
+                var isDarkColor = ColorUtilities.IsDarkColor(color);
+                var newL = ColorConverterHelper.ConvertValue(lab.Item1 / 100.0, parameter, _isSplit ? isDarkColor : (bool?)null);
                 if (newL.HasValue)
                 {
                     if (Tips.GetNotNullableType(targetType) == typeof(Color))
@@ -280,7 +280,8 @@ namespace ColorInvestigation.Common
             if (color.HasValue)
             {
                 var oldGrayLevel = ColorUtilities.ColorToGrayLevel(color.Value) / 255.0;
-                var newGrayLevel = ColorConverterHelper.ConvertValue(oldGrayLevel, parameter, _isSplit ? ColorUtilities.DarkSplit/255.0 : (double?)null);
+                var isDarkColor = ColorUtilities.IsDarkColor(color.Value);
+                var newGrayLevel = ColorConverterHelper.ConvertValue(oldGrayLevel, parameter, _isSplit ? isDarkColor : (bool?)null);
                 if (newGrayLevel.HasValue)
                 {
                     var newGrayValue = System.Convert.ToByte(newGrayLevel * 255.0);
