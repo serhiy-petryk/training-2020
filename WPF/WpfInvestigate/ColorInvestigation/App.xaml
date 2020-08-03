@@ -12,11 +12,8 @@
                 <ResourceDictionary Source="/Lib/FlatButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <system:String x:Key="HueAndSaturation">280,100</system:String>
+            <system:String x:Key="HueAndSaturation">0,50</system:String>
             <common:BindingProxy x:Key="HueAndSaturationProxy" Value="{DynamicResource HueAndSaturation}"/>
-            <common:BindingProxy x:Key="BackColorProxy" Value="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
-            <common:BindingProxy x:Key="ForeColorProxy" Value="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance }, ConverterParameter=35}"/>
-            <common:BindingProxy x:Key="BackMouseOverColorProxy" Value="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=80}"/>
 
             <Style x:Key="TestColorStyle" TargetType="Button">
                 <Setter Property="BorderThickness" Value="2"/>
@@ -31,6 +28,7 @@
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+85%}"/>
                                     <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+30}"/>
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+10}"/>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
                                     <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background}"/>
@@ -145,7 +143,7 @@
                 <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorLabBrush.InstanceWithSplit}, ConverterParameter=+75%}"/>
             </Style>
 
-            <Style x:Key="ClearButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource FlatButtonStyle}" x:Shared="False">
+            <Style x:Key="ClearButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource FlatMonoButtonStyle}" x:Shared="False">
                 <Setter Property="Content">
                     <Setter.Value>
                         <Viewbox UseLayoutRounding="False">

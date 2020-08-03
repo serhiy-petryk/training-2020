@@ -135,7 +135,11 @@
                 <Button Style="{StaticResource FlatMonoButtonStyle}" Width="200" Height="30" Margin="5 0" BorderThickness="3" Content="FlatMonoButtonStyle (disabled)"
                         Background="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"
                         IsEnabled="False"/>
-                <Button Style="{StaticResource ClearButtonStyle}" Background="Blue" Foreground="Yellow" Width="30" Height="30" BorderBrush="Red"/>
+                <Button Style="{StaticResource FlatMonoButtonStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
+                        Background="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
+                <Button Style="{StaticResource FlatMonoButtonStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
+                        Background="#FFD98C8C"/>
+                <Button Style="{StaticResource ClearButtonStyle}" Background="Blue" Width="30" Height="30"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">

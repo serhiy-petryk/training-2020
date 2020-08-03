@@ -27,9 +27,9 @@ namespace ColorInvestigation.Lib
         {
             if (!(o is string))
                 return null;
-            const string pathString = "FMLHVCQSTAZ+-,.0123456789";
+            const string pathString = "FMLHVCQSTAZ+-,.0123456789z";
             var s = (string)o;
-            if (string.IsNullOrEmpty(s) || !s.All(c => pathString.Contains(c) || char.IsWhiteSpace(c)))
+            if (string.IsNullOrEmpty(s) || !s.All(c => pathString.Contains(c) || char.IsWhiteSpace(c)) || !s.Contains(','))
                 return null;
 
             try { return Geometry.Parse(s); }
@@ -62,10 +62,13 @@ namespace ColorInvestigation.Lib
                         SetColorsForShapes(button, null);
                         var dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
                         dpd.AddValueChanged(button, SetColorsForShapes);
+                        dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+                        dpd.AddValueChanged(button, SetColorsForShapes);
                     }
                 }));
             }
         }
+
         private void OnFlatButtonUnloaded(object sender, RoutedEventArgs e)
         {
             var button = sender as ButtonBase;
@@ -75,6 +78,8 @@ namespace ColorInvestigation.Lib
                 button.Unloaded -= OnFlatButtonUnloaded;
                 var dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
                 dpd.RemoveValueChanged(button, SetColorsForShapes);
+                dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(ButtonBase));
+                dpd.RemoveValueChanged(button, SetColorsForShapes);
             }
         }
         private void SetColorsForShapes(object sender, EventArgs e)
@@ -82,15 +87,22 @@ namespace ColorInvestigation.Lib
             var button = sender as ButtonBase;
             // var rippleColor = RippleEffect.GetRippleColor(button); // don't apply Pressed effect if control has ripple effect
             // var color = button.IsPressed && rippleColor == null ? Tips.GetActualBackgroundColor(button) : Tips.GetActualForegroundColor(button);
-            var color = button.IsPressed ? Tips.GetActualBackgroundColor(button) : Tips.GetActualForegroundColor(button);
+            // var color = button.IsPressed ? Tips.GetActualBackgroundColor(button) : Tips.GetActualForegroundColor(button);
 
-            foreach (Shape shape in Tips.GetVisualChildren(button).Where(a => a is Shape))
+            var newColor = Tips.GetActualBackgroundColor(button);
+            if (button.IsPressed) { }
+            else if (button.IsMouseOver)
+                newColor = (Color)ColorHslBrush.InstanceWithSplit.Convert(button, typeof(Color), "+85%", null);
+            else 
+                newColor = (Color)ColorHslBrush.InstanceWithSplit.Convert(button, typeof(Color), "+70%", null);
+
+            foreach (var shape in Tips.GetVisualChildren(button).OfType<Shape>())
             {
                 var brush = shape.Fill as SolidColorBrush;
                 if (brush == null || brush.IsFrozen || brush.IsSealed)
                   shape.Fill = new SolidColorBrush();
 
-                var ca = new ColorAnimation(color, AnimationHelper.SlowAnimationDuration);
+                var ca = new ColorAnimation(newColor, AnimationHelper.SlowAnimationDuration);
                 shape.Fill.BeginAnimation(SolidColorBrush.ColorProperty, ca);
 
                 if (!(shape is Path))

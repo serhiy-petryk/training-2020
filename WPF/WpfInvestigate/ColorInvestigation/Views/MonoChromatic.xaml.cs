@@ -109,5 +109,27 @@ namespace ColorInvestigation.Views
             var wnd = GetWindow(this);
             if (wnd != null) wnd.Width = 950;
         }
+
+        private void OnMonochromaticButtonStyleClick(object sender, RoutedEventArgs e)
+        {
+            Panel.Children.Clear();
+            var step = 10;
+            var style = Application.Current.TryFindResource("FlatMonoButtonStyle") as Style;
+            for (var h = 0; h <= 100; h += step)
+            for (var s = 0; s <= 100; s += step)
+            for (var l = 0; l <= 100; l += step)
+            {
+                var back = ColorUtilities.HslToColor(h / 100.0, s / 100.0, l / 100.0);
+                var grayLevel = Convert.ToByte(ColorUtilities.ColorToGrayLevel(back));
+                var btn = new Button
+                {
+                    Width = 80, Height = 25, Content = h + " " + s + " " + l + " " + grayLevel,
+                    Background = new SolidColorBrush(back), BorderThickness = new Thickness(2), Style = style
+                };
+                Panel.Children.Add(btn);
+            }
+            var wnd = GetWindow(this);
+            if (wnd != null) wnd.Width = 950;
+        }
     }
 }

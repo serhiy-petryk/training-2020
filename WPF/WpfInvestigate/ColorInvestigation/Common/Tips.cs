@@ -97,5 +97,15 @@ namespace ColorInvestigation.Common
             }
         }
 
+        // ============  Type  ==============
+        public static bool IsNullableType(Type type) => type != null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+
+        public static Type GetNotNullableType(Type type)
+        {
+            if (IsNullableType(type))
+                return Nullable.GetUnderlyingType(type);
+            return type;
+        }
+
     }
 }
