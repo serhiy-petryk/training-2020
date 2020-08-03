@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\AnimationHelper.cs" />
+    <Compile Include="Common\BindingProxy.cs" />
     <Compile Include="Common\ColorConverters.cs" />
     <Compile Include="Common\FlatButtonConverters.cs" />
     <Compile Include="Lib\ColorSpacesTests.cs" />

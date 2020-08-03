@@ -8,25 +8,11 @@ using ColorInvestigation.Lib;
 namespace ColorInvestigation.Common
 {
 
-    #region ==========  BindingProxy  ==============
-    public class BindingProxy : Freezable
-    {
-        protected override Freezable CreateInstanceCore() => new BindingProxy();
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            nameof(Value), typeof(object), typeof(BindingProxy), new FrameworkPropertyMetadata(default));
-        public object Value
-        {
-            get => GetValue(ValueProperty);
-            set => SetValue(ValueProperty, value);
-        }
-    }
-    #endregion BindingProxy
-
     internal static class ColorConverterHelper
     {
         internal static double? ConvertValue(double value, object parameter, bool? isUp = null)
         {
-            /*
+            /* Process parameter of ColorHslBrush/ColorLabBrush/ColorGrayScaleBrush
              value is double in range [0-1.0]
              format of parameter: [+ or -]NN[%] where NN is double between 0-100
              split is double in range [0-1.0] or null
