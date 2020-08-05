@@ -52,17 +52,10 @@ namespace ColorInvestigation
 
         private void OnChangeHueClick(object sender, RoutedEventArgs e)
         {
-            var a1 = Application.Current.Resources["HueAndSaturation"];
-            if (a1 is string)
-            {
-                // var aa1 = ((string) a1).Split(new[] {" ", ","}, StringSplitOptions.RemoveEmptyEntries);
-                // var newHue = (int.Parse(aa1[0]) + 20) % 360;
-                // Application.Current.Resources["HueAndSaturation"] = $"{newHue},{aa1[1]}";
-                var a2 = Application.Current.Resources["HueAndSaturationProxy"] as DynamicBinding;
-                var aa1 = ((string)a2.Value).Split(new[] { " ", "," }, StringSplitOptions.RemoveEmptyEntries);
-                var newHue = (int.Parse(aa1[0]) + 20) % 360;
-                a2.Value = $"{newHue},{aa1[1]}";
-            }
+            var a1 = Application.Current.Resources["HueAndSaturation"] as DynamicBinding;
+            var aa1 = ((string)a1.Value).Split(new[] { " ", "," }, StringSplitOptions.RemoveEmptyEntries);
+            var newHue = (int.Parse(aa1[0]) + 20) % 360;
+            a1.Value = $"{newHue},{aa1[1]}";
         }
 
     }

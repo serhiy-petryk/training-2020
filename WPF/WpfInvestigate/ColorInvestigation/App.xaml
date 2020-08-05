@@ -11,10 +11,7 @@
                 <ResourceDictionary Source="/Lib/FlatButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <!--<system:String x:Key="XXX">10,100</system:String>-->
-            <common:DynamicBinding x:Key="XHueAndSaturationProxy" Value="300,100" />
-            <system:String x:Key="HueAndSaturation">20,100</system:String>
-            <common:DynamicBinding x:Key="HueAndSaturationProxy" Value="{StaticResource HueAndSaturation}"/>
+            <common:DynamicBinding x:Key="HueAndSaturation" Value="20,100"/>
 
             <Style x:Key="TestColorStyle" TargetType="Button">
                 <Setter Property="BorderThickness" Value="2"/>

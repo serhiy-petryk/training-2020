@@ -24,11 +24,11 @@
     <Grid Margin="0 10 0 0">
         <StackPanel Orientation="Vertical" Margin="5">
             <StackPanel Orientation="Horizontal"
-                        Background="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}">
+                        Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}">
                 <TextBlock Margin="0 0 2 0" VerticalAlignment="Center" Text="Hue and saturation:"/>
-                <TextBlock Margin="0 0 2 0" VerticalAlignment="Center" Text="{DynamicResource HueAndSaturation}"/>
+                <TextBlock Margin="0 0 2 0" VerticalAlignment="Center" Text="{Binding Source={StaticResource HueAndSaturation}, Path=Value}"/>
                 <TextBlock Margin="5 0 2 0" VerticalAlignment="Center" Text="Proxy:"/>
-                <TextBlock Margin="0 0 2 0" VerticalAlignment="Center" Text="{Binding Source={StaticResource HueAndSaturationProxy}, Path=Value, Converter={x:Static common:TestConverter.Instance}}"/>
+                <TextBlock Margin="0 0 2 0" VerticalAlignment="Center" Text="{Binding Source={StaticResource HueAndSaturation}, Path=Value, Converter={x:Static common:TestConverter.Instance}}"/>
                 <Button Content="Change hue" Click="OnChangeHueClick" Margin="5 0"/>
                 <Button Width="200" Height="30" VerticalAlignment="Stretch" BorderBrush="Gray"
                         VerticalContentAlignment="Center" FontSize="14" Margin="4" Content="Test absolute hsl color">
@@ -43,15 +43,15 @@
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Foreground" Value="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=35}"/>
+                            <Setter Property="Foreground" Value="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=35}"/>
                             <Setter Property="Background" Value="Transparent"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Foreground" Value="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=10}"/>
-                                    <Setter Property="Background" Value="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=80}"/>
+                                    <Setter Property="Foreground" Value="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=10}"/>
+                                    <Setter Property="Background" Value="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=80}"/>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
-                                    <Setter Property="Foreground" Value="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=85}"/>
+                                    <Setter Property="Foreground" Value="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=85}"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -135,12 +135,12 @@
                 <Button Style="{StaticResource FlatMonoButtonStyle}" Background="Blue" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="FlatMonoButtonStyle"/>
                 <Button Style="{StaticResource FlatMonoButtonStyle}" Background="Yellow" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="FlatMonoButtonStyle"/>
                 <Button Style="{StaticResource FlatMonoButtonStyle}" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="FlatMonoButtonStyle"
-                        Background="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
+                        Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
                 <Button Style="{StaticResource FlatMonoButtonStyle}" Width="200" Height="30" Margin="5 0" BorderThickness="3" Content="FlatMonoButtonStyle (disabled)"
-                        Background="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"
+                        Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"
                         IsEnabled="False"/>
                 <Button Style="{StaticResource FlatMonoButtonStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
-                        Background="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
+                        Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
                 <Button Style="{StaticResource FlatMonoButtonStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
                         Background="#FFD98C8C"/>
                 <Button Style="{StaticResource ClearButtonStyle}" Background="Blue" Width="30" Height="30"/>
