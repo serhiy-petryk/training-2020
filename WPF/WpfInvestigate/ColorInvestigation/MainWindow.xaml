@@ -25,7 +25,11 @@
         <StackPanel Orientation="Vertical" Margin="5">
             <StackPanel Orientation="Horizontal"
                         Background="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}">
-                <Button Content="Refresh" Click="OnRefreshClick"/>
+                <TextBlock Margin="0 0 2 0" VerticalAlignment="Center" Text="Hue and saturation:"/>
+                <TextBlock Margin="0 0 2 0" VerticalAlignment="Center" Text="{DynamicResource HueAndSaturation}"/>
+                <TextBlock Margin="5 0 2 0" VerticalAlignment="Center" Text="Proxy:"/>
+                <TextBlock Margin="0 0 2 0" VerticalAlignment="Center" Text="{Binding Source={StaticResource HueAndSaturationProxy}, Path=Value, Converter={x:Static common:TestConverter.Instance}}"/>
+                <Button Content="Change hue" Click="OnChangeHueClick" Margin="5 0"/>
                 <Button Width="200" Height="30" VerticalAlignment="Stretch" BorderBrush="Gray"
                         VerticalContentAlignment="Center" FontSize="14" Margin="4" Content="Test absolute hsl color">
                     <Button.Style>
@@ -163,6 +167,7 @@
                 <TextBlock Margin="10 0 5 0">TestColorStyle</TextBlock>
                 <Button Width="70" Height="30" Background="#FF00FFFF" Style="{StaticResource TestColorStyle}">Test style</Button>
                 <Button Width="100" Height="30" Background="White" Style="{StaticResource TestColorStyle}">White button</Button>
+                <Button Width="100" Height="30" Background="Gray" Style="{StaticResource TestColorStyle}">Gray button</Button>
                 <Button Width="100" Height="30" Background="Black" Style="{StaticResource TestColorStyle}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Black button</Button>
             </StackPanel>
 

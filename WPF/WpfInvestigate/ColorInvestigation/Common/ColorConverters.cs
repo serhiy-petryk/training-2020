@@ -130,18 +130,24 @@ namespace ColorInvestigation.Common
                 if (value is string)
                     ss = ((string) value).Split(new [] {",", " "}, StringSplitOptions.RemoveEmptyEntries);
                 else if ((value as BindingProxy)?.Value is string)
-                    ss = ((string) ((BindingProxy) value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    ss = ((string)((BindingProxy)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                else if ((value as DynamicBinding)?.Value is string)
+                    ss = ((string)((DynamicBinding)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (ss != null && ss.Length == 2)
                 {
                     var h = double.Parse(ss[0], Tips.InvariantCulture);
                     var s = double.Parse(ss[1], Tips.InvariantCulture);
+                    if (Tips.GetNotNullableType(targetType) == typeof(Color))
+                        ColorUtilities.HslToColor(h / 360, s / 100, newL / 100.0);
                     return new SolidColorBrush(ColorUtilities.HslToColor(h / 360, s / 100, newL / 100.0));
                 }
 
                 if (value is Brush brush)
                 {
                     var hsl = ColorUtilities.ColorToHsl(Tips.GetColorFromBrush(brush));
+                    if (Tips.GetNotNullableType(targetType) == typeof(Color))
+                        return ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL / 100.0);
                     return new SolidColorBrush(ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL / 100.0));
                 }
 
@@ -149,10 +155,14 @@ namespace ColorInvestigation.Common
                 {
                     var color = Tips.GetActualBackgroundColor(d);
                     var hsl = ColorUtilities.ColorToHsl(color);
+                    if (Tips.GetNotNullableType(targetType) == typeof(Color))
+                        return ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL / 100.0);
                     return new SolidColorBrush(ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL / 100.0));
                 }
             }
 
+            if (Tips.GetNotNullableType(targetType) == typeof(Color))
+                return Colors.Transparent;
             return new SolidColorBrush(Colors.Transparent);
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
@@ -174,6 +184,8 @@ namespace ColorInvestigation.Common
                 ss = ((string)value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
             else if ((value as BindingProxy)?.Value is string)
                 ss = ((string)((BindingProxy)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+            else if ((value as DynamicBinding)?.Value is string)
+                ss = ((string)((DynamicBinding)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
 
             if (ss != null && ss.Length == 2)
                 hsl = new Tuple<double, double, double>(double.Parse(ss[0], Tips.InvariantCulture), double.Parse(ss[1], Tips.InvariantCulture), 0);
@@ -281,4 +293,15 @@ namespace ColorInvestigation.Common
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
+    public class TestConverter : IValueConverter
+    {
+        public static TestConverter Instance = new TestConverter();
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string)
+                return "X" + (string) value;
+            return value;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
 }

@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:common="clr-namespace:ColorInvestigation.Common"
-             xmlns:lib="clr-namespace:ColorInvestigation.Lib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
@@ -12,12 +11,15 @@
                 <ResourceDictionary Source="/Lib/FlatButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <system:String x:Key="HueAndSaturation">0,50</system:String>
-            <common:BindingProxy x:Key="HueAndSaturationProxy" Value="{DynamicResource HueAndSaturation}"/>
+            <!--<system:String x:Key="XXX">10,100</system:String>-->
+            <common:DynamicBinding x:Key="XHueAndSaturationProxy" Value="300,100" />
+            <system:String x:Key="HueAndSaturation">20,100</system:String>
+            <common:DynamicBinding x:Key="HueAndSaturationProxy" Value="{StaticResource HueAndSaturation}"/>
 
             <Style x:Key="TestColorStyle" TargetType="Button">
                 <Setter Property="BorderThickness" Value="2"/>
                 <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background}"/>
+                <Setter Property="UseLayoutRounding" Value="True"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">

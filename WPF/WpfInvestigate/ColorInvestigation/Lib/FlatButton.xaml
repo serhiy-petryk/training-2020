@@ -8,6 +8,7 @@
         <!-- Can't use binding for background because there is VS Designer error -->
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static converters:GetForegroundBrushConverter.Instance}}"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -31,7 +32,7 @@
                             </Storyboard>
                             <Storyboard x:Key="PressedState">
                                 <ColorAnimation Storyboard.TargetName="PART_Grid" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static converters:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+40%}" Duration="{x:Static converters:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static converters:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+40%}" Duration="{x:Static converters:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
                                                 To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static converters:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+0%}" Duration="{x:Static converters:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color"
@@ -39,7 +40,7 @@
                             </Storyboard>
                             <Storyboard x:Key="Disabled">
                                 <ColorAnimation Storyboard.TargetName="PART_Grid" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static converters:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+0%}" Duration="{x:Static converters:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static converters:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+0%}" Duration="{x:Static converters:AnimationHelper.SlowAnimationDuration}" />
                                 <DoubleAnimation To="0.35" Storyboard.TargetProperty="Opacity" Duration="{x:Static converters:AnimationHelper.SlowAnimationDuration}" />
                             </Storyboard>
                         </Grid.Resources>

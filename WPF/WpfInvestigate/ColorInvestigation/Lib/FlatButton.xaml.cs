@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -27,10 +28,11 @@ namespace ColorInvestigation.Lib
         {
             if (!(o is string))
                 return null;
-            const string pathString = "FMLHVCQSTAZ+-,.0123456789z";
-            var s = (string)o;
-            if (string.IsNullOrEmpty(s) || !s.All(c => pathString.Contains(c) || char.IsWhiteSpace(c)) || !s.Contains(','))
-                return null;
+            const string pathString = "FMLHVCQSTAZ+-,.0123456789fmlhvcqstaz";
+            var s = ((string)o).Trim();
+               if (string.IsNullOrEmpty(s) || s.Length < 3 || !"FfMm".Any(s[0].ToString().Contains) || !"Zz".Any(s[s.Length-1].ToString().Contains) ||
+                   !(s.Contains(',') || s.Contains(' '))  || !s.All(c => pathString.Contains(c) || char.IsWhiteSpace(c)))
+                    return null;
 
             try { return Geometry.Parse(s); }
             catch { return null; }
@@ -41,8 +43,7 @@ namespace ColorInvestigation.Lib
             var button = sender as ButtonBase;
             if (button != null)
             {
-                button.Loaded -= OnFlatButtonLoaded;
-                button.Unloaded -= OnFlatButtonUnloaded;
+                OnFlatButtonUnloaded(sender, e);
 
                 // if (DualPathToggleButtonEffect.GetGeometryOff(button) != Geometry.Empty)
                    // return;
@@ -56,9 +57,11 @@ namespace ColorInvestigation.Lib
 
                 button.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
                 {
+                    button.Unloaded += OnFlatButtonUnloaded;
+                    var dpd1 = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(Control));
+                    dpd1.AddValueChanged(button, OnBackgroundChanged);
                     if (Tips.GetVisualChildren(button).Any(a => a is Shape))
                     {
-                        button.Unloaded += OnFlatButtonUnloaded;
                         SetColorsForShapes(button, null);
                         var dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
                         dpd.AddValueChanged(button, SetColorsForShapes);
@@ -66,6 +69,20 @@ namespace ColorInvestigation.Lib
                         dpd.AddValueChanged(button, SetColorsForShapes);
                     }
                 }));
+            }
+        }
+
+        private void OnBackgroundChanged(object sender, EventArgs e)
+        {
+            var button = sender as ButtonBase;
+            if (button != null)
+            {
+                // Refresh button colors
+                var buttonChild = VisualTreeHelper.GetChild(button, 0) as FrameworkElement;
+                var stateGroup = (VisualStateManager.GetVisualStateGroups(buttonChild) as IList<VisualStateGroup>).FirstOrDefault(g => g.Name == "CommonStates");
+                stateGroup?.CurrentState.Storyboard.Begin(buttonChild);
+                // Refresh shapes colors
+                SetColorsForShapes(sender, e);
             }
         }
 
@@ -80,6 +97,8 @@ namespace ColorInvestigation.Lib
                 dpd.RemoveValueChanged(button, SetColorsForShapes);
                 dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(ButtonBase));
                 dpd.RemoveValueChanged(button, SetColorsForShapes);
+                dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(Control));
+                dpd.RemoveValueChanged(button, OnBackgroundChanged);
             }
         }
         private void SetColorsForShapes(object sender, EventArgs e)
