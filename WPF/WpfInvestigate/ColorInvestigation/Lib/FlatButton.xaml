@@ -3,7 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:ColorInvestigation.Common">
 
-    <Style x:Key="FlatMonoButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MonochromeButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="0"/>
         <!-- Can't use binding for background because there is VS Designer error -->
         <Setter Property="Background" Value="Transparent"/>
