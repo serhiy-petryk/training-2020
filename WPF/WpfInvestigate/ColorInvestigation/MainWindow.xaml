@@ -144,6 +144,9 @@
                 <Button Style="{StaticResource MonochromeButtonStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
                         Background="#FFD98C8C"/>
                 <Button Style="{StaticResource ClearButtonStyle}" Background="Blue" Width="30" Height="30"/>
+                <Button Style="{StaticResource MonochromeButtonStyle}" Background="Blue" Width="30" Height="30" Content="Blue" BorderThickness="2"/>
+                <Button Style="{StaticResource ClearButtonStyle}" Background="#FF5300FF" Width="30" Height="30"/>
+                <Button Style="{StaticResource MonochromeButtonStyle}" Background="#FF5300FF" Height="30" Content="70 100 50" BorderThickness="2"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
