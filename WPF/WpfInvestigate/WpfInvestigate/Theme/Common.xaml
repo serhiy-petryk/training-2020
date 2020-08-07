@@ -4,6 +4,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Controls/FlatButton.xaml"/>
+        <ResourceDictionary Source="/Controls/MonochromeButton.xaml"/>
         <ResourceDictionary Source="/Theme/Flags.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 

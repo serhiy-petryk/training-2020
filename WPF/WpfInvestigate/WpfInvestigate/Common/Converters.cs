@@ -22,7 +22,7 @@ namespace WpfInvestigate.Common
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double percent;
-            if (value is double && parameter is string && double.TryParse((string)parameter, NumberStyles.Any, CultureInfo.InvariantCulture, out percent))
+            if (value is double && parameter is string && double.TryParse((string)parameter, NumberStyles.Any, Tips.InvariantCulture, out percent))
             {
                 var v = (double) value * percent / 100;
                 if (_isPadding)
@@ -77,7 +77,7 @@ namespace WpfInvestigate.Common
         public static DoubleMultiplyConverter Instance = new DoubleMultiplyConverter();
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var d1 = double.Parse(parameter.ToString(), CultureInfo.InvariantCulture);
+            var d1 = double.Parse(parameter.ToString(), Tips.InvariantCulture);
             return (double) value * d1;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();

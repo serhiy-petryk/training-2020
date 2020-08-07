@@ -52,6 +52,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\AnimationHelper.cs" />
+    <Compile Include="Common\BindingProxy.cs" />
+    <Compile Include="Common\ColorConverters.cs" />
+    <Compile Include="Common\ColorUtilities.cs" />
     <Compile Include="Common\DataTypeMetadata.cs" />
     <Compile Include="Controls\AdornerControl.cs" />
     <Compile Include="Controls\Calculator.xaml.cs">
@@ -65,6 +68,9 @@
     </Compile>
     <Compile Include="Controls\FlatButtonConverters\FlatButtonConverters.cs" />
     <Compile Include="Controls\KeyAssignmentSet.cs" />
+    <Compile Include="Controls\MonochromeButton.xaml.cs">
+      <DependentUpon>MonochromeButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NumericBox.xaml.cs">
       <DependentUpon>NumericBox.xaml</DependentUpon>
     </Compile>
@@ -95,6 +101,9 @@
     </Compile>
     <Compile Include="TestViews\DualPathToggleButtonEffectTests.xaml.cs">
       <DependentUpon>DualPathToggleButtonEffectTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\MonochromeButtonTests.xaml.cs">
+      <DependentUpon>MonochromeButtonTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\FlatButtonTests.xaml.cs">
       <DependentUpon>FlatButtonTests.xaml</DependentUpon>
@@ -147,6 +156,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\MonochromeButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\NumericBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,6 +208,10 @@
     <Page Include="TestViews\DualPathToggleButtonEffectTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\MonochromeButtonTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\FlatButtonTests.xaml">
       <SubType>Designer</SubType>

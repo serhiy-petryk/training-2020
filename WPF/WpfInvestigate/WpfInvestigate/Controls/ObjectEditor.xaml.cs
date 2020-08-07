@@ -109,7 +109,7 @@ namespace WpfInvestigate.Controls
                 var borderNames = new[] { "watermark_decorator", "ContentElement" };
                 var borders = Tips.GetVisualChildren(editor).Where(c => c is Border && borderNames.Contains(((Border)c).Name));
                 foreach (Border x in borders)
-                    x.BorderBrush = new SolidColorBrush(Colors.Transparent);
+                    x.BorderBrush = Brushes.Transparent;
 
                 editor._isTemplateChanging = false;
                 

@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
+using WpfInvestigate.Common;
 
 namespace WpfInvestigate
 {
@@ -13,7 +14,7 @@ namespace WpfInvestigate
         protected override void OnStartup(StartupEventArgs e)
         {
             // var vCulture = new CultureInfo("uk");
-            var vCulture = CultureInfo.InvariantCulture;
+            var vCulture = Tips.InvariantCulture;
 
             Thread.CurrentThread.CurrentCulture = vCulture;
             Thread.CurrentThread.CurrentUICulture = vCulture;

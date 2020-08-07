@@ -6,9 +6,9 @@ namespace WpfInvestigate.TestViews
     /// <summary>
     /// Interaction logic for FlatButton.xaml
     /// </summary>
-    public partial class FlatButtonTests
+    public partial class MonochromeButtonTests
     {
-        public FlatButtonTests()
+        public MonochromeButtonTests()
         {
             InitializeComponent();
         }

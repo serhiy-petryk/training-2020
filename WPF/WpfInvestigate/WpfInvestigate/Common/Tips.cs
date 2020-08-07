@@ -14,6 +14,7 @@ namespace WpfInvestigate.Common
 {
     public static class Tips
     {
+        public static readonly CultureInfo InvariantCulture = CultureInfo.InvariantCulture;
         public static CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
 
         public const double SCREEN_TOLERANCE = 0.001;

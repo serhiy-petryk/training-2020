@@ -10,7 +10,7 @@
         Title="WatermarkTests" Height="400" Width="1000">
 
     <Window.Resources>
-        <!--Control colors.-->
+        <!-- Control colors -->
         <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
         <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
         <Color x:Key="ControlLightColor">#00AAAA</Color>

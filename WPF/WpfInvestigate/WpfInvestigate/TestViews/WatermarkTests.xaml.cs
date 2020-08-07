@@ -29,9 +29,9 @@ namespace WpfInvestigate.TestViews
         {
             var a = TestBox.GetValue(WatermarkEffect.ForegroundProperty) as Brush;
             if (a!=null && a is SolidColorBrush && ((SolidColorBrush)a).Color == Colors.Red)
-                TestBox.SetValue(WatermarkEffect.ForegroundProperty, new SolidColorBrush(Colors.Green));
+                TestBox.SetValue(WatermarkEffect.ForegroundProperty, Brushes.Green);
             else
-                TestBox.SetValue(WatermarkEffect.ForegroundProperty, new SolidColorBrush(Colors.Red));
+                TestBox.SetValue(WatermarkEffect.ForegroundProperty, Brushes.Red);
         }
     }
 }

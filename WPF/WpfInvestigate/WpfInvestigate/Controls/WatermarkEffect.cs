@@ -114,6 +114,9 @@ namespace WpfInvestigate.Controls
 
         private static void ShowWatermark(Control ctrlBox, string watermark, Brush foregroundBrush)
         {
+            if (ctrlBox == null)
+                return;
+
             if (foregroundBrush == null)
             {
                 if (ctrlBox.Foreground is SolidColorBrush)
@@ -122,7 +125,7 @@ namespace WpfInvestigate.Controls
                     foregroundBrush = new SolidColorBrush(Color.FromArgb(Convert.ToByte(color.A / 2), color.R, color.G, color.B));
                 }
                 else
-                    foregroundBrush = new SolidColorBrush(Colors.DarkGray);
+                    foregroundBrush = Brushes.DarkGray;
             }
 
             var partWatermark = ctrlBox?.Template.FindName("PART_Watermark", ctrlBox) as ContentControl;
@@ -142,8 +145,8 @@ namespace WpfInvestigate.Controls
                         Focusable = false,
                         IsHitTestVisible = false,
                         Margin = new Thickness(),
-                        Background = new SolidColorBrush(Colors.Transparent),
-                        BorderBrush = new SolidColorBrush(Colors.Transparent)
+                        Background = Brushes.Transparent,
+                        BorderBrush = Brushes.Transparent
                     };
                     adornerControl = new AdornerControl(ctrlBox) {Child = adorner};
                     layer.Add(adornerControl);

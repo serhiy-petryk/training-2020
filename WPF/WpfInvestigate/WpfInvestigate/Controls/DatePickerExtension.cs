@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
@@ -65,12 +66,17 @@ namespace WpfInvestigate.Controls
             button = dp.Template.FindName("PART_Button", dp) as Button;
             var grid = button.Parent as Grid;
             grid.ColumnDefinitions.Add(new ColumnDefinition {Width = GridLength.Auto});
-            var style = dp.FindResource("ClearButtonStyle") as Style;
+            var style = dp.FindResource("MonochromeClearButtonStyle") as Style;
             var clearButton = new Button
             {
                 Name = ClearButtonName, Style = style, Width = 18, Margin = new Thickness(-2, 0, 0, 2),
                 Padding = new Thickness(3.5)
             };
+
+            var binding = new Binding("Background");
+            binding.Source = dp;
+            clearButton.SetBinding(Control.BackgroundProperty, binding);
+
             clearButton.Click += ClearButton_Click;
             grid.Children.Add(clearButton);
             Grid.SetColumn(clearButton, grid.ColumnDefinitions.Count - 1);
