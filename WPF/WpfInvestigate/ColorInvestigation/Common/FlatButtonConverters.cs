@@ -60,7 +60,7 @@ namespace ColorInvestigation.Common
         public static GetForegroundBrushConverter Instance = new GetForegroundBrushConverter();
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var brush = Tips.GetActualForegroundBrush((DependencyObject)value) ?? new SolidColorBrush(Colors.Transparent);
+            var brush = Tips.GetActualForegroundBrush((DependencyObject)value) ?? Brushes.Transparent;
             return brush;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();

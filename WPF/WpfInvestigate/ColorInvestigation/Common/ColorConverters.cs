@@ -163,7 +163,7 @@ namespace ColorInvestigation.Common
 
             if (Tips.GetNotNullableType(targetType) == typeof(Color))
                 return Colors.Transparent;
-            return new SolidColorBrush(Colors.Transparent);
+            return Brushes.Transparent;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
@@ -209,7 +209,7 @@ namespace ColorInvestigation.Common
 
             if (Tips.GetNotNullableType(targetType) == typeof(Color))
                 return Colors.Transparent;
-            return new SolidColorBrush(Colors.Transparent);
+            return Brushes.Transparent;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
@@ -254,7 +254,7 @@ namespace ColorInvestigation.Common
 
             if (Tips.GetNotNullableType(targetType) == typeof(Color))
                 return Colors.Transparent;
-            return new SolidColorBrush(Colors.Transparent);
+            return Brushes.Transparent;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
@@ -287,7 +287,7 @@ namespace ColorInvestigation.Common
                 }
             }
 
-            return new SolidColorBrush(Colors.Transparent);
+            return Brushes.Transparent;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();

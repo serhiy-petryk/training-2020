@@ -81,7 +81,7 @@ namespace ColorInvestigation.Views
                         IsReadOnly = true,
                         Text = color + ": " + a,
                         Background = new SolidColorBrush(color),
-                        Foreground = new SolidColorBrush(Colors.White),
+                        Foreground = Brushes.White,
                         Width = 90
                     };
                     panel.Children.Add(text1);
@@ -94,7 +94,7 @@ namespace ColorInvestigation.Views
                         IsReadOnly = true,
                         Text = color + ": " + a,
                         Background = new SolidColorBrush(color),
-                        Foreground = new SolidColorBrush(Colors.Black),
+                        Foreground = Brushes.Black,
                         Width = 90
                     };
                     panel.Children.Add(text2);

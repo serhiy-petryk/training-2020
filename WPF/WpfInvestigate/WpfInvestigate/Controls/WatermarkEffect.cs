@@ -132,9 +132,7 @@ namespace WpfInvestigate.Controls
             if (partWatermark == null)
             {
                 var layer = AdornerLayer.GetAdornerLayer(ctrlBox);
-                var adornerControl =
-                    layer.GetAdorners(ctrlBox)?.FirstOrDefault(a =>
-                        a is AdornerControl && ((AdornerControl) a).Child.Name == "Watermark") as AdornerControl;
+                var adornerControl = layer.GetAdorners(ctrlBox)?.FirstOrDefault(a => a is AdornerControl && ((AdornerControl) a).Child.Name == "Watermark") as AdornerControl;
 
                 if (adornerControl == null)
                 {
@@ -155,7 +153,7 @@ namespace WpfInvestigate.Controls
                     adornerControl.Visibility = Visibility.Visible;
 
                 var child = adornerControl.Child as TextBox;
-                child.Text = watermark;
+                child.Text = watermark ?? "";
                 child.Foreground = foregroundBrush;
                 child.BorderThickness = ctrlBox.BorderThickness;
                 child.Padding = ctrlBox.Padding;
@@ -169,7 +167,7 @@ namespace WpfInvestigate.Controls
             }
             else
             { // DatePickerTextBox
-                partWatermark.Content = watermark;
+                partWatermark.Content = watermark ?? "";
                 partWatermark.Foreground = foregroundBrush;
             }
         }
@@ -181,8 +179,7 @@ namespace WpfInvestigate.Controls
             {
                 var layer = AdornerLayer.GetAdornerLayer(ctrlBox);
                 var adorners = layer?.GetAdorners(ctrlBox) ?? new Adorner[0];
-                foreach (var adorner in adorners.Where(a =>
-                    a is AdornerControl && ((AdornerControl) a).Child.Name == "Watermark"))
+                foreach (var adorner in adorners.Where(a => a is AdornerControl && ((AdornerControl) a).Child.Name == "Watermark"))
                     adorner.Visibility = Visibility.Collapsed;
             }
         }
