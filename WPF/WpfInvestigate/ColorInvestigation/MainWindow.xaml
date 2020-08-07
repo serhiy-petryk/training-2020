@@ -171,60 +171,6 @@
                 <Button Width="100" Height="30" Background="Black" Style="{StaticResource TestColorStyle}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Black button</Button>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal">
-                <Button  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">AAAAA</Button>
-            </StackPanel>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="140"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Rectangle Grid.Row="0" Grid.Column="0" x:Name="R0"/>
-                <Rectangle Grid.Row="0" Grid.Column="1" x:Name="R1"/>
-                <Rectangle Grid.Row="0" Grid.Column="2" x:Name="R2"/>
-                <Rectangle Grid.Row="0" Grid.Column="3" x:Name="R3"/>
-                <Rectangle Grid.Row="0" Grid.Column="4" x:Name="R4"/>
-                <Rectangle Grid.Row="0" Grid.Column="5" x:Name="R5"/>
-                <Rectangle Grid.Row="0" Grid.Column="6" x:Name="R6"/>
-
-                <TextBox Grid.Row="1" Grid.Column="0" x:Name="C0" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="C1" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="1" Grid.Column="2" x:Name="C2" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="1" Grid.Column="3" x:Name="C3" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="1" Grid.Column="4" x:Name="C4" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="1" Grid.Column="5" x:Name="C5" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="1" Grid.Column="6" x:Name="C6" TextWrapping="Wrap"/>
-
-                <Rectangle Grid.Row="2" Grid.Column="0" x:Name="RV0"/>
-                <Rectangle Grid.Row="2" Grid.Column="1" x:Name="RV1"/>
-                <Rectangle Grid.Row="2" Grid.Column="2" x:Name="RV2"/>
-                <Rectangle Grid.Row="2" Grid.Column="3" x:Name="RV3"/>
-                <Rectangle Grid.Row="2" Grid.Column="4" x:Name="RV4"/>
-                <Rectangle Grid.Row="2" Grid.Column="5" x:Name="RV5"/>
-                <Rectangle Grid.Row="2" Grid.Column="6" x:Name="RV6"/>
-
-                <TextBox Grid.Row="3" Grid.Column="0" x:Name="CV0" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="3" Grid.Column="1" x:Name="CV1" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="3" Grid.Column="2" x:Name="CV2" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="3" Grid.Column="3" x:Name="CV3" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="3" Grid.Column="4" x:Name="CV4" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="3" Grid.Column="5" x:Name="CV5" TextWrapping="Wrap"/>
-                <TextBox Grid.Row="3" Grid.Column="6" x:Name="CV6" TextWrapping="Wrap"/>
-
-            </Grid>
         </StackPanel>
     </Grid>
 </Window>
