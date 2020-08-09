@@ -7,7 +7,6 @@
              xmlns:common="clr-namespace:MyWpfMwi.Common"
              xmlns:viewModels="clr-namespace:MyWpfMwi.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="150" d:DesignWidth="300"
              SelectionChanged="WindowsBar_OnSelectionChanged">
 
     <TabControl.Resources>

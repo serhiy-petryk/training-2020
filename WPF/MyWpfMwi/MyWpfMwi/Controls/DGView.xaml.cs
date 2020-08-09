@@ -9,7 +9,7 @@ using MyWpfMwi.Examples;
 namespace MyWpfMwi.Controls
 {
     /// <summary>
-    /// Interaction logic for ExampleControl.xaml
+    /// Interaction logic for DGView.xaml
     /// </summary>
     public partial class DGView : IDisposable
     {

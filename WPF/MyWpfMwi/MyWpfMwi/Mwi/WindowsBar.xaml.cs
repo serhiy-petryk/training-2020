@@ -140,6 +140,5 @@ namespace MyWpfMwi.Mwi
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
     }
 }

@@ -52,7 +52,6 @@ namespace MyWpfMwi.ViewModels
             RaiseEvent(args);
         }
 
-
         //===========  INotifyPropertyChanged  =======================
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
