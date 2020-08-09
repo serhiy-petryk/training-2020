@@ -60,8 +60,17 @@ NegativeColor =  (255,255,255) - Color.RGB
 
 Відтінки кольору
 ===============
-У проекті MaterialDesignColors у папці Theme визначенні набори віддінків + foreground для 19 кольорів.
+У проекті MaterialDesignColors у папці Theme визначенні набори відтінків + foreground для 19 кольорів.
 Крім того, там є папка Recomended для Accent/Primary.
+
+
+ToDo 2020-08-09:
+===============
+1. Base all custom controls (dual/ripple/.. buttons, calculator, pickers) on the monochrome color.
+2. Ripple monochrome button: define ripple color as binding to background color with +-NN% parameter. 
+3. Another way for monochrome: define monochrome using attached property:
+	have a problem => how to specify many color parameters for control
+	(based/normal/mouseover/pressed/dissabled states for background/foreground/border/ripple colors)
 
 
 

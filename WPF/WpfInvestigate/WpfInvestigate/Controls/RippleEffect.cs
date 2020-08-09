@@ -39,7 +39,7 @@ namespace WpfInvestigate.Controls
                     {
                         var groups = VisualStateManager.GetVisualStateGroups(o);
                         if (groups != null)
-                            foreach (VisualStateGroup visualGroup in groups?.Cast<object>().Where(g => g is VisualStateGroup))
+                            foreach (VisualStateGroup visualGroup in groups?.OfType<VisualStateGroup>())
                             {
                                 var state = visualGroup.States.Cast<VisualState>().FirstOrDefault(v => v.Name == "Pressed");
                                 if (state != null)

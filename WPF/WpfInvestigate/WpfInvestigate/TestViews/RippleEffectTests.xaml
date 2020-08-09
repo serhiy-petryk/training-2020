@@ -49,6 +49,11 @@
                     <Button controls:RippleEffect.RippleColor="White" Width="120" Height="30" Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
                     <Button controls:RippleEffect.RippleColor="White" Background="Blue" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="Blue" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="MonochromeButtonStyle" />
+
+                    <Button controls:RippleEffect.RippleColor="White" Background="White" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="White" />
                     <Button controls:RippleEffect.RippleColor="White" Width="70" Height="30" Content="Button" />
                     <Button controls:RippleEffect.RippleColor="Black" Width="70" Height="30" Content="Button" />
                 </WrapPanel>
