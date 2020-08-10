@@ -70,10 +70,10 @@ namespace MyWpfMwi.Examples
 
         private void AddScrollWindow_OnClick(object sender, RoutedEventArgs e)
         {
-            StackPanel sp = new StackPanel { Orientation = Orientation.Vertical };
+            var sp = new StackPanel { Orientation = Orientation.Vertical };
             sp.Children.Add(new TextBlock { Text = "Window with scroll", Margin = new Thickness(5) });
             sp.Children.Add(new ComboBox { Margin = new Thickness(20), Width = 300 });
-            ScrollViewer sv = new ScrollViewer { Content = sp, HorizontalScrollBarVisibility = ScrollBarVisibility.Auto };
+            var sv = new ScrollViewer { Content = sp, HorizontalScrollBarVisibility = ScrollBarVisibility.Auto };
 
             Container.Children.Add(new MwiChild { Content = sv, Title = "Window " + count++ });
             Container.HideLeftPanel();
