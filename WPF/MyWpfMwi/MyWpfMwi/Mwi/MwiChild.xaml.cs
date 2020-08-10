@@ -24,8 +24,6 @@ namespace MyWpfMwi.Mwi
     {
         public const double MIN_WIDTH = 250;
         public const double MIN_HEIGHT = 50;
-        public const double DEFAULT_WIDTH = 450;
-        public const double DEFAULT_HEIGHT = 300;
         private const double MAX_THUMBNAIL_SIZE = 180;
 
         #region Constructor
@@ -75,7 +73,7 @@ namespace MyWpfMwi.Mwi
         public double ThumbnailHeight => GetThumbnailSize().Y;
 
         //  ===============  MwiChild State ===============
-        private Size _lastNormalSize = new Size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        private Size _lastNormalSize;
         private Point _attachedPosition;
         private Point _detachedPosition;
         private WindowState? _beforeMinimizedState { get; set; } // Previous state of minimized window.
@@ -271,6 +269,8 @@ namespace MyWpfMwi.Mwi
 
         private void MwiChild_OnLoaded(object sender, RoutedEventArgs e)
         {
+            _lastNormalSize = new Size(ActualWidth, ActualHeight);
+
             if (Container != null)
                 StatusBar = new StatusBarExample();
 
@@ -780,7 +780,7 @@ namespace MyWpfMwi.Mwi
                 if (!Tips.AreEqual(newLeft, window.Left))
                     window.Left = newLeft;
             }
-            else if (mwiChild.Parent is Canvas)
+            else if (mwiChild.Parent == null || mwiChild.Parent is Canvas)
             {
                 Canvas.SetTop(mwiChild, newPosition.Y);
                 Canvas.SetLeft(mwiChild, newPosition.X);

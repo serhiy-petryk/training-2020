@@ -15,7 +15,6 @@
              GotFocus="MwiChild_OnGotFocus"
              Loaded="MwiChild_OnLoaded"
              MinWidth="{x:Static mwi:MwiChild.MIN_WIDTH}" MinHeight="{x:Static mwi:MwiChild.MIN_HEIGHT}"
-             Width="{x:Static mwi:MwiChild.DEFAULT_WIDTH}" Height="{x:Static mwi:MwiChild.DEFAULT_HEIGHT}"
              Background="{DynamicResource Mwi.Child.ChildBackground}">
 
     <UserControl.Resources>

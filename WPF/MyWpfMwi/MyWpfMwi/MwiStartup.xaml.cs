@@ -87,12 +87,7 @@ namespace MyWpfMwi
 
         public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
         {
-            var dialog = new MwiChild { Title = "Dialog" };
-            dialog.Content = new TextBlock { Text = "Test dialog window", Background = new SolidColorBrush(Colors.Green) };
-
-            var style = dialog.TryFindResource("MovableDialogStyle") as Style;
-            DialogItems.Show(AppViewModel.Instance.ContainerControl.ContainerForDialog, dialog, style,
-                GetAfterCreationCallbackForDialog(dialog, true));
+            Tips.ShowMwiChildDialog(new TextBlock { Text = "Test dialog window", Background = new SolidColorBrush(Colors.Green) }, "Dialog");
         });
 
         public RelayCommand CmdShowMessage { get; } = new RelayCommand(o =>
@@ -102,24 +97,5 @@ namespace MyWpfMwi
             if (aa != null)
                 MessageBlock.Show($"You pressed '{aa}' button", null, MessageBlock.MessageBlockIcon.Information);
         });
-
-        private static Action<DialogItems> GetAfterCreationCallbackForDialog(FrameworkElement content, bool closeOnClickBackground)
-        {
-            return dialogItems =>
-            {
-                content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
-                {
-                    dialogItems.CloseOnClickBackground = closeOnClickBackground;
-
-                    // center content position
-                    var mwiChild = (MwiChild)dialogItems.Items[0];
-                    mwiChild.Focused = true;
-                    mwiChild.Position = new Point(
-                        Math.Max(0, (dialogItems.ItemsPresenter.ActualWidth - content.ActualWidth) / 2),
-                        Math.Max(0, (dialogItems.ItemsPresenter.ActualHeight - content.ActualHeight) / 2));
-                }));
-            };
-        }
-
     }
 }
