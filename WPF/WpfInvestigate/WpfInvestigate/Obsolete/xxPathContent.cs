@@ -6,7 +6,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
-namespace WpfInvestigate.Controls
+namespace WpfInvestigate.Obsolete
 {
     public class xxPathContent
     {
@@ -28,7 +28,5 @@ namespace WpfInvestigate.Controls
                 }));
             }
         }
-
-
     }
 }

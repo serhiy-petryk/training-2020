@@ -79,7 +79,7 @@
     </Compile>
     <Compile Include="Controls\Others\VirtualKeyboard.Models.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.KeyDefinition.cs" />
-    <Compile Include="Controls\xxPathContent.cs" />
+    <Compile Include="Obsolete\xxPathContent.cs" />
     <Compile Include="Obsolete\AnimationHelper.cs" />
     <Compile Include="Obsolete\Events.cs" />
     <Compile Include="Obsolete\NumericUpDown.xaml.cs">
