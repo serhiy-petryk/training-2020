@@ -36,5 +36,5 @@
             <Button Height="100">AAA</Button>
             <Button Height="100">AAA</Button>
         </StackPanel>
-</Grid>
+    </Grid>
 </UserControl>

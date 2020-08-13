@@ -14,6 +14,7 @@
              IsTabStop="False"
              Loaded="MwiContainer_OnLoaded"
              SizeChanged="MwiContainer_OnSizeChanged"
+             PreviewMouseLeftButtonUp="MwiContainer_OnPreviewMouseLeftButtonUp"
              Unloaded="MwiContainer_OnUnloaded">
 
     <UserControl.Resources>

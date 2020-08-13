@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using MyWpfMwi.Common;
 
@@ -8,7 +9,7 @@ namespace MyWpfMwi.Mwi
 {
     public partial class MwiContainer
     {
-        public static readonly DependencyProperty LeftPanelProperty = DependencyProperty.Register("LeftPanel", typeof(UIElement), typeof(MwiContainer), new FrameworkPropertyMetadata(null, OnLeftPanelPropertyChanged));
+        public static readonly DependencyProperty LeftPanelProperty = DependencyProperty.Register("LeftPanel", typeof(UIElement), typeof(MwiContainer), new FrameworkPropertyMetadata(null, LeftPanel_OnPropertyChanged));
         public UIElement LeftPanel
         {
             get => (UIElement)GetValue(LeftPanelProperty);
@@ -17,7 +18,13 @@ namespace MyWpfMwi.Mwi
 
         public void HideLeftPanel() => LeftPanelButton.IsChecked = false;
 
-        private static void OnLeftPanelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private void MwiContainer_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Equals(LeftPanelButton.IsChecked, true) && !LeftPanelContainer.IsMouseOver && !LeftPanelButton.IsMouseOver)
+                HideLeftPanel();
+        }
+
+        private static void LeftPanel_OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue != null && e.NewValue is UIElement && d is MwiContainer)
                 ((UIElement)e.NewValue).SetValue(MwiContainerProperty, d);
@@ -28,6 +35,7 @@ namespace MyWpfMwi.Mwi
             var newWidth = LeftPanelContainer.ActualWidth + e.HorizontalChange;
             if (newWidth >= 0)
                 LeftPanelContainer.Width = newWidth;
+            e.Handled = true;
         }
 
         private Storyboard _leftPanelAnimationOn;
