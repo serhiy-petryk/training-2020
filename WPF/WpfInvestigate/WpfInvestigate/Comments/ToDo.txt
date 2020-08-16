@@ -14,7 +14,6 @@ ToDo 2020-05-07:
 	text editor
 	picker
 
-
 ToDo 2020-04-29:
 + 1. DatePicker: IsNullable - використати стандартний DatePicker + добавити стиль
 + 2. DatePicker: ClearButton
