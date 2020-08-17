@@ -351,5 +351,11 @@
   <ItemGroup>
     <Resource Include="Comments\Dialog.Investigate.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\Combobox.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\Styles.Comment.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,10 @@
+﻿1. Github:
+-- https://github.com/ryotaro0222/Wpf_Samplecode_Datagrid
++ https://github.com/IvanHdz/WPF_ComboBox_Datagrid - view/edit as CombobBox
++ https://github.com/Sekagra/DynamicComboBoxItemsSourceInDataGrid - view/edit as CombobBox
+
++ https://archive.codeplex.com/?p=itemsfilter - view as TextBox; edit as CombobBox
+	see ItemsFilter\sourceCode\itemsfilter\Northwind.NET.Sample\View\OrdersView.xaml
+
+2. Multicolumn combobox:
+https://stackoverflow.com/questions/23893348/wpf-multicolumn-combobox
