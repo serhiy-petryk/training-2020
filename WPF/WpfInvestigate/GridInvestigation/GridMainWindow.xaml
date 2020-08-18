@@ -1,0 +1,42 @@
+﻿<Window x:Class="GridInvestigation.GridMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GridInvestigation"
+        xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Grid Margin="0 20 0 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5">
+            <Label Content="Current culture:"/>
+            <ComboBox x:Name="cbCulture" SelectionChanged="CbCulture_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type globalization:CultureInfo}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding DisplayName, Mode=OneWay}" />
+                            <TextBlock Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding IetfLanguageTag, StringFormat=(\{0\})}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Label Content="WiP controls:" Margin="0 10 0 0"/>
+            <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
+            <Label>Tests:</Label>
+            <Button x:Name="ValidationTest" Margin="5" Content="Validation Test" Click="ValidationTest_OnClick"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

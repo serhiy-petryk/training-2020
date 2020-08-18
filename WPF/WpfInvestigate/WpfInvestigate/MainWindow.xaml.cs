@@ -30,7 +30,6 @@ namespace WpfInvestigate
             .GetCultures(CultureTypes.InstalledWin32Cultures).Where(c => Array.IndexOf(_cultures, c.Name) != -1)
             .OrderBy(c => c.DisplayName).ToList();
 
-
         private void CbCulture_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1)
