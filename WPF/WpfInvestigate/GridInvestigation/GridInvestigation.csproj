@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="TestViews\MetanitValidationTests.xaml.cs">
+      <DependentUpon>MetanitValidationTests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\ValidationTests.xaml.cs">
       <DependentUpon>ValidationTests.xaml</DependentUpon>
     </Compile>
@@ -70,6 +73,10 @@
       <DependentUpon>GridMainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="TestViews\MetanitValidationTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TestViews\ValidationTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

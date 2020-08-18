@@ -46,5 +46,7 @@ namespace GridInvestigation
         }
 
         private void ValidationTest_OnClick(object sender, RoutedEventArgs e) => new ValidationTests().Show();
+
+        private void MetanitValidationTest_OnClick(object sender, RoutedEventArgs e) => new MetanitValidationTests().Show();
     }
 }

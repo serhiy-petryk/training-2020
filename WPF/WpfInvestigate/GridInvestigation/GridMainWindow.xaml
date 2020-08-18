@@ -36,6 +36,7 @@
         <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
             <Label>Tests:</Label>
             <Button x:Name="ValidationTest" Margin="5" Content="Validation Test" Click="ValidationTest_OnClick"/>
+            <Button x:Name="MetanitValidationTest" Margin="5" Content="Metanit Validation Test" Click="MetanitValidationTest_OnClick"/>
         </StackPanel>
 
     </Grid>
