@@ -37,6 +37,8 @@
             <Label>Tests:</Label>
             <Button x:Name="ValidationTest" Margin="5" Content="Validation Test" Click="ValidationTest_OnClick"/>
             <Button x:Name="MetanitValidationTest" Margin="5" Content="Metanit Validation Test" Click="MetanitValidationTest_OnClick"/>
+            <Button x:Name="MyValidationTest" Margin="5" Content="My Validation Test" Click="MyValidationTest_OnClick"/>
+            <Button x:Name="AttributeValidationTest" Margin="5" Content="Attribute Validation Test" Click="AttributeValidationTest_OnClick"/>
         </StackPanel>
 
     </Grid>

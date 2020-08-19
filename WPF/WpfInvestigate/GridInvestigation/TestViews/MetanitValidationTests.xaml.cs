@@ -22,7 +22,8 @@ namespace GridInvestigation.TestViews
 
         private void TextBox_Error(object sender, ValidationErrorEventArgs e)
         {
-            MessageBox.Show(e.Error.ErrorContent.ToString());
+            if (e.Action == ValidationErrorEventAction.Added)
+                MessageBox.Show(e.Error.ErrorContent.ToString());
         }
     }
 

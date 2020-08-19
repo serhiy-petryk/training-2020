@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +56,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="TestViews\AttributeValidationTests.xaml.cs">
+      <DependentUpon>AttributeValidationTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\MyValidationTests.xaml.cs">
+      <DependentUpon>MyValidationTests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\MetanitValidationTests.xaml.cs">
       <DependentUpon>MetanitValidationTests.xaml</DependentUpon>
     </Compile>
@@ -73,6 +80,14 @@
       <DependentUpon>GridMainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="TestViews\AttributeValidationTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\MyValidationTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="TestViews\MetanitValidationTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

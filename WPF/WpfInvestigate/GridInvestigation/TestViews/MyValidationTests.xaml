@@ -1,0 +1,83 @@
+﻿<Window x:Class="GridInvestigation.TestViews.MyValidationTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GridInvestigation.TestViews"
+        mc:Ignorable="d"
+        Title="MetanitValidationTests" Height="450" Width="800">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="validationFailed">
+            <StackPanel Orientation="Horizontal">
+                <Border BorderBrush="Violet" BorderThickness="2">
+                    <AdornedElementPlaceholder x:Name="customAdorner"/>
+                </Border>
+                <TextBlock Foreground="Red" FontSize="26" FontWeight="Bold" Text="!" ToolTip="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                <Grid ToolTip="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" VerticalAlignment="Center" Height="{Binding ElementName=customAdorner, Path=ActualHeight}">
+                    <Ellipse StrokeThickness="0" Fill="Red" Width="{Binding ElementName=customAdorner, Path=ActualHeight}" Height="{Binding ElementName=customAdorner, Path=ActualHeight}" />
+                    <TextBlock Margin="0 0 0 0" Text="!" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red"/>
+                </Grid>
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Column="1" Grid.Row="0" Height="30" Text="{Binding Path=Name}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Height="30" Text="{Binding Position}" />
+
+        <TextBox Grid.Column="1" Grid.Row="3" Margin="0 5 0 0" Height="30">
+            <Binding Path="Age">
+                <Binding.ValidationRules>
+                    <DataErrorValidationRule />
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBox Grid.Column="1" Grid.Row="4" Margin="0 5 0 0" Height="30" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="5" Margin="0 5 0 0" Height="30" Text="{Binding Age}" Validation.ErrorTemplate="{StaticResource validationFailed}"/>
+        <TextBox Grid.Column="1" Grid.Row="6" Margin="0 5 0 0" Height="30" Text="{Binding Age, NotifyOnValidationError=True}" Validation.Error="TextBox_Error"/>
+        <TextBox Grid.Column="1" Grid.Row="7" Margin="0 5 0 0" Height="30" Text="{Binding Age}">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                            <Setter Property="Foreground" Value="Red" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <Label Grid.Row="0" Content="Введите имя" Height="30" />
+        <Label Grid.Row="1" Content="Введите должность" Height="30" />
+        <Label Grid.Row="2" Content="Введите возраст (число от 0 до 100):" Height="30" Margin="0 10 0 0"/>
+        <Label Grid.Row="3" Content="Simple binding" Height="30" />
+        <Label Grid.Row="4" Content="UpdateSourceTrigger=PropertyChanged" Height="30" />
+        <Label Grid.Row="5" Content="Validation.ErrorTemplate" Height="30" />
+        <Label Grid.Row="6" Content="Validation.Error event" Height="30" />
+        <Label Grid.Row="7" Content="Trigger of style" Height="30" />
+
+        <Label Grid.Row="8" Grid.ColumnSpan="3" Content="{Binding Path=Name}" Height="30" />
+        <Label Grid.Row="8" Grid.ColumnSpan="3" Content="{Binding Path=Age}" Height="30" Width="50" Margin="50 5 0 0" />
+        <Label Grid.Row="8" Grid.ColumnSpan="3" Content="{Binding Path=Position}" Height="30" Margin="100 5 0 0" />
+    </Grid>
+</Window>
