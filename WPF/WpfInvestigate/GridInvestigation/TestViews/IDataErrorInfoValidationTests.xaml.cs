@@ -14,15 +14,15 @@ using System.Windows.Controls;
 namespace GridInvestigation.TestViews
 {
     /// <summary>
-    /// Interaction logic for MyValidationTests.xaml
+    /// Interaction logic for IDataErrorInfoValidationTests.xaml
     /// </summary>
-    public partial class MyValidationTests : Window
+    public partial class IDataErrorInfoValidationTests : Window
     {
-        MyPersonModel Tom;
-        public MyValidationTests()
+        PersonModel3 Tom;
+        public IDataErrorInfoValidationTests()
         {
             InitializeComponent();
-            Tom = new MyPersonModel();
+            Tom = new PersonModel3();
             DataContext = Tom;
         }
 
@@ -33,7 +33,7 @@ namespace GridInvestigation.TestViews
         }
     }
 
-    public class MyPersonModel: INotifyPropertyChanged, INotifyDataErrorInfo
+    public class PersonModel3: INotifyPropertyChanged, IDataErrorInfo
     {
         private string _name;
         [System.ComponentModel.DataAnnotations.StringLength(4)]
@@ -69,17 +69,12 @@ namespace GridInvestigation.TestViews
         public event PropertyChangedEventHandler PropertyChanged; // INotifyPropertyChanged
         #endregion
 
-        #region =====  INotifyDataErrorInfo  =======
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-        public bool HasErrors => GetErrors(null).OfType<object>().Any();
-        public virtual IEnumerable GetErrors([CallerMemberName] string propertyName = null)
-        {
-            if (string.IsNullOrEmpty(propertyName) || propertyName == nameof(Age))
-            {
-                if (Age < 0 || Age > 100)
-                    yield return "Возраст должен быть больше 0 и меньше 100";
-            }
-        }
+        #region =====  IDataErrorInfo  =======
+        public string Error => Age < 0 || Age > 100 ? "Возраст должен быть больше 0 и меньше 100" : null;
+        public string this[string propertyName] => propertyName == nameof(Age) && (Age < 0 || Age > 100)
+            ? "Возраст должен быть больше 0 и меньше 100"
+            : null;
+
         #endregion
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>

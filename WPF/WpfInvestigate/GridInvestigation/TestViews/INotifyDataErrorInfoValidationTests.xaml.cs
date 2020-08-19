@@ -14,15 +14,15 @@ using System.Windows.Controls;
 namespace GridInvestigation.TestViews
 {
     /// <summary>
-    /// Interaction logic for MyValidationTests.xaml
+    /// Interaction logic for INotifyDataErrorInfoValidationTests.xaml
     /// </summary>
-    public partial class MyValidationTests : Window
+    public partial class INotifyDataErrorInfoValidationTests : Window
     {
-        MyPersonModel Tom;
-        public MyValidationTests()
+        PersonModel1 Tom;
+        public INotifyDataErrorInfoValidationTests()
         {
             InitializeComponent();
-            Tom = new MyPersonModel();
+            Tom = new PersonModel1();
             DataContext = Tom;
         }
 
@@ -33,7 +33,7 @@ namespace GridInvestigation.TestViews
         }
     }
 
-    public class MyPersonModel: INotifyPropertyChanged, INotifyDataErrorInfo
+    public class PersonModel1: ModelBase1
     {
         private string _name;
         [System.ComponentModel.DataAnnotations.StringLength(4)]
@@ -63,16 +63,7 @@ namespace GridInvestigation.TestViews
 
         public string Position { get; set; }
 
-        public override string ToString() => $"Name: {Name}, Age: {Age}, Position: {Position}";
-
-        #region =====  INotifyPropertyChanged  =======
-        public event PropertyChangedEventHandler PropertyChanged; // INotifyPropertyChanged
-        #endregion
-
-        #region =====  INotifyDataErrorInfo  =======
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-        public bool HasErrors => GetErrors(null).OfType<object>().Any();
-        public virtual IEnumerable GetErrors([CallerMemberName] string propertyName = null)
+        public override IEnumerable GetErrors([CallerMemberName] string propertyName = null)
         {
             if (string.IsNullOrEmpty(propertyName) || propertyName == nameof(Age))
             {
@@ -80,6 +71,20 @@ namespace GridInvestigation.TestViews
                     yield return "Возраст должен быть больше 0 и меньше 100";
             }
         }
+
+        public override string ToString() => $"Name: {Name}, Age: {Age}, Position: {Position}";
+    }
+
+    public class ModelBase1 : INotifyPropertyChanged, INotifyDataErrorInfo
+    {
+        #region =====  INotifyPropertyChanged  =======
+        public event PropertyChangedEventHandler PropertyChanged; // INotifyPropertyChanged
+        #endregion
+
+        #region =====  INotifyDataErrorInfo  =======
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        public bool HasErrors => GetErrors(null).OfType<object>().Any();
+        public virtual IEnumerable GetErrors([CallerMemberName] string propertyName = null) => Enumerable.Empty<object>();
         #endregion
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>

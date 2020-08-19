@@ -59,6 +59,12 @@
     <Compile Include="TestViews\AttributeValidationTests.xaml.cs">
       <DependentUpon>AttributeValidationTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\IDataErrorInfoValidationTests.xaml.cs">
+      <DependentUpon>IDataErrorInfoValidationTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\INotifyDataErrorInfoValidationTests.xaml.cs">
+      <DependentUpon>INotifyDataErrorInfoValidationTests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\MyValidationTests.xaml.cs">
       <DependentUpon>MyValidationTests.xaml</DependentUpon>
     </Compile>
@@ -81,6 +87,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="TestViews\AttributeValidationTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\IDataErrorInfoValidationTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\INotifyDataErrorInfoValidationTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
