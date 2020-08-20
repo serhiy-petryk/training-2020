@@ -145,10 +145,10 @@ namespace GridInvestigation.TestViews
         #endregion
 
         #region =====  IDataErrorInfo  =======
-        public string Error => StartDate > EndDate ? "Start Date must be earlier than End Date" : null;
+        public string Error => StartDate > EndDate ? "Start Date must be earlier than End Date" + Environment.NewLine + "Item error" : null;
         public string this[string propertyName] =>
             ((propertyName == nameof(StartDate) || propertyName == nameof(EndDate)) && StartDate > EndDate)
-                ? "Start Date must be earlier than End Date"
+                ? "Start Date must be earlier than End Date" + Environment.NewLine + "Property row"
                 : null;
         #endregion
     }

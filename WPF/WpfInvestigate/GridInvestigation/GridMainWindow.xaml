@@ -33,6 +33,11 @@
             <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
         </StackPanel>
 
+        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
+            <Label>Ready:</Label>
+            <Button x:Name="GridValidationTest" Margin="5" Content="Grid Validation Test" Click="GridValidationTests_OnClick"/>
+        </StackPanel>
+
         <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
             <Label>Tests:</Label>
             <Button x:Name="ValidationTest" Margin="5" Content="Validation Test" Click="ValidationTest_OnClick"/>
@@ -41,7 +46,6 @@
             <Button x:Name="IDataErrorInfoValidationTest" Margin="5" Content="IDataErrorInfo Validation Test" Click="IDataErrorInfoValidationTests_OnClick"/>
             <Button x:Name="INotifyDataErrorInfoValidationTest" Margin="5" Content="INotifyDataErrorInfo Validation Test" Click="INotifyDataErrorInfoValidationTests_OnClick"/>
             <Button x:Name="MyValidationTest" Margin="5" Content="My Validation Test" Click="MyValidationTest_OnClick"/>
-            <Button x:Name="GridValidationTest" Margin="5" Content="Grid Validation Test" Click="GridValidationTests_OnClick"/>
             <Button x:Name="RedefineInternalValidationTest" Margin="5" Content="Redefine Internal Validation Test" Click="RedefineInternalValidationTests_OnClick"/>
         </StackPanel>
 

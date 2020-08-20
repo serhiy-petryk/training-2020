@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GridInvestigation.TestViews"
+        xmlns:common="clr-namespace:GridInvestigation.Common"
         mc:Ignorable="d"
         Title="Grid Validation Tests" Height="450" Width="800">
 
@@ -35,51 +36,56 @@
                 <local:Courses5 x:Key="courses"/>
             </Grid.Resources>
 
-            <DataGrid Name="dataGrid1" RowHeaderWidth="27" ItemsSource="{StaticResource courses}" AutoGenerateColumns="False">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Font size:"/>
+                <TextBox Margin="0 5" Width="30" HorizontalAlignment="Left" Text="{Binding ElementName=dataGrid1, Path=FontSize, Mode=TwoWay}"/>
 
-                <DataGrid.Resources>
-                    <Style x:Key="EditingElementErrorStyle" TargetType="{x:Type TextBox}">
-                        <Setter Property="Padding" Value="0"/>
-                        <Style.Triggers>
-                            <Trigger Property="Validation.HasError" Value="True">
-                                <Setter Property="Foreground" Value="Red"/>
-                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                    <Style x:Key="ElementErrorStyle" TargetType="{x:Type TextBlock}">
-                        <Setter Property="Padding" Value="0"/>
-                        <Style.Triggers>
-                            <Trigger Property="Validation.HasError" Value="True">
-                                <Setter Property="Foreground" Value="DarkRed"/>
-                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.Resources>
+                <DataGrid Name="dataGrid1" RowHeaderWidth="27" ItemsSource="{StaticResource courses}" AutoGenerateColumns="False">
+                    <DataGrid.Resources>
+                        <Style x:Key="EditingElementErrorStyle" TargetType="{x:Type TextBox}">
+                            <Setter Property="Padding" Value="0"/>
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError" Value="True">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                        <Style x:Key="ElementErrorStyle" TargetType="{x:Type TextBlock}">
+                            <Setter Property="Padding" Value="0"/>
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError" Value="True">
+                                    <Setter Property="Foreground" Value="DarkRed"/>
+                                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Course Name" Binding="{Binding Name, TargetNullValue=(enter a course name)}"/>
-                    <DataGridTextColumn Header="Course ID"
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Course Name" Binding="{Binding Name, TargetNullValue=(enter a course name)}"/>
+                        <DataGridTextColumn Header="Course ID"
                                         Binding="{Binding Id, ValidatesOnDataErrors=True, StringFormat=d}"
                                         ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
-                    <DataGridTextColumn Header="Start Date"
+                        <DataGridTextColumn Header="Start Date"
                                         Binding="{Binding StartDate, ValidatesOnDataErrors=True, StringFormat=d}"
                                         ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
-                    <DataGridTextColumn Header="End Date"
+                        <DataGridTextColumn Header="End Date"
                                         Binding="{Binding EndDate, ValidatesOnDataErrors=True, StringFormat=d}"
                                         ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
-                </DataGrid.Columns>
+                    </DataGrid.Columns>
 
-                <DataGrid.RowValidationErrorTemplate>
-                    <ControlTemplate>
-                        <Grid Margin="0,-2,0,-2" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Path=(Validation.Errors)[0].ErrorContent}">
-                            <Ellipse StrokeThickness="0" Fill="Red" Width="{TemplateBinding FontSize}" Height="{TemplateBinding FontSize}" />
-                            <TextBlock Text="!" FontSize="{TemplateBinding FontSize}" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"  />
-                        </Grid>
-                    </ControlTemplate>
-                </DataGrid.RowValidationErrorTemplate>
-            </DataGrid>
+                    <DataGrid.RowValidationErrorTemplate>
+                        <ControlTemplate>
+<!--                            <Grid Margin="0,-2,0,-2" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Converter={x:Static common:DummyConverter.Instance}}">-->
+                            <Grid ToolTip="{Binding Error}">
+                                <Ellipse StrokeThickness="0" Fill="Red" Width="{TemplateBinding FontSize}" Height="{TemplateBinding FontSize}" />
+                                <TextBlock Text="!" FontSize="{TemplateBinding FontSize}" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"  />
+                            </Grid>
+                        </ControlTemplate>
+                    </DataGrid.RowValidationErrorTemplate>
+                </DataGrid>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>
