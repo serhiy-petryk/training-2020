@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace GridInvestigation.TestViews
 {
@@ -79,6 +81,7 @@ namespace GridInvestigation.TestViews
                 if (_number == value) return;
                 _number = value;
                 OnPropertyChanged("Id");
+                // not in use: OnPropertyChanged("Error");
             }
         }
 
@@ -92,6 +95,7 @@ namespace GridInvestigation.TestViews
                 _startDate = value;
                 OnPropertyChanged("StartDate");
                 OnPropertyChanged("EndDate"); // for cross-column validation
+                // not in use: OnPropertyChanged("Error");
             }
         }
 
@@ -105,6 +109,7 @@ namespace GridInvestigation.TestViews
                 _endDate = value;
                 OnPropertyChanged("EndDate");
                 OnPropertyChanged("StartDate"); // for cross-column validation
+                // not in use: OnPropertyChanged("Error");
             }
         }
 
@@ -145,7 +150,12 @@ namespace GridInvestigation.TestViews
         #endregion
 
         #region =====  IDataErrorInfo  =======
-        public string Error => StartDate > EndDate ? "Start Date must be earlier than End Date" + Environment.NewLine + "Item error" : null;
+
+        public string Error => null; // not in use
+        /*  public string Error => StartDate > EndDate
+            ? "Start Date must be earlier than End Date" + Environment.NewLine + "Item error"
+            : null;*/
+
         public string this[string propertyName] =>
             ((propertyName == nameof(StartDate) || propertyName == nameof(EndDate)) && StartDate > EndDate)
                 ? "Start Date must be earlier than End Date" + Environment.NewLine + "Property row"

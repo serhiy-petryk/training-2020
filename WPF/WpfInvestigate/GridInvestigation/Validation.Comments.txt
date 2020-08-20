@@ -1,0 +1,48 @@
+﻿
+Ціль: динамічна підтримка перевірки вводимих даних в DataGrid на рівні DataGFridCell & DataGridRow на різних мовах (CultureInfo)
+
+Технології і прийоми:
+==========
+1. ValidationRule - окремий клас з методом Validate(object value, CultureInfo cultureInfo)
+Usage: <DataGrid.RowValidationRules>
+            <local:CourseValidationRule ValidationStep="UpdatedValue"/>
+       </DataGrid.RowValidationRules>
+
+2. Interface IDataErrorInfo: 2 string get properties: string this[string columnName] & Error
+Також є підтримка Windows.Form
+
+3. Interface INotifyDataErrorInfo (from Net.Framework 4.5)
+Не підтримується Windows.Form, трохи кращий за IDataErrorInfo, тому що отримується масив помилок.
+
+4. Є 2 типи помилок: вбудовані помилки перетворення даних і помилки обєкта даних
+Помилки перетворення даних можна перехопити через подію Validation.Error, але текст помилки на англ.мові.
+Помилки даних формуються, наприклад для IDataErrorInfo, у властивостях this/Error.
+
+5. Validation attribute: можна добавити перевірку на базі атрибутів Properties, але текст помилок на англ.мові.
+Приклади:   https://www.c-sharpcorner.com/UploadFile/tirthacs/inotifydataerrorinfo-in-wpf/
+            https://blog.magnusmontin.net/2013/08/26/data-validation-in-wpf/
+
+6. Cross-column validation: використовувати OnPropertyChanged в сетері іншого property
+
+7. Щоб не мати справу з вбудованими помилками перетворення даних, тексти яких на англ.мові, для числових типів, даи, і т.п. можна використовувати proxy properties і
+мвти справу тільки з помилками у властивостях this/Error обєкту даних
+(див. https://joshsmithonwpf.wordpress.com/2008/11/14/using-a-viewmodel-to-provide-meaningful-validation-error-messages/)
+
+8. Якщо в binding вказано NotifyOnValidationError=True, то при вбудованій помилці виникає подія Validation.Error
+9. Якщо в binding вказано ValidatesOnDataErrors=true=True, то йде перевірка для обєкту з інтерфейсом IDataErrorInfo
+10. Якщо в binding вказано ValidatesOnNotifyDataErrors=true=True, то йде перевірка для обєкту з інтерфейсом INotifyDataErrorInfo
+11. Властивість UpdateSourceTrigger в binding вказує коли виконується перевірка: PropertyChanged (on key press), LostFocus, Explicit (потрібно визвати  метод UpdateSource)
+
+Як користуватися (приклад див. GridValidationTests):
+================
+1. Використати інтерфейси IDataErrorInfo + INotifyPropertyChanged, а також IEditableObject для обектів даних.
+    IDataErrorInfo.Error - error message at row level
+    IDataErrorInfo.this[propertyName] - error message at cell level
+2. В xaml вказати колонки, наприклад,: <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, ValidatesOnDataErrors=True, StringFormat=d}" ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>,
+де ValidatesOnDataErrors=True, вказує, що потрібно виконувати перевірку даних після їх редагування (тільки для інтерфейсу IDataErrorInfo),
+ElementStyle/EditingElementStyle - для відображення помилки в DataGridCell
+3. Відображення помилки в RowHeader: <DataGrid.RowValidationErrorTemplate>
+4. Для cross-column validation: використовувати OnPropertyChanged в сетері іншого property
+5. Не використовувати вбудовані помилки (при необхідності користуватися proxy properties з типом даних string) і validation attributes, тому що буде складно зробити мультимовну підтримку.
+
+
