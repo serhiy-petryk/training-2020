@@ -91,7 +91,7 @@ namespace GridInvestigation.TestViews
                 if (_startDate == value) return;
                 _startDate = value;
                 OnPropertyChanged("StartDate");
-                OnPropertyChanged("EndDate");
+                OnPropertyChanged("EndDate"); // for cross-column validation
             }
         }
 
@@ -104,7 +104,7 @@ namespace GridInvestigation.TestViews
                 if (_endDate == value) return;
                 _endDate = value;
                 OnPropertyChanged("EndDate");
-                OnPropertyChanged("StartDate");
+                OnPropertyChanged("StartDate"); // for cross-column validation
             }
         }
 
@@ -146,16 +146,10 @@ namespace GridInvestigation.TestViews
 
         #region =====  IDataErrorInfo  =======
         public string Error => StartDate > EndDate ? "Start Date must be earlier than End Date" : null;
-        public string this[string propertyName]
-        {
-            get
-            {
-                return ((propertyName == nameof(StartDate) || propertyName == nameof(EndDate)) && StartDate > EndDate)
-                    ? "Start Date must be earlier than End Date"
-                    : null;
-            }
-        }
-
+        public string this[string propertyName] =>
+            ((propertyName == nameof(StartDate) || propertyName == nameof(EndDate)) && StartDate > EndDate)
+                ? "Start Date must be earlier than End Date"
+                : null;
         #endregion
     }
 }
