@@ -60,11 +60,14 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Course Name" Binding="{Binding Name, TargetNullValue=(enter a course name)}"/>
-                    <DataGridTextColumn Header="Course ID" Binding="{Binding Id, ValidatesOnDataErrors=True, ValidatesOnExceptions=False, StringFormat=d}"
+                    <DataGridTextColumn Header="Course ID"
+                                        Binding="{Binding Id, ValidatesOnDataErrors=True, StringFormat=d}"
                                         ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
-                    <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate, ValidatesOnDataErrors=True, ValidatesOnExceptions=False, StringFormat=d}"
+                    <DataGridTextColumn Header="Start Date"
+                                        Binding="{Binding StartDate, ValidatesOnDataErrors=True, StringFormat=d}"
                                         ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
-                    <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, ValidatesOnDataErrors=True, StringFormat=d}"
+                    <DataGridTextColumn Header="End Date"
+                                        Binding="{Binding EndDate, ValidatesOnDataErrors=True, StringFormat=d}"
                                         ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
                 </DataGrid.Columns>
 
