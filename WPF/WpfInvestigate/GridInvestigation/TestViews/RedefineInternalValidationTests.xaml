@@ -1,0 +1,36 @@
+﻿<Window x:Class="GridInvestigation.TestViews.RedefineInternalValidationTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="RedefineInternalValidation" Height="450" Width="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0" Grid.Row="0" Content="Name:" />
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=Name}" VerticalAlignment="Center" />
+
+        <Label Grid.Column="0" Grid.Row="1" Content="Age:" />
+        <TextBox x:Name="ageTextBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"
+                 Text="{Binding Path=Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 VerticalAlignment="Top" Width="100" />
+
+        <ContentPresenter Grid.Column="1" Grid.Row="2" Content="{Binding ElementName=ageTextBox, Path=(Validation.Errors).CurrentItem}" HorizontalAlignment="Left">
+            <ContentPresenter.ContentTemplate>
+                <DataTemplate>
+                    <TextBlock Foreground="Red" FontStyle="Italic" Text="{Binding Path=ErrorContent}" />
+                </DataTemplate>
+            </ContentPresenter.ContentTemplate>
+        </ContentPresenter>
+    </Grid>
+</Window>

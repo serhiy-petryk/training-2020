@@ -71,6 +71,12 @@
     <Compile Include="TestViews\MetanitValidationTests.xaml.cs">
       <DependentUpon>MetanitValidationTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\GridValidationTests.xaml.cs">
+      <DependentUpon>GridValidationTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\RedefineInternalValidationTests.xaml.cs">
+      <DependentUpon>RedefineInternalValidationTests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\ValidationTests.xaml.cs">
       <DependentUpon>ValidationTests.xaml</DependentUpon>
     </Compile>
@@ -103,6 +109,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\MetanitValidationTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\GridValidationTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\RedefineInternalValidationTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -41,6 +41,8 @@
             <Button x:Name="IDataErrorInfoValidationTest" Margin="5" Content="IDataErrorInfo Validation Test" Click="IDataErrorInfoValidationTests_OnClick"/>
             <Button x:Name="INotifyDataErrorInfoValidationTest" Margin="5" Content="INotifyDataErrorInfo Validation Test" Click="INotifyDataErrorInfoValidationTests_OnClick"/>
             <Button x:Name="MyValidationTest" Margin="5" Content="My Validation Test" Click="MyValidationTest_OnClick"/>
+            <Button x:Name="GridValidationTest" Margin="5" Content="Grid Validation Test" Click="GridValidationTests_OnClick"/>
+            <Button x:Name="RedefineInternalValidationTest" Margin="5" Content="Redefine Internal Validation Test" Click="RedefineInternalValidationTests_OnClick"/>
         </StackPanel>
 
     </Grid>

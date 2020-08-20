@@ -3,10 +3,7 @@
 // Exception in setter: https://www.nbdtech.com/Blog/archive/2010/07/05/wpf-adorners-part-3-ndash-adorners-and-validation.aspx
 // -- Not working!!! Attributes and INotifyPropertyChanged+INotifyDataErrorInfo: https://www.c-sharpcorner.com/UploadFile/tirthacs/inotifydataerrorinfo-in-wpf/
 
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
