@@ -38,7 +38,7 @@
             <DataGrid Name="dataGrid1" RowHeaderWidth="27" ItemsSource="{StaticResource courses}" AutoGenerateColumns="False">
 
                 <DataGrid.Resources>
-                    <Style x:Key="errorStyle" TargetType="{x:Type TextBox}">
+                    <Style x:Key="EditingElementErrorStyle" TargetType="{x:Type TextBox}">
                         <Setter Property="Padding" Value="0"/>
                         <Style.Triggers>
                             <Trigger Property="Validation.HasError" Value="True">
@@ -47,13 +47,25 @@
                             </Trigger>
                         </Style.Triggers>
                     </Style>
+                    <Style x:Key="ElementErrorStyle" TargetType="{x:Type TextBlock}">
+                        <Setter Property="Padding" Value="0"/>
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="Foreground" Value="DarkRed"/>
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
                 </DataGrid.Resources>
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Course Name" Binding="{Binding Name, TargetNullValue=(enter a course name)}"/>
-                    <DataGridTextColumn Header="Course ID" EditingElementStyle="{StaticResource errorStyle}" Binding="{Binding Id, ValidatesOnDataErrors=True, ValidatesOnExceptions=False, StringFormat=d}"/>
-                    <DataGridTextColumn Header="Start Date" EditingElementStyle="{StaticResource errorStyle}" Binding="{Binding StartDate, ValidatesOnDataErrors=True, ValidatesOnExceptions=False, StringFormat=d}"/>
-                    <DataGridTextColumn Header="End Date" EditingElementStyle="{StaticResource errorStyle}" Binding="{Binding EndDate, ValidatesOnDataErrors=True, StringFormat=d}"/>
+                    <DataGridTextColumn Header="Course ID" Binding="{Binding Id, ValidatesOnDataErrors=True, ValidatesOnExceptions=False, StringFormat=d}"
+                                        ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
+                    <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate, ValidatesOnDataErrors=True, ValidatesOnExceptions=False, StringFormat=d}"
+                                        ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
+                    <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, ValidatesOnDataErrors=True, StringFormat=d}"
+                                        ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
                 </DataGrid.Columns>
 
                 <DataGrid.RowValidationErrorTemplate>
