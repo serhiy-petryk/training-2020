@@ -60,6 +60,9 @@
     <Compile Include="TestViews\AttributeValidationTests.xaml.cs">
       <DependentUpon>AttributeValidationTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\FilterLine_My_Tests.xaml.cs">
+      <DependentUpon>FilterLine_My_Tests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\FilterLine_INotifyDataErrorInfo_Tests.xaml.cs">
       <DependentUpon>FilterLine_INotifyDataErrorInfo_Tests.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="TestViews\AttributeValidationTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\FilterLine_My_Tests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
