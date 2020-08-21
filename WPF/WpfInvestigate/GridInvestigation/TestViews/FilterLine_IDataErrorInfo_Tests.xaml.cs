@@ -8,11 +8,11 @@ using System.Windows;
 namespace GridInvestigation.TestViews
 {
     /// <summary>
-    /// Interaction logic for FilterLineTests.xaml
+    /// Interaction logic for FilterLine_IDataErrorInfo_Tests.xaml
     /// </summary>
-    public partial class FilterLineTests : Window
+    public partial class FilterLine_IDataErrorInfo_Tests : Window
     {
-        public FilterLineTests()
+        public FilterLine_IDataErrorInfo_Tests()
         {
             InitializeComponent();
         }

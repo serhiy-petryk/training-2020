@@ -63,8 +63,8 @@
     <Compile Include="TestViews\FilterLine_INotifyDataErrorInfo_Tests.xaml.cs">
       <DependentUpon>FilterLine_INotifyDataErrorInfo_Tests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\FilterLineTests.xaml.cs">
-      <DependentUpon>FilterLineTests.xaml</DependentUpon>
+    <Compile Include="TestViews\FilterLine_IDataErrorInfo_Tests.xaml.cs">
+      <DependentUpon>FilterLine_IDataErrorInfo_Tests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\IDataErrorInfoValidationTests.xaml.cs">
       <DependentUpon>IDataErrorInfoValidationTests.xaml</DependentUpon>
@@ -107,7 +107,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestViews\FilterLineTests.xaml">
+    <Page Include="TestViews\FilterLine_IDataErrorInfo_Tests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
