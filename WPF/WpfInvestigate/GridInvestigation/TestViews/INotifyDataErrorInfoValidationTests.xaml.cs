@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -65,6 +66,7 @@ namespace GridInvestigation.TestViews
 
         public override IEnumerable GetErrors([CallerMemberName] string propertyName = null)
         {
+            Debug.Print($"GetErrors: {propertyName}");
             if (string.IsNullOrEmpty(propertyName) || propertyName == nameof(Age))
             {
                 if (Age < 0 || Age > 100)

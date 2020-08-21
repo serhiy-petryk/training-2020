@@ -53,6 +53,7 @@ namespace GridInvestigation
         private void INotifyDataErrorInfoValidationTests_OnClick(object sender, RoutedEventArgs e) => new INotifyDataErrorInfoValidationTests().Show();
         private void GridValidationTests_OnClick(object sender, RoutedEventArgs e) => new GridValidationTests().Show();
         private void RedefineInternalValidationTests_OnClick(object sender, RoutedEventArgs e) => new RedefineInternalValidationTests().Show();
+        private void FilterLineTests_OnClick(object sender, RoutedEventArgs e) => new FilterLineTests().Show();
         //
     }
 }
