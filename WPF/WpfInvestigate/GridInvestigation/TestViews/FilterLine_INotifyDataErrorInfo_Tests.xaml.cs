@@ -1,6 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
@@ -8,24 +11,24 @@ using System.Windows;
 namespace GridInvestigation.TestViews
 {
     /// <summary>
-    /// Interaction logic for FilterLineTests.xaml
+    /// Interaction logic for FilterLine_INotifyDataErrorInfo_Tests.xaml
     /// </summary>
-    public partial class FilterLineTests : Window
+    public partial class FilterLine_INotifyDataErrorInfo_Tests : Window
     {
-        public FilterLineTests()
+        public FilterLine_INotifyDataErrorInfo_Tests()
         {
             InitializeComponent();
         }
     }
 
-    public class Lines : ObservableCollection<FilterLineSubitem>
+    public class Lines2 : ObservableCollection<FilterLineSubitem2>
     {
-        public Lines()
+        public Lines2()
         {
         }
     }
 
-    public class FilterLineSubitem : INotifyPropertyChanged, IDataErrorInfo
+    public class FilterLineSubitem2 : INotifyPropertyChanged, INotifyDataErrorInfo, IEditableObject
     {
         //private Common.Enums.FilterOperand _operand;
         private string _operand;
@@ -47,6 +50,7 @@ namespace GridInvestigation.TestViews
                     OnPropertyChanged(nameof(Value1));
                     OnPropertyChanged(nameof(Value2));
                     OnPropertyChanged(nameof(Error));
+                    OnPropertyChanged(nameof(HasErrors));
                 }
             }
         }
@@ -64,6 +68,7 @@ namespace GridInvestigation.TestViews
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(Operand));
                     OnPropertyChanged(nameof(Error));
+                    OnPropertyChanged(nameof(HasErrors));
                 }
             }
         }
@@ -81,21 +86,8 @@ namespace GridInvestigation.TestViews
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(Operand));
                     OnPropertyChanged(nameof(Error));
+                    OnPropertyChanged(nameof(HasErrors));
                 }
-            }
-        }
-
-        #region ===========  IDataErrorInfo  ===========
-        public string this[string propertyName]
-        {
-            get
-            {
-                Debug.Print($"this: {propertyName}");
-                if (!string.IsNullOrEmpty(_operand) && _value1 == null && propertyName == "Value1") return "Вкажіть вираз №1";
-                if (string.IsNullOrEmpty(_operand) && _value1 != null && propertyName == "Value1") return "Зітріть вираз №1";
-                if (!string.IsNullOrEmpty(_operand) && _value2 == null && propertyName == "Value2") return "Вкажіть вираз №2";
-                if (string.IsNullOrEmpty(_operand) && _value2 != null && propertyName == "Value2") return "Зітріть вираз №2";
-                return null;
             }
         }
 
@@ -114,8 +106,6 @@ namespace GridInvestigation.TestViews
             }
         }
 
-        #endregion
-
         #region ===========  INotifyPropertyChanged  ===========
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -126,6 +116,63 @@ namespace GridInvestigation.TestViews
                 Debug.Print($"OnErrorPropertyChanged: {Error}");
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #region ===========  INotifyDataErrorInfo  ===========
+        public IEnumerable GetErrors([CallerMemberName] string propertyName = null)
+        {
+            Debug.Print($"GetErrors: {propertyName}");
+            if (!string.IsNullOrEmpty(_operand) && _value1 == null && propertyName == "Value1") yield return "Вкажіть вираз №1";
+            if (string.IsNullOrEmpty(_operand) && _value1 != null && propertyName == "Value1") yield return "Зітріть вираз №1";
+            if (!string.IsNullOrEmpty(_operand) && _value2 == null && propertyName == "Value2") yield return "Вкажіть вираз №2";
+            if (string.IsNullOrEmpty(_operand) && _value2 != null && propertyName == "Value2") yield return "Зітріть вираз №2";
+        }
+
+        public bool HasErrors => GetErrors($"Operand").OfType<object>().Any() ||
+                                 GetErrors($"Value1").OfType<object>().Any() ||
+                                 GetErrors($"Value2").OfType<object>().Any();
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        #endregion
+
+        #region ===========  IEditableObject  ===========
+        private FilterLineSubitem2 backupCopy;
+        private bool inEdit;
+        public void BeginEdit()
+        {
+            if (inEdit) return;
+            inEdit = true;
+            backupCopy = MemberwiseClone() as FilterLineSubitem2;
+            Debug.Print($"BeginEdit");
+        }
+
+        public void EndEdit()
+        {
+            if (!inEdit) return;
+            inEdit = false;
+            backupCopy = null;
+            OnPropertyChanged(nameof(Value1));
+            OnPropertyChanged(nameof(Value2));
+            OnPropertyChanged(nameof(Operand));
+            OnPropertyChanged(nameof(Error));
+            OnPropertyChanged(nameof(HasErrors));
+            Debug.Print($"EndEdit");
+        }
+
+        public void CancelEdit()
+        {
+            if (!inEdit) return;
+            inEdit = false;
+            Operand = backupCopy.Operand;
+            Value1 = backupCopy.Value1;
+            Value2 = backupCopy.Value2;
+            OnPropertyChanged(nameof(Value1));
+            OnPropertyChanged(nameof(Value2));
+            OnPropertyChanged(nameof(Operand));
+            OnPropertyChanged(nameof(Error));
+            OnPropertyChanged(nameof(HasErrors));
+            Debug.Print($"CancelEdit");
         }
         #endregion
     }

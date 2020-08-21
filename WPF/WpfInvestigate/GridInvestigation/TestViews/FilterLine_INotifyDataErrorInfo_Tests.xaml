@@ -1,0 +1,92 @@
+﻿<Window x:Class="GridInvestigation.TestViews.FilterLine_INotifyDataErrorInfo_Tests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GridInvestigation.TestViews"
+        xmlns:common="clr-namespace:GridInvestigation.Common"
+        mc:Ignorable="d"
+        Title="Grid Validation Tests" Height="450" Width="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Slider Grid.Column="0"
+                x:Name="uiScaleSlider"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100"
+                Value="1" Minimum="0.5" Maximum="4"
+                Orientation="Vertical"
+                Ticks="1"
+                IsSnapToTickEnabled="False"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
+
+        <Grid Grid.Column="1">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+            <Grid.Resources>
+                <local:Lines2 x:Key="data"/>
+            </Grid.Resources>
+
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Font size:"/>
+                <TextBox Margin="0 5" Width="30" HorizontalAlignment="Left" Text="{Binding ElementName=dataGrid1, Path=FontSize, Mode=TwoWay}"/>
+
+                <DataGrid Name="dataGrid1" RowHeaderWidth="27" ItemsSource="{StaticResource data}" AutoGenerateColumns="False">
+                    <DataGrid.Resources>
+                        <Style x:Key="EditingElementErrorStyle" TargetType="{x:Type TextBox}">
+                            <Setter Property="Padding" Value="0"/>
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError" Value="True">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                        <Style x:Key="ElementErrorStyle" TargetType="{x:Type TextBlock}">
+                            <Setter Property="Padding" Value="0"/>
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError" Value="True">
+                                    <Setter Property="Foreground" Value="DarkRed"/>
+                                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Operand"
+                                        Binding="{Binding Operand, ValidatesOnDataErrors=True}"
+                                        ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
+                        <DataGridTextColumn Header="Value1"
+                                        Binding="{Binding Value1, ValidatesOnDataErrors=True}"
+                                        ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
+                        <DataGridTextColumn Header="Value2"
+                                            Binding="{Binding Value2, ValidatesOnDataErrors=True}"
+                                            ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
+                        <DataGridTextColumn Header="Error" Binding="{Binding Error}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="HasErrors" Binding="{Binding HasErrors}" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+
+                    <!--<DataGrid.RowValidationErrorTemplate>
+                        <ControlTemplate>-->
+                            <!--<Grid ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Path=(Validation.Errors)[0].ErrorContent}">-->
+                                <!--<Grid ToolTip="{Binding Error}">
+                                <Ellipse StrokeThickness="0" Fill="Red" Width="{TemplateBinding FontSize}" Height="{TemplateBinding FontSize}" />
+                                <TextBlock Text="!" FontSize="{TemplateBinding FontSize}" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"  />
+                            </Grid>
+                        </ControlTemplate>
+                    </DataGrid.RowValidationErrorTemplate>-->
+                </DataGrid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

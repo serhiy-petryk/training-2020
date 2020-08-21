@@ -47,6 +47,8 @@
             <Button x:Name="INotifyDataErrorInfoValidationTest" Margin="5" Content="INotifyDataErrorInfo Validation Test" Click="INotifyDataErrorInfoValidationTests_OnClick"/>
             <Button x:Name="MyValidationTest" Margin="5" Content="My Validation Test" Click="MyValidationTest_OnClick"/>
             <Button x:Name="FilterLineTest" Margin="5" Content="FilterLine Test" Click="FilterLineTests_OnClick"/>
+            <Button x:Name="FilterLine_INotifyDataErrorInfo_Test" Margin="5" Content="FilterLine INotifyDataErrorInfo Test" Click="FilterLine_INotifyDataErrorInfo_Tests_OnClick"/>
+            
         </StackPanel>
 
     </Grid>
