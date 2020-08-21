@@ -64,13 +64,13 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Operand"
-                                        Binding="{Binding Operand, ValidatesOnDataErrors=True}"
+                                        Binding="{Binding Operand, ValidatesOnNotifyDataErrors=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
                                         ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
                         <DataGridTextColumn Header="Value1"
-                                        Binding="{Binding Value1, ValidatesOnDataErrors=True}"
+                                        Binding="{Binding Value1, ValidatesOnNotifyDataErrors=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
                                         ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
                         <DataGridTextColumn Header="Value2"
-                                            Binding="{Binding Value2, ValidatesOnDataErrors=True}"
+                                            Binding="{Binding Value2, ValidatesOnNotifyDataErrors=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
                                             ElementStyle="{StaticResource ElementErrorStyle}" EditingElementStyle="{StaticResource EditingElementErrorStyle}"/>
                         <DataGridTextColumn Header="Error" Binding="{Binding Error}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="HasErrors" Binding="{Binding HasErrors}" IsReadOnly="True"/>

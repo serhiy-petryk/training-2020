@@ -43,10 +43,7 @@ namespace GridInvestigation.TestViews
                 if (_operand != value)
                 {
                     _operand = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(Value1));
-                    OnPropertyChanged(nameof(Value2));
-                    OnPropertyChanged(nameof(Error));
+                    RefreshUI();
                 }
             }
         }
@@ -61,9 +58,7 @@ namespace GridInvestigation.TestViews
                 if (_value1 != value)
                 {
                     _value1 = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(Operand));
-                    OnPropertyChanged(nameof(Error));
+                    RefreshUI();
                 }
             }
         }
@@ -78,11 +73,14 @@ namespace GridInvestigation.TestViews
                 if (_value2 != value)
                 {
                     _value2 = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(Operand));
-                    OnPropertyChanged(nameof(Error));
+                    RefreshUI();
                 }
             }
+        }
+
+        private void RefreshUI()
+        {
+            OnPropertiesChanged(new [] { nameof(Operand), nameof(Value1), nameof(Value2), nameof(Error) });
         }
 
         #region ===========  IDataErrorInfo  ===========
@@ -118,7 +116,7 @@ namespace GridInvestigation.TestViews
 
         #region ===========  INotifyPropertyChanged  ===========
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        /*protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             Debug.Print($"OnPropertyChanged: {propertyName}");
             if (propertyName == "Error")
@@ -126,7 +124,13 @@ namespace GridInvestigation.TestViews
                 Debug.Print($"OnErrorPropertyChanged: {Error}");
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }*/
+        private void OnPropertiesChanged(string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         #endregion
     }
 }
