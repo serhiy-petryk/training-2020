@@ -100,9 +100,15 @@ namespace GridInvestigation.TestViews
                 if (string.IsNullOrEmpty(_operand) && _value1 != null) sb.AppendLine("Зітріть вираз №1");
                 if (!string.IsNullOrEmpty(_operand) && _value2 == null) sb.AppendLine("Вкажіть вираз №2");
                 if (string.IsNullOrEmpty(_operand) && _value2 != null) sb.AppendLine("Зітріть вираз №2");
-                var a1 = sb.ToString().Trim();
-                Debug.Print($"Error: {a1}");
-                return string.IsNullOrEmpty(a1) ? null : a1;
+                ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(Operand)));
+                ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(Value1)));
+                ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(Value2)));
+                ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(HasErrors)));
+                Debug.Print($"get_Error");
+
+                var s = sb.Length == 0 ? null : sb.ToString().Trim();
+                Debug.Print($"Error: {s}");
+                return s;
             }
         }
 
