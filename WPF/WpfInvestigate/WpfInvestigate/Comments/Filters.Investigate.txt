@@ -28,3 +28,4 @@
 	5 datasets, inline header filter for diferent datatypes/operands + value list for filter select
 	filter by nested properties
 	sync views of different dataset
+++ 12. https://github.com/tom-englert/DataGridExtensions - (24 cs files (>100KB), 1 xaml file (9KB)) автофільтер, сортування, attach to any datagrid
