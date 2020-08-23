@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Text;
 using System.Windows;
 
@@ -17,7 +16,7 @@ namespace GridInvestigation.TestViews
         }
     }
 
-    public class Lines3 : ObservableCollection<FilterLineSubitem>
+    public class Lines3 : ObservableCollection<FilterLineSubitem3>
     {
         public Lines3()
         {
@@ -87,7 +86,6 @@ namespace GridInvestigation.TestViews
         {
             get
             {
-                Debug.Print($"this: {propertyName}");
                 if (!string.IsNullOrEmpty(_operand) && _value1 == null && propertyName == "Value1") return "Вкажіть вираз №1";
                 if (string.IsNullOrEmpty(_operand) && _value1 != null && propertyName == "Value1") return "Зітріть вираз №1";
                 if (!string.IsNullOrEmpty(_operand) && _value2 == null && propertyName == "Value2") return "Вкажіть вираз №2";
@@ -106,7 +104,6 @@ namespace GridInvestigation.TestViews
                 if (!string.IsNullOrEmpty(_operand) && _value2 == null) sb.AppendLine("Вкажіть вираз №2");
                 if (string.IsNullOrEmpty(_operand) && _value2 != null) sb.AppendLine("Зітріть вираз №2");
                 var a1 = sb.ToString().Trim();
-                Debug.Print($"Error: {a1}");
                 return string.IsNullOrEmpty(a1) ? null : a1;
             }
         }
@@ -115,15 +112,6 @@ namespace GridInvestigation.TestViews
 
         #region ===========  INotifyPropertyChanged  ===========
         public event PropertyChangedEventHandler PropertyChanged;
-        /*protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            Debug.Print($"OnPropertyChanged: {propertyName}");
-            if (propertyName == "Error")
-            {
-                Debug.Print($"OnErrorPropertyChanged: {Error}");
-            }
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }*/
         private void OnPropertiesChanged(params string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
@@ -133,15 +121,13 @@ namespace GridInvestigation.TestViews
         #endregion
 
         #region ===========  IEditableObject  ===========
-        private FilterLineSubitem2 backupCopy;
+        private FilterLineSubitem3 backupCopy;
         private bool inEdit;
         public void BeginEdit()
         {
             if (inEdit) return;
             inEdit = true;
-            backupCopy = MemberwiseClone() as FilterLineSubitem2;
-            RefreshUI();
-            Debug.Print($"BeginEdit");
+            backupCopy = MemberwiseClone() as FilterLineSubitem3;
         }
 
         public void EndEdit()
@@ -149,8 +135,6 @@ namespace GridInvestigation.TestViews
             if (!inEdit) return;
             inEdit = false;
             backupCopy = null;
-            RefreshUI();
-            Debug.Print($"EndEdit");
         }
 
         public void CancelEdit()
@@ -160,8 +144,6 @@ namespace GridInvestigation.TestViews
             Operand = backupCopy.Operand;
             Value1 = backupCopy.Value1;
             Value2 = backupCopy.Value2;
-            RefreshUI();
-            Debug.Print($"CancelEdit");
         }
         #endregion
 

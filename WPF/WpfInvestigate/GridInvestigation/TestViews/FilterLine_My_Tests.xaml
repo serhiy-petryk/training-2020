@@ -71,32 +71,29 @@
                         <ControlTemplate/>
                     </DataGrid.RowValidationErrorTemplate>
 
-                    <DataGrid.RowHeaderStyle>
-                        <Style TargetType="{x:Type DataGridRowHeader}">
-                            <Setter Property="Content">
-                                <Setter.Value>
-                                    <Grid Width="32" HorizontalAlignment="Center" ToolTip="{Binding Error}"
-                                          Opacity="{Binding Converter={x:Static common:OpacityForDataGridRowHeader.Instance}, Mode=OneWay}"
-                                          Visibility="{Binding Path=Error, Converter={x:Static common:VisibilityConverter.Instance}, Mode=OneWay}">
-                                            <Ellipse StrokeThickness="0" Fill="Red"
-                                                     Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}, Path=FontSize}"
-                                                     Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGrid}}, Path=FontSize}"/>
-                                            <TextBlock Text="!" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
-                                    </Grid>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </DataGrid.RowHeaderStyle>
+                    <DataGrid.RowHeaderTemplate>
+                        <DataTemplate>
+                            <Grid Width="32"
+                                  ToolTip="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Mode=OneWay}"
+                                  Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext, Converter={x:Static common:VisibilityConverter.Instance}, Mode=OneWay}">
+
+                                <Ellipse StrokeThickness="0" Fill="Red"
+                                         Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}"
+                                         Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}" />
+                                <TextBlock Text="!" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGrid.RowHeaderTemplate>
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Operand"
-                                        Binding="{Binding Operand, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
+                                        Binding="{Binding Operand, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                         ElementStyle="{StaticResource ElementStyle}" EditingElementStyle="{StaticResource EditingElementStyle}"/>
                         <DataGridTextColumn Header="Value1"
-                                        Binding="{Binding Value1, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
+                                        Binding="{Binding Value1, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                         ElementStyle="{StaticResource ElementStyle}" EditingElementStyle="{StaticResource EditingElementStyle}"/>
                         <DataGridTextColumn Header="Value2"
-                                            Binding="{Binding Value2, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
+                                            Binding="{Binding Value2, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                             ElementStyle="{StaticResource ElementStyle}" EditingElementStyle="{StaticResource EditingElementStyle}"/>
                         <DataGridTextColumn Header="Error" Binding="{Binding Error}" IsReadOnly="True"/>
                     </DataGrid.Columns>
