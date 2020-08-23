@@ -68,7 +68,7 @@ namespace MyWpfMwi.Mwi
                             _activeMwiChild.BringIntoView();
                     }
                 }
-                OnPropertiesChanged(new[] {nameof(ActiveMwiChild), nameof(ScrollBarKind)});
+                OnPropertiesChanged(nameof(ActiveMwiChild), nameof(ScrollBarKind));
                 // Dispatcher.Invoke(DispatcherPriority.Render, Tips.EmptyDelegate); // Refresh UI (bug on Startup => active child doesn't highlight and ScrollBar is bad)
                 InvalidateSize();
             }
@@ -202,7 +202,7 @@ namespace MyWpfMwi.Mwi
             if (!Tips.AreEqual(_canvasSize.X, maxWidth) || !Tips.AreEqual(_canvasSize.Y, maxHeight))
             {
                 _canvasSize = new Point(maxWidth, maxHeight);
-                OnPropertiesChanged(new[] {nameof(CanvasWidth), nameof(CanvasHeight)});
+                OnPropertiesChanged(nameof(CanvasWidth), nameof(CanvasHeight));
             }
         }
 
@@ -213,7 +213,7 @@ namespace MyWpfMwi.Mwi
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertiesChanged(string[] propertyNames)
+        public void OnPropertiesChanged(params string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -49,7 +49,7 @@ namespace MyWpfMwi.Mwi
                 _extentWidth = newExtentWidth;
                 _horizontalOffset = newHorizontalOffset;
                 if (oldCanScrollLeft != CanScrollLeft || oldCanScrollRight != CanScrollRight)
-                    OnPropertiesChanged(new[] {nameof(CanScrollLeft), nameof(CanScrollRight), nameof(ScrollButtonVisibility)});
+                    OnPropertiesChanged(nameof(CanScrollLeft), nameof(CanScrollRight), nameof(ScrollButtonVisibility));
             }
         }
 
@@ -134,7 +134,7 @@ namespace MyWpfMwi.Mwi
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertiesChanged(string[] propertyNames)
+        private void OnPropertiesChanged(params string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
