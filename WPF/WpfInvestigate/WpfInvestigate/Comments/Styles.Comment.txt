@@ -1,1 +1,1 @@
-﻿Styles for many controls: https://github.com/JeremiSharkboy/WpfStyles
+﻿Styles for many controls: https://github.com/JeremiSharkboy/WpfStyles - no aniamtion
