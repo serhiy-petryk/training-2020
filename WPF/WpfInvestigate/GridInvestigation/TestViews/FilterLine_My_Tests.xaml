@@ -85,14 +85,6 @@
                         </DataTemplate>
                     </DataGrid.RowHeaderTemplate>
 
-                                <Ellipse StrokeThickness="0" Fill="Red"
-                                         Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}"
-                                         Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}" />
-                                <TextBlock Text="!" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
-                            </Grid>
-                        </DataTemplate>
-                    </DataGrid.RowHeaderTemplate>
-
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Operand"
                                         Binding="{Binding Operand, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
