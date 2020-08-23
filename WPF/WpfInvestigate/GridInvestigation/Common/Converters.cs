@@ -1,29 +1,33 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace GridInvestigation.Common
 {
-    public class SuppressXamlErrorConverter : DependencyObject, IValueConverter
+    public class OpacityForDataGridRowHeader : DependencyObject, IValueConverter
     {
-        // Dummy convertor to suppress output errors for TimePickerBase: Cannot find governing FrameworkElement or FrameworkContentElement for target element...
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value;
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
-
-    public class DummyConverter : DependencyObject, IValueConverter
-    {
-        public static DummyConverter Instance = new DummyConverter();
+        public static OpacityForDataGridRowHeader Instance = new OpacityForDataGridRowHeader();
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var aa1 = Validation.GetErrors(value as DependencyObject).Select(e=> e.ErrorContent.ToString()).ToList();
-            return string.Join(Environment.NewLine, aa1);
-            return "AAA";
-            return value;
+            return value == null || Equals(value.GetType().Name, "NamedObject") ? 0.0 : 1.0;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
+
+    public class VisibilityConverter : IValueConverter
+    {
+        public static VisibilityConverter Instance = new VisibilityConverter();
+        public static VisibilityConverter InverseInstance = new VisibilityConverter { _inverse = true };
+        private bool _inverse;
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return _inverse ^ (value == null || Equals(value, false) || Equals(value, 0) || Equals(value, ""))
+                ? (Equals(parameter, "Hide") ? Visibility.Hidden : Visibility.Collapsed)
+                : Visibility.Visible;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+
+
 }

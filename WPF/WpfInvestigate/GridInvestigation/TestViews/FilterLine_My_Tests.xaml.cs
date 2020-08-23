@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 
@@ -25,7 +24,7 @@ namespace GridInvestigation.TestViews
         }
     }
 
-    public class FilterLineSubitem3 : INotifyPropertyChanged, IDataErrorInfo
+    public class FilterLineSubitem3 : INotifyPropertyChanged, IDataErrorInfo, IEditableObject
     {
         //private Common.Enums.FilterOperand _operand;
         private string _operand;
@@ -80,7 +79,7 @@ namespace GridInvestigation.TestViews
 
         private void RefreshUI()
         {
-            OnPropertiesChanged(new [] { nameof(Operand), nameof(Value1), nameof(Value2), nameof(Error) });
+            OnPropertiesChanged(nameof(Operand), nameof(Value1), nameof(Value2), nameof(Error));
         }
 
         #region ===========  IDataErrorInfo  ===========
@@ -125,13 +124,47 @@ namespace GridInvestigation.TestViews
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }*/
-        private void OnPropertiesChanged(string[] propertyNames)
+        private void OnPropertiesChanged(params string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
+
+        #region ===========  IEditableObject  ===========
+        private FilterLineSubitem2 backupCopy;
+        private bool inEdit;
+        public void BeginEdit()
+        {
+            if (inEdit) return;
+            inEdit = true;
+            backupCopy = MemberwiseClone() as FilterLineSubitem2;
+            RefreshUI();
+            Debug.Print($"BeginEdit");
+        }
+
+        public void EndEdit()
+        {
+            if (!inEdit) return;
+            inEdit = false;
+            backupCopy = null;
+            RefreshUI();
+            Debug.Print($"EndEdit");
+        }
+
+        public void CancelEdit()
+        {
+            if (!inEdit) return;
+            inEdit = false;
+            Operand = backupCopy.Operand;
+            Value1 = backupCopy.Value1;
+            Value2 = backupCopy.Value2;
+            RefreshUI();
+            Debug.Print($"CancelEdit");
+        }
+        #endregion
+
     }
 }
 
