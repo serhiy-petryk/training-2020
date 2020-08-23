@@ -5,12 +5,12 @@ using System.Windows.Data;
 
 namespace GridInvestigation.Common
 {
-    public class OpacityForDataGridRowHeader : DependencyObject, IValueConverter
+    public class DummyConverter : DependencyObject, IValueConverter
     {
-        public static OpacityForDataGridRowHeader Instance = new OpacityForDataGridRowHeader();
+        public static DummyConverter Instance = new DummyConverter();
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null || Equals(value.GetType().Name, "NamedObject") ? 0.0 : 1.0;
+            return value;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
@@ -22,7 +22,7 @@ namespace GridInvestigation.Common
         private bool _inverse;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return _inverse ^ (value == null || Equals(value, false) || Equals(value, 0) || Equals(value, ""))
+            return _inverse ^ (value == null || Equals(value, false) || Equals(value, 0) || Equals(value, "") || Equals(value.GetType().Name, "NamedObject"))
                 ? (Equals(parameter, "Hide") ? Visibility.Hidden : Visibility.Collapsed)
                 : Visibility.Visible;
         }
