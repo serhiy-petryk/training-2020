@@ -81,9 +81,8 @@ namespace MyWpfMwi.Common
         public static Brush GetActualForegroundBrush(DependencyObject d)
         {
             // valid only for SolidColorBrush
-            foreach (var o in GetVisualParents(d).Where(a1 => a1 is Control))
+            foreach (var c in GetVisualParents(d).OfType<Control>())
             {
-                var c = (Control)o;
                 var brush = c.Foreground;
                 if (brush is SolidColorBrush)
                 {

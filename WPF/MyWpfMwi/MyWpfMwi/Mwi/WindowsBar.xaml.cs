@@ -108,7 +108,7 @@ namespace MyWpfMwi.Mwi
         private void TabToolTip_OnOpened(object sender, RoutedEventArgs e)
         {
             var toolTip = (ToolTip)sender;
-            var tabTextBlock = Tips.GetVisualChildren(toolTip.PlacementTarget).First(s=> s is TextBlock) as TextBlock;
+            var tabTextBlock = Tips.GetVisualChildren(toolTip.PlacementTarget).OfType<TextBlock>().First();
             toolTip.Tag = Tips.IsTextTrimmed(tabTextBlock) ? "1" : null;
         }
 

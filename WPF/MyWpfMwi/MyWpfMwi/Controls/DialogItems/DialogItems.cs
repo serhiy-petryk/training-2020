@@ -74,8 +74,8 @@ namespace MyWpfMwi.Controls.DialogItems
             if (adorner == null)
                 adorner = await CreateAdornerAsync(owner, style);
 
-            if (adorner.Child != null && adorner.Child is DialogItems)
-                ((DialogItems)adorner.Child).AddDialog(content);
+            if (adorner.Child is DialogItems items)
+                items.AddDialog(content);
 
             afterCreationCallback?.Invoke((DialogItems)adorner.Child);
         }
@@ -94,10 +94,10 @@ namespace MyWpfMwi.Controls.DialogItems
             if (adorner == null)
                 adorner = await CreateAdornerAsync(owner, style);
 
-            if (adorner.Child != null && adorner.Child is DialogItems)
+            if (adorner.Child is DialogItems items)
             {
-                var task = ((DialogItems) adorner.Child).AddDialogAsync(content);
-                afterCreationCallback?.Invoke((DialogItems)adorner.Child);
+                var task = items.AddDialogAsync(content);
+                afterCreationCallback?.Invoke(items);
                 await task;
             }
         }
