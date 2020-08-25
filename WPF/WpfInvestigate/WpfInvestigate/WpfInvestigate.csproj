@@ -357,5 +357,8 @@
   <ItemGroup>
     <Resource Include="Comments\Styles.Comment.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\PropertyGrid.Comments.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
