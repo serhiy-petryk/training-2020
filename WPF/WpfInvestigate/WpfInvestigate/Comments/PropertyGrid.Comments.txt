@@ -1,0 +1,18 @@
+﻿- big, not working 1. https://www.codeproject.com/Articles/1092748/WPF-PropertyGrid-2
+https://archive.codeplex.com/?p=imagin
+https://github.com/imagin-tech/Imagin.NET
+
+?big, 2. https://github.com/DenysVuika/WPG
+
+-+ big (2 projects, 200 cs files, >1M) 3. https://github.com/PropertyTools/PropertyTools
+
+!!++ (1 cs file 18KB, MIT licence) 4. https://github.com/jaime-olivares/wpf-propertygrid
+https://www.codeproject.com/Articles/87715/Native-WPF-PropertyGrid
+
+- ??? small, not working (2 files, 20KB, no licence), not opening 5. https://github.com/CodenameColors/PropertyGridControl
+
+- big library 6. https://github.com/HandyOrg/HandyControl
+
+- middle, 55 files, 200K, ? мало возможностей 7. https://github.com/GuOrg/Gu.Wpf.PropertyGrid
+
+
