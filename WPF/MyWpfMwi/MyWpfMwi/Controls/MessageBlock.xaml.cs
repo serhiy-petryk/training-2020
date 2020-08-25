@@ -55,10 +55,6 @@ namespace MyWpfMwi.Controls
                 }
                 ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             }
-
-            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            if (currentWindow != null)
-                MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);
         }
 
         private void OnButtonClick(object parameter)
