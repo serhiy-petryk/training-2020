@@ -6,7 +6,7 @@ https://github.com/imagin-tech/Imagin.NET
 
 -+ big (2 projects, 200 cs files, >1M) 3. https://github.com/PropertyTools/PropertyTools
 
-!!++ (1 cs file 18KB, MIT licence) 4. https://github.com/jaime-olivares/wpf-propertygrid
+!!++ (1 cs file 18KB, MIT licence) Taken from System.Activities assembiles 4. https://github.com/jaime-olivares/wpf-propertygrid
 https://www.codeproject.com/Articles/87715/Native-WPF-PropertyGrid
 
 - ??? small, not working (2 files, 20KB, no licence), not opening 5. https://github.com/CodenameColors/PropertyGridControl
