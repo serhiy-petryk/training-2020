@@ -68,13 +68,17 @@ namespace WpfInvestigate.Controls
             var grid = new Grid { ClipToBounds = true };
             grid.Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb);
             var viewbox = new Viewbox { UseLayoutRounding = false };
-            var path = new Path { Stretch = Stretch.Uniform, Fill = Tips.GetActualForegroundBrush(tb) };
+            var path = new Path { Stretch = Stretch.Uniform };
             path.Data = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb);
             viewbox.Child = path;
             grid.Children.Add(viewbox);
             tb.Content = grid;
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => CreateAnimation(grid)));
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
+            {
+                path.Fill = Tips.GetActualForegroundBrush(tb); // Delay for Tips.GetActualForegroundBrush(tb)
+                CreateAnimation(grid);
+            }));
         }
 
         private static void OnToggleButtonUnloaded(object sender, RoutedEventArgs e)

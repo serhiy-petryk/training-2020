@@ -152,7 +152,7 @@
 
             <!-- Ripple buttons -->
             <TextBlock>Ripple buttons</TextBlock>
-            <ToolBar Margin="0" Padding="0" Height="30" Background="Gainsboro">
+            <ToolBar Margin="0" Padding="0" Height="30" Background="Gray">
                 <obsolete:RippleButton Margin="2 0" Padding="0" Width="26" Height="26" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White">
                     <TextBlock Text="H" Margin="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </obsolete:RippleButton>
@@ -180,18 +180,38 @@
                 </obsolete:RippleButton>
 
                 <Separator/>
-                <Button>AAA</Button>
-
-                <Separator/>
-
-                <obsolete:PathToggleButton x:Uid="WindowsMenuButton" Width="18" Margin="0 0 1 0" Foreground="Black" PathWidth="10" PathHeight="10" Padding="1 7"
-                                       ToolTip="Open/Close Windows menu"
-                                       Visibility="{Binding Path=Children.Count, Converter={x:Static common:VisibilityConverter.Instance}, ConverterParameter=Hide}"
-                                       GeometryOff="M 0 2.5 L 5 7.5 L 10 2.5 Z"
-                                       GeometryOn="M9.5 2.136875L7.863125 0.5L5 3.363125L2.136875 0.5L0.5 2.136875L3.363125 5L0.5 7.863125L2.136875 9.5L5 6.636875L7.863125 9.5L9.5 7.863125L6.636875 5L9.5 2.136875Z">
+                <Button VerticalAlignment="Stretch" Padding="0 0 20 0">AAA</Button>
+                <obsolete:PathToggleButton x:Uid="WindowsMenuButton" Width="18" Margin="0 0 0 0" Foreground="Black" PathWidth="10" PathHeight="10" Padding="1 7"
+                                           ToolTip="Open/Close Windows menu"
+                                           VerticalAlignment="Stretch"
+                                           Visibility="{Binding Path=Children.Count, Converter={x:Static common:VisibilityConverter.Instance}, ConverterParameter=Hide}"
+                                           GeometryOff="M 0 2.5 L 5 7.5 L 10 2.5 Z"
+                                           GeometryOn="M9.5 2.136875L7.863125 0.5L5 3.363125L2.136875 0.5L0.5 2.136875L3.363125 5L0.5 7.863125L2.136875 9.5L5 6.636875L7.863125 9.5L9.5 7.863125L6.636875 5L9.5 2.136875Z">
                 </obsolete:PathToggleButton>
 
-                <Separator/>
+                <Separator Margin="0 0 0 0"/>
+
+                <TextBlock Text="Splt button:" Margin="4 0" VerticalAlignment="Center"></TextBlock>
+                <Button VerticalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="AAA" Margin="0"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0 0 1 0"></Button>
+                            <obsolete:PathToggleButton Grid.Column="1" Foreground="Black" PathWidth="10" PathHeight="10" BorderThickness="1 0 0 0"
+                                                       ToolTip="Open/Close Windows menu" Width="18" Padding="1 7" Margin="-1 1 0 1" 
+                                                       VerticalAlignment="Stretch"
+                                                       Visibility="{Binding Path=Children.Count, Converter={x:Static common:VisibilityConverter.Instance}, ConverterParameter=Hide}"
+                                                       GeometryOff="M 0 2.5 L 5 7.5 L 10 2.5 Z"
+                                                       GeometryOn="M9.5 2.136875L7.863125 0.5L5 3.363125L2.136875 0.5L0.5 2.136875L3.363125 5L0.5 7.863125L2.136875 9.5L5 6.636875L7.863125 9.5L9.5 7.863125L6.636875 5L9.5 2.136875Z">
+                            </obsolete:PathToggleButton>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+
+                <Separator Margin="20 0 0 0"/>
 
                 <obsolete:RippleButton Margin="2 0" Width="36" Padding="0" Height="26" VerticalAlignment="Center" RippleColor="#FFe0d5f2">
                     <ToggleButton Content="{StaticResource OpenIcon}" Padding="0" IsThreeState="False" Checked="OpenSettingButton_OnChecked"
