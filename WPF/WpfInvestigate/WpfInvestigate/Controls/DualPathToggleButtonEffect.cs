@@ -54,10 +54,10 @@ namespace WpfInvestigate.Controls
                     if (!(tb.Content is Grid) && GetGeometryOn(tb) != Geometry.Empty && GetGeometryOff(tb) != Geometry.Empty)
                     {
                         Init(tb);
-                        OnToggleButtonUnloaded(tb, null);
+                        tb.Checked -= OnToggleButtonCheckChanged;
+                        tb.Unchecked -= OnToggleButtonCheckChanged;
                         tb.Checked += OnToggleButtonCheckChanged;
                         tb.Unchecked += OnToggleButtonCheckChanged;
-                        tb.Unloaded += OnToggleButtonUnloaded;
                     }
                 }));
             }
@@ -79,16 +79,6 @@ namespace WpfInvestigate.Controls
                 path.Fill = Tips.GetActualForegroundBrush(tb); // Delay for Tips.GetActualForegroundBrush(tb)
                 CreateAnimation(grid);
             }));
-        }
-
-        private static void OnToggleButtonUnloaded(object sender, RoutedEventArgs e)
-        {
-            var tb = (ToggleButton)sender;
-            tb.Unloaded -= OnToggleButtonUnloaded;
-            tb.Checked -= OnToggleButtonCheckChanged;
-            tb.Unchecked -= OnToggleButtonCheckChanged;
-            if (e != null)
-                tb.Content = null;
         }
 
         private static void OnToggleButtonCheckChanged(object sender, RoutedEventArgs e)
