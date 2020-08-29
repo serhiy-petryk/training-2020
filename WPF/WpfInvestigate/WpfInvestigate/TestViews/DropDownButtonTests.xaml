@@ -6,7 +6,7 @@
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         mc:Ignorable="d"
-        Title="ToggleButtonAndPopup" Height="450" Width="800">
+        Title="ToggleButtonAndPopup" Height="800" Width="800">
 
     <Window.Resources>
         <Geometry x:Key="Mwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
@@ -244,6 +244,57 @@
                 </ToolBar>
             </Grid>
 
+            <ToolBar Grid.Row="11" x:Name="CommandBar2" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
+                     Padding="0" Margin="0 10 0 0" Height="30" Background="#FFD6EAFF">
+
+                <ToggleButton Margin="0 -1 0 -2" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" VerticalAlignment="Stretch"
+                              Padding="3" Foreground="#FF0069D6" 
+                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="Open/Close Task panel"
+                              UseLayoutRounding="True"
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
+
+                <TextBlock Text="Splt button:" Margin="4 0" VerticalAlignment="Center"></TextBlock>
+                <Button VerticalAlignment="Stretch" Padding="0" VerticalContentAlignment="Stretch" Margin="4 -1 4 -2" UseLayoutRounding="False">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="AAA" Margin="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0 0 1 0" Padding="5 0" VerticalAlignment="Stretch"/>
+                            <Grid Grid.Column="1">
+                                <ToggleButton Foreground="#FF0069D6" BorderThickness="1 0 0 0"
+                                              ToolTip="Open/Close Task panel" Width="14" Padding="2 8" Margin="-1 0 0 0"
+                                              VerticalAlignment="Stretch"
+                                              Focusable="False" IsThreeState="False"
+                                              controls:DualPathToggleButtonEffect.GeometryOff="M 0 2.5 L 5 7.5 L 10 2.5 Z"
+                                              controls:DualPathToggleButtonEffect.GeometryOn="M9.5 2.136875L7.863125 0.5L5 3.363125L2.136875 0.5L0.5 2.136875L3.363125 5L0.5 7.863125L2.136875 9.5L5 6.636875L7.863125 9.5L9.5 7.863125L6.636875 5L9.5 2.136875Z">
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+                                            <Style.Triggers>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="IsMouseOver" Value="False" />
+                                                        <Condition Property="IsChecked" Value="True" />
+                                                    </MultiTrigger.Conditions>
+                                                    <MultiTrigger.Setters>
+                                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                                        <Setter Property="Background" Value="Transparent"/>
+                                                    </MultiTrigger.Setters>
+                                                </MultiTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
+                            </Grid>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+
+            </ToolBar>
         </Grid>
     </Grid>
 </Window>

@@ -67,7 +67,7 @@ namespace WpfInvestigate.Controls
         {
             var grid = new Grid { ClipToBounds = true };
             grid.Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb);
-            var viewbox = new Viewbox { UseLayoutRounding = false };
+            var viewbox = new Viewbox();
             var path = new Path { Stretch = Stretch.Uniform };
             path.Data = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb);
             viewbox.Child = path;
