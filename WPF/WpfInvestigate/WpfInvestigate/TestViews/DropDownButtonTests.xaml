@@ -6,7 +6,7 @@
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         mc:Ignorable="d"
-        Title="ToggleButtonAndPopup" Height="800" Width="800">
+        Title="ToggleButtonAndPopup" Height="900" Width="1250">
 
     <Window.Resources>
         <Geometry x:Key="Mwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
@@ -95,38 +95,41 @@
 
 
             <TextBlock Grid.Row="0" Text="Dummy textbox:" HorizontalAlignment="Left"/>
-            <TextBox Grid.Row="0" Margin="100 0 0 0" Width="100" Background="Yellow" HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="0" Margin="100 0 0 0" Width="50" Background="Yellow" HorizontalAlignment="Left"/>
 
-            <ToggleButton Grid.Row="1" x:Name="ToggleButton" Content="Popup" IsThreeState="False" Width="100"
-                          Style="{StaticResource FlatButtonStyle}" Background="Gainsboro"
-                          IsHitTestVisible="{Binding ElementName=TestPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"/>
+            <WrapPanel Grid.Row="1">
+                <ToggleButton x:Name="ToggleButton" Content="Popup" IsThreeState="False" Width="70"
+                              Style="{StaticResource FlatButtonStyle}" Background="Gainsboro"
+                              IsHitTestVisible="{Binding ElementName=TestPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"/>
 
-            <Popup x:Name="TestPopup"
-                   AllowsTransparency="True"
-                   Focusable="False"
-                   Placement="Bottom"
-                   PlacementTarget="{Binding ElementName=ToggleButton}"
-                   PopupAnimation="Fade"
-                   IsOpen="{Binding ElementName=ToggleButton, Path=IsChecked}"
-                   StaysOpen="False">
-                <controls:Calculator/>
-            </Popup>
+                <Popup x:Name="TestPopup"
+                       AllowsTransparency="True"
+                       Focusable="False"
+                       Placement="Bottom"
+                       PlacementTarget="{Binding ElementName=ToggleButton}"
+                       PopupAnimation="Fade"
+                       IsOpen="{Binding ElementName=ToggleButton, Path=IsChecked}"
+                       StaysOpen="False">
+                    <controls:Calculator/>
+                </Popup>
 
-            <ContentPresenter Grid.Row="2" Content="{StaticResource AA}" HorizontalAlignment="Left"/>
+                <ContentPresenter Content="{StaticResource AA}" HorizontalAlignment="Left" Width="70"/>
 
-            <UserControl Grid.Row="3" Style="{StaticResource BB}" HorizontalAlignment="Left" Width="200" Height="30"
-                         BorderThickness="2" BorderBrush="Yellow" Background="Blue" Foreground="White"/>
+                <UserControl Style="{StaticResource BB}" HorizontalAlignment="Left" Width="70" Height="30"
+                             BorderThickness="2" BorderBrush="Yellow" Background="Blue" Foreground="White"/>
 
-            <controls:NumericBox Grid.Row="4" Width="200" controls:WatermarkEffect.Watermark="Enter a number" IsNullable="True" Value="23"/>
+                <controls:NumericBox Width="70" controls:WatermarkEffect.Watermark="Enter a number" IsNullable="True" Value="23"/>
+            </WrapPanel>
 
             <!-- ======================= -->
-            <TextBlock Grid.Row="5" FontWeight="Bold" Text="Controls:" HorizontalAlignment="Center" Margin="0 20 0 0"/>
+            <TextBlock Grid.Row="2" FontWeight="Bold" Text="Controls:" HorizontalAlignment="Center" Margin="0 20 0 0"/>
 
-            <ToggleButton Grid.Row="6" x:Name="PopupButton" Margin="5" Content="DropDown button with Popup" IsThreeState="False" Width="300"
+            <WrapPanel Grid.Row="3">
+                <ToggleButton x:Name="PopupButton" Margin="5" Content="DropDown button with Popup" IsThreeState="False"
                           Style="{StaticResource FlatButtonStyle}" Background="Gainsboro"
                           IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"/>
 
-            <Popup x:Name="PART_Popup"
+                <Popup x:Name="PART_Popup"
                    AllowsTransparency="True"
                    Focusable="False"
                    Placement="Bottom"
@@ -134,14 +137,14 @@
                    PopupAnimation="Fade"
                    IsOpen="{Binding ElementName=PopupButton, Path=IsChecked}"
                    StaysOpen="False">
-                <controls:Calculator/>
-            </Popup>
+                    <controls:Calculator/>
+                </Popup>
 
-            <ToggleButton Grid.Row="7" Margin="5" x:Name="MenuPopupButton" Content="Bad: DropDown button with MenuPopup" IsThreeState="False" Width="300"
+                <ToggleButton Margin="5" x:Name="MenuPopupButton" Content="Bad: DropDown button with MenuPopup" IsThreeState="False"
                           Style="{StaticResource FlatButtonStyle}" Background="Gainsboro"
                           IsHitTestVisible="{Binding ElementName=PART_MenuPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"/>
 
-            <Popup x:Name="PART_MenuPopup"
+                <Popup x:Name="PART_MenuPopup"
                    AllowsTransparency="True"
                    Focusable="False"
                    Placement="Bottom"
@@ -149,41 +152,42 @@
                    PopupAnimation="Fade"
                    IsOpen="{Binding ElementName=MenuPopupButton, Path=IsChecked}"
                    StaysOpen="False">
-                <Menu>
-                    <MenuItem Header="Копировать"/>
-                    <MenuItem Header="Вставить"/>
-                    <MenuItem Header="Вырезать"/>
-                    <MenuItem Header="Удалить"/>
-                </Menu>
-            </Popup>
-
-            <ToggleButton Grid.Row="8" Margin="5" Content="DropDown button with ContextMenu in Resources" IsThreeState="False" IsChecked="False" Width="300"
-                          Checked="OpenDropDownMenu"
-                          Style="{StaticResource FlatButtonStyle}" Background="Gainsboro">
-                <ToggleButton.Resources>
-                    <ContextMenu x:Key="cm" StaysOpen="False">
+                    <Menu>
                         <MenuItem Header="Копировать"/>
                         <MenuItem Header="Вставить"/>
                         <MenuItem Header="Вырезать"/>
                         <MenuItem Header="Удалить"/>
-                    </ContextMenu>
-                </ToggleButton.Resources>
-            </ToggleButton>
+                    </Menu>
+                </Popup>
 
-            <ToggleButton Grid.Row="9" Margin="5" Content="DropDown button with ContextMenu in tag" IsThreeState="False" IsChecked="False" Width="300"
+                <ToggleButton Margin="5" Content="DropDown button with ContextMenu in Resources" IsThreeState="False" IsChecked="False"
                           Checked="OpenDropDownMenu"
                           Style="{StaticResource FlatButtonStyle}" Background="Gainsboro">
-                <ToggleButton.Tag>
-                    <ContextMenu StaysOpen="False">
-                        <MenuItem Header="Копировать"/>
-                        <MenuItem Header="Вставить"/>
-                        <MenuItem Header="Вырезать"/>
-                        <MenuItem Header="Удалить"/>
-                    </ContextMenu>
-                </ToggleButton.Tag>
-            </ToggleButton>
+                    <ToggleButton.Resources>
+                        <ContextMenu x:Key="cm" StaysOpen="False">
+                            <MenuItem Header="Копировать"/>
+                            <MenuItem Header="Вставить"/>
+                            <MenuItem Header="Вырезать"/>
+                            <MenuItem Header="Удалить"/>
+                        </ContextMenu>
+                    </ToggleButton.Resources>
+                </ToggleButton>
 
-            <Grid Grid.Row="10" Background="#FF8194AA">
+                <ToggleButton Margin="5" Content="DropDown button with ContextMenu in tag" IsThreeState="False" IsChecked="False"
+                          Checked="OpenDropDownMenu"
+                          Style="{StaticResource FlatButtonStyle}" Background="Gainsboro">
+                    <ToggleButton.Tag>
+                        <ContextMenu StaysOpen="False">
+                            <MenuItem Header="Копировать"/>
+                            <MenuItem Header="Вставить"/>
+                            <MenuItem Header="Вырезать"/>
+                            <MenuItem Header="Удалить"/>
+                        </ContextMenu>
+                    </ToggleButton.Tag>
+                </ToggleButton>
+            </WrapPanel>
+
+            <Grid Grid.Row="4" Background="#FF8194AA" Margin="0 10 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -244,7 +248,7 @@
                 </ToolBar>
             </Grid>
 
-            <ToolBar Grid.Row="11" x:Name="CommandBar2" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
+            <ToolBar Grid.Row="5" x:Name="CommandBar2" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="30" Background="#FFD6EAFF">
 
                 <ToggleButton Margin="0 -1 0 -2" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" VerticalAlignment="Stretch"
@@ -368,7 +372,6 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-
             </ToolBar>
         </Grid>
     </Grid>
