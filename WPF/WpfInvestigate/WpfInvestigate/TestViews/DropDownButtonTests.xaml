@@ -386,24 +386,33 @@
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
-                              UseLayoutRounding="True"
                               controls:DualPathToggleButtonEffect2.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                               controls:DualPathToggleButtonEffect2.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
                               controls:DualPathToggleButtonEffect2.MarginOff="3 5"
                               controls:DualPathToggleButtonEffect2.MarginOn="3 3">
                 </ToggleButton>
 
-                <ToggleButton Margin="0 -1 0 -2" Width="18" VerticalAlignment="Stretch"
-                              Foreground="#FF0069D6" 
+                <ToggleButton Margin="0 -1 0 -2" Width="18" VerticalAlignment="Stretch" Foreground="#FF0069D6" 
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
-                              UseLayoutRounding="True"
                               controls:DualPathToggleButtonEffect2.GeometryOff="{StaticResource DownArrowGeometry}"
                               controls:DualPathToggleButtonEffect2.GeometryOn="{StaticResource CloseGeometry}"
                               controls:DualPathToggleButtonEffect2.MarginOff="0.5 9 0 8"
                               controls:DualPathToggleButtonEffect2.MarginOn="0.5 6">
                 </ToggleButton>
+
+                <ToggleButton Margin="0 -1 0 -2" VerticalAlignment="Stretch" Foreground="#FF0069D6" 
+                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="Open/Close Task panel" Content="Toggle">
+                </ToggleButton>
+
+                <Button Margin="0 -1 0 -2" VerticalAlignment="Stretch" Foreground="#FF0069D6" 
+                              Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                              Focusable="False"
+                              ToolTip="Open/Close Task panel" Content="Button">
+                </Button>
 
             </ToolBar>
         </Grid>
