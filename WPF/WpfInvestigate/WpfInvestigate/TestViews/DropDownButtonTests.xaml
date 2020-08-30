@@ -11,6 +11,8 @@
     <Window.Resources>
         <Geometry x:Key="Mwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
         <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
+        <Geometry x:Key="DownArrowGeometry">M2.5,0L8.5,0 5.5,3z</Geometry>
+        <Geometry x:Key="CloseGeometry">M22 4 L 18 0 L 11 7 L 4 0 L 0 4 L 7 11 L 0 18 L 4 22 L 11 15 L 18 22 L 22 18 L 15 11 L 22 4Z</Geometry>
 
         <Path x:Key="DownArrowPath" x:Shared="False" Width="10" Height="3" Fill="Black" Data="M2.5,0L8.5,0 5.5,3z" VerticalAlignment="Center"/>
 
@@ -372,6 +374,36 @@
                         </Grid>
                     </Button.Content>
                 </Button>
+            </ToolBar>
+
+            <!--  ====================  -->
+            <TextBlock Grid.Row="6" FontWeight="Bold" Text="DualPathToggleButtonEffect2:" HorizontalAlignment="Center" Margin="0 20 0 0"/>
+            <ToolBar Grid.Row="7" x:Name="CommandBar3" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
+                     Padding="0" Margin="0 10 0 0" Height="30" Background="#FFD6EAFF">
+                <ToggleButton Margin="0 -1 0 -2" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" VerticalAlignment="Stretch"
+                              Foreground="#FF0069D6" 
+                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="Open/Close Task panel"
+                              UseLayoutRounding="True"
+                              controls:DualPathToggleButtonEffect2.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                              controls:DualPathToggleButtonEffect2.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                              controls:DualPathToggleButtonEffect2.MarginOff="3 5"
+                              controls:DualPathToggleButtonEffect2.MarginOn="3 3">
+                </ToggleButton>
+
+                <ToggleButton Margin="0 -1 0 -2" Width="18" VerticalAlignment="Stretch"
+                              Foreground="#FF0069D6" 
+                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="Open/Close Task panel"
+                              UseLayoutRounding="True"
+                              controls:DualPathToggleButtonEffect2.GeometryOff="{StaticResource DownArrowGeometry}"
+                              controls:DualPathToggleButtonEffect2.GeometryOn="{StaticResource CloseGeometry}"
+                              controls:DualPathToggleButtonEffect2.MarginOff="0.5 9 0 8"
+                              controls:DualPathToggleButtonEffect2.MarginOn="0.5 6">
+                </ToggleButton>
+
             </ToolBar>
         </Grid>
     </Grid>
