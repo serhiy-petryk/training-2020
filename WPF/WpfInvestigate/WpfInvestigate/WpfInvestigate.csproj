@@ -62,7 +62,6 @@
     </Compile>
     <Compile Include="Controls\DatePickerExtension.cs" />
     <Compile Include="Controls\DropDownButton.cs" />
-    <Compile Include="Controls\DualPathToggleButtonEffect2.cs" />
     <Compile Include="Controls\DualPathToggleButtonEffect.cs" />
     <Compile Include="Controls\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -41,7 +42,11 @@ namespace WpfInvestigate.Controls
                     if (d is ToggleButton tb && tb.Content is Grid grid &&
                         ((tb.IsChecked == true && e.Property == MarginOnProperty) ||
                          (tb.IsChecked != null && e.Property == MarginOffProperty)))
-                        grid.Margin = (Thickness)e.NewValue;
+                    {
+                        var viewbox = GetViewbox(grid);
+                        if (viewbox != null)
+                            viewbox.Margin = (Thickness) e.NewValue;
+                    }
                 }));
         }
 
@@ -65,13 +70,30 @@ namespace WpfInvestigate.Controls
 
         private static void Init(ToggleButton tb)
         {
-            var grid = new Grid { ClipToBounds = true };
-            grid.Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb);
-            var viewbox = new Viewbox();
-            var path = new Path { Stretch = Stretch.Uniform };
-            path.Data = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb);
-            viewbox.Child = path;
+            var grid = new Grid { ClipToBounds = true, Margin = new Thickness(), HorizontalAlignment = HorizontalAlignment.Stretch};
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+            var path = new Path
+            {
+                Stretch = Stretch.Uniform,
+                Margin = new Thickness(),
+                Data = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb)
+            };
+            var viewbox = new Viewbox
+            {
+                Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb), Child = path
+            };
+
+            if (tb.Content is UIElement oldContent)
+            {
+                tb.Content = null;
+                grid.Children.Add(oldContent);
+                Grid.SetColumn(oldContent, 0);
+            }
+
             grid.Children.Add(viewbox);
+            Grid.SetColumn(viewbox, 1);
             tb.Content = grid;
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
@@ -95,7 +117,10 @@ namespace WpfInvestigate.Controls
         //============= Animation service ===================
         private static void CreateAnimation(Grid grid)
         {
-            var viewbox = (Viewbox)grid.Children[0];
+            var viewbox = GetViewbox(grid);
+            if (viewbox == null)
+                return;
+
             var path = (Path)viewbox.Child;
             if (!(viewbox.RenderTransform is ScaleTransform))
                 viewbox.RenderTransform = new ScaleTransform(1, 1);
@@ -111,7 +136,7 @@ namespace WpfInvestigate.Controls
 
             var storyboard = new Storyboard();
             storyboard.Children.Add(AnimationHelper.GetFrameAnimation(path, Path.DataProperty, Geometry.Empty));
-            storyboard.Children.Add(AnimationHelper.GetFrameAnimation(grid, FrameworkElement.MarginProperty, new Thickness()));
+            storyboard.Children.Add(AnimationHelper.GetFrameAnimation(viewbox, FrameworkElement.MarginProperty, new Thickness()));
             storyboard.Children.Add(da1);
             storyboard.Children.Add(da2);
 
@@ -124,5 +149,7 @@ namespace WpfInvestigate.Controls
             ((ObjectAnimationUsingKeyFrames)storyboard.Children[1]).KeyFrames[0].Value = newMargin;
             return storyboard;
         }
+
+        private static Viewbox GetViewbox(Grid grid) => grid.Children.OfType<Viewbox>().FirstOrDefault(vb => Grid.GetColumn(vb) == 1);
     }
 }

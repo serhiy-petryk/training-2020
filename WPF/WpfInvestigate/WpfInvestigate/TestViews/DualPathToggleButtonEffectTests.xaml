@@ -13,8 +13,8 @@
     <Window.Resources>
         <Geometry x:Key="Mwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
         <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
-        <Geometry x:Key="Mwi.Container.WindowMenuNormalGeometry">M 0 1 L 2 3 L 4 1 Z</Geometry>
-        <Geometry x:Key="Mwi.Container.WindowMenuOpenGeometry">M22 4 L 18 0 L 11 7 L 4 0 L 0 4 L 7 11 L 0 18 L 4 22 L 11 15 L 18 22 L 22 18 L 15 11 L 22 4Z</Geometry>
+        <Geometry x:Key="CloseGeometry">M22 4 L 18 0 L 11 7 L 4 0 L 0 4 L 7 11 L 0 18 L 4 22 L 11 15 L 18 22 L 22 18 L 15 11 L 22 4Z</Geometry>
+        <Geometry x:Key="DownArrowGeometry">M 0 0 L 2 2 L 4 0 Z</Geometry>
 
         <!-- Double buttons -->
         <SolidColorBrush x:Key="Mwi.WindowBar.ForegroundBrush" Color="Black"/>
@@ -107,74 +107,109 @@
             </Grid.RowDefinitions>
 
             <WrapPanel Grid.Row="1" Orientation="Horizontal" Margin="5">
-                <ToggleButton Margin="2 0" Width="26" Height="26" Padding="4"
+                <ToggleButton Margin="2 0" Width="26" Height="26"
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                               Focusable="False" IsThreeState="False"
-                              ToolTip="Open/Close Task panel"
+                              ToolTip="SnapsToDevicePixels=True"
                               SnapsToDevicePixels="True"
                               controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
-                <ToggleButton Margin="2 0" Width="26" Height="26" Padding="4"
-                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
-                              Focusable="False" IsThreeState="False"
-                              ToolTip="Open/Close Task panel"
-                              UseLayoutRounding="True"
-                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.MarginOff="1 5 1 5"
+                              controls:DualPathToggleButtonEffect.MarginOn="2"/>
 
-                <ToggleButton Width="18" Height="26" Margin="2 0"
-                              Padding="1 7" Focusable="False" IsThreeState="False"
+                <ToggleButton Margin="2 0" Width="26" Height="26"
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
-                              ToolTip="Open/Close Windows menu"
-                              SnapsToDevicePixels="True"
-                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.WindowMenuNormalGeometry}"
-                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.WindowMenuOpenGeometry}"
-                              controls:DualPathToggleButtonEffect.MarginOff="2"/>
-                <ToggleButton Width="18" Height="26" Margin="2 0"
-                              Padding="1 7" Focusable="False" IsThreeState="False"
-                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
-                              ToolTip="Open/Close Windows menu"
-                              UseLayoutRounding="True"
-                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.WindowMenuNormalGeometry}"
-                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.WindowMenuOpenGeometry}"
-                              controls:DualPathToggleButtonEffect.MarginOff="2"/>
-
-                <ToggleButton Margin="2 0" Width="26" Height="26" Padding="4"
-                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
-                              Style="{StaticResource FlatButtonStyle}"
                               Focusable="False" IsThreeState="False"
-                              ToolTip="Open/Close Task panel"
-                              SnapsToDevicePixels="True"
-                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
-                <ToggleButton Margin="2 0" Width="26" Height="26" Padding="4"
-                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
-                              Style="{StaticResource FlatButtonStyle}"
-                              Focusable="False" IsThreeState="False"
-                              ToolTip="Open/Close Task panel"
+                              ToolTip="SnapsToDevicePixels=False"
                               SnapsToDevicePixels="False"
                               controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.MarginOff="1 5 1 5"
+                              controls:DualPathToggleButtonEffect.MarginOn="2"/>
 
-                <ToggleButton Width="18" Height="26" Margin="2 0"
-                              Padding="1 7" Focusable="False" IsThreeState="False"
-                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
-                              Style="{StaticResource FlatButtonStyle}"
-                              ToolTip="Open/Close Windows menu"
+                <ToggleButton Margin="2 0" Width="26" Height="26"
+                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="UseLayoutRounding=True"
+                              UseLayoutRounding="True"
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.MarginOff="1 5 1 5"
+                              controls:DualPathToggleButtonEffect.MarginOn="2"/>
+
+                <ToggleButton Margin="2 0" Width="26" Height="26"
+                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="UseLayoutRounding=False"
+                              UseLayoutRounding="False"
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.MarginOff="1 5 1 5"
+                              controls:DualPathToggleButtonEffect.MarginOn="2"/>
+
+                <ToggleButton Height="26" Width="18" Margin="2 0"
+                              Focusable="False" IsThreeState="False"
+                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                              ToolTip="Fixed width"
                               SnapsToDevicePixels="True"
-                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.WindowMenuNormalGeometry}"
-                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.WindowMenuOpenGeometry}"
-                              controls:DualPathToggleButtonEffect.MarginOff="2"/>
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              controls:DualPathToggleButtonEffect.MarginOff="0 7.5 0 7.5"
+                              controls:DualPathToggleButtonEffect.MarginOn="0 5 0 5"/>
 
-                <ToggleButton Width="18" Height="26" Margin="2 0"
-                              Padding="1 7" Focusable="False" IsThreeState="False"
+                <ToggleButton Height="26" Margin="2 0"
+                              Focusable="False" IsThreeState="False"
+                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                              ToolTip="SnapsToDevicePixels=True"
+                              SnapsToDevicePixels="True"
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              controls:DualPathToggleButtonEffect.MarginOff="1 7.5 1 7.5"
+                              controls:DualPathToggleButtonEffect.MarginOn="1 5 1 5"/>
+
+                <ToggleButton Height="26" Margin="2 0"
+                              Focusable="False" IsThreeState="False"
+                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                              ToolTip="SnapsToDevicePixels=Falses"
+                              SnapsToDevicePixels="False"
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              controls:DualPathToggleButtonEffect.MarginOff="1 7.5 1 7.5"
+                              controls:DualPathToggleButtonEffect.MarginOn="1 5 1 5"/>
+
+                <ToggleButton Margin="2 0" Width="26" Height="26"
                               Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
                               Style="{StaticResource FlatButtonStyle}"
-                              ToolTip="Open/Close Windows menu"
-                              SnapsToDevicePixels="False"
-                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.WindowMenuNormalGeometry}"
-                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.WindowMenuOpenGeometry}"
-                              controls:DualPathToggleButtonEffect.MarginOff="2"/>
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="Open/Close Task panel"
+                              SnapsToDevicePixels="True"
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.MarginOff="1 5 1 5"
+                              controls:DualPathToggleButtonEffect.MarginOn="2"/>
+
+                <ToggleButton Margin="2 0" Height="26"
+                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
+                              Style="{StaticResource FlatButtonStyle}"
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="Open/Close Task panel"
+                              SnapsToDevicePixels="True"
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              controls:DualPathToggleButtonEffect.MarginOff="3 9"
+                              controls:DualPathToggleButtonEffect.MarginOn="2 6"/>
+
+                <ToggleButton Margin="2 0" Height="26"
+                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
+                              Style="{StaticResource FlatButtonStyle}"
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="Open/Close Task panel"
+                              SnapsToDevicePixels="True"
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              controls:DualPathToggleButtonEffect.MarginOff="2 8.5"
+                              controls:DualPathToggleButtonEffect.MarginOn="2 6"/>
+
 
                 <StackPanel Margin="2 0 0 0" Orientation="Horizontal">
                     <RepeatButton Template="{DynamicResource LeftUpDoubleButtonTemplate}" Style="{DynamicResource DoubleButtonStyle}"
@@ -193,6 +228,7 @@
                 </StackPanel>
             </WrapPanel>
 
+            <!-- old -->
             <ToolBarPanel Grid.Row="2" Margin="5" ClipToBounds="True" Height="26">
                 <ToolBar Background="#FF8194AA" Foreground="Black" Padding="0" BorderThickness="0" ToolBarTray.IsLocked="True" Margin="-5,-2,-13,0" ClipToBounds="True" UseLayoutRounding="True" SnapsToDevicePixels="True">
                     <Label>ToolBarPanel</Label>
@@ -203,63 +239,83 @@
                             Content="X" FontSize="12" FontWeight="Bold"/>
 
                     <ToggleButton Foreground="Black"
-                                  Width="26" Height="26" Padding="4"
+                                  Width="26" Height="26" Padding="0"
                                   Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                                   Focusable="False" IsThreeState="False"
                                   ToolTip="Open/Close Task panel"
                                   UseLayoutRounding="False"
                                   controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
+                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                                  controls:DualPathToggleButtonEffect.MarginOff="0 7"
+                                  controls:DualPathToggleButtonEffect.MarginOn="0 4"/>
 
-                    <ToggleButton Width="26" Height="26" Padding="4"
+                    <ToggleButton Width="26" Height="26" Padding="0"
                                   Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                                   Focusable="False" IsThreeState="False"
                                   ToolTip="Open/Close Task panel"
                                   SnapsToDevicePixels="False"
                                   controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
+                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                                  controls:DualPathToggleButtonEffect.MarginOff="0 7"
+                                  controls:DualPathToggleButtonEffect.MarginOn="0 4"/>
 
-                    <ToggleButton Width="18" Height="26"
-                                  Padding="1 7" Focusable="False" IsThreeState="False"
+                    <ToggleButton Margin="2 0" Width="26" Height="26" Padding="0"
+                                  Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                                  Focusable="False" IsThreeState="False"
+                                  ToolTip="SnapsToDevicePixels=False"
+                                  SnapsToDevicePixels="False"
+                                  controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                                  controls:DualPathToggleButtonEffect.MarginOff="0 6"
+                                  controls:DualPathToggleButtonEffect.MarginOn="0 3"/>
+
+                    <ToggleButton Margin="2 0" Width="26" Height="26" Padding="0"
+                                  Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                                  Focusable="False" IsThreeState="False"
+                                  ToolTip="UseLayoutRounding=True"
+                                  UseLayoutRounding="True"
+                                  controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                                  controls:DualPathToggleButtonEffect.MarginOff="0 6"
+                                  controls:DualPathToggleButtonEffect.MarginOn="0 3"/>
+
+                    <ToggleButton Width="18" Height="26" Padding="0" Focusable="False" IsThreeState="False"
                                   Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                                   ToolTip="Open/Close Windows menu"
                                   UseLayoutRounding="False"
-                                  controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.WindowMenuNormalGeometry}"
-                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.WindowMenuOpenGeometry}"
-                                  controls:DualPathToggleButtonEffect.MarginOff="2"/>
+                                  controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                  controls:DualPathToggleButtonEffect.MarginOff="3 9.5"
+                                  controls:DualPathToggleButtonEffect.MarginOn="3 7"/>
 
-                    <ToggleButton Width="18" Height="26"
-                                  Padding="1 7" Focusable="False" IsThreeState="False"
+                    <ToggleButton Width="18" Height="26" Padding="0" Focusable="False" IsThreeState="False"
                                   Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
-                                  ToolTip="Open/Close Windows menu"
-                                  UseLayoutRounding="True"
-                                  controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.WindowMenuNormalGeometry}"
-                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.WindowMenuOpenGeometry}"
-                                  controls:DualPathToggleButtonEffect.MarginOff="2"/>
+                                  ToolTip="SnapsToDevicePixels=False"
+                                  SnapsToDevicePixels="False"
+                                  controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                  controls:DualPathToggleButtonEffect.MarginOff="3 9 3 10"
+                                  controls:DualPathToggleButtonEffect.MarginOn="3 7"/>
 
-                    <ToggleButton Margin="2 0" Width="26" Height="26" Padding="3"
+                    <ToggleButton Height="26" Margin="2 0" Padding="0"
+                                  Focusable="False" IsThreeState="False"
                                   Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
-                                  Focusable="False" IsThreeState="False"
-                                  ToolTip="Open/Close Task panel"
-                                  UseLayoutRounding="True"
-                                  controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
-                    <ToggleButton Margin="2 0" Width="26" Height="26" Padding="4"
-                                  Style="{StaticResource FlatButtonStyle}"
-                                  Focusable="False" IsThreeState="False"
-                                  ToolTip="Open/Close Task panel"
-                                  UseLayoutRounding="True"
-                                  controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
+                                  ToolTip="No width defined / ToolBar.ToggleButtonStyleKey"
+                                  SnapsToDevicePixels="True"
+                                  controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                  controls:DualPathToggleButtonEffect.MarginOff="3 9"
+                                  controls:DualPathToggleButtonEffect.MarginOn="3 6"/>
 
-                    <ToggleButton Width="18" Height="26" Margin="2 0"
-                                  Padding="1 7" Focusable="False" IsThreeState="False"
+                    <ToggleButton Height="26" Margin="2 0" Padding="0" Foreground="Black"
+                                  Focusable="False" IsThreeState="False"
                                   Style="{StaticResource FlatButtonStyle}"
-                                  ToolTip="Open/Close Windows menu"
+                                  ToolTip="No width defined / FlatButtonStyle"
                                   UseLayoutRounding="True"
-                                  controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.WindowMenuNormalGeometry}"
-                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.WindowMenuOpenGeometry}"
-                                  controls:DualPathToggleButtonEffect.MarginOff="2"/>
+                                  controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                  controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                  controls:DualPathToggleButtonEffect.MarginOff="3 10"
+                                  controls:DualPathToggleButtonEffect.MarginOn="3 7"/>
 
                     <StackPanel Margin="2 0 0 0" Orientation="Horizontal">
                         <RepeatButton Template="{DynamicResource LeftUpDoubleButtonTemplate}" Style="{DynamicResource DoubleButtonStyle}"
