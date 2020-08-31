@@ -202,7 +202,7 @@
                               ToolTip="Open/Close Task panel"
                               controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                               controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
-                              controls:DualPathToggleButtonEffect.MarginOff="5 7"
+                              controls:DualPathToggleButtonEffect.MarginOff="4 7 5 7"
                               controls:DualPathToggleButtonEffect.MarginOn="5">
                 </ToggleButton>
 
