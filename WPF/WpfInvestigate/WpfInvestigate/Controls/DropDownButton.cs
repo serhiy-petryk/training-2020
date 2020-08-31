@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -20,7 +21,11 @@ namespace WpfInvestigate.Controls
 
                 if (cm.PlacementTarget == null)
                 {
-                    cm.PlacementTarget = button;
+                    var parentButton = button.Parent as FrameworkElement;
+                    while (parentButton != null && !(parentButton is ButtonBase))
+                        parentButton = parentButton.Parent as FrameworkElement;
+
+                    cm.PlacementTarget = parentButton is ButtonBase ? parentButton : button;
                     cm.Placement = PlacementMode.Bottom;
                     cm.Closed += (senderClosed, eClosed) => ((ToggleButton)sender).IsChecked = false;
                 }
