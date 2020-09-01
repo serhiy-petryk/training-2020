@@ -13,8 +13,6 @@
         <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
         <Geometry x:Key="DownArrowGeometry">M 0 0 L 5 5 L 10 0 Z</Geometry>
         <Geometry x:Key="CloseGeometry">M22 4 L 18 0 L 11 7 L 4 0 L 0 4 L 7 11 L 0 18 L 4 22 L 11 15 L 18 22 L 22 18 L 15 11 L 22 4Z</Geometry>
-        
-        <Path x:Key="DownArrowPath" x:Shared="False" Width="10" Height="3" Fill="Black" Data="M2.5,0L8.5,0 5.5,3z" VerticalAlignment="Center"/>
 
         <Style TargetType="UserControl" x:Key="BB">
             <Setter Property="Template">
@@ -155,10 +153,10 @@
                    IsOpen="{Binding ElementName=MenuPopupButton, Path=IsChecked}"
                    StaysOpen="False">
                     <Menu>
-                        <MenuItem Header="Копировать"/>
-                        <MenuItem Header="Вставить"/>
-                        <MenuItem Header="Вырезать"/>
-                        <MenuItem Header="Удалить"/>
+                        <MenuItem Header="Copy"/>
+                        <MenuItem Header="Paste"/>
+                        <MenuItem Header="Cut"/>
+                        <MenuItem Header="Delete"/>
                     </Menu>
                 </Popup>
 
@@ -167,10 +165,10 @@
                           Style="{StaticResource FlatButtonStyle}" Background="Gainsboro">
                     <ToggleButton.Resources>
                         <ContextMenu x:Key="cm" StaysOpen="False">
-                            <MenuItem Header="Копировать"/>
-                            <MenuItem Header="Вставить"/>
-                            <MenuItem Header="Вырезать"/>
-                            <MenuItem Header="Удалить"/>
+                            <MenuItem Header="Copy"/>
+                            <MenuItem Header="Paste"/>
+                            <MenuItem Header="Cut"/>
+                            <MenuItem Header="Delete"/>
                         </ContextMenu>
                     </ToggleButton.Resources>
                 </ToggleButton>
@@ -180,10 +178,10 @@
                           Style="{StaticResource FlatButtonStyle}" Background="Gainsboro">
                     <ToggleButton.Tag>
                         <ContextMenu StaysOpen="False">
-                            <MenuItem Header="Копировать"/>
-                            <MenuItem Header="Вставить"/>
-                            <MenuItem Header="Вырезать"/>
-                            <MenuItem Header="Удалить"/>
+                            <MenuItem Header="Copy"/>
+                            <MenuItem Header="Paste"/>
+                            <MenuItem Header="Cut"/>
+                            <MenuItem Header="Delete"/>
                         </ContextMenu>
                     </ToggleButton.Tag>
                 </ToggleButton>
@@ -217,10 +215,10 @@
                               controls:DualPathToggleButtonEffect.MarginOn="3 8">
                     <ToggleButton.Resources>
                         <ContextMenu x:Key="cm" StaysOpen="False">
-                            <MenuItem Header="Копировать"/>
-                            <MenuItem Header="Вставить"/>
-                            <MenuItem Header="Вырезать"/>
-                            <MenuItem Header="Удалить"/>
+                            <MenuItem Header="Copy"/>
+                            <MenuItem Header="Paste"/>
+                            <MenuItem Header="Cut"/>
+                            <MenuItem Header="Delete"/>
                         </ContextMenu>
                     </ToggleButton.Resources>
                 </ToggleButton>
@@ -238,10 +236,10 @@
                     <TextBlock Margin="5 0" VerticalAlignment="Center">Wide toggle button</TextBlock>
                     <ToggleButton.Resources>
                         <ContextMenu x:Key="cm" StaysOpen="False">
-                            <MenuItem Header="Копировать"/>
-                            <MenuItem Header="Вставить"/>
-                            <MenuItem Header="Вырезать"/>
-                            <MenuItem Header="Удалить"/>
+                            <MenuItem Header="Copy"/>
+                            <MenuItem Header="Paste"/>
+                            <MenuItem Header="Cut"/>
+                            <MenuItem Header="Delete"/>
                         </ContextMenu>
                     </ToggleButton.Resources>
                 </ToggleButton>
@@ -258,10 +256,10 @@
                     <TextBlock Margin="3 0 5 0" VerticalAlignment="Center">Toggle button</TextBlock>
                     <ToggleButton.Resources>
                         <ContextMenu x:Key="cm" StaysOpen="False">
-                            <MenuItem Header="Копировать"/>
-                            <MenuItem Header="Вставить"/>
-                            <MenuItem Header="Вырезать"/>
-                            <MenuItem Header="Удалить"/>
+                            <MenuItem Header="Copy"/>
+                            <MenuItem Header="Paste"/>
+                            <MenuItem Header="Cut"/>
+                            <MenuItem Header="Delete"/>
                         </ContextMenu>
                     </ToggleButton.Resources>
                 </ToggleButton>
@@ -322,10 +320,10 @@
                                     </ToggleButton.Style>
                                     <ToggleButton.Resources>
                                         <ContextMenu x:Key="cm" StaysOpen="False">
-                                            <MenuItem Header="Копировать"/>
-                                            <MenuItem Header="Вставить"/>
-                                            <MenuItem Header="Вырезать"/>
-                                            <MenuItem Header="Удалить"/>
+                                            <MenuItem Header="Copy"/>
+                                            <MenuItem Header="Paste"/>
+                                            <MenuItem Header="Cut"/>
+                                            <MenuItem Header="Delete"/>
                                         </ContextMenu>
                                     </ToggleButton.Resources>
                                 </ToggleButton>
