@@ -93,7 +93,6 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-
             <TextBlock Grid.Row="0" Text="Dummy textbox:" HorizontalAlignment="Left"/>
             <TextBox Grid.Row="0" Margin="100 0 0 0" Width="50" Background="Yellow" HorizontalAlignment="Left"/>
 
@@ -204,8 +203,13 @@
                               controls:DualPathToggleButtonEffect.MarginOn="5">
                 </ToggleButton>
 
-                <ToggleButton Margin="0 -1 0 -2" VerticalAlignment="Stretch"
+                <CheckBox IsChecked="True" IsThreeState="False" Style="{StaticResource {x:Static ToolBar.CheckBoxStyleKey}}"
+                          BorderBrush="#FF0069D6" Width="10" Height="10"
+                          Checked="IsVisible_OnChecked" Unchecked="IsVisible_OnChecked"/>
+                <TextBlock Text="Is visible?:" Margin="2 0" VerticalAlignment="Center"/>
+                <ToggleButton x:Name="T2" Margin="0 -1 0 -2" VerticalAlignment="Stretch"
                               Foreground="#FF0069D6" Padding="0"
+                              Visibility="Collapsed"
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                               Focusable="False" IsThreeState="False"
                               Checked="OpenDropDownMenu"
@@ -223,7 +227,7 @@
                     </ToggleButton.Resources>
                 </ToggleButton>
 
-                <ToggleButton x:Name="T2" Margin="0 -1 0 -2" VerticalAlignment="Stretch" Width="180"
+                <ToggleButton x:Name="T3" Margin="0 -1 0 -2" VerticalAlignment="Stretch" Width="180"
                               Foreground="#FF0069D6" Padding="0"
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                               Focusable="False" IsThreeState="False"
@@ -244,7 +248,7 @@
                     </ToggleButton.Resources>
                 </ToggleButton>
 
-                <ToggleButton x:Name="T21" Margin="0 -1 0 -2" VerticalAlignment="Stretch"
+                <ToggleButton x:Name="T31" Margin="0 -1 0 -2" VerticalAlignment="Stretch"
                               Foreground="#FF0069D6" Padding="3 0"
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                               Focusable="False" IsThreeState="False"

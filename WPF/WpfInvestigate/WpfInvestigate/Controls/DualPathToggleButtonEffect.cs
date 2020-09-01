@@ -70,7 +70,7 @@ namespace WpfInvestigate.Controls
 
         private static void Init(ToggleButton tb)
         {
-            var grid = new Grid { ClipToBounds = true, Margin = new Thickness(), HorizontalAlignment = HorizontalAlignment.Stretch};
+            var grid = new Grid {ClipToBounds = true, Margin = new Thickness(), HorizontalAlignment = HorizontalAlignment.Stretch};
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
@@ -99,7 +99,6 @@ namespace WpfInvestigate.Controls
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
             {
                 path.Fill = Tips.GetActualForegroundBrush(tb); // Delay for Tips.GetActualForegroundBrush(tb)
-                CreateAnimation(grid);
             }));
         }
 
@@ -111,15 +110,15 @@ namespace WpfInvestigate.Controls
             var newGeometry = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb);
             var newMargin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb);
             var sb = GetAnimation(grid, newGeometry, newMargin);
-            sb.Begin();
+            sb?.Begin();
         }
 
         //============= Animation service ===================
-        private static void CreateAnimation(Grid grid)
+        private static Storyboard CreateAnimation(Grid grid)
         {
             var viewbox = GetViewbox(grid);
             if (viewbox == null)
-                return;
+                return null;
 
             var path = (Path)viewbox.Child;
             if (!(viewbox.RenderTransform is ScaleTransform))
@@ -141,10 +140,19 @@ namespace WpfInvestigate.Controls
             storyboard.Children.Add(da2);
 
             grid.Resources.Add("Animation", storyboard);
+            return storyboard;
         }
+
         private static Storyboard GetAnimation(Grid grid, Geometry newGeometry, Thickness newMargin)
         {
             var storyboard = (Storyboard)grid.Resources["Animation"];
+            if (storyboard == null)
+            {
+                storyboard = CreateAnimation(grid);
+                if (storyboard == null)
+                    return null;
+            }
+
             ((ObjectAnimationUsingKeyFrames)storyboard.Children[0]).KeyFrames[0].Value = newGeometry;
             ((ObjectAnimationUsingKeyFrames)storyboard.Children[1]).KeyFrames[0].Value = newMargin;
             return storyboard;
