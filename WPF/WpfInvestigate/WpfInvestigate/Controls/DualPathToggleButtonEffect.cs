@@ -23,6 +23,11 @@ namespace WpfInvestigate.Controls
         public static Geometry GetGeometryOff(DependencyObject obj) => (Geometry)obj.GetValue(GeometryOffProperty);
         public static void SetGeometryOff(DependencyObject obj, Geometry value) => obj.SetValue(GeometryOffProperty, value);
         //================
+        public static readonly DependencyProperty WidthProperty = DependencyProperty.RegisterAttached("Width",
+            typeof(double), typeof(DualPathToggleButtonEffect), new UIPropertyMetadata(double.NaN, OnWidthPropertyChanged));
+        public static double GetWidth(DependencyObject obj) => (double)obj.GetValue(WidthProperty);
+        public static void SetWidth(DependencyObject obj, double value) => obj.SetValue(WidthProperty, value);
+        //================
         public static readonly DependencyProperty MarginOnProperty = DependencyProperty.RegisterAttached("MarginOn",
             typeof(Thickness), typeof(DualPathToggleButtonEffect), new UIPropertyMetadata(new Thickness(), OnMarginPropertyChanged));
         public static Thickness GetMarginOn(DependencyObject obj) => (Thickness)obj.GetValue(MarginOnProperty);
@@ -34,6 +39,19 @@ namespace WpfInvestigate.Controls
         public static void SetMarginOff(DependencyObject obj, Thickness value) => obj.SetValue(MarginOffProperty, value);
 
         //=====================================
+        private static void OnWidthPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded,
+                new Action(() =>
+                {
+                    if (d is ToggleButton tb && tb.Content is Grid grid)
+                    {
+                        var viewbox = GetViewbox(grid);
+                        if (viewbox != null)
+                            viewbox.Width = (double)e.NewValue;
+                    }
+                }));
+        }
         private static void OnMarginPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded,
@@ -82,7 +100,7 @@ namespace WpfInvestigate.Controls
             };
             var viewbox = new Viewbox
             {
-                Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb), Child = path
+                Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb), Child = path, Width = GetWidth(tb)
             };
 
             if (tb.Content is UIElement oldContent)
