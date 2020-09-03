@@ -23,7 +23,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="ButtonPart" Content="{TemplateBinding Content}" Margin="0" Padding="{TemplateBinding Padding}"
+                        <Button x:Name="ContentPart" Content="{TemplateBinding Content}" Margin="0" Padding="{TemplateBinding Padding}"
                                             Foreground="{TemplateBinding Foreground}" BorderThickness="1"
                                             HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
@@ -33,14 +33,14 @@
                                         <DataTrigger Binding="{Binding ElementName=Root, Path=IsMouseOver}" Value="True">
                                             <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding ElementName=TogglePart, Path=IsChecked}" Value="True">
+                                        <DataTrigger Binding="{Binding ElementName=DropDownPart, Path=IsChecked}" Value="True">
                                             <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <ToggleButton Grid.Column="1" x:Name="TogglePart" Foreground="{TemplateBinding Foreground}" BorderThickness="0 1 1 1" Padding="0" Margin="0"
+                        <ToggleButton Grid.Column="1" x:Name="DropDownPart" Foreground="{TemplateBinding Foreground}" BorderThickness="0 1 1 1" Padding="0" Margin="0"
                                       IsThreeState="False" Width="13"
                                       IsChecked="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=IsChecked, Mode=TwoWay}"
                                       VerticalAlignment="Stretch"
