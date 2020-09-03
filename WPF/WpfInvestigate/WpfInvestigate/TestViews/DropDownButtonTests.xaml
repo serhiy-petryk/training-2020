@@ -118,7 +118,27 @@
 
             <ToolBar Grid.Row="1" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="50" Background="#FFD6EAFF">
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Resources="{StaticResource PopupMenu}"/>
+                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle - no width" Margin="0 -1 0 -2" Resources="{StaticResource PopupMenu}"
+                        VerticalContentAlignment="Top" HorizontalContentAlignment="Left" BorderBrush="Red" BorderThickness="2"/>
+                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle - wide" Margin="0 -1 0 -2" Resources="{StaticResource PopupMenu}"
+                        VerticalContentAlignment="Top" HorizontalContentAlignment="Left" Width="200" BorderBrush="Red" BorderThickness="2"/>
+                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle - narrow" Margin="0 -1 0 -2" Resources="{StaticResource PopupMenu}"
+                        VerticalContentAlignment="Top" HorizontalContentAlignment="Left" Width="70" BorderBrush="Red" BorderThickness="2"/>
+
+                <ToggleButton Margin="0 -1 0 -2" VerticalAlignment="Stretch" Width="180"
+                              VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+                              Foreground="#FF0069D6" Padding="0"
+                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="Open/Close Task panel"
+                              Checked="OpenDropDownMenu"
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              controls:DualPathToggleButtonEffect.MarginOff="1 12 1 10"
+                              controls:DualPathToggleButtonEffect.MarginOn="0.5 8.5 0.5 8.5"
+                              Resources="{StaticResource PopupMenu}">
+                    <TextBlock Margin="5 0" VerticalAlignment="Center">Wide toggle button</TextBlock>
+                </ToggleButton>
             </ToolBar>
 
             <TextBlock Grid.Row="4" Text="Dummy textbox:" HorizontalAlignment="Left"/>
@@ -240,6 +260,7 @@
                               Resources="{StaticResource PopupMenu}"/>
 
                 <ToggleButton x:Name="T3" Margin="0 -1 0 -2" VerticalAlignment="Stretch" Width="180"
+                              VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
                               Foreground="#FF0069D6" Padding="0"
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                               Focusable="False" IsThreeState="False"

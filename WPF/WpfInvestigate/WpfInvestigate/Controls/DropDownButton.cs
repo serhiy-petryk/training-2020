@@ -17,23 +17,19 @@ namespace WpfInvestigate.Controls
                 foreach (var element in Tips.GetVisualParents(button).OfType<FrameworkElement>())
                 {
                     cm = element.Tag as ContextMenu ?? element.Resources.Values.OfType<ContextMenu>().FirstOrDefault();
-                    if (cm != null) break;
+                    if (cm != null)
+                    {
+                        if (cm.PlacementTarget == null)
+                        {
+                            cm.PlacementTarget = element;
+                            cm.Placement = PlacementMode.Bottom;
+                            cm.Closed += (senderClosed, eClosed) => ((ToggleButton)sender).IsChecked = false;
+                        }
+                        cm.IsOpen = true;
+                        return;
+                    }
                 }
-
-                if (cm == null)
-                    throw new Exception($"Can't find context menu in DropDown button");
-
-                if (cm.PlacementTarget == null)
-                {
-                    var parentButton = button.Parent as FrameworkElement;
-                    while (parentButton != null && !(parentButton is ButtonBase))
-                        parentButton = parentButton.Parent as FrameworkElement;
-
-                    cm.PlacementTarget = parentButton is ButtonBase ? parentButton : button;
-                    cm.Placement = PlacementMode.Bottom;
-                    cm.Closed += (senderClosed, eClosed) => ((ToggleButton)sender).IsChecked = false;
-                }
-                cm.IsOpen = true;
+                throw new Exception($"Can't find context menu in DropDown button");
             }
         }
 
@@ -74,10 +70,10 @@ namespace WpfInvestigate.Controls
                           Style="{StaticResource FlatButtonStyle}" Background="Gainsboro">
                 <ToggleButton.Tag>
                     <ContextMenu StaysOpen="False">
-                        <MenuItem Header="Копировать"/>
-                        <MenuItem Header="Вставить"/>
-                        <MenuItem Header="Вырезать"/>
-                        <MenuItem Header="Удалить"/>
+                        <MenuItem Header="Copy"/>
+                        <MenuItem Header="Paste"/>
+                        <MenuItem Header="Cut"/>
+                        <MenuItem Header="Delete"/>
                     </ContextMenu>
                 </ToggleButton.Tag>
             </ToggleButton>
