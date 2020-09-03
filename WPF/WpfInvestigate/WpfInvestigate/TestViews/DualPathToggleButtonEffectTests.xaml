@@ -181,8 +181,28 @@
                               SnapsToDevicePixels="True"
                               controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                               controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.Width="18"/>
+
+                <ToggleButton Margin="2 0" Width="26" Height="26"
+                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
+                              Style="{StaticResource FlatButtonStyle}"
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="Open/Close Task panel"
+                              SnapsToDevicePixels="True"
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
                               controls:DualPathToggleButtonEffect.MarginOff="1 5 1 5"
                               controls:DualPathToggleButtonEffect.MarginOn="2"/>
+
+                <ToggleButton Margin="2 0" Height="26" Padding="1"
+                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
+                              Style="{StaticResource FlatButtonStyle}"
+                              Focusable="False" IsThreeState="False"
+                              ToolTip="Open/Close Task panel"
+                              SnapsToDevicePixels="False"
+                              controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              controls:DualPathToggleButtonEffect.Width="11"/>
 
                 <ToggleButton Margin="2 0" Height="26"
                               Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
