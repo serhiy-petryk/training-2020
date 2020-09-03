@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
 
@@ -11,11 +13,21 @@ namespace WpfInvestigate.TestViews
     /// </summary>
     public partial class DropDownButtonTests : Window
     {
+        private int _clickCount = 0;
         public DropDownButtonTests()
         {
             InitializeComponent();
         }
         private void OpenDropDownMenu(object sender, RoutedEventArgs e) => DropDownButton.OpenDropDownMenu(sender);
+
+        private void SplitButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (((ToggleButton) sender).IsChecked != true)
+            {
+                Debug.Print($"SplitButton_OnClick");
+                SplitButtonLabel.Text = $"SplitButtonStyle (Click count={++_clickCount}):";
+            }
+        }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {

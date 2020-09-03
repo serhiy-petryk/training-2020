@@ -109,23 +109,30 @@
 
             <ToolBar Grid.Row="0" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="30" Background="#FFD6EAFF">
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Padding="8 0"
-                        Resources="{StaticResource PopupMenu}"/>
+                <ToggleButton Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Padding="8 0"
+                        Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Padding="8 0" UseLayoutRounding="False"
-                        Resources="{StaticResource PopupMenu}"/>
+                <ToggleButton Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Padding="8 0" UseLayoutRounding="False"
+                        Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
             </ToolBar>
 
             <ToolBar Grid.Row="1" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="50" Background="#FFD6EAFF">
-                <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Text="SplitButtonStyle:"/>
-                <Button Style="{StaticResource SplitButtonStyle}" Content="Simplest" Margin="0 -1 0 -2" Resources="{StaticResource PopupMenu}"/>
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle - no width" Margin="0 -1 0 -2" Resources="{StaticResource PopupMenu}"
-                        VerticalContentAlignment="Top" HorizontalContentAlignment="Left" BorderBrush="Red" BorderThickness="2"/>
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle - wide" Margin="0 -1 0 -2" Resources="{StaticResource PopupMenu}"
-                        VerticalContentAlignment="Top" HorizontalContentAlignment="Left" Width="200" BorderBrush="Red" BorderThickness="2"/>
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle - narrow" Margin="0 -1 0 -2" Resources="{StaticResource PopupMenu}"
-                        VerticalContentAlignment="Top" HorizontalContentAlignment="Left" Width="70" BorderBrush="Red" BorderThickness="2"/>
+                <TextBlock x:Name="SplitButtonLabel" Margin="0 0 5 0" VerticalAlignment="Center" Text="SplitButtonStyle (Click count=0):"/>
+                <ToggleButton Style="{StaticResource SplitButtonStyle}" Content="Simplest" Margin="0 -1 0 -2"
+                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu" Click="SplitButton_OnClick"/>
+
+                <ToggleButton Style="{StaticResource SplitButtonStyle}" Content="SplitButton - no width" Margin="0 -1 0 -2"
+                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu" Click="SplitButton_OnClick"
+                        VerticalContentAlignment="Top" HorizontalContentAlignment="Left"/>
+
+                <ToggleButton Style="{StaticResource SplitButtonStyle}" Content="Wide SplitButton" Margin="0 -1 0 -2"
+                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu" Click="SplitButton_OnClick"
+                        VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left" Width="150"/>
+
+                <ToggleButton Style="{StaticResource SplitButtonStyle}" Content="Narrow SplitButton" Margin="0 -1 0 -2"
+                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu" Click="SplitButton_OnClick"
+                        VerticalContentAlignment="Top" HorizontalContentAlignment="Left" Width="70"/>
             </ToolBar>
 
             <ToolBar Grid.Row="2" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch" Padding="0" Margin="0 10 0 0" Height="50" Background="#FFD6EAFF">

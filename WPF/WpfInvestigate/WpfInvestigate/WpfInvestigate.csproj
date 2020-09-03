@@ -92,9 +92,6 @@
     </Compile>
     <Compile Include="Controls\WatermarkEffect.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
-    <Compile Include="Controls\SplitButton.xaml.cs">
-      <DependentUpon>SplitButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Temp\ColorUtilities.cs" />
     <Compile Include="Temp\OriginalVirtualKeyboard.xaml.cs">
       <DependentUpon>OriginalVirtualKeyboard.xaml</DependentUpon>
