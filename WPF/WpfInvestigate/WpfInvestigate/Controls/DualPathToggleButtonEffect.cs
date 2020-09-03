@@ -88,8 +88,8 @@ namespace WpfInvestigate.Controls
 
         private static void Init(ToggleButton tb)
         {
-            var grid = new Grid {ClipToBounds = true, Margin = new Thickness(), HorizontalAlignment = HorizontalAlignment.Stretch};
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            var grid = new Grid {ClipToBounds = true, Margin = new Thickness()};
+            grid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)});
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
             var path = new Path
@@ -100,14 +100,22 @@ namespace WpfInvestigate.Controls
             };
             var viewbox = new Viewbox
             {
-                Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb), Child = path, Width = GetWidth(tb)
+                Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb), Child = path, Width = GetWidth(tb), VerticalAlignment = VerticalAlignment.Stretch
             };
 
-            if (tb.Content is UIElement oldContent)
+            if (tb.Content != null)
             {
+                var contentControl = new ContentPresenter
+                {
+                    Content = tb.Content, Margin = tb.Padding,
+                    VerticalAlignment = tb.VerticalContentAlignment, HorizontalAlignment = tb.HorizontalContentAlignment
+                };
                 tb.Content = null;
-                grid.Children.Add(oldContent);
-                Grid.SetColumn(oldContent, 0);
+                tb.Padding = new Thickness();
+                // tb.VerticalContentAlignment = VerticalAlignment.Stretch;
+                tb.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+                grid.Children.Add(contentControl);
+                Grid.SetColumn(contentControl, 0);
             }
 
             grid.Children.Add(viewbox);
@@ -116,7 +124,7 @@ namespace WpfInvestigate.Controls
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
             {
-                path.Fill = Tips.GetActualForegroundBrush(tb); // Delay for Tips.GetActualForegroundBrush(tb)
+                path.Fill = Tips.GetActualForegroundBrush(tb); // Delay in Tips.GetActualForegroundBrush(tb)
             }));
         }
 
