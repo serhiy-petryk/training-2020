@@ -92,6 +92,9 @@
     </Compile>
     <Compile Include="Controls\WatermarkEffect.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
+    <Compile Include="Controls\SplitButton.xaml.cs">
+      <DependentUpon>SplitButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Temp\ColorUtilities.cs" />
     <Compile Include="Temp\OriginalVirtualKeyboard.xaml.cs">
       <DependentUpon>OriginalVirtualKeyboard.xaml</DependentUpon>
@@ -197,6 +200,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\SplitButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Temp\OriginalVirtualKeyboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -276,6 +283,10 @@
     <Page Include="Theme\Flags.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

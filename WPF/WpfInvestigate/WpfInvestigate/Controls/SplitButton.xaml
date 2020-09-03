@@ -1,0 +1,81 @@
+﻿<ResourceDictionary x:Class="WpfInvestigate.Controls.SplitButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:WpfInvestigate.Controls">
+
+    <Geometry x:Key="CloseGeometry">M22 4 L18 0 L11 7 L4 0 L0 4 L7 11 L0 18 L4 22 L11 15 L18 22 L22 18 L15 11 L22 4Z</Geometry>
+    <Geometry x:Key="DownArrowGeometry">M0 0 L1 1 L2 0 Z</Geometry>
+    <SolidColorBrush x:Key="BorderBrush" Color="#FF3399FF"/>
+
+    <Style x:Key="SplitButtonStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="#FF0069D6"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Button x:Name="RootButton" Padding="0" Margin="0" UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
+                        VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <ContentPresenter/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="ButtonPart" Content="{TemplateBinding Content}" Margin="0" Padding="{TemplateBinding Padding}"
+                                            Foreground="{TemplateBinding Foreground}" BorderThickness="1" VerticalAlignment="Stretch">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=RootButton, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=TogglePart, Path=IsChecked}" Value="True">
+                                                    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Grid Grid.Column="1">
+                                    <ToggleButton x:Name="TogglePart" Foreground="{TemplateBinding Foreground}" BorderThickness="0 1 1 1" Padding="0" Margin="0"
+                                          IsThreeState="False" Checked="OpenDropDownMenu" Width="13"
+                                          VerticalAlignment="Stretch"
+                                          UseLayoutRounding="False"
+                                          controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                          controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                          controls:DualPathToggleButtonEffect.Width="9">
+                                        <ToggleButton.Style>
+                                            <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=RootButton, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ToggleButton.Style>
+                                    </ToggleButton>
+                                </Grid>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
