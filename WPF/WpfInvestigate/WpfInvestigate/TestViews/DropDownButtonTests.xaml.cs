@@ -23,10 +23,7 @@ namespace WpfInvestigate.TestViews
         private void SplitButton_OnClick(object sender, RoutedEventArgs e)
         {
             if (((ToggleButton) sender).IsChecked != true)
-            {
-                Debug.Print($"SplitButton_OnClick");
                 SplitButtonLabel.Text = $"SplitButtonStyle (Click count={++_clickCount}):";
-            }
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
