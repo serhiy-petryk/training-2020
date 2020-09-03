@@ -40,26 +40,24 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Grid Grid.Column="1">
-                            <ToggleButton x:Name="TogglePart" Foreground="{TemplateBinding Foreground}" BorderThickness="0 1 1 1" Padding="0" Margin="0"
-                                          IsThreeState="False" Width="13"
-                                          IsChecked="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=IsChecked, Mode=TwoWay}"
-                                          VerticalAlignment="Stretch"
-                                          UseLayoutRounding="False"
-                                          controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                                          controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                          controls:DualPathToggleButtonEffect.Width="9">
-                                <ToggleButton.Style>
-                                    <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ElementName=Root, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ToggleButton.Style>
-                            </ToggleButton>
-                        </Grid>
+                        <ToggleButton Grid.Column="1" x:Name="TogglePart" Foreground="{TemplateBinding Foreground}" BorderThickness="0 1 1 1" Padding="0" Margin="0"
+                                      IsThreeState="False" Width="13"
+                                      IsChecked="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=IsChecked, Mode=TwoWay}"
+                                      VerticalAlignment="Stretch"
+                                      UseLayoutRounding="False"
+                                      controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                      controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                      controls:DualPathToggleButtonEffect.Width="9">
+                            <ToggleButton.Style>
+                                <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=Root, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
