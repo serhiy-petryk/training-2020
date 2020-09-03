@@ -109,16 +109,16 @@
 
             <ToolBar Grid.Row="0" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="30" Background="#FFD6EAFF">
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonTemplate" Margin="0 -1 0 -2" Padding="8 0"
+                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Padding="8 0"
                         Resources="{StaticResource PopupMenu}"/>
 
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonTemplate" Margin="0 -1 0 -2" Padding="8 0" UseLayoutRounding="False"
+                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Padding="8 0" UseLayoutRounding="False"
                         Resources="{StaticResource PopupMenu}"/>
             </ToolBar>
 
             <ToolBar Grid.Row="1" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="50" Background="#FFD6EAFF">
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonTemplate" Margin="0 -1 0 -2" Resources="{StaticResource PopupMenu}"/>
+                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Resources="{StaticResource PopupMenu}"/>
             </ToolBar>
 
             <TextBlock Grid.Row="4" Text="Dummy textbox:" HorizontalAlignment="Left"/>
