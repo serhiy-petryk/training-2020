@@ -18,8 +18,19 @@
         <Geometry x:Key="CloseGeometry">M22 4 L18 0 L11 7 L4 0 L0 4 L7 11 L0 18 L4 22 L11 15 L18 22 L22 18 L15 11 L22 4Z</Geometry>
         <Geometry x:Key="DownArrowGeometry">M0 0 L1 1 L2 0 Z</Geometry>
 
+        <ResourceDictionary x:Key="PopupMenu" x:Shared="False">
+            <ContextMenu x:Key="cm" StaysOpen="False" LayoutTransform="{StaticResource ScaleTransform}">
+                <MenuItem Header="Copy"/>
+                <MenuItem Header="Paste"/>
+                <MenuItem Header="Cut"/>
+                <MenuItem Header="Delete"/>
+            </ContextMenu>
+        </ResourceDictionary>
+
         <Style x:Key="SplitButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="#FF0069D6"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="UseLayoutRounding" Value="True"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -75,14 +86,6 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </ToggleButton.Style>
-                                            <ToggleButton.Resources>
-                                                <ContextMenu x:Key="cm" StaysOpen="False" LayoutTransform="{StaticResource ScaleTransform}">
-                                                    <MenuItem Header="Copy"/>
-                                                    <MenuItem Header="Paste"/>
-                                                    <MenuItem Header="Cut"/>
-                                                    <MenuItem Header="Delete"/>
-                                                </ContextMenu>
-                                            </ToggleButton.Resources>
                                         </ToggleButton>
                                     </Grid>
                                 </Grid>
@@ -175,25 +178,16 @@
 
             <ToolBar Grid.Row="0" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="30" Background="#FFD6EAFF">
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonTemplate" VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-                        Margin="0 -1 0 -2" Padding="8 0"/>
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonTemplate" VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-                        Margin="0 -1 0 -2" Padding="8 0" UseLayoutRounding="False"/>
+                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonTemplate" Margin="0 -1 0 -2" Padding="8 0"
+                        Resources="{StaticResource PopupMenu}"/>
+
+                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonTemplate" Margin="0 -1 0 -2" Padding="8 0" UseLayoutRounding="False"
+                        Resources="{StaticResource PopupMenu}"/>
             </ToolBar>
 
             <ToolBar Grid.Row="1" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="50" Background="#FFD6EAFF">
-                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonTemplate" VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-                        Margin="0 -1 0 -2">
-                    <Button.Resources>
-                        <ContextMenu x:Key="cm" StaysOpen="False">
-                            <MenuItem Header="Copy"/>
-                            <MenuItem Header="Paste"/>
-                            <MenuItem Header="Cut"/>
-                            <MenuItem Header="Delete"/>
-                        </ContextMenu>
-                    </Button.Resources>
-                </Button>
+                <Button Style="{StaticResource SplitButtonStyle}" Content="SplitButtonTemplate" Margin="0 -1 0 -2" Resources="{StaticResource PopupMenu}"/>
             </ToolBar>
 
             <TextBlock Grid.Row="4" Text="Dummy textbox:" HorizontalAlignment="Left"/>
@@ -264,15 +258,7 @@
 
                 <ToggleButton Margin="5" Content="DropDown button with ContextMenu in Resources" IsThreeState="False" IsChecked="False"
                           Checked="OpenDropDownMenu"
-                          Style="{StaticResource FlatButtonStyle}" Background="Gainsboro">
-                    <ToggleButton.Resources>
-                        <ContextMenu x:Key="cm" StaysOpen="False">
-                            <MenuItem Header="Copy"/>
-                            <MenuItem Header="Paste"/>
-                            <MenuItem Header="Cut"/>
-                            <MenuItem Header="Delete"/>
-                        </ContextMenu>
-                    </ToggleButton.Resources>
+                          Style="{StaticResource FlatButtonStyle}" Background="Gainsboro" Resources="{StaticResource PopupMenu}">
                 </ToggleButton>
 
                 <ToggleButton Margin="5" Content="DropDown button with ContextMenu in tag" IsThreeState="False" IsChecked="False"
@@ -319,16 +305,8 @@
                               controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                               controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                               controls:DualPathToggleButtonEffect.MarginOff="2 10"
-                              controls:DualPathToggleButtonEffect.MarginOn="3 8">
-                    <ToggleButton.Resources>
-                        <ContextMenu x:Key="cm" StaysOpen="False">
-                            <MenuItem Header="Copy"/>
-                            <MenuItem Header="Paste"/>
-                            <MenuItem Header="Cut"/>
-                            <MenuItem Header="Delete"/>
-                        </ContextMenu>
-                    </ToggleButton.Resources>
-                </ToggleButton>
+                              controls:DualPathToggleButtonEffect.MarginOn="3 8"
+                              Resources="{StaticResource PopupMenu}"/>
 
                 <ToggleButton x:Name="T3" Margin="0 -1 0 -2" VerticalAlignment="Stretch" Width="180"
                               Foreground="#FF0069D6" Padding="0"
@@ -339,16 +317,9 @@
                               controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                               controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                               controls:DualPathToggleButtonEffect.MarginOff="1 12 1 10"
-                              controls:DualPathToggleButtonEffect.MarginOn="0.5 8.5 0.5 8.5">
+                              controls:DualPathToggleButtonEffect.MarginOn="0.5 8.5 0.5 8.5"
+                              Resources="{StaticResource PopupMenu}">
                     <TextBlock Margin="5 0" VerticalAlignment="Center">Wide toggle button</TextBlock>
-                    <ToggleButton.Resources>
-                        <ContextMenu x:Key="cm" StaysOpen="False">
-                            <MenuItem Header="Copy"/>
-                            <MenuItem Header="Paste"/>
-                            <MenuItem Header="Cut"/>
-                            <MenuItem Header="Delete"/>
-                        </ContextMenu>
-                    </ToggleButton.Resources>
                 </ToggleButton>
 
                 <ToggleButton x:Name="T31" Margin="0 -1 0 -2" VerticalAlignment="Stretch"
@@ -359,16 +330,9 @@
                               controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                               controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                               controls:DualPathToggleButtonEffect.MarginOff="1 11"
-                              controls:DualPathToggleButtonEffect.MarginOn="0 8.5 0 7.5">
+                              controls:DualPathToggleButtonEffect.MarginOn="0 8.5 0 7.5"
+                              Resources="{StaticResource PopupMenu}">
                     <TextBlock Margin="3 0 5 0" VerticalAlignment="Center">Toggle button</TextBlock>
-                    <ToggleButton.Resources>
-                        <ContextMenu x:Key="cm" StaysOpen="False">
-                            <MenuItem Header="Copy"/>
-                            <MenuItem Header="Paste"/>
-                            <MenuItem Header="Cut"/>
-                            <MenuItem Header="Delete"/>
-                        </ContextMenu>
-                    </ToggleButton.Resources>
                 </ToggleButton>
 
                 <ToggleButton Margin="0 -1 0 -2" VerticalAlignment="Stretch" Foreground="#FF0069D6" 
@@ -408,7 +372,8 @@
                                               controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                               controls:DualPathToggleButtonEffect.MarginOff="0 11"
                                               controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                              controls:DualPathToggleButtonEffect.MarginOn="0 8">
+                                              controls:DualPathToggleButtonEffect.MarginOn="0 8"
+                                              Resources="{StaticResource PopupMenu}">
                                     <ToggleButton.Style>
                                         <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
                                             <Style.Triggers>
@@ -425,14 +390,6 @@
                                             </Style.Triggers>
                                         </Style>
                                     </ToggleButton.Style>
-                                    <ToggleButton.Resources>
-                                        <ContextMenu x:Key="cm" StaysOpen="False">
-                                            <MenuItem Header="Copy"/>
-                                            <MenuItem Header="Paste"/>
-                                            <MenuItem Header="Cut"/>
-                                            <MenuItem Header="Delete"/>
-                                        </ContextMenu>
-                                    </ToggleButton.Resources>
                                 </ToggleButton>
                             </Grid>
                         </Grid>

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
@@ -12,9 +13,12 @@ namespace WpfInvestigate.Controls
         {
             if (sender is ToggleButton button && Equals(button.IsChecked, true))
             {
-                var cm = button.Tag as ContextMenu;
-                if (cm == null)
-                    cm = button.Resources.Values.OfType<ContextMenu>().FirstOrDefault();
+                ContextMenu cm = null;
+                foreach (var element in Tips.GetVisualParents(button).OfType<FrameworkElement>())
+                {
+                    cm = element.Tag as ContextMenu ?? element.Resources.Values.OfType<ContextMenu>().FirstOrDefault();
+                    if (cm != null) break;
+                }
 
                 if (cm == null)
                     throw new Exception($"Can't find context menu in DropDown button");
