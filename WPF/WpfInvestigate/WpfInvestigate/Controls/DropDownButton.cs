@@ -13,10 +13,9 @@ namespace WpfInvestigate.Controls
         {
             if (sender is ToggleButton button && Equals(button.IsChecked, true))
             {
-                ContextMenu cm = null;
                 foreach (var element in Tips.GetVisualParents(button).OfType<FrameworkElement>())
                 {
-                    cm = element.Tag as ContextMenu ?? element.Resources.Values.OfType<ContextMenu>().FirstOrDefault();
+                    var cm = element.Tag as ContextMenu ?? element.Resources.Values.OfType<ContextMenu>().FirstOrDefault();
                     if (cm != null)
                     {
                         if (cm.PlacementTarget == null)
