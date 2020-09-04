@@ -79,5 +79,4 @@
         <Setter Property="UseLayoutRounding" Value="True"/>
     </Style>
 
-
 </ResourceDictionary>
