@@ -14,6 +14,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="IsThreeState" Value="False"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -71,6 +72,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="IsThreeState" Value="False"/>
         <Setter Property="controls:DualPathToggleButtonEffect.GeometryOff" Value="{StaticResource DownArrowGeometry}"/>
         <Setter Property="controls:DualPathToggleButtonEffect.GeometryOn" Value="{StaticResource CloseGeometry}"/>
         <Setter Property="controls:DualPathToggleButtonEffect.Width" Value="9"/>
