@@ -94,21 +94,21 @@ namespace WpfInvestigate.Controls
 
             var path = new Path
             {
-                Stretch = Stretch.Uniform,
-                Margin = new Thickness(),
+                Stretch = Stretch.Uniform, Margin = new Thickness(),
                 Data = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb)
             };
             var viewbox = new Viewbox
             {
-                Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb), Child = path, Width = GetWidth(tb), VerticalAlignment = VerticalAlignment.Stretch
+                Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb),
+                Child = path, Width = GetWidth(tb), VerticalAlignment = VerticalAlignment.Stretch
             };
 
             if (tb.Content != null)
             {
                 var contentControl = new ContentPresenter
                 {
-                    Content = tb.Content, Margin = tb.Padding,
-                    VerticalAlignment = tb.VerticalContentAlignment, HorizontalAlignment = tb.HorizontalContentAlignment
+                    Content = tb.Content, Margin = tb.Padding, VerticalAlignment = tb.VerticalContentAlignment,
+                    HorizontalAlignment = tb.HorizontalContentAlignment
                 };
                 tb.Content = null;
                 tb.Padding = new Thickness();
