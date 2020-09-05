@@ -43,7 +43,7 @@
                         </Button>
                         <ToggleButton Grid.Column="1" x:Name="DropDownPart" Foreground="{TemplateBinding Foreground}" BorderThickness="0 1 1 1" Padding="0" Margin="0"
                                       IsThreeState="False" Width="13"
-                                      IsChecked="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=IsChecked, Mode=TwoWay}"
+                                      IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}"
                                       VerticalAlignment="Stretch"
                                       UseLayoutRounding="False"
                                       controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"

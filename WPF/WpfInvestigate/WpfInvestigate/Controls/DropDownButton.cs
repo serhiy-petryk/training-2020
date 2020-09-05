@@ -1,38 +1,32 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
+﻿using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
     public static class DropDownButton
     {
-        public static void OpenDropDownMenu(object sender)
+        public static ContextMenu OpenDropDownMenu(object sender)
         {
             if (sender is ToggleButton button && Equals(button.IsChecked, true))
             {
-                foreach (var element in Tips.GetVisualParents(button).OfType<FrameworkElement>())
+                var cm = button.Tag as ContextMenu ?? button.Resources.Values.OfType<ContextMenu>().FirstOrDefault();
+                if (cm != null && !cm.IsOpen) // ContextMenu may be already opened (?bug (binding mode=TwoWay=>twice event call when value changed), see SplitButtonStyle)
                 {
-                    var cm = element.Tag as ContextMenu ?? element.Resources.Values.OfType<ContextMenu>().FirstOrDefault();
-                    if (cm != null)
+                    if (cm.PlacementTarget == null)
                     {
-                        if (cm.PlacementTarget == null)
-                        {
-                            cm.PlacementTarget = element;
-                            cm.Placement = PlacementMode.Bottom;
-                            cm.Closed += (senderClosed, eClosed) => ((ToggleButton)sender).IsChecked = false;
-                        }
-                        cm.IsOpen = true;
-                        return;
+                        cm.PlacementTarget = button;
+                        cm.Placement = PlacementMode.Bottom;
+                        cm.Closed += (senderClosed, eClosed) => ((ToggleButton) sender).IsChecked = false;
                     }
+                    cm.IsOpen = true;
+                    return cm;
                 }
-                throw new Exception($"Can't find context menu in DropDown button");
             }
+            return null;
         }
 
-        /* Examples for 2 types of DropDownButton (Popup and ContextMenu):
+        /* Examples of 2 types of DropDownButton (Popup and ContextMenu):
          
          XAML file:
          =========
