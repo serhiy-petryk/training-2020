@@ -27,7 +27,7 @@ namespace MyWpfMwi.Mwi
             var button = (ToggleButton)sender;
             if (button.IsChecked == true)
             {
-                Controls.ToggleButtonHelper.OpenMenu_OnCheck(sender);
+                Controls.DropDownButtonHelper.OpenDropDownMenu(sender);
                 var cm = button.Resources.Values.OfType<ContextMenu>().First();
 
                 // Remove old window tab items

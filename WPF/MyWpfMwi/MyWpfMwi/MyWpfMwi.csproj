@@ -80,7 +80,7 @@
     <Compile Include="Controls\MessageBlock.xaml.cs">
       <DependentUpon>MessageBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ToggleButtonHelper.cs" />
+    <Compile Include="Controls\DropDownButtonHelper.cs" />
     <Compile Include="Examples\CommandBarExample.xaml.cs">
       <DependentUpon>CommandBarExample.xaml</DependentUpon>
     </Compile>
@@ -137,6 +137,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Controls\DropDownButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\MessageBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

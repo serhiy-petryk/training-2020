@@ -3,6 +3,7 @@
                     xmlns:local="clr-namespace:MyWpfMwi.Themes">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MyWpfMwi;component/Controls/DropDownButtons.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MyWpfMwi;component/Controls/DialogItems/DialogItems.xaml" />
     </ResourceDictionary.MergedDictionaries>
 

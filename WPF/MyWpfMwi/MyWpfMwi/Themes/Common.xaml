@@ -6,6 +6,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MyWpfMwi;component/Controls/DialogItems/DialogItemsCommon.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MyWpfMwi;component/Controls/DialogItems/DialogItems.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MyWpfMwi;component/Controls/DropDownButtons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <DropShadowEffect x:Key="ShadowEffect" BlurRadius="8" Direction="330" Opacity="0.8" ShadowDepth="2" Color="Black" po:Freeze="True" />

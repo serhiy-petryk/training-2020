@@ -347,7 +347,7 @@ namespace MyWpfMwi.Mwi
         }
 
         private void SystemMenuButton_OnChecked(object sender, RoutedEventArgs e) =>
-            Controls.ToggleButtonHelper.OpenMenu_OnCheck(sender);
+            Controls.DropDownButtonHelper.OpenDropDownMenu(sender);
 
         #endregion
 

@@ -4,9 +4,9 @@ using System.Windows.Controls.Primitives;
 
 namespace MyWpfMwi.Controls
 {
-    public static class ToggleButtonHelper
+    public static class DropDownButtonHelper
     {
-        public static void OpenMenu_OnCheck(object sender)
+        public static void OpenDropDownMenu(object sender)
         {
             if (sender is ToggleButton button && Equals(button.IsChecked, true))
             {
