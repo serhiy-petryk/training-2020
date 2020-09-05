@@ -32,7 +32,7 @@ namespace WpfInvestigate.Controls
         public bool IsShifted { get; private set; }
         public bool IsExtra { get; private set; }
 
-        private void OpenDropDownMenu(object sender, RoutedEventArgs e) => DropDownButton.OpenDropDownMenu(sender);
+        private void OpenDropDownMenu(object sender, RoutedEventArgs e) => DropDownButtonHelper.OpenDropDownMenu(sender);
 
         private void OnKeyClick(object sender, RoutedEventArgs e)
         {

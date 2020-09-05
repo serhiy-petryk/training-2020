@@ -7,7 +7,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/Common.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/SplitButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/DropDownButtons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

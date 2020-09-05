@@ -15,7 +15,7 @@ namespace WpfInvestigate.TestViews
             DataContext = this;
         }
 
-        private void OpenDropDownMenu(object sender, RoutedEventArgs e) => DropDownButton.OpenDropDownMenu(sender);
+        private void OpenDropDownMenu(object sender, RoutedEventArgs e) => DropDownButtonHelper.OpenDropDownMenu(sender);
 
         private void OnChangeSizeClick(object sender, RoutedEventArgs e)
         {

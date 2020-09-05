@@ -61,7 +61,7 @@
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DatePickerExtension.cs" />
-    <Compile Include="Controls\DropDownButton.cs" />
+    <Compile Include="Controls\DropDownButtonHelper.cs" />
     <Compile Include="Controls\DualPathToggleButtonEffect.cs" />
     <Compile Include="Controls\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>
@@ -197,7 +197,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\SplitButton.xaml">
+    <Page Include="Controls\DropDownButtons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

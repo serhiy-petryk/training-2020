@@ -18,7 +18,7 @@ namespace WpfInvestigate.TestViews
         {
             InitializeComponent();
         }
-        private void OpenDropDownMenu(object sender, RoutedEventArgs e) => DropDownButton.OpenDropDownMenu(sender);
+        private void OpenDropDownMenu(object sender, RoutedEventArgs e) => DropDownButtonHelper.OpenDropDownMenu(sender);
 
         private void SplitButton_OnClick(object sender, RoutedEventArgs e)
         {

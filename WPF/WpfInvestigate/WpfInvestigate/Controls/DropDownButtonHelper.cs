@@ -4,7 +4,7 @@ using System.Windows.Controls.Primitives;
 
 namespace WpfInvestigate.Controls
 {
-    public static class DropDownButton
+    public static class DropDownButtonHelper
     {
         public static ContextMenu OpenDropDownMenu(object sender)
         {
