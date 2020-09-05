@@ -515,7 +515,7 @@ namespace MyWpfMwi.Mwi
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void DoClose(object p)
         {
-            ClosingEventArgs eventArgs = new ClosingEventArgs(ClosingEvent);
+            var eventArgs = new ClosingEventArgs(ClosingEvent);
             RaiseEvent(eventArgs);
 
             if (eventArgs.Cancel)
