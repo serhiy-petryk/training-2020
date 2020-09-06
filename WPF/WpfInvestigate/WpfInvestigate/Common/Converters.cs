@@ -7,6 +7,16 @@ using System.Windows.Media;
 
 namespace WpfInvestigate.Common
 {
+    public class DummyConverter : DependencyObject, IValueConverter
+    {
+        public static DummyConverter Instance = new DummyConverter();
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+
     public class SuppressXamlErrorConverter : DependencyObject, IValueConverter
     {
         // Dummy convertor to suppress output errors for TimePickerBase: Cannot find governing FrameworkElement or FrameworkContentElement for target element...
@@ -29,16 +39,6 @@ namespace WpfInvestigate.Common
                     return new Thickness(2 * v, v, 2 * v, v);
                 return v;
             }
-            return value;
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
-
-    public class DummyConverter : DependencyObject, IValueConverter
-    {
-        public static DummyConverter Instance = new DummyConverter();
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
             return value;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
@@ -72,35 +72,12 @@ namespace WpfInvestigate.Common
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value;
     }
 
-    public class DoubleMultiplyConverter : DependencyObject, IValueConverter
-    {
-        public static DoubleMultiplyConverter Instance = new DoubleMultiplyConverter();
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var d1 = double.Parse(parameter.ToString(), Tips.InvariantCulture);
-            return (double) value * d1;
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
-
     public class GridLinesVisibilityConverter : IValueConverter
     {
         public static GridLinesVisibilityConverter Instance = new GridLinesVisibilityConverter();
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => Equals(value, DataGridGridLinesVisibility.None);
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Equals(value, false) ? DataGridGridLinesVisibility.All : DataGridGridLinesVisibility.None;
-    }
-
-    public class TestConverter : IValueConverter
-    {
-        public static TestConverter Instance = new TestConverter();
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value == null || Equals(value, false) || Equals(value, 0)
-                ? (Equals(parameter, "Hide") ? Visibility.Hidden : Visibility.Collapsed)
-                : Visibility.Visible;
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
     public class VisibilityConverter : IValueConverter
@@ -117,19 +94,6 @@ namespace WpfInvestigate.Common
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
-    public class InverseVisibilityConverter : IValueConverter
-    {
-        public static InverseVisibilityConverter Instance = new InverseVisibilityConverter();
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value == null || Equals(value, false)
-                ? Visibility.Visible
-                : (Equals(parameter, "Hide") ? Visibility.Hidden : Visibility.Collapsed);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
-
     public class InverseBoolConverter : IValueConverter
     {
         public static InverseBoolConverter Instance = new InverseBoolConverter();
@@ -138,13 +102,6 @@ namespace WpfInvestigate.Common
             return value == null || Equals(value, false) || Equals(value, 0) || Equals(value, "");
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
-
-    public class StringToGeometryConverter : IValueConverter
-    {
-        public static StringToGeometryConverter Instance = new StringToGeometryConverter();
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => Geometry.Parse((string)value);
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 

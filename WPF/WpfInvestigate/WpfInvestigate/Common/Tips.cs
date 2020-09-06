@@ -20,7 +20,41 @@ namespace WpfInvestigate.Common
         public const double SCREEN_TOLERANCE = 0.001;
         public static bool AreEqual(double d1, double d2) => Math.Abs(d1 - d2) < SCREEN_TOLERANCE;
 
+        public static DateTime MaxDateTime(DateTime date1, DateTime date2) => date1 > date2 ? date1 : date2;
 
+        public static void Beep() => SystemSounds.Beep.Play();
+
+        public static Geometry GeometryFromString(object o)
+        {
+            if (o is string)
+            {
+                const string pathString = "FMLHVCQSTAZ+-,.0123456789fmlhvcqstaz";
+                var s = ((string) o).Trim();
+                if (!string.IsNullOrEmpty(s) && s.Length > 2 && "FfMm".Any(s[0].ToString().Contains) &&
+                    "Zz".Any(s[s.Length - 1].ToString().Contains) && (s.Contains(',') || s.Contains(' ')) &&
+                    s.All(c => pathString.Contains(c) || char.IsWhiteSpace(c)))
+                    try { return Geometry.Parse(s); }
+                    catch { } // ignored
+            }
+            return null;
+        }
+
+        // ===================================
+        public static List<DependencyObject> GetElementsUnderMouseClick(UIElement sender, MouseButtonEventArgs e)
+        {
+            var hitTestResults = new List<DependencyObject>();
+            VisualTreeHelper.HitTest(sender, null, result => GetHitTestResult(result, hitTestResults), new PointHitTestParameters(e.GetPosition(sender)));
+            return hitTestResults;
+        }
+        private static HitTestResultBehavior GetHitTestResult(HitTestResult result, List<DependencyObject> hitTestResults)
+        {
+            // Add the hit test result to the list that will be processed after the enumeration.
+            hitTestResults.Add(result.VisualHit);
+            // Set the behavior to return visuals at all z-order levels.
+            return HitTestResultBehavior.Continue;
+        }
+
+        #region ===========  Element tree  ================
         public static IEnumerable<DependencyObject> GetVisualParents(DependencyObject current)
         {
             while (current != null)
@@ -41,26 +75,7 @@ namespace WpfInvestigate.Common
                     yield return childOfChild;
             }
         }
-
-        public static List<DependencyObject> GetElementsUnderMouseClick(UIElement sender, MouseButtonEventArgs e)
-        {
-            var hitTestResults = new List<DependencyObject>();
-            VisualTreeHelper.HitTest(sender, null, result => GetHitTestResult(result, hitTestResults), new PointHitTestParameters(e.GetPosition(sender)));
-            return hitTestResults;
-        }
-        private static HitTestResultBehavior GetHitTestResult(HitTestResult result, List<DependencyObject> hitTestResults)
-        {
-            // Add the hit test result to the list that will be processed after the enumeration.
-            hitTestResults.Add(result.VisualHit);
-            // Set the behavior to return visuals at all z-order levels.
-            return HitTestResultBehavior.Continue;
-        }
-
-        //================================
-        public static DateTime MaxDateTime(DateTime date1, DateTime date2) => date1 > date2 ? date1 : date2;
-
-        public static void Beep() => SystemSounds.Beep.Play();
-
+        #endregion =============================
         #region =============  Colors  =============
         public static Brush GetActualBackgroundBrush(DependencyObject d)
         {

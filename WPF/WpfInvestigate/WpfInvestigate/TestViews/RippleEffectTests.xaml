@@ -74,6 +74,7 @@
                     <Button controls:RippleEffect.RippleColor="White" Background="Gray" Width="120" Height="30"
                             Style="{StaticResource MonochromeButtonStyle}" Content="Gray Monochrome" />
 
+                    <!-- from https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp -->
                     <Button controls:RippleEffect.RippleColor="White" Background="#5CB85C" Width="120" Height="30" Margin="10 0 0 0"
                             Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
                     <Button controls:RippleEffect.RippleColor="White" Background="#337AB7" Width="120" Height="30"
@@ -85,6 +86,7 @@
                     <Button controls:RippleEffect.RippleColor="White" Background="#D9534F" Width="120" Height="30"
                             Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
 
+                    <!-- from https://getbootstrap.com/docs/4.0/utilities/colors/ -->
                     <Button controls:RippleEffect.RippleColor="White" Background="#007BFF" Width="120" Height="30" Margin="10 0 0 0"
                             Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
                     <Button controls:RippleEffect.RippleColor="White" Background="#6C757D" Width="120" Height="30"

@@ -23,19 +23,6 @@ namespace WpfInvestigate.Controls
         }
 
         #region =========  FlatButton Extension  =========
-        private static Geometry GetGeometry(object o)
-        {
-            if (!(o is string))
-                return null;
-            const string pathString = "FMLHVCQSTAZ+-,.0123456789";
-            var s = (string)o;
-            if (string.IsNullOrEmpty(s) || !s.All(c => pathString.Contains(c) || char.IsWhiteSpace(c)))
-                return null;
-
-            try { return Geometry.Parse(s); }
-            catch { return null; }
-        }
-
         private void OnFlatButtonLoaded(object sender, RoutedEventArgs e)
         {
             var button = sender as ButtonBase;
@@ -47,7 +34,7 @@ namespace WpfInvestigate.Controls
                 if (DualPathToggleButtonEffect.GetGeometryOff(button) != Geometry.Empty)
                     return;
 
-                var geometry = GetGeometry(button.Content);
+                var geometry = Tips.GeometryFromString(button.Content);
                 if (geometry != null)
                 {
                     var path = new Path {Stretch = Stretch.Uniform, Data = geometry};
