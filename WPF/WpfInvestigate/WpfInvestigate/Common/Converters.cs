@@ -17,13 +17,6 @@ namespace WpfInvestigate.Common
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
-    public class SuppressXamlErrorConverter : DependencyObject, IValueConverter
-    {
-        // Dummy convertor to suppress output errors for TimePickerBase: Cannot find governing FrameworkElement or FrameworkContentElement for target element...
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value;
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
-
     public class PercentageConverter : DependencyObject, IValueConverter
     { // return = (double)ConverterValue * ConverterParameter /100;
         public static PercentageConverter Instance = new PercentageConverter();
