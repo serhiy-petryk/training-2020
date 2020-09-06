@@ -20,6 +20,48 @@ namespace WpfInvestigate.Common
         public const double SCREEN_TOLERANCE = 0.001;
         public static bool AreEqual(double d1, double d2) => Math.Abs(d1 - d2) < SCREEN_TOLERANCE;
 
+
+        public static IEnumerable<DependencyObject> GetVisualParents(DependencyObject current)
+        {
+            while (current != null)
+            {
+                yield return current;
+                current = VisualTreeHelper.GetParent(current) ?? (current as FrameworkElement)?.Parent;
+            }
+        }
+
+        public static IEnumerable<DependencyObject> GetVisualChildren(DependencyObject current)
+        {
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
+            {
+                var child = VisualTreeHelper.GetChild(current, i);
+                yield return child;
+
+                foreach (var childOfChild in GetVisualChildren(child))
+                    yield return childOfChild;
+            }
+        }
+
+        public static List<DependencyObject> GetElementsUnderMouseClick(UIElement sender, MouseButtonEventArgs e)
+        {
+            var hitTestResults = new List<DependencyObject>();
+            VisualTreeHelper.HitTest(sender, null, result => GetHitTestResult(result, hitTestResults), new PointHitTestParameters(e.GetPosition(sender)));
+            return hitTestResults;
+        }
+        private static HitTestResultBehavior GetHitTestResult(HitTestResult result, List<DependencyObject> hitTestResults)
+        {
+            // Add the hit test result to the list that will be processed after the enumeration.
+            hitTestResults.Add(result.VisualHit);
+            // Set the behavior to return visuals at all z-order levels.
+            return HitTestResultBehavior.Continue;
+        }
+
+        //================================
+        public static DateTime MaxDateTime(DateTime date1, DateTime date2) => date1 > date2 ? date1 : date2;
+
+        public static void Beep() => SystemSounds.Beep.Play();
+
+        #region =============  Colors  =============
         public static Brush GetActualBackgroundBrush(DependencyObject d)
         {
             // valid only for SolidColorBrush
@@ -77,48 +119,9 @@ namespace WpfInvestigate.Common
             }
             return Colors.Transparent;
         }
+        #endregion
 
-        public static IEnumerable<DependencyObject> GetVisualParents(DependencyObject current)
-        {
-            while (current != null)
-            {
-                yield return current;
-                current = VisualTreeHelper.GetParent(current) ?? (current as FrameworkElement)?.Parent;
-            }
-        }
-
-        public static IEnumerable<DependencyObject> GetVisualChildren(DependencyObject current)
-        {
-            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
-            {
-                var child = VisualTreeHelper.GetChild(current, i);
-                yield return child;
-
-                foreach (var childOfChild in GetVisualChildren(child))
-                    yield return childOfChild;
-            }
-        }
-
-        public static List<DependencyObject> GetElementsUnderMouseClick(UIElement sender, MouseButtonEventArgs e)
-        {
-            var hitTestResults = new List<DependencyObject>();
-            VisualTreeHelper.HitTest(sender, null, result => GetHitTestResult(result, hitTestResults), new PointHitTestParameters(e.GetPosition(sender)));
-            return hitTestResults;
-        }
-        private static HitTestResultBehavior GetHitTestResult(HitTestResult result, List<DependencyObject> hitTestResults)
-        {
-            // Add the hit test result to the list that will be processed after the enumeration.
-            hitTestResults.Add(result.VisualHit);
-            // Set the behavior to return visuals at all z-order levels.
-            return HitTestResultBehavior.Continue;
-        }
-
-        //================================
-        public static DateTime MaxDateTime(DateTime date1, DateTime date2) => date1 > date2 ? date1 : date2;
-
-        public static void Beep() => SystemSounds.Beep.Play();
-
-        // =============  Type Utilities ==============
+        #region =============  Type Utilities ==============
         public static Type GetNotNullableType(Type type) => IsNullableType(type) ? Nullable.GetUnderlyingType(type) : type;
         public static bool IsNullableType(Type type) => type != null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 
@@ -132,5 +135,6 @@ namespace WpfInvestigate.Common
             return method.MakeGenericMethod(type).Invoke(null, null);
         }
         private static T GetDefaultGeneric<T>() => default(T);
+        #endregion
     }
 }

@@ -49,8 +49,56 @@
                     <Button controls:RippleEffect.RippleColor="White" Width="120" Height="30" Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
                     <Button controls:RippleEffect.RippleColor="White" Background="Blue" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
-                    <Button controls:RippleEffect.RippleColor="White" Background="Blue" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
+
+                    <Button controls:RippleEffect.RippleColor="White" Background="Blue" BorderThickness="4" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome Blue" />
+
+                    <Button controls:RippleEffect.RippleColor="White" Background="#FF20df20" Width="120" Height="30"
                             Style="{StaticResource MonochromeButtonStyle}" Content="MonochromeButtonStyle" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#ffae00" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="MonochromeButtonStyle" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#d9a026" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="MonochromeButtonStyle" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="red" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome Red" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="green" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Green Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="GreenYellow" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="GreenYellow Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="Yellow" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Yellow Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="White" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="White Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="Black" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Black Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="Gray" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Gray Monochrome" />
+
+                    <Button controls:RippleEffect.RippleColor="White" Background="#5CB85C" Width="120" Height="30" Margin="10 0 0 0"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#337AB7" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#5BC0DE" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#F0AD4E" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#D9534F" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
+
+                    <Button controls:RippleEffect.RippleColor="White" Background="#007BFF" Width="120" Height="30" Margin="10 0 0 0"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#6C757D" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#28A745" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#DC3545" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#FFC107" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#17A2B8" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
+                    <Button controls:RippleEffect.RippleColor="White" Background="#343A40" Width="120" Height="30"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="Monochrome" />
 
                     <Button controls:RippleEffect.RippleColor="White" Background="White" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
                             Style="{StaticResource MonochromeButtonStyle}" Content="White" />

@@ -107,8 +107,8 @@ namespace WpfInvestigate.Controls
             {
                 // Hide border of DatePicker textbox
                 var borderNames = new[] { "watermark_decorator", "ContentElement" };
-                var borders = Tips.GetVisualChildren(editor).Where(c => c is Border && borderNames.Contains(((Border)c).Name));
-                foreach (Border x in borders)
+                var borders = Tips.GetVisualChildren(editor).OfType<Border>().Where(c => borderNames.Contains(((Border)c).Name));
+                foreach (var x in borders)
                     x.BorderBrush = Brushes.Transparent;
 
                 editor._isTemplateChanging = false;

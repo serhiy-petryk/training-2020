@@ -35,7 +35,7 @@ namespace WpfInvestigate.Controls
                     fe.PreviewMouseLeftButtonDown += OnElementPreviewMouseLeftButtonDown;
 
                     // Suppress 'Pressed' VisualState for ripple FlatButton
-                    foreach (FrameworkElement o in Tips.GetVisualChildren(fe).Where(a => a is FrameworkElement))
+                    foreach (var o in Tips.GetVisualChildren(fe).OfType<FrameworkElement>())
                     {
                         var groups = VisualStateManager.GetVisualStateGroups(o);
                         if (groups != null)

@@ -83,7 +83,7 @@ namespace WpfInvestigate.Controls
             var rippleColor = RippleEffect.GetRippleColor(button); // don't apply Pressed effect if control has ripple effect
             var color = button.IsPressed && rippleColor == null ? Tips.GetActualBackgroundColor(button) : Tips.GetActualForegroundColor(button);
 
-            foreach (Shape shape in Tips.GetVisualChildren(button).Where(a => a is Shape))
+            foreach (var shape in Tips.GetVisualChildren(button).OfType<Shape>())
             {
                 var brush = shape.Fill as SolidColorBrush;
                 if (brush == null || brush.IsFrozen || brush.IsSealed)
