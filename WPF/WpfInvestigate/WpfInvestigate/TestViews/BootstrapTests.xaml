@@ -1,0 +1,14 @@
+﻿<Window x:Class="WpfInvestigate.TestViews.BootstrapTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        mc:Ignorable="d"
+        Title="BootstrapTests" Height="400" Width="1000">
+
+    <WrapPanel>
+        <Button Background="Orange" Content="Orange button" controls:BootstrapEffect.Background="Aqua"/>
+        <Button controls:BootstrapEffect.Background="Aqua" Background="Orange" Content="Orange button" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"/>
+    </WrapPanel>
+</Window>

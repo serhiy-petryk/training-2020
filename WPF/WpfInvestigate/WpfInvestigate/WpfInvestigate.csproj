@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="Controls\Others\VirtualKeyboard.Models.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.KeyDefinition.cs" />
+    <Compile Include="Controls\BootstrapEffect.cs" />
     <Compile Include="Obsolete\xxPathContent.cs" />
     <Compile Include="Obsolete\AnimationHelper.cs" />
     <Compile Include="Obsolete\Events.cs" />
@@ -138,6 +139,9 @@
     </Compile>
     <Compile Include="TestViews\VirtualKeyboardTests.xaml.cs">
       <DependentUpon>VirtualKeyboardTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\BootstrapTests.xaml.cs">
+      <DependentUpon>BootstrapTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\WatermarkTests.xaml.cs">
       <DependentUpon>WatermarkTests.xaml</DependentUpon>
@@ -260,6 +264,10 @@
     <Page Include="TestViews\VirtualKeyboardTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\BootstrapTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\WatermarkTests.xaml">
       <SubType>Designer</SubType>

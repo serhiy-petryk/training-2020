@@ -58,6 +58,7 @@ namespace WpfInvestigate
         private void NumericBoxTest_OnClick(object sender, RoutedEventArgs e) => new NumericBoxTests().Show();
         private void DualPathToggleButtonEffectTest_OnClick(object sender, RoutedEventArgs e) => new DualPathToggleButtonEffectTests().Show();
         private void KeyboardTest_OnClick(object sender, RoutedEventArgs e) => new VirtualKeyboardTests().Show();
+        private void BootstrapTest_OnClick(object sender, RoutedEventArgs e) => new BootstrapTests().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
