@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         mc:Ignorable="d"
-        Title="Flat Buttons" Height="450" Width="1000">
+        Title="Flat Buttons" Height="800" Width="1000">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -211,6 +211,17 @@
                     <TextBlock TextWrapping="WrapWithOverflow" Text="ClearButtonStyle with margin:" VerticalAlignment="Center" Background="Aqua" Width="100"/>
                     <Button Style="{StaticResource ClearButtonStyle}" Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Black"
                             Width="20" Height="20" Margin="24 0 0 0" />
+                </WrapPanel>
+
+                <WrapPanel>
+                    <Button Background="#d4edda" Foreground="#155724" BorderThickness="4" BorderBrush="#c3e6cb" Width="150" Height="30"
+                            Style="{StaticResource FlatButtonStyle}" Content="Success" />
+                    <Button Background="#28a745" Foreground="#c2f0cd" BorderThickness="4" BorderBrush="#c3e6cb" Width="150" Height="30"
+                            Style="{StaticResource FlatButtonStyle}" Content="Success" />
+                    <Button Margin="5 0" Background="#4CAF50" Foreground="#C8E6C9" BorderThickness="4" BorderBrush="#C8E6C9" Width="150" Height="30"
+                            Style="{StaticResource FlatButtonStyle}" Content="Success" controls:BootstrapEffect.CornerRadius="13"/>
+                    <Button Margin="5 0" Background="#4CAF50" Foreground="White" BorderThickness="4" BorderBrush="#C8E6C9" Width="150" Height="30"
+                            Style="{StaticResource FlatButtonStyle}" Content="Success"/>
                 </WrapPanel>
             </StackPanel>
         </Grid>
