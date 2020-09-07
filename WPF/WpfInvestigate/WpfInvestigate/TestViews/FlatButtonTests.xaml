@@ -214,17 +214,33 @@
                 </WrapPanel>
 
                 <WrapPanel>
-                    <Button Background="#d4edda" Foreground="#155724" BorderThickness="4" BorderBrush="#c3e6cb" Width="150" Height="30"
+                    <Button Background="#d4edda" Foreground="Black" BorderThickness="4" BorderBrush="Red" Width="150" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="Success" />
-                    <Button Background="#28a745" Foreground="#c2f0cd" BorderThickness="4" BorderBrush="#c3e6cb" Width="150" Height="30"
-                            Style="{StaticResource FlatButtonStyle}" Content="Success" />
-                    <Button Margin="5 0" Background="#4CAF50" Foreground="#C8E6C9" BorderThickness="4" BorderBrush="#4CAF50" Width="150" Height="30"
-                            Style="{StaticResource FlatButtonStyle}" Content="With CornerRadius" controls:BootstrapEffect.CornerRadius="2"
+                    <Button Background="#d4edda" BorderThickness="4" Width="150" Height="30"
+                            Style="{StaticResource FlatButtonStyle}" Content="#d4edda" />
+                    <Button Background="#d4edda" Width="150" Height="30" Style="{StaticResource HslMonoStyle}" Content="#d4edda HslMonoStyle" />
+
+                    <Button Margin="5 0 0 0" Background="#b8e0c2" Width="150" Height="30" Style="{StaticResource HslMonoStyle}" Content="#b8e0c2 HslMonoStyle" />
+
+                    <Button Margin="5 0 0 0" Background="#28a745" BorderThickness="4" Width="150" Height="30" Style="{StaticResource FlatButtonStyle}" Content="#28a745" />
+                    <Button Background="#28a745" BorderThickness="4" Width="150" Height="30" Style="{StaticResource HslMonoStyle}" Content="HslMonoStyle" />
+
+                    <Button Margin="5 0 0 0" Background="#4CAF50" BorderThickness="2" Width="150" Height="30"
+                            Style="{StaticResource FlatButtonStyle}" Content="#4CAF50 CornerRadius" controls:BootstrapEffect.CornerRadius="2"
                             HorizontalContentAlignment="Right" VerticalContentAlignment="Top"/>
-                    <Button Margin="5 0" Background="#4CAF50" Foreground="White" BorderThickness="4" BorderBrush="#C8E6C9" Width="150" Height="30"
-                            Style="{StaticResource FlatButtonStyle}" Content="Success"/>
-                    <Button Margin="5 0" Background="#29a347" Foreground="White" BorderThickness="4" BorderBrush="#C8E6C9" Width="150" Height="30"
-                            Style="{StaticResource FlatButtonStyle}" Content="Success"/>
+                    <Button Background="#4CAF50" BorderThickness="2" Width="150" Height="30"
+                            Style="{StaticResource HslMonoStyle}" Content="HslMonoStyle" controls:BootstrapEffect.CornerRadius="2"
+                            HorizontalContentAlignment="Right" VerticalContentAlignment="Top"/>
+
+                    <Button Margin="5 0 0 0" Background="#4CAF50" Foreground="White" BorderThickness="4" Width="150" Height="30"
+                            Style="{StaticResource FlatButtonStyle}" Content="#4CAF50+White"/>
+                    <Button Background="#4CAF50" BorderThickness="4" Width="150" Height="30"
+                            Style="{StaticResource HslMonoStyle}" Content="HslMonoStyle"/>
+
+                    <Button Margin="5 0 0 0" Background="#29a347" BorderThickness="4" Width="150" Height="30"
+                            Style="{StaticResource FlatButtonStyle}" Content="#29a347"/>
+                    <Button Background="#29a347" BorderThickness="4" Width="150" Height="30"
+                            Style="{StaticResource HslMonoStyle}" Content="HslMonoStyle"/>
                 </WrapPanel>
             </StackPanel>
         </Grid>
