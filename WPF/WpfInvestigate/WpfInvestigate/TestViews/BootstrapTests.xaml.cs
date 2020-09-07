@@ -1,8 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Media;
-using WpfInvestigate.Controls;
-
-namespace WpfInvestigate.TestViews
+﻿namespace WpfInvestigate.TestViews
 {
     /// <summary>
     /// Interaction logic for TextBoxBootstrapTests.xaml

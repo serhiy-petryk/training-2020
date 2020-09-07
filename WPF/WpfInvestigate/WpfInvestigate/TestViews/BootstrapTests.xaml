@@ -7,8 +7,43 @@
         mc:Ignorable="d"
         Title="BootstrapTests" Height="400" Width="1000">
 
+    <Window.Resources>
+        <Style TargetType="ButtonBase" x:Key="TestStyle">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border BorderThickness="{TemplateBinding Border.BorderThickness}" Padding="{TemplateBinding Control.Padding}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" SnapsToDevicePixels="True">
+                                <ContentPresenter Content="{TemplateBinding ContentControl.Content}"
+                                                  ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
+                                                  ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"
+                                                  HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
+                                                  SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+    </Window.Resources>
+
     <WrapPanel>
-        <Button Background="Orange" Content="Orange button" controls:BootstrapEffect.Background="Aqua"/>
-        <Button controls:BootstrapEffect.Background="Aqua" Background="Orange" Content="Orange button" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"/>
+        <ComboBox Background="Orange" controls:BootstrapEffect.Background="#FF00FF00" MinWidth="100">
+            <TextBlock>LG Nexus 5X</TextBlock>
+            <TextBlock>Huawai Nexus 6P</TextBlock>
+            <TextBlock>iPhone 6S</TextBlock>
+            <TextBlock>iPhone 6S Plus</TextBlock>
+            <TextBlock>Microsoft Lumia 950</TextBlock>
+        </ComboBox>
+
+        <DatePicker x:Name="A11" Margin="5" Background="Orange" controls:BootstrapEffect.Background="#FF00FF00"
+                    controls:BootstrapEffect.CornerRadius="0"/>
+        <Button x:Name="A1" Margin="5" Background="Orange" Content="Orange button" controls:BootstrapEffect.Background="#FF00FF00" Style="{StaticResource TestStyle}"
+                controls:BootstrapEffect.CornerRadius="0"/>
+        <Button x:Name="A2" Margin="5" Background="Orange" Content="Orange button" controls:BootstrapEffect.Background="#FF00FF00"
+                controls:BootstrapEffect.CornerRadius="0"/>
+        <Button x:Name="A3" Margin="5" controls:BootstrapEffect.Background="Aqua" Background="Orange" Content="Orange button" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                controls:BootstrapEffect.CornerRadius="0"/>
     </WrapPanel>
 </Window>
