@@ -218,9 +218,12 @@
                             Style="{StaticResource FlatButtonStyle}" Content="Success" />
                     <Button Background="#28a745" Foreground="#c2f0cd" BorderThickness="4" BorderBrush="#c3e6cb" Width="150" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="Success" />
-                    <Button Margin="5 0" Background="#4CAF50" Foreground="#C8E6C9" BorderThickness="4" BorderBrush="#C8E6C9" Width="150" Height="30"
-                            Style="{StaticResource FlatButtonStyle}" Content="Success" controls:BootstrapEffect.CornerRadius="13"/>
+                    <Button Margin="5 0" Background="#4CAF50" Foreground="#C8E6C9" BorderThickness="4" BorderBrush="#4CAF50" Width="150" Height="30"
+                            Style="{StaticResource FlatButtonStyle}" Content="With CornerRadius" controls:BootstrapEffect.CornerRadius="2"
+                            HorizontalContentAlignment="Right" VerticalContentAlignment="Top"/>
                     <Button Margin="5 0" Background="#4CAF50" Foreground="White" BorderThickness="4" BorderBrush="#C8E6C9" Width="150" Height="30"
+                            Style="{StaticResource FlatButtonStyle}" Content="Success"/>
+                    <Button Margin="5 0" Background="#29a347" Foreground="White" BorderThickness="4" BorderBrush="#C8E6C9" Width="150" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="Success"/>
                 </WrapPanel>
             </StackPanel>

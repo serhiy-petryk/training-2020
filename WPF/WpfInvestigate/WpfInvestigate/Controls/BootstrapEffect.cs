@@ -70,7 +70,6 @@ namespace WpfInvestigate.Controls
         {
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
             {
-                Debug.Print($"OnMouseOver");
                 var element = (UIElement) sender;
                 var endColor = element.IsMouseOver ? Colors.Red : ((SolidColorBrush) GetBackground(element)).Color;
                 // VisualStateManager.GoToState((FrameworkElement)element, "Pressed", false);
