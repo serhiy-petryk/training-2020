@@ -126,23 +126,14 @@
         </Style>
         <ControlTemplate x:Key="ComponentSliderCanvasTemplate">
             <Canvas Background="Transparent" VerticalAlignment="Stretch"
-                    MouseDown="Slider_OnMouseDown"
-                    MouseUp="Slider_OnMouseUp"
+                    MouseDown="Slider_MouseDown"
+                    MouseUp="Slider_MouseUp"
                     MouseMove="ComponentSliderCanvas_MouseMove">
                 <Border BorderThickness="1" Background="Transparent" BorderBrush="#FFEEEEEE" Width="8" Height="18" Padding="0">
                     <Border BorderThickness="1" Background="Transparent" BorderBrush="#FF555555" Width="6" Height="16"/>
                 </Border>
             </Canvas>
         </ControlTemplate>
-
-        <Style TargetType="Canvas" x:Key="xComponentSliderCanvas">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <EventSetter Event="MouseDown" Handler="Slider_OnMouseDown"/>
-            <EventSetter Event="MouseUp" Handler="Slider_OnMouseUp"/>
-            <EventSetter Event="MouseMove" Handler="ComponentSliderCanvas_MouseMove"/>
-            <EventSetter Event="SizeChanged" Handler="ComponentSliderCanvas_SizeChanged"/>
-        </Style>
     </UserControl.Resources>
 
     <Border Padding="10,10,0,10">
@@ -167,9 +158,9 @@
                     <Rectangle Fill="{Binding Hue, Converter={x:Static controls:HueConverter.Instance}}"/>
                     <Rectangle Fill="{StaticResource ColorBoxBaseBrush}"/>
                     <Canvas Background="Transparent" ClipToBounds="False"
-                                MouseDown="Slider_OnMouseDown"
+                                MouseDown="Slider_MouseDown"
                                 MouseMove="ColorBoxThumb_MouseMove"
-                                MouseUp="Slider_OnMouseUp">
+                                MouseUp="Slider_MouseUp">
                         <Grid x:Name="ColorBoxThumb" Width="12" Height="12">
                             <Ellipse Stroke="White" Width="10" Height="10"/>
                             <Ellipse Stroke="Black"/>
@@ -180,11 +171,8 @@
                 <!-- HueBar -->
                 <Grid Grid.Column="1" Grid.Row="0" RenderOptions.EdgeMode="Aliased" Margin="3,0">
                     <Rectangle Fill="{StaticResource HueVerticalBrush}" Margin="5,0"/>
-                    <Canvas
-                        Background="Transparent"
-                        MouseDown="Slider_OnMouseDown"
-                        MouseMove="HueBarThumb_MouseMove"
-                        MouseUp="Slider_OnMouseUp">
+                    <Canvas x:Name="HueSlider" Background="Transparent"
+                            MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid x:Name="HueThumb"
                               Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}"
                               Height="12">
@@ -200,14 +188,11 @@
                     <Rectangle
                     Fill="{StaticResource TransparentBrush}"
                     OpacityMask="{StaticResource AlphaOpacityMask}" Margin="5,0"/>
-                    <Canvas
-                    Background="Transparent"
-                    MouseDown="Slider_OnMouseDown"
-                    MouseMove="AlphaBarThumb_MouseMove"
-                    MouseUp="Slider_OnMouseUp">
+                    <Canvas x:Name="AlphaSlider" Background="Transparent"
+                            MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid x:Name="AlphaThumb"
-                                  Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}"
-                                  Height="12">
+                              Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}"
+                              Height="12">
                             <Path Data="M0,0 L6,6 L0,12 Z" Fill="White" HorizontalAlignment="Left"/>
                             <Path Data="M5,1 L0,6 L5,11 Z" Fill="White" HorizontalAlignment="Right"/>
                         </Grid>

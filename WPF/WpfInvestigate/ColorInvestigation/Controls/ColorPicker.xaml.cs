@@ -336,7 +336,7 @@ namespace ColorInvestigation.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Slider_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void Slider_MouseDown(object sender, MouseButtonEventArgs e)
         {
             (sender as UIElement).CaptureMouse();
             Keyboard.ClearFocus();
@@ -347,9 +347,41 @@ namespace ColorInvestigation.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Slider_OnMouseUp(object sender, MouseButtonEventArgs e)
+        private void Slider_MouseUp(object sender, MouseButtonEventArgs e)
         {
             (sender as UIElement).ReleaseMouseCapture();
+        }
+
+        private void Slider_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var canvas = sender as Panel;
+                var isVertical = canvas.ActualHeight > canvas.ActualWidth;
+                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
+                var thumb = canvas.Children[0] as FrameworkElement;
+
+                var multiply = isVertical? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
+                multiply = Math.Max(0, Math.Min(1, multiply));
+
+                if (canvas.Name == "HueSlider")
+                {
+
+                }
+                else if (canvas.Name == "AlphaSlider")
+                {
+
+                }
+
+                /*var byteValue = Convert.ToByte(multiply);
+                var control = VisualTreeHelper.GetParent(canvas) as FrameworkElement;
+                if (control.Name == "RControl")
+                    Red = byteValue;
+                else if (control.Name == "GControl")
+                    Green = byteValue;
+                else if (control.Name == "BControl")
+                    Blue = byteValue;*/
+            }
         }
 
         /// <summary>
@@ -588,10 +620,6 @@ namespace ColorInvestigation.Controls
                 else if (control.Name == "BControl")
                     Blue = byteValue;
             }
-        }
-
-        private void ComponentSliderCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
         }
 
         #region ============  Calculated Properties  =================
