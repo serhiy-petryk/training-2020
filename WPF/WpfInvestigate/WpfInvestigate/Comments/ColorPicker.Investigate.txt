@@ -1,0 +1,60 @@
+﻿
+-+ 1. (HSB(HSV)/RGB/LAB/CMYK)1. https://www.codeproject.com/Articles/131708/WPF-Color-Picker-Construction-Kit 2010, 4.96/56v ranking
+	 2 projects: 42 cs files(146K) + 12 xaml(65KB); 16 cs files (46K) + 10 xaml (20K) = 80 files (275K) 
+++ 2. (HSV?HSL/RGBA, Lightness) https://github.com/drogoganor/ColorPickerWPF 65 stars, 2 years old
+	трохи сируватий, third party dll: WriteableBitmapEx.Wpf (?may be replaced)
+	13 cs files (42KB) + 5 xaml (11KB) = 18 files (53KB),  
++ 3. (RGB/HSV) https://github.com/Dirkster99/ColorPickerLib 29 stars, 1 year old
+	2 project(1-multitarget) + add files: 30 cs files (136KB) + 13 xaml (83KB); 1 cs (1KB) + 2 xaml (13KB); 17 cs files (36KB) = 60 files (250KB)
+- 4. (not run) https://github.com/Bluegrams/Colora 13 stars 8 month; > 30 files (140KB)
++++- (very simple, - bad Hue slider, + beatiful icon.png for picker) 5. (RGBA, sliders with colors, unknown palette)
+	https://github.com/sh-akira/ColorPickerWPF 14 stars/16 month; .Net 3.5; 5 cs files (33KB) + 2 xaml (12KB) = 7 files (45KB)
++++ (very simple, + slider with colors, - only RGB, -bad drag on palette) 6. (RGB, sliders with colors) https://github.com/zubetto/ColorControl 12 stars/2 years; 1 cs file (31KB) + 1 xaml (30KB)
+Not checked:
+- (combobox of named colors) 8. https://www.codeproject.com/Articles/140521/Color-Picker-using-WPF-Combobox
+-? 9. (RGBA) https://www.codeproject.com/Articles/33001/WPF-A-Simple-Color-Picker-With-Preview 2012, 4.89/72 ranking, SashaBarber
++-? 10. (no sliders, only color area + predefined colors) https://www.codeproject.com/Articles/52795/WPF-Color-Picker-Like-Office-2007 2010, 4.89/61 ranking
+	7 cs files (36KB) + 1 xaml (20KB)
++++ RGB sliders with current HSL colors 11. (RGBA, color sliders, color area) https://www.codeproject.com/Articles/229442/WPF-Color-Picker-VS2010-Style 2011, 4.83/28 ranking
+-? 12. https://www.codeproject.com/Articles/42849/Making-a-Drop-Down-Style-Custom-Color-Picker-in-WP 2009, 4.90/32 ranking
+		https://archive.codeplex.com/?p=wpfcolorpicker
+!!!!++++ 13. (RGBA/HSB, predefined, mouse pointer, color area) https://github.com/dsafa/wpf-color-picker 4 stars/1 year
+	23 cs files (58KB) + 9 xaml (22KB)
+	external project: WpfScreenHelper (to pickup color under mouse pointer)
+- ? (?+slider style (with circle)) no demo 14. https://github.com/PixiEditor/ColorPicker
+-- 15. (RGBA, named colors in combo, color area) https://github.com/abbaye/WpfColorPicker 3 stars/9 month
+	11 cs files (35KB) + 2 xaml (48KB)
+- 16. https://github.com/ideayuye/ColorPicker
++ (Hexagon palette) 17. (RGB/HSV, sliders, HSV/Hexagon palette) ColorPicker-master-3 https://github.com/nenaaki/ColorPicker 1 star/3 month, Apache licence
+	2 projects: 3 cs files (5KB); 28 cs files (81KB) + 10 xaml (37KB)
+- used xceed 17. https://github.com/johnbritton/ColorPicker 1 star/2 years ago
+- used Prism 18. (RGBA, color area) https://github.com/Mun1z/WPFColorPicker 1 star/2 years ago
+-? 19. https://github.com/varHarrie/ColorPicker
+++++ 20. (RGBA/HSB, area, no slider) https://github.com/MT224244/WpfColorPicker 1 star/2 years, Apache-2.0 License
+	4 files (33K) only dll, no demo
+- 21. https://github.com/steverhall/WpfColorPicker Displays hex color value of pixel underneath cursor.
++? 22.(RGB, -unknown area, -no slider) https://github.com/AndreasLill/ColorPickerWPF 1 star/5 years, Apache-2.0 License
+	3 files (25 KB)
+- 23. https://github.com/Talha-T/AdvancedColorPicker
+
+Summary
+=======
+beatiful icon.png https://github.com/sh-akira/ColorPickerWPF
+slider with colors	customized https://github.com/zubetto/ColorControl
+					(only hue/alpha sliders) https://github.com/dsafa/wpf-color-picker
+					(only hue/alpha sliders) https://github.com/MT224244/WpfColorPicker
+					https://github.com/sh-akira/ColorPickerWPF
+good palette	https://github.com/dsafa/wpf-color-picker
+				https://github.com/zubetto/ColorControl (? palette ellipse)
+				https://github.com/MT224244/WpfColorPicker (? palette ellipse)
+				https://github.com/sh-akira/ColorPickerWPF (circle)
+HSV		https://github.com/MT224244/WpfColorPicker
+HSL(?)	https://github.com/drogoganor/ColorPickerWPF
+RGB sliders with current HSL colors https://www.codeproject.com/Articles/229442/WPF-Color-Picker-VS2010-Style
+									https://github.com/sh-akira/ColorPickerWPF
+
+Color table:
+https://www.codeproject.com/Articles/21965/Color-Picker-with-Color-Wheel-and-Eye-Dropper
+
+
+
