@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using ColorInvestigation.Common;
 
 namespace ColorInvestigation.Views
 {
@@ -22,5 +23,9 @@ namespace ColorInvestigation.Views
             ColorPicker.RestoreColor();
         }
 
+        private void TestButton_Click(object sender, RoutedEventArgs e)
+        {
+            ColorSpacesCheck.RunTests();
+        }
     }
 }

@@ -361,12 +361,14 @@ namespace ColorInvestigation.Controls
                 var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
                 var thumb = canvas.Children[0] as FrameworkElement;
 
-                var multiply = isVertical? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
-                multiply = Math.Max(0, Math.Min(1, multiply));
+                var multiplier = isVertical? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
+                multiplier = Math.Max(0, Math.Min(1, multiplier));
 
                 if (canvas.Name == "HueSlider")
                 {
-
+                    // Canvas.SetTop(thumb, y - (HueThumb.ActualHeight / 2));
+                    var hsl = ColorUtilities.RgbToHsl(_rgb);
+                    _rgb = ColorUtilities.HslToRgb(new Tuple<double, double, double>(multiplier, hsl.Item2, hsl.Item3));
                 }
                 else if (canvas.Name == "AlphaSlider")
                 {

@@ -386,8 +386,60 @@ namespace ColorInvestigation.Lib
         }
         #endregion
 
+        #region ==============  RGB  =======================
+        // RGB, HSL are Tuple<double, double, double> where items are in [0-1] range
         public static Color RgbToColor(Tuple<double, double, double> rgb, double alpha = 255.0) => Color.FromArgb(
             Convert.ToByte(alpha), Convert.ToByte(rgb.Item1), Convert.ToByte(rgb.Item2), Convert.ToByte(rgb.Item3));
         public static Tuple<double, double, double> ColorToRgb(Color color) => new Tuple<double, double, double>(color.R, color.G, color.B);
+
+        public static Tuple<double, double, double> RgbToHsl(Tuple<double, double, double> rgb)
+        {
+            var r = rgb.Item1;
+            var g = rgb.Item2;
+            var b = rgb.Item3;
+            var max = threeway_max(r, g, b);
+            var min = threeway_min(r, g, b);
+            double h = 0.0, s = 0.0, l = (max + min) / 2;
+
+            if (is_equal(max, min))
+                h = s = 0.0; // achromatic
+            else
+            {
+                var d = max - min;
+                s = l > 0.5 ? d / (2.0 - max - min) : d / (max + min);
+                if (is_equal(max, r))
+                    h = (g - b) / d + (g < b ? 6.0 : 0.0);
+                else if (is_equal(max, g))
+                    h = (b - r) / d + 2.0;
+                else if (is_equal(max, b))
+                    h = (r - g) / d + 4.0;
+                h /= 6.0;
+            }
+
+            return new Tuple<double, double, double>(h, s, l);
+        }
+
+        public static Tuple<double, double, double> HslToRgb(Tuple<double, double, double> hsl)
+        {
+            var h = hsl.Item1;
+            var s = hsl.Item2;
+            var l = hsl.Item3;
+            double r, g, b;
+
+            if (is_equal(s, 0.0))
+                r = g = b = l; // achromatic
+            else
+            {
+                var q = l < 0.5 ? l * (1.0 + s) : l + s - l * s;
+                var p = 2.0 * l - q;
+                r = hue2rgb(p, q, h + OneThird);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - OneThird);
+            }
+
+            return new Tuple<double, double, double>(r, g, b);
+        }
+
+        #endregion
     }
 }

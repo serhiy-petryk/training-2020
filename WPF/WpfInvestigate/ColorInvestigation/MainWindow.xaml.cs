@@ -45,7 +45,7 @@ namespace ColorInvestigation
         private void OnGrayScaleButtonClick(object sender, RoutedEventArgs e) => new GrayScale().Show();
         private void OnGrayScaleDiffButtonClick(object sender, RoutedEventArgs e) => new GrayScaleDiff().Show();
         private void OnCalcButtonClick(object sender, RoutedEventArgs e) => Temp.Calc.Calculate();
-        private void OnColorSpacesButtonClick(object sender, RoutedEventArgs e) => new ColorSpaces().Show();
+        private void OnColorSpacesButtonClick(object sender, RoutedEventArgs e) => new ColorSpacesTest().Show();
         private void OnForegroundButtonClick(object sender, RoutedEventArgs e) => new Foreground().Show();
         private void OnForegroundDiffButtonClick(object sender, RoutedEventArgs e) => new ForegroundDiff().Show();
         private void OnMonoChromaticButtonClick(object sender, RoutedEventArgs e) => new MonoChromatic().Show();
