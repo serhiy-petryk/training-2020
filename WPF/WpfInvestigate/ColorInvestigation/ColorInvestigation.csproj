@@ -74,8 +74,8 @@
     <Compile Include="Views\ColorPickerTests.xaml.cs">
       <DependentUpon>ColorPickerTests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ColorSpacesTest.xaml.cs">
-      <DependentUpon>ColorSpacesTest.xaml</DependentUpon>
+    <Compile Include="Views\ColorSpacesForm.xaml.cs">
+      <DependentUpon>ColorSpacesForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Foreground.xaml.cs">
       <DependentUpon>Foreground.xaml</DependentUpon>
@@ -118,7 +118,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ColorSpacesTest.xaml">
+    <Page Include="Views\ColorSpacesForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

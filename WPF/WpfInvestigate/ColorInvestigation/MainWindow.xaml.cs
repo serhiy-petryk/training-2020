@@ -19,9 +19,14 @@ namespace ColorInvestigation
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
-            ColorSpacesTests.HueTest();
-            ColorSpacesTests.HslTest();
-            ColorSpacesTests.HsvTest();
+            var a32 = ColorUtilities.ColorToXyz(Color.FromRgb(0, 0, 0x9E));
+            var a42 = ColorUtilities.ColorToLab(Color.FromRgb(0, 0, 0x20));
+            var rgb = new ColorSpaces.RGB(Color.FromRgb(0, 0, 0x20));
+            var lab = new ColorSpaces.LAB(rgb);
+            // ColorSpacesTests.HueTest();
+            // ColorSpacesTests.HslTest();
+            // ColorSpacesTests.HsvTest();
+            ColorSpacesTests.XyzTest();
 
             var c21 = Color.FromRgb(169, 104, 54);
             var c22 = ColorUtilities.ColorToYCbCr(c21, ColorUtilities.YCbCrStandard.BT601);
@@ -36,7 +41,7 @@ namespace ColorInvestigation
             var a3 = ColorUtilities.XyzToColor(95.047, 100.000, 108.883);
             var a31 = ColorUtilities.XyzToColor(95, 100.000, 109);
 
-            //ColorXyz.Test(); // OK! 
+            // ColorXyz.Test(); // OK! 
             // ColorLab.Test(); // OK! 
         }
 
@@ -45,10 +50,11 @@ namespace ColorInvestigation
         private void OnGrayScaleButtonClick(object sender, RoutedEventArgs e) => new GrayScale().Show();
         private void OnGrayScaleDiffButtonClick(object sender, RoutedEventArgs e) => new GrayScaleDiff().Show();
         private void OnCalcButtonClick(object sender, RoutedEventArgs e) => Temp.Calc.Calculate();
-        private void OnColorSpacesButtonClick(object sender, RoutedEventArgs e) => new ColorSpacesTest().Show();
+        private void OnColorSpacesButtonClick(object sender, RoutedEventArgs e) => new ColorSpacesForm().Show();
         private void OnForegroundButtonClick(object sender, RoutedEventArgs e) => new Foreground().Show();
         private void OnForegroundDiffButtonClick(object sender, RoutedEventArgs e) => new ForegroundDiff().Show();
         private void OnMonoChromaticButtonClick(object sender, RoutedEventArgs e) => new MonoChromatic().Show();
+        private void OnColorPickerButtonClick(object sender, RoutedEventArgs e) => new ColorPickerTests().Show();
 
         private void OnChangeHueClick(object sender, RoutedEventArgs e)
         {

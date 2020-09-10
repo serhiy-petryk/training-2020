@@ -8,9 +8,9 @@ namespace ColorInvestigation.Views
     /// <summary>
     /// Interaction logic for MonoChromatic.xaml
     /// </summary>
-    public partial class ColorSpacesTest : Window
+    public partial class ColorSpacesForm : Window
     {
-        public ColorSpacesTest()
+        public ColorSpacesForm()
         {
             InitializeComponent();
         }
