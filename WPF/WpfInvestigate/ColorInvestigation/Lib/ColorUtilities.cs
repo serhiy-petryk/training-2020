@@ -360,5 +360,34 @@ namespace ColorInvestigation.Lib
             return Color.FromRgb(r, g, b);
         }
         #endregion
+
+        #region ===========  Linear gradient brushes  ====================
+
+        public static LinearGradientBrush GetHueGradientBrush(Color baseColor)
+        {
+            var hsl = ColorToHsl(baseColor);
+            var brush = new LinearGradientBrush();
+            // brush.StartPoint = new Point(0, 0);
+            // brush.EndPoint = new Point(0, 1);
+            for (var i = 0; i < 360; i++)
+                brush.GradientStops.Add(new GradientStop { Color = HslToColor(i / 360.0, hsl.Item2, hsl.Item3), Offset = i / 360.0 });
+            brush.GradientStops.Add(new GradientStop { Color = HslToColor(1, hsl.Item2, hsl.Item3), Offset = 1 });
+            return brush;
+        }
+
+        public static LinearGradientBrush GetHslSaturationGradientBrush(Color baseColor)
+        {
+            var hsl = ColorToHsl(baseColor);
+            var brush = new LinearGradientBrush();
+            for (var i = 0; i < 100; i++)
+                brush.GradientStops.Add(new GradientStop { Color = HslToColor(hsl.Item1, i / 100.0, hsl.Item3), Offset = i / 100.0 });
+            brush.GradientStops.Add(new GradientStop { Color = HslToColor(hsl.Item1, 1, hsl.Item3), Offset = 1 });
+            return brush;
+        }
+        #endregion
+
+        public static Color RgbToColor(Tuple<double, double, double> rgb, double alpha = 255.0) => Color.FromArgb(
+            Convert.ToByte(alpha), Convert.ToByte(rgb.Item1), Convert.ToByte(rgb.Item2), Convert.ToByte(rgb.Item3));
+        public static Tuple<double, double, double> ColorToRgb(Color color) => new Tuple<double, double, double>(color.R, color.G, color.B);
     }
 }
