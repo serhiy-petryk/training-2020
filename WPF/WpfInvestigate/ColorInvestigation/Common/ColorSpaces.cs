@@ -313,7 +313,7 @@ namespace ColorInvestigation.Common
             private static double[,] yCbCrMultipliers = { { 0.114, 0.299 }, { 0.0722, 0.2126 }, { 0.0593, 0.2627 }, { 0.0102, 0.1736 } };
 
             public double y, cB, cR;
-            public YCbCr(RGB rgb, YCbCrStandard yCbCrStandard)
+            public YCbCr(RGB rgb, YCbCrStandard yCbCrStandard = DefaultYCbCr)
             {
                 var kB = yCbCrMultipliers[(int)yCbCrStandard, 0];
                 var kR = yCbCrMultipliers[(int)yCbCrStandard, 1];
@@ -322,7 +322,7 @@ namespace ColorInvestigation.Common
                 cR = 0.5 / (1.0 - kR) * (rgb.R - y);
             }
 
-            public RGB GetRGB(YCbCrStandard yCbCrStandard)
+            public RGB GetRGB(YCbCrStandard yCbCrStandard = DefaultYCbCr)
             {
                 var kB = yCbCrMultipliers[(int)yCbCrStandard, 0];
                 var kR = yCbCrMultipliers[(int)yCbCrStandard, 1];

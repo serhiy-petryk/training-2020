@@ -30,18 +30,35 @@ namespace ColorInvestigation.Controls
     /// </summary>
     public partial class ColorPicker : UserControl, INotifyPropertyChanged
     {
+        private enum UpdateMode { Alpha, RGB, HSL, HSV, XYZ, LAB, YCbCr};
+
+        // Color space values must be independent => we need to have separate object for each color space 
         private ColorSpaces.RGB _rgb = new ColorSpaces.RGB(0, 0, 0);
         private double _alpha = 1.0;
+        private ColorSpaces.HSL _hsl;
+        private ColorSpaces.HSV _hsv;
+        private ColorSpaces.XYZ _xyz;
+        private ColorSpaces.LAB _lab;
+        private ColorSpaces.YCbCr _yCbCr;
 
         private ColorSpaces.RGB _oldRgb = new ColorSpaces.RGB(0, 0, 0);
         private double _oldAlpha = 1.0;
 
         private Color _savedColor;
 
+        // Calculated properties
+        private Color CurrentColor => _rgb.GetColor(_alpha);
+        public Color AlphaMinColor => Color.FromArgb(0, CurrentColor.R, CurrentColor.G, CurrentColor.B);
+        public Color AlphaMaxColor => Color.FromArgb(0xff, CurrentColor.R, CurrentColor.G, CurrentColor.B);
+        public Color RofRgbMinColor => Color.FromArgb(0xff, 0,  CurrentColor.G, CurrentColor.B);
+        public Color RofRgbMaxColor => Color.FromArgb(0xff, 0xff,  CurrentColor.G, CurrentColor.B);
+
+
         // Constructor
         public ColorPicker()
         {
             InitializeComponent();
+            UpdateValue(UpdateMode.RGB);
             _savedColor = _oldRgb.GetColor(_oldAlpha);
         }
 
@@ -69,37 +86,196 @@ namespace ColorInvestigation.Controls
         {
             _oldRgb = new ColorSpaces.RGB(_savedColor);
             _oldAlpha = _savedColor.A;
-            UpdateRgb(_oldRgb, _oldAlpha);
+            xxUpdateRgb(_oldRgb, _oldAlpha);
             OnPropertiesChanged(nameof(Color));
         }
 
-        bool _isUpdating = false;
-        private void UpdateRgb(ColorSpaces.RGB newRgb, double? newAlpha)
+        private void UpdateValue(UpdateMode mode)
         {
-            if (!_isUpdating)
+            // Update rgb object
+            if (mode == UpdateMode.HSL)
             {
-                _isUpdating = true;
+                _rgb = _hsl.GetRGB();
+                _hsv = new ColorSpaces.HSV(_rgb);
+                _hsv.H = _hsl.H;
+            }
+            else if (mode == UpdateMode.HSV)
+            {
+                _rgb = _hsv.GetRGB();
+                _hsl = new ColorSpaces.HSL(_rgb);
+                _hsl.H = _hsv.H;
+            }
+            else if (mode == UpdateMode.XYZ)
+            {
+                _rgb = _xyz.GetRGB();
+                _lab = new ColorSpaces.LAB(_xyz);
+            }
+            else if (mode == UpdateMode.LAB)
+            {
+                _rgb = _lab.GetRGB();
+                _xyz = _lab.GetXYZ();
+            }
+            else if (mode == UpdateMode.YCbCr)
+                _rgb = _yCbCr.GetRGB();
+
+            // Update other objects
+            if (mode != UpdateMode.HSL && mode != UpdateMode.HSV)
+            {
+                _hsl = new ColorSpaces.HSL(_rgb);
+                _hsv = new ColorSpaces.HSV(_rgb);
+            }
+            if (mode != UpdateMode.XYZ && mode != UpdateMode.LAB)
+            {
+                _xyz = new ColorSpaces.XYZ(_rgb);
+                _lab = new ColorSpaces.LAB(_rgb);
+            }
+            if (mode != UpdateMode.YCbCr)
+                _yCbCr = new ColorSpaces.YCbCr(_rgb);
+
+            UpdateUI();
+        }
+
+        bool _xxisUpdating = false;
+        private void xxUpdateRgb(ColorSpaces.RGB newRgb, double? newAlpha)
+        {
+            if (!_xxisUpdating)
+            {
+                _xxisUpdating = true;
                 _rgb = newRgb;
                 _alpha = newAlpha ?? _alpha;
                 UpdateUI();
-                _isUpdating = false;
+                _xxisUpdating = false;
             }
         }
 
         private void UpdateUI()
         {
-            OnPropertiesChanged(nameof(RDarkColor), nameof(RLightColor), nameof(GDarkColor), nameof(GLightColor),
-                nameof(BDarkColor), nameof(BLightColor), nameof(ADarkColor), nameof(ALightColor), nameof(HueOfHslBackground), nameof(HslSaturationBackground));
+            // OnPropertiesChanged(nameof(RDarkColor), nameof(RLightColor), nameof(GDarkColor), nameof(GLightColor),
+               // nameof(BDarkColor), nameof(BLightColor), nameof(ADarkColor), nameof(ALightColor), nameof(HueOfHslBackground), nameof(HslSaturationBackground));
+               OnPropertiesChanged(nameof(ADarkColor), nameof(ALightColor), nameof(RofRgbMinColor), nameof(RofRgbMaxColor));
 
-            RefreshSlider(RControl, Red, 255);
-            RefreshSlider(GControl, Green, 255);
-            RefreshSlider(BControl, Blue, 255);
+            UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
+            UpdateSlider(HueSlider, _hsv.H, 1.0);
 
-            var hsl = ColorUtilities.ColorToHsl(CurrentColor);
+            RefreshSlider(RofRgbSlider, _rgb.R, 1.0);
+            RefreshSlider(GofRgbSlider, _rgb.G, 1.0);
+            RefreshSlider(BofRgbSlider, _rgb.B, 1.0);
+
+            RefreshSlider(HofHslSlider, _hsl.H, 1.0);
+            RefreshSlider(SofHslSlider, _hsl.S, 1.0);
+            RefreshSlider(LofHslSlider, _hsl.L, 1.0);
+
+            /*var hsl = ColorUtilities.ColorToHsl(CurrentColor);
             RefreshSlider(HControl, hsl.Item1 * 360, 360);
-            RefreshSlider(HslSaturationControl, hsl.Item2 * 100, 100);
+            RefreshSlider(HslSaturationControl, hsl.Item2 * 100, 100);*/
 
         }
+
+        #region ==============  Event handlers  ====================
+
+        /// <summary>
+        /// Processing the control size changing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            /*var height = ((Canvas)ColorBoxThumb.Parent).ActualHeight;
+            var width = ((Canvas)ColorBoxThumb.Parent).ActualWidth;
+            Canvas.SetLeft(ColorBoxThumb, (Saturation / 100) * width - (ColorBoxThumb.ActualWidth / 2));
+            Canvas.SetTop(ColorBoxThumb, -((Value / 100) * height) + height - (ColorBoxThumb.ActualHeight / 2));
+
+            height = ((Canvas)HueThumb.Parent).ActualHeight;
+            Canvas.SetTop(HueThumb, (Hue / 100) * height - (HueThumb.ActualHeight / 2));
+
+            height = ((Canvas)AlphaThumb.Parent).ActualHeight;
+            Canvas.SetTop(AlphaThumb, -((Alpha / 100) * height) + height - (AlphaThumb.ActualHeight / 2));
+
+            RefreshUI();*/
+
+            UpdateUI();
+        }
+
+        /// <summary>
+        /// Processing when mouse down on Hue/Alpha sliders
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Slider_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            (sender as UIElement).CaptureMouse();
+            Keyboard.ClearFocus();
+        }
+
+        /// <summary>
+        /// Processing when mouse up on Hue/Alpha sliders
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Slider_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            (sender as UIElement).ReleaseMouseCapture();
+        }
+
+        private void Slider_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var canvas = sender as Panel;
+                var sliderName = string.IsNullOrEmpty(canvas.Name)
+                    ? ((FrameworkElement)VisualTreeHelper.GetParent(canvas)).Name
+                    : canvas.Name;
+
+                var isVertical = canvas.ActualHeight > canvas.ActualWidth;
+                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
+                var thumb = canvas.Children[0] as FrameworkElement;
+
+                var multiplier = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
+                multiplier = Math.Max(0, Math.Min(1, multiplier));
+
+                if (sliderName == "HueSlider")
+                {
+                    _hsv.H = multiplier;
+                    UpdateValue(UpdateMode.HSV);
+                }
+                else if (canvas.Name == "AlphaSlider")
+                {
+                    _alpha = 1.0 - multiplier;
+                    UpdateValue(UpdateMode.Alpha);
+                }
+                else if (sliderName == "RofRgbSlider")
+                {
+                    _rgb.R = multiplier;
+                    UpdateValue(UpdateMode.RGB);
+                }
+                else if (sliderName == "GofRgbSlider")
+                {
+                    _rgb.G = multiplier;
+                    UpdateValue(UpdateMode.RGB);
+                }
+                else if (sliderName == "BofRgbSlider")
+                {
+                    _rgb.B = multiplier;
+                    UpdateValue(UpdateMode.RGB);
+                }
+                else if (sliderName == "HofHslSlider")
+                {
+                    _hsl.H = multiplier;
+                    UpdateValue(UpdateMode.HSL);
+                }
+                else if (sliderName == "SofHslSlider")
+                {
+                    _hsl.S = multiplier;
+                    UpdateValue(UpdateMode.HSL);
+                }
+                else if (sliderName == "LofHslSlider")
+                {
+                    _hsl.L = multiplier;
+                    UpdateValue(UpdateMode.HSL);
+                }
+            }
+        }
+        #endregion
 
         #region ===========  Properties  ==============
         #endregion
@@ -306,87 +482,9 @@ namespace ColorInvestigation.Controls
         }
         #endregion  ==========================
 
+        #region  =========  Event handlers  ==========
         private bool IsCalcHSV = false;
         private bool IsCalcRGB = false;
-
-        #region ==============  Event handlers  ====================
-
-        /// <summary>
-        /// Processing the control size changing
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            var height = ((Canvas)ColorBoxThumb.Parent).ActualHeight;
-            var width = ((Canvas)ColorBoxThumb.Parent).ActualWidth;
-            Canvas.SetLeft(ColorBoxThumb, (Saturation / 100) * width - (ColorBoxThumb.ActualWidth / 2));
-            Canvas.SetTop(ColorBoxThumb, -((Value / 100) * height) + height - (ColorBoxThumb.ActualHeight / 2));
-
-            height = ((Canvas)HueThumb.Parent).ActualHeight;
-            Canvas.SetTop(HueThumb, (Hue / 100) * height - (HueThumb.ActualHeight / 2));
-
-            height = ((Canvas)AlphaThumb.Parent).ActualHeight;
-            Canvas.SetTop(AlphaThumb, -((Alpha / 100) * height) + height - (AlphaThumb.ActualHeight / 2));
-
-            RefreshUI();
-        }
-
-        /// <summary>
-        /// Processing when mouse down on Hue/Alpha sliders
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Slider_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            (sender as UIElement).CaptureMouse();
-            Keyboard.ClearFocus();
-        }
-
-        /// <summary>
-        /// Processing when mouse up on Hue/Alpha sliders
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Slider_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            (sender as UIElement).ReleaseMouseCapture();
-        }
-
-        private void Slider_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                var canvas = sender as Panel;
-                var isVertical = canvas.ActualHeight > canvas.ActualWidth;
-                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
-                var thumb = canvas.Children[0] as FrameworkElement;
-
-                var multiplier = isVertical? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
-                multiplier = Math.Max(0, Math.Min(1, multiplier));
-
-                if (canvas.Name == "HueSlider")
-                {
-                    // Canvas.SetTop(thumb, y - (HueThumb.ActualHeight / 2));
-                    var hsl = new ColorSpaces.HSL(_rgb);
-                    hsl.H = multiplier;
-                    _rgb = hsl.GetRGB();
-                }
-                else if (canvas.Name == "AlphaSlider")
-                {
-
-                }
-
-                /*var byteValue = Convert.ToByte(multiply);
-                var control = VisualTreeHelper.GetParent(canvas) as FrameworkElement;
-                if (control.Name == "RControl")
-                    Red = byteValue;
-                else if (control.Name == "GControl")
-                    Green = byteValue;
-                else if (control.Name == "BControl")
-                    Blue = byteValue;*/
-            }
-        }
 
         /// <summary>
         /// Processing mouse moving for Hue slider
@@ -541,7 +639,7 @@ namespace ColorInvestigation.Controls
                 Value = (max / 255.0) * 100;
 
                 AfterBrush = new SolidColorBrush(Color.FromArgb((byte)((Alpha / 100.0) * 255), Red, Green, Blue));
-                RefreshUI();
+                xxRefreshUI();
             }
 
             IsCalcHSV = false;
@@ -597,7 +695,7 @@ namespace ColorInvestigation.Controls
                 }
 
                 AfterBrush = new SolidColorBrush(Color.FromArgb((byte)((Alpha / 100) * 255), Red, Green, Blue));
-                RefreshUI();
+                xxRefreshUI();
             }
 
             IsCalcRGB = false;
@@ -617,17 +715,16 @@ namespace ColorInvestigation.Controls
                 var byteValue = Convert.ToByte(value);
 
                 var control = VisualTreeHelper.GetParent(canvas) as FrameworkElement;
-                if (control.Name == "RControl")
+                if (control.Name == "RofRgbSlider")
                     Red = byteValue;
-                else if (control.Name == "GControl")
+                else if (control.Name == "GofRgbSlider")
                     Green = byteValue;
-                else if (control.Name == "BControl")
+                else if (control.Name == "BofRgbSlider")
                     Blue = byteValue;
             }
         }
 
         #region ============  Calculated Properties  =================
-        private Color CurrentColor => AfterBrush.Color;
         public Color RDarkColor => Color.FromArgb(0xff, 0, CurrentColor.G, CurrentColor.B);
         public Color RLightColor => Color.FromArgb(0xff, 0xff, CurrentColor.G, CurrentColor.B);
         public Color GDarkColor => Color.FromArgb(0xff, CurrentColor.R, 0, CurrentColor.B);
@@ -653,20 +750,21 @@ namespace ColorInvestigation.Controls
         #region ===========  INotifyPropertyChanged  ===============
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void RefreshUI()
+        private void xxRefreshUI()
         {
-            UpdateRgb(new ColorSpaces.RGB(CurrentColor.R, CurrentColor.G, CurrentColor.B ), CurrentColor.A);
+            return;
+            xxUpdateRgb(new ColorSpaces.RGB(CurrentColor.R, CurrentColor.G, CurrentColor.B ), CurrentColor.A);
 
             OnPropertiesChanged(nameof(RDarkColor), nameof(RLightColor), nameof(GDarkColor), nameof(GLightColor),
                 nameof(BDarkColor), nameof(BLightColor), nameof(ADarkColor), nameof(ALightColor), nameof(HueOfHslBackground), nameof(HslSaturationBackground));
 
-            RefreshSlider(RControl, Red, 255);
-            RefreshSlider(GControl, Green, 255);
-            RefreshSlider(BControl, Blue, 255);
+            RefreshSlider(RofRgbSlider, Red, 255);
+            RefreshSlider(GofRgbSlider, Green, 255);
+            RefreshSlider(BofRgbSlider, Blue, 255);
 
             var hsl = ColorUtilities.ColorToHsl(CurrentColor);
-            RefreshSlider(HControl, hsl.Item1 * 360, 360);
-            RefreshSlider(HslSaturationControl, hsl.Item2 * 100, 100);
+            // RefreshSlider(HControl, hsl.Item1 * 360, 360);
+            // RefreshSlider(HslSaturationControl, hsl.Item2 * 100, 100);
 
         }
 
@@ -681,9 +779,9 @@ namespace ColorInvestigation.Controls
         private void RefreshSlider(Control control, double value, double maxValue)
         {
             if (VisualTreeHelper.GetChildrenCount(control) > 0)
-                RefreshSlider(VisualTreeHelper.GetChild(control, 0) as Panel, value, maxValue);
+                UpdateSlider(VisualTreeHelper.GetChild(control, 0) as Panel, value, maxValue);
         }
-        private double RefreshSlider(Panel panel, double value, double maxValue)
+        private void UpdateSlider(Panel panel, double value, double maxValue)
         {
             if (VisualTreeHelper.GetChildrenCount(panel) > 0)
             {
@@ -695,13 +793,10 @@ namespace ColorInvestigation.Controls
                 }
                 else
                 {   // vertical slider
-                    var x = (panel.ActualHeight - thumb.ActualHeight) * value / maxValue;
-                    return x;
-                    // Canvas.SetTop(thumb, x);
+                    var x = panel.ActualHeight * value / maxValue - thumb.ActualHeight/2;
+                    Canvas.SetTop(thumb, x);
                 }
             }
-
-            return 0;
         }
     }
 }

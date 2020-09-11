@@ -128,7 +128,7 @@
             <Canvas Background="Transparent" VerticalAlignment="Stretch"
                     MouseDown="Slider_MouseDown"
                     MouseUp="Slider_MouseUp"
-                    MouseMove="ComponentSliderCanvas_MouseMove">
+                    MouseMove="Slider_MouseMove">
                 <Border BorderThickness="1" Background="Transparent" BorderBrush="#FFEEEEEE" Width="8" Height="18" Padding="0">
                     <Border BorderThickness="1" Background="Transparent" BorderBrush="#FF555555" Width="6" Height="16"/>
                 </Border>
@@ -157,7 +157,7 @@
                 <Grid Grid.Column="0" Grid.Row="0" RenderOptions.EdgeMode="Aliased" Margin="0,0,5,0">
                     <Rectangle Fill="{Binding Hue, Converter={x:Static controls:HueConverter.Instance}}"/>
                     <Rectangle Fill="{StaticResource ColorBoxBaseBrush}"/>
-                    <Canvas Background="Transparent" ClipToBounds="False"
+                    <Canvas x:Name="ColorBox" Background="Transparent" ClipToBounds="False"
                                 MouseDown="Slider_MouseDown"
                                 MouseMove="ColorBoxThumb_MouseMove"
                                 MouseUp="Slider_MouseUp">
@@ -301,11 +301,11 @@
                 <Border Grid.Row="1" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                            <GradientStop Offset="0" Color="{Binding RDarkColor}" />
-                            <GradientStop Offset="1" Color="{Binding RLightColor}" />
+                            <GradientStop Offset="0" Color="{Binding RofRgbMinColor}" />
+                            <GradientStop Offset="1" Color="{Binding RofRgbMaxColor}" />
                         </LinearGradientBrush>
                     </Border.Background>
-                    <Control Name="RControl" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
+                    <Control Name="RofRgbSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
                 </Border>
                 <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource ValueEditor}"
                                  Text="{Binding Red, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -319,7 +319,7 @@
                             <GradientStop Offset="1" Color="{Binding GLightColor}" />
                         </LinearGradientBrush>
                     </Border.Background>
-                    <Control Name="GControl" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
+                    <Control Name="GofRgbSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
                 </Border>
                 <TextBox Grid.Row="2" Grid.Column="2" Style="{StaticResource ValueEditor}"
                                  Text="{Binding Green, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -333,7 +333,7 @@
                             <GradientStop Offset="1" Color="{Binding BLightColor}" />
                         </LinearGradientBrush>
                     </Border.Background>
-                    <Control Name="BControl" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
+                    <Control Name="BofRgbSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
                 </Border>
                 <TextBox Grid.Row="3" Grid.Column="2" Style="{StaticResource ValueEditor}"
                                  Text="{Binding Blue, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -345,7 +345,7 @@
                 <Label Grid.Row="5" Grid.Column="0" Foreground="White" Content="H"/>
                 <Border Grid.Row="5" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0"
                             Background="{Binding HueOfHslBackground}">
-                    <Control Name="HControl" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
+                    <Control Name="HofHslSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
                 </Border>
                 <TextBox Grid.Row="5" Grid.Column="2" Style="{StaticResource ValueEditor}"
                              Text="{Binding Red, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -353,13 +353,23 @@
 
                 <Label Grid.Row="6" Grid.Column="0" Foreground="White" Content="S"/>
                 <Border Grid.Row="6" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0"
-                            Background="{Binding HslSaturationBackground}">
-                    <Control Name="HslSaturationControl" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
+                        Background="{Binding HslSaturationBackground}">
+                    <Control Name="SofHslSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
                 </Border>
                 <TextBox Grid.Row="6" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                             Text="{Binding HslSaturation, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             TextChanged="RGB_TextChanged" />
+                         Text="{Binding HslSaturation, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         TextChanged="RGB_TextChanged" />
                 <Label Grid.Row="6" Grid.Column="3" Foreground="White" Content="%"/>
+
+                <Label Grid.Row="7" Grid.Column="0" Foreground="White" Content="L"/>
+                <Border Grid.Row="7" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0"
+                        Background="{Binding HslSaturationBackground}">
+                    <Control Name="LofHslSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
+                </Border>
+                <TextBox Grid.Row="7" Grid.Column="2" Style="{StaticResource ValueEditor}"
+                         Text="{Binding HslSaturation, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         TextChanged="RGB_TextChanged" />
+                <Label Grid.Row="7" Grid.Column="3" Foreground="White" Content="%"/>
 
                 <!-- HSV -->
                 <TextBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4" Margin="0 5 0 4" Style="{StaticResource Label}"
