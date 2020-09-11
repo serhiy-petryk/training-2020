@@ -95,6 +95,10 @@ namespace ColorInvestigation.Common
         {
             public double H, S, L;
 
+            public HSL(double h, double s, double l)
+            {
+                H = h; S = s; L = l;
+            }
             public HSL(RGB rgb)
             {
                 var max = threeway_max(rgb.R, rgb.G, rgb.B);
@@ -253,7 +257,11 @@ namespace ColorInvestigation.Common
             // b*: from blue (−) to yellow (+) component [-127.5, 127.5]
             public double L, A, B;
 
-            public LAB(RGB rgb):this(new XYZ(rgb)) {}
+            public LAB(double l, double a, double b)
+            {
+                L = l; A = a; B = b;
+            }
+            public LAB(RGB rgb) : this(new XYZ(rgb)) { }
 
             public LAB(XYZ xyz)
             {
@@ -313,23 +321,29 @@ namespace ColorInvestigation.Common
             // Cb: blue-difference chroma component [-0.5, 0.5],
             // Cr: red-difference chroma component [-0.5, 0.5]
 
-            private const YCbCrStandard DefaultYCbCr = YCbCrStandard.BT709;
+            private const YCbCrStandard DefaultYCbCrStandard = YCbCrStandard.BT709;
             private static double[,] yCbCrMultipliers = { { 0.114, 0.299 }, { 0.0722, 0.2126 }, { 0.0593, 0.2627 }, { 0.0102, 0.1736 } };
 
             public double y, cB, cR;
-            public YCbCr(RGB rgb, YCbCrStandard yCbCrStandard = DefaultYCbCr)
+            public YCbCrStandard Standard = DefaultYCbCrStandard;
+            public YCbCr(double y, double cB, double cR)
             {
-                var kB = yCbCrMultipliers[(int)yCbCrStandard, 0];
-                var kR = yCbCrMultipliers[(int)yCbCrStandard, 1];
+                this.y = y; this.cB = cB; this.cR = cR;
+            }
+            public YCbCr(RGB rgb, YCbCrStandard standard = DefaultYCbCrStandard)
+            {
+                var kB = yCbCrMultipliers[(int)standard, 0];
+                var kR = yCbCrMultipliers[(int)standard, 1];
                 y = kR * rgb.R + (1 - kR - kB) * rgb.G + kB * rgb.B;
                 cB = 0.5 / (1.0 - kB) * (rgb.B - y);
                 cR = 0.5 / (1.0 - kR) * (rgb.R - y);
+                Standard = standard;
             }
 
-            public RGB GetRGB(YCbCrStandard yCbCrStandard = DefaultYCbCr)
+            public RGB GetRGB()
             {
-                var kB = yCbCrMultipliers[(int)yCbCrStandard, 0];
-                var kR = yCbCrMultipliers[(int)yCbCrStandard, 1];
+                var kB = yCbCrMultipliers[(int)Standard, 0];
+                var kR = yCbCrMultipliers[(int)Standard, 1];
                 var r = Math.Min(1.0, Math.Max(0.0, y + (1 - kR) / 0.5 * cR));
                 var g = Math.Min(1.0, Math.Max(0.0, y - 2 * kB * (1 - kB) / (1 - kB - kR) * cB - 2 * kR * (1 - kR) / (1 - kB - kR) * cR));
                 var b = Math.Min(1.0, Math.Max(0.0, y + (1 - kB) / 0.5 * cB));
@@ -343,8 +357,8 @@ namespace ColorInvestigation.Common
             /// <returns>Gray level representation: double [0, 1]</returns>
             public static double GetGrayLevel(RGB rgb)
             {
-                var kB = yCbCrMultipliers[(int)DefaultYCbCr, 0];
-                var kR = yCbCrMultipliers[(int)DefaultYCbCr, 1];
+                var kB = yCbCrMultipliers[(int)DefaultYCbCrStandard, 0];
+                var kR = yCbCrMultipliers[(int)DefaultYCbCrStandard, 1];
                 return kR * rgb.R + (1.0 - kB - kR) * rgb.G + kB * rgb.B;
             }
 

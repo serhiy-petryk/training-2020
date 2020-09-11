@@ -16,6 +16,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -30,16 +31,16 @@ namespace ColorInvestigation.Controls
     /// </summary>
     public partial class ColorPicker : UserControl, INotifyPropertyChanged
     {
-        private enum UpdateMode { Alpha, RGB, HSL, HSV, XYZ, LAB, YCbCr};
+        private enum UpdateMode { RGB, HSL, HSV, XYZ, LAB, YCbCr};
 
         // Color space values must be independent => we need to have separate object for each color space 
-        private ColorSpaces.RGB _rgb = new ColorSpaces.RGB(0, 0, 0);
         private double _alpha = 1.0;
-        private ColorSpaces.HSL _hsl;
-        private ColorSpaces.HSV _hsv;
-        private ColorSpaces.XYZ _xyz;
-        private ColorSpaces.LAB _lab;
-        private ColorSpaces.YCbCr _yCbCr;
+        private ColorSpaces.RGB _rgb = new ColorSpaces.RGB(0, 0, 0);
+        private ColorSpaces.HSL _hsl = new ColorSpaces.HSL(0,0,0);
+        private ColorSpaces.HSV _hsv = new ColorSpaces.HSV(0,0,0);
+        private ColorSpaces.XYZ _xyz= new ColorSpaces.XYZ(0,0,0);
+        private ColorSpaces.LAB _lab = new ColorSpaces.LAB(0, 0, 0);
+        private ColorSpaces.YCbCr _yCbCr = new ColorSpaces.YCbCr(0, 0, 0);
 
         private ColorSpaces.RGB _oldRgb = new ColorSpaces.RGB(0, 0, 0);
         private double _oldAlpha = 1.0;
@@ -53,18 +54,11 @@ namespace ColorInvestigation.Controls
         {
             get
             {
-                    _hueBrush.Color = new ColorSpaces.HSV(_hsv?.H ?? 0.0, 1, 1).GetRGB().GetColor();
+                _hueBrush.Color = new ColorSpaces.HSV(_hsv.H, 1, 1).GetRGB().GetColor();
                 return _hueBrush;
             }
         }
         private Color CurrentColor => _rgb.GetColor(_alpha);
-        public Color RofRgbMinColor => Color.FromArgb(0xff, 0, CurrentColor.G, CurrentColor.B);
-        public Color RofRgbMaxColor => Color.FromArgb(0xff, 0xff, CurrentColor.G, CurrentColor.B);
-        public Color GofRgbMinColor => Color.FromArgb(0xff, CurrentColor.R, 0, CurrentColor.B);
-        public Color GofRgbMaxColor => Color.FromArgb(0xff, CurrentColor.R, 0xFF, CurrentColor.B);
-        public Color BofRgbMinColor => Color.FromArgb(0xff, CurrentColor.R, CurrentColor.G, 0);
-        public Color BofRgbMaxColor => Color.FromArgb(0xff, CurrentColor.R, CurrentColor.G, 0xff);
-
 
         // Constructor
         public ColorPicker()
@@ -162,9 +156,10 @@ namespace ColorInvestigation.Controls
 
         private void UpdateUI()
         {
-            // OnPropertiesChanged(nameof(RDarkColor), nameof(RLightColor), nameof(GDarkColor), nameof(GLightColor),
-               // nameof(BDarkColor), nameof(BLightColor), nameof(ADarkColor), nameof(ALightColor), nameof(HueOfHslBackground), nameof(HslSaturationBackground));
-               OnPropertiesChanged(nameof(HueBrush), nameof(RofRgbMinColor), nameof(RofRgbMaxColor), nameof(GofRgbMinColor), nameof(GofRgbMaxColor), nameof(BofRgbMinColor), nameof(BofRgbMaxColor));
+            OnPropertiesChanged(nameof(HueBrush));
+
+            UpdateRgbBrushes();
+            UpdateHslBrushes();
 
             UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
             UpdateSlider(HueSlider, _hsv.H, 1.0);
@@ -253,7 +248,7 @@ namespace ColorInvestigation.Controls
                 else if (canvas.Name == "AlphaSlider")
                 {
                     _alpha = 1.0 - multiplier;
-                    UpdateValue(UpdateMode.Alpha);
+                    UpdateUI();
                 }
                 else if (sliderName == "RofRgbSlider")
                 {
@@ -810,5 +805,59 @@ namespace ColorInvestigation.Controls
                 }
             }
         }
+
+        #region ===========  Linear gradient brushes  ====================
+        public LinearGradientBrush RofRgbBrush { get; } = CreateLinearGradientBrush(1);
+        public LinearGradientBrush GofRgbBrush { get; } = CreateLinearGradientBrush(1);
+        public LinearGradientBrush BofRgbBrush { get; } = CreateLinearGradientBrush(1);
+        public LinearGradientBrush HofHslBrush { get; } = CreateLinearGradientBrush(360);
+        public LinearGradientBrush SofHslBrush { get; } = CreateLinearGradientBrush(100);
+        public LinearGradientBrush LofHslBrush { get; } = CreateLinearGradientBrush(100);
+        public LinearGradientBrush HofHsvBrush { get; } = CreateLinearGradientBrush(360);
+        public LinearGradientBrush SofHsvBrush { get; } = CreateLinearGradientBrush(100);
+        public LinearGradientBrush VofHsvBrush { get; } = CreateLinearGradientBrush(100);
+
+        private static LinearGradientBrush CreateLinearGradientBrush(int gradientCount) => new LinearGradientBrush(
+            new GradientStopCollection(Enumerable.Range(0, gradientCount + 1)
+                .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / gradientCount))));
+
+        private void UpdateRgbBrushes()
+        {
+            RofRgbBrush.GradientStops[0].Color = Color.FromRgb(0, CurrentColor.G, CurrentColor.B);
+            RofRgbBrush.GradientStops[1].Color = Color.FromRgb(0xFF, CurrentColor.G, CurrentColor.B);
+
+            GofRgbBrush.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, 0,CurrentColor.B);
+            GofRgbBrush.GradientStops[1].Color = Color.FromRgb(CurrentColor.R,0xFF, CurrentColor.B);
+
+            BofRgbBrush.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0);
+            BofRgbBrush.GradientStops[1].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0xFF);
+
+            OnPropertiesChanged(nameof(RofRgbBrush), nameof(GofRgbBrush), nameof(BofRgbBrush));
+        }
+
+        private void UpdateHslBrushes()
+        {
+            for (var i = 0; i <= 360; i++)
+                HofHslBrush.GradientStops[i].Color = new ColorSpaces.HSL(i / 360.0, _hsl.S, _hsl.L).GetRGB().GetColor();
+            for (var i = 0; i <= 100; i++)
+            {
+                SofHslBrush.GradientStops[i].Color = new ColorSpaces.HSL(_hsl.H, i / 100.0, _hsl.L).GetRGB().GetColor();
+                LofHslBrush.GradientStops[i].Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, i / 100.0).GetRGB().GetColor();
+            }
+            OnPropertiesChanged(nameof(HofHslBrush), nameof(SofHslBrush), nameof(LofHslBrush));
+        }
+
+        private void UpdateHsvBrushes()
+        {
+            for (var i = 0; i <= 360; i++)
+                HofHsvBrush.GradientStops[i].Color = new ColorSpaces.HSV(i / 360.0, _hsv.S, _hsv.V).GetRGB().GetColor();
+            for (var i = 0; i <= 100; i++)
+            {
+                SofHsvBrush.GradientStops[i].Color = new ColorSpaces.HSV(_hsv.H, i / 100.0, _hsv.V).GetRGB().GetColor();
+                VofHsvBrush.GradientStops[i].Color = new ColorSpaces.HSV(_hsv.H, _hsv.S, i / 100.0).GetRGB().GetColor();
+            }
+            OnPropertiesChanged(nameof(HofHsvBrush), nameof(SofHsvBrush), nameof(VofHsvBrush));
+        }
+        #endregion
     }
 }

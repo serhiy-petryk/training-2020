@@ -157,7 +157,7 @@ namespace ColorInvestigation.Common
             {
                 var rgb = new ColorSpaces.RGB(color);
                 var yCbCr = new ColorSpaces.YCbCr(rgb, yCbCrStandard);
-                var rgb2 = yCbCr.GetRGB(yCbCrStandard);
+                var rgb2 = yCbCr.GetRGB();
                 if (!AreRGBEqual(rgb, rgb2))
                     throw new Exception($"CheckYCbCr error. Color: {color}. RGB: {rgb}. RGB2: {rgb2}. yCbCrStandard: {yCbCrStandard}");
             }

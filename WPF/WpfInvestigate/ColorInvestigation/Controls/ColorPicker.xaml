@@ -298,13 +298,7 @@
                 <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Label}"
                          Text="RGB (Red[0-255], Green[0-255], Blue[0-255])" HorizontalAlignment="Stretch" Background="#FF555555"/>
                 <Label Grid.Row="1" Grid.Column="0" Foreground="White" Content="R"/>
-                <Border Grid.Row="1" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                            <GradientStop Offset="0" Color="{Binding RofRgbMinColor}" />
-                            <GradientStop Offset="1" Color="{Binding RofRgbMaxColor}" />
-                        </LinearGradientBrush>
-                    </Border.Background>
+                <Border Grid.Row="1" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding RofRgbBrush}">
                     <Control Name="RofRgbSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
                 </Border>
                 <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource ValueEditor}"
@@ -312,13 +306,7 @@
                                  TextChanged="RGB_TextChanged" />
 
                 <Label Grid.Row="2" Grid.Column="0" Foreground="White" Content="G"/>
-                <Border Grid.Row="2" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                            <GradientStop Offset="0" Color="{Binding GofRgbMinColor}" />
-                            <GradientStop Offset="1" Color="{Binding GofRgbMaxColor}" />
-                        </LinearGradientBrush>
-                    </Border.Background>
+                <Border Grid.Row="2" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding GofRgbBrush}">
                     <Control Name="GofRgbSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
                 </Border>
                 <TextBox Grid.Row="2" Grid.Column="2" Style="{StaticResource ValueEditor}"
@@ -326,13 +314,7 @@
                                  TextChanged="RGB_TextChanged" />
 
                 <Label Grid.Row="3" Grid.Column="0" Foreground="White" Content="B"/>
-                <Border Grid.Row="3" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                            <GradientStop Offset="0" Color="{Binding BofRgbMinColor}" />
-                            <GradientStop Offset="1" Color="{Binding BofRgbMaxColor}" />
-                        </LinearGradientBrush>
-                    </Border.Background>
+                <Border Grid.Row="3" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding BofRgbBrush}">
                     <Control Name="BofRgbSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
                 </Border>
                 <TextBox Grid.Row="3" Grid.Column="2" Style="{StaticResource ValueEditor}"
@@ -344,7 +326,7 @@
                          Text="HSL (Hue[0-360], Saturation[0-100], Lightness[0-100])" HorizontalAlignment="Stretch" Background="#FF555555"/>
                 <Label Grid.Row="5" Grid.Column="0" Foreground="White" Content="H"/>
                 <Border Grid.Row="5" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0"
-                            Background="{Binding HueOfHslBackground}">
+                            Background="{Binding HofHslBrush}">
                     <Control Name="HofHslSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
                 </Border>
                 <TextBox Grid.Row="5" Grid.Column="2" Style="{StaticResource ValueEditor}"
@@ -353,7 +335,7 @@
 
                 <Label Grid.Row="6" Grid.Column="0" Foreground="White" Content="S"/>
                 <Border Grid.Row="6" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0"
-                        Background="{Binding HslSaturationBackground}">
+                        Background="{Binding SofHslBrush}">
                     <Control Name="SofHslSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
                 </Border>
                 <TextBox Grid.Row="6" Grid.Column="2" Style="{StaticResource ValueEditor}"
@@ -363,7 +345,7 @@
 
                 <Label Grid.Row="7" Grid.Column="0" Foreground="White" Content="L"/>
                 <Border Grid.Row="7" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0"
-                        Background="{Binding HslSaturationBackground}">
+                        Background="{Binding LofHslBrush}">
                     <Control Name="LofHslSlider" Template="{StaticResource ComponentSliderCanvasTemplate}"/>
                 </Border>
                 <TextBox Grid.Row="7" Grid.Column="2" Style="{StaticResource ValueEditor}"
