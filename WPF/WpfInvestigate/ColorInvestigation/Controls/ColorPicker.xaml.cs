@@ -160,6 +160,7 @@ namespace ColorInvestigation.Controls
 
             UpdateRgbBrushes();
             UpdateHslBrushes();
+            UpdateHsvBrushes();
 
             UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
             UpdateSlider(HueSlider, _hsv.H, 1.0);
@@ -171,6 +172,10 @@ namespace ColorInvestigation.Controls
             RefreshSlider(HofHslSlider, _hsl.H, 1.0);
             RefreshSlider(SofHslSlider, _hsl.S, 1.0);
             RefreshSlider(LofHslSlider, _hsl.L, 1.0);
+
+            RefreshSlider(HofHsvSlider, _hsv.H, 1.0);
+            RefreshSlider(SofHsvSlider, _hsv.S, 1.0);
+            RefreshSlider(VofHsvSlider, _hsv.V, 1.0);
 
             /*var hsl = ColorUtilities.ColorToHsl(CurrentColor);
             RefreshSlider(HControl, hsl.Item1 * 360, 360);
@@ -240,45 +245,60 @@ namespace ColorInvestigation.Controls
                 var multiplier = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
                 multiplier = Math.Max(0, Math.Min(1, multiplier));
 
-                if (sliderName == "HueSlider")
+                if (sliderName == nameof(HueSlider))
                 {
                     _hsv.H = multiplier;
                     UpdateValue(UpdateMode.HSV);
                 }
-                else if (canvas.Name == "AlphaSlider")
+                else if (canvas.Name == nameof(AlphaSlider))
                 {
                     _alpha = 1.0 - multiplier;
                     UpdateUI();
                 }
-                else if (sliderName == "RofRgbSlider")
+                else if (sliderName == nameof(RofRgbSlider))
                 {
                     _rgb.R = multiplier;
                     UpdateValue(UpdateMode.RGB);
                 }
-                else if (sliderName == "GofRgbSlider")
+                else if (sliderName == nameof(GofRgbSlider))
                 {
                     _rgb.G = multiplier;
                     UpdateValue(UpdateMode.RGB);
                 }
-                else if (sliderName == "BofRgbSlider")
+                else if (sliderName == nameof(BofRgbSlider))
                 {
                     _rgb.B = multiplier;
                     UpdateValue(UpdateMode.RGB);
                 }
-                else if (sliderName == "HofHslSlider")
+                else if (sliderName == nameof(HofHslSlider))
                 {
                     _hsl.H = multiplier;
                     UpdateValue(UpdateMode.HSL);
                 }
-                else if (sliderName == "SofHslSlider")
+                else if (sliderName == nameof(SofHslSlider))
                 {
                     _hsl.S = multiplier;
                     UpdateValue(UpdateMode.HSL);
                 }
-                else if (sliderName == "LofHslSlider")
+                else if (sliderName == nameof(LofHslSlider))
                 {
                     _hsl.L = multiplier;
                     UpdateValue(UpdateMode.HSL);
+                }
+                else if (sliderName == nameof(HofHsvSlider))
+                {
+                    _hsv.H = multiplier;
+                    UpdateValue(UpdateMode.HSV);
+                }
+                else if (sliderName == nameof(SofHsvSlider))
+                {
+                    _hsv.S = multiplier;
+                    UpdateValue(UpdateMode.HSV);
+                }
+                else if (sliderName == nameof(VofHsvSlider))
+                {
+                    _hsv.V = multiplier;
+                    UpdateValue(UpdateMode.HSV);
                 }
             }
         }
