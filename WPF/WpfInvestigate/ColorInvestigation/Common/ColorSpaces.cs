@@ -249,9 +249,10 @@ namespace ColorInvestigation.Common
             // b*: from blue (−) to yellow (+) component [-127.5, 127.5]
             public double L, A, B;
 
-            public LAB(RGB rgb)
+            public LAB(RGB rgb):this(new XYZ(rgb)) {}
+
+            public LAB(XYZ xyz)
             {
-                var xyz = new XYZ(rgb);
                 var white = XyzWhiteReference;
 
                 var x = PivotXyz(xyz.X / white.X);
@@ -263,7 +264,9 @@ namespace ColorInvestigation.Common
                 B = 200 * (y - z);
             }
 
-            public RGB GetRGB()
+            public RGB GetRGB() => GetXYZ().GetRGB();
+
+            public XYZ GetXYZ()
             {
                 var y = (L + 16.0) / 116.0;
                 var x = A / 500.0 + y;
@@ -278,8 +281,7 @@ namespace ColorInvestigation.Common
                                ? Math.Pow(((L + 16.0) / 116.0), 3)
                                : L / Kappa);
                 var xyzZ = white.Z * (z3 > Epsilon ? z3 : (z - 16.0 / 116.0) / 7.787);
-                var xyz = new XYZ(xyzX, xyzY, xyzZ);
-                return xyz.GetRGB();
+                return new XYZ(xyzX, xyzY, xyzZ);
             }
 
             public override string ToString() => $"L: {L}, A: {A}, B: {B}";

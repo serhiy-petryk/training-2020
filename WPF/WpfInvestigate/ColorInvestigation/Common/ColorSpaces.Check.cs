@@ -12,9 +12,24 @@ namespace ColorInvestigation.Common
             // CheckHSL();
             // CheckHSV();
             // CheckXYZ();
-            CheckLAB();
+            // CheckLAB();
             // CheckYCbCr();
         }
+
+        private static void CheckColorRange()
+        {
+            var step = 0.1;
+            var lab = new ColorSpaces.LAB(new ColorSpaces.RGB(0, 0, 0));
+            for (var k1 = 0.0; k1 <= 100.00001; k1 += step)
+            for (var k2 = -127.5; k2 <= 127.5000001; k2 += step)
+            for (var k3 = -127.5; k3 <= 127.5000001; k3 += step)
+            {
+                lab.L = k1;
+                lab.A = k2;
+                lab.B = k3;
+            }
+        }
+
 
         private const double DefaultPrecision = 0.0001;
         private static bool IsEqual(double d1, double d2) => Math.Abs(d1 - d2) < DefaultPrecision;

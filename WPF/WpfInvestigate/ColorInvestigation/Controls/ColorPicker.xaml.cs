@@ -20,6 +20,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using ColorInvestigation.Common;
 using ColorInvestigation.Lib;
 
 namespace ColorInvestigation.Controls
@@ -29,11 +30,11 @@ namespace ColorInvestigation.Controls
     /// </summary>
     public partial class ColorPicker : UserControl, INotifyPropertyChanged
     {
-        private Tuple<double, double, double> _rgb = new Tuple<double, double, double>(0, 0, 0);
-        private double _alpha = 255;
+        private ColorSpaces.RGB _rgb = new ColorSpaces.RGB(0, 0, 0);
+        private double _alpha = 1.0;
 
-        private Tuple<double, double, double> _oldRgb = new Tuple<double, double, double>(0, 0, 0);
-        private double _oldAlpha = 255;
+        private ColorSpaces.RGB _oldRgb = new ColorSpaces.RGB(0, 0, 0);
+        private double _oldAlpha = 1.0;
 
         private Color _savedColor;
 
@@ -41,15 +42,15 @@ namespace ColorInvestigation.Controls
         public ColorPicker()
         {
             InitializeComponent();
-            _savedColor = ColorUtilities.RgbToColor(_oldRgb, _oldAlpha);
+            _savedColor = _oldRgb.GetColor(_oldAlpha);
         }
 
         public Color Color
         {
-            get => ColorUtilities.RgbToColor(_oldRgb, _oldAlpha);
+            get => _oldRgb.GetColor(_oldAlpha);
             set
             {
-                _rgb = ColorUtilities.ColorToRgb(value);
+                _rgb = new ColorSpaces.RGB(value);
                 _alpha = value.A;
                 SaveColor();
                 UpdateUI();
@@ -58,7 +59,7 @@ namespace ColorInvestigation.Controls
 
         public void SaveColor()
         {
-            _savedColor = ColorUtilities.RgbToColor(_oldRgb, _oldAlpha);
+            _savedColor = _oldRgb.GetColor(_oldAlpha);
             _oldRgb = _rgb;
             _oldAlpha = _alpha;
             OnPropertiesChanged(nameof(Color));
@@ -66,14 +67,14 @@ namespace ColorInvestigation.Controls
 
         public void RestoreColor()
         {
-            _oldRgb = ColorUtilities.ColorToRgb(_savedColor);
+            _oldRgb = new ColorSpaces.RGB(_savedColor);
             _oldAlpha = _savedColor.A;
             UpdateRgb(_oldRgb, _oldAlpha);
             OnPropertiesChanged(nameof(Color));
         }
 
         bool _isUpdating = false;
-        private void UpdateRgb(Tuple<double, double, double> newRgb, double? newAlpha)
+        private void UpdateRgb(ColorSpaces.RGB newRgb, double? newAlpha)
         {
             if (!_isUpdating)
             {
@@ -367,8 +368,9 @@ namespace ColorInvestigation.Controls
                 if (canvas.Name == "HueSlider")
                 {
                     // Canvas.SetTop(thumb, y - (HueThumb.ActualHeight / 2));
-                    var hsl = ColorUtilities.RgbToHsl(_rgb);
-                    _rgb = ColorUtilities.HslToRgb(new Tuple<double, double, double>(multiplier, hsl.Item2, hsl.Item3));
+                    var hsl = new ColorSpaces.HSL(_rgb);
+                    hsl.H = multiplier;
+                    _rgb = hsl.GetRGB();
                 }
                 else if (canvas.Name == "AlphaSlider")
                 {
@@ -653,7 +655,7 @@ namespace ColorInvestigation.Controls
 
         private void RefreshUI()
         {
-            UpdateRgb(new Tuple<double, double, double>(CurrentColor.R, CurrentColor.G, CurrentColor.B ), CurrentColor.A);
+            UpdateRgb(new ColorSpaces.RGB(CurrentColor.R, CurrentColor.G, CurrentColor.B ), CurrentColor.A);
 
             OnPropertiesChanged(nameof(RDarkColor), nameof(RLightColor), nameof(GDarkColor), nameof(GLightColor),
                 nameof(BDarkColor), nameof(BLightColor), nameof(ADarkColor), nameof(ALightColor), nameof(HueOfHslBackground), nameof(HslSaturationBackground));
