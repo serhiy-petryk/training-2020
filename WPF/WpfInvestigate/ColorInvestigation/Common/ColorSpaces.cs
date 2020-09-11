@@ -147,6 +147,10 @@ namespace ColorInvestigation.Common
         {
             public double H, S, V;
 
+            public HSV(double h, double s, double v)
+            {
+                H = h; S = s; V = v;
+            }
             public HSV(RGB rgb)
             {
                 var max = threeway_max(rgb.R, rgb.G, rgb.B);

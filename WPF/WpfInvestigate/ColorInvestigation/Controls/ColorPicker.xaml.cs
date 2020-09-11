@@ -46,12 +46,24 @@ namespace ColorInvestigation.Controls
 
         private Color _savedColor;
 
+
         // Calculated properties
+        private readonly SolidColorBrush _hueBrush = new SolidColorBrush();
+        public Brush HueBrush
+        {
+            get
+            {
+                    _hueBrush.Color = new ColorSpaces.HSV(_hsv?.H ?? 0.0, 1, 1).GetRGB().GetColor();
+                return _hueBrush;
+            }
+        }
         private Color CurrentColor => _rgb.GetColor(_alpha);
-        public Color AlphaMinColor => Color.FromArgb(0, CurrentColor.R, CurrentColor.G, CurrentColor.B);
-        public Color AlphaMaxColor => Color.FromArgb(0xff, CurrentColor.R, CurrentColor.G, CurrentColor.B);
-        public Color RofRgbMinColor => Color.FromArgb(0xff, 0,  CurrentColor.G, CurrentColor.B);
-        public Color RofRgbMaxColor => Color.FromArgb(0xff, 0xff,  CurrentColor.G, CurrentColor.B);
+        public Color RofRgbMinColor => Color.FromArgb(0xff, 0, CurrentColor.G, CurrentColor.B);
+        public Color RofRgbMaxColor => Color.FromArgb(0xff, 0xff, CurrentColor.G, CurrentColor.B);
+        public Color GofRgbMinColor => Color.FromArgb(0xff, CurrentColor.R, 0, CurrentColor.B);
+        public Color GofRgbMaxColor => Color.FromArgb(0xff, CurrentColor.R, 0xFF, CurrentColor.B);
+        public Color BofRgbMinColor => Color.FromArgb(0xff, CurrentColor.R, CurrentColor.G, 0);
+        public Color BofRgbMaxColor => Color.FromArgb(0xff, CurrentColor.R, CurrentColor.G, 0xff);
 
 
         // Constructor
@@ -152,7 +164,7 @@ namespace ColorInvestigation.Controls
         {
             // OnPropertiesChanged(nameof(RDarkColor), nameof(RLightColor), nameof(GDarkColor), nameof(GLightColor),
                // nameof(BDarkColor), nameof(BLightColor), nameof(ADarkColor), nameof(ALightColor), nameof(HueOfHslBackground), nameof(HslSaturationBackground));
-               OnPropertiesChanged(nameof(ADarkColor), nameof(ALightColor), nameof(RofRgbMinColor), nameof(RofRgbMaxColor));
+               OnPropertiesChanged(nameof(HueBrush), nameof(RofRgbMinColor), nameof(RofRgbMaxColor), nameof(GofRgbMinColor), nameof(GofRgbMaxColor), nameof(BofRgbMinColor), nameof(BofRgbMaxColor));
 
             UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
             UpdateSlider(HueSlider, _hsv.H, 1.0);
