@@ -162,7 +162,10 @@ namespace ColorInvestigation.Controls
 
         private void UpdateUI()
         {
-            OnPropertiesChanged(nameof(HueBrush), nameof(_rgb), nameof(GofRgbValue));
+            OnPropertiesChanged(nameof(HueBrush), nameof(_rgb),
+                nameof(RofRgbValue), nameof(GofRgbValue), nameof(BofRgbValue),
+                nameof(HofHslValue), nameof(SofHslValue), nameof(LofHslValue),
+                nameof(HofHsvValue), nameof(SofHsvValue), nameof(VofHsvValue));
 
             UpdateRgbBrushes();
             UpdateHslBrushes();
@@ -897,8 +900,15 @@ namespace ColorInvestigation.Controls
                 {"RofRgbValue", Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
                 {"GofRgbValue", Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
                 {"BofRgbValue", Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
+                {"HofHslValue", Tuple.Create(0.0, 360.0, UpdateMode.HSL)},
+                {"SofHslValue", Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
+                {"LofHslValue", Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
+                {"HofHsvValue", Tuple.Create(0.0, 360.0, UpdateMode.HSV)},
+                {"SofHsvValue", Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
+                {"VofHsvValue", Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
             };
 
+        // RGB
         public double RofRgbValue
         {
             get => _rgb.R * 255;
@@ -913,6 +923,40 @@ namespace ColorInvestigation.Controls
         {
             get => _rgb.B * 255;
             set => _rgb.B = value / 255.0;
+        }
+
+        // HSL
+        public double HofHslValue
+        {
+            get => _hsl.H * 360;
+            set => _hsl.H = value / 360.0;
+        }
+        public double SofHslValue
+        {
+            get => _hsl.S * 100;
+            set => _hsl.S = value / 100.0;
+        }
+        public double LofHslValue
+        {
+            get => _hsl.L * 100;
+            set => _hsl.L = value / 100.0;
+        }
+
+        // HSV
+        public double HofHsvValue
+        {
+            get => _hsv.H * 360;
+            set => _hsv.H = value / 360.0;
+        }
+        public double SofHsvValue
+        {
+            get => _hsv.S * 100;
+            set => _hsv.S = value / 100.0;
+        }
+        public double VofHsvValue
+        {
+            get => _hsv.V * 100;
+            set => _hsv.V = value / 100.0;
         }
 
         private void ValueEditor_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
