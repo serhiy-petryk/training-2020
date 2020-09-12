@@ -14,17 +14,14 @@
 // +8. Size changed => how Hue don't change
 
 using ColorInvestigation.Common;
-using ColorInvestigation.Lib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -65,6 +62,19 @@ namespace ColorInvestigation.Controls
         }
         public Color CurrentColor => _rgb.GetColor(_alpha);
 
+        // Original color
+        public Color Color
+        {
+            get => _oldRgb.GetColor(_oldAlpha);
+            set
+            {
+                _rgb = new ColorSpaces.RGB(value);
+                _alpha = value.A / 255.0;
+                SaveColor();
+                UpdateUI();
+            }
+        }
+
         // Constructor
         public ColorPicker()
         {
@@ -73,34 +83,22 @@ namespace ColorInvestigation.Controls
             _savedColor = _oldRgb.GetColor(_oldAlpha);
         }
 
-        public Color Color
-        {
-            get => _oldRgb.GetColor(_oldAlpha);
-            set
-            {
-                _rgb = new ColorSpaces.RGB(value);
-                _alpha = value.A;
-                SaveColor();
-                UpdateUI();
-            }
-        }
-
         public void SaveColor()
         {
             _savedColor = _oldRgb.GetColor(_oldAlpha);
-            _oldRgb = _rgb;
+            _oldRgb = new ColorSpaces.RGB(_rgb.GetColor());
             _oldAlpha = _alpha;
-            OnPropertiesChanged(nameof(Color));
+            OnPropertiesChanged(nameof(Color), nameof(CurrentColor));
         }
 
         public void RestoreColor()
         {
             _oldRgb = new ColorSpaces.RGB(_savedColor);
-            _oldAlpha = _savedColor.A;
+            _oldAlpha = _savedColor.A / 255.0;
             _rgb = new ColorSpaces.RGB(_savedColor);
-            _alpha = _savedColor.A;
+            _alpha = _savedColor.A / 255.0;
             UpdateValue(UpdateMode.RGB);
-            OnPropertiesChanged(nameof(Color));
+            OnPropertiesChanged(nameof(Color), nameof(CurrentColor));
         }
 
         private void UpdateValue(UpdateMode mode)
