@@ -13,16 +13,21 @@
 // 7. Process value when mouse is clicked
 // +8. Size changed => how Hue don't change
 
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 using ColorInvestigation.Common;
 using ColorInvestigation.Lib;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace ColorInvestigation.Controls
 {
@@ -31,14 +36,15 @@ namespace ColorInvestigation.Controls
     /// </summary>
     public partial class ColorPicker : UserControl, INotifyPropertyChanged
     {
-        private enum UpdateMode { RGB, HSL, HSV, XYZ, LAB, YCbCr};
+        private CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
+        private enum UpdateMode { RGB, HSL, HSV, XYZ, LAB, YCbCr };
 
         // Color space values must be independent => we need to have separate object for each color space 
         private double _alpha = 1.0;
-        private ColorSpaces.RGB _rgb = new ColorSpaces.RGB(0, 0, 0);
-        private ColorSpaces.HSL _hsl = new ColorSpaces.HSL(0,0,0);
-        private ColorSpaces.HSV _hsv = new ColorSpaces.HSV(0,0,0);
-        private ColorSpaces.XYZ _xyz= new ColorSpaces.XYZ(0,0,0);
+        private ColorSpaces.RGB _rgb { get; set; } = new ColorSpaces.RGB(0, 0, 0);
+        private ColorSpaces.HSL _hsl = new ColorSpaces.HSL(0, 0, 0);
+        private ColorSpaces.HSV _hsv = new ColorSpaces.HSV(0, 0, 0);
+        private ColorSpaces.XYZ _xyz = new ColorSpaces.XYZ(0, 0, 0);
         private ColorSpaces.LAB _lab = new ColorSpaces.LAB(0, 0, 0);
         private ColorSpaces.YCbCr _yCbCr = new ColorSpaces.YCbCr(0, 0, 0);
 
@@ -156,7 +162,7 @@ namespace ColorInvestigation.Controls
 
         private void UpdateUI()
         {
-            OnPropertiesChanged(nameof(HueBrush));
+            OnPropertiesChanged(nameof(HueBrush), nameof(_rgb), nameof(GofRgbValue));
 
             UpdateRgbBrushes();
             UpdateHslBrushes();
@@ -311,7 +317,7 @@ namespace ColorInvestigation.Controls
         /// Input Brush
         /// </summary>
         public static readonly DependencyProperty BeforeBrushProperty = DependencyProperty.Register(nameof(BeforeBrush),
-            typeof(SolidColorBrush), typeof(ColorPicker), new PropertyMetadata(Brushes.Black, (obj, e)=>
+            typeof(SolidColorBrush), typeof(ColorPicker), new PropertyMetadata(Brushes.Black, (obj, e) =>
             {
                 var cp = obj as ColorPicker;
                 cp.AfterBrush = cp.BeforeBrush;
@@ -333,7 +339,7 @@ namespace ColorInvestigation.Controls
         /// Hue
         /// </summary>
         public static readonly DependencyProperty HueProperty = DependencyProperty.Register(nameof(Hue),
-            typeof(double), typeof(ColorPicker), new PropertyMetadata(0d, (obj, e)=> 
+            typeof(double), typeof(ColorPicker), new PropertyMetadata(0d, (obj, e) =>
             {
                 var cp = obj as ColorPicker;
                 var height = ((Canvas)cp.HueThumb.Parent).ActualHeight;
@@ -345,7 +351,7 @@ namespace ColorInvestigation.Controls
         /// Saturation
         /// </summary>
         public static readonly DependencyProperty SaturationProperty = DependencyProperty.Register(nameof(Saturation),
-            typeof(double), typeof(ColorPicker), new PropertyMetadata(0d, (obj, e)=>
+            typeof(double), typeof(ColorPicker), new PropertyMetadata(0d, (obj, e) =>
             {
                 var cp = obj as ColorPicker;
                 var width = ((Canvas)cp.ColorBoxThumb.Parent).ActualWidth;
@@ -357,7 +363,7 @@ namespace ColorInvestigation.Controls
         /// Value
         /// </summary>
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value),
-            typeof(double), typeof(ColorPicker), new PropertyMetadata(0d, (obj, e)=>
+            typeof(double), typeof(ColorPicker), new PropertyMetadata(0d, (obj, e) =>
             {
                 var cp = obj as ColorPicker;
                 var height = ((Canvas)cp.ColorBoxThumb.Parent).ActualHeight;
@@ -369,7 +375,7 @@ namespace ColorInvestigation.Controls
         /// AlphaProperty
         /// </summary>
         public static readonly DependencyProperty AlphaProperty = DependencyProperty.Register(nameof(Alpha),
-            typeof(double), typeof(ColorPicker), new PropertyMetadata(100d, (obj, e)=>
+            typeof(double), typeof(ColorPicker), new PropertyMetadata(100d, (obj, e) =>
             {
                 var cp = obj as ColorPicker;
                 var height = ((Canvas)cp.AlphaThumb.Parent).ActualHeight;
@@ -381,7 +387,7 @@ namespace ColorInvestigation.Controls
         /// RedProperty
         /// </summary>
         public static readonly DependencyProperty RedProperty = DependencyProperty.Register(nameof(Red),
-            typeof(byte), typeof(ColorPicker), new PropertyMetadata((byte)0, (obj, e)=>
+            typeof(byte), typeof(ColorPicker), new PropertyMetadata((byte)0, (obj, e) =>
             {
                 var cp = obj as ColorPicker;
                 cp.CalcHSV();
@@ -622,12 +628,15 @@ namespace ColorInvestigation.Controls
         /// <param name="e"></param>
         private void RGB_TextChanged(object sender, TextChangedEventArgs e)
         {
+            BindingExpression bindingExpression = ((TextBox)sender).GetBindingExpression(TextBox.TextProperty);
+            return;
             if (int.TryParse((sender as TextBox).Text, out int num))
             {
                 if (num > 255) (sender as TextBox).Text = "255";
                 else if (num < 0) (sender as TextBox).Text = "0";
             }
             else (sender as TextBox).Text = "0";
+            UpdateValue(UpdateMode.RGB);
         }
 
         #endregion
@@ -780,7 +789,7 @@ namespace ColorInvestigation.Controls
         private void xxRefreshUI()
         {
             return;
-            xxUpdateRgb(new ColorSpaces.RGB(CurrentColor.R, CurrentColor.G, CurrentColor.B ), CurrentColor.A);
+            xxUpdateRgb(new ColorSpaces.RGB(CurrentColor.R, CurrentColor.G, CurrentColor.B), CurrentColor.A);
 
             OnPropertiesChanged(nameof(RDarkColor), nameof(RLightColor), nameof(GDarkColor), nameof(GLightColor),
                 nameof(BDarkColor), nameof(BLightColor), nameof(ADarkColor), nameof(ALightColor), nameof(HueOfHslBackground), nameof(HslSaturationBackground));
@@ -820,7 +829,7 @@ namespace ColorInvestigation.Controls
                 }
                 else
                 {   // vertical slider
-                    var x = panel.ActualHeight * value / maxValue - thumb.ActualHeight/2;
+                    var x = panel.ActualHeight * value / maxValue - thumb.ActualHeight / 2;
                     Canvas.SetTop(thumb, x);
                 }
             }
@@ -846,8 +855,8 @@ namespace ColorInvestigation.Controls
             RofRgbBrush.GradientStops[0].Color = Color.FromRgb(0, CurrentColor.G, CurrentColor.B);
             RofRgbBrush.GradientStops[1].Color = Color.FromRgb(0xFF, CurrentColor.G, CurrentColor.B);
 
-            GofRgbBrush.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, 0,CurrentColor.B);
-            GofRgbBrush.GradientStops[1].Color = Color.FromRgb(CurrentColor.R,0xFF, CurrentColor.B);
+            GofRgbBrush.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, 0, CurrentColor.B);
+            GofRgbBrush.GradientStops[1].Color = Color.FromRgb(CurrentColor.R, 0xFF, CurrentColor.B);
 
             BofRgbBrush.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0);
             BofRgbBrush.GradientStops[1].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0xFF);
@@ -879,5 +888,62 @@ namespace ColorInvestigation.Controls
             OnPropertiesChanged(nameof(HofHsvBrush), nameof(SofHsvBrush), nameof(VofHsvBrush));
         }
         #endregion
+
+        #region ===============  TextBox values  ===================
+
+        private static readonly Dictionary<string, Tuple<double, double, UpdateMode>> ValueMetadata =
+            new Dictionary<string, Tuple<double, double, UpdateMode>>
+            {
+                {"RofRgbValue", Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
+                {"GofRgbValue", Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
+                {"BofRgbValue", Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
+            };
+
+        public double RofRgbValue
+        {
+            get => _rgb.R * 255;
+            set => _rgb.R = value / 255.0;
+        }
+        public double GofRgbValue
+        {
+            get => _rgb.G * 255;
+            set => _rgb.G = value / 255.0;
+        }
+        public double BofRgbValue
+        {
+            get => _rgb.B * 255;
+            set => _rgb.B = value / 255.0;
+        }
+
+        private void ValueEditor_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var box = (TextBox)sender;
+            var bindingExpression = box.GetBindingExpression(TextBox.TextProperty);
+            var propertyName = bindingExpression.ParentBinding.Path.Path;
+            var metaData = ValueMetadata[propertyName];
+
+            if (double.TryParse(box.Text, NumberStyles.Any, CurrentCulture, out var value))
+            {
+                if (value < metaData.Item1) box.Text = metaData.Item1.ToString(CurrentCulture);
+                else if (value > metaData.Item2) box.Text = metaData.Item2.ToString(CurrentCulture);
+            }
+            else box.Text = "0";
+            UpdateValue(metaData.Item3);
+        }
+
+        #endregion
+
+        private void ValueEditor_OnGotFocus(object sender, RoutedEventArgs e) => ((TextBox)sender).SelectAll();
+
+        private void ValueEditor_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // select all text on got focus: see BillBR comment in https://stackoverflow.com/questions/660554/how-to-automatically-select-all-text-on-focus-in-wpf-textbox
+            var textBox = (TextBox)sender;
+            if (!textBox.IsKeyboardFocusWithin)
+            {
+                e.Handled = true;
+                textBox.Focus();
+            }
+        }
     }
 }

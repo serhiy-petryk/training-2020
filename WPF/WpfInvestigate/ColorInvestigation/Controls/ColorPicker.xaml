@@ -117,7 +117,11 @@
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="HorizontalContentAlignment" Value="Right"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <EventSetter Event="GotFocus" Handler="ValueEditor_OnGotFocus"/>
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ValueEditor_OnPreviewMouseLeftButtonDown"/>
+            <EventSetter Event="PreviewTextInput" Handler="ValueEditor_OnPreviewTextInput"/>
         </Style>
+
         <Style TargetType="TextBox" x:Key="Label">
             <Setter Property="Focusable" Value="False"/>
             <Setter Property="IsTabStop" Value="False"/>
@@ -307,25 +311,21 @@
                     <Control Name="RofRgbSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
                 </Border>
                 <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                                 Text="{Binding RofRgbValue, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 TextChanged="Component_TextChanged" />
+                         Text="{Binding RofRgbValue, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="2" Grid.Column="0" Foreground="White" Content="G"/>
                 <Border Grid.Row="2" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding GofRgbBrush}">
                     <Control Name="GofRgbSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
                 </Border>
                 <TextBox Grid.Row="2" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                                 Text="{Binding GofRgbValue, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 TextChanged="Component_TextChanged" />
+                                 Text="{Binding GofRgbValue, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="3" Grid.Column="0" Foreground="White" Content="B"/>
                 <Border Grid.Row="3" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding BofRgbBrush}">
                     <Control Name="BofRgbSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
                 </Border>
                 <TextBox Grid.Row="3" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                                 Text="{Binding BofRgbValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 PreviewTextInput="ValueBox_OnPreviewTextInput"
-                                 TextChanged="Component_TextChanged" />
+                                 Text="{Binding BofRgbValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- HSL -->
                 <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 4" Style="{StaticResource Label}"
@@ -336,8 +336,7 @@
                     <Control Name="HofHslSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
                 </Border>
                 <TextBox Grid.Row="5" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                             Text="{Binding Red, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             TextChanged="RGB_TextChanged" />
+                             Text="{Binding Red, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="6" Grid.Column="0" Foreground="White" Content="S"/>
                 <Border Grid.Row="6" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0"
@@ -345,8 +344,7 @@
                     <Control Name="SofHslSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
                 </Border>
                 <TextBox Grid.Row="6" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding HslSaturation, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         TextChanged="RGB_TextChanged" />
+                         Text="{Binding HslSaturation, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="6" Grid.Column="3" Foreground="White" Content="%"/>
 
                 <Label Grid.Row="7" Grid.Column="0" Foreground="White" Content="L"/>
@@ -355,8 +353,7 @@
                     <Control Name="LofHslSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
                 </Border>
                 <TextBox Grid.Row="7" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding HslSaturation, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         TextChanged="RGB_TextChanged" />
+                         Text="{Binding HslSaturation, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="7" Grid.Column="3" Foreground="White" Content="%"/>
 
                 <!-- HSV -->
@@ -367,16 +364,14 @@
                     <Control Name="HofHsvSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
                 </Border>
                 <TextBox Grid.Row="9" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Red, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         TextChanged="RGB_TextChanged" />
+                         Text="{Binding Red, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="10" Grid.Column="0" Foreground="White" Content="S"/>
                 <Border Grid.Row="10" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding SofHsvBrush}">
                     <Control Name="SofHsvSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
                 </Border>
                 <TextBox Grid.Row="10" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding HslSaturation, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         TextChanged="RGB_TextChanged" />
+                         Text="{Binding HslSaturation, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="10" Grid.Column="3" Foreground="White" Content="%"/>
 
                 <Label Grid.Row="11" Grid.Column="0" Foreground="White" Content="V/B"/>
@@ -384,8 +379,7 @@
                     <Control Name="VofHsvSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
                 </Border>
                 <TextBox Grid.Row="11" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding HslSaturation, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         TextChanged="RGB_TextChanged" />
+                         Text="{Binding HslSaturation, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="11" Grid.Column="3" Foreground="White" Content="%"/>
 
                 <!-- LAB -->
