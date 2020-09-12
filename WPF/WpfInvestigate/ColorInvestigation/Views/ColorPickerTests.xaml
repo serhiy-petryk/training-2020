@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:ColorInvestigation.Controls"
         mc:Ignorable="d"
-        Title="ColorPickerTests" Height="450" Width="800">
+        Title="ColorPickerTests" Height="700" Width="800">
 
     <Grid>
         <Grid.ColumnDefinitions>

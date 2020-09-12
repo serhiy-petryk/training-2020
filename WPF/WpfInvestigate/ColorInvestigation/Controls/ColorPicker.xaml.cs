@@ -27,7 +27,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace ColorInvestigation.Controls
 {
@@ -45,7 +44,7 @@ namespace ColorInvestigation.Controls
         private ColorSpaces.HSL _hsl = new ColorSpaces.HSL(0, 0, 0);
         private ColorSpaces.HSV _hsv = new ColorSpaces.HSV(0, 0, 0);
         private ColorSpaces.XYZ _xyz = new ColorSpaces.XYZ(0, 0, 0);
-        private ColorSpaces.LAB _lab = new ColorSpaces.LAB(0, 0, 0);
+        private ColorSpaces.LAB _lab = new ColorSpaces.LAB(0, -127.5, -127.5);
         private ColorSpaces.YCbCr _yCbCr = new ColorSpaces.YCbCr(0, 0, 0);
 
         private ColorSpaces.RGB _oldRgb = new ColorSpaces.RGB(0, 0, 0);
@@ -165,11 +164,13 @@ namespace ColorInvestigation.Controls
             OnPropertiesChanged(nameof(HueBrush), nameof(_rgb),
                 nameof(RofRgbValue), nameof(GofRgbValue), nameof(BofRgbValue),
                 nameof(HofHslValue), nameof(SofHslValue), nameof(LofHslValue),
-                nameof(HofHsvValue), nameof(SofHsvValue), nameof(VofHsvValue));
+                nameof(HofHsvValue), nameof(SofHsvValue), nameof(VofHsvValue),
+                nameof(LofLabValue), nameof(AofLabValue), nameof(BofLabValue));
 
             UpdateRgbBrushes();
             UpdateHslBrushes();
             UpdateHsvBrushes();
+            UpdateLabBrushes();
 
             UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
             UpdateSlider(HueSlider, _hsv.H, 1.0);
@@ -185,6 +186,10 @@ namespace ColorInvestigation.Controls
             RefreshSlider(HofHsvSlider, _hsv.H, 1.0);
             RefreshSlider(SofHsvSlider, _hsv.S, 1.0);
             RefreshSlider(VofHsvSlider, _hsv.V, 1.0);
+
+            RefreshSlider(LofLabSlider, _lab.L, 100.0);
+            RefreshSlider(AofLabSlider, _lab.A + 127.5, 255.0);
+            RefreshSlider(BofLabSlider, _lab.B + 127.5, 255.0);
 
             /*var hsl = ColorUtilities.ColorToHsl(CurrentColor);
             RefreshSlider(HControl, hsl.Item1 * 360, 360);
@@ -308,6 +313,21 @@ namespace ColorInvestigation.Controls
                 {
                     _hsv.V = multiplier;
                     UpdateValue(UpdateMode.HSV);
+                }
+                else if (sliderName == nameof(LofLabSlider))
+                {
+                    _lab.L = multiplier * 100;
+                    UpdateValue(UpdateMode.LAB);
+                }
+                else if (sliderName == nameof(AofLabSlider))
+                {
+                    _lab.A = multiplier * 255 - 127.5;
+                    UpdateValue(UpdateMode.LAB);
+                }
+                else if (sliderName == nameof(BofLabSlider))
+                {
+                    _lab.B = multiplier * 255 - 127.5;
+                    UpdateValue(UpdateMode.LAB);
                 }
             }
         }
@@ -848,6 +868,9 @@ namespace ColorInvestigation.Controls
         public LinearGradientBrush HofHsvBrush { get; } = CreateLinearGradientBrush(360);
         public LinearGradientBrush SofHsvBrush { get; } = CreateLinearGradientBrush(100);
         public LinearGradientBrush VofHsvBrush { get; } = CreateLinearGradientBrush(100);
+        public LinearGradientBrush LofLabBrush { get; } = CreateLinearGradientBrush(100);
+        public LinearGradientBrush AofLabBrush { get; } = CreateLinearGradientBrush(255);
+        public LinearGradientBrush BofLabBrush { get; } = CreateLinearGradientBrush(255);
 
         private static LinearGradientBrush CreateLinearGradientBrush(int gradientCount) => new LinearGradientBrush(
             new GradientStopCollection(Enumerable.Range(0, gradientCount + 1)
@@ -890,6 +913,19 @@ namespace ColorInvestigation.Controls
             }
             OnPropertiesChanged(nameof(HofHsvBrush), nameof(SofHsvBrush), nameof(VofHsvBrush));
         }
+
+        private void UpdateLabBrushes()
+        {
+            for (var i = 0; i <= 100; i++)
+                LofLabBrush.GradientStops[i].Color = new ColorSpaces.LAB(i, _lab.A, _lab.B).GetRGB().GetColor();
+            for (var i = 0; i <= 255; i++)
+            {
+                AofLabBrush.GradientStops[i].Color = new ColorSpaces.LAB(_lab.L, i - 127.5, _lab.B).GetRGB().GetColor();
+                BofLabBrush.GradientStops[i].Color = new ColorSpaces.LAB(_lab.L, _lab.A, i - 127.5).GetRGB().GetColor();
+            }
+            OnPropertiesChanged(nameof(LofLabBrush), nameof(AofLabBrush), nameof(BofLabBrush));
+        }
+
         #endregion
 
         #region ===============  TextBox values  ===================
@@ -897,15 +933,18 @@ namespace ColorInvestigation.Controls
         private static readonly Dictionary<string, Tuple<double, double, UpdateMode>> ValueMetadata =
             new Dictionary<string, Tuple<double, double, UpdateMode>>
             {
-                {"RofRgbValue", Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
-                {"GofRgbValue", Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
-                {"BofRgbValue", Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
-                {"HofHslValue", Tuple.Create(0.0, 360.0, UpdateMode.HSL)},
-                {"SofHslValue", Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
-                {"LofHslValue", Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
-                {"HofHsvValue", Tuple.Create(0.0, 360.0, UpdateMode.HSV)},
-                {"SofHsvValue", Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
-                {"VofHsvValue", Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
+                {nameof(RofRgbValue), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
+                {nameof(GofRgbValue), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
+                {nameof(BofRgbValue), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
+                {nameof(HofHslValue), Tuple.Create(0.0, 360.0, UpdateMode.HSL)},
+                {nameof(SofHslValue), Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
+                {nameof(LofHslValue), Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
+                {nameof(HofHsvValue), Tuple.Create(0.0, 360.0, UpdateMode.HSV)},
+                {nameof(SofHsvValue), Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
+                {nameof(VofHsvValue), Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
+                {nameof(LofLabValue), Tuple.Create(0.0, 100.0, UpdateMode.LAB)},
+                {nameof(AofLabValue), Tuple.Create(-127.5, 127.5, UpdateMode.LAB)},
+                {nameof(BofLabValue), Tuple.Create(-127.5, 127.5, UpdateMode.LAB)},
             };
 
         // RGB
@@ -957,6 +996,23 @@ namespace ColorInvestigation.Controls
         {
             get => _hsv.V * 100;
             set => _hsv.V = value / 100.0;
+        }
+
+        // LAB
+        public double LofLabValue
+        {
+            get => _lab.L;
+            set => _lab.L = value;
+        }
+        public double AofLabValue
+        {
+            get => _lab.A;
+            set => _lab.A = value;
+        }
+        public double BofLabValue
+        {
+            get => _lab.B;
+            set => _lab.B = value;
         }
 
         private void ValueEditor_OnPreviewTextInput(object sender, TextCompositionEventArgs e)

@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300"
              d:DesignWidth="600"
-             MinHeight="300"
+             MinHeight="700"
              MinWidth="300"
              SnapsToDevicePixels="True"
              UseLayoutRounding="True"
@@ -388,6 +388,28 @@
                 <!-- LAB -->
                 <TextBox Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 4" Style="{StaticResource Label}" TextWrapping="Wrap"
                          Text="Lab (Lightness[0-100], A(Green↔Red)[-127.5, 127.5], B(Blue↔Yellow)[-127.5, 127.5])" HorizontalAlignment="Stretch" Background="#FF555555"/>
+
+                <Label Grid.Row="13" Grid.Column="0" Foreground="White" Content="L"/>
+                <Border Grid.Row="13" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding LofLabBrush}">
+                    <Control Name="LofLabSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
+                </Border>
+                <TextBox Grid.Row="13" Grid.Column="2" Style="{StaticResource ValueEditor}"
+                         Text="{Binding LofLabValue, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+                <Label Grid.Row="14" Grid.Column="0" Foreground="White" Content="A"/>
+                <Border Grid.Row="14" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding AofLabBrush}">
+                    <Control Name="AofLabSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
+                </Border>
+                <TextBox Grid.Row="14" Grid.Column="2" Style="{StaticResource ValueEditor}"
+                         Text="{Binding AofLabValue, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="15" Grid.Column="0" Foreground="White" Content="B"/>
+                <Border Grid.Row="15" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding BofLabBrush}">
+                    <Control Name="BofLabSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
+                </Border>
+                <TextBox Grid.Row="15" Grid.Column="2" Style="{StaticResource ValueEditor}"
+                         Text="{Binding BofLabValue, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- YCbCr -->
                 <TextBox Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="4" Margin="0 5 0 4" Style="{StaticResource Label}"
