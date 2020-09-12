@@ -151,11 +151,11 @@ namespace ColorInvestigation.Controls
         private void UpdateUI()
         {
             OnPropertiesChanged( nameof (CurrentColor), nameof(HueBrush), 
-                nameof(RofRgbValue), nameof(GofRgbValue), nameof(BofRgbValue),
-                nameof(HofHslValue), nameof(SofHslValue), nameof(LofHslValue),
-                nameof(HofHsvValue), nameof(SofHsvValue), nameof(VofHsvValue),
-                nameof(LofLabValue), nameof(AofLabValue), nameof(BofLabValue),
-                nameof(YofYCbCrValue), nameof(CbOfYCbCrValue), nameof(CrOfYCbCrValue));
+                nameof(Value_RGB_R), nameof(Value_RGB_G), nameof(Value_RGB_B),
+                nameof(Value_HSL_H), nameof(Value_HSL_S), nameof(Value_HSL_L),
+                nameof(Value_HSV_H), nameof(Value_HSV_S), nameof(Value_HSV_V),
+                nameof(Value_LAB_L), nameof(Value_LAB_A), nameof(Value_LAB_B),
+                nameof(Value_YCbCr_Y), nameof(Value_YCbCr_Cb), nameof(Value_YCbCr_Cr));
 
             UpdateRgbBrushes();
             UpdateHslBrushes();
@@ -163,29 +163,29 @@ namespace ColorInvestigation.Controls
             UpdateLabBrushes();
             UpdateYCbCrBrushes();
 
-            UpdateSaturationValueSlider();
+            UpdateSaturationAndValueSlider();
             UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
             UpdateSlider(HueSlider, _hsv.H, 1.0);
 
-            RefreshSlider(RofRgbSlider, _rgb.R, 1.0);
-            RefreshSlider(GofRgbSlider, _rgb.G, 1.0);
-            RefreshSlider(BofRgbSlider, _rgb.B, 1.0);
+            RefreshSlider(Slider_RGB_R, _rgb.R, 1.0);
+            RefreshSlider(Slider_RGB_G, _rgb.G, 1.0);
+            RefreshSlider(Slider_RGB_B, _rgb.B, 1.0);
 
-            RefreshSlider(HofHslSlider, _hsl.H, 1.0);
-            RefreshSlider(SofHslSlider, _hsl.S, 1.0);
-            RefreshSlider(LofHslSlider, _hsl.L, 1.0);
+            RefreshSlider(Slider_HSL_H, _hsl.H, 1.0);
+            RefreshSlider(Slider_HSL_S, _hsl.S, 1.0);
+            RefreshSlider(Slider_HSL_L, _hsl.L, 1.0);
 
-            RefreshSlider(HofHsvSlider, _hsv.H, 1.0);
-            RefreshSlider(SofHsvSlider, _hsv.S, 1.0);
-            RefreshSlider(VofHsvSlider, _hsv.V, 1.0);
+            RefreshSlider(Slider_HSV_H, _hsv.H, 1.0);
+            RefreshSlider(Slider_HSV_S, _hsv.S, 1.0);
+            RefreshSlider(Slider_HSV_V, _hsv.V, 1.0);
 
-            RefreshSlider(LofLabSlider, _lab.L, 100.0);
-            RefreshSlider(AofLabSlider, _lab.A + 127.5, 255.0);
-            RefreshSlider(BofLabSlider, _lab.B + 127.5, 255.0);
+            RefreshSlider(Slider_LAB_L, _lab.L, 100.0);
+            RefreshSlider(Slider_LAB_A, _lab.A + 127.5, 255.0);
+            RefreshSlider(Slider_LAB_B, _lab.B + 127.5, 255.0);
 
-            RefreshSlider(YofYCbCrSlider, _yCbCr.Y * 255.0, 255.0);
-            RefreshSlider(CbofYCbCrSlider, _yCbCr.Cb * 255.0 + 127.5, 255.0);
-            RefreshSlider(CrofYCbCrSlider, _yCbCr.Cr * 255.0 + 127.5, 255.0);
+            RefreshSlider(Slider_YCbCr_Y, _yCbCr.Y * 255.0, 255.0);
+            RefreshSlider(Slider_YCbCr_Cb, _yCbCr.Cb * 255.0 + 127.5, 255.0);
+            RefreshSlider(Slider_YCbCr_Cr, _yCbCr.Cr * 255.0 + 127.5, 255.0);
         }
 
         #region ==============  Event handlers  ====================
@@ -244,77 +244,77 @@ namespace ColorInvestigation.Controls
                     _alpha = 1.0 - multiplier;
                     UpdateUI();
                 }
-                else if (sliderName == nameof(RofRgbSlider))
+                else if (sliderName == nameof(Slider_RGB_R))
                 {
                     _rgb.R = multiplier;
                     UpdateValue(UpdateMode.RGB);
                 }
-                else if (sliderName == nameof(GofRgbSlider))
+                else if (sliderName == nameof(Slider_RGB_G))
                 {
                     _rgb.G = multiplier;
                     UpdateValue(UpdateMode.RGB);
                 }
-                else if (sliderName == nameof(BofRgbSlider))
+                else if (sliderName == nameof(Slider_RGB_B))
                 {
                     _rgb.B = multiplier;
                     UpdateValue(UpdateMode.RGB);
                 }
-                else if (sliderName == nameof(HofHslSlider))
+                else if (sliderName == nameof(Slider_HSL_H))
                 {
                     _hsl.H = multiplier;
                     UpdateValue(UpdateMode.HSL);
                 }
-                else if (sliderName == nameof(SofHslSlider))
+                else if (sliderName == nameof(Slider_HSL_S))
                 {
                     _hsl.S = multiplier;
                     UpdateValue(UpdateMode.HSL);
                 }
-                else if (sliderName == nameof(LofHslSlider))
+                else if (sliderName == nameof(Slider_HSL_L))
                 {
                     _hsl.L = multiplier;
                     UpdateValue(UpdateMode.HSL);
                 }
-                else if (sliderName == nameof(HofHsvSlider))
+                else if (sliderName == nameof(Slider_HSV_H))
                 {
                     _hsv.H = multiplier;
                     UpdateValue(UpdateMode.HSV);
                 }
-                else if (sliderName == nameof(SofHsvSlider))
+                else if (sliderName == nameof(Slider_HSV_S))
                 {
                     _hsv.S = multiplier;
                     UpdateValue(UpdateMode.HSV);
                 }
-                else if (sliderName == nameof(VofHsvSlider))
+                else if (sliderName == nameof(Slider_HSV_V))
                 {
                     _hsv.V = multiplier;
                     UpdateValue(UpdateMode.HSV);
                 }
-                else if (sliderName == nameof(LofLabSlider))
+                else if (sliderName == nameof(Slider_LAB_L))
                 {
                     _lab.L = multiplier * 100;
                     UpdateValue(UpdateMode.LAB);
                 }
-                else if (sliderName == nameof(AofLabSlider))
+                else if (sliderName == nameof(Slider_LAB_A))
                 {
                     _lab.A = multiplier * 255 - 127.5;
                     UpdateValue(UpdateMode.LAB);
                 }
-                else if (sliderName == nameof(BofLabSlider))
+                else if (sliderName == nameof(Slider_LAB_B))
                 {
                     _lab.B = multiplier * 255 - 127.5;
                     UpdateValue(UpdateMode.LAB);
                 }
-                else if (sliderName == nameof(YofYCbCrSlider))
+                else if (sliderName == nameof(Slider_YCbCr_Y))
                 {
                     _yCbCr.Y = multiplier;
                     UpdateValue(UpdateMode.YCbCr);
                 }
-                else if (sliderName == nameof(CbofYCbCrSlider))
+                else if (sliderName == nameof(Slider_YCbCr_Cb))
                 {
                     _yCbCr.Cb = multiplier - 0.5;
                     UpdateValue(UpdateMode.YCbCr);
                 }
-                else if (sliderName == nameof(CrofYCbCrSlider))
+                else if (sliderName == nameof(Slider_YCbCr_Cr))
                 {
                     _yCbCr.Cr = multiplier - 0.5;
                     UpdateValue(UpdateMode.YCbCr);
@@ -327,7 +327,7 @@ namespace ColorInvestigation.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaturationValueSlider_MouseMove(object sender, MouseEventArgs e)
+        private void SaturationAndValueSlider_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -376,9 +376,9 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        private void UpdateSaturationValueSlider()
+        private void UpdateSaturationAndValueSlider()
         {
-            var panel = (Panel) SaturationValueSlider;
+            var panel = (Panel) SaturationAndValueSlider;
             if (VisualTreeHelper.GetChildrenCount(panel) > 0)
             {
                 var thumb = panel.Children[0] as FrameworkElement;
@@ -390,21 +390,21 @@ namespace ColorInvestigation.Controls
         }
 
         #region ===========  Linear gradient brushes  ====================
-        public LinearGradientBrush RofRgbBrush { get; } = CreateLinearGradientBrush(1);
-        public LinearGradientBrush GofRgbBrush { get; } = CreateLinearGradientBrush(1);
-        public LinearGradientBrush BofRgbBrush { get; } = CreateLinearGradientBrush(1);
-        public LinearGradientBrush HofHslBrush { get; } = CreateLinearGradientBrush(360);
-        public LinearGradientBrush SofHslBrush { get; } = CreateLinearGradientBrush(100);
-        public LinearGradientBrush LofHslBrush { get; } = CreateLinearGradientBrush(100);
-        public LinearGradientBrush HofHsvBrush { get; } = CreateLinearGradientBrush(360);
-        public LinearGradientBrush SofHsvBrush { get; } = CreateLinearGradientBrush(100);
-        public LinearGradientBrush VofHsvBrush { get; } = CreateLinearGradientBrush(100);
-        public LinearGradientBrush LofLabBrush { get; } = CreateLinearGradientBrush(100);
-        public LinearGradientBrush AofLabBrush { get; } = CreateLinearGradientBrush(255);
-        public LinearGradientBrush BofLabBrush { get; } = CreateLinearGradientBrush(255);
-        public LinearGradientBrush YofYCbCrBrush { get; } = CreateLinearGradientBrush(255);
-        public LinearGradientBrush CbOfYCbCrBrush { get; } = CreateLinearGradientBrush(255);
-        public LinearGradientBrush CrOfYCbCrBrush { get; } = CreateLinearGradientBrush(255);
+        public LinearGradientBrush Brush_RGB_R { get; } = CreateLinearGradientBrush(1);
+        public LinearGradientBrush Brush_RGB_G { get; } = CreateLinearGradientBrush(1);
+        public LinearGradientBrush Brush_RGB_B { get; } = CreateLinearGradientBrush(1);
+        public LinearGradientBrush Brush_HSL_H { get; } = CreateLinearGradientBrush(360);
+        public LinearGradientBrush Brush_HSL_S { get; } = CreateLinearGradientBrush(100);
+        public LinearGradientBrush Brush_HSL_L { get; } = CreateLinearGradientBrush(100);
+        public LinearGradientBrush Brush_HSV_H { get; } = CreateLinearGradientBrush(360);
+        public LinearGradientBrush Brush_HSV_S { get; } = CreateLinearGradientBrush(100);
+        public LinearGradientBrush Brush_HSV_V { get; } = CreateLinearGradientBrush(100);
+        public LinearGradientBrush Brush_LAB_L { get; } = CreateLinearGradientBrush(100);
+        public LinearGradientBrush Brush_LAB_A { get; } = CreateLinearGradientBrush(255);
+        public LinearGradientBrush Brush_LAB_B { get; } = CreateLinearGradientBrush(255);
+        public LinearGradientBrush Brush_YCbCr_Y { get; } = CreateLinearGradientBrush(255);
+        public LinearGradientBrush Brush_YCbCr_Cb { get; } = CreateLinearGradientBrush(255);
+        public LinearGradientBrush Brush_YCbCr_Cr { get; } = CreateLinearGradientBrush(255);
 
         private static LinearGradientBrush CreateLinearGradientBrush(int gradientCount) => new LinearGradientBrush(
             new GradientStopCollection(Enumerable.Range(0, gradientCount + 1)
@@ -412,63 +412,63 @@ namespace ColorInvestigation.Controls
 
         private void UpdateRgbBrushes()
         {
-            RofRgbBrush.GradientStops[0].Color = Color.FromRgb(0, CurrentColor.G, CurrentColor.B);
-            RofRgbBrush.GradientStops[1].Color = Color.FromRgb(0xFF, CurrentColor.G, CurrentColor.B);
+            Brush_RGB_R.GradientStops[0].Color = Color.FromRgb(0, CurrentColor.G, CurrentColor.B);
+            Brush_RGB_R.GradientStops[1].Color = Color.FromRgb(0xFF, CurrentColor.G, CurrentColor.B);
 
-            GofRgbBrush.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, 0, CurrentColor.B);
-            GofRgbBrush.GradientStops[1].Color = Color.FromRgb(CurrentColor.R, 0xFF, CurrentColor.B);
+            Brush_RGB_G.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, 0, CurrentColor.B);
+            Brush_RGB_G.GradientStops[1].Color = Color.FromRgb(CurrentColor.R, 0xFF, CurrentColor.B);
 
-            BofRgbBrush.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0);
-            BofRgbBrush.GradientStops[1].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0xFF);
+            Brush_RGB_B.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0);
+            Brush_RGB_B.GradientStops[1].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0xFF);
 
-            OnPropertiesChanged(nameof(RofRgbBrush), nameof(GofRgbBrush), nameof(BofRgbBrush));
+            OnPropertiesChanged(nameof(Brush_RGB_R), nameof(Brush_RGB_G), nameof(Brush_RGB_B));
         }
 
         private void UpdateHslBrushes()
         {
             for (var i = 0; i <= 360; i++)
-                HofHslBrush.GradientStops[i].Color = new ColorSpaces.HSL(i / 360.0, _hsl.S, _hsl.L).GetRGB().GetColor();
+                Brush_HSL_H.GradientStops[i].Color = new ColorSpaces.HSL(i / 360.0, _hsl.S, _hsl.L).GetRGB().GetColor();
             for (var i = 0; i <= 100; i++)
             {
-                SofHslBrush.GradientStops[i].Color = new ColorSpaces.HSL(_hsl.H, i / 100.0, _hsl.L).GetRGB().GetColor();
-                LofHslBrush.GradientStops[i].Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, i / 100.0).GetRGB().GetColor();
+                Brush_HSL_S.GradientStops[i].Color = new ColorSpaces.HSL(_hsl.H, i / 100.0, _hsl.L).GetRGB().GetColor();
+                Brush_HSL_L.GradientStops[i].Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, i / 100.0).GetRGB().GetColor();
             }
-            OnPropertiesChanged(nameof(HofHslBrush), nameof(SofHslBrush), nameof(LofHslBrush));
+            OnPropertiesChanged(nameof(Brush_HSL_H), nameof(Brush_HSL_S), nameof(Brush_HSL_L));
         }
 
         private void UpdateHsvBrushes()
         {
             for (var i = 0; i <= 360; i++)
-                HofHsvBrush.GradientStops[i].Color = new ColorSpaces.HSV(i / 360.0, _hsv.S, _hsv.V).GetRGB().GetColor();
+                Brush_HSV_H.GradientStops[i].Color = new ColorSpaces.HSV(i / 360.0, _hsv.S, _hsv.V).GetRGB().GetColor();
             for (var i = 0; i <= 100; i++)
             {
-                SofHsvBrush.GradientStops[i].Color = new ColorSpaces.HSV(_hsv.H, i / 100.0, _hsv.V).GetRGB().GetColor();
-                VofHsvBrush.GradientStops[i].Color = new ColorSpaces.HSV(_hsv.H, _hsv.S, i / 100.0).GetRGB().GetColor();
+                Brush_HSV_S.GradientStops[i].Color = new ColorSpaces.HSV(_hsv.H, i / 100.0, _hsv.V).GetRGB().GetColor();
+                Brush_HSV_V.GradientStops[i].Color = new ColorSpaces.HSV(_hsv.H, _hsv.S, i / 100.0).GetRGB().GetColor();
             }
-            OnPropertiesChanged(nameof(HofHsvBrush), nameof(SofHsvBrush), nameof(VofHsvBrush));
+            OnPropertiesChanged(nameof(Brush_HSV_H), nameof(Brush_HSV_S), nameof(Brush_HSV_V));
         }
 
         private void UpdateLabBrushes()
         {
             for (var i = 0; i <= 100; i++)
-                LofLabBrush.GradientStops[i].Color = new ColorSpaces.LAB(i, _lab.A, _lab.B).GetRGB().GetColor();
+                Brush_LAB_L.GradientStops[i].Color = new ColorSpaces.LAB(i, _lab.A, _lab.B).GetRGB().GetColor();
             for (var i = 0; i <= 255; i++)
             {
-                AofLabBrush.GradientStops[i].Color = new ColorSpaces.LAB(_lab.L, i - 127.5, _lab.B).GetRGB().GetColor();
-                BofLabBrush.GradientStops[i].Color = new ColorSpaces.LAB(_lab.L, _lab.A, i - 127.5).GetRGB().GetColor();
+                Brush_LAB_A.GradientStops[i].Color = new ColorSpaces.LAB(_lab.L, i - 127.5, _lab.B).GetRGB().GetColor();
+                Brush_LAB_B.GradientStops[i].Color = new ColorSpaces.LAB(_lab.L, _lab.A, i - 127.5).GetRGB().GetColor();
             }
-            OnPropertiesChanged(nameof(LofLabBrush), nameof(AofLabBrush), nameof(BofLabBrush));
+            OnPropertiesChanged(nameof(Brush_LAB_L), nameof(Brush_LAB_A), nameof(Brush_LAB_B));
         }
 
         private void UpdateYCbCrBrushes()
         {
             for (var i = 0; i <= 255; i++)
             {
-                YofYCbCrBrush.GradientStops[i].Color = new ColorSpaces.YCbCr(i / 255.0, _yCbCr.Cb, _yCbCr.Cr).GetRGB().GetColor();
-                CbOfYCbCrBrush.GradientStops[i].Color = new ColorSpaces.YCbCr(_yCbCr.Y, (i - 127.5) / 255, _yCbCr.Cr).GetRGB().GetColor();
-                CrOfYCbCrBrush.GradientStops[i].Color = new ColorSpaces.YCbCr(_yCbCr.Y, _yCbCr.Cb, (i - 127.5) / 255).GetRGB().GetColor();
+                Brush_YCbCr_Y.GradientStops[i].Color = new ColorSpaces.YCbCr(i / 255.0, _yCbCr.Cb, _yCbCr.Cr).GetRGB().GetColor();
+                Brush_YCbCr_Cb.GradientStops[i].Color = new ColorSpaces.YCbCr(_yCbCr.Y, (i - 127.5) / 255, _yCbCr.Cr).GetRGB().GetColor();
+                Brush_YCbCr_Cr.GradientStops[i].Color = new ColorSpaces.YCbCr(_yCbCr.Y, _yCbCr.Cb, (i - 127.5) / 255).GetRGB().GetColor();
             }
-            OnPropertiesChanged(nameof(YofYCbCrBrush), nameof(CbOfYCbCrBrush), nameof(CrOfYCbCrBrush));
+            OnPropertiesChanged(nameof(Brush_YCbCr_Y), nameof(Brush_YCbCr_Cb), nameof(Brush_YCbCr_Cr));
         }
 
         #endregion
@@ -478,103 +478,103 @@ namespace ColorInvestigation.Controls
         private static readonly Dictionary<string, Tuple<double, double, UpdateMode>> ValueMetadata =
             new Dictionary<string, Tuple<double, double, UpdateMode>>
             {
-                {nameof(RofRgbValue), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
-                {nameof(GofRgbValue), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
-                {nameof(BofRgbValue), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
-                {nameof(HofHslValue), Tuple.Create(0.0, 360.0, UpdateMode.HSL)},
-                {nameof(SofHslValue), Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
-                {nameof(LofHslValue), Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
-                {nameof(HofHsvValue), Tuple.Create(0.0, 360.0, UpdateMode.HSV)},
-                {nameof(SofHsvValue), Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
-                {nameof(VofHsvValue), Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
-                {nameof(LofLabValue), Tuple.Create(0.0, 100.0, UpdateMode.LAB)},
-                {nameof(AofLabValue), Tuple.Create(-127.5, 127.5, UpdateMode.LAB)},
-                {nameof(BofLabValue), Tuple.Create(-127.5, 127.5, UpdateMode.LAB)},
-                {nameof(YofYCbCrValue), Tuple.Create(0.0, 255.0, UpdateMode.YCbCr)},
-                {nameof(CbOfYCbCrValue), Tuple.Create(-127.5, 127.5, UpdateMode.YCbCr)},
-                {nameof(CrOfYCbCrValue), Tuple.Create(-127.5, 127.5, UpdateMode.YCbCr)}
+                {nameof(Value_RGB_R), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
+                {nameof(Value_RGB_G), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
+                {nameof(Value_RGB_B), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
+                {nameof(Value_HSL_H), Tuple.Create(0.0, 360.0, UpdateMode.HSL)},
+                {nameof(Value_HSL_S), Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
+                {nameof(Value_HSL_L), Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
+                {nameof(Value_HSV_H), Tuple.Create(0.0, 360.0, UpdateMode.HSV)},
+                {nameof(Value_HSV_S), Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
+                {nameof(Value_HSV_V), Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
+                {nameof(Value_LAB_L), Tuple.Create(0.0, 100.0, UpdateMode.LAB)},
+                {nameof(Value_LAB_A), Tuple.Create(-127.5, 127.5, UpdateMode.LAB)},
+                {nameof(Value_LAB_B), Tuple.Create(-127.5, 127.5, UpdateMode.LAB)},
+                {nameof(Value_YCbCr_Y), Tuple.Create(0.0, 255.0, UpdateMode.YCbCr)},
+                {nameof(Value_YCbCr_Cb), Tuple.Create(-127.5, 127.5, UpdateMode.YCbCr)},
+                {nameof(Value_YCbCr_Cr), Tuple.Create(-127.5, 127.5, UpdateMode.YCbCr)}
             };
 
         // RGB
-        public double RofRgbValue
+        public double Value_RGB_R
         {
             get => _rgb.R * 255;
             set => _rgb.R = value / 255.0;
         }
-        public double GofRgbValue
+        public double Value_RGB_G
         {
             get => _rgb.G * 255;
             set => _rgb.G = value / 255.0;
         }
-        public double BofRgbValue
+        public double Value_RGB_B
         {
             get => _rgb.B * 255;
             set => _rgb.B = value / 255.0;
         }
 
         // HSL
-        public double HofHslValue
+        public double Value_HSL_H
         {
             get => _hsl.H * 360;
             set => _hsl.H = value / 360.0;
         }
-        public double SofHslValue
+        public double Value_HSL_S
         {
             get => _hsl.S * 100;
             set => _hsl.S = value / 100.0;
         }
-        public double LofHslValue
+        public double Value_HSL_L
         {
             get => _hsl.L * 100;
             set => _hsl.L = value / 100.0;
         }
 
         // HSV
-        public double HofHsvValue
+        public double Value_HSV_H
         {
             get => _hsv.H * 360;
             set => _hsv.H = value / 360.0;
         }
-        public double SofHsvValue
+        public double Value_HSV_S
         {
             get => _hsv.S * 100;
             set => _hsv.S = value / 100.0;
         }
-        public double VofHsvValue
+        public double Value_HSV_V
         {
             get => _hsv.V * 100;
             set => _hsv.V = value / 100.0;
         }
 
         // LAB
-        public double LofLabValue
+        public double Value_LAB_L
         {
             get => _lab.L;
             set => _lab.L = value;
         }
-        public double AofLabValue
+        public double Value_LAB_A
         {
             get => _lab.A;
             set => _lab.A = value;
         }
-        public double BofLabValue
+        public double Value_LAB_B
         {
             get => _lab.B;
             set => _lab.B = value;
         }
 
         // YCbCr
-        public double YofYCbCrValue
+        public double Value_YCbCr_Y
         {
             get => _yCbCr.Y * 255.0;
             set => _yCbCr.Y = value / 255.0;
         }
-        public double CbOfYCbCrValue
+        public double Value_YCbCr_Cb
         {
             get => _yCbCr.Cb * 255.0;
             set => _yCbCr.Cb = value / 255.0;
         }
-        public double CrOfYCbCrValue
+        public double Value_YCbCr_Cr
         {
             get => _yCbCr.Cr * 255.0;
             set => _yCbCr.Cr = value / 255.0;
