@@ -324,19 +324,19 @@ namespace ColorInvestigation.Common
             private const YCbCrStandard DefaultYCbCrStandard = YCbCrStandard.BT709;
             private static double[,] yCbCrMultipliers = { { 0.114, 0.299 }, { 0.0722, 0.2126 }, { 0.0593, 0.2627 }, { 0.0102, 0.1736 } };
 
-            public double y, cB, cR;
+            public double Y, Cb, Cr;
             public YCbCrStandard Standard = DefaultYCbCrStandard;
             public YCbCr(double y, double cB, double cR)
             {
-                this.y = y; this.cB = cB; this.cR = cR;
+                Y = y; Cb = cB; Cr = cR;
             }
             public YCbCr(RGB rgb, YCbCrStandard standard = DefaultYCbCrStandard)
             {
                 var kB = yCbCrMultipliers[(int)standard, 0];
                 var kR = yCbCrMultipliers[(int)standard, 1];
-                y = kR * rgb.R + (1 - kR - kB) * rgb.G + kB * rgb.B;
-                cB = 0.5 / (1.0 - kB) * (rgb.B - y);
-                cR = 0.5 / (1.0 - kR) * (rgb.R - y);
+                Y = kR * rgb.R + (1 - kR - kB) * rgb.G + kB * rgb.B;
+                Cb = 0.5 / (1.0 - kB) * (rgb.B - Y);
+                Cr = 0.5 / (1.0 - kR) * (rgb.R - Y);
                 Standard = standard;
             }
 
@@ -344,9 +344,9 @@ namespace ColorInvestigation.Common
             {
                 var kB = yCbCrMultipliers[(int)Standard, 0];
                 var kR = yCbCrMultipliers[(int)Standard, 1];
-                var r = Math.Min(1.0, Math.Max(0.0, y + (1 - kR) / 0.5 * cR));
-                var g = Math.Min(1.0, Math.Max(0.0, y - 2 * kB * (1 - kB) / (1 - kB - kR) * cB - 2 * kR * (1 - kR) / (1 - kB - kR) * cR));
-                var b = Math.Min(1.0, Math.Max(0.0, y + (1 - kB) / 0.5 * cB));
+                var r = Math.Min(1.0, Math.Max(0.0, Y + (1 - kR) / 0.5 * Cr));
+                var g = Math.Min(1.0, Math.Max(0.0, Y - 2 * kB * (1 - kB) / (1 - kB - kR) * Cb - 2 * kR * (1 - kR) / (1 - kB - kR) * Cr));
+                var b = Math.Min(1.0, Math.Max(0.0, Y + (1 - kB) / 0.5 * Cb));
                 return new RGB(r, g, b);
             }
 
@@ -362,7 +362,7 @@ namespace ColorInvestigation.Common
                 return kR * rgb.R + (1.0 - kB - kR) * rgb.G + kB * rgb.B;
             }
 
-            public override string ToString() => $"y: {y}, cB: {cB}, cR: {cR}";
+            public override string ToString() => $"Y: {Y}, Cb: {Cb}, Cr: {Cr}";
         }
         #endregion
     }

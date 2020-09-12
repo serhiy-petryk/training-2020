@@ -302,6 +302,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <!-- RGB -->
                 <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Label}"
@@ -415,6 +417,26 @@
                 <TextBox Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="4" Margin="0 5 0 4" Style="{StaticResource Label}"
                          Text="YCbCr (Y[0-255], Cb[-127.5, 127.5], Cr[-127.5, 127.5])" HorizontalAlignment="Stretch" Background="#FF555555"/>
 
+                <Label Grid.Row="17" Grid.Column="0" Foreground="White" Content="Y"/>
+                <Border Grid.Row="17" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding YofYCbCrBrush}">
+                    <Control Name="YofYCbCrSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
+                </Border>
+                <TextBox Grid.Row="17" Grid.Column="2" Style="{StaticResource ValueEditor}"
+                         Text="{Binding YofYCbCrValue, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="18" Grid.Column="0" Foreground="White" Content="Cb"/>
+                <Border Grid.Row="18" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding CbOfYCbCrBrush}">
+                    <Control Name="CbofYCbCrSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
+                </Border>
+                <TextBox Grid.Row="18" Grid.Column="2" Style="{StaticResource ValueEditor}"
+                         Text="{Binding CbOfYCbCrValue, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="19" Grid.Column="0" Foreground="White" Content="Cr"/>
+                <Border Grid.Row="19" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding CrOfYCbCrBrush}">
+                    <Control Name="CrofYCbCrSlider" Template="{StaticResource ComponentSliderCanvasTemplate}" Focusable="False" IsTabStop="False"/>
+                </Border>
+                <TextBox Grid.Row="19" Grid.Column="2" Style="{StaticResource ValueEditor}"
+                         Text="{Binding CrOfYCbCrValue, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
 
         </Grid>

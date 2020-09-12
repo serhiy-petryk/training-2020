@@ -165,12 +165,14 @@ namespace ColorInvestigation.Controls
                 nameof(RofRgbValue), nameof(GofRgbValue), nameof(BofRgbValue),
                 nameof(HofHslValue), nameof(SofHslValue), nameof(LofHslValue),
                 nameof(HofHsvValue), nameof(SofHsvValue), nameof(VofHsvValue),
-                nameof(LofLabValue), nameof(AofLabValue), nameof(BofLabValue));
+                nameof(LofLabValue), nameof(AofLabValue), nameof(BofLabValue),
+                nameof(YofYCbCrValue), nameof(CbOfYCbCrValue), nameof(CrOfYCbCrValue));
 
             UpdateRgbBrushes();
             UpdateHslBrushes();
             UpdateHsvBrushes();
             UpdateLabBrushes();
+            UpdateYCbCrBrushes();
 
             UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
             UpdateSlider(HueSlider, _hsv.H, 1.0);
@@ -191,10 +193,9 @@ namespace ColorInvestigation.Controls
             RefreshSlider(AofLabSlider, _lab.A + 127.5, 255.0);
             RefreshSlider(BofLabSlider, _lab.B + 127.5, 255.0);
 
-            /*var hsl = ColorUtilities.ColorToHsl(CurrentColor);
-            RefreshSlider(HControl, hsl.Item1 * 360, 360);
-            RefreshSlider(HslSaturationControl, hsl.Item2 * 100, 100);*/
-
+            RefreshSlider(YofYCbCrSlider, _yCbCr.Y * 255.0, 255.0);
+            RefreshSlider(CbofYCbCrSlider, _yCbCr.Cb * 255.0 + 127.5, 255.0);
+            RefreshSlider(CrofYCbCrSlider, _yCbCr.Cr * 255.0 + 127.5, 255.0);
         }
 
         #region ==============  Event handlers  ====================
@@ -328,6 +329,21 @@ namespace ColorInvestigation.Controls
                 {
                     _lab.B = multiplier * 255 - 127.5;
                     UpdateValue(UpdateMode.LAB);
+                }
+                else if (sliderName == nameof(YofYCbCrSlider))
+                {
+                    _yCbCr.Y = multiplier;
+                    UpdateValue(UpdateMode.YCbCr);
+                }
+                else if (sliderName == nameof(CbofYCbCrSlider))
+                {
+                    _yCbCr.Cb = multiplier - 0.5;
+                    UpdateValue(UpdateMode.YCbCr);
+                }
+                else if (sliderName == nameof(CrofYCbCrSlider))
+                {
+                    _yCbCr.Cr = multiplier - 0.5;
+                    UpdateValue(UpdateMode.YCbCr);
                 }
             }
         }
@@ -871,6 +887,9 @@ namespace ColorInvestigation.Controls
         public LinearGradientBrush LofLabBrush { get; } = CreateLinearGradientBrush(100);
         public LinearGradientBrush AofLabBrush { get; } = CreateLinearGradientBrush(255);
         public LinearGradientBrush BofLabBrush { get; } = CreateLinearGradientBrush(255);
+        public LinearGradientBrush YofYCbCrBrush { get; } = CreateLinearGradientBrush(255);
+        public LinearGradientBrush CbOfYCbCrBrush { get; } = CreateLinearGradientBrush(255);
+        public LinearGradientBrush CrOfYCbCrBrush { get; } = CreateLinearGradientBrush(255);
 
         private static LinearGradientBrush CreateLinearGradientBrush(int gradientCount) => new LinearGradientBrush(
             new GradientStopCollection(Enumerable.Range(0, gradientCount + 1)
@@ -926,6 +945,17 @@ namespace ColorInvestigation.Controls
             OnPropertiesChanged(nameof(LofLabBrush), nameof(AofLabBrush), nameof(BofLabBrush));
         }
 
+        private void UpdateYCbCrBrushes()
+        {
+            for (var i = 0; i <= 255; i++)
+            {
+                YofYCbCrBrush.GradientStops[i].Color = new ColorSpaces.YCbCr(i / 255.0, _yCbCr.Cb, _yCbCr.Cr).GetRGB().GetColor();
+                CbOfYCbCrBrush.GradientStops[i].Color = new ColorSpaces.YCbCr(_yCbCr.Y, (i - 127.5) / 255, _yCbCr.Cr).GetRGB().GetColor();
+                CrOfYCbCrBrush.GradientStops[i].Color = new ColorSpaces.YCbCr(_yCbCr.Y, _yCbCr.Cb, (i - 127.5) / 255).GetRGB().GetColor();
+            }
+            OnPropertiesChanged(nameof(YofYCbCrBrush), nameof(CbOfYCbCrBrush), nameof(CrOfYCbCrBrush));
+        }
+
         #endregion
 
         #region ===============  TextBox values  ===================
@@ -945,6 +975,9 @@ namespace ColorInvestigation.Controls
                 {nameof(LofLabValue), Tuple.Create(0.0, 100.0, UpdateMode.LAB)},
                 {nameof(AofLabValue), Tuple.Create(-127.5, 127.5, UpdateMode.LAB)},
                 {nameof(BofLabValue), Tuple.Create(-127.5, 127.5, UpdateMode.LAB)},
+                {nameof(YofYCbCrValue), Tuple.Create(0.0, 255.0, UpdateMode.YCbCr)},
+                {nameof(CbOfYCbCrValue), Tuple.Create(-127.5, 127.5, UpdateMode.YCbCr)},
+                {nameof(CrOfYCbCrValue), Tuple.Create(-127.5, 127.5, UpdateMode.YCbCr)}
             };
 
         // RGB
@@ -1013,6 +1046,23 @@ namespace ColorInvestigation.Controls
         {
             get => _lab.B;
             set => _lab.B = value;
+        }
+
+        // YCbCr
+        public double YofYCbCrValue
+        {
+            get => _yCbCr.Y * 255.0;
+            set => _yCbCr.Y = value / 255.0;
+        }
+        public double CbOfYCbCrValue
+        {
+            get => _yCbCr.Cb * 255.0;
+            set => _yCbCr.Cb = value / 255.0;
+        }
+        public double CrOfYCbCrValue
+        {
+            get => _yCbCr.Cr * 255.0;
+            set => _yCbCr.Cr = value / 255.0;
         }
 
         private void ValueEditor_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
