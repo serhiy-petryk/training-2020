@@ -354,7 +354,7 @@ namespace ColorInvestigation.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ColorBoxThumb_MouseMove(object sender, MouseEventArgs e)
+        private void SaturationValueSlider_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -848,7 +848,7 @@ namespace ColorInvestigation.Controls
 
         private void UpdateColorBoxSlider()
         {
-            var panel = (Panel) ColorBox;
+            var panel = (Panel) SaturationValueSlider;
             if (VisualTreeHelper.GetChildrenCount(panel) > 0)
             {
                 var thumb = panel.Children[0] as FrameworkElement;
