@@ -174,6 +174,7 @@ namespace ColorInvestigation.Controls
             UpdateLabBrushes();
             UpdateYCbCrBrushes();
 
+            UpdateColorBoxSlider();
             UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
             UpdateSlider(HueSlider, _hsv.H, 1.0);
 
@@ -345,6 +346,27 @@ namespace ColorInvestigation.Controls
                     _yCbCr.Cr = multiplier - 0.5;
                     UpdateValue(UpdateMode.YCbCr);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Processing mouse moving for Saturation and brightness controls 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ColorBoxThumb_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var canvas = sender as Canvas;
+                var x = e.GetPosition(canvas).X;
+                var y = e.GetPosition(canvas).Y;
+                x = Math.Max(0, Math.Min(x, canvas.ActualWidth));
+                y = Math.Max(0, Math.Min(y, canvas.ActualHeight));
+
+                _hsv.S = x / canvas.ActualWidth;
+                _hsv.V = 1 - y / canvas.ActualHeight;
+                UpdateValue(UpdateMode.HSV);
             }
         }
         #endregion
@@ -619,33 +641,6 @@ namespace ColorInvestigation.Controls
         }
 
         /// <summary>
-        /// Processing mouse moving for Saturation and brightness controls 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ColorBoxThumb_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                var canvas = sender as Canvas;
-                var grid = canvas.Children[0] as Grid;
-                var x = e.GetPosition(canvas).X;
-                var y = e.GetPosition(canvas).Y;
-
-                x = Math.Max(x, 0);
-                x = Math.Min(x, canvas.ActualWidth);
-                y = Math.Max(y, 0);
-                y = Math.Min(y, canvas.ActualHeight);
-
-                Canvas.SetLeft(grid, x - (ColorBoxThumb.ActualWidth / 2));
-                Canvas.SetTop(grid, y - (ColorBoxThumb.ActualHeight / 2));
-
-                Saturation = (x / canvas.ActualWidth) * 100;
-                Value = -((y / canvas.ActualHeight) * 100) + 100;
-            }
-        }
-
-        /// <summary>
         /// Processing text changing in HSV text boxes
         /// </summary>
         /// <param name="sender"></param>
@@ -776,29 +771,6 @@ namespace ColorInvestigation.Controls
             IsCalcRGB = false;
         }
 
-        private void ComponentSliderCanvas_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                var canvas = sender as Panel;
-                var x = e.GetPosition(canvas).X;
-
-                var thumb = canvas.Children[0] as FrameworkElement;
-                var value = (x - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth) * 255;
-                if (value < 0) value = 0;
-                else if (value > 255) value = 255;
-                var byteValue = Convert.ToByte(value);
-
-                var control = VisualTreeHelper.GetParent(canvas) as FrameworkElement;
-                if (control.Name == "RofRgbSlider")
-                    Red = byteValue;
-                else if (control.Name == "GofRgbSlider")
-                    Green = byteValue;
-                else if (control.Name == "BofRgbSlider")
-                    Blue = byteValue;
-            }
-        }
-
         #region ============  Calculated Properties  =================
         public Color RDarkColor => Color.FromArgb(0xff, 0, CurrentColor.G, CurrentColor.B);
         public Color RLightColor => Color.FromArgb(0xff, 0xff, CurrentColor.G, CurrentColor.B);
@@ -871,6 +843,19 @@ namespace ColorInvestigation.Controls
                     var x = panel.ActualHeight * value / maxValue - thumb.ActualHeight / 2;
                     Canvas.SetTop(thumb, x);
                 }
+            }
+        }
+
+        private void UpdateColorBoxSlider()
+        {
+            var panel = (Panel) ColorBox;
+            if (VisualTreeHelper.GetChildrenCount(panel) > 0)
+            {
+                var thumb = panel.Children[0] as FrameworkElement;
+                var x = panel.ActualWidth * _hsv.S - thumb.ActualWidth / 2;
+                Canvas.SetLeft(thumb, x);
+                var y = panel.ActualHeight * (1.0 - _hsv.V) - thumb.ActualHeight / 2;
+                Canvas.SetTop(thumb, y);
             }
         }
 
