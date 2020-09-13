@@ -83,11 +83,12 @@
 
         <!-- Component Slider template -->
         <ControlTemplate x:Key="ComponentSliderTemplate" TargetType="Control">
-            <Border Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{TemplateBinding Background}">
+            <Border BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{TemplateBinding Background}">
                 <Canvas Background="Transparent" VerticalAlignment="Stretch"
                         MouseDown="Slider_MouseDown" MouseUp="Slider_MouseUp" MouseMove="Slider_MouseMove">
-                    <Border BorderThickness="1" Background="Transparent" BorderBrush="#FF555555" Width="8" Height="18" Padding="0">
-                        <Border BorderThickness="1" Background="Transparent" BorderBrush="#FFEEEEEE" Width="6" Height="16"/>
+                    <Border BorderThickness="1" Background="Transparent" BorderBrush="#FF555555" Width="8"
+                            Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Canvas}}">
+                        <Border BorderThickness="1" Background="Transparent" BorderBrush="#FFEEEEEE" Width="6"/>
                     </Border>
                 </Canvas>
             </Border>
@@ -100,7 +101,6 @@
             <Setter Property="BorderBrush" Value="Gray"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Width" Value="40"/>
-            <Setter Property="Height" Value="20"/>
             <Setter Property="Margin" Value="0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
@@ -185,7 +185,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Color and HSV -->
+                    <!-- Color boxes -->
                     <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,4,0">
                         <Grid Margin="0,0,0,8" Height="40">
                             <Grid.ColumnDefinitions>
@@ -234,25 +234,25 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <!-- RGB -->
                 <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Label}"
