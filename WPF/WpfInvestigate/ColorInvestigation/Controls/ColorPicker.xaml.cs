@@ -30,6 +30,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace ColorInvestigation.Controls
 {
@@ -120,8 +121,11 @@ namespace ColorInvestigation.Controls
         public ColorPicker()
         {
             InitializeComponent();
-            UpdateValue(UpdateMode.RGB);
-            _savedColor = _oldRgb.GetColor(_oldAlpha);
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+            {
+                UpdateValue(UpdateMode.RGB);
+                _savedColor = _oldRgb.GetColor(_oldAlpha);
+            }));
         }
 
         public void SaveColor()
@@ -263,9 +267,13 @@ namespace ColorInvestigation.Controls
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var canvas = sender as Panel;
-                var sliderName = string.IsNullOrEmpty(canvas.Name)
-                    ? ((FrameworkElement)VisualTreeHelper.GetParent(canvas)).Name
-                    : canvas.Name;
+                var sliderName = canvas.Name;
+                FrameworkElement temp = canvas;
+                while (string.IsNullOrEmpty(sliderName) && temp != null)
+                {
+                    sliderName = temp.Name;
+                    temp = (FrameworkElement) VisualTreeHelper.GetParent(temp);
+                }
 
                 var isVertical = canvas.ActualHeight > canvas.ActualWidth;
                 var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
@@ -395,24 +403,21 @@ namespace ColorInvestigation.Controls
 
         private void RefreshSlider(Control control, double value, double maxValue)
         {
-            if (VisualTreeHelper.GetChildrenCount(control) > 0)
-                UpdateSlider(VisualTreeHelper.GetChild(control, 0) as Panel, value, maxValue);
+            var panel = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(control, 0), 0);
+            UpdateSlider(panel as Panel, value, maxValue);
         }
         private void UpdateSlider(Panel panel, double value, double maxValue)
         {
-            if (VisualTreeHelper.GetChildrenCount(panel) > 0)
-            {
-                var thumb = panel.Children[0] as FrameworkElement;
-                if (panel.ActualWidth > panel.ActualHeight)
-                {   // horizontal slider
-                    var x = (panel.ActualWidth - thumb.ActualWidth) * value / maxValue;
-                    Canvas.SetLeft(thumb, x);
-                }
-                else
-                {   // vertical slider
-                    var x = panel.ActualHeight * value / maxValue - thumb.ActualHeight / 2;
-                    Canvas.SetTop(thumb, x);
-                }
+            var thumb = panel.Children[0] as FrameworkElement;
+            if (panel.ActualWidth > panel.ActualHeight)
+            {   // horizontal slider
+                var x = (panel.ActualWidth - thumb.ActualWidth) * value / maxValue;
+                Canvas.SetLeft(thumb, x);
+            }
+            else
+            {   // vertical slider
+                var y = panel.ActualHeight * value / maxValue - thumb.ActualHeight / 2;
+                Canvas.SetTop(thumb, y);
             }
         }
 
