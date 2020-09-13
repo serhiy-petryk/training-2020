@@ -192,19 +192,18 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0" Margin="0,0,4,0">
                                 <Rectangle Fill="{StaticResource TransparentBrush}"/>
-                                <TextBox BorderThickness="0" IsReadOnly="True" IsTabStop="False" Focusable="True" Text="{Binding Color, Mode=OneWay}"
+                                <TextBox BorderThickness="0" IsReadOnly="True" IsTabStop="False" Focusable="True" Cursor="Arrow"
                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                         Cursor="Arrow"
-                                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                         Text="{Binding Color, Mode=OneWay}"
+                                         Foreground="{Binding Color_ForegroundBrush}">
                                     <TextBox.Background>
                                         <SolidColorBrush Color="{Binding Color}"/>
                                     </TextBox.Background>
-                                    <TextBox.Foreground>
-                                        <SolidColorBrush Color="{Binding ForegroundForColor}"/>
-                                    </TextBox.Foreground>
                                 </TextBox>
                             </Grid>
                             <Grid Grid.Column="1" Margin="4,0,0,0">
@@ -214,17 +213,11 @@
                                         <SolidColorBrush Color="{Binding CurrentColor}"/>
                                     </Rectangle.Fill>
                                 </Rectangle>
-                                <TextBox Text="{Binding CurrentColor}" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                         GotFocus="ValueEditor_OnGotFocus" PreviewMouseLeftButtonDown="ValueEditor_OnPreviewMouseLeftButtonDown">
-                                    <TextBox.Background>
-                                        <SolidColorBrush Color="{Binding CurrentColor}"/>
-                                    </TextBox.Background>
-                                    <TextBox.Foreground>
-                                        <SolidColorBrush Color="{Binding ForegroundForCurrentColor}"/>
-                                    </TextBox.Foreground>
-                                    <TextBox.BorderBrush>
-                                        <SolidColorBrush Color="{Binding ForegroundForCurrentColor}"/>
-                                    </TextBox.BorderBrush>
+                                <TextBox Text="{Binding CurrentColor}" Width="70"
+                                         BorderBrush="{Binding CurrentColor_ForegroundBrush}"
+                                         Background="{Binding CurrentColorWithoutAlphaBrush}"
+                                         Foreground="{Binding CurrentColor_ForegroundBrush}"
+                                         VerticalAlignment="Center" HorizontalContentAlignment="Center">
                                 </TextBox>
                             </Grid>
                         </Grid>
@@ -298,6 +291,7 @@
                 </Border>
                 <TextBox Grid.Row="5" Grid.Column="2" Style="{StaticResource ValueEditor}"
                              Text="{Binding Value_HSL_H, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Grid.Row="5" Grid.Column="3" Foreground="White" Content="°"/>
 
                 <Label Grid.Row="6" Grid.Column="0" Foreground="White" Content="S"/>
                 <Border Grid.Row="6" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0"
@@ -327,6 +321,7 @@
                 </Border>
                 <TextBox Grid.Row="9" Grid.Column="2" Style="{StaticResource ValueEditor}"
                          Text="{Binding Value_HSV_H, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Grid.Row="9" Grid.Column="3" Foreground="White" Content="°"/>
 
                 <Label Grid.Row="10" Grid.Column="0" Foreground="White" Content="S"/>
                 <Border Grid.Row="10" Grid.Column="1" Height="20" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding Brush_HSV_S}">

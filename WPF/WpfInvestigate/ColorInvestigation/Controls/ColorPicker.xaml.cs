@@ -15,7 +15,9 @@
 // 9. Known color: show name + hex
 // 10. Tones
 // 11. Binding to dictionary
-// 12. Edited text box for CurrentColor
+// +12. Edited text box for CurrentColor
+// +13. Degree label for Hue
+// 14. Control for slider
 
 using ColorInvestigation.Common;
 using System;
@@ -75,8 +77,31 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        public Color ForegroundForColor => ColorSpaces.IsDarkColor(new ColorSpaces.RGB(Color)) ? Colors.White : Colors.Black;
-        public Color ForegroundForCurrentColor => ColorSpaces.IsDarkColor(new ColorSpaces.RGB(CurrentColor)) ? Colors.White : Colors.Black;
+        private SolidColorBrush[] _brushesCache = {new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
+        public SolidColorBrush Color_ForegroundBrush
+        {
+            get
+            {
+                _brushesCache[0].Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(Color)) ? Colors.White : Colors.Black;
+                return _brushesCache[0];
+            }
+        }
+        public SolidColorBrush CurrentColor_ForegroundBrush
+        {
+            get
+            {
+                _brushesCache[1].Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(CurrentColor)) ? Colors.White : Colors.Black;
+                return _brushesCache[1];
+            }
+        }
+        public SolidColorBrush CurrentColorWithoutAlphaBrush
+        {
+            get
+            {
+                _brushesCache[2].Color = _rgb.GetColor();
+                return _brushesCache[2];
+            }
+        }
 
         // Original color
         public Color Color
@@ -104,7 +129,7 @@ namespace ColorInvestigation.Controls
             _savedColor = _oldRgb.GetColor(_oldAlpha);
             _oldRgb = new ColorSpaces.RGB(_rgb.GetColor());
             _oldAlpha = _alpha;
-            OnPropertiesChanged(nameof(Color), nameof(ForegroundForColor), nameof(CurrentColor));
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
         }
 
         public void RestoreColor()
@@ -114,7 +139,7 @@ namespace ColorInvestigation.Controls
             _rgb = new ColorSpaces.RGB(_savedColor);
             _alpha = _savedColor.A / 255.0;
             UpdateValue(UpdateMode.RGB);
-            OnPropertiesChanged(nameof(Color), nameof(ForegroundForColor), nameof(CurrentColor));
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
         }
 
         private void UpdateValue(UpdateMode mode)
@@ -164,7 +189,8 @@ namespace ColorInvestigation.Controls
 
         private void UpdateUI()
         {
-            OnPropertiesChanged( nameof (CurrentColor), nameof(ForegroundForCurrentColor), nameof(HueBrush), 
+            OnPropertiesChanged(nameof(CurrentColor),
+                nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColor_ForegroundBrush), nameof(HueBrush), 
                 nameof(Value_RGB_R), nameof(Value_RGB_G), nameof(Value_RGB_B),
                 nameof(Value_HSL_H), nameof(Value_HSL_S), nameof(Value_HSL_L),
                 nameof(Value_HSV_H), nameof(Value_HSV_S), nameof(Value_HSV_V),
