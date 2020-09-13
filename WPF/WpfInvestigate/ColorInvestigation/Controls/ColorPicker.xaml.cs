@@ -267,17 +267,10 @@ namespace ColorInvestigation.Controls
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var canvas = sender as Panel;
-                var sliderName = canvas.Name;
-                FrameworkElement temp = canvas;
-                while (string.IsNullOrEmpty(sliderName) && temp != null)
-                {
-                    sliderName = temp.Name;
-                    temp = (FrameworkElement) VisualTreeHelper.GetParent(temp);
-                }
-
-                var isVertical = canvas.ActualHeight > canvas.ActualWidth;
-                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
                 var thumb = canvas.Children[0] as FrameworkElement;
+                var isVertical = canvas.ActualHeight > canvas.ActualWidth;
+                var sliderName = (canvas.TemplatedParent as FrameworkElement)?.Name ?? canvas.Name;
+                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
 
                 var multiplier = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
                 multiplier = Math.Max(0, Math.Min(1, multiplier));
