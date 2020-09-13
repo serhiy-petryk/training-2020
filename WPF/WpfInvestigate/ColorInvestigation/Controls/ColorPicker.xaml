@@ -10,7 +10,7 @@
              UseLayoutRounding="True"
              Background="#FF282828"
              DataContext="{Binding RelativeSource={RelativeSource Self}, Mode=OneTime}"
-             SizeChanged="UserControl_SizeChanged">
+             SizeChanged="ColorPicker_SizeChanged">
 
     <UserControl.Resources>
         <!-- ColorBox base background brush -->

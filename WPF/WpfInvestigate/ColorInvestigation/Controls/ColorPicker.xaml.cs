@@ -239,7 +239,7 @@ namespace ColorInvestigation.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e) => UpdateUI();
+        private void ColorPicker_SizeChanged(object sender, SizeChangedEventArgs e) => UpdateUI();
 
         /// <summary>
         /// Processing when mouse down on slider
@@ -423,15 +423,12 @@ namespace ColorInvestigation.Controls
 
         private void UpdateSaturationAndValueSlider()
         {
-            var panel = (Panel) SaturationAndValueSlider;
-            if (VisualTreeHelper.GetChildrenCount(panel) > 0)
-            {
-                var thumb = panel.Children[0] as FrameworkElement;
-                var x = panel.ActualWidth * _hsv.S - thumb.ActualWidth / 2;
-                Canvas.SetLeft(thumb, x);
-                var y = panel.ActualHeight * (1.0 - _hsv.V) - thumb.ActualHeight / 2;
-                Canvas.SetTop(thumb, y);
-            }
+            var panel = (Panel)SaturationAndValueSlider;
+            var thumb = panel.Children[0] as FrameworkElement;
+            var x = panel.ActualWidth * _hsv.S - thumb.ActualWidth / 2;
+            Canvas.SetLeft(thumb, x);
+            var y = panel.ActualHeight * (1.0 - _hsv.V) - thumb.ActualHeight / 2;
+            Canvas.SetTop(thumb, y);
         }
 
         #region ===========  Linear gradient brushes  ====================
