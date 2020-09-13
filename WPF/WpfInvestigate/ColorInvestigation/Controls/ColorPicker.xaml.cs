@@ -234,33 +234,16 @@ namespace ColorInvestigation.Controls
 
         #region ==============  Event handlers  ====================
 
-        /// <summary>
-        /// Processing the control size changing
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void ColorPicker_SizeChanged(object sender, SizeChangedEventArgs e) => UpdateUI();
+        private void RightColumn_OnSizeChanged(object sender, SizeChangedEventArgs e) => UpdateUI();
 
-        /// <summary>
-        /// Processing when mouse down on slider
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Slider_MouseDown(object sender, MouseButtonEventArgs e)
         {
             (sender as UIElement).CaptureMouse();
             Keyboard.ClearFocus();
         }
 
-        /// <summary>
-        /// Processing when mouse up on slider
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Slider_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            (sender as UIElement).ReleaseMouseCapture();
-        }
+        private void Slider_MouseUp(object sender, MouseButtonEventArgs e) => (sender as UIElement).ReleaseMouseCapture();
 
         private void Slider_MouseMove(object sender, MouseEventArgs e)
         {
@@ -633,6 +616,7 @@ namespace ColorInvestigation.Controls
 
         #endregion
 
+        #region ================  SelectAll on Focus events  ===============
         private void ValueEditor_OnGotFocus(object sender, RoutedEventArgs e) => ((TextBox)sender).SelectAll();
 
         private void ValueEditor_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -645,5 +629,6 @@ namespace ColorInvestigation.Controls
                 textBox.Focus();
             }
         }
+        #endregion
     }
 }
