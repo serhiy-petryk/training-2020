@@ -39,6 +39,18 @@ namespace ColorInvestigation.Controls
     /// </summary>
     public partial class ColorPicker : UserControl, INotifyPropertyChanged
     {
+        // Constructor
+        public ColorPicker()
+        {
+            InitializeComponent();
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+            {
+                UpdateValue(UpdateMode.RGB);
+                _savedColor = _oldRgb.GetColor(_oldAlpha);
+            }));
+        }
+
+        //=================================
         private CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
         private enum UpdateMode { RGB, HSL, HSV, XYZ, LAB, YCbCr };
 
@@ -117,17 +129,7 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        // Constructor
-        public ColorPicker()
-        {
-            InitializeComponent();
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
-            {
-                UpdateValue(UpdateMode.RGB);
-                _savedColor = _oldRgb.GetColor(_oldAlpha);
-            }));
-        }
-
+        // =========================
         public void SaveColor()
         {
             _savedColor = _oldRgb.GetColor(_oldAlpha);
@@ -193,6 +195,7 @@ namespace ColorInvestigation.Controls
 
         private void UpdateUI()
         {
+            TonesGenerate();
             OnPropertiesChanged(nameof(CurrentColor),
                 nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColor_ForegroundBrush), nameof(HueBrush), 
                 nameof(Value_RGB_R), nameof(Value_RGB_G), nameof(Value_RGB_B),
@@ -628,6 +631,47 @@ namespace ColorInvestigation.Controls
                 e.Handled = true;
                 textBox.Focus();
             }
+        }
+        #endregion
+
+        #region ==============  Tones  =======================
+        public class ColorToneBox
+        {
+            public SolidColorBrush Background { get; set; }=new SolidColorBrush();
+            public SolidColorBrush Foreground { get; set; }=new SolidColorBrush();
+            public int GridRow { get; set; }
+            public int GridColumn { get; set; }
+            public string Info { get; set; }
+            public override string ToString() => Background.Color.ToString();
+        }
+
+        private const int NumberOfTones = 10;
+        public ColorToneBox[] Tones { get; private set; } 
+
+        private void TonesGenerate()
+        {
+            if (Tones == null)
+            {
+                Tones = new ColorToneBox[3 * NumberOfTones];
+                for (var k1 = 0; k1 < 3; k1++)
+                for (var k2 = 0; k2 < NumberOfTones; k2++)
+                    Tones[k2 + k1 * NumberOfTones] = new ColorToneBox {GridRow = k2, GridColumn = k1};
+            }
+
+            for (var k = 0; k < NumberOfTones; k++)
+            {
+                Tones[k].Background.Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, 0.025 + 0.05 * k).GetRGB().GetColor();
+                Tones[k].Foreground.Color = Colors.White;
+                
+                Tones[NumberOfTones + k].Background.Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, 0.975 - 0.05 * k).GetRGB().GetColor();
+                Tones[NumberOfTones + k].Foreground.Color = Colors.Black;
+
+                var tone = new ColorSpaces.HSL(_hsl.H, 0.05 + 0.1 * k, _hsl.L).GetRGB().GetColor();
+                Tones[NumberOfTones * 2 + k].Background.Color = tone;
+                Tones[NumberOfTones * 2 + k].Foreground.Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(tone)) ? Colors.White : Colors.Black;
+            }
+
+            OnPropertiesChanged(nameof(Tones));
         }
         #endregion
     }
