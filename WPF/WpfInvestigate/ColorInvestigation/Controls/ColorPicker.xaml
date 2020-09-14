@@ -13,8 +13,8 @@
              SizeChanged="ColorPicker_SizeChanged">
 
     <UserControl.Resources>
-        <!-- ColorBox base background brush -->
-        <DrawingBrush x:Key="ColorBoxBaseBrush">
+        <!-- SaturationAndValueSlider base background brush -->
+        <DrawingBrush x:Key="SaturationAndValueSliderBaseBrush">
             <DrawingBrush.Drawing>
                 <DrawingGroup>
                     <GeometryDrawing>
@@ -117,7 +117,7 @@
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="Cursor" Value="Arrow"/>
             <Setter Property="Background" Value="#FF555555"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="#FFE0E0E0"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -136,15 +136,17 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColorBox_OnPreviewMouseLeftButtonDown"></EventSetter>
         </Style>
 
         <Style TargetType="Label" x:Key="SliderLabel">
             <Setter Property="Margin" Value="0 0 -2 0"/>
             <Setter Property="Padding" Value="0"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="#FFE0E0E0"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+
         <Style TargetType="Label" x:Key="ValueLabel">
             <Setter Property="Margin" Value="4 0 8 0"/>
             <Setter Property="Padding" Value="0"/>
@@ -172,10 +174,11 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1.5*"/>
                 </Grid.RowDefinitions>
-                <!-- ColorBox -->
+
+                <!-- SaturationAndValueSlider -->
                 <Grid Grid.Column="0" Grid.Row="0" Margin="0,0,5,0">
                     <Rectangle Fill="{Binding HueBrush}"/>
-                    <Rectangle Fill="{StaticResource ColorBoxBaseBrush}"/>
+                    <Rectangle Fill="{StaticResource SaturationAndValueSliderBaseBrush}"/>
                     <Canvas x:Name="SaturationAndValueSlider" Background="Transparent" ClipToBounds="False"
                             MouseDown="Slider_MouseDown"
                             MouseMove="SaturationAndValueSlider_MouseMove"

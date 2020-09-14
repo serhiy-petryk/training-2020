@@ -14,10 +14,10 @@
 // +8. Size changed => how Hue don't change
 // 9. Known color: show name + hex (as popup)
 // 10. Tones
-// 11. Binding to dictionary
+// +11. Binding to dictionary
 // +12. Edited text box for CurrentColor
 // +13. Degree label for Hue
-// 14. Control for slider
+// -14. Control for slider
 // 15. ViewModel
 // 16. Click on ColorBox
 // 17. Alpha for old Color in ColorBox
@@ -653,6 +653,15 @@ namespace ColorInvestigation.Controls
                 GridRow = gridRow;
                 Foreground.Color = gridColumn == 0 ? Colors.White : Colors.Black;
             }
+
+            public ColorSpaces.HSL GetBackgroundHSL(ColorSpaces.HSL baseHSL)
+            {
+                if (GridColumn == 0)
+                    return new ColorSpaces.HSL(baseHSL.H, baseHSL.S, 0.025 + 0.05 * GridRow);
+                if (GridColumn == 1)
+                    return new ColorSpaces.HSL(baseHSL.H, baseHSL.S, 0.975 - 0.05 * GridRow);
+                return new ColorSpaces.HSL(baseHSL.H, 0.05 + 0.1 * GridRow, baseHSL.L);
+            }
         }
 
         private const int NumberOfTones = 10;
@@ -670,21 +679,23 @@ namespace ColorInvestigation.Controls
                 }
             }
 
-            for (var k = 0; k < NumberOfTones; k++)
+            foreach (var tone in Tones)
             {
-                Tones[k].Background.Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, 0.025 + 0.05 * k).GetRGB().GetColor();
-                // Tones[k].Foreground.Color = Colors.White;
-                
-                Tones[NumberOfTones + k].Background.Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, 0.975 - 0.05 * k).GetRGB().GetColor();
-                // Tones[NumberOfTones + k].Foreground.Color = Colors.Black;
-
-                var tone = new ColorSpaces.HSL(_hsl.H, 0.05 + 0.1 * k, _hsl.L).GetRGB().GetColor();
-                Tones[NumberOfTones * 2 + k].Background.Color = tone;
-                Tones[NumberOfTones * 2 + k].Foreground.Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(tone)) ? Colors.White : Colors.Black;
+                tone.Background.Color = tone.GetBackgroundHSL(_hsl).GetRGB().GetColor();
+                if (tone.GridColumn == 2)
+                    tone.Foreground.Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(tone.Background.Color))
+                        ? Colors.White
+                        : Colors.Black;
             }
 
             OnPropertiesChanged(nameof(Tones));
         }
         #endregion
+
+        private void ColorBox_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _hsl = (((FrameworkElement)sender).DataContext as ColorToneBox).GetBackgroundHSL(_hsl);
+            UpdateValue(UpdateMode.HSL);
+        }
     }
 }
