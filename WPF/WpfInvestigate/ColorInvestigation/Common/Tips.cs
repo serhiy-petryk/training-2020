@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -12,6 +13,8 @@ namespace ColorInvestigation.Common
     {
         public static readonly CultureInfo InvariantCulture = CultureInfo.InvariantCulture;
         private const double DefaultPrecision = 0.0001;
+
+        public static void Beep() => SystemSounds.Beep.Play();
 
         public static bool AreEqual(double d1, double d2)
         {

@@ -109,6 +109,7 @@
             <EventSetter Event="GotFocus" Handler="ValueEditor_OnGotFocus"/>
             <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ValueEditor_OnPreviewMouseLeftButtonDown"/>
             <EventSetter Event="PreviewTextInput" Handler="ValueEditor_OnPreviewTextInput"/>
+            <EventSetter Event="LostFocus" Handler="ValueEditor_OnLostFocus"/>
         </Style>
 
         <Style TargetType="TextBox" x:Key="Label">
@@ -338,7 +339,7 @@
                 <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="R"/>
                 <Control Grid.Row="1" Grid.Column="1" Name="Slider_RGB_R" Background="{Binding Brush_RGB_R}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_RGB_R, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding Value_RGB_R, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="G"/>
                 <Control Margin="0 -1" Grid.Row="2" Grid.Column="1" Name="Slider_RGB_G" Background="{Binding Brush_RGB_G}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
@@ -348,7 +349,7 @@
                 <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="B"/>
                 <Control Grid.Row="3" Grid.Column="1" Name="Slider_RGB_B" Background="{Binding Brush_RGB_B}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="3" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                                 Text="{Binding Value_RGB_B, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                 Text="{Binding Value_RGB_B, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- HSL -->
                 <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 4" Text="HSL (Hue[0-360], Saturation[0-100], Lightness[0-100])" Style="{StaticResource Label}"/>
@@ -356,19 +357,19 @@
                 <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="H"/>
                 <Control Grid.Row="5" Grid.Column="1" Name="Slider_HSL_H" Background="{Binding Brush_HSL_H}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="5" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                             Text="{Binding Value_HSL_H, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding Value_HSL_H, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="5" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="°"/>
 
                 <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="S"/>
                 <Control Margin="0 -1" Grid.Row="6" Grid.Column="1" Name="Slider_HSL_S" Background="{Binding Brush_HSL_S}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="6" Grid.Column="2" Style="{StaticResource ValueEditor}" BorderThickness="1 0"
-                         Text="{Binding Value_HSL_S, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding Value_HSL_S, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="6" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="%"/>
 
                 <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="L"/>
                 <Control Grid.Row="7" Grid.Column="1" Name="Slider_HSL_L" Background="{Binding Brush_HSL_L}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="7" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_HSL_L, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding Value_HSL_L, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="7" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="%"/>
 
                 <!-- HSV -->
@@ -377,19 +378,19 @@
                 <Label Grid.Row="9" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="H"/>
                 <Control Grid.Row="9" Grid.Column="1" Name="Slider_HSV_H" Background="{Binding Brush_HSV_H}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="9" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_HSV_H, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding Value_HSV_H, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="9" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="°"/>
 
                 <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="S"/>
                 <Control Margin="0 -1" Grid.Row="10" Grid.Column="1" Name="Slider_HSV_S" Background="{Binding Brush_HSV_S}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="10" Grid.Column="2" Style="{StaticResource ValueEditor}" BorderThickness="1 0"
-                         Text="{Binding Value_HSV_S, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding Value_HSV_S, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="10" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="%"/>
 
                 <Label Grid.Row="11" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="V/B"/>
                 <Control Grid.Row="11" Grid.Column="1" Name="Slider_HSV_V" Background="{Binding Brush_HSV_V}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="11" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_HSV_V, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding Value_HSV_V, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="11" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="%"/>
 
                 <!-- LAB -->
@@ -398,7 +399,7 @@
                 <Label Grid.Row="13" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="L"/>
                 <Control Grid.Row="13" Grid.Column="1" Name="Slider_LAB_L" Background="{Binding Brush_LAB_L}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="13" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_LAB_L, StringFormat={}{0:0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding Value_LAB_L, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="14" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="A"/>
                 <Control Margin="0 -1" Grid.Row="14" Grid.Column="1" Name="Slider_LAB_A" Background="{Binding Brush_LAB_A}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>

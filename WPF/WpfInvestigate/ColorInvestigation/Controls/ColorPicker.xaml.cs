@@ -1,6 +1,6 @@
 ﻿// ToDo:
 // +1. fixed mouse move on HSV area
-// 2. Layout
+// +2. Layout
 // +3. Remove all dependency properties + use calculated properties
 //      in setter set variable _isChanging=true
 //      public properties are Color type (not Brush)
@@ -13,15 +13,16 @@
 // ?7. Process value when mouse is clicked
 // +8. Size changed => how Hue don't change
 // 9. Known color: show name + hex (as popup)
-// 10. Tones
+// +10. Tones
 // +11. Binding to dictionary
 // +12. Edited text box for CurrentColor
 // +13. Degree label for Hue
 // -14. Control for slider
 // 15. ViewModel
-// 16. Click on ColorBox
+// +16. Click on ColorBox
 // 17. Alpha for old Color in ColorBox
 // 18. Popup for ColorBox info
+// +19. Decimal places for ValueEditor
 
 using ColorInvestigation.Common;
 using System;
@@ -94,7 +95,7 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        private SolidColorBrush[] _brushesCache = {new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
+        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
         public SolidColorBrush Color_ForegroundBrush
         {
             get
@@ -152,8 +153,11 @@ namespace ColorInvestigation.Controls
             OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
         }
 
+        private bool _isUpdating;
         private void UpdateValue(UpdateMode mode)
         {
+            if (_isUpdating) return;
+
             // Update rgb object
             if (mode == UpdateMode.HSL)
             {
@@ -194,14 +198,16 @@ namespace ColorInvestigation.Controls
             if (mode != UpdateMode.YCbCr)
                 _yCbCr = new ColorSpaces.YCbCr(_rgb);
 
+            _isUpdating = true;
             UpdateUI();
+            _isUpdating = false;
         }
 
         private void UpdateUI()
         {
             TonesGenerate();
             OnPropertiesChanged(nameof(CurrentColor),
-                nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColor_ForegroundBrush), nameof(HueBrush), 
+                nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColor_ForegroundBrush), nameof(HueBrush),
                 nameof(Value_RGB_R), nameof(Value_RGB_G), nameof(Value_RGB_B),
                 nameof(Value_HSL_H), nameof(Value_HSL_S), nameof(Value_HSL_L),
                 nameof(Value_HSV_H), nameof(Value_HSV_S), nameof(Value_HSV_V),
@@ -218,25 +224,54 @@ namespace ColorInvestigation.Controls
             UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
             UpdateSlider(HueSlider, _hsv.H, 1.0);
 
-            RefreshSlider(Slider_RGB_R, _rgb.R, 1.0);
-            RefreshSlider(Slider_RGB_G, _rgb.G, 1.0);
-            RefreshSlider(Slider_RGB_B, _rgb.B, 1.0);
+            UpdateSlider(Slider_RGB_R, _rgb.R, 1.0);
+            UpdateSlider(Slider_RGB_G, _rgb.G, 1.0);
+            UpdateSlider(Slider_RGB_B, _rgb.B, 1.0);
 
-            RefreshSlider(Slider_HSL_H, _hsl.H, 1.0);
-            RefreshSlider(Slider_HSL_S, _hsl.S, 1.0);
-            RefreshSlider(Slider_HSL_L, _hsl.L, 1.0);
+            UpdateSlider(Slider_HSL_H, _hsl.H, 1.0);
+            UpdateSlider(Slider_HSL_S, _hsl.S, 1.0);
+            UpdateSlider(Slider_HSL_L, _hsl.L, 1.0);
 
-            RefreshSlider(Slider_HSV_H, _hsv.H, 1.0);
-            RefreshSlider(Slider_HSV_S, _hsv.S, 1.0);
-            RefreshSlider(Slider_HSV_V, _hsv.V, 1.0);
+            UpdateSlider(Slider_HSV_H, _hsv.H, 1.0);
+            UpdateSlider(Slider_HSV_S, _hsv.S, 1.0);
+            UpdateSlider(Slider_HSV_V, _hsv.V, 1.0);
 
-            RefreshSlider(Slider_LAB_L, _lab.L, 100.0);
-            RefreshSlider(Slider_LAB_A, _lab.A + 127.5, 255.0);
-            RefreshSlider(Slider_LAB_B, _lab.B + 127.5, 255.0);
+            UpdateSlider(Slider_LAB_L, _lab.L, 100.0);
+            UpdateSlider(Slider_LAB_A, _lab.A + 127.5, 255.0);
+            UpdateSlider(Slider_LAB_B, _lab.B + 127.5, 255.0);
 
-            RefreshSlider(Slider_YCbCr_Y, _yCbCr.Y * 255.0, 255.0);
-            RefreshSlider(Slider_YCbCr_Cb, _yCbCr.Cb * 255.0 + 127.5, 255.0);
-            RefreshSlider(Slider_YCbCr_Cr, _yCbCr.Cr * 255.0 + 127.5, 255.0);
+            UpdateSlider(Slider_YCbCr_Y, _yCbCr.Y * 255.0, 255.0);
+            UpdateSlider(Slider_YCbCr_Cb, _yCbCr.Cb * 255.0 + 127.5, 255.0);
+            UpdateSlider(Slider_YCbCr_Cr, _yCbCr.Cr * 255.0 + 127.5, 255.0);
+        }
+
+        private void UpdateSlider(FrameworkElement element, double value, double maxValue)
+        {
+            var panel = element is Panel
+                ? (Panel) element
+                : VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(element, 0), 0) as Panel;
+
+            var thumb = panel.Children[0] as FrameworkElement;
+            if (panel.ActualWidth > panel.ActualHeight)
+            {   // horizontal slider
+                var x = (panel.ActualWidth - thumb.ActualWidth) * value / maxValue;
+                Canvas.SetLeft(thumb, x);
+            }
+            else
+            {   // vertical slider
+                var y = panel.ActualHeight * value / maxValue - thumb.ActualHeight / 2;
+                Canvas.SetTop(thumb, y);
+            }
+        }
+
+        private void UpdateSaturationAndValueSlider()
+        {
+            var panel = (Panel)SaturationAndValueSlider;
+            var thumb = panel.Children[0] as FrameworkElement;
+            var x = panel.ActualWidth * _hsv.S - thumb.ActualWidth / 2;
+            Canvas.SetLeft(thumb, x);
+            var y = panel.ActualHeight * (1.0 - _hsv.V) - thumb.ActualHeight / 2;
+            Canvas.SetTop(thumb, y);
         }
 
         #region ==============  Event handlers  ====================
@@ -353,11 +388,6 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        /// <summary>
-        /// Processing mouse moving for Saturation and brightness controls 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void SaturationAndValueSlider_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -373,6 +403,77 @@ namespace ColorInvestigation.Controls
                 UpdateValue(UpdateMode.HSV);
             }
         }
+
+        private void ColorBox_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _hsl = (((FrameworkElement)sender).DataContext as ColorToneBox).GetBackgroundHSL(_hsl);
+            UpdateValue(UpdateMode.HSL);
+        }
+
+        #endregion
+
+        #region ================  SelectAll Event Handlers on Focus event  ===============
+        private void ValueEditor_OnGotFocus(object sender, RoutedEventArgs e) => ((TextBox)sender).SelectAll();
+
+        private void ValueEditor_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // select all text on got focus: see BillBR comment in https://stackoverflow.com/questions/660554/how-to-automatically-select-all-text-on-focus-in-wpf-textbox
+            var textBox = (TextBox)sender;
+            if (!textBox.IsKeyboardFocusWithin)
+            {
+                e.Handled = true;
+                textBox.Focus();
+            }
+        }
+        #endregion
+
+        #region ================  Event Handlers for Value Editor  ===============
+        private void ValueEditor_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = true;
+            if (e.Text == "\t") // tab key
+                return;
+            if (string.IsNullOrWhiteSpace(e.Text) || e.Text.Length != 1)
+            {
+                Tips.Beep();
+                return;
+            }
+
+            var valueEditor = (TextBox)sender;
+            var bindingExpression = valueEditor.GetBindingExpression(TextBox.TextProperty);
+            var propertyName = bindingExpression.ParentBinding.Path.Path;
+            var metaData = ValueMetadata[propertyName];
+            var newText = valueEditor.Text.Substring(0, valueEditor.SelectionStart) + e.Text +
+                          valueEditor.Text.Substring(valueEditor.SelectionStart + valueEditor.SelectionLength);
+
+            if (CurrentCulture.NumberFormat.NativeDigits.Contains(e.Text))
+                e.Handled = false;
+            if (CurrentCulture.NumberFormat.NumberDecimalSeparator == e.Text)
+                e.Handled = valueEditor.Text.Contains(CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            else if (CurrentCulture.NumberFormat.NegativeSign == e.Text)
+                e.Handled = metaData.Item1 >= 0 ||
+                            valueEditor.Text.Contains(CurrentCulture.NumberFormat.NegativeSign) ||
+                            !(newText.StartsWith(e.Text) || newText.EndsWith(e.Text));
+
+            if (e.Handled)
+                Tips.Beep();
+        }
+
+        private void ValueEditor_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            var valueEditor = (TextBox)sender;
+            var bindingExpression = valueEditor.GetBindingExpression(TextBox.TextProperty);
+            var propertyName = bindingExpression.ParentBinding.Path.Path;
+            var metaData = ValueMetadata[propertyName];
+
+            if (double.TryParse(valueEditor.Text, NumberStyles.Any, CurrentCulture, out var value))
+            {
+                if (value < metaData.Item1) valueEditor.Text = metaData.Item1.ToString(CurrentCulture);
+                else if (value > metaData.Item2) valueEditor.Text = metaData.Item2.ToString(CurrentCulture);
+            }
+            else valueEditor.Text = "0";
+            UpdateValue(metaData.Item3);
+        }
         #endregion
 
         #region ===========  INotifyPropertyChanged  ===============
@@ -384,35 +485,59 @@ namespace ColorInvestigation.Controls
         }
         #endregion
 
-        private void RefreshSlider(Control control, double value, double maxValue)
+        #region ==============  Tones  =======================
+        public class ColorToneBox
         {
-            var panel = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(control, 0), 0);
-            UpdateSlider(panel as Panel, value, maxValue);
-        }
-        private void UpdateSlider(Panel panel, double value, double maxValue)
-        {
-            var thumb = panel.Children[0] as FrameworkElement;
-            if (panel.ActualWidth > panel.ActualHeight)
-            {   // horizontal slider
-                var x = (panel.ActualWidth - thumb.ActualWidth) * value / maxValue;
-                Canvas.SetLeft(thumb, x);
+            public int GridColumn { get; }
+            public int GridRow { get; }
+            public SolidColorBrush Background { get; } = new SolidColorBrush();
+            public SolidColorBrush Foreground { get; } = new SolidColorBrush();
+            public string Info { get; set; }
+
+            public ColorToneBox(int gridColumn, int gridRow)
+            {
+                GridColumn = gridColumn;
+                GridRow = gridRow;
+                Foreground.Color = gridColumn == 0 ? Colors.White : Colors.Black;
             }
-            else
-            {   // vertical slider
-                var y = panel.ActualHeight * value / maxValue - thumb.ActualHeight / 2;
-                Canvas.SetTop(thumb, y);
+
+            public ColorSpaces.HSL GetBackgroundHSL(ColorSpaces.HSL baseHSL)
+            {
+                if (GridColumn == 0)
+                    return new ColorSpaces.HSL(baseHSL.H, baseHSL.S, 0.025 + 0.05 * GridRow);
+                if (GridColumn == 1)
+                    return new ColorSpaces.HSL(baseHSL.H, baseHSL.S, 0.975 - 0.05 * GridRow);
+                return new ColorSpaces.HSL(baseHSL.H, 0.05 + 0.1 * GridRow, baseHSL.L);
             }
         }
 
-        private void UpdateSaturationAndValueSlider()
+        private const int NumberOfTones = 10;
+        public ColorToneBox[] Tones { get; private set; }
+
+        private void TonesGenerate()
         {
-            var panel = (Panel)SaturationAndValueSlider;
-            var thumb = panel.Children[0] as FrameworkElement;
-            var x = panel.ActualWidth * _hsv.S - thumb.ActualWidth / 2;
-            Canvas.SetLeft(thumb, x);
-            var y = panel.ActualHeight * (1.0 - _hsv.V) - thumb.ActualHeight / 2;
-            Canvas.SetTop(thumb, y);
+            if (Tones == null)
+            {
+                Tones = new ColorToneBox[3 * NumberOfTones];
+                for (var k1 = 0; k1 < 3; k1++)
+                {
+                    for (var k2 = 0; k2 < NumberOfTones; k2++)
+                        Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(k1, k2);
+                }
+            }
+
+            foreach (var tone in Tones)
+            {
+                tone.Background.Color = tone.GetBackgroundHSL(_hsl).GetRGB().GetColor();
+                if (tone.GridColumn == 2)
+                    tone.Foreground.Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(tone.Background.Color))
+                        ? Colors.White
+                        : Colors.Black;
+            }
+
+            OnPropertiesChanged(nameof(Tones));
         }
+        #endregion
 
         #region ===========  Linear gradient brushes  ====================
         public LinearGradientBrush Brush_RGB_R { get; } = CreateLinearGradientBrush(1);
@@ -599,103 +724,13 @@ namespace ColorInvestigation.Controls
             get => _yCbCr.Cb * 255.0;
             set => _yCbCr.Cb = value / 255.0;
         }
+
         public double Value_YCbCr_Cr
         {
             get => _yCbCr.Cr * 255.0;
             set => _yCbCr.Cr = value / 255.0;
         }
 
-        private void ValueEditor_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            var box = (TextBox)sender;
-            var bindingExpression = box.GetBindingExpression(TextBox.TextProperty);
-            var propertyName = bindingExpression.ParentBinding.Path.Path;
-            var metaData = ValueMetadata[propertyName];
-
-            if (double.TryParse(box.Text, NumberStyles.Any, CurrentCulture, out var value))
-            {
-                if (value < metaData.Item1) box.Text = metaData.Item1.ToString(CurrentCulture);
-                else if (value > metaData.Item2) box.Text = metaData.Item2.ToString(CurrentCulture);
-            }
-            else box.Text = "0";
-            UpdateValue(metaData.Item3);
-        }
-
         #endregion
-
-        #region ================  SelectAll on Focus events  ===============
-        private void ValueEditor_OnGotFocus(object sender, RoutedEventArgs e) => ((TextBox)sender).SelectAll();
-
-        private void ValueEditor_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            // select all text on got focus: see BillBR comment in https://stackoverflow.com/questions/660554/how-to-automatically-select-all-text-on-focus-in-wpf-textbox
-            var textBox = (TextBox)sender;
-            if (!textBox.IsKeyboardFocusWithin)
-            {
-                e.Handled = true;
-                textBox.Focus();
-            }
-        }
-        #endregion
-
-        #region ==============  Tones  =======================
-        public class ColorToneBox
-        {
-            public int GridColumn { get; }
-            public int GridRow { get; }
-            public SolidColorBrush Background { get; } = new SolidColorBrush();
-            public SolidColorBrush Foreground { get; } = new SolidColorBrush();
-            public string Info { get; set; }
-
-            public ColorToneBox(int gridColumn, int gridRow)
-            {
-                GridColumn = gridColumn;
-                GridRow = gridRow;
-                Foreground.Color = gridColumn == 0 ? Colors.White : Colors.Black;
-            }
-
-            public ColorSpaces.HSL GetBackgroundHSL(ColorSpaces.HSL baseHSL)
-            {
-                if (GridColumn == 0)
-                    return new ColorSpaces.HSL(baseHSL.H, baseHSL.S, 0.025 + 0.05 * GridRow);
-                if (GridColumn == 1)
-                    return new ColorSpaces.HSL(baseHSL.H, baseHSL.S, 0.975 - 0.05 * GridRow);
-                return new ColorSpaces.HSL(baseHSL.H, 0.05 + 0.1 * GridRow, baseHSL.L);
-            }
-        }
-
-        private const int NumberOfTones = 10;
-        public ColorToneBox[] Tones { get; private set; } 
-
-        private void TonesGenerate()
-        {
-            if (Tones == null)
-            {
-                Tones = new ColorToneBox[3 * NumberOfTones];
-                for (var k1 = 0; k1 < 3; k1++)
-                {
-                    for (var k2 = 0; k2 < NumberOfTones; k2++)
-                        Tones[k2 + k1 * NumberOfTones] = new ColorToneBox( k1, k2);
-                }
-            }
-
-            foreach (var tone in Tones)
-            {
-                tone.Background.Color = tone.GetBackgroundHSL(_hsl).GetRGB().GetColor();
-                if (tone.GridColumn == 2)
-                    tone.Foreground.Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(tone.Background.Color))
-                        ? Colors.White
-                        : Colors.Black;
-            }
-
-            OnPropertiesChanged(nameof(Tones));
-        }
-        #endregion
-
-        private void ColorBox_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            _hsl = (((FrameworkElement)sender).DataContext as ColorToneBox).GetBackgroundHSL(_hsl);
-            UpdateValue(UpdateMode.HSL);
-        }
     }
 }
