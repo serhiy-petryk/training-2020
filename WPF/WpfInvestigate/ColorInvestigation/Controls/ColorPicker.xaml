@@ -245,7 +245,7 @@
                                 <SolidColorBrush Color="{Binding CurrentColor}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <TextBox Text="{Binding CurrentColor}" MaxWidth="70" MinWidth="60" BorderThickness="2" FontWeight="Bold"
+                        <TextBox Text="{Binding CurrentColor}" HorizontalAlignment="Center" BorderThickness="2" FontWeight="Bold"
                                  Margin="0" Padding="0"
                                  BorderBrush="{Binding CurrentColor_ForegroundBrush}"
                                  Background="{Binding CurrentColorWithoutAlphaBrush}"
@@ -261,7 +261,7 @@
                     <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2"  ItemsSource="{Binding Path=Tones}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Background}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}" Style="{StaticResource ColorBox}"/>
+                                <TextBox Text="{Binding Background, Mode=OneWay}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}" Style="{StaticResource ColorBox}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemContainerStyle>

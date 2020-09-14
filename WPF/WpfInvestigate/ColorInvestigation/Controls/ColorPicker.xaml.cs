@@ -12,12 +12,16 @@
 // +6. Remove IsMouseDown property (only Capture)
 // ?7. Process value when mouse is clicked
 // +8. Size changed => how Hue don't change
-// 9. Known color: show name + hex
+// 9. Known color: show name + hex (as popup)
 // 10. Tones
 // 11. Binding to dictionary
 // +12. Edited text box for CurrentColor
 // +13. Degree label for Hue
 // 14. Control for slider
+// 15. ViewModel
+// 16. Click on ColorBox
+// 17. Alpha for old Color in ColorBox
+// 18. Popup for ColorBox info
 
 using ColorInvestigation.Common;
 using System;
@@ -637,12 +641,18 @@ namespace ColorInvestigation.Controls
         #region ==============  Tones  =======================
         public class ColorToneBox
         {
-            public SolidColorBrush Background { get; set; }=new SolidColorBrush();
-            public SolidColorBrush Foreground { get; set; }=new SolidColorBrush();
-            public int GridRow { get; set; }
-            public int GridColumn { get; set; }
+            public int GridColumn { get; }
+            public int GridRow { get; }
+            public SolidColorBrush Background { get; } = new SolidColorBrush();
+            public SolidColorBrush Foreground { get; } = new SolidColorBrush();
             public string Info { get; set; }
-            public override string ToString() => Background.Color.ToString();
+
+            public ColorToneBox(int gridColumn, int gridRow)
+            {
+                GridColumn = gridColumn;
+                GridRow = gridRow;
+                Foreground.Color = gridColumn == 0 ? Colors.White : Colors.Black;
+            }
         }
 
         private const int NumberOfTones = 10;
@@ -654,17 +664,19 @@ namespace ColorInvestigation.Controls
             {
                 Tones = new ColorToneBox[3 * NumberOfTones];
                 for (var k1 = 0; k1 < 3; k1++)
-                for (var k2 = 0; k2 < NumberOfTones; k2++)
-                    Tones[k2 + k1 * NumberOfTones] = new ColorToneBox {GridRow = k2, GridColumn = k1};
+                {
+                    for (var k2 = 0; k2 < NumberOfTones; k2++)
+                        Tones[k2 + k1 * NumberOfTones] = new ColorToneBox( k1, k2);
+                }
             }
 
             for (var k = 0; k < NumberOfTones; k++)
             {
                 Tones[k].Background.Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, 0.025 + 0.05 * k).GetRGB().GetColor();
-                Tones[k].Foreground.Color = Colors.White;
+                // Tones[k].Foreground.Color = Colors.White;
                 
                 Tones[NumberOfTones + k].Background.Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, 0.975 - 0.05 * k).GetRGB().GetColor();
-                Tones[NumberOfTones + k].Foreground.Color = Colors.Black;
+                // Tones[NumberOfTones + k].Foreground.Color = Colors.Black;
 
                 var tone = new ColorSpaces.HSL(_hsl.H, 0.05 + 0.1 * k, _hsl.L).GetRGB().GetColor();
                 Tones[NumberOfTones * 2 + k].Background.Color = tone;
