@@ -404,7 +404,7 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        private void ColorBox_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ColorBox_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             _hsl = (((FrameworkElement)sender).DataContext as ColorToneBox).GetBackgroundHSL(_hsl);
             UpdateValue(UpdateMode.HSL);

@@ -131,7 +131,7 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColorBox_OnPreviewMouseLeftButtonDown"></EventSetter>
+            <EventSetter Event="MouseDoubleClick" Handler="ColorBox_OnMouseDoubleClick"/>
         </Style>
 
         <Style x:Key="SliderLabel" TargetType="Label">
