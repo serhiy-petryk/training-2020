@@ -131,7 +131,6 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <EventSetter Event="MouseDoubleClick" Handler="ColorBox_OnMouseDoubleClick"/>
         </Style>
 
         <Style x:Key="SliderLabel" TargetType="Label">
@@ -259,9 +258,39 @@
                     <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2"  ItemsSource="{Binding Path=Tones}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Background, Mode=OneWay}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}"
-                                         ToolTip="{Binding Info}" ToolTipOpening="FrameworkElement_OnToolTipOpening"
-                                         Style="{StaticResource ColorBox}"/>
+                                <Grid x:Name="ColorBoxGrid">
+                                    <TextBox x:Name="PopupPlacement" Text="{Binding Background, Mode=OneWay}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}" Style="{StaticResource ColorBox}"/>
+                                    <ToggleButton x:Name="PopupButton" Opacity="0.01" IsThreeState="False"/>
+                                    <Popup x:Name="PART_Popup"
+                                           AllowsTransparency="True"
+                                           Focusable="False"
+                                           Placement="Bottom"
+                                           PlacementTarget="{Binding ElementName=PopupPlacement}"
+                                           PopupAnimation="Fade"
+                                           SnapsToDevicePixels="True"
+                                           IsOpen="{Binding ElementName=PopupButton, Path=IsChecked}"
+                                           Opened="PART_Popup_OnOpened"
+                                           StaysOpen="False">
+                                        <Border Margin="0,0,8,8" Background="#daedf4" BorderBrush="#FF399CBD" BorderThickness="1.5">
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
+                                            </Border.Effect>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <TextBox Grid.Row="0" IsReadOnly="True" Background="Transparent" Cursor="Arrow"/>
+                                                <Button Grid.Row="1" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightBlue"
+                                                        BorderThickness="2" Margin="10">
+                                                    <TextBlock Padding="4" TextAlignment="Center" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap"
+                                                               MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown"
+                                                               Text="Click here to set the current color to this color" Width="120" />
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+                                    </Popup>
+                                </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemContainerStyle>

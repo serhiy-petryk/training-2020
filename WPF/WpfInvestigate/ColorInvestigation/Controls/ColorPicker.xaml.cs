@@ -35,6 +35,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -406,12 +407,6 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        private void ColorBox_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            _hsl = (((FrameworkElement)sender).DataContext as ColorToneBox).GetBackgroundHSL();
-            UpdateValue(UpdateMode.HSL);
-        }
-
         #endregion
 
         #region ================  SelectAll Event Handlers on Focus event  ===============
@@ -756,11 +751,22 @@ namespace ColorInvestigation.Controls
 
         #endregion
 
-        private void FrameworkElement_OnToolTipOpening(object sender, ToolTipEventArgs e)
+        private void PART_Popup_OnOpened(object sender, EventArgs e)
         {
-            var textBox = (TextBox) sender;
-            var colorToneBox = textBox.DataContext as ColorToneBox;
-            textBox.ToolTip = colorToneBox.Info;
+            var textBox = Tips.GetVisualChildren(((Popup)sender).Child).OfType<TextBox>().FirstOrDefault();
+            textBox.Text = (textBox.DataContext as ColorToneBox).Info;
         }
+
+        private void UIElement_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var element = (FrameworkElement)sender;
+            var colorBoxGrid = Tips.GetVisualParents(element).OfType<Grid>().FirstOrDefault(g => g.Name == "ColorBoxGrid");
+            var toggle = Tips.GetVisualChildren(colorBoxGrid).OfType<ToggleButton>().FirstOrDefault();
+            toggle.IsChecked = false;
+
+            _hsl = (((FrameworkElement)sender).DataContext as ColorToneBox).GetBackgroundHSL();
+            UpdateValue(UpdateMode.HSL);
+        }
+
     }
 }
