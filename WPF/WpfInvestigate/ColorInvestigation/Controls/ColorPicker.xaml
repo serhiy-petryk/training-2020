@@ -13,7 +13,6 @@
              SizeChanged="ColorPicker_SizeChanged">
 
     <UserControl.Resources>
-        <!-- SaturationAndValueSlider base background brush -->
         <DrawingBrush x:Key="SaturationAndValueSliderBaseBrush">
             <DrawingBrush.Drawing>
                 <DrawingGroup>
@@ -43,8 +42,7 @@
             </DrawingBrush.Drawing>
         </DrawingBrush>
 
-        <!-- HueBar background color -->
-        <LinearGradientBrush x:Key="HueVerticalBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush x:Key="HueBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Offset="0" Color="#FFFF0000"/>
             <GradientStop Offset="0.167" Color="#FFFFFF00"/>
             <GradientStop Offset="0.333" Color="#FF00FF00"/>
@@ -54,8 +52,7 @@
             <GradientStop Offset="1" Color="#FFFF0000"/>
         </LinearGradientBrush>
 
-        <!-- Alpha background brush -->
-        <DrawingBrush x:Key="TransparentBrush" Viewport="0,0,16,16" TileMode="Tile" ViewportUnits="Absolute">
+        <DrawingBrush x:Key="AlphaBackgroundBrush" Viewport="0,0,16,16" TileMode="Tile" ViewportUnits="Absolute">
             <DrawingBrush.Drawing>
                 <DrawingGroup>
                     <GeometryDrawing Brush="#FCCC">
@@ -75,13 +72,11 @@
             </DrawingBrush.Drawing>
         </DrawingBrush>
 
-        <!-- AlphaBar color -->
-        <LinearGradientBrush x:Key="AlphaOpacityMask" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush x:Key="AlphaBarOpacityMask" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Offset="0" Color="#0000"/>
             <GradientStop Offset="1" Color="#FFFF"/>
         </LinearGradientBrush>
 
-        <!-- Component Slider template -->
         <ControlTemplate x:Key="ComponentSliderTemplate" TargetType="Control">
             <Border BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{TemplateBinding Background}">
                 <Canvas Background="Transparent" VerticalAlignment="Stretch"
@@ -94,8 +89,7 @@
             </Border>
         </ControlTemplate>
 
-        <!-- TextBox default style -->
-        <Style TargetType="TextBox" x:Key="ValueEditor">
+        <Style x:Key="ValueEditor" TargetType="TextBox">
             <Setter Property="Background" Value="#FF181818"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderBrush" Value="Gray"/>
@@ -112,7 +106,7 @@
             <EventSetter Event="LostFocus" Handler="ValueEditor_OnLostFocus"/>
         </Style>
 
-        <Style TargetType="TextBox" x:Key="Label">
+        <Style x:Key="Label" TargetType="TextBox">
             <Setter Property="Focusable" Value="True"/>
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="IsReadOnly" Value="True"/>
@@ -126,7 +120,7 @@
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
 
-        <Style TargetType="TextBox" x:Key="ColorBox">
+        <Style x:Key="ColorBox" TargetType="TextBox">
             <Setter Property="Focusable" Value="True"/>
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="IsReadOnly" Value="True"/>
@@ -140,7 +134,7 @@
             <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColorBox_OnPreviewMouseLeftButtonDown"></EventSetter>
         </Style>
 
-        <Style TargetType="Label" x:Key="SliderLabel">
+        <Style x:Key="SliderLabel" TargetType="Label">
             <Setter Property="Margin" Value="0 0 -2 0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Foreground" Value="#FFE0E0E0"/>
@@ -148,10 +142,10 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <Style TargetType="Label" x:Key="ValueLabel">
+        <Style x:Key="ValueLabel" TargetType="Label">
             <Setter Property="Margin" Value="4 0 8 0"/>
             <Setter Property="Padding" Value="0"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="#FFE0E0E0"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
@@ -193,7 +187,7 @@
 
                 <!-- HueBar -->
                 <Grid Grid.Column="1" Grid.Row="0" Margin="3,0">
-                    <Rectangle Fill="{StaticResource HueVerticalBrush}" Margin="5,0"/>
+                    <Rectangle Fill="{StaticResource HueBackgroundBrush}" Margin="5,0"/>
                     <Canvas x:Name="HueSlider" Background="Transparent"
                             MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid Height="12" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
@@ -206,7 +200,7 @@
                 <!-- AlphaBar -->
                 <Grid Grid.Column="2" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{Binding HueBrush}" Margin="5,0"/>
-                    <Rectangle Fill="{StaticResource TransparentBrush}" OpacityMask="{StaticResource AlphaOpacityMask}" Margin="5,0"/>
+                    <Rectangle Fill="{StaticResource AlphaBackgroundBrush}" OpacityMask="{StaticResource AlphaBarOpacityMask}" Margin="5,0"/>
                     <Canvas x:Name="AlphaSlider" Background="Transparent"
                             MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid Height="12" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
@@ -230,7 +224,7 @@
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0" Grid.Column="0" Margin="0" VerticalAlignment="Stretch">
-                        <Rectangle Fill="{StaticResource TransparentBrush}"/>
+                        <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
                         <TextBox BorderThickness="0" IsReadOnly="True" IsTabStop="False" Focusable="True" Cursor="Arrow"
                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
@@ -243,7 +237,7 @@
                     </Grid>
 
                     <Grid Grid.Row="0" Grid.Column="1">
-                        <Rectangle Fill="{StaticResource TransparentBrush}"/>
+                        <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
                         <Rectangle>
                             <Rectangle.Fill>
                                 <SolidColorBrush Color="{Binding CurrentColor}"/>
