@@ -266,12 +266,11 @@
                                            Focusable="False"
                                            Placement="Bottom"
                                            PlacementTarget="{Binding ElementName=PopupPlacement}"
-                                           PopupAnimation="Fade"
-                                           SnapsToDevicePixels="True"
+                                           PopupAnimation="Slide"
                                            IsOpen="{Binding ElementName=PopupButton, Path=IsChecked}"
                                            Opened="PART_Popup_OnOpened"
                                            StaysOpen="False">
-                                        <Border Margin="0,0,8,8" Background="#daedf4" BorderBrush="#FF399CBD" BorderThickness="1.5">
+                                        <Border Margin="0,0,8,8" Background="#daedf4" BorderBrush="#FF399CBD" BorderThickness="2" CornerRadius="2">
                                             <Border.Effect>
                                                 <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
                                             </Border.Effect>
@@ -279,9 +278,11 @@
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
-                                                <TextBox Grid.Row="0" IsReadOnly="True" Background="Transparent" Cursor="Arrow"/>
-                                                <Button Grid.Row="1" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightBlue"
+                                                <Label Grid.Row="0" Background="#FF9ED1E1" FontSize="12" FontWeight="SemiBold" Content="Color information"/>
+                                                <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" Cursor="Arrow"/>
+                                                <Button Grid.Row="2" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="#FF9ED1E1"
                                                         BorderThickness="2" Margin="10">
                                                     <TextBlock Padding="4" TextAlignment="Center" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap"
                                                                MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown"
