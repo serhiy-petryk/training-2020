@@ -501,7 +501,7 @@ namespace ColorInvestigation.Controls
                     var yCbCr = new ColorSpaces.YCbCr(rgb);
 
                     var sb = new StringBuilder();
-                    sb.AppendLine("HEX:".PadRight(10) + rgb.Color);
+                    sb.AppendLine("HEX:".PadRight(5) + rgb.Color);
                     sb.AppendLine(FormatInfoString("RGB", rgb.R * 255, rgb.G * 255, rgb.B * 255));
                     sb.AppendLine(FormatInfoString("HSL", hsl.H * 360, hsl.S * 100, hsl.L * 100));
                     sb.AppendLine(FormatInfoString("HSV", hsv.H * 360, hsv.S * 100, hsv.V * 100));
@@ -529,8 +529,8 @@ namespace ColorInvestigation.Controls
             }
 
             private string FormatInfoString(string label, double value1, double value2, double value3) =>
-                (label + ":").PadRight(8) + FormatDouble(value1) + FormatDouble(value2) + FormatDouble(value3);
-            private string FormatDouble(double value) => value.ToString("F1", _owner.CurrentCulture).PadLeft(8);
+                (label + ":").PadRight(7) + FormatDouble(value1) + FormatDouble(value2) + FormatDouble(value3);
+            private string FormatDouble(double value) => value.ToString("F1", _owner.CurrentCulture).PadLeft(7);
         }
 
         private const int NumberOfTones = 10;
@@ -755,20 +755,19 @@ namespace ColorInvestigation.Controls
 
         #endregion
 
-        private void PART_Popup_OnOpened(object sender, EventArgs e)
+        private void ColorBoxPopup_OnOpened(object sender, EventArgs e)
         {
             var textBox = Tips.GetVisualChildren(((Popup)sender).Child).OfType<TextBox>().FirstOrDefault();
             textBox.Text = (textBox.DataContext as ColorToneBox).Info;
         }
 
-        private void UIElement_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ColorBox_OnSetColor(object sender, MouseButtonEventArgs e)
         {
             var element = (FrameworkElement)sender;
-            var colorBoxGrid = Tips.GetVisualParents(element).OfType<Grid>().FirstOrDefault(g => g.Name == "ColorBoxGrid");
-            var toggle = Tips.GetVisualChildren(colorBoxGrid).OfType<ToggleButton>().FirstOrDefault();
-            toggle.IsChecked = false;
+            var toggleButton = Tips.GetVisualParents(element).OfType<Grid>().SelectMany(grid => grid.Children.OfType<ToggleButton>()).FirstOrDefault();
+            toggleButton.IsChecked = false;
 
-            _hsl = (((FrameworkElement)sender).DataContext as ColorToneBox).GetBackgroundHSL();
+            _hsl = (element.DataContext as ColorToneBox).GetBackgroundHSL();
             UpdateValue(UpdateMode.HSL);
         }
 

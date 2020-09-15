@@ -259,18 +259,18 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid x:Name="ColorBoxGrid">
-                                    <TextBox x:Name="PopupPlacement" Text="{Binding Background, Mode=OneWay}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}" Style="{StaticResource ColorBox}"/>
-                                    <ToggleButton x:Name="PopupButton" Opacity="0.01" IsThreeState="False"/>
-                                    <Popup x:Name="PART_Popup"
+                                    <TextBox x:Name="ColorBox" Text="{Binding Background, Mode=OneWay}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}" Style="{StaticResource ColorBox}"/>
+                                    <ToggleButton x:Name="ColorBoxToggleButton" Opacity="0.01" IsThreeState="False"/>
+                                    <Popup x:Name="ColorBoxPopup"
                                            AllowsTransparency="True"
                                            Focusable="False"
                                            Placement="Bottom"
-                                           PlacementTarget="{Binding ElementName=PopupPlacement}"
+                                           PlacementTarget="{Binding ElementName=ColorBox}"
                                            PopupAnimation="Slide"
-                                           IsOpen="{Binding ElementName=PopupButton, Path=IsChecked}"
-                                           Opened="PART_Popup_OnOpened"
+                                           IsOpen="{Binding ElementName=ColorBoxToggleButton, Path=IsChecked}"
+                                           Opened="ColorBoxPopup_OnOpened"
                                            StaysOpen="False">
-                                        <Border Margin="0,0,8,8" Background="#daedf4" BorderBrush="#FF399CBD" BorderThickness="2" CornerRadius="2">
+                                        <Border Margin="0 0 8 8" Background="#FFDAEDF4" BorderBrush="#FF399CBD" BorderThickness="2" CornerRadius="2">
                                             <Border.Effect>
                                                 <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
                                             </Border.Effect>
@@ -281,11 +281,11 @@
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
                                                 <Label Grid.Row="0" Background="#FF9ED1E1" FontSize="12" FontWeight="SemiBold" Content="Color information"/>
-                                                <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" Cursor="Arrow"/>
+                                                <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" Cursor="Arrow" FontFamily="Courier New"/>
                                                 <Button Grid.Row="2" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="#FF9ED1E1"
                                                         BorderThickness="2" Margin="10">
                                                     <TextBlock Padding="4" TextAlignment="Center" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap"
-                                                               MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown"
+                                                               MouseLeftButtonDown="ColorBox_OnSetColor"
                                                                Text="Click here to set the current color to this color" Width="120" />
                                                 </Button>
                                             </Grid>
