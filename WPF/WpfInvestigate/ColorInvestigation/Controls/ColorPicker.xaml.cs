@@ -505,9 +505,9 @@ namespace ColorInvestigation.Controls
 
                     var sb = new StringBuilder();
                     sb.AppendLine($"Color: {rgb.Color}");
-                    sb.AppendLine($"RGB: {rgb.R * 255}, {rgb.G * 255}, {rgb.B * 255}");
-                    sb.AppendLine($"HSL: {hsl.H * 100}, {hsl.S *100}, {hsl.L * 100}");
-                    sb.AppendLine($"HSV: {hsv.H * 100}, {hsv.S * 100}, {hsv.V * 100}");
+                    sb.AppendLine(FormatInfoString("RGB", rgb.R * 255, rgb.G * 255, rgb.B * 255));
+                    sb.AppendLine(FormatInfoString("HSL", hsl.H * 360, hsl.S * 100, hsl.L * 100));
+                    sb.AppendLine(FormatInfoString("HSV", hsv.H * 360, hsv.S * 100, hsv.V * 100));
                     return sb.ToString();
                 }
             }
@@ -528,6 +528,10 @@ namespace ColorInvestigation.Controls
                     return new ColorSpaces.HSL(_owner._hsl.H, _owner._hsl.S, 0.975 - 0.05 * GridRow);
                 return new ColorSpaces.HSL(_owner._hsl.H, 0.05 + 0.1 * GridRow, _owner._hsl.L);
             }
+
+            private string FormatInfoString(string label, double value1, double value2, double value3) =>
+                (label + ":").PadRight(8) + FormatDouble(value1) + FormatDouble(value2) + FormatDouble(value3);
+            private string FormatDouble(double value) => value.ToString("F1", _owner.CurrentCulture).PadLeft(8);
         }
 
         private const int NumberOfTones = 10;
