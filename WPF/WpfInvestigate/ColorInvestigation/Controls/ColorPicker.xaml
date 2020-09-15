@@ -259,7 +259,9 @@
                     <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2"  ItemsSource="{Binding Path=Tones}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Background, Mode=OneWay}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}" Style="{StaticResource ColorBox}"/>
+                                <TextBox Text="{Binding Background, Mode=OneWay}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}"
+                                         ToolTip="{Binding Info}" ToolTipOpening="FrameworkElement_OnToolTipOpening"
+                                         Style="{StaticResource ColorBox}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemContainerStyle>

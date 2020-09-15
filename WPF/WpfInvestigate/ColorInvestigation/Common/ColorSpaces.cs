@@ -70,7 +70,7 @@ namespace ColorInvestigation.Common
         public class RGB
         {
             public double R, G, B;
-            public Color Color => Color.FromRgb(Convert.ToByte(R), Convert.ToByte(G), Convert.ToByte(B));
+            public Color Color => Color.FromRgb(Convert.ToByte(R * 255), Convert.ToByte(G * 255), Convert.ToByte(B * 255));
 
             public RGB(double r, double g, double b)
             {

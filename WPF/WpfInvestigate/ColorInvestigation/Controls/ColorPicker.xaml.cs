@@ -30,6 +30,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -406,7 +408,7 @@ namespace ColorInvestigation.Controls
 
         private void ColorBox_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            _hsl = (((FrameworkElement)sender).DataContext as ColorToneBox).GetBackgroundHSL(_hsl);
+            _hsl = (((FrameworkElement)sender).DataContext as ColorToneBox).GetBackgroundHSL();
             UpdateValue(UpdateMode.HSL);
         }
 
@@ -488,26 +490,43 @@ namespace ColorInvestigation.Controls
         #region ==============  Tones  =======================
         public class ColorToneBox
         {
+            private readonly ColorPicker _owner;
             public int GridColumn { get; }
             public int GridRow { get; }
             public SolidColorBrush Background { get; } = new SolidColorBrush();
             public SolidColorBrush Foreground { get; } = new SolidColorBrush();
-            public string Info { get; set; }
-
-            public ColorToneBox(int gridColumn, int gridRow)
+            public string Info
             {
+                get
+                {
+                    var rgb = GetBackgroundHSL().GetRGB();
+                    var hsl = GetBackgroundHSL();
+                    var hsv = new ColorSpaces.HSV(rgb);
+
+                    var sb = new StringBuilder();
+                    sb.AppendLine($"Color: {rgb.Color}");
+                    sb.AppendLine($"RGB: {rgb.R * 255}, {rgb.G * 255}, {rgb.B * 255}");
+                    sb.AppendLine($"HSL: {hsl.H * 100}, {hsl.S *100}, {hsl.L * 100}");
+                    sb.AppendLine($"HSV: {hsv.H * 100}, {hsv.S * 100}, {hsv.V * 100}");
+                    return sb.ToString();
+                }
+            }
+
+            public ColorToneBox(ColorPicker owner, int gridColumn, int gridRow)
+            {
+                _owner = owner;
                 GridColumn = gridColumn;
                 GridRow = gridRow;
                 Foreground.Color = gridColumn == 0 ? Colors.White : Colors.Black;
             }
 
-            public ColorSpaces.HSL GetBackgroundHSL(ColorSpaces.HSL baseHSL)
+            internal ColorSpaces.HSL GetBackgroundHSL()
             {
                 if (GridColumn == 0)
-                    return new ColorSpaces.HSL(baseHSL.H, baseHSL.S, 0.025 + 0.05 * GridRow);
+                    return new ColorSpaces.HSL(_owner._hsl.H, _owner._hsl.S, 0.025 + 0.05 * GridRow);
                 if (GridColumn == 1)
-                    return new ColorSpaces.HSL(baseHSL.H, baseHSL.S, 0.975 - 0.05 * GridRow);
-                return new ColorSpaces.HSL(baseHSL.H, 0.05 + 0.1 * GridRow, baseHSL.L);
+                    return new ColorSpaces.HSL(_owner._hsl.H, _owner._hsl.S, 0.975 - 0.05 * GridRow);
+                return new ColorSpaces.HSL(_owner._hsl.H, 0.05 + 0.1 * GridRow, _owner._hsl.L);
             }
         }
 
@@ -522,13 +541,13 @@ namespace ColorInvestigation.Controls
                 for (var k1 = 0; k1 < 3; k1++)
                 {
                     for (var k2 = 0; k2 < NumberOfTones; k2++)
-                        Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(k1, k2);
+                        Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
                 }
             }
 
             foreach (var tone in Tones)
             {
-                tone.Background.Color = tone.GetBackgroundHSL(_hsl).GetRGB().GetColor();
+                tone.Background.Color = tone.GetBackgroundHSL().GetRGB().GetColor();
                 if (tone.GridColumn == 2)
                     tone.Foreground.Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(tone.Background.Color))
                         ? Colors.White
@@ -732,5 +751,12 @@ namespace ColorInvestigation.Controls
         }
 
         #endregion
+
+        private void FrameworkElement_OnToolTipOpening(object sender, ToolTipEventArgs e)
+        {
+            var textBox = (TextBox) sender;
+            var colorToneBox = textBox.DataContext as ColorToneBox;
+            textBox.ToolTip = colorToneBox.Info;
+        }
     }
 }
