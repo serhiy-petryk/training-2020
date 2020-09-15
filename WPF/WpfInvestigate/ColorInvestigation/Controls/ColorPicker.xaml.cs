@@ -496,13 +496,17 @@ namespace ColorInvestigation.Controls
                 {
                     var rgb = GetBackgroundHSL().GetRGB();
                     var hsl = GetBackgroundHSL();
-                    var hsv = new ColorSpaces.HSV(rgb);
+                    var hsv = new ColorSpaces.HSV(rgb) {H = hsl.H};
+                    var lab = new ColorSpaces.LAB(rgb);
+                    var yCbCr = new ColorSpaces.YCbCr(rgb);
 
                     var sb = new StringBuilder();
-                    sb.AppendLine($"Color: {rgb.Color}");
+                    sb.AppendLine("HEX:".PadRight(10) + rgb.Color);
                     sb.AppendLine(FormatInfoString("RGB", rgb.R * 255, rgb.G * 255, rgb.B * 255));
                     sb.AppendLine(FormatInfoString("HSL", hsl.H * 360, hsl.S * 100, hsl.L * 100));
                     sb.AppendLine(FormatInfoString("HSV", hsv.H * 360, hsv.S * 100, hsv.V * 100));
+                    sb.AppendLine(FormatInfoString("LAB", lab.L, lab.A, lab.B));
+                    sb.Append(FormatInfoString("YCbCr", yCbCr.Y * 255, yCbCr.Cb * 255, yCbCr.Cr * 255));
                     return sb.ToString();
                 }
             }
