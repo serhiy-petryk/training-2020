@@ -214,9 +214,7 @@ namespace ColorInvestigation.Controls
         private void UpdateUI()
         {
             TonesGenerate();
-            Debug.Print($"Start UpdateSliderBrushes");
             UpdateSliderBrushes();
-            Debug.Print($"End UpdateSliderBrushes");
 
             OnPropertiesChanged(nameof(CurrentColor), nameof(CurrentColor_ForegroundBrush),
                 nameof(CurrentColorWithoutAlphaBrush), nameof(HueBrush), nameof(Brushes),
@@ -281,7 +279,6 @@ namespace ColorInvestigation.Controls
                 var value = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
                 value = Math.Max(0, Math.Min(1, value));
 
-                Debug.Print("Before mouseMove");
                 if (sliderName == nameof(HueSlider))
                 {
                     _hsv.H = value;
@@ -298,7 +295,6 @@ namespace ColorInvestigation.Controls
                     property.MouseMoveAction(this, value);
                     UpdateValue(property.ColorSpace);
                 }
-                Debug.Print("After mouseMove");
             }
         }
 
