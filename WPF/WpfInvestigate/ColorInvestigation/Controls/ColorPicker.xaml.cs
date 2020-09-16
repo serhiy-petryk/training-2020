@@ -28,6 +28,7 @@
 // 22. Производительность - sliders:
 //      - increase step (try ~20 gradient) 
 //      -or/and process only last mouse move / skip late mouse moves
+// 23. ViewModel + з прямими get/set (без формул) - ? propertyUpdate + getter caller name 
 
 using ColorInvestigation.Common;
 using System;
