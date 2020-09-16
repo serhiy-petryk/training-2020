@@ -754,6 +754,7 @@ namespace ColorInvestigation.Controls
 
         #endregion
 
+        #region ===============  Color box event handlers  ===============
         private void ColorBoxPopup_OnOpened(object sender, EventArgs e)
         {
             var textBox = Tips.GetVisualChildren(((Popup)sender).Child).OfType<TextBox>().FirstOrDefault();
@@ -770,5 +771,6 @@ namespace ColorInvestigation.Controls
             _hsl = (element.DataContext as ColorToneBox).GetBackgroundHSL();
             UpdateValue(UpdateMode.HSL);
         }
+        #endregion
     }
 }
