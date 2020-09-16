@@ -439,7 +439,7 @@ namespace ColorInvestigation.Controls
             var valueEditor = (TextBox)sender;
             var bindingExpression = valueEditor.GetBindingExpression(TextBox.TextProperty);
             var propertyName = bindingExpression.ParentBinding.Path.Path;
-            var metaData = ValueMetadata[propertyName];
+            var component = Components[propertyName.Replace("Value_", "")];
             var newText = valueEditor.Text.Substring(0, valueEditor.SelectionStart) + e.Text +
                           valueEditor.Text.Substring(valueEditor.SelectionStart + valueEditor.SelectionLength);
 
@@ -448,7 +448,7 @@ namespace ColorInvestigation.Controls
             if (CurrentCulture.NumberFormat.NumberDecimalSeparator == e.Text)
                 e.Handled = valueEditor.Text.Contains(CurrentCulture.NumberFormat.NumberDecimalSeparator);
             else if (CurrentCulture.NumberFormat.NegativeSign == e.Text)
-                e.Handled = metaData.Item1 >= 0 ||
+                e.Handled = component.Min >= 0 ||
                             valueEditor.Text.Contains(CurrentCulture.NumberFormat.NegativeSign) ||
                             !(newText.StartsWith(e.Text) || newText.EndsWith(e.Text));
 
@@ -461,15 +461,15 @@ namespace ColorInvestigation.Controls
             var valueEditor = (TextBox)sender;
             var bindingExpression = valueEditor.GetBindingExpression(TextBox.TextProperty);
             var propertyName = bindingExpression.ParentBinding.Path.Path;
-            var metaData = ValueMetadata[propertyName];
+            var component = Components[propertyName.Replace("Value_", "")];
 
             if (double.TryParse(valueEditor.Text, NumberStyles.Any, CurrentCulture, out var value))
             {
-                if (value < metaData.Item1) valueEditor.Text = metaData.Item1.ToString(CurrentCulture);
-                else if (value > metaData.Item2) valueEditor.Text = metaData.Item2.ToString(CurrentCulture);
+                if (value < component.Min) valueEditor.Text = component.Min.ToString(CurrentCulture);
+                else if (value > component.Max) valueEditor.Text = component.Max.ToString(CurrentCulture);
             }
             else valueEditor.Text = "0";
-            UpdateValue(metaData.Item3);
+            UpdateValue(component.ColorSpace);
         }
         #endregion
 
@@ -647,25 +647,24 @@ namespace ColorInvestigation.Controls
 
         #region ===============  TextBox values  ===================
 
-        private static readonly Dictionary<string, Tuple<double, double, ColorSpace>> ValueMetadata =
-            new Dictionary<string, Tuple<double, double, ColorSpace>>
-            {
-                {nameof(Value_RGB_R), Tuple.Create(0.0, 255.0, ColorSpace.RGB)},
-                {nameof(Value_RGB_G), Tuple.Create(0.0, 255.0, ColorSpace.RGB)},
-                {nameof(Value_RGB_B), Tuple.Create(0.0, 255.0, ColorSpace.RGB)},
-                {nameof(Value_HSL_H), Tuple.Create(0.0, 360.0, ColorSpace.HSL)},
-                {nameof(Value_HSL_S), Tuple.Create(0.0, 100.0, ColorSpace.HSL)},
-                {nameof(Value_HSL_L), Tuple.Create(0.0, 100.0, ColorSpace.HSL)},
-                {nameof(Value_HSV_H), Tuple.Create(0.0, 360.0, ColorSpace.HSV)},
-                {nameof(Value_HSV_S), Tuple.Create(0.0, 100.0, ColorSpace.HSV)},
-                {nameof(Value_HSV_V), Tuple.Create(0.0, 100.0, ColorSpace.HSV)},
-                {nameof(Value_LAB_L), Tuple.Create(0.0, 100.0, ColorSpace.LAB)},
-                {nameof(Value_LAB_A), Tuple.Create(-127.5, 127.5, ColorSpace.LAB)},
-                {nameof(Value_LAB_B), Tuple.Create(-127.5, 127.5, ColorSpace.LAB)},
-                {nameof(Value_YCbCr_Y), Tuple.Create(0.0, 255.0, ColorSpace.YCbCr)},
-                {nameof(Value_YCbCr_Cb), Tuple.Create(-127.5, 127.5, ColorSpace.YCbCr)},
-                {nameof(Value_YCbCr_Cr), Tuple.Create(-127.5, 127.5, ColorSpace.YCbCr)}
-            };
+        private static readonly Dictionary<string, ColorComponent> Components = new Dictionary<string, ColorComponent>()
+        {
+            {"RGB_R", new ColorComponent(0, 255, ColorSpace.RGB) },
+            {"RGB_G", new ColorComponent(0, 255, ColorSpace.RGB) },
+            {"RGB_B", new ColorComponent(0, 255, ColorSpace.RGB) },
+            {"HSL_H", new ColorComponent(0, 360, ColorSpace.HSL) },
+            {"HSL_S", new ColorComponent(0, 100, ColorSpace.HSL) },
+            {"HSL_L", new ColorComponent(0, 100, ColorSpace.HSL) },
+            {"HSV_H", new ColorComponent(0, 360, ColorSpace.HSV) },
+            {"HSV_S", new ColorComponent(0, 100, ColorSpace.HSV) },
+            {"HSV_V", new ColorComponent(0, 100, ColorSpace.HSV) },
+            {"LAB_L", new ColorComponent(0, 100, ColorSpace.LAB) },
+            {"LAB_A", new ColorComponent(-127.5, 127.5, ColorSpace.LAB) },
+            {"LAB_B", new ColorComponent(-127.5, 127.5, ColorSpace.LAB) },
+            {"YCbCr_Y", new ColorComponent(0, 255, ColorSpace.YCbCr) },
+            {"YCbCr_Cb", new ColorComponent(-127.5, 127.5, ColorSpace.YCbCr) },
+            {"YCbCr_Cr", new ColorComponent(-127.5, 127.5, ColorSpace.YCbCr) },
+        };
 
         // RGB
         public double Value_RGB_R
@@ -786,10 +785,11 @@ namespace ColorInvestigation.Controls
         {
             public double Min;
             public double Max;
+            public ColorSpace ColorSpace;
 
             public ColorComponent(double min, double max, ColorSpace colorSpace)
             {
-
+                Min = min; Max = max; ColorSpace = colorSpace;
             }
         }
         #endregion
