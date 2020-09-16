@@ -25,6 +25,9 @@
 // +19. Decimal places for ValueEditor
 // 20. Component Slider - change black/white color
 // 21. Component slider - like triangle
+// 22. Производительность - sliders:
+//      - increase step (try ~20 gradient) 
+//      -or/and process only last mouse move / skip late mouse moves
 
 using ColorInvestigation.Common;
 using System;
@@ -222,31 +225,14 @@ namespace ColorInvestigation.Controls
                 nameof(Value_YCbCr_Y), nameof(Value_YCbCr_Cb), nameof(Value_YCbCr_Cr));
 
             UpdateSaturationAndValueSlider();
-            UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
-            UpdateSlider(HueSlider, _hsv.H, 1.0);
+            UpdateSlider(AlphaSlider, 1.0 - _alpha);
+            UpdateSlider(HueSlider, _hsv.H);
 
-            UpdateSlider(Slider_RGB_R, _rgb.R, 1.0);
-            UpdateSlider(Slider_RGB_G, _rgb.G, 1.0);
-            UpdateSlider(Slider_RGB_B, _rgb.B, 1.0);
-
-            UpdateSlider(Slider_HSL_H, _hsl.H, 1.0);
-            UpdateSlider(Slider_HSL_S, _hsl.S, 1.0);
-            UpdateSlider(Slider_HSL_L, _hsl.L, 1.0);
-
-            UpdateSlider(Slider_HSV_H, _hsv.H, 1.0);
-            UpdateSlider(Slider_HSV_S, _hsv.S, 1.0);
-            UpdateSlider(Slider_HSV_V, _hsv.V, 1.0);
-
-            UpdateSlider(Slider_LAB_L, _lab.L, 100.0);
-            UpdateSlider(Slider_LAB_A, _lab.A + 127.5, 255.0);
-            UpdateSlider(Slider_LAB_B, _lab.B + 127.5, 255.0);
-
-            UpdateSlider(Slider_YCbCr_Y, _yCbCr.Y * 255.0, 255.0);
-            UpdateSlider(Slider_YCbCr_Cb, _yCbCr.Cb * 255.0 + 127.5, 255.0);
-            UpdateSlider(Slider_YCbCr_Cr, _yCbCr.Cr * 255.0 + 127.5, 255.0);
+            foreach (var kvp in Properties)
+                UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, kvp.Value.SliderValue(this));
         }
 
-        private void UpdateSlider(FrameworkElement element, double value, double maxValue)
+        private void UpdateSlider(FrameworkElement element, double value)
         {
             var panel = element is Panel
                 ? (Panel) element
@@ -255,12 +241,12 @@ namespace ColorInvestigation.Controls
             var thumb = panel.Children[0] as FrameworkElement;
             if (panel.ActualWidth > panel.ActualHeight)
             {   // horizontal slider
-                var x = (panel.ActualWidth - thumb.ActualWidth) * value / maxValue;
+                var x = (panel.ActualWidth - thumb.ActualWidth) * value ;
                 Canvas.SetLeft(thumb, x);
             }
             else
             {   // vertical slider
-                var y = panel.ActualHeight * value / maxValue - thumb.ActualHeight / 2;
+                var y = panel.ActualHeight * value - thumb.ActualHeight / 2;
                 Canvas.SetTop(thumb, y);
             }
         }
@@ -674,23 +660,23 @@ namespace ColorInvestigation.Controls
 
         #region ===========  ColorProperty  ======================
 
-        private static Dictionary<string, ColorProperty> Properties =>  new Dictionary<string, ColorProperty>()
+        private static Dictionary<string, ColorProperty> Properties => new Dictionary<string, ColorProperty>()
         {
-            {"RGB_R", new ColorProperty(0, 255, ColorSpace.RGB)},
-            {"RGB_G", new ColorProperty(0, 255, ColorSpace.RGB)},
-            {"RGB_B", new ColorProperty(0, 255, ColorSpace.RGB)},
-            {"HSL_H", new ColorProperty(0, 360, ColorSpace.HSL)},
-            {"HSL_S", new ColorProperty(0, 100, ColorSpace.HSL)},
-            {"HSL_L", new ColorProperty(0, 100, ColorSpace.HSL)},
-            {"HSV_H", new ColorProperty(0, 360, ColorSpace.HSV)},
-            {"HSV_S", new ColorProperty(0, 100, ColorSpace.HSV)},
-            {"HSV_V", new ColorProperty(0, 100, ColorSpace.HSV)},
-            {"LAB_L", new ColorProperty(0, 100, ColorSpace.LAB)},
-            {"LAB_A", new ColorProperty(-127.5, 127.5, ColorSpace.LAB)},
-            {"LAB_B", new ColorProperty(-127.5, 127.5, ColorSpace.LAB)},
-            {"YCbCr_Y", new ColorProperty(0, 255, ColorSpace.YCbCr)},
-            {"YCbCr_Cb", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr)},
-            {"YCbCr_Cr", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr)},
+            {"RGB_R", new ColorProperty(0, 255, ColorSpace.RGB, picker => picker._rgb.R)},
+            {"RGB_G", new ColorProperty(0, 255, ColorSpace.RGB, picker => picker._rgb.G)},
+            {"RGB_B", new ColorProperty(0, 255, ColorSpace.RGB, picker => picker._rgb.B)},
+            {"HSL_H", new ColorProperty(0, 360, ColorSpace.HSL, picker => picker._hsl.H)},
+            {"HSL_S", new ColorProperty(0, 100, ColorSpace.HSL, picker => picker._hsl.S)},
+            {"HSL_L", new ColorProperty(0, 100, ColorSpace.HSL, picker => picker._hsl.L)},
+            {"HSV_H", new ColorProperty(0, 360, ColorSpace.HSV, picker => picker._hsv.H)},
+            {"HSV_S", new ColorProperty(0, 100, ColorSpace.HSV, picker => picker._hsv.S)},
+            {"HSV_V", new ColorProperty(0, 100, ColorSpace.HSV, picker => picker._hsv.V)},
+            {"LAB_L", new ColorProperty(0, 100, ColorSpace.LAB, picker => picker._lab.L / 100.0)},
+            {"LAB_A", new ColorProperty(-127.5, 127.5, ColorSpace.LAB, picker => (picker._lab.A + 127.5) / 255.0)},
+            {"LAB_B", new ColorProperty(-127.5, 127.5, ColorSpace.LAB, picker => (picker._lab.B + 127.5) / 255.0)},
+            {"YCbCr_Y", new ColorProperty(0, 255, ColorSpace.YCbCr, picker => picker._yCbCr.Y)},
+            {"YCbCr_Cb", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr, picker => picker._yCbCr.Cb + 0.5)},
+            {"YCbCr_Cr", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr, picker => picker._yCbCr.Cr + 0.5)},
         };
 
         public class ColorProperty
@@ -698,10 +684,11 @@ namespace ColorInvestigation.Controls
             public double Min;
             public double Max;
             public ColorSpace ColorSpace;
+            public Func<ColorPicker, double> SliderValue;
 
-            public ColorProperty(double min, double max, ColorSpace colorSpace)
+            public ColorProperty(double min, double max, ColorSpace colorSpace, Func<ColorPicker, double> sliderValue)
             {
-                Min = min; Max = max; ColorSpace = colorSpace;
+                Min = min; Max = max; ColorSpace = colorSpace; SliderValue = sliderValue;
             }
         }
         #endregion
@@ -709,7 +696,7 @@ namespace ColorInvestigation.Controls
         #region ===========  Linear gradient brushes for Color property  ==========
         public Dictionary<string, LinearGradientBrush> Brushes { get; private set; }
 
-        public void UpdateBrushes()
+        private void UpdateBrushes()
         {
             if (Brushes == null)
             {
