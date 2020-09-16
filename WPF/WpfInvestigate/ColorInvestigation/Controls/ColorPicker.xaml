@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:common="clr-namespace:ColorInvestigation.Common"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600"
              MinHeight="420" MinWidth="500"
@@ -252,7 +253,8 @@
                                              Background="{Binding Background}" Foreground="{Binding Foreground}"
                                              Text="{Binding Background, Mode=OneWay}">
                                     </TextBox>
-                                    <ToggleButton x:Name="ColorBoxToggleButton" IsThreeState="False" Margin="0" Padding="0">
+                                    <ToggleButton x:Name="ColorBoxToggleButton" IsThreeState="False" Margin="0" Padding="0"
+                                                  IsHitTestVisible="{Binding ElementName=ColorBoxPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}">
                                         <ToggleButton.Style>
                                             <Style TargetType="ToggleButton">
                                                 <Setter Property="BorderBrush" Value="{Binding Background}"/>
@@ -287,10 +289,10 @@
                                                 </Grid.RowDefinitions>
                                                 <Label Grid.Row="0" Background="#FF9ED1E1" FontSize="12" FontWeight="SemiBold" Content="Color information"/>
                                                 <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" Cursor="Arrow" FontFamily="Courier New"/>
-                                                <Button Grid.Row="2" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="#FF9ED1E1"
-                                                        BorderThickness="2" Margin="10">
+                                                <Button Grid.Row="2" Background="#FF9ED1E1" BorderThickness="2" Margin="10" IsDefault="True"
+                                                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                                        Click="ColorBox_OnSetColor">
                                                     <TextBlock Padding="4" TextAlignment="Center" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap"
-                                                               MouseLeftButtonDown="ColorBox_OnSetColor"
                                                                Text="Click here to set the current color to this color" Width="120" />
                                                 </Button>
                                             </Grid>

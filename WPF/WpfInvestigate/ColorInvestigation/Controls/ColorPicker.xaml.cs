@@ -31,7 +31,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -759,9 +758,10 @@ namespace ColorInvestigation.Controls
         {
             var textBox = Tips.GetVisualChildren(((Popup)sender).Child).OfType<TextBox>().FirstOrDefault();
             textBox.Text = (textBox.DataContext as ColorToneBox).Info;
+            textBox.Focus();
         }
 
-        private void ColorBox_OnSetColor(object sender, MouseButtonEventArgs e)
+        private void ColorBox_OnSetColor(object sender, RoutedEventArgs e)
         {
             var element = (FrameworkElement)sender;
             var toggleButton = Tips.GetVisualParents(element).OfType<Grid>().SelectMany(grid => grid.Children.OfType<ToggleButton>()).FirstOrDefault();
@@ -770,6 +770,5 @@ namespace ColorInvestigation.Controls
             _hsl = (element.DataContext as ColorToneBox).GetBackgroundHSL();
             UpdateValue(UpdateMode.HSL);
         }
-
     }
 }

@@ -60,6 +60,7 @@
     <Compile Include="Common\ColorConverters.cs" />
     <Compile Include="Common\ColorSpaces.Check.cs" />
     <Compile Include="Common\ColorSpaces.cs" />
+    <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\FlatButtonConverters.cs" />
     <Compile Include="Controls\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
