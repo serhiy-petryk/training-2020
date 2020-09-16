@@ -165,6 +165,7 @@ namespace ColorInvestigation.Controls
         private void UpdateValue(ColorSpace colorSpace)
         {
             if (_isUpdating) return;
+            _isUpdating = true;
 
             // Update rgb object
             if (colorSpace == ColorSpace.HSL)
@@ -206,7 +207,6 @@ namespace ColorInvestigation.Controls
             if (colorSpace != ColorSpace.YCbCr)
                 _yCbCr = new ColorSpaces.YCbCr(_rgb);
 
-            _isUpdating = true;
             UpdateUI();
             _isUpdating = false;
         }
@@ -216,8 +216,8 @@ namespace ColorInvestigation.Controls
             TonesGenerate();
             UpdateSliderBrushes();
 
-            OnPropertiesChanged(nameof(CurrentColor), nameof(Brushes),
-                nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColor_ForegroundBrush), nameof(HueBrush),
+            OnPropertiesChanged(nameof(CurrentColor), nameof(CurrentColor_ForegroundBrush),
+                nameof(CurrentColorWithoutAlphaBrush), nameof(HueBrush), nameof(Brushes),
                 nameof(Value_RGB_R), nameof(Value_RGB_G), nameof(Value_RGB_B),
                 nameof(Value_HSL_H), nameof(Value_HSL_S), nameof(Value_HSL_L),
                 nameof(Value_HSV_H), nameof(Value_HSV_S), nameof(Value_HSV_V),
