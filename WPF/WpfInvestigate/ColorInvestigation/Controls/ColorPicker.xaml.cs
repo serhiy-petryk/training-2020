@@ -224,41 +224,31 @@ namespace ColorInvestigation.Controls
                 nameof(Value_LAB_L), nameof(Value_LAB_A), nameof(Value_LAB_B),
                 nameof(Value_YCbCr_Y), nameof(Value_YCbCr_Cb), nameof(Value_YCbCr_Cr));
 
-            UpdateSaturationAndValueSlider();
-            UpdateSlider(AlphaSlider, 1.0 - _alpha);
-            UpdateSlider(HueSlider, _hsv.H);
+            UpdateSlider(SaturationAndValueSlider, _hsv.S, 1.0 - _hsv.V);
+            UpdateSlider(HueSlider, null, _hsv.H);
+            UpdateSlider(AlphaSlider, null, 1.0 - _alpha);
 
             foreach (var kvp in Properties)
-                UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, kvp.Value.SliderValue(this));
+                UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, kvp.Value.SliderValue(this), null);
         }
 
-        private void UpdateSlider(FrameworkElement element, double value)
+        private void UpdateSlider(FrameworkElement element, double? xValue, double? yValue)
         {
             var panel = element is Panel
                 ? (Panel) element
                 : VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(element, 0), 0) as Panel;
 
             var thumb = panel.Children[0] as FrameworkElement;
-            if (panel.ActualWidth > panel.ActualHeight)
-            {   // horizontal slider
-                var x = (panel.ActualWidth - thumb.ActualWidth) * value ;
+            if (xValue.HasValue)
+            {   
+                var x = (panel.ActualWidth - thumb.ActualWidth) * xValue.Value ;
                 Canvas.SetLeft(thumb, x);
             }
-            else
-            {   // vertical slider
-                var y = panel.ActualHeight * value - thumb.ActualHeight / 2;
+            if (yValue.HasValue)
+            {
+                var y = panel.ActualHeight * yValue.Value - thumb.ActualHeight / 2;
                 Canvas.SetTop(thumb, y);
             }
-        }
-
-        private void UpdateSaturationAndValueSlider()
-        {
-            var panel = (Panel)SaturationAndValueSlider;
-            var thumb = panel.Children[0] as FrameworkElement;
-            var x = panel.ActualWidth * _hsv.S - thumb.ActualWidth / 2;
-            Canvas.SetLeft(thumb, x);
-            var y = panel.ActualHeight * (1.0 - _hsv.V) - thumb.ActualHeight / 2;
-            Canvas.SetTop(thumb, y);
         }
 
         #region ==============  Event handlers  ====================
