@@ -28,6 +28,7 @@ using ColorInvestigation.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -772,5 +773,10 @@ namespace ColorInvestigation.Controls
             UpdateValue(UpdateMode.HSL);
         }
         #endregion
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            Debug.Print($"ButtonBase_OnClick");
+        }
     }
 }

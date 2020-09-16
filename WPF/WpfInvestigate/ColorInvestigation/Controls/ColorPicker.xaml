@@ -125,7 +125,7 @@
             <Setter Property="Margin" Value="0 0 -2 0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Foreground" Value="#FFE0E0E0"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
@@ -198,7 +198,7 @@
                 </Grid>
 
                 <!-- Color boxes -->
-                <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="0 8 8 0" VerticalAlignment="Stretch">
+                <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="0 8 0 0" VerticalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
@@ -239,11 +239,16 @@
                         </TextBox>
                     </Grid>
 
+                    <Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="80" IsTabStop="True" Focusable="True"
+                            Click="ButtonBase_OnClick">
+                        <TextBlock Text="Known color table" TextWrapping="Wrap" TextAlignment="Center"/>
+                    </Button>
+
                     <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Label}" Text="Shades" TextAlignment="Center"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource Label}" Text="Tints" TextAlignment="Center"/>
                     <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource Label}" Text="Tones" TextAlignment="Center"/>
 
-                    <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2"  ItemsSource="{Binding Path=Tones}">
+                    <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" ItemsSource="{Binding Path=Tones}" IsTabStop="False">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid x:Name="ColorBoxGrid" UseLayoutRounding="False" SnapsToDevicePixels="False">
@@ -253,7 +258,7 @@
                                              Background="{Binding Background}" Foreground="{Binding Foreground}"
                                              Text="{Binding Background, Mode=OneWay}">
                                     </TextBox>
-                                    <ToggleButton x:Name="ColorBoxToggleButton" IsThreeState="False" Margin="0" Padding="0"
+                                    <ToggleButton x:Name="ColorBoxToggleButton" IsThreeState="False" Margin="0" Padding="0" IsTabStop="False"
                                                   IsHitTestVisible="{Binding ElementName=ColorBoxPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}">
                                         <ToggleButton.Style>
                                             <Style TargetType="ToggleButton">
@@ -334,7 +339,7 @@
                 </Grid>
             </Grid>
 
-            <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Stretch" Background="Transparent" IsTabStop="False"/>
+            <GridSplitter Grid.Column="1" Width="6" HorizontalAlignment="Stretch" BorderThickness="0" BorderBrush="Transparent" Background="#FF555555" IsTabStop="False"/>
 
             <!--  Color component sliders  -->
             <Grid Grid.Column="2" SizeChanged="RightColumn_OnSizeChanged">
@@ -367,7 +372,7 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <!-- RGB -->
-                <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="RGB (Red[0-255], Green[0-255], Blue[0-255])" Style="{StaticResource Label}"/>
+                <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 4" Text="RGB (Red[0-255], Green[0-255], Blue[0-255])" Style="{StaticResource Label}"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="R"/>
                 <Control Grid.Row="1" Grid.Column="1" Name="Slider_RGB_R" Background="{Binding Brush_RGB_R}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
