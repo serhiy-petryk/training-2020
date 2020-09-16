@@ -226,7 +226,7 @@ namespace ColorInvestigation.Controls
                 nameof(Value_LAB_L), nameof(Value_LAB_A), nameof(Value_LAB_B),
                 nameof(Value_YCbCr_Y), nameof(Value_YCbCr_Cb), nameof(Value_YCbCr_Cr));
 
-            UpdateSlider(SaturationAndValueSlider, _hsv.S, 1.0 - _hsv.V);
+            UpdateSlider(SaturationAndValueSlider, null, 1.0 - _hsv.V, _hsv.S);
             UpdateSlider(HueSlider, null, _hsv.H);
             UpdateSlider(AlphaSlider, null, 1.0 - _alpha);
 
@@ -234,7 +234,7 @@ namespace ColorInvestigation.Controls
                 UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, kvp.Value.SliderValue(this), null);
         }
 
-        private void UpdateSlider(FrameworkElement element, double? xValue, double? yValue)
+        private void UpdateSlider(FrameworkElement element, double? xValue, double? yValue, double? xValueOfSaturationAndValueSlider = null)
         {
             var panel = element is Panel
                 ? (Panel) element
@@ -244,6 +244,11 @@ namespace ColorInvestigation.Controls
             if (xValue.HasValue)
             {   
                 var x = (panel.ActualWidth - thumb.ActualWidth) * xValue.Value ;
+                Canvas.SetLeft(thumb, x);
+            }
+            else if (xValueOfSaturationAndValueSlider.HasValue)
+            {
+                var x = panel.ActualWidth * xValueOfSaturationAndValueSlider.Value - thumb.ActualWidth / 2;
                 Canvas.SetLeft(thumb, x);
             }
             if (yValue.HasValue)
