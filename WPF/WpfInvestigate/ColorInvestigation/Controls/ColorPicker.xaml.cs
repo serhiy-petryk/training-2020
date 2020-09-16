@@ -776,8 +776,6 @@ namespace ColorInvestigation.Controls
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             Debug.Print($"ButtonBase_OnClick");
-            var x = new ColorComponent(0,0, ColorSpace.HSL);
-            var a1 = x.Max;
         }
 
         #region ===========  ColorComponent  ======================
