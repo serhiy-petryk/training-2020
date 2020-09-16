@@ -18,10 +18,10 @@
 // +12. Edited text box for CurrentColor
 // +13. Degree label for Hue
 // -14. Control for slider
-// 15. ViewModel
+// -?15. ViewModel
 // +16. Click on ColorBox
 // 17. Alpha for old Color in ColorBox
-// 18. Popup for ColorBox info
+// +18. Popup for ColorBox info
 // +19. Decimal places for ValueEditor
 
 using ColorInvestigation.Common;
@@ -53,14 +53,14 @@ namespace ColorInvestigation.Controls
             InitializeComponent();
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
             {
-                UpdateValue(UpdateMode.RGB);
+                UpdateValue(ColorSpace.RGB);
                 _savedColor = _oldRgb.GetColor(_oldAlpha);
             }));
         }
 
         //=================================
         private CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
-        private enum UpdateMode { RGB, HSL, HSV, XYZ, LAB, YCbCr };
+        private enum ColorSpace { RGB, HSL, HSV, XYZ, LAB, YCbCr };
 
         // Color space values must be independent => we need to have separate object for each color space 
         private double _alpha = 1.0;
@@ -94,7 +94,7 @@ namespace ColorInvestigation.Controls
             {
                 _alpha = value.A / 255.0;
                 _rgb = new ColorSpaces.RGB(value);
-                UpdateValue(UpdateMode.RGB);
+                UpdateValue(ColorSpace.RGB);
             }
         }
 
@@ -152,53 +152,53 @@ namespace ColorInvestigation.Controls
             _oldAlpha = _savedColor.A / 255.0;
             _rgb = new ColorSpaces.RGB(_savedColor);
             _alpha = _savedColor.A / 255.0;
-            UpdateValue(UpdateMode.RGB);
+            UpdateValue(ColorSpace.RGB);
             OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
         }
 
         private bool _isUpdating;
-        private void UpdateValue(UpdateMode mode)
+        private void UpdateValue(ColorSpace colorSpace)
         {
             if (_isUpdating) return;
 
             // Update rgb object
-            if (mode == UpdateMode.HSL)
+            if (colorSpace == ColorSpace.HSL)
             {
                 _rgb = _hsl.GetRGB();
                 _hsv = new ColorSpaces.HSV(_rgb);
                 _hsv.H = _hsl.H;
             }
-            else if (mode == UpdateMode.HSV)
+            else if (colorSpace == ColorSpace.HSV)
             {
                 _rgb = _hsv.GetRGB();
                 _hsl = new ColorSpaces.HSL(_rgb);
                 _hsl.H = _hsv.H;
             }
-            else if (mode == UpdateMode.XYZ)
+            else if (colorSpace == ColorSpace.XYZ)
             {
                 _rgb = _xyz.GetRGB();
                 _lab = new ColorSpaces.LAB(_xyz);
             }
-            else if (mode == UpdateMode.LAB)
+            else if (colorSpace == ColorSpace.LAB)
             {
                 _rgb = _lab.GetRGB();
                 _xyz = _lab.GetXYZ();
             }
-            else if (mode == UpdateMode.YCbCr)
+            else if (colorSpace == ColorSpace.YCbCr)
                 _rgb = _yCbCr.GetRGB();
 
             // Update other objects
-            if (mode != UpdateMode.HSL && mode != UpdateMode.HSV)
+            if (colorSpace != ColorSpace.HSL && colorSpace != ColorSpace.HSV)
             {
                 _hsl = new ColorSpaces.HSL(_rgb);
                 _hsv = new ColorSpaces.HSV(_rgb);
             }
-            if (mode != UpdateMode.XYZ && mode != UpdateMode.LAB)
+            if (colorSpace != ColorSpace.XYZ && colorSpace != ColorSpace.LAB)
             {
                 _xyz = new ColorSpaces.XYZ(_rgb);
                 _lab = new ColorSpaces.LAB(_rgb);
             }
-            if (mode != UpdateMode.YCbCr)
+            if (colorSpace != ColorSpace.YCbCr)
                 _yCbCr = new ColorSpaces.YCbCr(_rgb);
 
             _isUpdating = true;
@@ -306,7 +306,7 @@ namespace ColorInvestigation.Controls
                 if (sliderName == nameof(HueSlider))
                 {
                     _hsv.H = multiplier;
-                    UpdateValue(UpdateMode.HSV);
+                    UpdateValue(ColorSpace.HSV);
                 }
                 else if (canvas.Name == nameof(AlphaSlider))
                 {
@@ -316,77 +316,77 @@ namespace ColorInvestigation.Controls
                 else if (sliderName == nameof(Slider_RGB_R))
                 {
                     _rgb.R = multiplier;
-                    UpdateValue(UpdateMode.RGB);
+                    UpdateValue(ColorSpace.RGB);
                 }
                 else if (sliderName == nameof(Slider_RGB_G))
                 {
                     _rgb.G = multiplier;
-                    UpdateValue(UpdateMode.RGB);
+                    UpdateValue(ColorSpace.RGB);
                 }
                 else if (sliderName == nameof(Slider_RGB_B))
                 {
                     _rgb.B = multiplier;
-                    UpdateValue(UpdateMode.RGB);
+                    UpdateValue(ColorSpace.RGB);
                 }
                 else if (sliderName == nameof(Slider_HSL_H))
                 {
                     _hsl.H = multiplier;
-                    UpdateValue(UpdateMode.HSL);
+                    UpdateValue(ColorSpace.HSL);
                 }
                 else if (sliderName == nameof(Slider_HSL_S))
                 {
                     _hsl.S = multiplier;
-                    UpdateValue(UpdateMode.HSL);
+                    UpdateValue(ColorSpace.HSL);
                 }
                 else if (sliderName == nameof(Slider_HSL_L))
                 {
                     _hsl.L = multiplier;
-                    UpdateValue(UpdateMode.HSL);
+                    UpdateValue(ColorSpace.HSL);
                 }
                 else if (sliderName == nameof(Slider_HSV_H))
                 {
                     _hsv.H = multiplier;
-                    UpdateValue(UpdateMode.HSV);
+                    UpdateValue(ColorSpace.HSV);
                 }
                 else if (sliderName == nameof(Slider_HSV_S))
                 {
                     _hsv.S = multiplier;
-                    UpdateValue(UpdateMode.HSV);
+                    UpdateValue(ColorSpace.HSV);
                 }
                 else if (sliderName == nameof(Slider_HSV_V))
                 {
                     _hsv.V = multiplier;
-                    UpdateValue(UpdateMode.HSV);
+                    UpdateValue(ColorSpace.HSV);
                 }
                 else if (sliderName == nameof(Slider_LAB_L))
                 {
                     _lab.L = multiplier * 100;
-                    UpdateValue(UpdateMode.LAB);
+                    UpdateValue(ColorSpace.LAB);
                 }
                 else if (sliderName == nameof(Slider_LAB_A))
                 {
                     _lab.A = multiplier * 255 - 127.5;
-                    UpdateValue(UpdateMode.LAB);
+                    UpdateValue(ColorSpace.LAB);
                 }
                 else if (sliderName == nameof(Slider_LAB_B))
                 {
                     _lab.B = multiplier * 255 - 127.5;
-                    UpdateValue(UpdateMode.LAB);
+                    UpdateValue(ColorSpace.LAB);
                 }
                 else if (sliderName == nameof(Slider_YCbCr_Y))
                 {
                     _yCbCr.Y = multiplier;
-                    UpdateValue(UpdateMode.YCbCr);
+                    UpdateValue(ColorSpace.YCbCr);
                 }
                 else if (sliderName == nameof(Slider_YCbCr_Cb))
                 {
                     _yCbCr.Cb = multiplier - 0.5;
-                    UpdateValue(UpdateMode.YCbCr);
+                    UpdateValue(ColorSpace.YCbCr);
                 }
                 else if (sliderName == nameof(Slider_YCbCr_Cr))
                 {
                     _yCbCr.Cr = multiplier - 0.5;
-                    UpdateValue(UpdateMode.YCbCr);
+                    UpdateValue(ColorSpace.YCbCr);
                 }
             }
         }
@@ -403,7 +403,7 @@ namespace ColorInvestigation.Controls
 
                 _hsv.S = x / canvas.ActualWidth;
                 _hsv.V = 1 - y / canvas.ActualHeight;
-                UpdateValue(UpdateMode.HSV);
+                UpdateValue(ColorSpace.HSV);
             }
         }
 
@@ -647,24 +647,24 @@ namespace ColorInvestigation.Controls
 
         #region ===============  TextBox values  ===================
 
-        private static readonly Dictionary<string, Tuple<double, double, UpdateMode>> ValueMetadata =
-            new Dictionary<string, Tuple<double, double, UpdateMode>>
+        private static readonly Dictionary<string, Tuple<double, double, ColorSpace>> ValueMetadata =
+            new Dictionary<string, Tuple<double, double, ColorSpace>>
             {
-                {nameof(Value_RGB_R), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
-                {nameof(Value_RGB_G), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
-                {nameof(Value_RGB_B), Tuple.Create(0.0, 255.0, UpdateMode.RGB)},
-                {nameof(Value_HSL_H), Tuple.Create(0.0, 360.0, UpdateMode.HSL)},
-                {nameof(Value_HSL_S), Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
-                {nameof(Value_HSL_L), Tuple.Create(0.0, 100.0, UpdateMode.HSL)},
-                {nameof(Value_HSV_H), Tuple.Create(0.0, 360.0, UpdateMode.HSV)},
-                {nameof(Value_HSV_S), Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
-                {nameof(Value_HSV_V), Tuple.Create(0.0, 100.0, UpdateMode.HSV)},
-                {nameof(Value_LAB_L), Tuple.Create(0.0, 100.0, UpdateMode.LAB)},
-                {nameof(Value_LAB_A), Tuple.Create(-127.5, 127.5, UpdateMode.LAB)},
-                {nameof(Value_LAB_B), Tuple.Create(-127.5, 127.5, UpdateMode.LAB)},
-                {nameof(Value_YCbCr_Y), Tuple.Create(0.0, 255.0, UpdateMode.YCbCr)},
-                {nameof(Value_YCbCr_Cb), Tuple.Create(-127.5, 127.5, UpdateMode.YCbCr)},
-                {nameof(Value_YCbCr_Cr), Tuple.Create(-127.5, 127.5, UpdateMode.YCbCr)}
+                {nameof(Value_RGB_R), Tuple.Create(0.0, 255.0, ColorSpace.RGB)},
+                {nameof(Value_RGB_G), Tuple.Create(0.0, 255.0, ColorSpace.RGB)},
+                {nameof(Value_RGB_B), Tuple.Create(0.0, 255.0, ColorSpace.RGB)},
+                {nameof(Value_HSL_H), Tuple.Create(0.0, 360.0, ColorSpace.HSL)},
+                {nameof(Value_HSL_S), Tuple.Create(0.0, 100.0, ColorSpace.HSL)},
+                {nameof(Value_HSL_L), Tuple.Create(0.0, 100.0, ColorSpace.HSL)},
+                {nameof(Value_HSV_H), Tuple.Create(0.0, 360.0, ColorSpace.HSV)},
+                {nameof(Value_HSV_S), Tuple.Create(0.0, 100.0, ColorSpace.HSV)},
+                {nameof(Value_HSV_V), Tuple.Create(0.0, 100.0, ColorSpace.HSV)},
+                {nameof(Value_LAB_L), Tuple.Create(0.0, 100.0, ColorSpace.LAB)},
+                {nameof(Value_LAB_A), Tuple.Create(-127.5, 127.5, ColorSpace.LAB)},
+                {nameof(Value_LAB_B), Tuple.Create(-127.5, 127.5, ColorSpace.LAB)},
+                {nameof(Value_YCbCr_Y), Tuple.Create(0.0, 255.0, ColorSpace.YCbCr)},
+                {nameof(Value_YCbCr_Cb), Tuple.Create(-127.5, 127.5, ColorSpace.YCbCr)},
+                {nameof(Value_YCbCr_Cr), Tuple.Create(-127.5, 127.5, ColorSpace.YCbCr)}
             };
 
         // RGB
@@ -770,13 +770,28 @@ namespace ColorInvestigation.Controls
             toggleButton.IsChecked = false;
 
             _hsl = (element.DataContext as ColorToneBox).GetBackgroundHSL();
-            UpdateValue(UpdateMode.HSL);
+            UpdateValue(ColorSpace.HSL);
         }
         #endregion
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             Debug.Print($"ButtonBase_OnClick");
+            var x = new ColorComponent(0,0, ColorSpace.HSL);
+            var a1 = x.Max;
         }
+
+        #region ===========  ColorComponent  ======================
+        private class ColorComponent
+        {
+            public double Min;
+            public double Max;
+
+            public ColorComponent(double min, double max, ColorSpace colorSpace)
+            {
+
+            }
+        }
+        #endregion
     }
 }
