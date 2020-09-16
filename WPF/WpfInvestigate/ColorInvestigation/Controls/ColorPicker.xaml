@@ -259,17 +259,26 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid x:Name="ColorBoxGrid">
-                                    <TextBox x:Name="ColorBox" Text="{Binding Background, Mode=OneWay}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}" Style="{StaticResource ColorBox}"/>
+                                    <TextBox x:Name="ColorBox" Margin="0" Padding="0" BorderThickness="0 1" IsReadOnly="True" Focusable="True" IsTabStop="False"
+                                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                             Background="{Binding Background}" Foreground="{Binding Foreground}"
+                                             Text="{Binding Background, Mode=OneWay}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox">
+                                                <Setter Property="BorderBrush" Value="{Binding Background}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=ColorBoxToggleButton, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
                                     <ToggleButton x:Name="ColorBoxToggleButton" Opacity="0.01" IsThreeState="False"/>
-                                    <Popup x:Name="ColorBoxPopup"
-                                           AllowsTransparency="True"
-                                           Focusable="False"
-                                           Placement="Bottom"
-                                           PlacementTarget="{Binding ElementName=ColorBox}"
-                                           PopupAnimation="Slide"
+                                    <Popup x:Name="ColorBoxPopup" AllowsTransparency="True" StaysOpen="False" Focusable="False"
+                                           Placement="Bottom" PlacementTarget="{Binding ElementName=ColorBox}" PopupAnimation="Slide"
                                            IsOpen="{Binding ElementName=ColorBoxToggleButton, Path=IsChecked}"
-                                           Opened="ColorBoxPopup_OnOpened"
-                                           StaysOpen="False">
+                                           Opened="ColorBoxPopup_OnOpened">
                                         <Border Margin="0 0 8 8" Background="#FFDAEDF4" BorderBrush="#FF399CBD" BorderThickness="2" CornerRadius="2">
                                             <Border.Effect>
                                                 <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
