@@ -245,23 +245,32 @@
                     <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2"  ItemsSource="{Binding Path=Tones}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid x:Name="ColorBoxGrid">
-                                    <TextBox x:Name="ColorBox" Margin="0" Padding="0" BorderThickness="0 1" IsReadOnly="True" Focusable="True" IsTabStop="False"
+                                <Grid x:Name="ColorBoxGrid" UseLayoutRounding="False" SnapsToDevicePixels="False">
+                                    <TextBox x:Name="ColorBox" Margin="0" Padding="0" BorderThickness="0"
+                                             IsReadOnly="True" Focusable="True" IsTabStop="False"
                                              VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                                              Background="{Binding Background}" Foreground="{Binding Foreground}"
                                              Text="{Binding Background, Mode=OneWay}">
-                                        <TextBox.Style>
-                                            <Style TargetType="TextBox">
+                                    </TextBox>
+                                    <ToggleButton x:Name="ColorBoxToggleButton" IsThreeState="False" Margin="0" Padding="0">
+                                        <ToggleButton.Style>
+                                            <Style TargetType="ToggleButton">
                                                 <Setter Property="BorderBrush" Value="{Binding Background}"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ToggleButton">
+                                                            <Border Background="Transparent" BorderThickness="0 0.5" BorderBrush="{TemplateBinding BorderBrush}"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding ElementName=ColorBoxToggleButton, Path=IsMouseOver}" Value="True">
+                                                    <Trigger Property="IsMouseOver" Value="True">
                                                         <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
-                                                    </DataTrigger>
+                                                    </Trigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </TextBox.Style>
-                                    </TextBox>
-                                    <ToggleButton x:Name="ColorBoxToggleButton" Opacity="0.01" IsThreeState="False"/>
+                                        </ToggleButton.Style>
+                                    </ToggleButton>
                                     <Popup x:Name="ColorBoxPopup" AllowsTransparency="True" StaysOpen="False" Focusable="False"
                                            Placement="Bottom" PlacementTarget="{Binding ElementName=ColorBox}" PopupAnimation="Slide"
                                            IsOpen="{Binding ElementName=ColorBoxToggleButton, Path=IsChecked}"
