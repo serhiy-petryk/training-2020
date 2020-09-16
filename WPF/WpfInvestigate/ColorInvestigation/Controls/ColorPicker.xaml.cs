@@ -62,7 +62,7 @@ namespace ColorInvestigation.Controls
 
         //=================================
         private CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
-        private enum ColorSpace { RGB, HSL, HSV, XYZ, LAB, YCbCr };
+        public enum ColorSpace { RGB, HSL, HSV, XYZ, LAB, YCbCr };
 
         // Color space values must be independent => we need to have separate object for each color space 
         private double _alpha = 1.0;
@@ -211,19 +211,15 @@ namespace ColorInvestigation.Controls
         private void UpdateUI()
         {
             TonesGenerate();
-            OnPropertiesChanged(nameof(CurrentColor),
+            UpdateBrushes();
+
+            OnPropertiesChanged(nameof(CurrentColor), nameof(Brushes),
                 nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColor_ForegroundBrush), nameof(HueBrush),
                 nameof(Value_RGB_R), nameof(Value_RGB_G), nameof(Value_RGB_B),
                 nameof(Value_HSL_H), nameof(Value_HSL_S), nameof(Value_HSL_L),
                 nameof(Value_HSV_H), nameof(Value_HSV_S), nameof(Value_HSV_V),
                 nameof(Value_LAB_L), nameof(Value_LAB_A), nameof(Value_LAB_B),
                 nameof(Value_YCbCr_Y), nameof(Value_YCbCr_Cb), nameof(Value_YCbCr_Cr));
-
-            UpdateRgbBrushes();
-            UpdateHslBrushes();
-            UpdateHsvBrushes();
-            UpdateLabBrushes();
-            UpdateYCbCrBrushes();
 
             UpdateSaturationAndValueSlider();
             UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
@@ -563,111 +559,7 @@ namespace ColorInvestigation.Controls
         }
         #endregion
 
-        #region ===========  Linear gradient brushes  ====================
-        public LinearGradientBrush Brush_RGB_R { get; } = CreateLinearGradientBrush(1);
-        public LinearGradientBrush Brush_RGB_G { get; } = CreateLinearGradientBrush(1);
-        public LinearGradientBrush Brush_RGB_B { get; } = CreateLinearGradientBrush(1);
-        public LinearGradientBrush Brush_HSL_H { get; } = CreateLinearGradientBrush(360);
-        public LinearGradientBrush Brush_HSL_S { get; } = CreateLinearGradientBrush(100);
-        public LinearGradientBrush Brush_HSL_L { get; } = CreateLinearGradientBrush(100);
-        public LinearGradientBrush Brush_HSV_H { get; } = CreateLinearGradientBrush(360);
-        public LinearGradientBrush Brush_HSV_S { get; } = CreateLinearGradientBrush(100);
-        public LinearGradientBrush Brush_HSV_V { get; } = CreateLinearGradientBrush(100);
-        public LinearGradientBrush Brush_LAB_L { get; } = CreateLinearGradientBrush(100);
-        public LinearGradientBrush Brush_LAB_A { get; } = CreateLinearGradientBrush(255);
-        public LinearGradientBrush Brush_LAB_B { get; } = CreateLinearGradientBrush(255);
-        public LinearGradientBrush Brush_YCbCr_Y { get; } = CreateLinearGradientBrush(255);
-        public LinearGradientBrush Brush_YCbCr_Cb { get; } = CreateLinearGradientBrush(255);
-        public LinearGradientBrush Brush_YCbCr_Cr { get; } = CreateLinearGradientBrush(255);
-
-        private static LinearGradientBrush CreateLinearGradientBrush(int gradientCount) => new LinearGradientBrush(
-            new GradientStopCollection(Enumerable.Range(0, gradientCount + 1)
-                .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / gradientCount))));
-
-        private void UpdateRgbBrushes()
-        {
-            Brush_RGB_R.GradientStops[0].Color = Color.FromRgb(0, CurrentColor.G, CurrentColor.B);
-            Brush_RGB_R.GradientStops[1].Color = Color.FromRgb(0xFF, CurrentColor.G, CurrentColor.B);
-
-            Brush_RGB_G.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, 0, CurrentColor.B);
-            Brush_RGB_G.GradientStops[1].Color = Color.FromRgb(CurrentColor.R, 0xFF, CurrentColor.B);
-
-            Brush_RGB_B.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0);
-            Brush_RGB_B.GradientStops[1].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0xFF);
-
-            OnPropertiesChanged(nameof(Brush_RGB_R), nameof(Brush_RGB_G), nameof(Brush_RGB_B));
-        }
-
-        private void UpdateHslBrushes()
-        {
-            for (var i = 0; i <= 360; i++)
-                Brush_HSL_H.GradientStops[i].Color = new ColorSpaces.HSL(i / 360.0, _hsl.S, _hsl.L).GetRGB().GetColor();
-            for (var i = 0; i <= 100; i++)
-            {
-                Brush_HSL_S.GradientStops[i].Color = new ColorSpaces.HSL(_hsl.H, i / 100.0, _hsl.L).GetRGB().GetColor();
-                Brush_HSL_L.GradientStops[i].Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, i / 100.0).GetRGB().GetColor();
-            }
-            OnPropertiesChanged(nameof(Brush_HSL_H), nameof(Brush_HSL_S), nameof(Brush_HSL_L));
-        }
-
-        private void UpdateHsvBrushes()
-        {
-            for (var i = 0; i <= 360; i++)
-                Brush_HSV_H.GradientStops[i].Color = new ColorSpaces.HSV(i / 360.0, _hsv.S, _hsv.V).GetRGB().GetColor();
-            for (var i = 0; i <= 100; i++)
-            {
-                Brush_HSV_S.GradientStops[i].Color = new ColorSpaces.HSV(_hsv.H, i / 100.0, _hsv.V).GetRGB().GetColor();
-                Brush_HSV_V.GradientStops[i].Color = new ColorSpaces.HSV(_hsv.H, _hsv.S, i / 100.0).GetRGB().GetColor();
-            }
-            OnPropertiesChanged(nameof(Brush_HSV_H), nameof(Brush_HSV_S), nameof(Brush_HSV_V));
-        }
-
-        private void UpdateLabBrushes()
-        {
-            for (var i = 0; i <= 100; i++)
-                Brush_LAB_L.GradientStops[i].Color = new ColorSpaces.LAB(i, _lab.A, _lab.B).GetRGB().GetColor();
-            for (var i = 0; i <= 255; i++)
-            {
-                Brush_LAB_A.GradientStops[i].Color = new ColorSpaces.LAB(_lab.L, i - 127.5, _lab.B).GetRGB().GetColor();
-                Brush_LAB_B.GradientStops[i].Color = new ColorSpaces.LAB(_lab.L, _lab.A, i - 127.5).GetRGB().GetColor();
-            }
-            OnPropertiesChanged(nameof(Brush_LAB_L), nameof(Brush_LAB_A), nameof(Brush_LAB_B));
-        }
-
-        private void UpdateYCbCrBrushes()
-        {
-            for (var i = 0; i <= 255; i++)
-            {
-                Brush_YCbCr_Y.GradientStops[i].Color = new ColorSpaces.YCbCr(i / 255.0, _yCbCr.Cb, _yCbCr.Cr).GetRGB().GetColor();
-                Brush_YCbCr_Cb.GradientStops[i].Color = new ColorSpaces.YCbCr(_yCbCr.Y, (i - 127.5) / 255, _yCbCr.Cr).GetRGB().GetColor();
-                Brush_YCbCr_Cr.GradientStops[i].Color = new ColorSpaces.YCbCr(_yCbCr.Y, _yCbCr.Cb, (i - 127.5) / 255).GetRGB().GetColor();
-            }
-            OnPropertiesChanged(nameof(Brush_YCbCr_Y), nameof(Brush_YCbCr_Cb), nameof(Brush_YCbCr_Cr));
-        }
-
-        #endregion
-
         #region ===============  TextBox values  ===================
-
-        private static readonly Dictionary<string, ColorProperty> Properties = new Dictionary<string, ColorProperty>()
-        {
-            {"RGB_R", new ColorProperty(0, 255, ColorSpace.RGB) },
-            {"RGB_G", new ColorProperty(0, 255, ColorSpace.RGB) },
-            {"RGB_B", new ColorProperty(0, 255, ColorSpace.RGB) },
-            {"HSL_H", new ColorProperty(0, 360, ColorSpace.HSL) },
-            {"HSL_S", new ColorProperty(0, 100, ColorSpace.HSL) },
-            {"HSL_L", new ColorProperty(0, 100, ColorSpace.HSL) },
-            {"HSV_H", new ColorProperty(0, 360, ColorSpace.HSV) },
-            {"HSV_S", new ColorProperty(0, 100, ColorSpace.HSV) },
-            {"HSV_V", new ColorProperty(0, 100, ColorSpace.HSV) },
-            {"LAB_L", new ColorProperty(0, 100, ColorSpace.LAB) },
-            {"LAB_A", new ColorProperty(-127.5, 127.5, ColorSpace.LAB) },
-            {"LAB_B", new ColorProperty(-127.5, 127.5, ColorSpace.LAB) },
-            {"YCbCr_Y", new ColorProperty(0, 255, ColorSpace.YCbCr) },
-            {"YCbCr_Cb", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr) },
-            {"YCbCr_Cr", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr) },
-        };
-
         // RGB
         public double Value_RGB_R
         {
@@ -781,7 +673,27 @@ namespace ColorInvestigation.Controls
         }
 
         #region ===========  ColorProperty  ======================
-        private class ColorProperty
+
+        private static Dictionary<string, ColorProperty> Properties =>  new Dictionary<string, ColorProperty>()
+        {
+            {"RGB_R", new ColorProperty(0, 255, ColorSpace.RGB)},
+            {"RGB_G", new ColorProperty(0, 255, ColorSpace.RGB)},
+            {"RGB_B", new ColorProperty(0, 255, ColorSpace.RGB)},
+            {"HSL_H", new ColorProperty(0, 360, ColorSpace.HSL)},
+            {"HSL_S", new ColorProperty(0, 100, ColorSpace.HSL)},
+            {"HSL_L", new ColorProperty(0, 100, ColorSpace.HSL)},
+            {"HSV_H", new ColorProperty(0, 360, ColorSpace.HSV)},
+            {"HSV_S", new ColorProperty(0, 100, ColorSpace.HSV)},
+            {"HSV_V", new ColorProperty(0, 100, ColorSpace.HSV)},
+            {"LAB_L", new ColorProperty(0, 100, ColorSpace.LAB)},
+            {"LAB_A", new ColorProperty(-127.5, 127.5, ColorSpace.LAB)},
+            {"LAB_B", new ColorProperty(-127.5, 127.5, ColorSpace.LAB)},
+            {"YCbCr_Y", new ColorProperty(0, 255, ColorSpace.YCbCr)},
+            {"YCbCr_Cb", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr)},
+            {"YCbCr_Cr", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr)},
+        };
+
+        public class ColorProperty
         {
             public double Min;
             public double Max;
@@ -790,6 +702,55 @@ namespace ColorInvestigation.Controls
             public ColorProperty(double min, double max, ColorSpace colorSpace)
             {
                 Min = min; Max = max; ColorSpace = colorSpace;
+            }
+        }
+        #endregion
+
+        #region ===========  Linear gradient brushes for Color property  ==========
+        public Dictionary<string, LinearGradientBrush> Brushes { get; private set; }
+
+        public void UpdateBrushes()
+        {
+            if (Brushes == null)
+            {
+                Brushes=new Dictionary<string, LinearGradientBrush>();
+                foreach (var kvp in Properties)
+                {
+                    var gradientCount = kvp.Value.ColorSpace == ColorSpace.RGB
+                        ? 1
+                        : Convert.ToInt32(kvp.Value.Max - kvp.Value.Min);
+                    Brushes.Add(kvp.Key,
+                        new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, gradientCount + 1)
+                            .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / gradientCount)))));
+                }
+            }
+
+            for (var k = 0; k < 2; k++)
+            {
+                Brushes["RGB_R"].GradientStops[k].Color = Color.FromRgb(Convert.ToByte(255 * k), CurrentColor.G, CurrentColor.B);
+                Brushes["RGB_G"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, Convert.ToByte(255 * k), CurrentColor.B);
+                Brushes["RGB_B"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, Convert.ToByte(255 * k));
+            }
+            for (var k = 0; k <= 100; k++)
+            {
+                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(_hsl.H, k / 100.0, _hsl.L).GetRGB().GetColor();
+                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, k / 100.0).GetRGB().GetColor();
+                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(_hsv.H, k / 100.0, _hsv.V).GetRGB().GetColor();
+                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(_hsv.H, _hsv.S, k / 100.0).GetRGB().GetColor();
+                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(k, _lab.A, _lab.B).GetRGB().GetColor();
+            }
+            for (var k = 0; k <= 255; k++)
+            {
+                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(_lab.L, k - 127.5, _lab.B).GetRGB().GetColor();
+                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(_lab.L, _lab.A, k - 127.5).GetRGB().GetColor();
+                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(k / 255.0, _yCbCr.Cb, _yCbCr.Cr).GetRGB().GetColor();
+                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(_yCbCr.Y, (k - 127.5) / 255, _yCbCr.Cr).GetRGB().GetColor();
+                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(_yCbCr.Y, _yCbCr.Cb, (k - 127.5) / 255).GetRGB().GetColor();
+            }
+            for (var k = 0; k <= 360; k++)
+            {
+                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(k / 360.0, _hsl.S, _hsl.L).GetRGB().GetColor();
+                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(k / 360.0, _hsv.S, _hsv.V).GetRGB().GetColor();
             }
         }
         #endregion
