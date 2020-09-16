@@ -214,7 +214,7 @@ namespace ColorInvestigation.Controls
         private void UpdateUI()
         {
             TonesGenerate();
-            UpdateBrushes();
+            UpdateSliderBrushes();
 
             OnPropertiesChanged(nameof(CurrentColor), nameof(Brushes),
                 nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColor_ForegroundBrush), nameof(HueBrush),
@@ -274,93 +274,24 @@ namespace ColorInvestigation.Controls
                 var sliderName = (canvas.TemplatedParent as FrameworkElement)?.Name ?? canvas.Name;
                 var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
 
-                var multiplier = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
-                multiplier = Math.Max(0, Math.Min(1, multiplier));
+                var value = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
+                value = Math.Max(0, Math.Min(1, value));
 
                 if (sliderName == nameof(HueSlider))
                 {
-                    _hsv.H = multiplier;
+                    _hsv.H = value;
                     UpdateValue(ColorSpace.HSV);
                 }
                 else if (canvas.Name == nameof(AlphaSlider))
                 {
-                    _alpha = 1.0 - multiplier;
+                    _alpha = 1.0 - value;
                     UpdateUI();
                 }
-                else if (sliderName == nameof(Slider_RGB_R))
+                else
                 {
-                    _rgb.R = multiplier;
-                    UpdateValue(ColorSpace.RGB);
-                }
-                else if (sliderName == nameof(Slider_RGB_G))
-                {
-                    _rgb.G = multiplier;
-                    UpdateValue(ColorSpace.RGB);
-                }
-                else if (sliderName == nameof(Slider_RGB_B))
-                {
-                    _rgb.B = multiplier;
-                    UpdateValue(ColorSpace.RGB);
-                }
-                else if (sliderName == nameof(Slider_HSL_H))
-                {
-                    _hsl.H = multiplier;
-                    UpdateValue(ColorSpace.HSL);
-                }
-                else if (sliderName == nameof(Slider_HSL_S))
-                {
-                    _hsl.S = multiplier;
-                    UpdateValue(ColorSpace.HSL);
-                }
-                else if (sliderName == nameof(Slider_HSL_L))
-                {
-                    _hsl.L = multiplier;
-                    UpdateValue(ColorSpace.HSL);
-                }
-                else if (sliderName == nameof(Slider_HSV_H))
-                {
-                    _hsv.H = multiplier;
-                    UpdateValue(ColorSpace.HSV);
-                }
-                else if (sliderName == nameof(Slider_HSV_S))
-                {
-                    _hsv.S = multiplier;
-                    UpdateValue(ColorSpace.HSV);
-                }
-                else if (sliderName == nameof(Slider_HSV_V))
-                {
-                    _hsv.V = multiplier;
-                    UpdateValue(ColorSpace.HSV);
-                }
-                else if (sliderName == nameof(Slider_LAB_L))
-                {
-                    _lab.L = multiplier * 100;
-                    UpdateValue(ColorSpace.LAB);
-                }
-                else if (sliderName == nameof(Slider_LAB_A))
-                {
-                    _lab.A = multiplier * 255 - 127.5;
-                    UpdateValue(ColorSpace.LAB);
-                }
-                else if (sliderName == nameof(Slider_LAB_B))
-                {
-                    _lab.B = multiplier * 255 - 127.5;
-                    UpdateValue(ColorSpace.LAB);
-                }
-                else if (sliderName == nameof(Slider_YCbCr_Y))
-                {
-                    _yCbCr.Y = multiplier;
-                    UpdateValue(ColorSpace.YCbCr);
-                }
-                else if (sliderName == nameof(Slider_YCbCr_Cb))
-                {
-                    _yCbCr.Cb = multiplier - 0.5;
-                    UpdateValue(ColorSpace.YCbCr);
-                }
-                else if (sliderName == nameof(Slider_YCbCr_Cr))
-                {
-                    _yCbCr.Cr = multiplier - 0.5;
-                    UpdateValue(ColorSpace.YCbCr);
+                    var property = Properties[sliderName.Replace("Slider_", "")];
+                    property.MouseMoveAction(this, value);
+                    UpdateValue(property.ColorSpace);
                 }
             }
         }
@@ -516,10 +447,8 @@ namespace ColorInvestigation.Controls
             {
                 Tones = new ColorToneBox[3 * NumberOfTones];
                 for (var k1 = 0; k1 < 3; k1++)
-                {
-                    for (var k2 = 0; k2 < NumberOfTones; k2++)
-                        Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
-                }
+                for (var k2 = 0; k2 < NumberOfTones; k2++)
+                    Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
             }
 
             foreach (var tone in Tones)
@@ -652,21 +581,21 @@ namespace ColorInvestigation.Controls
 
         private static Dictionary<string, ColorProperty> Properties => new Dictionary<string, ColorProperty>()
         {
-            {"RGB_R", new ColorProperty(0, 255, ColorSpace.RGB, picker => picker._rgb.R)},
-            {"RGB_G", new ColorProperty(0, 255, ColorSpace.RGB, picker => picker._rgb.G)},
-            {"RGB_B", new ColorProperty(0, 255, ColorSpace.RGB, picker => picker._rgb.B)},
-            {"HSL_H", new ColorProperty(0, 360, ColorSpace.HSL, picker => picker._hsl.H)},
-            {"HSL_S", new ColorProperty(0, 100, ColorSpace.HSL, picker => picker._hsl.S)},
-            {"HSL_L", new ColorProperty(0, 100, ColorSpace.HSL, picker => picker._hsl.L)},
-            {"HSV_H", new ColorProperty(0, 360, ColorSpace.HSV, picker => picker._hsv.H)},
-            {"HSV_S", new ColorProperty(0, 100, ColorSpace.HSV, picker => picker._hsv.S)},
-            {"HSV_V", new ColorProperty(0, 100, ColorSpace.HSV, picker => picker._hsv.V)},
-            {"LAB_L", new ColorProperty(0, 100, ColorSpace.LAB, picker => picker._lab.L / 100.0)},
-            {"LAB_A", new ColorProperty(-127.5, 127.5, ColorSpace.LAB, picker => (picker._lab.A + 127.5) / 255.0)},
-            {"LAB_B", new ColorProperty(-127.5, 127.5, ColorSpace.LAB, picker => (picker._lab.B + 127.5) / 255.0)},
-            {"YCbCr_Y", new ColorProperty(0, 255, ColorSpace.YCbCr, picker => picker._yCbCr.Y)},
-            {"YCbCr_Cb", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr, picker => picker._yCbCr.Cb + 0.5)},
-            {"YCbCr_Cr", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr, picker => picker._yCbCr.Cr + 0.5)},
+            {"RGB_R", new ColorProperty(0, 255, ColorSpace.RGB, p => p._rgb.R, (p, v) => p._rgb.R = v)},
+            {"RGB_G", new ColorProperty(0, 255, ColorSpace.RGB, p => p._rgb.G, (p, v) => p._rgb.G = v)},
+            {"RGB_B", new ColorProperty(0, 255, ColorSpace.RGB, p => p._rgb.B, (p, v) => p._rgb.B = v)},
+            {"HSL_H", new ColorProperty(0, 360, ColorSpace.HSL, p => p._hsl.H, (p, v) => p._hsl.H = v)},
+            {"HSL_S", new ColorProperty(0, 100, ColorSpace.HSL, p => p._hsl.S, (p, v) => p._hsl.S = v)},
+            {"HSL_L", new ColorProperty(0, 100, ColorSpace.HSL, p => p._hsl.L, (p, v) => p._hsl.L = v)},
+            {"HSV_H", new ColorProperty(0, 360, ColorSpace.HSV, p => p._hsv.H, (p, v) => p._hsv.H = v)},
+            {"HSV_S", new ColorProperty(0, 100, ColorSpace.HSV, p => p._hsv.S, (p, v) => p._hsv.S = v)},
+            {"HSV_V", new ColorProperty(0, 100, ColorSpace.HSV, p => p._hsv.V, (p, v) => p._hsv.V = v)},
+            {"LAB_L", new ColorProperty(0, 100, ColorSpace.LAB, p => p._lab.L / 100, (p, v) => p._lab.L = v * 100)},
+            {"LAB_A", new ColorProperty(-127.5, 127.5, ColorSpace.LAB, p => (p._lab.A + 127.5) / 255.0, (p, v) => p._lab.A = v * 255 - 127.5)},
+            {"LAB_B", new ColorProperty(-127.5, 127.5, ColorSpace.LAB, p => (p._lab.B + 127.5) / 255.0, (p, v) => p._lab.B = v * 255 - 127.5)},
+            {"YCbCr_Y", new ColorProperty(0, 255, ColorSpace.YCbCr, p => p._yCbCr.Y, (p, v) => p._yCbCr.Y = v)},
+            {"YCbCr_Cb", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr, p => p._yCbCr.Cb + 0.5, (p, v) => p._yCbCr.Cb = v - 0.5)},
+            {"YCbCr_Cr", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr, p => p._yCbCr.Cr + 0.5, (p, v) => p._yCbCr.Cr = v - 0.5)}
         };
 
         public class ColorProperty
@@ -675,10 +604,12 @@ namespace ColorInvestigation.Controls
             public double Max;
             public ColorSpace ColorSpace;
             public Func<ColorPicker, double> SliderValue;
+            public Action<ColorPicker, double> MouseMoveAction;
 
-            public ColorProperty(double min, double max, ColorSpace colorSpace, Func<ColorPicker, double> sliderValue)
+            public ColorProperty(double min, double max, ColorSpace colorSpace, Func<ColorPicker, double> sliderValue, Action<ColorPicker, double> mouseMoveAction )
             {
                 Min = min; Max = max; ColorSpace = colorSpace; SliderValue = sliderValue;
+                MouseMoveAction = mouseMoveAction;
             }
         }
         #endregion
@@ -686,7 +617,7 @@ namespace ColorInvestigation.Controls
         #region ===========  Linear gradient brushes for Color property  ==========
         public Dictionary<string, LinearGradientBrush> Brushes { get; private set; }
 
-        private void UpdateBrushes()
+        private void UpdateSliderBrushes()
         {
             if (Brushes == null)
             {
