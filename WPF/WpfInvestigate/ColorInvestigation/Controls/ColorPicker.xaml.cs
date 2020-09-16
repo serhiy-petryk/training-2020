@@ -624,12 +624,10 @@ namespace ColorInvestigation.Controls
         {
             if (Brushes == null)
             {
-                Brushes=new Dictionary<string, LinearGradientBrush>();
+                Brushes = new Dictionary<string, LinearGradientBrush>();
                 foreach (var kvp in Properties)
                 {
-                    var gradientCount = kvp.Value.ColorSpace == ColorSpace.RGB
-                        ? 1
-                        : Convert.ToInt32(kvp.Value.Max - kvp.Value.Min);
+                    var gradientCount = kvp.Value.ColorSpace == ColorSpace.RGB ? 1 : 20;
                     Brushes.Add(kvp.Key,
                         new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, gradientCount + 1)
                             .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / gradientCount)))));
@@ -642,26 +640,24 @@ namespace ColorInvestigation.Controls
                 Brushes["RGB_G"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, Convert.ToByte(255 * k), CurrentColor.B);
                 Brushes["RGB_B"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, Convert.ToByte(255 * k));
             }
-            for (var k = 0; k <= 100; k++)
+
+            const double step = 1.0 / 21;
+            var offset = 0.0;
+            for (var k = 0; k <= 20; k++)
             {
-                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(_hsl.H, k / 100.0, _hsl.L).GetRGB().GetColor();
-                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, k / 100.0).GetRGB().GetColor();
-                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(_hsv.H, k / 100.0, _hsv.V).GetRGB().GetColor();
-                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(_hsv.H, _hsv.S, k / 100.0).GetRGB().GetColor();
-                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(k, _lab.A, _lab.B).GetRGB().GetColor();
-            }
-            for (var k = 0; k <= 255; k++)
-            {
-                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(_lab.L, k - 127.5, _lab.B).GetRGB().GetColor();
-                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(_lab.L, _lab.A, k - 127.5).GetRGB().GetColor();
-                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(k / 255.0, _yCbCr.Cb, _yCbCr.Cr).GetRGB().GetColor();
-                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(_yCbCr.Y, (k - 127.5) / 255, _yCbCr.Cr).GetRGB().GetColor();
-                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(_yCbCr.Y, _yCbCr.Cb, (k - 127.5) / 255).GetRGB().GetColor();
-            }
-            for (var k = 0; k <= 360; k++)
-            {
-                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(k / 360.0, _hsl.S, _hsl.L).GetRGB().GetColor();
-                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(k / 360.0, _hsv.S, _hsv.V).GetRGB().GetColor();
+                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(offset, _hsl.S, _hsl.L).GetRGB().GetColor();
+                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(_hsl.H, offset, _hsl.L).GetRGB().GetColor();
+                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, offset).GetRGB().GetColor();
+                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(offset, _hsv.S, _hsv.V).GetRGB().GetColor();
+                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(_hsv.H, offset, _hsv.V).GetRGB().GetColor();
+                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(_hsv.H, _hsv.S, offset).GetRGB().GetColor();
+                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(offset * 100, _lab.A, _lab.B).GetRGB().GetColor();
+                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(_lab.L, offset * 255 - 127.5, _lab.B).GetRGB().GetColor();
+                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(_lab.L, _lab.A, offset * 255 - 127.5).GetRGB().GetColor();
+                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(offset, _yCbCr.Cb, _yCbCr.Cr).GetRGB().GetColor();
+                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(_yCbCr.Y, offset * 255 - 0.5, _yCbCr.Cr).GetRGB().GetColor();
+                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(_yCbCr.Y, _yCbCr.Cb, offset - 0.5).GetRGB().GetColor();
+                offset += step;
             }
         }
         #endregion
