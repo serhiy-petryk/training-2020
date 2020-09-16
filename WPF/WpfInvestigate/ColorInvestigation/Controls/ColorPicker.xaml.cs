@@ -23,6 +23,8 @@
 // 17. Alpha for old Color in ColorBox
 // +18. Popup for ColorBox info
 // +19. Decimal places for ValueEditor
+// 20. Component Slider - change black/white color
+// 21. Component slider - like triangle
 
 using ColorInvestigation.Common;
 using System;
@@ -439,7 +441,7 @@ namespace ColorInvestigation.Controls
             var valueEditor = (TextBox)sender;
             var bindingExpression = valueEditor.GetBindingExpression(TextBox.TextProperty);
             var propertyName = bindingExpression.ParentBinding.Path.Path;
-            var component = Components[propertyName.Replace("Value_", "")];
+            var colorProperty = Properties[propertyName.Replace("Value_", "")];
             var newText = valueEditor.Text.Substring(0, valueEditor.SelectionStart) + e.Text +
                           valueEditor.Text.Substring(valueEditor.SelectionStart + valueEditor.SelectionLength);
 
@@ -448,7 +450,7 @@ namespace ColorInvestigation.Controls
             if (CurrentCulture.NumberFormat.NumberDecimalSeparator == e.Text)
                 e.Handled = valueEditor.Text.Contains(CurrentCulture.NumberFormat.NumberDecimalSeparator);
             else if (CurrentCulture.NumberFormat.NegativeSign == e.Text)
-                e.Handled = component.Min >= 0 ||
+                e.Handled = colorProperty.Min >= 0 ||
                             valueEditor.Text.Contains(CurrentCulture.NumberFormat.NegativeSign) ||
                             !(newText.StartsWith(e.Text) || newText.EndsWith(e.Text));
 
@@ -461,15 +463,15 @@ namespace ColorInvestigation.Controls
             var valueEditor = (TextBox)sender;
             var bindingExpression = valueEditor.GetBindingExpression(TextBox.TextProperty);
             var propertyName = bindingExpression.ParentBinding.Path.Path;
-            var component = Components[propertyName.Replace("Value_", "")];
+            var colorProperty = Properties[propertyName.Replace("Value_", "")];
 
             if (double.TryParse(valueEditor.Text, NumberStyles.Any, CurrentCulture, out var value))
             {
-                if (value < component.Min) valueEditor.Text = component.Min.ToString(CurrentCulture);
-                else if (value > component.Max) valueEditor.Text = component.Max.ToString(CurrentCulture);
+                if (value < colorProperty.Min) valueEditor.Text = colorProperty.Min.ToString(CurrentCulture);
+                else if (value > colorProperty.Max) valueEditor.Text = colorProperty.Max.ToString(CurrentCulture);
             }
             else valueEditor.Text = "0";
-            UpdateValue(component.ColorSpace);
+            UpdateValue(colorProperty.ColorSpace);
         }
         #endregion
 
@@ -647,23 +649,23 @@ namespace ColorInvestigation.Controls
 
         #region ===============  TextBox values  ===================
 
-        private static readonly Dictionary<string, ColorComponent> Components = new Dictionary<string, ColorComponent>()
+        private static readonly Dictionary<string, ColorProperty> Properties = new Dictionary<string, ColorProperty>()
         {
-            {"RGB_R", new ColorComponent(0, 255, ColorSpace.RGB) },
-            {"RGB_G", new ColorComponent(0, 255, ColorSpace.RGB) },
-            {"RGB_B", new ColorComponent(0, 255, ColorSpace.RGB) },
-            {"HSL_H", new ColorComponent(0, 360, ColorSpace.HSL) },
-            {"HSL_S", new ColorComponent(0, 100, ColorSpace.HSL) },
-            {"HSL_L", new ColorComponent(0, 100, ColorSpace.HSL) },
-            {"HSV_H", new ColorComponent(0, 360, ColorSpace.HSV) },
-            {"HSV_S", new ColorComponent(0, 100, ColorSpace.HSV) },
-            {"HSV_V", new ColorComponent(0, 100, ColorSpace.HSV) },
-            {"LAB_L", new ColorComponent(0, 100, ColorSpace.LAB) },
-            {"LAB_A", new ColorComponent(-127.5, 127.5, ColorSpace.LAB) },
-            {"LAB_B", new ColorComponent(-127.5, 127.5, ColorSpace.LAB) },
-            {"YCbCr_Y", new ColorComponent(0, 255, ColorSpace.YCbCr) },
-            {"YCbCr_Cb", new ColorComponent(-127.5, 127.5, ColorSpace.YCbCr) },
-            {"YCbCr_Cr", new ColorComponent(-127.5, 127.5, ColorSpace.YCbCr) },
+            {"RGB_R", new ColorProperty(0, 255, ColorSpace.RGB) },
+            {"RGB_G", new ColorProperty(0, 255, ColorSpace.RGB) },
+            {"RGB_B", new ColorProperty(0, 255, ColorSpace.RGB) },
+            {"HSL_H", new ColorProperty(0, 360, ColorSpace.HSL) },
+            {"HSL_S", new ColorProperty(0, 100, ColorSpace.HSL) },
+            {"HSL_L", new ColorProperty(0, 100, ColorSpace.HSL) },
+            {"HSV_H", new ColorProperty(0, 360, ColorSpace.HSV) },
+            {"HSV_S", new ColorProperty(0, 100, ColorSpace.HSV) },
+            {"HSV_V", new ColorProperty(0, 100, ColorSpace.HSV) },
+            {"LAB_L", new ColorProperty(0, 100, ColorSpace.LAB) },
+            {"LAB_A", new ColorProperty(-127.5, 127.5, ColorSpace.LAB) },
+            {"LAB_B", new ColorProperty(-127.5, 127.5, ColorSpace.LAB) },
+            {"YCbCr_Y", new ColorProperty(0, 255, ColorSpace.YCbCr) },
+            {"YCbCr_Cb", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr) },
+            {"YCbCr_Cr", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr) },
         };
 
         // RGB
@@ -778,14 +780,14 @@ namespace ColorInvestigation.Controls
             Debug.Print($"ButtonBase_OnClick");
         }
 
-        #region ===========  ColorComponent  ======================
-        private class ColorComponent
+        #region ===========  ColorProperty  ======================
+        private class ColorProperty
         {
             public double Min;
             public double Max;
             public ColorSpace ColorSpace;
 
-            public ColorComponent(double min, double max, ColorSpace colorSpace)
+            public ColorProperty(double min, double max, ColorSpace colorSpace)
             {
                 Min = min; Max = max; ColorSpace = colorSpace;
             }
