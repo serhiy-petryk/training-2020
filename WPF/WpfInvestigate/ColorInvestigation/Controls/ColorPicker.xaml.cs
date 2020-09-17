@@ -28,7 +28,7 @@
 // +22. Производительность - sliders:
 //     + - increase step (try ~20 gradient) 
 //      -or/and process only last mouse move / skip late mouse moves
-// 23. ViewModel + з прямими get/set (без формул) - ? propertyUpdate + getter caller name 
+// 23. ViewModel + з прямими get/set (без формул) - ? propertyUpdate + getter caller name => CallerMemberName
 
 using ColorInvestigation.Common;
 using System;
@@ -243,9 +243,14 @@ namespace ColorInvestigation.Controls
 
         private void UpdateSlider(FrameworkElement element, double? xValue, double? yValue)
         {
-            var panel = element is Panel
-                ? (Panel) element
-                : VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(element, 0), 0) as Panel;
+            var panel = element as Panel;
+            if (panel == null)
+            {
+                if (VisualTreeHelper.GetChildrenCount(element) > 0)
+                    panel = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(element, 0), 0) as Panel;
+                else
+                    return;
+            }
 
             var thumb = panel.Children[0] as FrameworkElement;
             if (xValue.HasValue)
