@@ -3,19 +3,51 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 using ColorInvestigation.Common;
 
 namespace ColorInvestigation.Controls
 {
     public class ColorPickerViewModel : INotifyPropertyChanged
     {
+        private const int ComponentNumber = 15;
         public event EventHandler PropertiesUpdated;
+
+        public void RefreshValues() => UpdateValues(Metadata["RGB_R"]);
+
         public enum ColorSpace { RGB, HSL, HSV, XYZ, LAB, YCbCr };
 
         private double _alpha;
-        private double[] _values = new double[15];
+        private double[] _values = new double[ComponentNumber];
 
         #region  ==============  Public Properties  ================
+        // Original color
+        public Color Color
+        {
+            get => Color.FromArgb(Convert.ToByte(_oldColorData[_oldColorData.Length - 1] * 255),
+                Convert.ToByte(_oldColorData[0]), Convert.ToByte(_oldColorData[1]), Convert.ToByte(_oldColorData[2]));
+            set
+            {
+                CurrentColor = value;
+                SaveColor();
+            }
+        }
+
+        public Color CurrentColor
+        {
+            get => Color.FromArgb(Convert.ToByte(Alpha * 255), Convert.ToByte(RGB_R), Convert.ToByte(RGB_G),
+                Convert.ToByte(RGB_B));
+            set
+            {
+                _isUpdating = true;
+                _alpha = value.A / 255.0;
+                RGB_R = value.R;
+                RGB_G = value.G;
+                _isUpdating = false;
+                RGB_B = value.B;
+            }
+        }
+
         public double Alpha // in range [0, 1]
         {
             get => _alpha;
@@ -252,9 +284,39 @@ namespace ColorInvestigation.Controls
         private void UpdateUI()
         {
             OnPropertiesChanged(Metadata.Keys.ToArray());
+            OnPropertiesChanged(nameof(CurrentColor));
             PropertiesUpdated?.Invoke(this, new EventArgs());
         }
 
+        #endregion
+
+        #region ===========  Save & Restore color  =================
+
+        private double[] _savedColorData = new double[ComponentNumber + 1];
+        private double[] _oldColorData = new double[ComponentNumber + 1];
+
+        public void SaveColor()
+        {
+            for (var k = 0; k < _values.Length; k++)
+            {
+                _savedColorData[k] = _oldColorData[k];
+                _oldColorData[k] = _values[k];
+            }
+            _savedColorData[_savedColorData.Length - 1] = _oldColorData[_savedColorData.Length-1];
+            _oldColorData[_savedColorData.Length - 1] = Alpha;
+            OnPropertiesChanged(nameof(Color));
+        }
+        public void RestoreColor()
+        {
+            for (var k = 0; k < _values.Length; k++)
+            {
+                _oldColorData[k] = _savedColorData[k];
+                _values[k] = _savedColorData[k];
+            }
+            _oldColorData[_oldColorData.Length-1] = _savedColorData[_oldColorData.Length - 1];
+            Alpha = _savedColorData[_savedColorData.Length - 1];
+            OnPropertiesChanged(nameof(Color));
+        }
         #endregion
     }
 }

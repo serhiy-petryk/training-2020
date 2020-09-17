@@ -45,19 +45,6 @@ namespace ColorInvestigation.Controls
     /// </summary>
     public partial class ColorPickerVM : UserControl, INotifyPropertyChanged
     {
-        private ColorPickerViewModel VM => (ColorPickerViewModel) DataContext;
-        // Constructor
-        public ColorPickerVM()
-        {
-            InitializeComponent();
-            VM.PropertiesUpdated += ViewModel_PropertiesUpdated;
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
-            {
-                UpdateValue(UpdateMode.RGB);
-                _savedColor = _oldRgb.GetColor(_oldAlpha);
-            }));
-        }
-
         //=================================
         private CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
         private enum UpdateMode { RGB, HSL, HSV, XYZ, LAB, YCbCr };
@@ -87,17 +74,6 @@ namespace ColorInvestigation.Controls
                 return _hueBrush;
             }
         }
-        public Color CurrentColor
-        {
-            get => _rgb.GetColor(_alpha);
-            set
-            {
-                _alpha = value.A / 255.0;
-                _rgb = new ColorSpaces.RGB(value);
-                UpdateValue(UpdateMode.RGB);
-            }
-        }
-
         private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
         public SolidColorBrush Color_ForegroundBrush
         {
@@ -111,7 +87,7 @@ namespace ColorInvestigation.Controls
         {
             get
             {
-                _brushesCache[1].Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(CurrentColor)) ? Colors.White : Colors.Black;
+                _brushesCache[1].Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(VM.CurrentColor)) ? Colors.White : Colors.Black;
                 return _brushesCache[1];
             }
         }
@@ -124,21 +100,8 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        // Original color
-        public Color Color
-        {
-            get => _oldRgb.GetColor(_oldAlpha);
-            set
-            {
-                _rgb = new ColorSpaces.RGB(value);
-                _alpha = value.A / 255.0;
-                SaveColor();
-                xxUpdateUI();
-            }
-        }
-
         // =========================
-        public void SaveColor()
+        public void xxSaveColor()
         {
             _savedColor = _oldRgb.GetColor(_oldAlpha);
             _oldRgb = new ColorSpaces.RGB(_rgb.GetColor());
@@ -146,7 +109,7 @@ namespace ColorInvestigation.Controls
             OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
         }
 
-        public void RestoreColor()
+        public void xxRestoreColor()
         {
             _oldRgb = new ColorSpaces.RGB(_savedColor);
             _oldAlpha = _savedColor.A / 255.0;
@@ -209,44 +172,6 @@ namespace ColorInvestigation.Controls
         private void xxUpdateUI()
         {
             return;
-            TonesGenerate();
-            OnPropertiesChanged(nameof(CurrentColor),
-                nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColor_ForegroundBrush), nameof(HueBrush),
-                nameof(Value_RGB_R), nameof(Value_RGB_G), nameof(Value_RGB_B),
-                nameof(Value_HSL_H), nameof(Value_HSL_S), nameof(Value_HSL_L),
-                nameof(Value_HSV_H), nameof(Value_HSV_S), nameof(Value_HSV_V),
-                nameof(Value_LAB_L), nameof(Value_LAB_A), nameof(Value_LAB_B),
-                nameof(Value_YCbCr_Y), nameof(Value_YCbCr_Cb), nameof(Value_YCbCr_Cr));
-
-            UpdateRgbBrushes();
-            UpdateHslBrushes();
-            UpdateHsvBrushes();
-            UpdateLabBrushes();
-            UpdateYCbCrBrushes();
-
-            UpdateSaturationAndValueSlider();
-            xxUpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
-            xxUpdateSlider(HueSlider, _hsv.H, 1.0);
-
-            xxUpdateSlider(Slider_RGB_R, _rgb.R, 1.0);
-            xxUpdateSlider(Slider_RGB_G, _rgb.G, 1.0);
-            xxUpdateSlider(Slider_RGB_B, _rgb.B, 1.0);
-
-            xxUpdateSlider(Slider_HSL_H, _hsl.H, 1.0);
-            xxUpdateSlider(Slider_HSL_S, _hsl.S, 1.0);
-            xxUpdateSlider(Slider_HSL_L, _hsl.L, 1.0);
-
-            xxUpdateSlider(Slider_HSV_H, _hsv.H, 1.0);
-            xxUpdateSlider(Slider_HSV_S, _hsv.S, 1.0);
-            xxUpdateSlider(Slider_HSV_V, _hsv.V, 1.0);
-
-            xxUpdateSlider(Slider_LAB_L, _lab.L, 100.0);
-            xxUpdateSlider(Slider_LAB_A, _lab.A + 127.5, 255.0);
-            xxUpdateSlider(Slider_LAB_B, _lab.B + 127.5, 255.0);
-
-            xxUpdateSlider(Slider_YCbCr_Y, _yCbCr.Y * 255.0, 255.0);
-            xxUpdateSlider(Slider_YCbCr_Cb, _yCbCr.Cb * 255.0 + 127.5, 255.0);
-            xxUpdateSlider(Slider_YCbCr_Cr, _yCbCr.Cr * 255.0 + 127.5, 255.0);
         }
 
         private void xxUpdateSlider(FrameworkElement element, double value, double maxValue)
@@ -549,14 +474,14 @@ namespace ColorInvestigation.Controls
 
         private void UpdateRgbBrushes()
         {
-            Brush_RGB_R.GradientStops[0].Color = Color.FromRgb(0, CurrentColor.G, CurrentColor.B);
-            Brush_RGB_R.GradientStops[1].Color = Color.FromRgb(0xFF, CurrentColor.G, CurrentColor.B);
+            Brush_RGB_R.GradientStops[0].Color = Color.FromRgb(0, VM.CurrentColor.G, VM.CurrentColor.B);
+            Brush_RGB_R.GradientStops[1].Color = Color.FromRgb(0xFF, VM.CurrentColor.G, VM.CurrentColor.B);
 
-            Brush_RGB_G.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, 0, CurrentColor.B);
-            Brush_RGB_G.GradientStops[1].Color = Color.FromRgb(CurrentColor.R, 0xFF, CurrentColor.B);
+            Brush_RGB_G.GradientStops[0].Color = Color.FromRgb(VM.CurrentColor.R, 0, VM.CurrentColor.B);
+            Brush_RGB_G.GradientStops[1].Color = Color.FromRgb(VM.CurrentColor.R, 0xFF, VM.CurrentColor.B);
 
-            Brush_RGB_B.GradientStops[0].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0);
-            Brush_RGB_B.GradientStops[1].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, 0xFF);
+            Brush_RGB_B.GradientStops[0].Color = Color.FromRgb(VM.CurrentColor.R, VM.CurrentColor.G, 0);
+            Brush_RGB_B.GradientStops[1].Color = Color.FromRgb(VM.CurrentColor.R, VM.CurrentColor.G, 0xFF);
 
             OnPropertiesChanged(nameof(Brush_RGB_R), nameof(Brush_RGB_G), nameof(Brush_RGB_B));
         }
@@ -739,7 +664,31 @@ namespace ColorInvestigation.Controls
 
         #region ===============  NEW CODE  ================
 
-        private ColorPickerViewModel.MetaItem GetMeta(string key) => ColorPickerViewModel.Metadata[key];
+        private ColorPickerViewModel VM => (ColorPickerViewModel)DataContext;
+        // Constructor
+        public ColorPickerVM()
+        {
+            InitializeComponent();
+            VM.PropertiesUpdated += ViewModel_PropertiesUpdated;
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+            {
+                VM.RefreshValues();
+                // _savedColor = Color;
+            }));
+        }
+
+        // public Color CurrentColor => VM.CurrentColor;
+
+        // Original color
+        public Color Color
+        {
+            get => VM.Color;
+            set => VM.Color = value;
+        }
+
+        public void SaveColor() => VM.SaveColor();
+        public void RestoreColor() => VM.RestoreColor();
+
         #region  =============  Slider event handlers  =====================
         private void Slider_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -805,12 +754,12 @@ namespace ColorInvestigation.Controls
 
         private double GetModelValueBySlider(string componentName, double sliderValue)
         {
-            var meta = GetMeta(componentName);
+            var meta = ColorPickerViewModel.Metadata[componentName];
             return (meta.Max - meta.Min) * sliderValue + meta.Min;
         }
         private double GetSliderValueByModel(string componentName)
         {
-            var meta = GetMeta(componentName);
+            var meta = ColorPickerViewModel.Metadata[componentName];
             return (meta.GetValue(VM) - meta.Min) / (meta.Max - meta.Min);
         }
         private void UpdateSlider(FrameworkElement element, double? xValue, double? yValue)
