@@ -9,89 +9,110 @@ namespace ColorInvestigation.Controls
 {
     public class ColorPickerViewModel : INotifyPropertyChanged
     {
+        public event EventHandler PropertiesUpdated;
         public enum ColorSpace { RGB, HSL, HSV, XYZ, LAB, YCbCr };
 
+        private double _alpha;
         private double[] _values = new double[15];
 
         #region  ==============  Public Properties  ================
-        public double RGB_R
+        public double Alpha // in range [0, 1]
+        {
+            get => _alpha;
+            set
+            {
+                _alpha = value;
+                UpdateUI();
+            }
+        }
+        public double RGB_R // in range [0, 255]
         {
             get => _values[0];
             set => SetProperty(value);
         }
-        public double RGB_G
+        public double RGB_G // in range [0, 255]
         {
             get => _values[1];
             set => SetProperty(value);
         }
-        public double RGB_B
+        public double RGB_B // in range [0, 255]
         {
             get => _values[2];
             set => SetProperty(value);
         }
-        public double HSL_H
+        public double HSL_H // in range [0, 360]
         {
             get => _values[3];
             set => SetProperty(value);
         }
-        public double HSL_S
+        public double HSL_S // in range [0, 100]
         {
             get => _values[4];
             set => SetProperty(value);
         }
-        public double HSL_L
+        public double HSL_L // in range [0, 100]
         {
             get => _values[5];
             set => SetProperty(value);
         }
-        public double HSV_H
+        public double HSV_H // in range [0, 360]
         {
             get => _values[6];
             set => SetProperty(value);
         }
-        public double HSV_S
+        public double HSV_S // in range [0, 100]
         {
             get => _values[7];
             set => SetProperty(value);
         }
-        public double HSV_V
+        public double HSV_V // in range [0, 100]
         {
             get => _values[8];
             set => SetProperty(value);
         }
-        public double LAB_L
+        public double LAB_L // in range [0, 100]
         {
             get => _values[9];
             set => SetProperty(value);
         }
-        public double LAB_A
+        public double LAB_A // in range [-127.5, 127.5]
         {
             get => _values[10];
             set => SetProperty(value);
         }
-        public double LAB_B
+        public double LAB_B // in range [-127.5, 127.5]
         {
             get => _values[11];
             set => SetProperty(value);
         }
-        public double YCbCr_Y
+        public double YCbCr_Y // in range [0, 100]
         {
             get => _values[12];
             set => SetProperty(value);
         }
-        public double YCbCr_Cb
+        public double YCbCr_Cb // in range [-127.5, 127.5]
         {
             get => _values[13];
             set => SetProperty(value);
         }
-        public double YCbCr_Cr
+        public double YCbCr_Cr // in range [-127.5, 127.5]
         {
             get => _values[14];
             set => SetProperty(value);
         }
+        public Tuple<double, double> HSV_S_And_V // set hsv.S & HSV.V simultaneously (for HueAndSaturation slider)
+        {
+            set
+            {
+                _isUpdating = true;
+                HSV_S = value.Item1;
+                _isUpdating = false;
+                HSV_V = value.Item2;
+            }
+        }
 
         private bool _isUpdating;
-        private void SetProperty(double value, [CallerMemberName]string propertyName = null)
+        public void SetProperty(double value, [CallerMemberName]string propertyName = null)
         {
             var meta = Metadata[propertyName];
             value = Math.Max(meta.Min, Math.Min(meta.Max, value));
@@ -129,6 +150,7 @@ namespace ColorInvestigation.Controls
 
         private static List<MetaItem> Metalist = new List<MetaItem>
         {
+            // new MetaItem(nameof(Alpha), 0, 255),
             new MetaItem(nameof(RGB_R), 0, 255),
             new MetaItem(nameof(RGB_G), 0, 255),
             new MetaItem(nameof(RGB_B), 0, 255),
@@ -154,6 +176,7 @@ namespace ColorInvestigation.Controls
             public readonly double Max;
             public readonly double SpaceMultiplier;
             public ColorSpace ColorSpace;
+            public double GetValue(ColorPickerViewModel VM) => VM._values[SeqNo];
             // public Func<ColorPickerAsync, double> SliderValue;
             // public Action<ColorPickerAsync, double> MouseMoveAction;
 
@@ -229,6 +252,7 @@ namespace ColorInvestigation.Controls
         private void UpdateUI()
         {
             OnPropertiesChanged(Metadata.Keys.ToArray());
+            PropertiesUpdated?.Invoke(this, new EventArgs());
         }
 
         #endregion

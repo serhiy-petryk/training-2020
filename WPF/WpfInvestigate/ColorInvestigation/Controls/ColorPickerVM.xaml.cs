@@ -50,6 +50,7 @@ namespace ColorInvestigation.Controls
         public ColorPickerVM()
         {
             InitializeComponent();
+            VM.PropertiesUpdated += ViewModel_PropertiesUpdated;
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
             {
                 UpdateValue(UpdateMode.RGB);
@@ -132,7 +133,7 @@ namespace ColorInvestigation.Controls
                 _rgb = new ColorSpaces.RGB(value);
                 _alpha = value.A / 255.0;
                 SaveColor();
-                UpdateUI();
+                xxUpdateUI();
             }
         }
 
@@ -201,12 +202,13 @@ namespace ColorInvestigation.Controls
                 _yCbCr = new ColorSpaces.YCbCr(_rgb);
 
             _isUpdating = true;
-            UpdateUI();
+            xxUpdateUI();
             _isUpdating = false;
         }
 
-        private void UpdateUI()
+        private void xxUpdateUI()
         {
+            return;
             TonesGenerate();
             OnPropertiesChanged(nameof(CurrentColor),
                 nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColor_ForegroundBrush), nameof(HueBrush),
@@ -223,32 +225,33 @@ namespace ColorInvestigation.Controls
             UpdateYCbCrBrushes();
 
             UpdateSaturationAndValueSlider();
-            UpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
-            UpdateSlider(HueSlider, _hsv.H, 1.0);
+            xxUpdateSlider(AlphaSlider, 1.0 - _alpha, 1.0);
+            xxUpdateSlider(HueSlider, _hsv.H, 1.0);
 
-            UpdateSlider(Slider_RGB_R, _rgb.R, 1.0);
-            UpdateSlider(Slider_RGB_G, _rgb.G, 1.0);
-            UpdateSlider(Slider_RGB_B, _rgb.B, 1.0);
+            xxUpdateSlider(Slider_RGB_R, _rgb.R, 1.0);
+            xxUpdateSlider(Slider_RGB_G, _rgb.G, 1.0);
+            xxUpdateSlider(Slider_RGB_B, _rgb.B, 1.0);
 
-            UpdateSlider(Slider_HSL_H, _hsl.H, 1.0);
-            UpdateSlider(Slider_HSL_S, _hsl.S, 1.0);
-            UpdateSlider(Slider_HSL_L, _hsl.L, 1.0);
+            xxUpdateSlider(Slider_HSL_H, _hsl.H, 1.0);
+            xxUpdateSlider(Slider_HSL_S, _hsl.S, 1.0);
+            xxUpdateSlider(Slider_HSL_L, _hsl.L, 1.0);
 
-            UpdateSlider(Slider_HSV_H, _hsv.H, 1.0);
-            UpdateSlider(Slider_HSV_S, _hsv.S, 1.0);
-            UpdateSlider(Slider_HSV_V, _hsv.V, 1.0);
+            xxUpdateSlider(Slider_HSV_H, _hsv.H, 1.0);
+            xxUpdateSlider(Slider_HSV_S, _hsv.S, 1.0);
+            xxUpdateSlider(Slider_HSV_V, _hsv.V, 1.0);
 
-            UpdateSlider(Slider_LAB_L, _lab.L, 100.0);
-            UpdateSlider(Slider_LAB_A, _lab.A + 127.5, 255.0);
-            UpdateSlider(Slider_LAB_B, _lab.B + 127.5, 255.0);
+            xxUpdateSlider(Slider_LAB_L, _lab.L, 100.0);
+            xxUpdateSlider(Slider_LAB_A, _lab.A + 127.5, 255.0);
+            xxUpdateSlider(Slider_LAB_B, _lab.B + 127.5, 255.0);
 
-            UpdateSlider(Slider_YCbCr_Y, _yCbCr.Y * 255.0, 255.0);
-            UpdateSlider(Slider_YCbCr_Cb, _yCbCr.Cb * 255.0 + 127.5, 255.0);
-            UpdateSlider(Slider_YCbCr_Cr, _yCbCr.Cr * 255.0 + 127.5, 255.0);
+            xxUpdateSlider(Slider_YCbCr_Y, _yCbCr.Y * 255.0, 255.0);
+            xxUpdateSlider(Slider_YCbCr_Cb, _yCbCr.Cb * 255.0 + 127.5, 255.0);
+            xxUpdateSlider(Slider_YCbCr_Cr, _yCbCr.Cr * 255.0 + 127.5, 255.0);
         }
 
-        private void UpdateSlider(FrameworkElement element, double value, double maxValue)
+        private void xxUpdateSlider(FrameworkElement element, double value, double maxValue)
         {
+            throw new Exception("AAA");
             var panel = element as Panel;
             if (panel == null)
             {
@@ -283,18 +286,10 @@ namespace ColorInvestigation.Controls
 
         #region ==============  Event handlers  ====================
 
-        private void ColorPicker_SizeChanged(object sender, SizeChangedEventArgs e) => UpdateUI();
-        private void RightColumn_OnSizeChanged(object sender, SizeChangedEventArgs e) => UpdateUI();
+        private void ColorPicker_SizeChanged(object sender, SizeChangedEventArgs e) => xxUpdateUI();
+        private void RightColumn_OnSizeChanged(object sender, SizeChangedEventArgs e) => xxUpdateUI();
 
-        private void Slider_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            (sender as UIElement).CaptureMouse();
-            Keyboard.ClearFocus();
-        }
-
-        private void Slider_MouseUp(object sender, MouseButtonEventArgs e) => (sender as UIElement).ReleaseMouseCapture();
-
-        private void Slider_MouseMove(object sender, MouseEventArgs e)
+        private void XXSlider_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -315,7 +310,7 @@ namespace ColorInvestigation.Controls
                 else if (canvas.Name == nameof(AlphaSlider))
                 {
                     _alpha = 1.0 - multiplier;
-                    UpdateUI();
+                    xxUpdateUI();
                 }
                 else if (sliderName == nameof(Slider_RGB_R))
                 {
@@ -392,22 +387,6 @@ namespace ColorInvestigation.Controls
                     _yCbCr.Cr = multiplier - 0.5;
                     UpdateValue(UpdateMode.YCbCr);
                 }
-            }
-        }
-
-        private void SaturationAndValueSlider_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                var canvas = sender as Canvas;
-                var x = e.GetPosition(canvas).X;
-                var y = e.GetPosition(canvas).Y;
-                x = Math.Max(0, Math.Min(x, canvas.ActualWidth));
-                y = Math.Max(0, Math.Min(y, canvas.ActualHeight));
-
-                _hsv.S = x / canvas.ActualWidth;
-                _hsv.V = 1 - y / canvas.ActualHeight;
-                UpdateValue(UpdateMode.HSV);
             }
         }
 
@@ -757,5 +736,113 @@ namespace ColorInvestigation.Controls
             // popup.PlacementTarget = grid.Children[0];
             popup.IsOpen = true;
         }
+
+        #region ===============  NEW CODE  ================
+
+        private ColorPickerViewModel.MetaItem GetMeta(string key) => ColorPickerViewModel.Metadata[key];
+        #region  =============  Slider event handlers  =====================
+        private void Slider_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            (sender as UIElement).CaptureMouse();
+            Keyboard.ClearFocus();
+        }
+
+        private void Slider_MouseUp(object sender, MouseButtonEventArgs e) => (sender as UIElement).ReleaseMouseCapture();
+
+        private void Slider_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var canvas = sender as Panel;
+                var thumb = canvas.Children[0] as FrameworkElement;
+                var isVertical = thumb is Grid;
+                var sliderName = (canvas.TemplatedParent as FrameworkElement)?.Name ?? canvas.Name;
+
+                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
+                var value = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
+                value = Math.Max(0, Math.Min(1, value));
+
+                if (sliderName == nameof(HueSlider))
+                    VM.HSV_H = GetModelValueBySlider("HSV_H", value);
+                else if (canvas.Name == nameof(AlphaSlider))
+                    VM.Alpha = 1.0 - value;
+                else
+                {
+                    var valueId = sliderName.Replace("Slider_", "");
+                    VM.SetProperty(GetModelValueBySlider(valueId, value), valueId);
+                }
+            }
+        }
+
+        private void SaturationAndValueSlider_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var canvas = sender as Canvas;
+                var x = e.GetPosition(canvas).X;
+                var y = e.GetPosition(canvas).Y;
+                x = Math.Max(0, Math.Min(x, canvas.ActualWidth));
+                y = Math.Max(0, Math.Min(y, canvas.ActualHeight));
+
+                VM.HSV_S_And_V = new Tuple<double, double>(GetModelValueBySlider("HSV_S", x / canvas.ActualWidth),
+                    GetModelValueBySlider("HSV_V", 1 - y / canvas.ActualHeight));
+            }
+        }
+
+        #endregion
+
+        #region =================  Properties Updated  =================
+        private void ViewModel_PropertiesUpdated(object sender, EventArgs e)
+        {
+            UpdateSlider(SaturationAndValueSlider, GetSliderValueByModel("HSV_S"), 1.0 - GetSliderValueByModel("HSV_V"));
+            UpdateSlider(HueSlider, null, GetSliderValueByModel("HSV_H"));
+            UpdateSlider(AlphaSlider, null, 1.0 - VM.Alpha);
+
+            foreach (var kvp in ColorPickerViewModel.Metadata)
+                UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, GetSliderValueByModel(kvp.Key), null);
+
+        }
+
+        private double GetModelValueBySlider(string componentName, double sliderValue)
+        {
+            var meta = GetMeta(componentName);
+            return (meta.Max - meta.Min) * sliderValue + meta.Min;
+        }
+        private double GetSliderValueByModel(string componentName)
+        {
+            var meta = GetMeta(componentName);
+            return (meta.GetValue(VM) - meta.Min) / (meta.Max - meta.Min);
+        }
+        private void UpdateSlider(FrameworkElement element, double? xValue, double? yValue)
+        {
+            var panel = element as Panel;
+            if (panel == null)
+            {
+                if (VisualTreeHelper.GetChildrenCount(element) > 0)
+                    panel = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(element, 0), 0) as Panel;
+                else
+                    return;
+            }
+
+            var thumb = panel.Children[0] as FrameworkElement;
+            if (xValue.HasValue)
+            {
+                var x = thumb is Grid
+                    ? panel.ActualWidth * xValue.Value - thumb.ActualWidth / 2
+                    : (panel.ActualWidth - thumb.ActualWidth) * xValue.Value;
+                Canvas.SetLeft(thumb, x);
+            }
+            if (yValue.HasValue)
+            {
+                var y = panel.ActualHeight * yValue.Value - thumb.ActualHeight / 2;
+                Canvas.SetTop(thumb, y);
+            }
+        }
+
+
+        #endregion
+
+        #endregion
+
     }
 }

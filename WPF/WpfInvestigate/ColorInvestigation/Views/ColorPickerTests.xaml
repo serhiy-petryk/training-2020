@@ -91,10 +91,10 @@
 
             <TabControl Grid.Row="1">
                 <TabItem Header="ViewModel">
-                    <controls:ColorPickerVM x:Name="ColorPickerViewModel"/>
+                    <controls:ColorPickerVM x:Name="ColorPickerViewModel" Color="LightBlue"/>
                 </TabItem>
                 <TabItem Header="Async">
-                    <controls:ColorPickerAsync x:Name="ColorPickerAsync"/>
+                    <controls:ColorPickerAsync x:Name="ColorPickerAsync" Color="LightBlue"/>
                 </TabItem>
                 <TabItem Header="Simple">
                     <controls:ColorPicker x:Name="ColorPicker"/>
