@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using ColorInvestigation.Common;
 
 namespace ColorInvestigation.Controls
 {
@@ -88,11 +89,19 @@ namespace ColorInvestigation.Controls
             get => _values[14];
             set => SetProperty(value);
         }
+
+        private bool _isUpdating;
         private void SetProperty(double value, [CallerMemberName]string propertyName = null)
         {
             var meta = Metadata[propertyName];
             value = Math.Max(meta.Min, Math.Min(meta.Max, value));
             _values[meta.SeqNo] = value;
+            if (!_isUpdating)
+            {
+                _isUpdating = true;
+                UpdateValues(meta);
+                _isUpdating = false;
+            }
         }
         #endregion
 
@@ -139,10 +148,11 @@ namespace ColorInvestigation.Controls
 
         public class MetaItem
         {
-            public string Id;
-            public int SeqNo { get; set; }
-            public double Min;
-            public double Max;
+            public readonly string Id;
+            public int SeqNo;
+            public readonly double Min;
+            public readonly double Max;
+            public readonly double SpaceMultiplier;
             public ColorSpace ColorSpace;
             // public Func<ColorPickerAsync, double> SliderValue;
             // public Action<ColorPickerAsync, double> MouseMoveAction;
@@ -150,11 +160,77 @@ namespace ColorInvestigation.Controls
             public MetaItem(string id, double min, double max)
             {
                 Id = id; Min = min; Max = max;
-                //ColorSpace = colorSpace;
+                SpaceMultiplier = Id.StartsWith("LAB") ? 1 : Max - Min;
                 // SliderValue = sliderValue; MouseMoveAction = mouseMoveAction;
             }
         }
         #endregion
 
+        #region ==============  Update Value  ===============
+
+        private double GetSpaceValue(int index) => _values[index] / Metalist[index].SpaceMultiplier;
+        private void SetValues(int startIndex, params double[] newValues)
+        {
+            for (var k = 0; k < newValues.Length; k++)
+                _values[k + startIndex] = newValues[k] * Metalist[k + startIndex].SpaceMultiplier;
+        }
+
+        private void UpdateValues(MetaItem meta)
+        {
+            // Get rgb object
+            var rgb = new ColorSpaces.RGB(0, 0, 0);
+            if (meta.ColorSpace == ColorSpace.RGB)
+                rgb = new ColorSpaces.RGB(GetSpaceValue(0), GetSpaceValue(1), GetSpaceValue(2));
+            else if (meta.ColorSpace == ColorSpace.HSL)
+            {
+                rgb = new ColorSpaces.HSL(GetSpaceValue(3), GetSpaceValue(4), GetSpaceValue(5)).GetRGB();
+                // Update HSV
+                _values[6] = _values[3]; // _hsv.H = _hsl.H;
+                var hsv = new ColorSpaces.HSV(rgb); // _hsv = new ColorSpaces.HSV(_rgb);
+                SetValues(7, hsv.S, hsv.V);
+            }
+            else if (meta.ColorSpace == ColorSpace.HSV)
+            {
+                rgb = new ColorSpaces.HSV(GetSpaceValue(6), GetSpaceValue(7), GetSpaceValue(8)).GetRGB();
+                // Update HSL
+                _values[3] = _values[6]; // _hsl.H = _hsv.H;
+                var hsl = new ColorSpaces.HSL(rgb); // _hsl = new ColorSpaces.HSL(_rgb);
+                SetValues(4, hsl.S, hsl.L);
+            }
+            else if (meta.ColorSpace == ColorSpace.LAB)
+                rgb = new ColorSpaces.LAB(GetSpaceValue(9), GetSpaceValue(10), GetSpaceValue(11)).GetRGB();
+            else if (meta.ColorSpace == ColorSpace.YCbCr)
+                rgb = new ColorSpaces.YCbCr(GetSpaceValue(12), GetSpaceValue(13), GetSpaceValue(14)).GetRGB();
+
+            // Update other objects
+            if (meta.ColorSpace != ColorSpace.RGB)
+                SetValues(0, rgb.R, rgb.G, rgb.B);
+            if (meta.ColorSpace != ColorSpace.HSL && meta.ColorSpace != ColorSpace.HSV)
+            {
+                var hsl = new ColorSpaces.HSL(rgb);
+                SetValues(3, hsl.H, hsl.S, hsl.L);
+                var hsv = new ColorSpaces.HSV(rgb);
+                SetValues(6, hsv.H, hsv.S, hsv.V);
+            }
+            if (meta.ColorSpace != ColorSpace.LAB)
+            {
+                var lab = new ColorSpaces.LAB(rgb);
+                SetValues(9, lab.L, lab.A, lab.B);
+            }
+            if (meta.ColorSpace != ColorSpace.YCbCr)
+            {
+                var yCbCr = new ColorSpaces.YCbCr(rgb);
+                SetValues(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
+            }
+
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            OnPropertiesChanged(Metadata.Keys.ToArray());
+        }
+
+        #endregion
     }
 }
