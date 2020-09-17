@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace ColorInvestigation.Common
 {
@@ -14,4 +16,19 @@ namespace ColorInvestigation.Common
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
+
+    public class DummyConverter : DependencyObject, IValueConverter
+    {
+        public static DummyConverter Instance = new DummyConverter();
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is SolidColorBrush brush)
+                return brush.Color.ToString();
+            if (value is string)
+                return value;
+            return "NaN";
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+
 }

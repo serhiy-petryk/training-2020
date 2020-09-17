@@ -62,6 +62,19 @@
     <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\FlatButtonConverters.cs" />
+    <Compile Include="Controls\ColorPickerViewModel.cs" />
+    <Compile Include="Controls\ColorPickerVM.xaml.cs">
+      <DependentUpon>ColorPickerVM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColorPickerLabel.xaml.cs">
+      <DependentUpon>ColorPickerLabel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColorPickerDelay.xaml.cs">
+      <DependentUpon>ColorPickerDelay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColorPickerAsync.xaml.cs">
+      <DependentUpon>ColorPickerAsync.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
@@ -92,6 +105,22 @@
     <Compile Include="Views\MonoChromatic.xaml.cs">
       <DependentUpon>MonoChromatic.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\ColorPickerVM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ColorPickerLabel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ColorPickerDelay.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ColorPickerAsync.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\ColorPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

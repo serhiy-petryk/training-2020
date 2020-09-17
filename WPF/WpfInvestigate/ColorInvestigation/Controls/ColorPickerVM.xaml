@@ -1,19 +1,23 @@
-﻿<UserControl x:Class="ColorInvestigation.Controls.ColorPicker"
+﻿<UserControl x:Class="ColorInvestigation.Controls.ColorPickerVM"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:common="clr-namespace:ColorInvestigation.Common"
+             xmlns:controls="clr-namespace:ColorInvestigation.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600"
              MinHeight="420" MinWidth="500"
              SnapsToDevicePixels="True"
              UseLayoutRounding="True"
              Background="#FF282828"
-             DataContext="{Binding RelativeSource={RelativeSource Self}, Mode=OneTime}"
              SizeChanged="ColorPicker_SizeChanged">
+    <UserControl.DataContext>
+        <controls:ColorPickerViewModel/>
+    </UserControl.DataContext>
 
     <UserControl.Resources>
+        <!-- SaturationAndValueSlider base background brush -->
         <DrawingBrush x:Key="SaturationAndValueSliderBaseBrush">
             <DrawingBrush.Drawing>
                 <DrawingGroup>
@@ -43,7 +47,8 @@
             </DrawingBrush.Drawing>
         </DrawingBrush>
 
-        <LinearGradientBrush x:Key="HueBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+        <!-- HueBar background color -->
+        <LinearGradientBrush x:Key="HueVerticalBrush" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Offset="0" Color="#FFFF0000"/>
             <GradientStop Offset="0.167" Color="#FFFFFF00"/>
             <GradientStop Offset="0.333" Color="#FF00FF00"/>
@@ -53,7 +58,8 @@
             <GradientStop Offset="1" Color="#FFFF0000"/>
         </LinearGradientBrush>
 
-        <DrawingBrush x:Key="AlphaBackgroundBrush" Viewport="0,0,16,16" TileMode="Tile" ViewportUnits="Absolute">
+        <!-- Alpha background brush -->
+        <DrawingBrush x:Key="TransparentBrush" Viewport="0,0,16,16" TileMode="Tile" ViewportUnits="Absolute">
             <DrawingBrush.Drawing>
                 <DrawingGroup>
                     <GeometryDrawing Brush="#FCCC">
@@ -73,11 +79,13 @@
             </DrawingBrush.Drawing>
         </DrawingBrush>
 
-        <LinearGradientBrush x:Key="AlphaBarOpacityMask" StartPoint="0,0" EndPoint="0,1">
+        <!-- AlphaBar color -->
+        <LinearGradientBrush x:Key="AlphaOpacityMask" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Offset="0" Color="#0000"/>
             <GradientStop Offset="1" Color="#FFFF"/>
         </LinearGradientBrush>
 
+        <!-- Component Slider template -->
         <ControlTemplate x:Key="ComponentSliderTemplate" TargetType="Control">
             <Border BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{TemplateBinding Background}">
                 <Canvas Background="Transparent" VerticalAlignment="Stretch"
@@ -90,7 +98,8 @@
             </Border>
         </ControlTemplate>
 
-        <Style x:Key="ValueEditor" TargetType="TextBox">
+        <!-- TextBox default style -->
+        <Style TargetType="TextBox" x:Key="ValueEditor">
             <Setter Property="Background" Value="#FF181818"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderBrush" Value="Gray"/>
@@ -107,7 +116,7 @@
             <EventSetter Event="LostFocus" Handler="ValueEditor_OnLostFocus"/>
         </Style>
 
-        <Style x:Key="Label" TargetType="TextBox">
+        <Style TargetType="TextBox" x:Key="Label">
             <Setter Property="Focusable" Value="True"/>
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="IsReadOnly" Value="True"/>
@@ -121,18 +130,118 @@
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
 
-        <Style x:Key="SliderLabel" TargetType="Label">
+        <Style TargetType="TextBox" x:Key="ColorBox">
+            <Setter Property="Focusable" Value="True"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Arrow"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColorBox_PreviewMouseLeftButtonDown"/>
+            <EventSetter Event="MouseDoubleClick" Handler="ColorBox_OnMouseDoubleClick"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Padding" Value="-1.1"/>
+                    <Setter Property="BorderThickness" Value="1.1"/>
+                    <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="XColorBox2" TargetType="ToggleButton">
+            <Setter Property="Focusable" Value="True"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Arrow"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColorBox_PreviewMouseLeftButtonDown"/>
+            <EventSetter Event="MouseDoubleClick" Handler="ColorBox_OnMouseDoubleClick"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Padding" Value="-1.1"/>
+                    <Setter Property="BorderThickness" Value="1.1"/>
+                    <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="XColorBox" TargetType="ToggleButton">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <!--<Setter Property="IsReadOnly" Value="True"/>-->
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Arrow"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <!--                        <Label Content="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:DummyConverter.Instance}, Mode=OneWay}"-->
+                        <Label Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:DummyConverter.Instance}, Mode=OneWay}"
+                               VerticalContentAlignment="Center"
+                               HorizontalContentAlignment="Center"
+                               Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"/>
+                        <!--<ContentPresenter Content="{TemplateBinding Background}" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--<Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <TextBox IsReadOnly="True" IsTabStop="False" Text="{Binding Background, Mode=OneWay}"
+                                 BorderBrush="{TemplateBinding Foreground}" Background="{TemplateBinding Background}"
+                                 HorizontalAlignment="Stretch" TextAlignment="Center"
+                                 VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                                 Foreground="{TemplateBinding Foreground}">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Padding" Value="-1.1"/>
+                                            <Setter Property="BorderThickness" Value="1.1"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>-->
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColorBox_PreviewMouseLeftButtonDown"/>
+            <EventSetter Event="MouseDoubleClick" Handler="ColorBox_OnMouseDoubleClick"/>
+            <!--<Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Padding" Value="-1.1"/>
+                    <Setter Property="BorderThickness" Value="1.1"/>
+                    <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
+                </Trigger>
+            </Style.Triggers>-->
+        </Style>
+
+        <Style TargetType="Label" x:Key="SliderLabel">
             <Setter Property="Margin" Value="0 0 -2 0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Foreground" Value="#FFE0E0E0"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <Style x:Key="ValueLabel" TargetType="Label">
+        <Style TargetType="Label" x:Key="ValueLabel">
             <Setter Property="Margin" Value="4 0 8 0"/>
             <Setter Property="Padding" Value="0"/>
-            <Setter Property="Foreground" Value="#FFE0E0E0"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
@@ -174,7 +283,7 @@
 
                 <!-- HueBar -->
                 <Grid Grid.Column="1" Grid.Row="0" Margin="3,0">
-                    <Rectangle Fill="{StaticResource HueBackgroundBrush}" Margin="5,0"/>
+                    <Rectangle Fill="{StaticResource HueVerticalBrush}" Margin="5,0"/>
                     <Canvas x:Name="HueSlider" Background="Transparent"
                             MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid Height="12" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
@@ -187,7 +296,7 @@
                 <!-- AlphaBar -->
                 <Grid Grid.Column="2" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{Binding HueBrush}" Margin="5,0"/>
-                    <Rectangle Fill="{StaticResource AlphaBackgroundBrush}" OpacityMask="{StaticResource AlphaBarOpacityMask}" Margin="5,0"/>
+                    <Rectangle Fill="{StaticResource TransparentBrush}" OpacityMask="{StaticResource AlphaOpacityMask}" Margin="5,0"/>
                     <Canvas x:Name="AlphaSlider" Background="Transparent"
                             MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid Height="12" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
@@ -198,7 +307,7 @@
                 </Grid>
 
                 <!-- Color boxes -->
-                <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="0 8 0 0" VerticalAlignment="Stretch">
+                <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="0 8 8 0" VerticalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
@@ -210,98 +319,55 @@
                         <RowDefinition Height="10*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0" Grid.Column="0" Margin="0" VerticalAlignment="Stretch" ToolTip="Original color">
-                        <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
-                        <Rectangle>
-                            <Rectangle.Fill>
+                    <Grid Grid.Row="0" Grid.Column="0" Margin="0" VerticalAlignment="Stretch">
+                        <Rectangle Fill="{StaticResource TransparentBrush}"/>
+                        <TextBox BorderThickness="0" IsReadOnly="True" IsTabStop="False" Focusable="True" Cursor="Arrow"
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                 Text="{Binding Color, Mode=OneWay}"
+                                 Foreground="{Binding Color_ForegroundBrush}">
+                            <TextBox.Background>
                                 <SolidColorBrush Color="{Binding Color}"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <TextBox Margin="0" Padding="4" BorderThickness="0"
-                                 IsReadOnly="True" IsTabStop="False" Focusable="True" Cursor="Arrow"
-                                 HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"
-                                 Background="{Binding ColorWithoutAlphaBrush}" Foreground="{Binding Color_ForegroundBrush}"
-                                 Text="{Binding Color, Mode=OneWay}">
+                            </TextBox.Background>
                         </TextBox>
                     </Grid>
 
-                    <Grid Grid.Row="0" Grid.Column="1" ToolTip="Current color">
-                        <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <Rectangle Fill="{StaticResource TransparentBrush}"/>
                         <Rectangle>
                             <Rectangle.Fill>
                                 <SolidColorBrush Color="{Binding CurrentColor}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <TextBox Margin="0" Padding="0" BorderThickness="1" FontWeight="Bold"
-                                 HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" 
+                        <TextBox Text="{Binding CurrentColor}" HorizontalAlignment="Center" BorderThickness="2" FontWeight="Bold"
+                                 Margin="0" Padding="0"
                                  BorderBrush="{Binding CurrentColor_ForegroundBrush}"
-                                 Background="{Binding CurrentColorWithoutAlphaBrush}" Foreground="{Binding CurrentColor_ForegroundBrush}"
-                                 Text="{Binding CurrentColor}" >
+                                 Background="{Binding CurrentColorWithoutAlphaBrush}"
+                                 Foreground="{Binding CurrentColor_ForegroundBrush}"
+                                 VerticalAlignment="Center" HorizontalContentAlignment="Center">
                         </TextBox>
                     </Grid>
-
-                    <Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="80" IsTabStop="True" Focusable="True"
-                            Click="ButtonBase_OnClick">
-                        <TextBlock Text="Known color table" TextWrapping="Wrap" TextAlignment="Center"/>
-                    </Button>
 
                     <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Label}" Text="Shades" TextAlignment="Center"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource Label}" Text="Tints" TextAlignment="Center"/>
                     <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource Label}" Text="Tones" TextAlignment="Center"/>
 
-                    <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" ItemsSource="{Binding Path=Tones}" IsTabStop="False">
+                    <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2"  ItemsSource="{Binding Path=Tones}" Focusable="False" IsTabStop="False">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid x:Name="ColorBoxGrid" UseLayoutRounding="False" SnapsToDevicePixels="False">
-                                    <TextBox x:Name="ColorBox" Margin="0" Padding="0" BorderThickness="0"
-                                             IsReadOnly="True" Focusable="True" IsTabStop="False"
-                                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                             Background="{Binding Background}" Foreground="{Binding Foreground}"
-                                             Text="{Binding Background, Mode=OneWay, Delay=50}">
-                                    </TextBox>
-                                    <ToggleButton x:Name="ColorBoxToggleButton" IsThreeState="False" Margin="0" Padding="0" IsTabStop="False"
-                                                  IsHitTestVisible="{Binding ElementName=ColorBoxPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}">
-                                        <ToggleButton.Style>
-                                            <Style TargetType="ToggleButton">
-                                                <Setter Property="BorderBrush" Value="{Binding Background}"/>
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate TargetType="ToggleButton">
-                                                            <Border Background="Transparent" BorderThickness="0 0.5" BorderBrush="{TemplateBinding BorderBrush}"/>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </ToggleButton.Style>
-                                    </ToggleButton>
-                                    <Popup x:Name="ColorBoxPopup" AllowsTransparency="True" StaysOpen="False" Focusable="False"
-                                           Placement="Bottom" PlacementTarget="{Binding ElementName=ColorBox}" PopupAnimation="Slide"
-                                           IsOpen="{Binding ElementName=ColorBoxToggleButton, Path=IsChecked}"
-                                           Opened="ColorBoxPopup_OnOpened">
-                                        <Border Margin="0 0 8 8" Background="#FFDAEDF4" BorderBrush="#FF399CBD" BorderThickness="2" CornerRadius="2">
-                                            <Border.Effect>
-                                                <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
-                                            </Border.Effect>
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <Label Grid.Row="0" Background="#FF9ED1E1" FontSize="12" FontWeight="SemiBold" Content="Color information"/>
-                                                <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" Cursor="Arrow" FontFamily="Courier New"/>
-                                                <Button Grid.Row="2" Background="#FF9ED1E1" BorderThickness="2" Margin="10" IsDefault="True"
-                                                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                                                        Click="ColorBox_OnSetColor">
-                                                    <TextBlock Padding="4" TextAlignment="Center" FontWeight="SemiBold" TextWrapping="Wrap"
-                                                               Text="Click here to set the current color to this color" Width="120" />
-                                                </Button>
-                                            </Grid>
+                                <Grid>
+                                    <!--<TextBox Text="{Binding Background, Mode=OneWay}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}" Style="{StaticResource ColorBox}"/>-->
+                                    <ToggleButton Background="{Binding Background}" Foreground="{Binding Foreground}"
+                                                  Content="{Binding BackgroundText}"
+                                                  Style="{StaticResource XColorBox}"/>
+                                    <!--<ToggleButton Content="{Binding BackgroundText}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}" Style="{StaticResource XColorBox2}"/>-->
+                                    <Popup StaysOpen="False" AllowsTransparency="False" >
+                                        <Border BorderBrush="Blue" BorderThickness="1" Background="AliceBlue">
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBox IsReadOnly="True" Padding="10" Width="150" TextWrapping="Wrap" BorderThickness="0" Background="Transparent"
+                                                         Text="Julius Caesar was a Roman emperor who lived from 100 BC to 44 BC"/>
+                                                <Button Content="OK" Click="btnOK_Click" HorizontalAlignment="Right" Margin="10" Padding="5,2"/>
+                                            </StackPanel>
                                         </Border>
                                     </Popup>
                                 </Grid>
@@ -340,7 +406,7 @@
                 </Grid>
             </Grid>
 
-            <GridSplitter Grid.Column="1" Width="6" HorizontalAlignment="Stretch" BorderThickness="0" BorderBrush="Transparent" Background="#FF555555" IsTabStop="False"/>
+            <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Stretch" Background="Transparent" IsTabStop="False"/>
 
             <!--  Color component sliders  -->
             <Grid Grid.Column="2" SizeChanged="RightColumn_OnSizeChanged">
@@ -373,101 +439,108 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <!-- RGB -->
-                <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 4" Text="RGB (Red[0-255], Green[0-255], Blue[0-255])" Style="{StaticResource Label}"/>
+                <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="RGB (Red[0-255], Green[0-255], Blue[0-255])" Style="{StaticResource Label}"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="R"/>
-                <Control Grid.Row="1" Grid.Column="1" Name="Slider_RGB_R" Background="{Binding Brushes[RGB_R]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Grid.Row="1" Grid.Column="1" Name="Slider_RGB_R" Background="{Binding Brush_RGB_R}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_RGB_R, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding RGB_R, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="G"/>
-                <Control Margin="0 -1" Grid.Row="2" Grid.Column="1" Name="Slider_RGB_G" Background="{Binding Brushes[RGB_G]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Margin="0 -1" Grid.Row="2" Grid.Column="1" Name="Slider_RGB_G" Background="{Binding Brush_RGB_G}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="2" Grid.Column="2" Style="{StaticResource ValueEditor}" BorderThickness="1 0"
-                                 Text="{Binding Value_RGB_G, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                 Text="{Binding RGB_G, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="B"/>
-                <Control Grid.Row="3" Grid.Column="1" Name="Slider_RGB_B" Background="{Binding Brushes[RGB_B]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Grid.Row="3" Grid.Column="1" Name="Slider_RGB_B" Background="{Binding Brush_RGB_B}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="3" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                                 Text="{Binding Value_RGB_B, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                 Text="{Binding RGB_B, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- HSL -->
                 <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 4" Text="HSL (Hue[0-360], Saturation[0-100], Lightness[0-100])" Style="{StaticResource Label}"/>
 
                 <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="H"/>
-                <Control Grid.Row="5" Grid.Column="1" Name="Slider_HSL_H" Background="{Binding Brushes[HSL_H]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Grid.Row="5" Grid.Column="1" Name="Slider_HSL_H" Background="{Binding Brush_HSL_H}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="5" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                             Text="{Binding Value_HSL_H, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding HSL_H, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="5" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="°"/>
 
                 <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="S"/>
-                <Control Margin="0 -1" Grid.Row="6" Grid.Column="1" Name="Slider_HSL_S" Background="{Binding Brushes[HSL_S]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Margin="0 -1" Grid.Row="6" Grid.Column="1" Name="Slider_HSL_S" Background="{Binding Brush_HSL_S}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="6" Grid.Column="2" Style="{StaticResource ValueEditor}" BorderThickness="1 0"
-                         Text="{Binding Value_HSL_S, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding HSL_S, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="6" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="%"/>
 
                 <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="L"/>
-                <Control Grid.Row="7" Grid.Column="1" Name="Slider_HSL_L" Background="{Binding Brushes[HSL_L]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Grid.Row="7" Grid.Column="1" Name="Slider_HSL_L" Background="{Binding Brush_HSL_L}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="7" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_HSL_L, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding HSL_L, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="7" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="%"/>
 
                 <!-- HSV -->
                 <TextBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 4" Text="HSV/HSB (Hue[0-360], Saturation[0-100], Value/Brightness[0-100])" Style="{StaticResource Label}"/>
 
                 <Label Grid.Row="9" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="H"/>
-                <Control Grid.Row="9" Grid.Column="1" Name="Slider_HSV_H" Background="{Binding Brushes[HSV_H]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Grid.Row="9" Grid.Column="1" Name="Slider_HSV_H" Background="{Binding Brush_HSV_H}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="9" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_HSV_H, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding HSV_H, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="9" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="°"/>
 
                 <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="S"/>
-                <Control Margin="0 -1" Grid.Row="10" Grid.Column="1" Name="Slider_HSV_S" Background="{Binding Brushes[HSV_S]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Margin="0 -1" Grid.Row="10" Grid.Column="1" Name="Slider_HSV_S" Background="{Binding Brush_HSV_S}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="10" Grid.Column="2" Style="{StaticResource ValueEditor}" BorderThickness="1 0"
-                         Text="{Binding Value_HSV_S, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding HSV_S, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="10" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="%"/>
 
                 <Label Grid.Row="11" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="V/B"/>
-                <Control Grid.Row="11" Grid.Column="1" Name="Slider_HSV_V" Background="{Binding Brushes[HSV_V]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Grid.Row="11" Grid.Column="1" Name="Slider_HSV_V" Background="{Binding Brush_HSV_V}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="11" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_HSV_V, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding HSV_V, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="11" Grid.Column="3" Style="{StaticResource ValueLabel}" Content="%"/>
 
                 <!-- LAB -->
                 <TextBox Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 4" Text="Lab (Lightness[0-100], A(Green↔Red)[-127.5, 127.5], B(Blue↔Yellow)[-127.5, 127.5])" Style="{StaticResource Label}"/>
 
                 <Label Grid.Row="13" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="L"/>
-                <Control Grid.Row="13" Grid.Column="1" Name="Slider_LAB_L" Background="{Binding Brushes[LAB_L]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Grid.Row="13" Grid.Column="1" Name="Slider_LAB_L" Background="{Binding Brush_LAB_L}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="13" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_LAB_L, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding LAB_L, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="14" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="A"/>
-                <Control Margin="0 -1" Grid.Row="14" Grid.Column="1" Name="Slider_LAB_A" Background="{Binding Brushes[LAB_A]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Margin="0 -1" Grid.Row="14" Grid.Column="1" Name="Slider_LAB_A" Background="{Binding Brush_LAB_A}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="14" Grid.Column="2" Style="{StaticResource ValueEditor}" BorderThickness="1 0"
-                         Text="{Binding Value_LAB_A, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding LAB_A, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="15" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="B"/>
-                <Control Grid.Row="15" Grid.Column="1" Name="Slider_LAB_B" Background="{Binding Brushes[LAB_B]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Grid.Row="15" Grid.Column="1" Name="Slider_LAB_B" Background="{Binding Brush_LAB_B}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="15" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_LAB_B, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding LAB_B, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- YCbCr -->
                 <TextBox Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 4" Text="YCbCr (Y[0-255], Cb[-127.5, 127.5], Cr[-127.5, 127.5])" Style="{StaticResource Label}"/>
 
                 <Label Grid.Row="17" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="Y"/>
-                <Control Grid.Row="17" Grid.Column="1" Name="Slider_YCbCr_Y" Background="{Binding Brushes[YCbCr_Y]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Grid.Row="17" Grid.Column="1" Name="Slider_YCbCr_Y" Background="{Binding Brush_YCbCr_Y}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="17" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_YCbCr_Y, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding YCbCr_Y, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="18" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="Cb"/>
-                <Control Margin="0 -1" Grid.Row="18" Grid.Column="1" Name="Slider_YCbCr_Cb" Background="{Binding Brushes[YCbCr_Cb]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Margin="0 -1" Grid.Row="18" Grid.Column="1" Name="Slider_YCbCr_Cb" Background="{Binding Brush_YCbCr_Cb}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="18" Grid.Column="2" Style="{StaticResource ValueEditor}" BorderThickness="1 0"
-                         Text="{Binding Value_YCbCr_Cb, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding YCbCr_Cb, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="19" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="Cr"/>
-                <Control Grid.Row="19" Grid.Column="1" Name="Slider_YCbCr_Cr" Background="{Binding Brushes[YCbCr_Cr]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
+                <Control Grid.Row="19" Grid.Column="1" Name="Slider_YCbCr_Cr" Background="{Binding Brush_YCbCr_Cr}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
                 <TextBox Grid.Row="19" Grid.Column="2" Style="{StaticResource ValueEditor}"
-                         Text="{Binding Value_YCbCr_Cr, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding YCbCr_Cr, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
+
+            <!--<Popup x:Name="popup1" StaysOpen="False" Placement="" MaxWidth="180"
+                   AllowsTransparency="True"  >
+                <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+                    Чтобы узнать больше, посетите сайт metanit.com
+                </TextBlock>
+            </Popup>-->
         </Grid>
     </Border>
 </UserControl>

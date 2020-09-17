@@ -49,12 +49,12 @@ using System.Windows.Threading;
 namespace ColorInvestigation.Controls
 {
     /// <summary>
-    /// Interaction logic ColorPicker.xaml
+    /// Interaction logic ColorPickerDelay.xaml
     /// </summary>
-    public partial class ColorPicker : UserControl, INotifyPropertyChanged
+    public partial class ColorPickerDelay : UserControl, INotifyPropertyChanged
     {
         // Constructor
-        public ColorPicker()
+        public ColorPickerDelay()
         {
             InitializeComponent();
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
@@ -406,7 +406,7 @@ namespace ColorInvestigation.Controls
         #region ==============  Tones  =======================
         public class ColorToneBox
         {
-            private readonly ColorPicker _owner;
+            private readonly ColorPickerDelay _owner;
             public int GridColumn { get; }
             public int GridRow { get; }
             public SolidColorBrush Background { get; } = new SolidColorBrush();
@@ -432,7 +432,7 @@ namespace ColorInvestigation.Controls
                 }
             }
 
-            public ColorToneBox(ColorPicker owner, int gridColumn, int gridRow)
+            public ColorToneBox(ColorPickerDelay owner, int gridColumn, int gridRow)
             {
                 _owner = owner;
                 GridColumn = gridColumn;
@@ -619,10 +619,10 @@ namespace ColorInvestigation.Controls
             public double Min;
             public double Max;
             public ColorSpace ColorSpace;
-            public Func<ColorPicker, double> SliderValue;
-            public Action<ColorPicker, double> MouseMoveAction;
+            public Func<ColorPickerDelay, double> SliderValue;
+            public Action<ColorPickerDelay, double> MouseMoveAction;
 
-            public ColorProperty(double min, double max, ColorSpace colorSpace, Func<ColorPicker, double> sliderValue, Action<ColorPicker, double> mouseMoveAction )
+            public ColorProperty(double min, double max, ColorSpace colorSpace, Func<ColorPickerDelay, double> sliderValue, Action<ColorPickerDelay, double> mouseMoveAction )
             {
                 Min = min; Max = max; ColorSpace = colorSpace; SliderValue = sliderValue;
                 MouseMoveAction = mouseMoveAction;
@@ -678,7 +678,7 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        private void UpdateSliderBrushesNew()
+        private void NewUpdateSliderBrushes()
         {
             const int gradientStopsNumber = 20;
             if (Brushes == null)
