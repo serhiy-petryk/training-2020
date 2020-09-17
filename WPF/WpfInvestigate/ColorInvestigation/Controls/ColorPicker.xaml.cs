@@ -23,10 +23,10 @@
 // 17. Alpha for old Color in ColorBox
 // +18. Popup for ColorBox info
 // +19. Decimal places for ValueEditor
-// 20. Component Slider - change black/white color
-// 21. Component slider - like triangle
-// 22. Производительность - sliders:
-//      - increase step (try ~20 gradient) 
+// - performance 20. Component Slider - change black/white color
+// - performance21. Component slider - like triangle
+// +22. Производительность - sliders:
+//     + - increase step (try ~20 gradient) 
 //      -or/and process only last mouse move / skip late mouse moves
 // 23. ViewModel + з прямими get/set (без формул) - ? propertyUpdate + getter caller name 
 
@@ -104,7 +104,7 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
+        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
         public SolidColorBrush Color_ForegroundBrush
         {
             get
@@ -113,20 +113,28 @@ namespace ColorInvestigation.Controls
                 return _brushesCache[0];
             }
         }
+        public SolidColorBrush ColorWithoutAlphaBrush
+        {
+            get
+            {
+                _brushesCache[1].Color = _rgb.GetColor();
+                return _brushesCache[1];
+            }
+        }
         public SolidColorBrush CurrentColor_ForegroundBrush
         {
             get
             {
-                _brushesCache[1].Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(CurrentColor)) ? Colors.White : Colors.Black;
-                return _brushesCache[1];
+                _brushesCache[2].Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(CurrentColor)) ? Colors.White : Colors.Black;
+                return _brushesCache[2];
             }
         }
         public SolidColorBrush CurrentColorWithoutAlphaBrush
         {
             get
             {
-                _brushesCache[2].Color = _rgb.GetColor();
-                return _brushesCache[2];
+                _brushesCache[3].Color = _rgb.GetColor();
+                return _brushesCache[3];
             }
         }
 
@@ -149,7 +157,7 @@ namespace ColorInvestigation.Controls
             _savedColor = _oldRgb.GetColor(_oldAlpha);
             _oldRgb = new ColorSpaces.RGB(_rgb.GetColor());
             _oldAlpha = _alpha;
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
 
         public void RestoreColor()
@@ -159,7 +167,7 @@ namespace ColorInvestigation.Controls
             _rgb = new ColorSpaces.RGB(_savedColor);
             _alpha = _savedColor.A / 255.0;
             UpdateValue(ColorSpace.RGB);
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
 
         private bool _isUpdating;

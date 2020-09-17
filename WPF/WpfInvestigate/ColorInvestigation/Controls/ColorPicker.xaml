@@ -210,32 +210,33 @@
                         <RowDefinition Height="10*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0" Grid.Column="0" Margin="0" VerticalAlignment="Stretch">
+                    <Grid Grid.Row="0" Grid.Column="0" Margin="0" VerticalAlignment="Stretch" ToolTip="Original color">
                         <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
-                        <TextBox BorderThickness="0" IsReadOnly="True" IsTabStop="False" Focusable="True" Cursor="Arrow"
-                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                 Text="{Binding Color, Mode=OneWay}"
-                                 Foreground="{Binding Color_ForegroundBrush}">
-                            <TextBox.Background>
+                        <Rectangle>
+                            <Rectangle.Fill>
                                 <SolidColorBrush Color="{Binding Color}"/>
-                            </TextBox.Background>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBox Margin="0" Padding="4" BorderThickness="0"
+                                 IsReadOnly="True" IsTabStop="False" Focusable="True" Cursor="Arrow"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"
+                                 Background="{Binding ColorWithoutAlphaBrush}" Foreground="{Binding Color_ForegroundBrush}"
+                                 Text="{Binding Color, Mode=OneWay}">
                         </TextBox>
                     </Grid>
 
-                    <Grid Grid.Row="0" Grid.Column="1">
+                    <Grid Grid.Row="0" Grid.Column="1" ToolTip="Current color">
                         <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
                         <Rectangle>
                             <Rectangle.Fill>
                                 <SolidColorBrush Color="{Binding CurrentColor}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <TextBox Text="{Binding CurrentColor}" HorizontalAlignment="Center" BorderThickness="2" FontWeight="Bold"
-                                 Margin="0" Padding="0"
+                        <TextBox Margin="0" Padding="0" BorderThickness="1" FontWeight="Bold"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" 
                                  BorderBrush="{Binding CurrentColor_ForegroundBrush}"
-                                 Background="{Binding CurrentColorWithoutAlphaBrush}"
-                                 Foreground="{Binding CurrentColor_ForegroundBrush}"
-                                 VerticalAlignment="Center" HorizontalContentAlignment="Center">
+                                 Background="{Binding CurrentColorWithoutAlphaBrush}" Foreground="{Binding CurrentColor_ForegroundBrush}"
+                                 Text="{Binding CurrentColor}" >
                         </TextBox>
                     </Grid>
 
@@ -297,7 +298,7 @@
                                                 <Button Grid.Row="2" Background="#FF9ED1E1" BorderThickness="2" Margin="10" IsDefault="True"
                                                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
                                                         Click="ColorBox_OnSetColor">
-                                                    <TextBlock Padding="4" TextAlignment="Center" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap"
+                                                    <TextBlock Padding="4" TextAlignment="Center" FontWeight="SemiBold" TextWrapping="Wrap"
                                                                Text="Click here to set the current color to this color" Width="120" />
                                                 </Button>
                                             </Grid>
