@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 using ColorInvestigation.Common;
 
 namespace ColorInvestigation.Views
@@ -30,5 +31,12 @@ namespace ColorInvestigation.Views
             ColorSpacesCheck.RunTests();
         }
 
+        private void ChangeColorButtonVM_Click(object sender, RoutedEventArgs e)
+        {
+            if (BrushVM.Color == Colors.Blue)
+                BrushVM.Color = Colors.Yellow;
+            else
+                BrushVM.Color = Colors.Blue;
+        }
     }
 }
