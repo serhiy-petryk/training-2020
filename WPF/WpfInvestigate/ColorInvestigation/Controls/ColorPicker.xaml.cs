@@ -81,8 +81,7 @@ namespace ColorInvestigation.Controls
         // Original color
         public Color Color
         {
-            get => Color.FromArgb(Convert.ToByte(_oldColorData[_oldColorData.Length - 1] * 255),
-                Convert.ToByte(_oldColorData[0]), Convert.ToByte(_oldColorData[1]), Convert.ToByte(_oldColorData[2]));
+            get => new ColorSpaces.RGB(_oldColorData[0]/255, _oldColorData[1]/255, _oldColorData[2]/255).GetColor(_oldColorData[ComponentNumber]);
             set
             {
                 CurrentColor = value;
@@ -92,8 +91,7 @@ namespace ColorInvestigation.Controls
 
         public Color CurrentColor
         {
-            get => Color.FromArgb(Convert.ToByte(Alpha * 255), Convert.ToByte(RGB_R), Convert.ToByte(RGB_G),
-                Convert.ToByte(RGB_B));
+            get => new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2)).GetColor(Alpha);
             set
             {
                 _isUpdating = true;
@@ -105,6 +103,26 @@ namespace ColorInvestigation.Controls
             }
         }
 
+        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
+        private SolidColorBrush GetCacheBrush(int index, Color color)
+        {
+            _brushesCache[index].Color = color;
+            return _brushesCache[index];
+        }
+
+        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC(6), 1, 1).GetRGB().GetColor());
+
+        public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
+        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
+
+        public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3,
+            new ColorSpaces.RGB(_oldColorData[0] / 255, _oldColorData[1] / 255, _oldColorData[2] / 255).GetColor());
+
+        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2)).GetColor());
+
+        #endregion
+
+        #region  ===========  Color component public Properties  ============
         public double Alpha // in range [0, 1]
         {
             get => _alpha;
@@ -225,7 +243,6 @@ namespace ColorInvestigation.Controls
 
         private static List<MetaItem> Metalist = new List<MetaItem>
         {
-            // new MetaItem(nameof(Alpha), 0, 255),
             new MetaItem(nameof(RGB_R), 0, 255),
             new MetaItem(nameof(RGB_G), 0, 255),
             new MetaItem(nameof(RGB_B), 0, 255),
@@ -350,7 +367,7 @@ namespace ColorInvestigation.Controls
             }
             _savedColorData[_savedColorData.Length - 1] = _oldColorData[_savedColorData.Length - 1];
             _oldColorData[_savedColorData.Length - 1] = Alpha;
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
         public void RestoreColor()
         {
@@ -361,30 +378,11 @@ namespace ColorInvestigation.Controls
             }
             _oldColorData[_oldColorData.Length - 1] = _savedColorData[_oldColorData.Length - 1];
             Alpha = _savedColorData[_savedColorData.Length - 1];
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
         #endregion
 
         #region ===========  Linear gradient brushes for Color components  ==========
-        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
-
-        private SolidColorBrush GetCacheBrush(int index, Color color)
-        {
-            _brushesCache[index].Color = color;
-            return _brushesCache[index];
-        }
-
-        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC(6), 1, 1).GetRGB().GetColor());
-
-        public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
-        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
-
-        public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3,
-            new ColorSpaces.RGB(_oldColorData[0] / 255, _oldColorData[0] / 255, _oldColorData[0] / 255).GetColor(_oldColorData[15]));
-
-        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4,
-            Color.FromRgb(Convert.ToByte(RGB_R), Convert.ToByte(RGB_G), Convert.ToByte(RGB_B)));
-
         public Dictionary<string, LinearGradientBrush> Brushes { get; private set; }
 
         private void UpdateSliderBrushes()
@@ -682,6 +680,5 @@ namespace ColorInvestigation.Controls
         }
         #endregion
         #endregion
-
     }
 }
