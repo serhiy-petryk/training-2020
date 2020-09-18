@@ -12,12 +12,12 @@
              UseLayoutRounding="True"
              Background="#FF282828"
              SizeChanged="Control_OnSizeChanged">
+
     <UserControl.DataContext>
         <controls:ColorPickerViewModel/>
     </UserControl.DataContext>
 
     <UserControl.Resources>
-        <!-- SaturationAndValueSlider base background brush -->
         <DrawingBrush x:Key="SaturationAndValueSliderBaseBrush">
             <DrawingBrush.Drawing>
                 <DrawingGroup>
@@ -47,8 +47,7 @@
             </DrawingBrush.Drawing>
         </DrawingBrush>
 
-        <!-- HueBar background color -->
-        <LinearGradientBrush x:Key="HueVerticalBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush x:Key="HueBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Offset="0" Color="#FFFF0000"/>
             <GradientStop Offset="0.167" Color="#FFFFFF00"/>
             <GradientStop Offset="0.333" Color="#FF00FF00"/>
@@ -58,8 +57,7 @@
             <GradientStop Offset="1" Color="#FFFF0000"/>
         </LinearGradientBrush>
 
-        <!-- Alpha background brush -->
-        <DrawingBrush x:Key="TransparentBrush" Viewport="0,0,16,16" TileMode="Tile" ViewportUnits="Absolute">
+        <DrawingBrush x:Key="AlphaBackgroundBrush" Viewport="0,0,16,16" TileMode="Tile" ViewportUnits="Absolute">
             <DrawingBrush.Drawing>
                 <DrawingGroup>
                     <GeometryDrawing Brush="#FCCC">
@@ -79,13 +77,11 @@
             </DrawingBrush.Drawing>
         </DrawingBrush>
 
-        <!-- AlphaBar color -->
-        <LinearGradientBrush x:Key="AlphaOpacityMask" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush x:Key="AlphaBarOpacityMask" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Offset="0" Color="#0000"/>
             <GradientStop Offset="1" Color="#FFFF"/>
         </LinearGradientBrush>
 
-        <!-- Component Slider template -->
         <ControlTemplate x:Key="ComponentSliderTemplate" TargetType="Control">
             <Border BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{TemplateBinding Background}">
                 <Canvas Background="Transparent" VerticalAlignment="Stretch"
@@ -98,8 +94,7 @@
             </Border>
         </ControlTemplate>
 
-        <!-- TextBox default style -->
-        <Style TargetType="TextBox" x:Key="ValueEditor">
+        <Style x:Key="ValueEditor" TargetType="TextBox">
             <Setter Property="Background" Value="#FF181818"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderBrush" Value="Gray"/>
@@ -115,7 +110,7 @@
             <EventSetter Event="PreviewTextInput" Handler="ValueEditor_OnPreviewTextInput"/>
         </Style>
 
-        <Style TargetType="TextBox" x:Key="Label">
+        <Style x:Key="Label" TargetType="TextBox">
             <Setter Property="Focusable" Value="True"/>
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="IsReadOnly" Value="True"/>
@@ -129,115 +124,18 @@
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
 
-        <Style TargetType="TextBox" x:Key="ColorBox">
-            <Setter Property="Focusable" Value="True"/>
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Cursor" Value="Arrow"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColorBox_PreviewMouseLeftButtonDown"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Padding" Value="-1.1"/>
-                    <Setter Property="BorderThickness" Value="1.1"/>
-                    <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="XColorBox2" TargetType="ToggleButton">
-            <Setter Property="Focusable" Value="True"/>
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Cursor" Value="Arrow"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColorBox_PreviewMouseLeftButtonDown"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Padding" Value="-1.1"/>
-                    <Setter Property="BorderThickness" Value="1.1"/>
-                    <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="XColorBox" TargetType="ToggleButton">
-            <Setter Property="Focusable" Value="False"/>
-            <Setter Property="IsTabStop" Value="False"/>
-            <!--<Setter Property="IsReadOnly" Value="True"/>-->
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Arrow"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <!--                        <Label Content="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:DummyConverter.Instance}, Mode=OneWay}"-->
-                        <Label Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:DummyConverter.Instance}, Mode=OneWay}"
-                               VerticalContentAlignment="Center"
-                               HorizontalContentAlignment="Center"
-                               Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"/>
-                        <!--<ContentPresenter Content="{TemplateBinding Background}" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <!--<Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <TextBox IsReadOnly="True" IsTabStop="False" Text="{Binding Background, Mode=OneWay}"
-                                 BorderBrush="{TemplateBinding Foreground}" Background="{TemplateBinding Background}"
-                                 HorizontalAlignment="Stretch" TextAlignment="Center"
-                                 VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-                                 Foreground="{TemplateBinding Foreground}">
-                            <TextBox.Style>
-                                <Style TargetType="TextBox">
-                                    <Setter Property="Padding" Value="0"/>
-                                    <Setter Property="BorderThickness" Value="0"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Padding" Value="-1.1"/>
-                                            <Setter Property="BorderThickness" Value="1.1"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>-->
-            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColorBox_PreviewMouseLeftButtonDown"/>
-            <!--<Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Padding" Value="-1.1"/>
-                    <Setter Property="BorderThickness" Value="1.1"/>
-                    <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
-                </Trigger>
-            </Style.Triggers>-->
-        </Style>
-
-        <Style TargetType="Label" x:Key="SliderLabel">
+        <Style x:Key="SliderLabel" TargetType="Label">
             <Setter Property="Margin" Value="0 0 -2 0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Foreground" Value="#FFE0E0E0"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <Style TargetType="Label" x:Key="ValueLabel">
+        <Style x:Key="ValueLabel" TargetType="Label">
             <Setter Property="Margin" Value="4 0 8 0"/>
             <Setter Property="Padding" Value="0"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="#FFE0E0E0"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
@@ -279,7 +177,7 @@
 
                 <!-- HueBar -->
                 <Grid Grid.Column="1" Grid.Row="0" Margin="3,0">
-                    <Rectangle Fill="{StaticResource HueVerticalBrush}" Margin="5,0"/>
+                    <Rectangle Fill="{StaticResource HueBackgroundBrush}" Margin="5,0"/>
                     <Canvas x:Name="HueSlider" Background="Transparent"
                             MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid Height="12" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
@@ -292,7 +190,7 @@
                 <!-- AlphaBar -->
                 <Grid Grid.Column="2" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{Binding HueBrush}" Margin="5,0"/>
-                    <Rectangle Fill="{StaticResource TransparentBrush}" OpacityMask="{StaticResource AlphaOpacityMask}" Margin="5,0"/>
+                    <Rectangle Fill="{StaticResource AlphaBackgroundBrush}" OpacityMask="{StaticResource AlphaBarOpacityMask}" Margin="5,0"/>
                     <Canvas x:Name="AlphaSlider" Background="Transparent"
                             MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid Height="12" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
@@ -303,7 +201,7 @@
                 </Grid>
 
                 <!-- Color boxes -->
-                <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="0 8 8 0" VerticalAlignment="Stretch">
+                <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="0 8 0 0" VerticalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
@@ -315,55 +213,98 @@
                         <RowDefinition Height="10*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0" Grid.Column="0" Margin="0" VerticalAlignment="Stretch">
-                        <Rectangle Fill="{StaticResource TransparentBrush}"/>
-                        <TextBox BorderThickness="0" IsReadOnly="True" IsTabStop="False" Focusable="True" Cursor="Arrow"
-                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                 Text="{Binding Color, Mode=OneWay}"
-                                 Foreground="{Binding Color_ForegroundBrush}">
-                            <TextBox.Background>
+                    <Grid Grid.Row="0" Grid.Column="0" Margin="0" VerticalAlignment="Stretch" ToolTip="Original color">
+                        <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
+                        <Rectangle>
+                            <Rectangle.Fill>
                                 <SolidColorBrush Color="{Binding Color}"/>
-                            </TextBox.Background>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBox Margin="0" Padding="4" BorderThickness="0"
+                                 IsReadOnly="True" IsTabStop="False" Focusable="True" Cursor="Arrow"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"
+                                 Background="{Binding ColorWithoutAlphaBrush}" Foreground="{Binding Color_ForegroundBrush}"
+                                 Text="{Binding Color, Mode=OneWay}">
                         </TextBox>
                     </Grid>
 
-                    <Grid Grid.Row="0" Grid.Column="1">
-                        <Rectangle Fill="{StaticResource TransparentBrush}"/>
+                    <Grid Grid.Row="0" Grid.Column="1" ToolTip="Current color">
+                        <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
                         <Rectangle>
                             <Rectangle.Fill>
                                 <SolidColorBrush Color="{Binding CurrentColor}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <TextBox Text="{Binding CurrentColor}" HorizontalAlignment="Center" BorderThickness="2" FontWeight="Bold"
-                                 Margin="0" Padding="0"
+                        <TextBox Margin="0" Padding="0" BorderThickness="1" FontWeight="Bold"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" 
                                  BorderBrush="{Binding CurrentColor_ForegroundBrush}"
-                                 Background="{Binding CurrentColorWithoutAlphaBrush}"
-                                 Foreground="{Binding CurrentColor_ForegroundBrush}"
-                                 VerticalAlignment="Center" HorizontalContentAlignment="Center">
+                                 Background="{Binding CurrentColorWithoutAlphaBrush}" Foreground="{Binding CurrentColor_ForegroundBrush}"
+                                 Text="{Binding CurrentColor}" >
                         </TextBox>
                     </Grid>
+
+                    <Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="80" IsTabStop="True" Focusable="True"
+                            Click="ButtonBase_OnClick">
+                        <TextBlock Text="Known color table" TextWrapping="Wrap" TextAlignment="Center"/>
+                    </Button>
 
                     <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Label}" Text="Shades" TextAlignment="Center"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource Label}" Text="Tints" TextAlignment="Center"/>
                     <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource Label}" Text="Tones" TextAlignment="Center"/>
 
-                    <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2"  ItemsSource="{Binding Path=Tones}" Focusable="False" IsTabStop="False">
+                    <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" ItemsSource="{Binding Path=Tones}" IsTabStop="False">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
-                                    <!--<TextBox Text="{Binding Background, Mode=OneWay}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}" Style="{StaticResource ColorBox}"/>-->
-                                    <ToggleButton Background="{Binding Background}" Foreground="{Binding Foreground}"
-                                                  Content="{Binding BackgroundText}"
-                                                  Style="{StaticResource XColorBox}"/>
-                                    <!--<ToggleButton Content="{Binding BackgroundText}" Background="{Binding Path=Background}" Foreground="{Binding Foreground}" Style="{StaticResource XColorBox2}"/>-->
-                                    <Popup StaysOpen="False" AllowsTransparency="False" >
-                                        <Border BorderBrush="Blue" BorderThickness="1" Background="AliceBlue">
-                                            <StackPanel Orientation="Vertical">
-                                                <TextBox IsReadOnly="True" Padding="10" Width="150" TextWrapping="Wrap" BorderThickness="0" Background="Transparent"
-                                                         Text="Julius Caesar was a Roman emperor who lived from 100 BC to 44 BC"/>
-                                                <Button Content="OK" Click="btnOK_Click" HorizontalAlignment="Right" Margin="10" Padding="5,2"/>
-                                            </StackPanel>
+                                <Grid x:Name="ColorBoxGrid" UseLayoutRounding="False" SnapsToDevicePixels="False">
+                                    <TextBox x:Name="ColorBox" Margin="0" Padding="0" BorderThickness="0"
+                                             IsReadOnly="True" Focusable="True" IsTabStop="False"
+                                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                             Background="{Binding Background}" Foreground="{Binding Foreground}"
+                                             Text="{Binding Background, Mode=OneWay, Delay=50}">
+                                    </TextBox>
+                                    <ToggleButton x:Name="ColorBoxToggleButton" IsThreeState="False" Margin="0" Padding="0" IsTabStop="False"
+                                                  IsHitTestVisible="{Binding ElementName=ColorBoxPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}">
+                                        <ToggleButton.Style>
+                                            <Style TargetType="ToggleButton">
+                                                <Setter Property="BorderBrush" Value="{Binding Background}"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ToggleButton">
+                                                            <Border Background="Transparent" BorderThickness="0 0.5" BorderBrush="{TemplateBinding BorderBrush}"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ToggleButton.Style>
+                                    </ToggleButton>
+                                    <Popup x:Name="ColorBoxPopup" AllowsTransparency="True" StaysOpen="False" Focusable="False"
+                                           Placement="Bottom" PlacementTarget="{Binding ElementName=ColorBox}" PopupAnimation="Slide"
+                                           IsOpen="{Binding ElementName=ColorBoxToggleButton, Path=IsChecked}"
+                                           Opened="ColorBoxPopup_OnOpened">
+                                        <Border Margin="0 0 8 8" Background="#FFDAEDF4" BorderBrush="#FF399CBD" BorderThickness="2" CornerRadius="2">
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
+                                            </Border.Effect>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Label Grid.Row="0" Background="#FF9ED1E1" FontSize="12" FontWeight="SemiBold" Content="Color information"/>
+                                                <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" Cursor="Arrow" FontFamily="Courier New"/>
+                                                <Button Grid.Row="2" Background="#FF9ED1E1" BorderThickness="2" Margin="10" IsDefault="True"
+                                                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                                        Click="ColorBox_OnSetColor">
+                                                    <TextBlock Padding="4" TextAlignment="Center" FontWeight="SemiBold" TextWrapping="Wrap"
+                                                               Text="Click here to set the current color to this color" Width="120" />
+                                                </Button>
+                                            </Grid>
                                         </Border>
                                     </Popup>
                                 </Grid>
@@ -402,7 +343,7 @@
                 </Grid>
             </Grid>
 
-            <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Stretch" Background="Transparent" IsTabStop="False"/>
+            <GridSplitter Grid.Column="1" Width="6" HorizontalAlignment="Stretch" BorderThickness="0" BorderBrush="Transparent" Background="#FF555555" IsTabStop="False"/>
 
             <!--  Color component sliders  -->
             <Grid Grid.Column="2" SizeChanged="Control_OnSizeChanged">
@@ -435,7 +376,7 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <!-- RGB -->
-                <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="RGB (Red[0-255], Green[0-255], Blue[0-255])" Style="{StaticResource Label}"/>
+                <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 4" Text="RGB (Red[0-255], Green[0-255], Blue[0-255])" Style="{StaticResource Label}"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource SliderLabel}" Content="R"/>
                 <Control Grid.Row="1" Grid.Column="1" Name="Slider_RGB_R" Background="{Binding Brushes[RGB_R]}" Template="{StaticResource ComponentSliderTemplate}" Focusable="False" IsTabStop="False"/>
@@ -530,13 +471,6 @@
                 <TextBox Grid.Row="19" Grid.Column="2" Style="{StaticResource ValueEditor}"
                          Text="{Binding YCbCr_Cr, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
-
-            <!--<Popup x:Name="popup1" StaysOpen="False" Placement="" MaxWidth="180"
-                   AllowsTransparency="True"  >
-                <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
-                    Чтобы узнать больше, посетите сайт metanit.com
-                </TextBlock>
-            </Popup>-->
         </Grid>
     </Border>
 </UserControl>

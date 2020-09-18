@@ -19,21 +19,8 @@ namespace ColorInvestigation.Controls
         internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
         internal Action AfterUpdatedCallback;
 
-        private double _alpha;
-        private double[] _values = new double[ComponentNumber];
-
-        // Get color component in space unit
-        private double GetCC(int index) => _values[index] / Metalist[index].SpaceMultiplier;
-        // Set color components from space unit
-        private void SetCC(int startIndex, params double[] newValues)
-        {
-            for (var k = 0; k < newValues.Length; k++)
-                _values[k + startIndex] = newValues[k] * Metalist[k + startIndex].SpaceMultiplier;
-        }
-
         #region  ==============  Public Properties  ================
-        // Original color
-        public Color Color
+        public Color Color // Original color
         {
             get => Color.FromArgb(Convert.ToByte(_oldColorData[_oldColorData.Length - 1] * 255),
                 Convert.ToByte(_oldColorData[0]), Convert.ToByte(_oldColorData[1]), Convert.ToByte(_oldColorData[2]));
@@ -57,6 +44,33 @@ namespace ColorInvestigation.Controls
                 _isUpdating = false;
                 RGB_B = value.B;
             }
+        }
+
+        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
+        private SolidColorBrush GetCacheBrush(int index, Color color)
+        {
+            _brushesCache[index].Color = color;
+            return _brushesCache[index];
+        }
+        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC(6), 1, 1).GetRGB().GetColor());
+        public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
+        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
+        public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, new ColorSpaces.RGB(_oldColorData[0] / 255, _oldColorData[1] / 255, _oldColorData[2] / 255).GetColor());
+        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2)).GetColor());
+
+        #endregion
+
+        #region  ===========  Color component public Properties  ============
+        private double _alpha;
+        private double[] _values = new double[ComponentNumber];
+
+        // Get color component in space unit
+        private double GetCC(int index) => _values[index] / Metalist[index].SpaceMultiplier;
+        // Set color components from space unit
+        internal void SetCC(int startIndex, params double[] newValues)
+        {
+            for (var k = 0; k < newValues.Length; k++)
+                _values[k + startIndex] = newValues[k] * Metalist[k + startIndex].SpaceMultiplier;
         }
 
         public double Alpha // in range [0, 1]
@@ -152,15 +166,6 @@ namespace ColorInvestigation.Controls
                 UpdateValues(meta.ColorSpace);
                 _isUpdating = false;
             }
-        }
-        #endregion
-
-        #region ===========  INotifyPropertyChanged  ===============
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertiesChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
 
@@ -274,10 +279,7 @@ namespace ColorInvestigation.Controls
                 nameof(CurrentColorWithoutAlphaBrush));
 
             UpdateTones();
-            OnPropertiesChanged(nameof(Tones));
-
             UpdateSliderBrushes();
-            OnPropertiesChanged(nameof(Brushes));
 
             AfterUpdatedCallback?.Invoke();
         }
@@ -298,7 +300,7 @@ namespace ColorInvestigation.Controls
             }
             _savedColorData[_savedColorData.Length - 1] = _oldColorData[_savedColorData.Length-1];
             _oldColorData[_savedColorData.Length - 1] = Alpha;
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
         public void RestoreColor()
         {
@@ -309,26 +311,11 @@ namespace ColorInvestigation.Controls
             }
             _oldColorData[_oldColorData.Length-1] = _savedColorData[_oldColorData.Length - 1];
             Alpha = _savedColorData[_savedColorData.Length - 1];
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
         #endregion
 
         #region ===========  Linear gradient brushes for Color components  ==========
-        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
-
-        private SolidColorBrush GetCacheBrush(int index, Color color)
-        {
-            _brushesCache[index].Color = color;
-            return _brushesCache[index];
-        }
-
-        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC(6), 1, 1).GetRGB().GetColor());
-
-        public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
-        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
-        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(3,
-            Color.FromRgb(Convert.ToByte(RGB_R), Convert.ToByte(RGB_G), Convert.ToByte(RGB_B)));
-
         public Dictionary<string, LinearGradientBrush> Brushes { get; private set; }
 
         private void UpdateSliderBrushes()
@@ -374,6 +361,7 @@ namespace ColorInvestigation.Controls
                 Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(k / 360.0, GetCC(4), GetCC(5)).GetRGB().GetColor();
                 Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(k / 360.0, GetCC(7), GetCC(8)).GetRGB().GetColor();
             }
+            OnPropertiesChanged(nameof(Brushes));
         }
 
         #endregion
@@ -397,8 +385,8 @@ namespace ColorInvestigation.Controls
                     var yCbCr = new ColorSpaces.YCbCr(rgb);
 
                     var sb = new StringBuilder();
+                    sb.AppendLine("Gray level:" + FormatDouble(ColorSpaces.GetGrayLevel(rgb) * 100) + "%");
                     sb.AppendLine("HEX:".PadRight(5) + rgb.Color);
-                    sb.AppendLine("Gray level: ???".PadRight(15));
                     sb.AppendLine(FormatInfoString("RGB", rgb.R * 255, rgb.G * 255, rgb.B * 255));
                     sb.AppendLine(FormatInfoString("HSL", hsl.H * 360, hsl.S * 100, hsl.L * 100));
                     sb.AppendLine(FormatInfoString("HSV", hsv.H * 360, hsv.S * 100, hsv.V * 100));
@@ -422,7 +410,7 @@ namespace ColorInvestigation.Controls
                     return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.025 + 0.05 * GridRow);
                 if (GridColumn == 1)
                     return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.975 - 0.05 * GridRow);
-                return new ColorSpaces.HSL(_owner.GetCC(3), 0.05 + 0.1 * GridRow, _owner.GetCC(4));
+                return new ColorSpaces.HSL(_owner.GetCC(3), 0.05 + 0.1 * GridRow, _owner.GetCC(5));
             }
 
             private string FormatInfoString(string label, double value1, double value2, double value3) =>
@@ -454,5 +442,13 @@ namespace ColorInvestigation.Controls
         }
         #endregion
 
+        #region ===========  INotifyPropertyChanged  ===============
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 }

@@ -53,8 +53,28 @@ namespace ColorInvestigation.Controls
         public ColorPickerVM()
         {
             InitializeComponent();
-            VM.AfterUpdatedCallback = ViewModel_AfterUpdate;
+            VM.AfterUpdatedCallback = UpdateUI;
         }
+
+        #region  ==============  User UI  ===========
+        public Color Color  // Original color
+        {
+            get => VM.Color;
+            set => VM.Color = value;
+        }
+
+        public void SaveColor()
+        {
+            VM.SaveColor();
+            OnPropertiesChanged(nameof(Color));
+        }
+
+        public void RestoreColor()
+        {
+            VM.RestoreColor();
+            OnPropertiesChanged(nameof(Color));
+        }
+        #endregion
 
         #region ==============  Event handlers  ====================
         private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e) => VM.UpdateUI();
@@ -107,14 +127,29 @@ namespace ColorInvestigation.Controls
         }
         #endregion
 
-        #region ===========  INotifyPropertyChanged  ===============
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertiesChanged(params string[] propertyNames)
+        #region ===============  Color box event handlers  ===============
+        private void ColorBoxPopup_OnOpened(object sender, EventArgs e)
         {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            var textBox = Tips.GetVisualChildren(((Popup)sender).Child).OfType<TextBox>().FirstOrDefault();
+            textBox.Text = (textBox.DataContext as ColorPickerViewModel.ColorToneBox).Info;
+            textBox.Focus();
+        }
+
+        private void ColorBox_OnSetColor(object sender, RoutedEventArgs e)
+        {
+            var element = (FrameworkElement)sender;
+            var toggleButton = Tips.GetVisualParents(element).OfType<Grid>().SelectMany(grid => grid.Children.OfType<ToggleButton>()).FirstOrDefault();
+            toggleButton.IsChecked = false;
+
+            var hsl = (element.DataContext as ColorPickerViewModel.ColorToneBox).GetBackgroundHSL();
+            VM.CurrentColor = hsl.GetRGB().GetColor();
+
+            VM.SetCC(3, hsl.H, hsl.S, hsl.L);
+
+            VM.SetProperty(hsl.H * 360, "HSL_H");
         }
         #endregion
+
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
@@ -131,27 +166,6 @@ namespace ColorInvestigation.Controls
             var popup = (Popup)grid.Children[1];
             // popup.PlacementTarget = grid.Children[0];
             popup.IsOpen = true;
-        }
-
-        #region ===============  NEW CODE  ================
-
-        // Original color
-        public Color Color
-        {
-            get => VM.Color;
-            set => VM.Color = value;
-        }
-
-        public void SaveColor()
-        {
-            VM.SaveColor();
-            OnPropertiesChanged(nameof(Color));
-        }
-
-        public void RestoreColor()
-        {
-            VM.RestoreColor();
-            OnPropertiesChanged(nameof(Color));
         }
 
         #region  =============  Slider event handlers  =====================
@@ -205,11 +219,10 @@ namespace ColorInvestigation.Controls
                     GetModelValueBySlider("HSV_V", 1 - y / canvas.ActualHeight));
             }
         }
-
         #endregion
 
-        #region =================  Properties Updated  =================
-        private void ViewModel_AfterUpdate()
+        #region =================  UpdateUI  =================
+        private void UpdateUI()
         {
             UpdateSlider(SaturationAndValueSlider, GetSliderValueByModel("HSV_S"), 1.0 - GetSliderValueByModel("HSV_V"));
             UpdateSlider(HueSlider, null, GetSliderValueByModel("HSV_H"));
@@ -218,7 +231,9 @@ namespace ColorInvestigation.Controls
             foreach (var kvp in ColorPickerViewModel.Metadata)
                 UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, GetSliderValueByModel(kvp.Key), null);
         }
+        #endregion
 
+        #region =============  Update sliders  =============
         private double GetModelValueBySlider(string componentName, double sliderValue)
         {
             var meta = ColorPickerViewModel.Metadata[componentName];
@@ -256,7 +271,19 @@ namespace ColorInvestigation.Controls
         }
         #endregion
 
+        #region ===========  INotifyPropertyChanged  ===============
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         #endregion
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            // Debug.Print($"ButtonBase_OnClick");
+        }
 
     }
 }
