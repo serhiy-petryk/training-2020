@@ -268,11 +268,15 @@ namespace ColorInvestigation.Controls
 
         public void UpdateUI()
         {
-            UpdateSliderBrushes();
+            // UpdateSliderBrushes();
 
             OnPropertiesChanged(Metadata.Keys.ToArray());
-            OnPropertiesChanged(nameof(CurrentColor), nameof(Brushes), nameof(HueBrush),
-                nameof(CurrentColor_ForegroundBrush), nameof(CurrentColorWithoutAlphaBrush));
+            OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
+                nameof(CurrentColorWithoutAlphaBrush));
+
+            UpdateSliderBrushes();
+            OnPropertiesChanged(nameof(Brushes));
+
             PropertiesUpdated?.Invoke(this, new EventArgs());
         }
 
@@ -308,8 +312,7 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ===========  Linear gradient brushes for Color components  ==========
-
-        private SolidColorBrush[] _brushesCache = {new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush()};
+        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
 
         private SolidColorBrush GetCacheBrush(int index, Color color)
         {
