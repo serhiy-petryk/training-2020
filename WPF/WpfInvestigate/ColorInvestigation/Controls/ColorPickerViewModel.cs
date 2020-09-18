@@ -293,23 +293,15 @@ namespace ColorInvestigation.Controls
 
         public void SaveColor()
         {
-            for (var k = 0; k < _values.Length; k++)
-            {
-                _savedColorData[k] = _oldColorData[k];
-                _oldColorData[k] = _values[k];
-            }
-            _savedColorData[_savedColorData.Length - 1] = _oldColorData[_savedColorData.Length-1];
+            _oldColorData.CopyTo(_savedColorData, 0);
+            Array.Copy(_values, _oldColorData, ComponentNumber);
             _oldColorData[_savedColorData.Length - 1] = Alpha;
             OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
         public void RestoreColor()
         {
-            for (var k = 0; k < _values.Length; k++)
-            {
-                _oldColorData[k] = _savedColorData[k];
-                _values[k] = _savedColorData[k];
-            }
-            _oldColorData[_oldColorData.Length-1] = _savedColorData[_oldColorData.Length - 1];
+            _savedColorData.CopyTo(_oldColorData, 0);
+            Array.Copy(_savedColorData, _values, ComponentNumber);
             Alpha = _savedColorData[_savedColorData.Length - 1];
             OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
