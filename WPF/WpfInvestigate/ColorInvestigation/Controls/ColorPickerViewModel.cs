@@ -279,9 +279,9 @@ namespace ColorInvestigation.Controls
                 nameof(CurrentColorWithoutAlphaBrush));
 
             UpdateTones();
+            AfterUpdatedCallback?.Invoke();
             UpdateSliderBrushes();
 
-            AfterUpdatedCallback?.Invoke();
         }
 
         #endregion
