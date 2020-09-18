@@ -37,6 +37,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -57,278 +58,456 @@ namespace ColorInvestigation.Controls
         public ColorPicker()
         {
             InitializeComponent();
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
-            {
-                UpdateValue(ColorSpace.RGB);
-                _savedColor = _oldRgb.GetColor(_oldAlpha);
-            }));
         }
 
-        //=================================
-        private CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
+        private const int ComponentNumber = 15;
+        internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
+
         public enum ColorSpace { RGB, HSL, HSV, XYZ, LAB, YCbCr };
 
-        // Color space values must be independent => we need to have separate object for each color space 
-        private double _alpha = 1.0;
-        private ColorSpaces.RGB _rgb { get; set; } = new ColorSpaces.RGB(0, 0, 0);
-        private ColorSpaces.HSL _hsl = new ColorSpaces.HSL(0, 0, 0);
-        private ColorSpaces.HSV _hsv = new ColorSpaces.HSV(0, 0, 0);
-        private ColorSpaces.XYZ _xyz = new ColorSpaces.XYZ(0, 0, 0);
-        private ColorSpaces.LAB _lab = new ColorSpaces.LAB(0, -127.5, -127.5);
-        private ColorSpaces.YCbCr _yCbCr = new ColorSpaces.YCbCr(0, 0, 0);
+        private double _alpha;
+        private double[] _values = new double[ComponentNumber];
 
-        private ColorSpaces.RGB _oldRgb = new ColorSpaces.RGB(0, 0, 0);
-        private double _oldAlpha = 1.0;
-
-        private Color _savedColor;
-
-
-        // Calculated properties
-        private readonly SolidColorBrush _hueBrush = new SolidColorBrush();
-        public Brush HueBrush
+        // Get color component in space unit
+        private double GetCC(int index) => _values[index] / Metalist[index].SpaceMultiplier;
+        // Set color components from space unit
+        private void SetCC(int startIndex, params double[] newValues)
         {
-            get
-            {
-                _hueBrush.Color = new ColorSpaces.HSV(_hsv.H, 1, 1).GetRGB().GetColor();
-                return _hueBrush;
-            }
-        }
-        public Color CurrentColor
-        {
-            get => _rgb.GetColor(_alpha);
-            set
-            {
-                _alpha = value.A / 255.0;
-                _rgb = new ColorSpaces.RGB(value);
-                UpdateValue(ColorSpace.RGB);
-            }
+            for (var k = 0; k < newValues.Length; k++)
+                _values[k + startIndex] = newValues[k] * Metalist[k + startIndex].SpaceMultiplier;
         }
 
-        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
-        public SolidColorBrush Color_ForegroundBrush
-        {
-            get
-            {
-                _brushesCache[0].Color = ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black;
-                return _brushesCache[0];
-            }
-        }
-        public SolidColorBrush ColorWithoutAlphaBrush
-        {
-            get
-            {
-                _brushesCache[1].Color = _rgb.GetColor();
-                return _brushesCache[1];
-            }
-        }
-        public SolidColorBrush CurrentColor_ForegroundBrush
-        {
-            get
-            {
-                _brushesCache[2].Color = ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black;
-                return _brushesCache[2];
-            }
-        }
-        public SolidColorBrush CurrentColorWithoutAlphaBrush
-        {
-            get
-            {
-                _brushesCache[3].Color = _rgb.GetColor();
-                return _brushesCache[3];
-            }
-        }
-
+        #region  ==============  Public Properties  ================
         // Original color
         public Color Color
         {
-            get => _oldRgb.GetColor(_oldAlpha);
+            get => Color.FromArgb(Convert.ToByte(_oldColorData[_oldColorData.Length - 1] * 255),
+                Convert.ToByte(_oldColorData[0]), Convert.ToByte(_oldColorData[1]), Convert.ToByte(_oldColorData[2]));
             set
             {
-                _rgb = new ColorSpaces.RGB(value);
-                _alpha = value.A / 255.0;
+                CurrentColor = value;
                 SaveColor();
-                UpdateUI();
             }
         }
 
-        // =========================
-        public void SaveColor()
+        public Color CurrentColor
         {
-            _savedColor = _oldRgb.GetColor(_oldAlpha);
-            _oldRgb = new ColorSpaces.RGB(_rgb.GetColor());
-            _oldAlpha = _alpha;
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
+            get => Color.FromArgb(Convert.ToByte(Alpha * 255), Convert.ToByte(RGB_R), Convert.ToByte(RGB_G),
+                Convert.ToByte(RGB_B));
+            set
+            {
+                _isUpdating = true;
+                _alpha = value.A / 255.0;
+                RGB_R = value.R;
+                RGB_G = value.G;
+                _isUpdating = false;
+                RGB_B = value.B;
+            }
         }
 
-        public void RestoreColor()
+        public double Alpha // in range [0, 1]
         {
-            _oldRgb = new ColorSpaces.RGB(_savedColor);
-            _oldAlpha = _savedColor.A / 255.0;
-            _rgb = new ColorSpaces.RGB(_savedColor);
-            _alpha = _savedColor.A / 255.0;
-            UpdateValue(ColorSpace.RGB);
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
+            get => _alpha;
+            set
+            {
+                _alpha = value;
+                if (!_isUpdating)
+                    UpdateUI();
+            }
+        }
+        public double RGB_R // in range [0, 255]
+        {
+            get => _values[0]; set => SetProperty(value);
+        }
+        public double RGB_G // in range [0, 255]
+        {
+            get => _values[1]; set => SetProperty(value);
+        }
+        public double RGB_B // in range [0, 255]
+        {
+            get => _values[2]; set => SetProperty(value);
+        }
+        public double HSL_H // in range [0, 360]
+        {
+            get => _values[3]; set => SetProperty(value);
+        }
+        public double HSL_S // in range [0, 100]
+        {
+            get => _values[4]; set => SetProperty(value);
+        }
+        public double HSL_L // in range [0, 100]
+        {
+            get => _values[5]; set => SetProperty(value);
+        }
+        public double HSV_H // in range [0, 360]
+        {
+            get => _values[6]; set => SetProperty(value);
+        }
+        public double HSV_S // in range [0, 100]
+        {
+            get => _values[7]; set => SetProperty(value);
+        }
+        public double HSV_V // in range [0, 100]
+        {
+            get => _values[8]; set => SetProperty(value);
+        }
+        public double LAB_L // in range [0, 100]
+        {
+            get => _values[9]; set => SetProperty(value);
+        }
+        public double LAB_A // in range [-127.5, 127.5]
+        {
+            get => _values[10]; set => SetProperty(value);
+        }
+        public double LAB_B // in range [-127.5, 127.5]
+        {
+            get => _values[11]; set => SetProperty(value);
+        }
+        public double YCbCr_Y // in range [0, 100]
+        {
+            get => _values[12]; set => SetProperty(value);
+        }
+        public double YCbCr_Cb // in range [-127.5, 127.5]
+        {
+            get => _values[13]; set => SetProperty(value);
+        }
+        public double YCbCr_Cr // in range [-127.5, 127.5]
+        {
+            get => _values[14]; set => SetProperty(value);
+        }
+        public Tuple<double, double> HSV_S_And_V // set HSV.S & HSV.V simultaneously (for HueAndSaturation slider)
+        {
+            set
+            {
+                _isUpdating = true;
+                HSV_S = value.Item1;
+                _isUpdating = false;
+                HSV_V = value.Item2;
+            }
         }
 
         private bool _isUpdating;
-        private void UpdateValue(ColorSpace colorSpace)
+        public void SetProperty(double value, [CallerMemberName]string propertyName = null)
         {
-            if (_isUpdating) return;
+            var meta = Metadata[propertyName];
+            value = Math.Max(meta.Min, Math.Min(meta.Max, value));
+            _values[meta.SeqNo] = value;
+            if (!_isUpdating)
+            {
+                _isUpdating = true;
+                UpdateValues(meta.ColorSpace);
+                _isUpdating = false;
+            }
+        }
+        #endregion
 
-            // Update rgb object
-            if (colorSpace == ColorSpace.HSL)
+        #region ===========  INotifyPropertyChanged  ===============
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #region ===========  Color component metadata  ============
+        public static Dictionary<string, MetaItem> Metadata;
+
+        static ColorPicker()
+        {
+            for (var k = 0; k < Metalist.Count; k++)
             {
-                _rgb = _hsl.GetRGB();
-                _hsv = new ColorSpaces.HSV(_rgb);
-                _hsv.H = _hsl.H;
+                Metalist[k].SeqNo = k;
+                Metalist[k].ColorSpace = (ColorSpace)Enum.Parse(typeof(ColorSpace), Metalist[k].Id.Split('_')[0]);
             }
-            else if (colorSpace == ColorSpace.HSV)
+            Metadata = Metalist.ToDictionary(a => a.Id, a => a);
+        }
+
+        private static List<MetaItem> Metalist = new List<MetaItem>
+        {
+            // new MetaItem(nameof(Alpha), 0, 255),
+            new MetaItem(nameof(RGB_R), 0, 255),
+            new MetaItem(nameof(RGB_G), 0, 255),
+            new MetaItem(nameof(RGB_B), 0, 255),
+            new MetaItem(nameof(HSL_H), 0, 360),
+            new MetaItem(nameof(HSL_S), 0, 100),
+            new MetaItem(nameof(HSL_L), 0, 100),
+            new MetaItem(nameof(HSV_H), 0, 360),
+            new MetaItem(nameof(HSV_S), 0, 100),
+            new MetaItem(nameof(HSV_V), 0, 100),
+            new MetaItem(nameof(LAB_L), 0, 100),
+            new MetaItem(nameof(LAB_A), -127.5, 127.5),
+            new MetaItem(nameof(LAB_B), -127.5, 127.5),
+            new MetaItem(nameof(YCbCr_Y), 0, 255),
+            new MetaItem(nameof(YCbCr_Cb), -127.5, 127.5),
+            new MetaItem(nameof(YCbCr_Cr), -127.5, 127.5)
+        };
+
+        public class MetaItem
+        {
+            public readonly string Id;
+            public int SeqNo;
+            public readonly double Min;
+            public readonly double Max;
+            public readonly double SpaceMultiplier;
+            public ColorSpace ColorSpace;
+            public double GetValue(ColorPicker picker) => picker._values[SeqNo];
+
+            public MetaItem(string id, double min, double max)
             {
-                _rgb = _hsv.GetRGB();
-                _hsl = new ColorSpaces.HSL(_rgb);
-                _hsl.H = _hsv.H;
+                Id = id; Min = min; Max = max;
+                SpaceMultiplier = Id.StartsWith("LAB") ? 1 : Max - Min;
             }
-            else if (colorSpace == ColorSpace.XYZ)
+        }
+        #endregion
+
+        #region ==============  Update Values/UI  ===============
+        private void UpdateValues(ColorSpace baseColorSpace)
+        {
+            // Get rgb object
+            var rgb = new ColorSpaces.RGB(0, 0, 0);
+            if (baseColorSpace == ColorSpace.RGB)
+                rgb = new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2));
+            else if (baseColorSpace == ColorSpace.HSL)
             {
-                _rgb = _xyz.GetRGB();
-                _lab = new ColorSpaces.LAB(_xyz);
+                rgb = new ColorSpaces.HSL(GetCC(3), GetCC(4), GetCC(5)).GetRGB();
+                // Update HSV
+                _values[6] = _values[3]; // _hsv.H = _hsl.H;
+                var hsv = new ColorSpaces.HSV(rgb); // _hsv = new ColorSpaces.HSV(_rgb);
+                SetCC(7, hsv.S, hsv.V);
             }
-            else if (colorSpace == ColorSpace.LAB)
+            else if (baseColorSpace == ColorSpace.HSV)
             {
-                _rgb = _lab.GetRGB();
-                _xyz = _lab.GetXYZ();
+                rgb = new ColorSpaces.HSV(GetCC(6), GetCC(7), GetCC(8)).GetRGB();
+                // Update HSL
+                _values[3] = _values[6]; // _hsl.H = _hsv.H;
+                var hsl = new ColorSpaces.HSL(rgb); // _hsl = new ColorSpaces.HSL(_rgb);
+                SetCC(4, hsl.S, hsl.L);
             }
-            else if (colorSpace == ColorSpace.YCbCr)
-                _rgb = _yCbCr.GetRGB();
+            else if (baseColorSpace == ColorSpace.LAB)
+                rgb = new ColorSpaces.LAB(GetCC(9), GetCC(10), GetCC(11)).GetRGB();
+            else if (baseColorSpace == ColorSpace.YCbCr)
+                rgb = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), GetCC(14)).GetRGB();
 
             // Update other objects
-            if (colorSpace != ColorSpace.HSL && colorSpace != ColorSpace.HSV)
+            if (baseColorSpace != ColorSpace.RGB)
+                SetCC(0, rgb.R, rgb.G, rgb.B);
+            if (baseColorSpace != ColorSpace.HSL && baseColorSpace != ColorSpace.HSV)
             {
-                _hsl = new ColorSpaces.HSL(_rgb);
-                _hsv = new ColorSpaces.HSV(_rgb);
+                var hsl = new ColorSpaces.HSL(rgb);
+                SetCC(3, hsl.H, hsl.S, hsl.L);
+                var hsv = new ColorSpaces.HSV(rgb);
+                SetCC(6, hsv.H, hsv.S, hsv.V);
             }
-            if (colorSpace != ColorSpace.XYZ && colorSpace != ColorSpace.LAB)
+            if (baseColorSpace != ColorSpace.LAB)
             {
-                _xyz = new ColorSpaces.XYZ(_rgb);
-                _lab = new ColorSpaces.LAB(_rgb);
+                var lab = new ColorSpaces.LAB(rgb);
+                SetCC(9, lab.L, lab.A, lab.B);
             }
-            if (colorSpace != ColorSpace.YCbCr)
-                _yCbCr = new ColorSpaces.YCbCr(_rgb);
+            if (baseColorSpace != ColorSpace.YCbCr)
+            {
+                var yCbCr = new ColorSpaces.YCbCr(rgb);
+                SetCC(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
+            }
 
-            _isUpdating = true;
             UpdateUI();
-            _isUpdating = false;
         }
 
-        private void UpdateUI()
+        public void UpdateUI()
         {
-            OnPropertiesChanged(nameof(CurrentColor), nameof(CurrentColor_ForegroundBrush),
-                nameof(CurrentColorWithoutAlphaBrush), nameof(HueBrush), 
-                nameof(Value_RGB_R), nameof(Value_RGB_G), nameof(Value_RGB_B),
-                nameof(Value_HSL_H), nameof(Value_HSL_S), nameof(Value_HSL_L),
-                nameof(Value_HSV_H), nameof(Value_HSV_S), nameof(Value_HSV_V),
-                nameof(Value_LAB_L), nameof(Value_LAB_A), nameof(Value_LAB_B),
-                nameof(Value_YCbCr_Y), nameof(Value_YCbCr_Cb), nameof(Value_YCbCr_Cr));
+            OnPropertiesChanged(Metadata.Keys.ToArray());
+            OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
+                nameof(CurrentColorWithoutAlphaBrush));
 
-            UpdateSlider(SaturationAndValueSlider, _hsv.S, 1.0 - _hsv.V);
-            UpdateSlider(HueSlider, null, _hsv.H);
-            UpdateSlider(AlphaSlider, null, 1.0 - _alpha);
+            UpdateSlider(SaturationAndValueSlider, GetSliderValueByModel("HSV_S"), 1.0 - GetSliderValueByModel("HSV_V"));
+            UpdateSlider(HueSlider, null, GetSliderValueByModel("HSV_H"));
+            UpdateSlider(AlphaSlider, null, 1.0 - Alpha);
 
-            foreach (var kvp in Properties)
-                UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, kvp.Value.SliderValue(this), null);
+            foreach (var kvp in Metadata)
+                UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, GetSliderValueByModel(kvp.Key), null);
 
-            TonesGenerate();
+            UpdateTones();
+            OnPropertiesChanged(nameof(Tones));
+
             UpdateSliderBrushes();
+            OnPropertiesChanged(nameof(Brushes));
+
         }
 
-        private void UpdateSlider(FrameworkElement element, double? xValue, double? yValue)
-        {
-            var panel = element as Panel;
-            if (panel == null)
-            {
-                if (VisualTreeHelper.GetChildrenCount(element) > 0)
-                    panel = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(element, 0), 0) as Panel;
-                else
-                    return;
-            }
+        #endregion
 
-            var thumb = panel.Children[0] as FrameworkElement;
-            if (xValue.HasValue)
+        #region ===========  Save & Restore color  =================
+
+        private double[] _savedColorData = new double[ComponentNumber + 1];
+        private double[] _oldColorData = new double[ComponentNumber + 1];
+
+        public void SaveColor()
+        {
+            for (var k = 0; k < _values.Length; k++)
             {
-                var x = thumb is Grid
-                    ? panel.ActualWidth * xValue.Value - thumb.ActualWidth / 2
-                    : (panel.ActualWidth - thumb.ActualWidth) * xValue.Value;
-                Canvas.SetLeft(thumb, x);
+                _savedColorData[k] = _oldColorData[k];
+                _oldColorData[k] = _values[k];
             }
-            if (yValue.HasValue)
+            _savedColorData[_savedColorData.Length - 1] = _oldColorData[_savedColorData.Length - 1];
+            _oldColorData[_savedColorData.Length - 1] = Alpha;
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
+        }
+        public void RestoreColor()
+        {
+            for (var k = 0; k < _values.Length; k++)
             {
-                var y = panel.ActualHeight * yValue.Value - thumb.ActualHeight / 2;
-                Canvas.SetTop(thumb, y);
+                _oldColorData[k] = _savedColorData[k];
+                _values[k] = _savedColorData[k];
             }
+            _oldColorData[_oldColorData.Length - 1] = _savedColorData[_oldColorData.Length - 1];
+            Alpha = _savedColorData[_savedColorData.Length - 1];
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
+        }
+        #endregion
+
+        #region ===========  Linear gradient brushes for Color components  ==========
+        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
+
+        private SolidColorBrush GetCacheBrush(int index, Color color)
+        {
+            _brushesCache[index].Color = color;
+            return _brushesCache[index];
         }
 
-        #region ==============  Event handlers  ====================
+        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC(6), 1, 1).GetRGB().GetColor());
 
-        private void ColorPicker_SizeChanged(object sender, SizeChangedEventArgs e) => UpdateUI();
-        private void RightColumn_OnSizeChanged(object sender, SizeChangedEventArgs e) => UpdateUI();
+        public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
+        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
+        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(3,
+            Color.FromRgb(Convert.ToByte(RGB_R), Convert.ToByte(RGB_G), Convert.ToByte(RGB_B)));
 
-        private void Slider_MouseDown(object sender, MouseButtonEventArgs e)
+        public Dictionary<string, LinearGradientBrush> Brushes { get; private set; }
+
+        private void UpdateSliderBrushes()
         {
-            (sender as UIElement).CaptureMouse();
-            Keyboard.ClearFocus();
-        }
-
-        private void Slider_MouseUp(object sender, MouseButtonEventArgs e) => (sender as UIElement).ReleaseMouseCapture();
-
-        private void Slider_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (Brushes == null)
             {
-                var canvas = sender as Panel;
-                var thumb = canvas.Children[0] as FrameworkElement;
-                var isVertical = canvas.ActualHeight > canvas.ActualWidth;
-                var sliderName = (canvas.TemplatedParent as FrameworkElement)?.Name ?? canvas.Name;
-                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
-
-                var value = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
-                value = Math.Max(0, Math.Min(1, value));
-
-                if (sliderName == nameof(HueSlider))
+                Brushes = new Dictionary<string, LinearGradientBrush>();
+                foreach (var kvp in Metadata)
                 {
-                    _hsv.H = value;
-                    UpdateValue(ColorSpace.HSV);
-                }
-                else if (canvas.Name == nameof(AlphaSlider))
-                {
-                    _alpha = 1.0 - value;
-                    UpdateUI();
-                }
-                else
-                {
-                    var property = Properties[sliderName.Replace("Slider_", "")];
-                    property.MouseMoveAction(this, value);
-                    UpdateValue(property.ColorSpace);
+                    var gradientCount = kvp.Value.ColorSpace == ColorSpace.RGB
+                        ? 1
+                        : Convert.ToInt32(kvp.Value.Max - kvp.Value.Min);
+                    Brushes.Add(kvp.Key,
+                        new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, gradientCount + 1)
+                            .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / gradientCount)))));
                 }
             }
-        }
 
-        private void SaturationAndValueSlider_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            for (var k = 0; k < 2; k++)
             {
-                var canvas = sender as Canvas;
-                var x = e.GetPosition(canvas).X;
-                var y = e.GetPosition(canvas).Y;
-                x = Math.Max(0, Math.Min(x, canvas.ActualWidth));
-                y = Math.Max(0, Math.Min(y, canvas.ActualHeight));
-
-                _hsv.S = x / canvas.ActualWidth;
-                _hsv.V = 1 - y / canvas.ActualHeight;
-                UpdateValue(ColorSpace.HSV);
+                Brushes["RGB_R"].GradientStops[k].Color = Color.FromRgb(Convert.ToByte(255 * k), CurrentColor.G, CurrentColor.B);
+                Brushes["RGB_G"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, Convert.ToByte(255 * k), CurrentColor.B);
+                Brushes["RGB_B"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, Convert.ToByte(255 * k));
+            }
+            for (var k = 0; k <= 100; k++)
+            {
+                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC(3), k / 100.0, GetCC(5)).GetRGB().GetColor();
+                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC(3), GetCC(4), k / 100.0).GetRGB().GetColor();
+                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), k / 100.0, GetCC(8)).GetRGB().GetColor();
+                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), GetCC(7), k / 100.0).GetRGB().GetColor();
+                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(k, GetCC(10), GetCC(11)).GetRGB().GetColor();
+            }
+            for (var k = 0; k <= 255; k++)
+            {
+                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), k - 127.5, GetCC(11)).GetRGB().GetColor();
+                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), GetCC(10), k - 127.5).GetRGB().GetColor();
+                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(k / 255.0, GetCC(13), GetCC(14)).GetRGB().GetColor();
+                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), (k - 127.5) / 255, GetCC(14)).GetRGB().GetColor();
+                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), (k - 127.5) / 255).GetRGB().GetColor();
+            }
+            for (var k = 0; k <= 360; k++)
+            {
+                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(k / 360.0, GetCC(4), GetCC(5)).GetRGB().GetColor();
+                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(k / 360.0, GetCC(7), GetCC(8)).GetRGB().GetColor();
             }
         }
 
         #endregion
+
+        #region ==============  Tones  =======================
+        public class ColorToneBox
+        {
+            private readonly ColorPicker _owner;
+            public int GridColumn { get; }
+            public int GridRow { get; }
+            public SolidColorBrush Background { get; } = new SolidColorBrush();
+            public SolidColorBrush Foreground { get; } = new SolidColorBrush();
+            public string Info
+            {
+                get
+                {
+                    var rgb = GetBackgroundHSL().GetRGB();
+                    var hsl = GetBackgroundHSL();
+                    var hsv = new ColorSpaces.HSV(rgb) { H = hsl.H };
+                    var lab = new ColorSpaces.LAB(rgb);
+                    var yCbCr = new ColorSpaces.YCbCr(rgb);
+
+                    var sb = new StringBuilder();
+                    sb.AppendLine("HEX:".PadRight(5) + rgb.Color);
+                    sb.AppendLine("Gray level: ???".PadRight(15));
+                    sb.AppendLine(FormatInfoString("RGB", rgb.R * 255, rgb.G * 255, rgb.B * 255));
+                    sb.AppendLine(FormatInfoString("HSL", hsl.H * 360, hsl.S * 100, hsl.L * 100));
+                    sb.AppendLine(FormatInfoString("HSV", hsv.H * 360, hsv.S * 100, hsv.V * 100));
+                    sb.AppendLine(FormatInfoString("LAB", lab.L, lab.A, lab.B));
+                    sb.Append(FormatInfoString("YCbCr", yCbCr.Y * 255, yCbCr.Cb * 255, yCbCr.Cr * 255));
+                    return sb.ToString();
+                }
+            }
+
+            public ColorToneBox(ColorPicker owner, int gridColumn, int gridRow)
+            {
+                _owner = owner;
+                GridColumn = gridColumn;
+                GridRow = gridRow;
+                Foreground.Color = gridColumn == 0 ? Colors.White : Colors.Black;
+            }
+
+            internal ColorSpaces.HSL GetBackgroundHSL()
+            {
+                if (GridColumn == 0)
+                    return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.025 + 0.05 * GridRow);
+                if (GridColumn == 1)
+                    return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.975 - 0.05 * GridRow);
+                return new ColorSpaces.HSL(_owner.GetCC(3), 0.05 + 0.1 * GridRow, _owner.GetCC(4));
+            }
+
+            private string FormatInfoString(string label, double value1, double value2, double value3) =>
+                (label + ":").PadRight(7) + FormatDouble(value1) + FormatDouble(value2) + FormatDouble(value3);
+            private string FormatDouble(double value) => value.ToString("F1", _owner.CurrentCulture).PadLeft(7);
+        }
+
+        private const int NumberOfTones = 10;
+        public ColorToneBox[] Tones { get; private set; }
+
+        private void UpdateTones()
+        {
+            if (Tones == null)
+            {
+                Tones = new ColorToneBox[3 * NumberOfTones];
+                for (var k1 = 0; k1 < 3; k1++)
+                    for (var k2 = 0; k2 < NumberOfTones; k2++)
+                        Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
+            }
+
+            foreach (var tone in Tones)
+            {
+                tone.Background.Color = tone.GetBackgroundHSL().GetRGB().GetColor();
+                if (tone.GridColumn == 2)
+                    tone.Foreground.Color = ColorSpaces.IsDarkColor(tone.Background.Color) ? Colors.White : Colors.Black;
+            }
+
+            OnPropertiesChanged(nameof(Tones));
+        }
+        #endregion
+
+        #region =============  CONTROL  ==================
+        private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e) => UpdateUI();
 
         #region ================  SelectAll Event Handlers on Focus event  ===============
         private void ValueEditor_OnGotFocus(object sender, RoutedEventArgs e) => ((TextBox)sender).SelectAll();
@@ -360,213 +539,78 @@ namespace ColorInvestigation.Controls
             var valueEditor = (TextBox)sender;
             var bindingExpression = valueEditor.GetBindingExpression(TextBox.TextProperty);
             var propertyName = bindingExpression.ParentBinding.Path.Path;
-            var colorProperty = Properties[propertyName.Replace("Value_", "")];
+            var metaData = Metadata[propertyName];
             var newText = valueEditor.Text.Substring(0, valueEditor.SelectionStart) + e.Text +
                           valueEditor.Text.Substring(valueEditor.SelectionStart + valueEditor.SelectionLength);
-
             if (CurrentCulture.NumberFormat.NativeDigits.Contains(e.Text))
                 e.Handled = false;
             if (CurrentCulture.NumberFormat.NumberDecimalSeparator == e.Text)
                 e.Handled = valueEditor.Text.Contains(CurrentCulture.NumberFormat.NumberDecimalSeparator);
             else if (CurrentCulture.NumberFormat.NegativeSign == e.Text)
-                e.Handled = colorProperty.Min >= 0 ||
+                e.Handled = metaData.Min >= 0 ||
                             valueEditor.Text.Contains(CurrentCulture.NumberFormat.NegativeSign) ||
                             !(newText.StartsWith(e.Text) || newText.EndsWith(e.Text));
 
             if (e.Handled)
                 Tips.Beep();
         }
-
-        private void ValueEditor_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            var valueEditor = (TextBox)sender;
-            var bindingExpression = valueEditor.GetBindingExpression(TextBox.TextProperty);
-            var propertyName = bindingExpression.ParentBinding.Path.Path;
-            var colorProperty = Properties[propertyName.Replace("Value_", "")];
-
-            if (double.TryParse(valueEditor.Text, NumberStyles.Any, CurrentCulture, out var value))
-            {
-                if (value < colorProperty.Min) valueEditor.Text = colorProperty.Min.ToString(CurrentCulture);
-                else if (value > colorProperty.Max) valueEditor.Text = colorProperty.Max.ToString(CurrentCulture);
-            }
-            else valueEditor.Text = "0";
-            UpdateValue(colorProperty.ColorSpace);
-        }
         #endregion
-
-        #region ===========  INotifyPropertyChanged  ===============
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertiesChanged(params string[] propertyNames)
+        
+        #region  =============  Slider event handlers  =====================
+        private void Slider_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            (sender as UIElement).CaptureMouse();
+            Keyboard.ClearFocus();
         }
-        #endregion
 
-        #region ==============  Tones  =======================
-        public class ColorToneBox
+        private void Slider_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            private readonly ColorPicker _owner;
-            public int GridColumn { get; }
-            public int GridRow { get; }
-            public SolidColorBrush Background { get; } = new SolidColorBrush();
-            public SolidColorBrush Foreground { get; } = new SolidColorBrush();
-            public string Info
+            (sender as UIElement).ReleaseMouseCapture();
+        }
+
+        private void Slider_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                get
+                var canvas = sender as Panel;
+                var thumb = canvas.Children[0] as FrameworkElement;
+                var isVertical = thumb is Grid;
+                var sliderName = (canvas.TemplatedParent as FrameworkElement)?.Name ?? canvas.Name;
+
+                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
+                var value = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
+                value = Math.Max(0, Math.Min(1, value));
+
+                if (sliderName == nameof(HueSlider))
+                    HSV_H = GetModelValueBySlider("HSV_H", value);
+                else if (canvas.Name == nameof(AlphaSlider))
+                    Alpha = 1.0 - value;
+                else
                 {
-                    var rgb = GetBackgroundHSL().GetRGB();
-                    var hsl = GetBackgroundHSL();
-                    var hsv = new ColorSpaces.HSV(rgb) {H = hsl.H};
-                    var lab = new ColorSpaces.LAB(rgb);
-                    var yCbCr = new ColorSpaces.YCbCr(rgb);
-
-                    var sb = new StringBuilder();
-                    sb.AppendLine("HEX:".PadRight(5) + rgb.Color);
-                    sb.AppendLine(FormatInfoString("RGB", rgb.R * 255, rgb.G * 255, rgb.B * 255));
-                    sb.AppendLine(FormatInfoString("HSL", hsl.H * 360, hsl.S * 100, hsl.L * 100));
-                    sb.AppendLine(FormatInfoString("HSV", hsv.H * 360, hsv.S * 100, hsv.V * 100));
-                    sb.AppendLine(FormatInfoString("LAB", lab.L, lab.A, lab.B));
-                    sb.Append(FormatInfoString("YCbCr", yCbCr.Y * 255, yCbCr.Cb * 255, yCbCr.Cr * 255));
-                    return sb.ToString();
+                    var valueId = sliderName.Replace("Slider_", "");
+                    SetProperty(GetModelValueBySlider(valueId, value), valueId);
                 }
             }
+        }
 
-            public ColorToneBox(ColorPicker owner, int gridColumn, int gridRow)
+        private void SaturationAndValueSlider_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                _owner = owner;
-                GridColumn = gridColumn;
-                GridRow = gridRow;
-                Foreground.Color = gridColumn == 0 ? Colors.White : Colors.Black;
+                var canvas = sender as Canvas;
+                var x = e.GetPosition(canvas).X;
+                var y = e.GetPosition(canvas).Y;
+                x = Math.Max(0, Math.Min(x, canvas.ActualWidth));
+                y = Math.Max(0, Math.Min(y, canvas.ActualHeight));
+
+                HSV_S_And_V = new Tuple<double, double>(GetModelValueBySlider("HSV_S", x / canvas.ActualWidth),
+                    GetModelValueBySlider("HSV_V", 1 - y / canvas.ActualHeight));
             }
-
-            internal ColorSpaces.HSL GetBackgroundHSL()
-            {
-                if (GridColumn == 0)
-                    return new ColorSpaces.HSL(_owner._hsl.H, _owner._hsl.S, 0.025 + 0.05 * GridRow);
-                if (GridColumn == 1)
-                    return new ColorSpaces.HSL(_owner._hsl.H, _owner._hsl.S, 0.975 - 0.05 * GridRow);
-                return new ColorSpaces.HSL(_owner._hsl.H, 0.05 + 0.1 * GridRow, _owner._hsl.L);
-            }
-
-            private string FormatInfoString(string label, double value1, double value2, double value3) =>
-                (label + ":").PadRight(7) + FormatDouble(value1) + FormatDouble(value2) + FormatDouble(value3);
-            private string FormatDouble(double value) => value.ToString("F1", _owner.CurrentCulture).PadLeft(7);
-        }
-
-        private const int NumberOfTones = 10;
-        public ColorToneBox[] Tones { get; private set; }
-
-        private void TonesGenerate()
-        {
-            if (Tones == null)
-            {
-                Tones = new ColorToneBox[3 * NumberOfTones];
-                for (var k1 = 0; k1 < 3; k1++)
-                for (var k2 = 0; k2 < NumberOfTones; k2++)
-                    Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
-            }
-
-            foreach (var tone in Tones)
-            {
-                tone.Background.Color = tone.GetBackgroundHSL().GetRGB().GetColor();
-                if (tone.GridColumn == 2)
-                    tone.Foreground.Color = ColorSpaces.IsDarkColor(tone.Background.Color) ? Colors.White : Colors.Black;
-            }
-
-            OnPropertiesChanged(nameof(Tones));
-        }
-        #endregion
-
-        #region ===============  TextBox values  ===================
-        // RGB
-        public double Value_RGB_R
-        {
-            get => _rgb.R * 255;
-            set => _rgb.R = value / 255.0;
-        }
-        public double Value_RGB_G
-        {
-            get => _rgb.G * 255;
-            set => _rgb.G = value / 255.0;
-        }
-        public double Value_RGB_B
-        {
-            get => _rgb.B * 255;
-            set => _rgb.B = value / 255.0;
-        }
-
-        // HSL
-        public double Value_HSL_H
-        {
-            get => _hsl.H * 360;
-            set => _hsl.H = value / 360.0;
-        }
-        public double Value_HSL_S
-        {
-            get => _hsl.S * 100;
-            set => _hsl.S = value / 100.0;
-        }
-        public double Value_HSL_L
-        {
-            get => _hsl.L * 100;
-            set => _hsl.L = value / 100.0;
-        }
-
-        // HSV
-        public double Value_HSV_H
-        {
-            get => _hsv.H * 360;
-            set => _hsv.H = value / 360.0;
-        }
-        public double Value_HSV_S
-        {
-            get => _hsv.S * 100;
-            set => _hsv.S = value / 100.0;
-        }
-        public double Value_HSV_V
-        {
-            get => _hsv.V * 100;
-            set => _hsv.V = value / 100.0;
-        }
-
-        // LAB
-        public double Value_LAB_L
-        {
-            get => _lab.L;
-            set => _lab.L = value;
-        }
-        public double Value_LAB_A
-        {
-            get => _lab.A;
-            set => _lab.A = value;
-        }
-        public double Value_LAB_B
-        {
-            get => _lab.B;
-            set => _lab.B = value;
-        }
-
-        // YCbCr
-        public double Value_YCbCr_Y
-        {
-            get => _yCbCr.Y * 255.0;
-            set => _yCbCr.Y = value / 255.0;
-        }
-        public double Value_YCbCr_Cb
-        {
-            get => _yCbCr.Cb * 255.0;
-            set => _yCbCr.Cb = value / 255.0;
-        }
-
-        public double Value_YCbCr_Cr
-        {
-            get => _yCbCr.Cr * 255.0;
-            set => _yCbCr.Cr = value / 255.0;
         }
 
         #endregion
 
+        #region  ==============  NEW from ASYNC  =================
         #region ===============  Color box event handlers  ===============
         private void ColorBoxPopup_OnOpened(object sender, EventArgs e)
         {
@@ -581,8 +625,10 @@ namespace ColorInvestigation.Controls
             var toggleButton = Tips.GetVisualParents(element).OfType<Grid>().SelectMany(grid => grid.Children.OfType<ToggleButton>()).FirstOrDefault();
             toggleButton.IsChecked = false;
 
-            _hsl = (element.DataContext as ColorToneBox).GetBackgroundHSL();
-            UpdateValue(ColorSpace.HSL);
+            // _hsl = (element.DataContext as ColorToneBox).GetBackgroundHSL();
+
+            UpdateValues(ColorSpace.HSL);
+            throw new Exception("ToDo: _hsl = (element.DataContext as ColorToneBox).GetBackgroundHSL();");
         }
         #endregion
 
@@ -591,135 +637,47 @@ namespace ColorInvestigation.Controls
             Debug.Print($"ButtonBase_OnClick");
         }
 
-        #region ===========  ColorProperty  ======================
 
-        private static Dictionary<string, ColorProperty> Properties => new Dictionary<string, ColorProperty>()
+        #endregion
+
+        #region ================  Update slider values  ======================
+        private double GetModelValueBySlider(string componentName, double sliderValue)
         {
-            {"RGB_R", new ColorProperty(0, 255, ColorSpace.RGB, p => p._rgb.R, (p, v) => p._rgb.R = v)},
-            {"RGB_G", new ColorProperty(0, 255, ColorSpace.RGB, p => p._rgb.G, (p, v) => p._rgb.G = v)},
-            {"RGB_B", new ColorProperty(0, 255, ColorSpace.RGB, p => p._rgb.B, (p, v) => p._rgb.B = v)},
-            {"HSL_H", new ColorProperty(0, 360, ColorSpace.HSL, p => p._hsl.H, (p, v) => p._hsl.H = v)},
-            {"HSL_S", new ColorProperty(0, 100, ColorSpace.HSL, p => p._hsl.S, (p, v) => p._hsl.S = v)},
-            {"HSL_L", new ColorProperty(0, 100, ColorSpace.HSL, p => p._hsl.L, (p, v) => p._hsl.L = v)},
-            {"HSV_H", new ColorProperty(0, 360, ColorSpace.HSV, p => p._hsv.H, (p, v) => p._hsv.H = v)},
-            {"HSV_S", new ColorProperty(0, 100, ColorSpace.HSV, p => p._hsv.S, (p, v) => p._hsv.S = v)},
-            {"HSV_V", new ColorProperty(0, 100, ColorSpace.HSV, p => p._hsv.V, (p, v) => p._hsv.V = v)},
-            {"LAB_L", new ColorProperty(0, 100, ColorSpace.LAB, p => p._lab.L / 100, (p, v) => p._lab.L = v * 100)},
-            {"LAB_A", new ColorProperty(-127.5, 127.5, ColorSpace.LAB, p => (p._lab.A + 127.5) / 255.0, (p, v) => p._lab.A = v * 255 - 127.5)},
-            {"LAB_B", new ColorProperty(-127.5, 127.5, ColorSpace.LAB, p => (p._lab.B + 127.5) / 255.0, (p, v) => p._lab.B = v * 255 - 127.5)},
-            {"YCbCr_Y", new ColorProperty(0, 255, ColorSpace.YCbCr, p => p._yCbCr.Y, (p, v) => p._yCbCr.Y = v)},
-            {"YCbCr_Cb", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr, p => p._yCbCr.Cb + 0.5, (p, v) => p._yCbCr.Cb = v - 0.5)},
-            {"YCbCr_Cr", new ColorProperty(-127.5, 127.5, ColorSpace.YCbCr, p => p._yCbCr.Cr + 0.5, (p, v) => p._yCbCr.Cr = v - 0.5)}
-        };
-
-        public class ColorProperty
+            var meta = ColorPicker.Metadata[componentName];
+            return (meta.Max - meta.Min) * sliderValue + meta.Min;
+        }
+        private double GetSliderValueByModel(string componentName)
         {
-            public double Min;
-            public double Max;
-            public ColorSpace ColorSpace;
-            public Func<ColorPicker, double> SliderValue;
-            public Action<ColorPicker, double> MouseMoveAction;
-
-            public ColorProperty(double min, double max, ColorSpace colorSpace, Func<ColorPicker, double> sliderValue, Action<ColorPicker, double> mouseMoveAction )
+            var meta = ColorPicker.Metadata[componentName];
+            return (meta.GetValue(this) - meta.Min) / (meta.Max - meta.Min);
+        }
+        private void UpdateSlider(FrameworkElement element, double? xValue, double? yValue)
+        {
+            var panel = element as Panel;
+            if (panel == null)
             {
-                Min = min; Max = max; ColorSpace = colorSpace; SliderValue = sliderValue;
-                MouseMoveAction = mouseMoveAction;
+                if (VisualTreeHelper.GetChildrenCount(element) > 0)
+                    panel = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(element, 0), 0) as Panel;
+                else
+                    return;
+            }
+
+            var thumb = panel.Children[0] as FrameworkElement;
+            if (xValue.HasValue)
+            {
+                var x = thumb is Grid
+                    ? panel.ActualWidth * xValue.Value - thumb.ActualWidth / 2
+                    : (panel.ActualWidth - thumb.ActualWidth) * xValue.Value;
+                Canvas.SetLeft(thumb, x);
+            }
+            if (yValue.HasValue)
+            {
+                var y = panel.ActualHeight * yValue.Value - thumb.ActualHeight / 2;
+                Canvas.SetTop(thumb, y);
             }
         }
         #endregion
-
-        #region ===========  Linear gradient brushes for Color property  ==========
-        public Dictionary<string, LinearGradientBrush> Brushes { get; private set; }
-
-        private void UpdateSliderBrushes()
-        {
-            if (Brushes == null)
-            {
-                Brushes = new Dictionary<string, LinearGradientBrush>();
-                foreach (var kvp in Properties)
-                {
-                    var gradientCount = kvp.Value.ColorSpace == ColorSpace.RGB
-                        ? 1
-                        : Convert.ToInt32(kvp.Value.Max - kvp.Value.Min);
-                    Brushes.Add(kvp.Key,
-                        new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, gradientCount + 1)
-                            .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / gradientCount)))));
-                }
-            }
-
-            for (var k = 0; k < 2; k++)
-            {
-                Brushes["RGB_R"].GradientStops[k].Color = Color.FromRgb(Convert.ToByte(255 * k), CurrentColor.G, CurrentColor.B);
-                Brushes["RGB_G"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, Convert.ToByte(255 * k), CurrentColor.B);
-                Brushes["RGB_B"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, Convert.ToByte(255 * k));
-            }
-            for (var k = 0; k <= 100; k++)
-            {
-                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(_hsl.H, k / 100.0, _hsl.L).GetRGB().GetColor();
-                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, k / 100.0).GetRGB().GetColor();
-                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(_hsv.H, k / 100.0, _hsv.V).GetRGB().GetColor();
-                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(_hsv.H, _hsv.S, k / 100.0).GetRGB().GetColor();
-                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(k, _lab.A, _lab.B).GetRGB().GetColor();
-            }
-            for (var k = 0; k <= 255; k++)
-            {
-                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(_lab.L, k - 127.5, _lab.B).GetRGB().GetColor();
-                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(_lab.L, _lab.A, k - 127.5).GetRGB().GetColor();
-                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(k / 255.0, _yCbCr.Cb, _yCbCr.Cr).GetRGB().GetColor();
-                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(_yCbCr.Y, (k - 127.5) / 255, _yCbCr.Cr).GetRGB().GetColor();
-                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(_yCbCr.Y, _yCbCr.Cb, (k - 127.5) / 255).GetRGB().GetColor();
-            }
-            for (var k = 0; k <= 360; k++)
-            {
-                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(k / 360.0, _hsl.S, _hsl.L).GetRGB().GetColor();
-                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(k / 360.0, _hsv.S, _hsv.V).GetRGB().GetColor();
-            }
-            OnPropertiesChanged(nameof(Brushes));
-        }
-
-        private void UpdateSliderBrushesNew()
-        {
-            const int gradientStopsNumber = 20;
-            if (Brushes == null)
-            {
-                Brushes = new Dictionary<string, LinearGradientBrush>();
-                foreach (var kvp in Properties)
-                {
-                    var gradientCount = kvp.Value.ColorSpace == ColorSpace.RGB ? 1 : gradientStopsNumber;
-                    Brushes.Add(kvp.Key,
-                        new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, gradientCount + 1)
-                            .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / gradientCount)))));
-                }
-            }
-
-            for (var k = 0; k < 2; k++)
-            {
-                var component = k == 0 ? (byte) 0x0 : (byte) 0xff;
-                Brushes["RGB_R"].GradientStops[k].Color = Color.FromRgb(component, CurrentColor.G, CurrentColor.B);
-                Brushes["RGB_G"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, component, CurrentColor.B);
-                Brushes["RGB_B"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, component);
-            }
-
-            const double xStep = 1.0 / (gradientStopsNumber + 1);
-            var x = 0.0;
-            for (var k = 0; k <= gradientStopsNumber; k++)
-            {
-                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(x, _hsl.S, _hsl.L).GetRGB().GetColor();
-                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(_hsl.H, x, _hsl.L).GetRGB().GetColor();
-                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, x).GetRGB().GetColor();
-                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(x, _hsv.S, _hsv.V).GetRGB().GetColor();
-                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(_hsv.H, x, _hsv.V).GetRGB().GetColor();
-                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(_hsv.H, _hsv.S, x).GetRGB().GetColor();
-                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(x * 100, _lab.A, _lab.B).GetRGB().GetColor();
-                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(_lab.L, x * 255 - 127.5, _lab.B).GetRGB().GetColor();
-                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(_lab.L, _lab.A, x * 255 - 127.5).GetRGB().GetColor();
-                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(x, _yCbCr.Cb, _yCbCr.Cr).GetRGB().GetColor();
-                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(_yCbCr.Y, x - 0.5, _yCbCr.Cr).GetRGB().GetColor();
-                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(_yCbCr.Y, _yCbCr.Cb, x - 0.5).GetRGB().GetColor();
-                x += xStep;
-            }
-            OnPropertiesChanged(nameof(Brushes));
-        }
         #endregion
+
     }
 }
