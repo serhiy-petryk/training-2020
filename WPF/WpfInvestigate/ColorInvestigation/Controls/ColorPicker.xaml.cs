@@ -65,18 +65,6 @@ namespace ColorInvestigation.Controls
 
         public enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
 
-        private double _alpha = 1.0;
-        private double[] _values = new double[ComponentNumber];
-
-        // Get color component in space unit
-        private double GetCC(int index) => _values[index] / Metalist[index].SpaceMultiplier;
-        // Set color components from space unit
-        private void SetCC(int startIndex, params double[] newValues)
-        {
-            for (var k = 0; k < newValues.Length; k++)
-                _values[k + startIndex] = newValues[k] * Metalist[k + startIndex].SpaceMultiplier;
-        }
-
         #region  ==============  Public Properties  ================
         // Original color
         public Color Color
@@ -89,7 +77,7 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        public Color CurrentColor
+        private Color CurrentColor
         {
             get => new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2)).GetColor(Alpha);
             set
@@ -123,6 +111,18 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region  ===========  Color component public Properties  ============
+        private double _alpha = 1.0;
+        private double[] _values = new double[ComponentNumber];
+
+        // Get color component in space unit
+        private double GetCC(int index) => _values[index] / Metalist[index].SpaceMultiplier;
+        // Set color components from space unit
+        private void SetCC(int startIndex, params double[] newValues)
+        {
+            for (var k = 0; k < newValues.Length; k++)
+                _values[k + startIndex] = newValues[k] * Metalist[k + startIndex].SpaceMultiplier;
+        }
+
         public double Alpha // in range [0, 1]
         {
             get => _alpha;
