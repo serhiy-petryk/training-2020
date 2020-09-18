@@ -42,21 +42,21 @@
                 <WrapPanel Grid.Row="0" Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left">
                         <Rectangle.Fill>
+                            <SolidColorBrush x:Name="BrushVM" Color="{Binding ElementName=ColorPickerViewModel, Path=Color, Mode=TwoWay}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Button Content="Save Color VM" Margin="5" Height="24" Click="SaveButtonVM_Click" HorizontalAlignment="Left"/>
+                    <Button Content="Restore Color VM" Margin="2" Height="34" Click="RestoreButtonVM_Click" HorizontalAlignment="Left"/>
+                    <Button Content="Change Color VM" Margin="2" Height="34" Click="ChangeColorButtonVM_Click" HorizontalAlignment="Left"/>
+
+                    <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left">
+                        <Rectangle.Fill>
                             <SolidColorBrush x:Name="Brush" Color="{Binding ElementName=ColorPicker, Path=Color, Mode=TwoWay}"/>
                         </Rectangle.Fill>
                     </Rectangle>
                     <Button Content="Save Color" Margin="5" Height="24" Click="SaveButton_Click" HorizontalAlignment="Left"/>
                     <Button Content="Restore Color" Margin="2" Height="34" Click="RestoreButton_Click" HorizontalAlignment="Left"/>
                     <Button Content="Change Color" Margin="2" Height="34" Click="ChangeColorButton_Click" HorizontalAlignment="Left"/>
-
-                    <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left">
-                        <Rectangle.Fill>
-                            <SolidColorBrush x:Name="BrushVM" Color="{Binding ElementName=ColorPickerViewModel, Path=Color, Mode=TwoWay}"/>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <Button Content="Save Color" Margin="5" Height="24" Click="SaveButtonVM_Click" HorizontalAlignment="Left"/>
-                    <Button Content="Restore Color" Margin="2" Height="34" Click="RestoreButtonVM_Click" HorizontalAlignment="Left"/>
-                    <Button Content="Change Color" Margin="2" Height="34" Click="ChangeColorButtonVM_Click" HorizontalAlignment="Left"/>
 
                     <Rectangle Width="24" Height="24" Margin="5" HorizontalAlignment="Left">
                         <Rectangle.Fill>
@@ -78,11 +78,11 @@
 
             <!-- =============== -->
             <TabControl Grid.Row="1">
+                <TabItem Header="ViewModel">
+                    <controls:ColorPickerVM x:Name="ColorPickerViewModel" Color="Orange"/>
+                </TabItem>
                 <TabItem Header="Simple">
                     <controls:ColorPicker x:Name="ColorPicker" Color="Orange"/>
-                </TabItem>
-                <TabItem Header="ViewModel">
-                    <controls:ColorPickerVM x:Name="ColorPickerViewModel" Color="Blue"/>
                 </TabItem>
                 <TabItem Header="Async">
                     <controls:ColorPickerAsync x:Name="ColorPickerAsync" Color="LightBlue"/>
