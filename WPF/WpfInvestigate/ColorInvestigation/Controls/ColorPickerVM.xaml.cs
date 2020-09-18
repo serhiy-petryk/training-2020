@@ -488,14 +488,14 @@ namespace ColorInvestigation.Controls
 
         private void UpdateHslBrushes()
         {
-            for (var i = 0; i <= 360; i++)
+            /*for (var i = 0; i <= 360; i++)
                 Brush_HSL_H.GradientStops[i].Color = new ColorSpaces.HSL(i / 360.0, _hsl.S, _hsl.L).GetRGB().GetColor();
             for (var i = 0; i <= 100; i++)
             {
                 Brush_HSL_S.GradientStops[i].Color = new ColorSpaces.HSL(_hsl.H, i / 100.0, _hsl.L).GetRGB().GetColor();
                 Brush_HSL_L.GradientStops[i].Color = new ColorSpaces.HSL(_hsl.H, _hsl.S, i / 100.0).GetRGB().GetColor();
             }
-            OnPropertiesChanged(nameof(Brush_HSL_H), nameof(Brush_HSL_S), nameof(Brush_HSL_L));
+            OnPropertiesChanged(nameof(Brush_HSL_H), nameof(Brush_HSL_S), nameof(Brush_HSL_L));*/
         }
 
         private void UpdateHsvBrushes()
@@ -750,7 +750,9 @@ namespace ColorInvestigation.Controls
             foreach (var kvp in ColorPickerViewModel.Metadata)
                 UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, GetSliderValueByModel(kvp.Key), null);
 
+            // UpdateSliderBrushes();
         }
+
 
         private double GetModelValueBySlider(string componentName, double sliderValue)
         {
@@ -787,8 +789,6 @@ namespace ColorInvestigation.Controls
                 Canvas.SetTop(thumb, y);
             }
         }
-
-
         #endregion
 
         #endregion
