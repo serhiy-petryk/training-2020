@@ -307,7 +307,17 @@ namespace ColorInvestigation.Controls
         }
         #endregion
 
-        #region ===========  Linear gradient brushes for Color property  ==========
+        #region ===========  Linear gradient brushes for Color components  ==========
+        private readonly SolidColorBrush _hueBrush = new SolidColorBrush();
+        public Brush HueBrush
+        {
+            get
+            {
+                _hueBrush.Color = new ColorSpaces.HSV(GetCC(6), 1, 1).GetRGB().GetColor();
+                return _hueBrush;
+            }
+        }
+
         public Dictionary<string, LinearGradientBrush> Brushes { get; private set; }
 
         private void UpdateSliderBrushes()
