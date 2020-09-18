@@ -222,11 +222,8 @@ namespace ColorInvestigation.Controls
 
         private void UpdateUI()
         {
-            TonesGenerate();
-            UpdateSliderBrushes();
-
             OnPropertiesChanged(nameof(CurrentColor), nameof(CurrentColor_ForegroundBrush),
-                nameof(CurrentColorWithoutAlphaBrush), nameof(HueBrush), nameof(Brushes),
+                nameof(CurrentColorWithoutAlphaBrush), nameof(HueBrush), 
                 nameof(Value_RGB_R), nameof(Value_RGB_G), nameof(Value_RGB_B),
                 nameof(Value_HSL_H), nameof(Value_HSL_S), nameof(Value_HSL_L),
                 nameof(Value_HSV_H), nameof(Value_HSV_S), nameof(Value_HSV_V),
@@ -239,6 +236,9 @@ namespace ColorInvestigation.Controls
 
             foreach (var kvp in Properties)
                 UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, kvp.Value.SliderValue(this), null);
+
+            TonesGenerate();
+            UpdateSliderBrushes();
         }
 
         private void UpdateSlider(FrameworkElement element, double? xValue, double? yValue)
@@ -674,6 +674,7 @@ namespace ColorInvestigation.Controls
                 Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(k / 360.0, _hsl.S, _hsl.L).GetRGB().GetColor();
                 Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(k / 360.0, _hsv.S, _hsv.V).GetRGB().GetColor();
             }
+            OnPropertiesChanged(nameof(Brushes));
         }
 
         private void UpdateSliderBrushesNew()
@@ -717,6 +718,7 @@ namespace ColorInvestigation.Controls
                 Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(_yCbCr.Y, _yCbCr.Cb, x - 0.5).GetRGB().GetColor();
                 x += xStep;
             }
+            OnPropertiesChanged(nameof(Brushes));
         }
         #endregion
     }
