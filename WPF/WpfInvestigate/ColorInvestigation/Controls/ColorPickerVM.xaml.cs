@@ -101,24 +101,6 @@ namespace ColorInvestigation.Controls
         }
 
         // =========================
-        public void xxSaveColor()
-        {
-            _savedColor = _oldRgb.GetColor(_oldAlpha);
-            _oldRgb = new ColorSpaces.RGB(_rgb.GetColor());
-            _oldAlpha = _alpha;
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
-        }
-
-        public void xxRestoreColor()
-        {
-            _oldRgb = new ColorSpaces.RGB(_savedColor);
-            _oldAlpha = _savedColor.A / 255.0;
-            _rgb = new ColorSpaces.RGB(_savedColor);
-            _alpha = _savedColor.A / 255.0;
-            UpdateValue(UpdateMode.RGB);
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush));
-        }
-
         private bool _isUpdating;
         private void UpdateValue(UpdateMode mode)
         {
@@ -174,146 +156,10 @@ namespace ColorInvestigation.Controls
             return;
         }
 
-        private void xxUpdateSlider(FrameworkElement element, double value, double maxValue)
-        {
-            throw new Exception("AAA");
-            var panel = element as Panel;
-            if (panel == null)
-            {
-                if (VisualTreeHelper.GetChildrenCount(element) > 0)
-                    panel = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(element, 0), 0) as Panel;
-                else
-                    return;
-            }
-
-            var thumb = panel.Children[0] as FrameworkElement;
-            if (panel.ActualWidth > panel.ActualHeight)
-            {   // horizontal slider
-                var x = (panel.ActualWidth - thumb.ActualWidth) * value / maxValue;
-                Canvas.SetLeft(thumb, x);
-            }
-            else
-            {   // vertical slider
-                var y = panel.ActualHeight * value / maxValue - thumb.ActualHeight / 2;
-                Canvas.SetTop(thumb, y);
-            }
-        }
-
-        private void UpdateSaturationAndValueSlider()
-        {
-            var panel = (Panel)SaturationAndValueSlider;
-            var thumb = panel.Children[0] as FrameworkElement;
-            var x = panel.ActualWidth * _hsv.S - thumb.ActualWidth / 2;
-            Canvas.SetLeft(thumb, x);
-            var y = panel.ActualHeight * (1.0 - _hsv.V) - thumb.ActualHeight / 2;
-            Canvas.SetTop(thumb, y);
-        }
-
         #region ==============  Event handlers  ====================
 
-        private void ColorPicker_SizeChanged(object sender, SizeChangedEventArgs e) => xxUpdateUI();
-        private void RightColumn_OnSizeChanged(object sender, SizeChangedEventArgs e) => xxUpdateUI();
-
-        private void XXSlider_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                var canvas = sender as Panel;
-                var thumb = canvas.Children[0] as FrameworkElement;
-                var isVertical = canvas.ActualHeight > canvas.ActualWidth;
-                var sliderName = (canvas.TemplatedParent as FrameworkElement)?.Name ?? canvas.Name;
-                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
-
-                var multiplier = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
-                multiplier = Math.Max(0, Math.Min(1, multiplier));
-
-                if (sliderName == nameof(HueSlider))
-                {
-                    _hsv.H = multiplier;
-                    UpdateValue(UpdateMode.HSV);
-                }
-                else if (canvas.Name == nameof(AlphaSlider))
-                {
-                    _alpha = 1.0 - multiplier;
-                    xxUpdateUI();
-                }
-                else if (sliderName == nameof(Slider_RGB_R))
-                {
-                    _rgb.R = multiplier;
-                    UpdateValue(UpdateMode.RGB);
-                }
-                else if (sliderName == nameof(Slider_RGB_G))
-                {
-                    _rgb.G = multiplier;
-                    UpdateValue(UpdateMode.RGB);
-                }
-                else if (sliderName == nameof(Slider_RGB_B))
-                {
-                    _rgb.B = multiplier;
-                    UpdateValue(UpdateMode.RGB);
-                }
-                else if (sliderName == nameof(Slider_HSL_H))
-                {
-                    _hsl.H = multiplier;
-                    UpdateValue(UpdateMode.HSL);
-                }
-                else if (sliderName == nameof(Slider_HSL_S))
-                {
-                    _hsl.S = multiplier;
-                    UpdateValue(UpdateMode.HSL);
-                }
-                else if (sliderName == nameof(Slider_HSL_L))
-                {
-                    _hsl.L = multiplier;
-                    UpdateValue(UpdateMode.HSL);
-                }
-                else if (sliderName == nameof(Slider_HSV_H))
-                {
-                    _hsv.H = multiplier;
-                    UpdateValue(UpdateMode.HSV);
-                }
-                else if (sliderName == nameof(Slider_HSV_S))
-                {
-                    _hsv.S = multiplier;
-                    UpdateValue(UpdateMode.HSV);
-                }
-                else if (sliderName == nameof(Slider_HSV_V))
-                {
-                    _hsv.V = multiplier;
-                    UpdateValue(UpdateMode.HSV);
-                }
-                else if (sliderName == nameof(Slider_LAB_L))
-                {
-                    _lab.L = multiplier * 100;
-                    UpdateValue(UpdateMode.LAB);
-                }
-                else if (sliderName == nameof(Slider_LAB_A))
-                {
-                    _lab.A = multiplier * 255 - 127.5;
-                    UpdateValue(UpdateMode.LAB);
-                }
-                else if (sliderName == nameof(Slider_LAB_B))
-                {
-                    _lab.B = multiplier * 255 - 127.5;
-                    UpdateValue(UpdateMode.LAB);
-                }
-                else if (sliderName == nameof(Slider_YCbCr_Y))
-                {
-                    _yCbCr.Y = multiplier;
-                    UpdateValue(UpdateMode.YCbCr);
-                }
-                else if (sliderName == nameof(Slider_YCbCr_Cb))
-                {
-                    _yCbCr.Cb = multiplier - 0.5;
-                    UpdateValue(UpdateMode.YCbCr);
-                }
-                else if (sliderName == nameof(Slider_YCbCr_Cr))
-                {
-                    _yCbCr.Cr = multiplier - 0.5;
-                    UpdateValue(UpdateMode.YCbCr);
-                }
-            }
-        }
+        private void ColorPicker_SizeChanged(object sender, SizeChangedEventArgs e) => VM.UpdateUI();
+        private void RightColumn_OnSizeChanged(object sender, SizeChangedEventArgs e) => VM.UpdateUI();
 
         private void ColorBox_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -367,23 +213,6 @@ namespace ColorInvestigation.Controls
 
             if (e.Handled)
                 Tips.Beep();
-        }
-
-        private void ValueEditor_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            return;
-            var valueEditor = (TextBox)sender;
-            var bindingExpression = valueEditor.GetBindingExpression(TextBox.TextProperty);
-            var propertyName = bindingExpression.ParentBinding.Path.Path;
-            var metaData = ValueMetadata[propertyName];
-
-            if (double.TryParse(valueEditor.Text, NumberStyles.Any, CurrentCulture, out var value))
-            {
-                if (value < metaData.Item1) valueEditor.Text = metaData.Item1.ToString(CurrentCulture);
-                else if (value > metaData.Item2) valueEditor.Text = metaData.Item2.ToString(CurrentCulture);
-            }
-            else valueEditor.Text = "0";
-            UpdateValue(metaData.Item3);
         }
         #endregion
 
@@ -672,8 +501,7 @@ namespace ColorInvestigation.Controls
             VM.PropertiesUpdated += ViewModel_PropertiesUpdated;
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
             {
-                VM.RefreshValues();
-                // _savedColor = Color;
+                // ? need to check (after color changed) VM.UpdateUI();
             }));
         }
 

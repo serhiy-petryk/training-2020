@@ -267,7 +267,7 @@ namespace ColorInvestigation.Controls
             UpdateUI();
         }
 
-        private void UpdateUI()
+        public void UpdateUI()
         {
             UpdateSliderBrushes();
 
