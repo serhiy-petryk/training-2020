@@ -13,12 +13,11 @@ namespace ColorInvestigation.Controls
 {
     public class ColorPickerViewModel : INotifyPropertyChanged
     {
+        public enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
+
         private const int ComponentNumber = 15;
         internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
-
-        public enum ColorSpace { RGB, HSL, HSV, XYZ, LAB, YCbCr };
-
-        public event EventHandler PropertiesUpdated;
+        internal Action AfterUpdatedCallback;
 
         private double _alpha;
         private double[] _values = new double[ComponentNumber];
@@ -280,7 +279,7 @@ namespace ColorInvestigation.Controls
             UpdateSliderBrushes();
             OnPropertiesChanged(nameof(Brushes));
 
-            PropertiesUpdated?.Invoke(this, new EventArgs());
+            AfterUpdatedCallback?.Invoke();
         }
 
         #endregion

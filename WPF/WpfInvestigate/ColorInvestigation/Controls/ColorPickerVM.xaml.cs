@@ -18,11 +18,17 @@
 // +12. Edited text box for CurrentColor
 // +13. Degree label for Hue
 // -14. Control for slider
-// 15. ViewModel
+// -?15. ViewModel
 // +16. Click on ColorBox
 // 17. Alpha for old Color in ColorBox
-// 18. Popup for ColorBox info
+// +18. Popup for ColorBox info
 // +19. Decimal places for ValueEditor
+// - performance 20. Component Slider - change black/white color
+// - performance21. Component slider - like triangle
+// +22. Производительность - sliders:
+//     + - increase step (try ~20 gradient) 
+//      -or/and process only last mouse move / skip late mouse moves
+// 23. ViewModel + з прямими get/set (без формул) - ? propertyUpdate + getter caller name => CallerMemberName
 
 using ColorInvestigation.Common;
 using System;
@@ -41,6 +47,15 @@ namespace ColorInvestigation.Controls
     /// </summary>
     public partial class ColorPickerVM : UserControl, INotifyPropertyChanged
     {
+        private ColorPickerViewModel VM => (ColorPickerViewModel)DataContext;
+
+        // Constructor
+        public ColorPickerVM()
+        {
+            InitializeComponent();
+            VM.AfterUpdatedCallback = ViewModel_AfterUpdate;
+        }
+
         #region ==============  Event handlers  ====================
         private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e) => VM.UpdateUI();
         #endregion
@@ -120,14 +135,6 @@ namespace ColorInvestigation.Controls
 
         #region ===============  NEW CODE  ================
 
-        private ColorPickerViewModel VM => (ColorPickerViewModel)DataContext;
-        // Constructor
-        public ColorPickerVM()
-        {
-            InitializeComponent();
-            VM.PropertiesUpdated += ViewModel_PropertiesUpdated;
-        }
-
         // Original color
         public Color Color
         {
@@ -202,7 +209,7 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region =================  Properties Updated  =================
-        private void ViewModel_PropertiesUpdated(object sender, EventArgs e)
+        private void ViewModel_AfterUpdate()
         {
             UpdateSlider(SaturationAndValueSlider, GetSliderValueByModel("HSV_S"), 1.0 - GetSliderValueByModel("HSV_V"));
             UpdateSlider(HueSlider, null, GetSliderValueByModel("HSV_H"));
