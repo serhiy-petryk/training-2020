@@ -11,9 +11,9 @@ using ColorInvestigation.Common;
 
 namespace ColorInvestigation.Controls
 {
-    public class ColorPickerViewModel : INotifyPropertyChanged
+    internal class ColorPickerViewModel : INotifyPropertyChanged
     {
-        public enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
+        internal enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
 
         private const int ComponentNumber = 15;
         internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
@@ -143,7 +143,7 @@ namespace ColorInvestigation.Controls
         {
             get => _values[14]; set => SetProperty(value);
         }
-        public Tuple<double, double> HSV_S_And_V // set HSV.S & HSV.V simultaneously (for HueAndSaturation slider)
+        internal Tuple<double, double> HSV_S_And_V // set HSV.S & HSV.V simultaneously (for HueAndSaturation slider)
         {
             set
             {
@@ -155,7 +155,7 @@ namespace ColorInvestigation.Controls
         }
 
         private bool _isUpdating;
-        public void SetProperty(double value, [CallerMemberName]string propertyName = null)
+        internal void SetProperty(double value, [CallerMemberName]string propertyName = null)
         {
             var meta = Metadata[propertyName];
             value = Math.Max(meta.Min, Math.Min(meta.Max, value));
@@ -170,7 +170,7 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ===========  Color component metadata  ============
-        public static Dictionary<string, MetaItem> Metadata;
+        internal static Dictionary<string, MetaItem> Metadata;
 
         static ColorPickerViewModel()
         {
@@ -202,14 +202,14 @@ namespace ColorInvestigation.Controls
             new MetaItem(nameof(YCbCr_Cr), -127.5, 127.5)
         };
 
-        public class MetaItem
+        internal class MetaItem
         {
             public readonly string Id;
             public int SeqNo;
             public readonly double Min;
             public readonly double Max;
             public readonly double SpaceMultiplier;
-            public ColorSpace ColorSpace;
+            internal ColorSpace ColorSpace;
             public double GetValue(ColorPickerViewModel VM) => VM._values[SeqNo];
 
             public MetaItem(string id, double min, double max)
@@ -272,7 +272,7 @@ namespace ColorInvestigation.Controls
             UpdateUI();
         }
 
-        public void UpdateUI()
+        internal void UpdateUI()
         {
             OnPropertiesChanged(Metadata.Keys.ToArray());
             OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
@@ -291,14 +291,14 @@ namespace ColorInvestigation.Controls
         private double[] _savedColorData = new double[ComponentNumber + 1];
         private double[] _oldColorData = new double[ComponentNumber + 1];
 
-        public void SaveColor()
+        internal void SaveColor()
         {
             _oldColorData.CopyTo(_savedColorData, 0);
             Array.Copy(_values, _oldColorData, ComponentNumber);
             _oldColorData[_savedColorData.Length - 1] = Alpha;
             OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
-        public void RestoreColor()
+        internal void RestoreColor()
         {
             _savedColorData.CopyTo(_oldColorData, 0);
             Array.Copy(_savedColorData, _values, ComponentNumber);
@@ -359,7 +359,7 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ==============  Tones  =======================
-        public class ColorToneBox
+        internal class ColorToneBox
         {
             private readonly ColorPickerViewModel _owner;
             public int GridColumn { get; }
