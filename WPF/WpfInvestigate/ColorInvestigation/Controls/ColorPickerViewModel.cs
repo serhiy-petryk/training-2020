@@ -62,7 +62,8 @@ namespace ColorInvestigation.Controls
             set
             {
                 _alpha = value;
-                UpdateUI();
+                if (!_isUpdating)
+                    UpdateUI();
             }
         }
         public double RGB_R // in range [0, 255]
@@ -125,7 +126,7 @@ namespace ColorInvestigation.Controls
         {
             get => _values[14]; set => SetProperty(value);
         }
-        public Tuple<double, double> HSV_S_And_V // set hsv.S & HSV.V simultaneously (for HueAndSaturation slider)
+        public Tuple<double, double> HSV_S_And_V // set HSV.S & HSV.V simultaneously (for HueAndSaturation slider)
         {
             set
             {
@@ -145,7 +146,7 @@ namespace ColorInvestigation.Controls
             if (!_isUpdating)
             {
                 _isUpdating = true;
-                UpdateValues(meta);
+                UpdateValues(meta.ColorSpace);
                 _isUpdating = false;
             }
         }
@@ -214,14 +215,14 @@ namespace ColorInvestigation.Controls
         }
         #endregion
 
-        #region ==============  Update Value  ===============
-        private void UpdateValues(MetaItem meta)
+        #region ==============  Update Values/UI  ===============
+        private void UpdateValues(ColorSpace baseColorSpace)
         {
             // Get rgb object
             var rgb = new ColorSpaces.RGB(0, 0, 0);
-            if (meta.ColorSpace == ColorSpace.RGB)
+            if (baseColorSpace == ColorSpace.RGB)
                 rgb = new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2));
-            else if (meta.ColorSpace == ColorSpace.HSL)
+            else if (baseColorSpace == ColorSpace.HSL)
             {
                 rgb = new ColorSpaces.HSL(GetCC(3), GetCC(4), GetCC(5)).GetRGB();
                 // Update HSV
@@ -229,7 +230,7 @@ namespace ColorInvestigation.Controls
                 var hsv = new ColorSpaces.HSV(rgb); // _hsv = new ColorSpaces.HSV(_rgb);
                 SetCC(7, hsv.S, hsv.V);
             }
-            else if (meta.ColorSpace == ColorSpace.HSV)
+            else if (baseColorSpace == ColorSpace.HSV)
             {
                 rgb = new ColorSpaces.HSV(GetCC(6), GetCC(7), GetCC(8)).GetRGB();
                 // Update HSL
@@ -237,27 +238,27 @@ namespace ColorInvestigation.Controls
                 var hsl = new ColorSpaces.HSL(rgb); // _hsl = new ColorSpaces.HSL(_rgb);
                 SetCC(4, hsl.S, hsl.L);
             }
-            else if (meta.ColorSpace == ColorSpace.LAB)
+            else if (baseColorSpace == ColorSpace.LAB)
                 rgb = new ColorSpaces.LAB(GetCC(9), GetCC(10), GetCC(11)).GetRGB();
-            else if (meta.ColorSpace == ColorSpace.YCbCr)
+            else if (baseColorSpace == ColorSpace.YCbCr)
                 rgb = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), GetCC(14)).GetRGB();
 
             // Update other objects
-            if (meta.ColorSpace != ColorSpace.RGB)
+            if (baseColorSpace != ColorSpace.RGB)
                 SetCC(0, rgb.R, rgb.G, rgb.B);
-            if (meta.ColorSpace != ColorSpace.HSL && meta.ColorSpace != ColorSpace.HSV)
+            if (baseColorSpace != ColorSpace.HSL && baseColorSpace != ColorSpace.HSV)
             {
                 var hsl = new ColorSpaces.HSL(rgb);
                 SetCC(3, hsl.H, hsl.S, hsl.L);
                 var hsv = new ColorSpaces.HSV(rgb);
                 SetCC(6, hsv.H, hsv.S, hsv.V);
             }
-            if (meta.ColorSpace != ColorSpace.LAB)
+            if (baseColorSpace != ColorSpace.LAB)
             {
                 var lab = new ColorSpaces.LAB(rgb);
                 SetCC(9, lab.L, lab.A, lab.B);
             }
-            if (meta.ColorSpace != ColorSpace.YCbCr)
+            if (baseColorSpace != ColorSpace.YCbCr)
             {
                 var yCbCr = new ColorSpaces.YCbCr(rgb);
                 SetCC(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
