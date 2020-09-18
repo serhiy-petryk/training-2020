@@ -33,13 +33,13 @@ namespace ColorInvestigation.Common
         /// <param name="rgb"></param>
         /// <returns>Gray level representation: double [0, 1]
         public static double GetGrayLevel(RGB rgb) => YCbCr.GetGrayLevel(rgb);
-        
+
         /// <summary>
         /// Define is color dark based on the BT.709 standard of YCbCr color space
         /// </summary>
-        /// <param name="rgb"></param>
+        /// <param name="color"></param>
         /// <returns></returns>
-        public static bool IsDarkColor(RGB rgb) => GetGrayLevel(rgb) < DarkSplit;
+        public static bool IsDarkColor(Color color) => GetGrayLevel(new RGB(color)) < DarkSplit;
 
         /// <summary>
         /// Get invert color based on hue of HSV color space

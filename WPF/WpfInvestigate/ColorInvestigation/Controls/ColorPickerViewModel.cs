@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
 using System.Windows.Media;
 using ColorInvestigation.Common;
 
@@ -12,9 +14,11 @@ namespace ColorInvestigation.Controls
     public class ColorPickerViewModel : INotifyPropertyChanged
     {
         private const int ComponentNumber = 15;
-        public event EventHandler PropertiesUpdated;
+        internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
 
         public enum ColorSpace { RGB, HSL, HSV, XYZ, LAB, YCbCr };
+
+        public event EventHandler PropertiesUpdated;
 
         private double _alpha;
         private double[] _values = new double[ComponentNumber];
@@ -203,14 +207,11 @@ namespace ColorInvestigation.Controls
             public readonly double SpaceMultiplier;
             public ColorSpace ColorSpace;
             public double GetValue(ColorPickerViewModel VM) => VM._values[SeqNo];
-            // public Func<ColorPickerAsync, double> SliderValue;
-            // public Action<ColorPickerAsync, double> MouseMoveAction;
 
             public MetaItem(string id, double min, double max)
             {
                 Id = id; Min = min; Max = max;
                 SpaceMultiplier = Id.StartsWith("LAB") ? 1 : Max - Min;
-                // SliderValue = sliderValue; MouseMoveAction = mouseMoveAction;
             }
         }
         #endregion
@@ -269,11 +270,12 @@ namespace ColorInvestigation.Controls
 
         public void UpdateUI()
         {
-            // UpdateSliderBrushes();
-
             OnPropertiesChanged(Metadata.Keys.ToArray());
             OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
                 nameof(CurrentColorWithoutAlphaBrush));
+
+            UpdateTones();
+            OnPropertiesChanged(nameof(Tones));
 
             UpdateSliderBrushes();
             OnPropertiesChanged(nameof(Brushes));
@@ -323,12 +325,8 @@ namespace ColorInvestigation.Controls
 
         public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC(6), 1, 1).GetRGB().GetColor());
 
-        public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1,
-            ColorSpaces.IsDarkColor(new ColorSpaces.RGB(Color)) ? Colors.White : Colors.Black);
-
-        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2,
-            ColorSpaces.IsDarkColor(new ColorSpaces.RGB(CurrentColor)) ? Colors.White : Colors.Black);
-
+        public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
+        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
         public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(3,
             Color.FromRgb(Convert.ToByte(RGB_R), Convert.ToByte(RGB_G), Convert.ToByte(RGB_B)));
 
@@ -379,6 +377,82 @@ namespace ColorInvestigation.Controls
             }
         }
 
+        #endregion
+
+        #region ==============  Tones  =======================
+        public class ColorToneBox
+        {
+            private readonly ColorPickerViewModel _owner;
+            public int GridColumn { get; }
+            public int GridRow { get; }
+            public SolidColorBrush Background { get; } = new SolidColorBrush();
+            public SolidColorBrush Foreground { get; } = new SolidColorBrush();
+            public string Info
+            {
+                get
+                {
+                    var rgb = GetBackgroundHSL().GetRGB();
+                    var hsl = GetBackgroundHSL();
+                    var hsv = new ColorSpaces.HSV(rgb) { H = hsl.H };
+                    var lab = new ColorSpaces.LAB(rgb);
+                    var yCbCr = new ColorSpaces.YCbCr(rgb);
+
+                    var sb = new StringBuilder();
+                    sb.AppendLine("HEX:".PadRight(5) + rgb.Color);
+                    sb.AppendLine("Gray level: ???".PadRight(15));
+                    sb.AppendLine(FormatInfoString("RGB", rgb.R * 255, rgb.G * 255, rgb.B * 255));
+                    sb.AppendLine(FormatInfoString("HSL", hsl.H * 360, hsl.S * 100, hsl.L * 100));
+                    sb.AppendLine(FormatInfoString("HSV", hsv.H * 360, hsv.S * 100, hsv.V * 100));
+                    sb.AppendLine(FormatInfoString("LAB", lab.L, lab.A, lab.B));
+                    sb.Append(FormatInfoString("YCbCr", yCbCr.Y * 255, yCbCr.Cb * 255, yCbCr.Cr * 255));
+                    return sb.ToString();
+                }
+            }
+
+            public ColorToneBox(ColorPickerViewModel owner, int gridColumn, int gridRow)
+            {
+                _owner = owner;
+                GridColumn = gridColumn;
+                GridRow = gridRow;
+                Foreground.Color = gridColumn == 0 ? Colors.White : Colors.Black;
+            }
+
+            internal ColorSpaces.HSL GetBackgroundHSL()
+            {
+                if (GridColumn == 0)
+                    return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.025 + 0.05 * GridRow);
+                if (GridColumn == 1)
+                    return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.975 - 0.05 * GridRow);
+                return new ColorSpaces.HSL(_owner.GetCC(3), 0.05 + 0.1 * GridRow, _owner.GetCC(4));
+            }
+
+            private string FormatInfoString(string label, double value1, double value2, double value3) =>
+                (label + ":").PadRight(7) + FormatDouble(value1) + FormatDouble(value2) + FormatDouble(value3);
+            private string FormatDouble(double value) => value.ToString("F1", _owner.CurrentCulture).PadLeft(7);
+        }
+
+        private const int NumberOfTones = 10;
+        public ColorToneBox[] Tones { get; private set; }
+
+        private void UpdateTones()
+        {
+            if (Tones == null)
+            {
+                Tones = new ColorToneBox[3 * NumberOfTones];
+                for (var k1 = 0; k1 < 3; k1++)
+                    for (var k2 = 0; k2 < NumberOfTones; k2++)
+                        Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
+            }
+
+            foreach (var tone in Tones)
+            {
+                tone.Background.Color = tone.GetBackgroundHSL().GetRGB().GetColor();
+                if (tone.GridColumn == 2)
+                    tone.Foreground.Color = ColorSpaces.IsDarkColor(tone.Background.Color) ? Colors.White : Colors.Black;
+            }
+
+            OnPropertiesChanged(nameof(Tones));
+        }
         #endregion
 
     }

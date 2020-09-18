@@ -59,7 +59,7 @@ namespace ColorInvestigation.Controls
             InitializeComponent();
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
             {
-                UpdateValue(ColorSpace.RGB);
+                UpdateValues(ColorSpace.RGB);
                 _savedColor = _oldRgb.GetColor(_oldAlpha);
             }));
         }
@@ -82,7 +82,6 @@ namespace ColorInvestigation.Controls
 
         private Color _savedColor;
 
-
         // Calculated properties
         private readonly SolidColorBrush _hueBrush = new SolidColorBrush();
         public Brush HueBrush
@@ -100,7 +99,7 @@ namespace ColorInvestigation.Controls
             {
                 _alpha = value.A / 255.0;
                 _rgb = new ColorSpaces.RGB(value);
-                UpdateValue(ColorSpace.RGB);
+                UpdateValues(ColorSpace.RGB);
             }
         }
 
@@ -109,7 +108,7 @@ namespace ColorInvestigation.Controls
         {
             get
             {
-                _brushesCache[0].Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(Color)) ? Colors.White : Colors.Black;
+                _brushesCache[0].Color = ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black;
                 return _brushesCache[0];
             }
         }
@@ -125,7 +124,7 @@ namespace ColorInvestigation.Controls
         {
             get
             {
-                _brushesCache[2].Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(CurrentColor)) ? Colors.White : Colors.Black;
+                _brushesCache[2].Color = ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black;
                 return _brushesCache[2];
             }
         }
@@ -166,12 +165,12 @@ namespace ColorInvestigation.Controls
             _oldAlpha = _savedColor.A / 255.0;
             _rgb = new ColorSpaces.RGB(_savedColor);
             _alpha = _savedColor.A / 255.0;
-            UpdateValue(ColorSpace.RGB);
+            UpdateValues(ColorSpace.RGB);
             OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
 
         private bool _isUpdating;
-        private void UpdateValue(ColorSpace colorSpace)
+        private void UpdateValues(ColorSpace colorSpace)
         {
             if (_isUpdating) return;
 
@@ -296,7 +295,7 @@ namespace ColorInvestigation.Controls
                 if (sliderName == nameof(HueSlider))
                 {
                     _hsv.H = value;
-                    UpdateValue(ColorSpace.HSV);
+                    UpdateValues(ColorSpace.HSV);
                 }
                 else if (canvas.Name == nameof(AlphaSlider))
                 {
@@ -307,7 +306,7 @@ namespace ColorInvestigation.Controls
                 {
                     var property = Properties[sliderName.Replace("Slider_", "")];
                     property.MouseMoveAction(this, value);
-                    UpdateValue(property.ColorSpace);
+                    UpdateValues(property.ColorSpace);
                 }
             }
         }
@@ -324,7 +323,7 @@ namespace ColorInvestigation.Controls
 
                 _hsv.S = x / canvas.ActualWidth;
                 _hsv.V = 1 - y / canvas.ActualHeight;
-                UpdateValue(ColorSpace.HSV);
+                UpdateValues(ColorSpace.HSV);
             }
         }
 
@@ -390,7 +389,7 @@ namespace ColorInvestigation.Controls
                 else if (value > colorProperty.Max) valueEditor.Text = colorProperty.Max.ToString(CurrentCulture);
             }
             else valueEditor.Text = "0";
-            UpdateValue(colorProperty.ColorSpace);
+            UpdateValues(colorProperty.ColorSpace);
         }
         #endregion
 
@@ -471,7 +470,7 @@ namespace ColorInvestigation.Controls
             {
                 tone.Background.Color = tone.GetBackgroundHSL().GetRGB().GetColor();
                 if (tone.GridColumn == 2)
-                    tone.Foreground.Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(tone.Background.Color))
+                    tone.Foreground.Color = ColorSpaces.IsDarkColor(tone.Background.Color)
                         ? Colors.White
                         : Colors.Black;
             }
@@ -584,7 +583,7 @@ namespace ColorInvestigation.Controls
             toggleButton.IsChecked = false;
 
             _hsl = (element.DataContext as ColorToneBox).GetBackgroundHSL();
-            UpdateValue(ColorSpace.HSL);
+            UpdateValues(ColorSpace.HSL);
         }
         #endregion
 

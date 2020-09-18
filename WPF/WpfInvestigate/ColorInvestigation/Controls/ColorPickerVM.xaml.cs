@@ -26,17 +26,13 @@
 
 using ColorInvestigation.Common;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace ColorInvestigation.Controls
 {
@@ -45,11 +41,6 @@ namespace ColorInvestigation.Controls
     /// </summary>
     public partial class ColorPickerVM : UserControl, INotifyPropertyChanged
     {
-        //=================================
-        private CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
-
-        private ColorSpaces.HSL _hsl = new ColorSpaces.HSL(0, 0, 0);
-
         #region ==============  Event handlers  ====================
         private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e) => VM.UpdateUI();
         #endregion
@@ -87,13 +78,13 @@ namespace ColorInvestigation.Controls
             var metaData = ColorPickerViewModel.Metadata[propertyName];
             var newText = valueEditor.Text.Substring(0, valueEditor.SelectionStart) + e.Text +
                           valueEditor.Text.Substring(valueEditor.SelectionStart + valueEditor.SelectionLength);
-            if (CurrentCulture.NumberFormat.NativeDigits.Contains(e.Text))
+            if (VM.CurrentCulture.NumberFormat.NativeDigits.Contains(e.Text))
                 e.Handled = false;
-            if (CurrentCulture.NumberFormat.NumberDecimalSeparator == e.Text)
-                e.Handled = valueEditor.Text.Contains(CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            else if (CurrentCulture.NumberFormat.NegativeSign == e.Text)
+            if (VM.CurrentCulture.NumberFormat.NumberDecimalSeparator == e.Text)
+                e.Handled = valueEditor.Text.Contains(VM.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            else if (VM.CurrentCulture.NumberFormat.NegativeSign == e.Text)
                 e.Handled = metaData.Min >= 0 ||
-                            valueEditor.Text.Contains(CurrentCulture.NumberFormat.NegativeSign) ||
+                            valueEditor.Text.Contains(VM.CurrentCulture.NumberFormat.NegativeSign) ||
                             !(newText.StartsWith(e.Text) || newText.EndsWith(e.Text));
 
             if (e.Handled)
@@ -107,61 +98,6 @@ namespace ColorInvestigation.Controls
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
-
-        #region ==============  Tones  =======================
-        public class ColorToneBox
-        {
-            public int GridColumn { get; }
-            public int GridRow { get; }
-            public SolidColorBrush Background { get; } = new SolidColorBrush();
-            public string BackgroundText => Background.Color.ToString();
-            public SolidColorBrush Foreground { get; } = new SolidColorBrush();
-            public string Info { get; set; }
-
-            public ColorToneBox(int gridColumn, int gridRow)
-            {
-                GridColumn = gridColumn;
-                GridRow = gridRow;
-                Foreground.Color = gridColumn == 0 ? Colors.White : Colors.Black;
-            }
-
-            public ColorSpaces.HSL GetBackgroundHSL(ColorSpaces.HSL baseHSL)
-            {
-                if (GridColumn == 0)
-                    return new ColorSpaces.HSL(baseHSL.H, baseHSL.S, 0.025 + 0.05 * GridRow);
-                if (GridColumn == 1)
-                    return new ColorSpaces.HSL(baseHSL.H, baseHSL.S, 0.975 - 0.05 * GridRow);
-                return new ColorSpaces.HSL(baseHSL.H, 0.05 + 0.1 * GridRow, baseHSL.L);
-            }
-        }
-
-        private const int NumberOfTones = 10;
-        public ColorToneBox[] Tones { get; private set; }
-
-        private void TonesGenerate()
-        {
-            if (Tones == null)
-            {
-                Tones = new ColorToneBox[3 * NumberOfTones];
-                for (var k1 = 0; k1 < 3; k1++)
-                {
-                    for (var k2 = 0; k2 < NumberOfTones; k2++)
-                        Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(k1, k2);
-                }
-            }
-
-            foreach (var tone in Tones)
-            {
-                tone.Background.Color = tone.GetBackgroundHSL(_hsl).GetRGB().GetColor();
-                if (tone.GridColumn == 2)
-                    tone.Foreground.Color = ColorSpaces.IsDarkColor(new ColorSpaces.RGB(tone.Background.Color))
-                        ? Colors.White
-                        : Colors.Black;
-            }
-
-            OnPropertiesChanged(nameof(Tones));
         }
         #endregion
 
@@ -274,10 +210,7 @@ namespace ColorInvestigation.Controls
 
             foreach (var kvp in ColorPickerViewModel.Metadata)
                 UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, GetSliderValueByModel(kvp.Key), null);
-
-            // UpdateSliderBrushes();
         }
-
 
         private double GetModelValueBySlider(string componentName, double sliderValue)
         {
