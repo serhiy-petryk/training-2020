@@ -20,6 +20,15 @@ namespace ColorInvestigation.Controls
         private double _alpha;
         private double[] _values = new double[ComponentNumber];
 
+        // Get color component in space unit
+        private double GetCC(int index) => _values[index] / Metalist[index].SpaceMultiplier;
+        // Set color components from space unit
+        private void SetCC(int startIndex, params double[] newValues)
+        {
+            for (var k = 0; k < newValues.Length; k++)
+                _values[k + startIndex] = newValues[k] * Metalist[k + startIndex].SpaceMultiplier;
+        }
+
         #region  ==============  Public Properties  ================
         // Original color
         public Color Color
@@ -59,78 +68,63 @@ namespace ColorInvestigation.Controls
         }
         public double RGB_R // in range [0, 255]
         {
-            get => _values[0];
-            set => SetProperty(value);
+            get => _values[0]; set => SetProperty(value);
         }
         public double RGB_G // in range [0, 255]
         {
-            get => _values[1];
-            set => SetProperty(value);
+            get => _values[1]; set => SetProperty(value);
         }
         public double RGB_B // in range [0, 255]
         {
-            get => _values[2];
-            set => SetProperty(value);
+            get => _values[2]; set => SetProperty(value);
         }
         public double HSL_H // in range [0, 360]
         {
-            get => _values[3];
-            set => SetProperty(value);
+            get => _values[3]; set => SetProperty(value);
         }
         public double HSL_S // in range [0, 100]
         {
-            get => _values[4];
-            set => SetProperty(value);
+            get => _values[4]; set => SetProperty(value);
         }
         public double HSL_L // in range [0, 100]
         {
-            get => _values[5];
-            set => SetProperty(value);
+            get => _values[5]; set => SetProperty(value);
         }
         public double HSV_H // in range [0, 360]
         {
-            get => _values[6];
-            set => SetProperty(value);
+            get => _values[6]; set => SetProperty(value);
         }
         public double HSV_S // in range [0, 100]
         {
-            get => _values[7];
-            set => SetProperty(value);
+            get => _values[7]; set => SetProperty(value);
         }
         public double HSV_V // in range [0, 100]
         {
-            get => _values[8];
-            set => SetProperty(value);
+            get => _values[8]; set => SetProperty(value);
         }
         public double LAB_L // in range [0, 100]
         {
-            get => _values[9];
-            set => SetProperty(value);
+            get => _values[9]; set => SetProperty(value);
         }
         public double LAB_A // in range [-127.5, 127.5]
         {
-            get => _values[10];
-            set => SetProperty(value);
+            get => _values[10]; set => SetProperty(value);
         }
         public double LAB_B // in range [-127.5, 127.5]
         {
-            get => _values[11];
-            set => SetProperty(value);
+            get => _values[11]; set => SetProperty(value);
         }
         public double YCbCr_Y // in range [0, 100]
         {
-            get => _values[12];
-            set => SetProperty(value);
+            get => _values[12]; set => SetProperty(value);
         }
         public double YCbCr_Cb // in range [-127.5, 127.5]
         {
-            get => _values[13];
-            set => SetProperty(value);
+            get => _values[13]; set => SetProperty(value);
         }
         public double YCbCr_Cr // in range [-127.5, 127.5]
         {
-            get => _values[14];
-            set => SetProperty(value);
+            get => _values[14]; set => SetProperty(value);
         }
         public Tuple<double, double> HSV_S_And_V // set hsv.S & HSV.V simultaneously (for HueAndSaturation slider)
         {
@@ -222,60 +216,52 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ==============  Update Value  ===============
-
-        private double GetSpaceValue(int index) => _values[index] / Metalist[index].SpaceMultiplier;
-        private void SetValues(int startIndex, params double[] newValues)
-        {
-            for (var k = 0; k < newValues.Length; k++)
-                _values[k + startIndex] = newValues[k] * Metalist[k + startIndex].SpaceMultiplier;
-        }
-
         private void UpdateValues(MetaItem meta)
         {
             // Get rgb object
             var rgb = new ColorSpaces.RGB(0, 0, 0);
             if (meta.ColorSpace == ColorSpace.RGB)
-                rgb = new ColorSpaces.RGB(GetSpaceValue(0), GetSpaceValue(1), GetSpaceValue(2));
+                rgb = new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2));
             else if (meta.ColorSpace == ColorSpace.HSL)
             {
-                rgb = new ColorSpaces.HSL(GetSpaceValue(3), GetSpaceValue(4), GetSpaceValue(5)).GetRGB();
+                rgb = new ColorSpaces.HSL(GetCC(3), GetCC(4), GetCC(5)).GetRGB();
                 // Update HSV
                 _values[6] = _values[3]; // _hsv.H = _hsl.H;
                 var hsv = new ColorSpaces.HSV(rgb); // _hsv = new ColorSpaces.HSV(_rgb);
-                SetValues(7, hsv.S, hsv.V);
+                SetCC(7, hsv.S, hsv.V);
             }
             else if (meta.ColorSpace == ColorSpace.HSV)
             {
-                rgb = new ColorSpaces.HSV(GetSpaceValue(6), GetSpaceValue(7), GetSpaceValue(8)).GetRGB();
+                rgb = new ColorSpaces.HSV(GetCC(6), GetCC(7), GetCC(8)).GetRGB();
                 // Update HSL
                 _values[3] = _values[6]; // _hsl.H = _hsv.H;
                 var hsl = new ColorSpaces.HSL(rgb); // _hsl = new ColorSpaces.HSL(_rgb);
-                SetValues(4, hsl.S, hsl.L);
+                SetCC(4, hsl.S, hsl.L);
             }
             else if (meta.ColorSpace == ColorSpace.LAB)
-                rgb = new ColorSpaces.LAB(GetSpaceValue(9), GetSpaceValue(10), GetSpaceValue(11)).GetRGB();
+                rgb = new ColorSpaces.LAB(GetCC(9), GetCC(10), GetCC(11)).GetRGB();
             else if (meta.ColorSpace == ColorSpace.YCbCr)
-                rgb = new ColorSpaces.YCbCr(GetSpaceValue(12), GetSpaceValue(13), GetSpaceValue(14)).GetRGB();
+                rgb = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), GetCC(14)).GetRGB();
 
             // Update other objects
             if (meta.ColorSpace != ColorSpace.RGB)
-                SetValues(0, rgb.R, rgb.G, rgb.B);
+                SetCC(0, rgb.R, rgb.G, rgb.B);
             if (meta.ColorSpace != ColorSpace.HSL && meta.ColorSpace != ColorSpace.HSV)
             {
                 var hsl = new ColorSpaces.HSL(rgb);
-                SetValues(3, hsl.H, hsl.S, hsl.L);
+                SetCC(3, hsl.H, hsl.S, hsl.L);
                 var hsv = new ColorSpaces.HSV(rgb);
-                SetValues(6, hsv.H, hsv.S, hsv.V);
+                SetCC(6, hsv.H, hsv.S, hsv.V);
             }
             if (meta.ColorSpace != ColorSpace.LAB)
             {
                 var lab = new ColorSpaces.LAB(rgb);
-                SetValues(9, lab.L, lab.A, lab.B);
+                SetCC(9, lab.L, lab.A, lab.B);
             }
             if (meta.ColorSpace != ColorSpace.YCbCr)
             {
                 var yCbCr = new ColorSpaces.YCbCr(rgb);
-                SetValues(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
+                SetCC(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
             }
 
             UpdateUI();
@@ -324,9 +310,6 @@ namespace ColorInvestigation.Controls
         #region ===========  Linear gradient brushes for Color property  ==========
         public Dictionary<string, LinearGradientBrush> Brushes { get; private set; }
 
-        // Get color component in space unit
-        private double C(int index) => _values[index] / Metalist[index].SpaceMultiplier;
-
         private void UpdateSliderBrushes()
         {
             if (Brushes == null)
@@ -351,24 +334,24 @@ namespace ColorInvestigation.Controls
             }
             for (var k = 0; k <= 100; k++)
             {
-                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(C(3), k / 100.0, C(5)).GetRGB().GetColor();
-                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(C(3), C(4), k / 100.0).GetRGB().GetColor();
-                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(C(6), k / 100.0, C(8)).GetRGB().GetColor();
-                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(C(6), C(7), k / 100.0).GetRGB().GetColor();
-                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(k, C(10), C(11)).GetRGB().GetColor();
+                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC(3), k / 100.0, GetCC(5)).GetRGB().GetColor();
+                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC(3), GetCC(4), k / 100.0).GetRGB().GetColor();
+                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), k / 100.0, GetCC(8)).GetRGB().GetColor();
+                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), GetCC(7), k / 100.0).GetRGB().GetColor();
+                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(k, GetCC(10), GetCC(11)).GetRGB().GetColor();
             }
             for (var k = 0; k <= 255; k++)
             {
-                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(C(9), k - 127.5, C(11)).GetRGB().GetColor();
-                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(C(9), C(10), k - 127.5).GetRGB().GetColor();
-                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(k / 255.0, C(13), C(14)).GetRGB().GetColor();
-                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(C(12), (k - 127.5) / 255, C(14)).GetRGB().GetColor();
-                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(C(12), C(13), (k - 127.5) / 255).GetRGB().GetColor();
+                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), k - 127.5, GetCC(11)).GetRGB().GetColor();
+                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), GetCC(10), k - 127.5).GetRGB().GetColor();
+                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(k / 255.0, GetCC(13), GetCC(14)).GetRGB().GetColor();
+                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), (k - 127.5) / 255, GetCC(14)).GetRGB().GetColor();
+                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), (k - 127.5) / 255).GetRGB().GetColor();
             }
             for (var k = 0; k <= 360; k++)
             {
-                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(k / 360.0, C(4), C(5)).GetRGB().GetColor();
-                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(k / 360.0, C(7), C(8)).GetRGB().GetColor();
+                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(k / 360.0, GetCC(4), GetCC(5)).GetRGB().GetColor();
+                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(k / 360.0, GetCC(7), GetCC(8)).GetRGB().GetColor();
             }
         }
 
