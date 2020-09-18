@@ -356,6 +356,49 @@ namespace ColorInvestigation.Controls
             OnPropertiesChanged(nameof(Brushes));
         }
 
+        private void NewUpdateSliderBrushes()
+        {
+            const int gradientStopsNumber = 30;
+            if (Brushes == null)
+            {
+                Brushes = new Dictionary<string, LinearGradientBrush>();
+                foreach (var kvp in Metadata)
+                {
+                    var gradientCount = kvp.Value.ColorSpace == ColorSpace.RGB ? 1 : gradientStopsNumber;
+                    Brushes.Add(kvp.Key,
+                        new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, gradientCount + 1)
+                            .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / gradientCount)))));
+                }
+            }
+
+            for (var k = 0; k < 2; k++)
+            {
+                var component = k == 0 ? (byte)0x0 : (byte)0xff;
+                Brushes["RGB_R"].GradientStops[k].Color = Color.FromRgb(component, CurrentColor.G, CurrentColor.B);
+                Brushes["RGB_G"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, component, CurrentColor.B);
+                Brushes["RGB_B"].GradientStops[k].Color = Color.FromRgb(CurrentColor.R, CurrentColor.G, component);
+            }
+
+            const double xStep = 1.0 / (gradientStopsNumber + 1);
+            var x = 0.0;
+            for (var k = 0; k <= gradientStopsNumber; k++)
+            {
+                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(x, GetCC(4), GetCC(5)).GetRGB().GetColor();
+                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC(3), x, GetCC(5)).GetRGB().GetColor();
+                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC(3), GetCC(4), x).GetRGB().GetColor();
+                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(x, GetCC(7), GetCC(8)).GetRGB().GetColor();
+                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), x, GetCC(8)).GetRGB().GetColor();
+                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), GetCC(7), x).GetRGB().GetColor();
+                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(x*100, GetCC(10), GetCC(11)).GetRGB().GetColor();
+                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), x*256 - 127.5, GetCC(11)).GetRGB().GetColor();
+                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), GetCC(10), x*256 - 127.5).GetRGB().GetColor();
+                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(x, GetCC(13), GetCC(14)).GetRGB().GetColor();
+                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), x-0.5, GetCC(14)).GetRGB().GetColor();
+                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), x-0.5).GetRGB().GetColor();
+                x += xStep;
+            }
+            OnPropertiesChanged(nameof(Brushes));
+        }
         #endregion
 
         #region ==============  Tones  =======================
