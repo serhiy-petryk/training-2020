@@ -69,9 +69,6 @@
     <Compile Include="Controls\ColorPickerLabel.xaml.cs">
       <DependentUpon>ColorPickerLabel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ColorPickerDelay.xaml.cs">
-      <DependentUpon>ColorPickerDelay.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ColorPickerAsync.xaml.cs">
       <DependentUpon>ColorPickerAsync.xaml</DependentUpon>
     </Compile>
@@ -110,10 +107,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\ColorPickerLabel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ColorPickerDelay.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
