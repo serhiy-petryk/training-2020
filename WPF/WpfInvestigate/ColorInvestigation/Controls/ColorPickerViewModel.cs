@@ -393,7 +393,6 @@ namespace ColorInvestigation.Controls
                 _owner = owner;
                 GridColumn = gridColumn;
                 GridRow = gridRow;
-                Foreground.Color = gridColumn == 0 ? Colors.White : Colors.Black;
             }
 
             internal ColorSpaces.HSL GetBackgroundHSL()
@@ -426,8 +425,7 @@ namespace ColorInvestigation.Controls
             foreach (var tone in Tones)
             {
                 tone.Background.Color = tone.GetBackgroundHSL().GetRGB().GetColor();
-                if (tone.GridColumn == 2)
-                    tone.Foreground.Color = ColorSpaces.IsDarkColor(tone.Background.Color) ? Colors.White : Colors.Black;
+                tone.Foreground.Color = ColorSpaces.IsDarkColor(tone.Background.Color) ? Colors.White : Colors.Black;
             }
 
             OnPropertiesChanged(nameof(Tones));
