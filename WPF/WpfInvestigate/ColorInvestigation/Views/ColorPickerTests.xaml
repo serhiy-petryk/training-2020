@@ -79,7 +79,7 @@
             <!-- =============== -->
             <TabControl Grid.Row="1">
                 <TabItem Header="Simple">
-                    <controls:ColorPicker x:Name="ColorPicker"/>
+                    <controls:ColorPicker x:Name="ColorPicker" Color="Orange"/>
                 </TabItem>
                 <TabItem Header="ViewModel">
                     <controls:ColorPickerVM x:Name="ColorPickerViewModel" Color="Blue"/>

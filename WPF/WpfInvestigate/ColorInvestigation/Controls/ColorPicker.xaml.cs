@@ -45,7 +45,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace ColorInvestigation.Controls
 {
@@ -58,14 +57,15 @@ namespace ColorInvestigation.Controls
         public ColorPicker()
         {
             InitializeComponent();
+            SaveColor();
         }
 
         private const int ComponentNumber = 15;
         internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
 
-        public enum ColorSpace { RGB, HSL, HSV, XYZ, LAB, YCbCr };
+        public enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
 
-        private double _alpha;
+        private double _alpha = 1.0;
         private double[] _values = new double[ComponentNumber];
 
         // Get color component in space unit
@@ -366,7 +366,7 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ===========  Linear gradient brushes for Color components  ==========
-        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
+        private SolidColorBrush[] _brushesCache = { new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush(), new SolidColorBrush() };
 
         private SolidColorBrush GetCacheBrush(int index, Color color)
         {
@@ -378,7 +378,11 @@ namespace ColorInvestigation.Controls
 
         public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
         public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
-        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(3,
+
+        public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3,
+            new ColorSpaces.RGB(_oldColorData[0] / 255, _oldColorData[0] / 255, _oldColorData[0] / 255).GetColor(_oldColorData[15]));
+
+        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4,
             Color.FromRgb(Convert.ToByte(RGB_R), Convert.ToByte(RGB_G), Convert.ToByte(RGB_B)));
 
         public Dictionary<string, LinearGradientBrush> Brushes { get; private set; }
@@ -474,7 +478,7 @@ namespace ColorInvestigation.Controls
                     return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.025 + 0.05 * GridRow);
                 if (GridColumn == 1)
                     return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.975 - 0.05 * GridRow);
-                return new ColorSpaces.HSL(_owner.GetCC(3), 0.05 + 0.1 * GridRow, _owner.GetCC(4));
+                return new ColorSpaces.HSL(_owner.GetCC(3), 0.05 + 0.1 * GridRow, _owner.GetCC(5));
             }
 
             private string FormatInfoString(string label, double value1, double value2, double value3) =>
@@ -625,10 +629,10 @@ namespace ColorInvestigation.Controls
             var toggleButton = Tips.GetVisualParents(element).OfType<Grid>().SelectMany(grid => grid.Children.OfType<ToggleButton>()).FirstOrDefault();
             toggleButton.IsChecked = false;
 
-            // _hsl = (element.DataContext as ColorToneBox).GetBackgroundHSL();
+            var hsl = (element.DataContext as ColorToneBox).GetBackgroundHSL();
+            SetCC(3, hsl.H, hsl.S, hsl.L);
 
             UpdateValues(ColorSpace.HSL);
-            throw new Exception("ToDo: _hsl = (element.DataContext as ColorToneBox).GetBackgroundHSL();");
         }
         #endregion
 
