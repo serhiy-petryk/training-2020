@@ -11,7 +11,7 @@
              SnapsToDevicePixels="True"
              UseLayoutRounding="True"
              Background="#FF282828"
-             SizeChanged="ColorPicker_SizeChanged">
+             SizeChanged="Control_OnSizeChanged">
     <UserControl.DataContext>
         <controls:ColorPickerViewModel/>
     </UserControl.DataContext>
@@ -264,7 +264,7 @@
 
                 <!-- SaturationAndValueSlider -->
                 <Grid Grid.Column="0" Grid.Row="0" Margin="0,0,5,0">
-                    <Rectangle Fill="{Binding VM.HueBrush}"/>
+                    <Rectangle Fill="{Binding HueBrush}"/>
                     <Rectangle Fill="{StaticResource SaturationAndValueSliderBaseBrush}"/>
                     <Canvas x:Name="SaturationAndValueSlider" Background="Transparent" ClipToBounds="False"
                             MouseDown="Slider_MouseDown"
@@ -405,7 +405,7 @@
             <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Stretch" Background="Transparent" IsTabStop="False"/>
 
             <!--  Color component sliders  -->
-            <Grid Grid.Column="2" SizeChanged="RightColumn_OnSizeChanged">
+            <Grid Grid.Column="2" SizeChanged="Control_OnSizeChanged">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>

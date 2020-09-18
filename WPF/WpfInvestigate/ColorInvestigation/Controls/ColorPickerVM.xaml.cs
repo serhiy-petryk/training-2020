@@ -100,73 +100,8 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        // =========================
-        private bool _isUpdating;
-        private void UpdateValue(UpdateMode mode)
-        {
-            if (_isUpdating) return;
-
-            // Update rgb object
-            if (mode == UpdateMode.HSL)
-            {
-                _rgb = _hsl.GetRGB();
-                _hsv = new ColorSpaces.HSV(_rgb);
-                _hsv.H = _hsl.H;
-            }
-            else if (mode == UpdateMode.HSV)
-            {
-                _rgb = _hsv.GetRGB();
-                _hsl = new ColorSpaces.HSL(_rgb);
-                _hsl.H = _hsv.H;
-            }
-            else if (mode == UpdateMode.XYZ)
-            {
-                _rgb = _xyz.GetRGB();
-                _lab = new ColorSpaces.LAB(_xyz);
-            }
-            else if (mode == UpdateMode.LAB)
-            {
-                _rgb = _lab.GetRGB();
-                _xyz = _lab.GetXYZ();
-            }
-            else if (mode == UpdateMode.YCbCr)
-                _rgb = _yCbCr.GetRGB();
-
-            // Update other objects
-            if (mode != UpdateMode.HSL && mode != UpdateMode.HSV)
-            {
-                _hsl = new ColorSpaces.HSL(_rgb);
-                _hsv = new ColorSpaces.HSV(_rgb);
-            }
-            if (mode != UpdateMode.XYZ && mode != UpdateMode.LAB)
-            {
-                _xyz = new ColorSpaces.XYZ(_rgb);
-                _lab = new ColorSpaces.LAB(_rgb);
-            }
-            if (mode != UpdateMode.YCbCr)
-                _yCbCr = new ColorSpaces.YCbCr(_rgb);
-
-            _isUpdating = true;
-            xxUpdateUI();
-            _isUpdating = false;
-        }
-
-        private void xxUpdateUI()
-        {
-            return;
-        }
-
         #region ==============  Event handlers  ====================
-
-        private void ColorPicker_SizeChanged(object sender, SizeChangedEventArgs e) => VM.UpdateUI();
-        private void RightColumn_OnSizeChanged(object sender, SizeChangedEventArgs e) => VM.UpdateUI();
-
-        private void ColorBox_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            _hsl = (((FrameworkElement)sender).DataContext as ColorToneBox).GetBackgroundHSL(_hsl);
-            UpdateValue(UpdateMode.HSL);
-        }
-
+        private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e) => VM.UpdateUI();
         #endregion
 
         #region ================  SelectAll Event Handlers on Focus event  ===============

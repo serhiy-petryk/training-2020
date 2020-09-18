@@ -13,8 +13,6 @@ namespace ColorInvestigation.Controls
         private const int ComponentNumber = 15;
         public event EventHandler PropertiesUpdated;
 
-        public void RefreshValues() => UpdateValues(Metadata["RGB_R"]);
-
         public enum ColorSpace { RGB, HSL, HSV, XYZ, LAB, YCbCr };
 
         private double _alpha;
@@ -272,7 +270,7 @@ namespace ColorInvestigation.Controls
             UpdateSliderBrushes();
 
             OnPropertiesChanged(Metadata.Keys.ToArray());
-            OnPropertiesChanged(nameof(CurrentColor), nameof(Brushes));
+            OnPropertiesChanged(nameof(CurrentColor), nameof(Brushes), nameof(HueBrush));
             PropertiesUpdated?.Invoke(this, new EventArgs());
         }
 
