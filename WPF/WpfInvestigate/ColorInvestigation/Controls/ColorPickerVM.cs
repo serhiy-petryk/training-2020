@@ -18,10 +18,25 @@ namespace ColorInvestigation.Controls
         {
             Components = new List<ColorComponent>
             {
-                new ColorComponent(this, "RGB_A", 0, 255), new ColorComponent(this, "RGB_R", 0, 255),
-                new ColorComponent(this, "RGB_G", 0, 255), new ColorComponent(this, "RGB_B", 0, 255),
-                new ColorComponent(this, "HSL_H", 0, 360, "°"), new ColorComponent(this, "HSL_S", 0, 100, "%"),
-                new ColorComponent(this, "HSL_L", 0, 100, "%")
+                new ColorComponent(this, "RGB_A", 0, 255, null, null),
+                new ColorComponent(this, "RGB_R", 0, 255, null,
+                    (k) => Color.FromRgb(Convert.ToByte(255 * k), CurrentColor.G, CurrentColor.B)),
+                new ColorComponent(this, "RGB_G", 0, 255, null,
+                    (k) => Color.FromRgb(CurrentColor.R, Convert.ToByte(255 * k), CurrentColor.B)),
+                new ColorComponent(this, "RGB_B", 0, 255, null,
+                    (k) => Color.FromRgb(CurrentColor.R, CurrentColor.G, Convert.ToByte(255 * k))),
+                new ColorComponent(this, "HSL_H", 0, 360, "°",
+                    (k) => new ColorSpaces.HSL(k / 360.0, GetCC(5), GetCC(6)).GetRGB().GetColor()),
+                new ColorComponent(this, "HSL_S", 0, 100, "%",
+                    (k) => new ColorSpaces.HSL(GetCC(4), k / 100.0, GetCC(6)).GetRGB().GetColor()),
+                new ColorComponent(this, "HSL_L", 0, 100, "%",
+                    (k) => new ColorSpaces.HSL(GetCC(4), GetCC(5), k / 100.0).GetRGB().GetColor()),
+                new ColorComponent(this, "HSV_H", 0, 360, "°",
+                (k) => new ColorSpaces.HSL(k / 360.0, GetCC(8), GetCC(9)).GetRGB().GetColor()),
+                new ColorComponent(this, "HSV_S", 0, 100, "%",
+                    (k) => new ColorSpaces.HSL(GetCC(7), k / 100.0, GetCC(9)).GetRGB().GetColor()),
+                new ColorComponent(this, "HSV_V", 0, 100, "%",
+                    (k) => new ColorSpaces.HSL(GetCC(7), GetCC(8), k / 100.0).GetRGB().GetColor())
             };
         }
 
@@ -51,11 +66,13 @@ namespace ColorInvestigation.Controls
             private ColorPickerVM _owner;
             public double SliderControlSize;
             public double SliderControlOffset;
+            private Func<int, Color> _backgroundGradient;
 
-            public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel = null)
+            public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel, Func<int, Color> backgroundGradient)
             {
                 Id = id; Min = min; Max = max;
                 ValueLabel = valueLabel; _owner = owner;
+                _backgroundGradient = backgroundGradient;
                 SpaceMultiplier = Id.StartsWith("LAB") ? 1 : Max - Min;
                 ColorSpace = (ColorSpace)Enum.Parse(typeof(ColorSpace), Id.Split('_')[0]);
                 var gradientCount = ColorSpace == ColorSpace.RGB ? 1 : Convert.ToInt32(Max - Min);
@@ -68,7 +85,10 @@ namespace ColorInvestigation.Controls
 
             public void UpdateUI()
             {
-                OnPropertiesChanged(nameof(SliderValue), nameof(Value));
+                if (_backgroundGradient !=null)
+                    for (var k = 0; k < BackgroundBrush.GradientStops.Count; k++)
+                        BackgroundBrush.GradientStops[k].Color = _backgroundGradient(k);
+                OnPropertiesChanged(nameof(SliderValue), nameof(Value), nameof(BackgroundBrush));
             }
 
             #region ===========  INotifyPropertyChanged  ===============
@@ -103,8 +123,10 @@ namespace ColorInvestigation.Controls
 
         public Color CurrentColor
         {
-            get => Color.FromArgb(Convert.ToByte(Alpha * 255), Convert.ToByte(RGB_R), Convert.ToByte(RGB_G),
-                Convert.ToByte(RGB_B));
+            // get => Color.FromArgb(Convert.ToByte(Alpha * 255), Convert.ToByte(RGB_R), Convert.ToByte(RGB_G),
+               // Convert.ToByte(RGB_B));
+            get => Color.FromArgb(Convert.ToByte(Components[0].Value), Convert.ToByte(Components[1].Value), Convert.ToByte(Components[2].Value),
+                Convert.ToByte(Components[3].Value));
             set
             {
                 _isUpdating = true;
@@ -350,7 +372,7 @@ namespace ColorInvestigation.Controls
                 nameof(CurrentColorWithoutAlphaBrush));
 
             AfterUpdatedCallback?.Invoke();
-            NewUpdateSliderBrushes();
+            // NewUpdateSliderBrushes();
 
             foreach (var component in Components)
                 component.UpdateUI();
