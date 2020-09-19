@@ -42,6 +42,15 @@
                 <WrapPanel Grid.Row="0" Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left">
                         <Rectangle.Fill>
+                            <SolidColorBrush x:Name="BrushDT" Color="{Binding ElementName=ColorPickerDT, Path=Color, Mode=TwoWay}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Button Content="Save Color DT" Margin="5" Height="24" Click="SaveButtonDT_Click" HorizontalAlignment="Left"/>
+                    <Button Content="Restore Color DT" Margin="2" Height="34" Click="RestoreButtonDT_Click" HorizontalAlignment="Left"/>
+                    <Button Content="Change Color DT" Margin="2" Height="34" Click="ChangeColorButtonDT_Click" HorizontalAlignment="Left"/>
+
+                    <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left">
+                        <Rectangle.Fill>
                             <SolidColorBrush x:Name="BrushVMAsync" Color="{Binding ElementName=ColorPickerViewModelAsync, Path=Color, Mode=TwoWay}"/>
                         </Rectangle.Fill>
                     </Rectangle>
@@ -87,6 +96,9 @@
 
             <!-- =============== -->
             <TabControl Grid.Row="1">
+                <TabItem Header="DTViewModel">
+                    <controls:ColorPickerDT x:Name="ColorPickerDT" Color="Orange"/>
+                </TabItem>
                 <TabItem Header="ViewModelAsync">
                     <controls:ColorPickerVMAsync x:Name="ColorPickerViewModelAsync" Color="Orange"/>
                 </TabItem>

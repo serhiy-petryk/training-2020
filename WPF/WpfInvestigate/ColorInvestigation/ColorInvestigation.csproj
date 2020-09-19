@@ -62,7 +62,11 @@
     <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\FlatButtonConverters.cs" />
+    <Compile Include="Controls\ColorPickerDTVM.cs" />
     <Compile Include="Controls\ColorPickerViewModel.cs" />
+    <Compile Include="Controls\ColorPickerDT.xaml.cs">
+      <DependentUpon>ColorPickerDT.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ColorPickerVMAsync.xaml.cs">
       <DependentUpon>ColorPickerVMAsync.xaml</DependentUpon>
     </Compile>
@@ -105,6 +109,10 @@
     <Compile Include="Views\MonoChromatic.xaml.cs">
       <DependentUpon>MonoChromatic.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\ColorPickerDT.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\ColorPickerVMAsync.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

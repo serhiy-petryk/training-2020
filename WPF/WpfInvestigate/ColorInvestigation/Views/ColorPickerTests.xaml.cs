@@ -19,10 +19,12 @@ namespace ColorInvestigation.Views
         private void SaveButtonVMAsync_Click(object sender, RoutedEventArgs e) => ColorPickerViewModelAsync.SaveColor();
         private void SaveButtonAsync_Click(object sender, RoutedEventArgs e) => ColorPickerAsync.SaveColor();
         private void SaveButtonLabel_Click(object sender, RoutedEventArgs e) => ColorPickerLabel.SaveColor();
+        private void SaveButtonDT_Click(object sender, RoutedEventArgs e) => ColorPickerDT.SaveColor();
 
         private void RestoreButton_Click(object sender, RoutedEventArgs e) => ColorPicker.RestoreColor();
         private void RestoreButtonVM_Click(object sender, RoutedEventArgs e) => ColorPickerViewModel.RestoreColor();
         private void RestoreButtonVMAsync_Click(object sender, RoutedEventArgs e) => ColorPickerViewModelAsync.RestoreColor();
+        private void RestoreButtonDT_Click(object sender, RoutedEventArgs e) => ColorPickerDT.RestoreColor();
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
@@ -45,6 +47,14 @@ namespace ColorInvestigation.Views
                 BrushVMAsync.Color = Colors.Blue;
         }
 
+        private void ChangeColorButtonDT_Click(object sender, RoutedEventArgs e)
+        {
+            if (BrushDT.Color == Colors.Blue)
+                BrushDT.Color = Colors.Yellow;
+            else
+                BrushDT.Color = Colors.Blue;
+        }
+
         private void ChangeColorButton_Click(object sender, RoutedEventArgs e)
         {
             if (Brush.Color == Colors.Blue)
@@ -52,5 +62,6 @@ namespace ColorInvestigation.Views
             else
                 Brush.Color = Colors.Blue;
         }
+
     }
 }
