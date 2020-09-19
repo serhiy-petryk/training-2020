@@ -122,11 +122,11 @@ namespace ColorInvestigation.Controls
             _brushesCache[index].Color = color;
             return _brushesCache[index];
         }
-        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC(6), 1, 1).GetRGB().GetColor());
+        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC_Old(6), 1, 1).GetRGB().GetColor());
         public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
         public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, new ColorSpaces.RGB(_oldColorData[0] / 255, _oldColorData[1] / 255, _oldColorData[2] / 255).GetColor());
-        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2)).GetColor());
+        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, new ColorSpaces.RGB(GetCC_Old(0), GetCC_Old(1), GetCC_Old(2)).GetColor());
 
         #endregion
 
@@ -135,9 +135,10 @@ namespace ColorInvestigation.Controls
         private double[] _values = new double[ComponentNumber];
 
         // Get color component in space unit
-        private double GetCC(int index) => _values[index] / Metalist[index].SpaceMultiplier;
+        private double GetCC(int index) => Components[index].Value / Components[index].SpaceMultiplier;
+        private double GetCC_Old(int index) => _values[index] / Metalist[index].SpaceMultiplier;
         // Set color components from space unit
-        internal void SetCC(int startIndex, params double[] newValues)
+        internal void SetCC_Old(int startIndex, params double[] newValues)
         {
             for (var k = 0; k < newValues.Length; k++)
                 _values[k + startIndex] = newValues[k] * Metalist[k + startIndex].SpaceMultiplier;
@@ -294,47 +295,47 @@ namespace ColorInvestigation.Controls
             // Get rgb object
             var rgb = new ColorSpaces.RGB(0, 0, 0);
             if (baseColorSpace == ColorSpace.RGB)
-                rgb = new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2));
+                rgb = new ColorSpaces.RGB(GetCC_Old(0), GetCC_Old(1), GetCC_Old(2));
             else if (baseColorSpace == ColorSpace.HSL)
             {
-                rgb = new ColorSpaces.HSL(GetCC(3), GetCC(4), GetCC(5)).GetRGB();
+                rgb = new ColorSpaces.HSL(GetCC_Old(3), GetCC_Old(4), GetCC_Old(5)).GetRGB();
                 // Update HSV
                 _values[6] = _values[3]; // _hsv.H = _hsl.H;
                 var hsv = new ColorSpaces.HSV(rgb); // _hsv = new ColorSpaces.HSV(_rgb);
-                SetCC(7, hsv.S, hsv.V);
+                SetCC_Old(7, hsv.S, hsv.V);
             }
             else if (baseColorSpace == ColorSpace.HSV)
             {
-                rgb = new ColorSpaces.HSV(GetCC(6), GetCC(7), GetCC(8)).GetRGB();
+                rgb = new ColorSpaces.HSV(GetCC_Old(6), GetCC_Old(7), GetCC_Old(8)).GetRGB();
                 // Update HSL
                 _values[3] = _values[6]; // _hsl.H = _hsv.H;
                 var hsl = new ColorSpaces.HSL(rgb); // _hsl = new ColorSpaces.HSL(_rgb);
-                SetCC(4, hsl.S, hsl.L);
+                SetCC_Old(4, hsl.S, hsl.L);
             }
             else if (baseColorSpace == ColorSpace.LAB)
-                rgb = new ColorSpaces.LAB(GetCC(9), GetCC(10), GetCC(11)).GetRGB();
+                rgb = new ColorSpaces.LAB(GetCC_Old(9), GetCC_Old(10), GetCC_Old(11)).GetRGB();
             else if (baseColorSpace == ColorSpace.YCbCr)
-                rgb = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), GetCC(14)).GetRGB();
+                rgb = new ColorSpaces.YCbCr(GetCC_Old(12), GetCC_Old(13), GetCC_Old(14)).GetRGB();
 
             // Update other objects
             if (baseColorSpace != ColorSpace.RGB)
-                SetCC(0, rgb.R, rgb.G, rgb.B);
+                SetCC_Old(0, rgb.R, rgb.G, rgb.B);
             if (baseColorSpace != ColorSpace.HSL && baseColorSpace != ColorSpace.HSV)
             {
                 var hsl = new ColorSpaces.HSL(rgb);
-                SetCC(3, hsl.H, hsl.S, hsl.L);
+                SetCC_Old(3, hsl.H, hsl.S, hsl.L);
                 var hsv = new ColorSpaces.HSV(rgb);
-                SetCC(6, hsv.H, hsv.S, hsv.V);
+                SetCC_Old(6, hsv.H, hsv.S, hsv.V);
             }
             if (baseColorSpace != ColorSpace.LAB)
             {
                 var lab = new ColorSpaces.LAB(rgb);
-                SetCC(9, lab.L, lab.A, lab.B);
+                SetCC_Old(9, lab.L, lab.A, lab.B);
             }
             if (baseColorSpace != ColorSpace.YCbCr)
             {
                 var yCbCr = new ColorSpaces.YCbCr(rgb);
-                SetCC(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
+                SetCC_Old(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
             }
 
             UpdateUI();
@@ -405,24 +406,24 @@ namespace ColorInvestigation.Controls
             }
             for (var k = 0; k <= 100; k++)
             {
-                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC(3), k / 100.0, GetCC(5)).GetRGB().GetColor();
-                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC(3), GetCC(4), k / 100.0).GetRGB().GetColor();
-                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), k / 100.0, GetCC(8)).GetRGB().GetColor();
-                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), GetCC(7), k / 100.0).GetRGB().GetColor();
-                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(k, GetCC(10), GetCC(11)).GetRGB().GetColor();
+                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC_Old(3), k / 100.0, GetCC_Old(5)).GetRGB().GetColor();
+                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC_Old(3), GetCC_Old(4), k / 100.0).GetRGB().GetColor();
+                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC_Old(6), k / 100.0, GetCC_Old(8)).GetRGB().GetColor();
+                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC_Old(6), GetCC_Old(7), k / 100.0).GetRGB().GetColor();
+                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(k, GetCC_Old(10), GetCC_Old(11)).GetRGB().GetColor();
             }
             for (var k = 0; k <= 255; k++)
             {
-                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), k - 127.5, GetCC(11)).GetRGB().GetColor();
-                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), GetCC(10), k - 127.5).GetRGB().GetColor();
-                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(k / 255.0, GetCC(13), GetCC(14)).GetRGB().GetColor();
-                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), (k - 127.5) / 255, GetCC(14)).GetRGB().GetColor();
-                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), (k - 127.5) / 255).GetRGB().GetColor();
+                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC_Old(9), k - 127.5, GetCC_Old(11)).GetRGB().GetColor();
+                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC_Old(9), GetCC_Old(10), k - 127.5).GetRGB().GetColor();
+                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(k / 255.0, GetCC_Old(13), GetCC_Old(14)).GetRGB().GetColor();
+                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC_Old(12), (k - 127.5) / 255, GetCC_Old(14)).GetRGB().GetColor();
+                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC_Old(12), GetCC_Old(13), (k - 127.5) / 255).GetRGB().GetColor();
             }
             for (var k = 0; k <= 360; k++)
             {
-                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(k / 360.0, GetCC(4), GetCC(5)).GetRGB().GetColor();
-                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(k / 360.0, GetCC(7), GetCC(8)).GetRGB().GetColor();
+                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(k / 360.0, GetCC_Old(4), GetCC_Old(5)).GetRGB().GetColor();
+                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(k / 360.0, GetCC_Old(7), GetCC_Old(8)).GetRGB().GetColor();
             }
             OnPropertiesChanged(nameof(Brushes));
         }
@@ -454,18 +455,18 @@ namespace ColorInvestigation.Controls
             var x = 0.0;
             for (var k = 0; k <= gradientStopsNumber; k++)
             {
-                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(x, GetCC(4), GetCC(5)).GetRGB().GetColor();
-                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC(3), x, GetCC(5)).GetRGB().GetColor();
-                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC(3), GetCC(4), x).GetRGB().GetColor();
-                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(x, GetCC(7), GetCC(8)).GetRGB().GetColor();
-                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), x, GetCC(8)).GetRGB().GetColor();
-                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), GetCC(7), x).GetRGB().GetColor();
-                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(x * 100, GetCC(10), GetCC(11)).GetRGB().GetColor();
-                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), x * 256 - 127.5, GetCC(11)).GetRGB().GetColor();
-                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), GetCC(10), x * 256 - 127.5).GetRGB().GetColor();
-                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(x, GetCC(13), GetCC(14)).GetRGB().GetColor();
-                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), x - 0.5, GetCC(14)).GetRGB().GetColor();
-                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), x - 0.5).GetRGB().GetColor();
+                Brushes["HSL_H"].GradientStops[k].Color = new ColorSpaces.HSL(x, GetCC_Old(4), GetCC_Old(5)).GetRGB().GetColor();
+                Brushes["HSL_S"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC_Old(3), x, GetCC_Old(5)).GetRGB().GetColor();
+                Brushes["HSL_L"].GradientStops[k].Color = new ColorSpaces.HSL(GetCC_Old(3), GetCC_Old(4), x).GetRGB().GetColor();
+                Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(x, GetCC_Old(7), GetCC_Old(8)).GetRGB().GetColor();
+                Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC_Old(6), x, GetCC_Old(8)).GetRGB().GetColor();
+                Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC_Old(6), GetCC_Old(7), x).GetRGB().GetColor();
+                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(x * 100, GetCC_Old(10), GetCC_Old(11)).GetRGB().GetColor();
+                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC_Old(9), x * 256 - 127.5, GetCC_Old(11)).GetRGB().GetColor();
+                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC_Old(9), GetCC_Old(10), x * 256 - 127.5).GetRGB().GetColor();
+                Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(x, GetCC_Old(13), GetCC_Old(14)).GetRGB().GetColor();
+                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC_Old(12), x - 0.5, GetCC_Old(14)).GetRGB().GetColor();
+                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC_Old(12), GetCC_Old(13), x - 0.5).GetRGB().GetColor();
                 x += xStep;
             }
             OnPropertiesChanged(nameof(Brushes));
@@ -512,10 +513,10 @@ namespace ColorInvestigation.Controls
             internal ColorSpaces.HSL GetBackgroundHSL()
             {
                 if (GridColumn == 0)
-                    return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.025 + 0.05 * GridRow);
+                    return new ColorSpaces.HSL(_owner.GetCC_Old(3), _owner.GetCC_Old(4), 0.025 + 0.05 * GridRow);
                 if (GridColumn == 1)
-                    return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.975 - 0.05 * GridRow);
-                return new ColorSpaces.HSL(_owner.GetCC(3), 0.05 + 0.1 * GridRow, _owner.GetCC(5));
+                    return new ColorSpaces.HSL(_owner.GetCC_Old(3), _owner.GetCC_Old(4), 0.975 - 0.05 * GridRow);
+                return new ColorSpaces.HSL(_owner.GetCC_Old(3), 0.05 + 0.1 * GridRow, _owner.GetCC_Old(5));
             }
 
             private string FormatInfoString(string label, double value1, double value2, double value3) =>

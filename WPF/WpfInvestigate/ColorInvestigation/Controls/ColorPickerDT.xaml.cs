@@ -167,7 +167,7 @@ namespace ColorInvestigation.Controls
             var hsl = (element.DataContext as ColorPickerVM.ColorToneBox).GetBackgroundHSL();
             VM.CurrentColor = hsl.GetRGB().GetColor();
 
-            VM.SetCC(3, hsl.H, hsl.S, hsl.L);
+            VM.SetCC_Old(3, hsl.H, hsl.S, hsl.L);
 
             VM.SetProperty(hsl.H * 360, "HSL_H");
         }
