@@ -42,6 +42,15 @@
                 <WrapPanel Grid.Row="0" Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left">
                         <Rectangle.Fill>
+                            <SolidColorBrush x:Name="BrushVMAsync" Color="{Binding ElementName=ColorPickerViewModelAsync, Path=Color, Mode=TwoWay}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Button Content="Save Color VMAsync" Margin="5" Height="24" Click="SaveButtonVMAsync_Click" HorizontalAlignment="Left"/>
+                    <Button Content="Restore Color VMAsync" Margin="2" Height="34" Click="RestoreButtonVMAsync_Click" HorizontalAlignment="Left"/>
+                    <Button Content="Change Color VMAsync" Margin="2" Height="34" Click="ChangeColorButtonVMAsync_Click" HorizontalAlignment="Left"/>
+
+                    <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left">
+                        <Rectangle.Fill>
                             <SolidColorBrush x:Name="BrushVM" Color="{Binding ElementName=ColorPickerViewModel, Path=Color, Mode=TwoWay}"/>
                         </Rectangle.Fill>
                     </Rectangle>
@@ -78,6 +87,9 @@
 
             <!-- =============== -->
             <TabControl Grid.Row="1">
+                <TabItem Header="ViewModelAsync">
+                    <controls:ColorPickerVMAsync x:Name="ColorPickerViewModelAsync" Color="Orange"/>
+                </TabItem>
                 <TabItem Header="ViewModel">
                     <controls:ColorPickerVM x:Name="ColorPickerViewModel" Color="Orange"/>
                 </TabItem>

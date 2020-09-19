@@ -274,14 +274,13 @@ namespace ColorInvestigation.Controls
 
         internal void UpdateUI()
         {
+            UpdateTones();
             OnPropertiesChanged(Metadata.Keys.ToArray());
             OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
                 nameof(CurrentColorWithoutAlphaBrush));
 
-            UpdateTones();
             AfterUpdatedCallback?.Invoke();
-            UpdateSliderBrushes();
-
+            NewUpdateSliderBrushes();
         }
 
         #endregion
@@ -358,7 +357,7 @@ namespace ColorInvestigation.Controls
 
         private void NewUpdateSliderBrushes()
         {
-            const int gradientStopsNumber = 30;
+            const int gradientStopsNumber = 100;
             if (Brushes == null)
             {
                 Brushes = new Dictionary<string, LinearGradientBrush>();
