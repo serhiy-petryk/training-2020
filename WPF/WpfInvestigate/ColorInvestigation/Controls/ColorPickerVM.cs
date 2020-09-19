@@ -12,7 +12,7 @@ using ColorInvestigation.Common;
 namespace ColorInvestigation.Controls
 {
     // ColorPicker ViewModel for DataTemplate
-    internal class ColorPickerDTVM : INotifyPropertyChanged
+    internal class ColorPickerVM : INotifyPropertyChanged
     {
         internal enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
 
@@ -173,7 +173,7 @@ namespace ColorInvestigation.Controls
         #region ===========  Color component metadata  ============
         internal static Dictionary<string, MetaItem> Metadata;
 
-        static ColorPickerDTVM()
+        static ColorPickerVM()
         {
             for (var k = 0; k < Metalist.Count; k++)
             {
@@ -211,7 +211,7 @@ namespace ColorInvestigation.Controls
             public readonly double Max;
             public readonly double SpaceMultiplier;
             internal ColorSpace ColorSpace;
-            public double GetValue(ColorPickerDTVM VM) => VM._values[SeqNo];
+            public double GetValue(ColorPickerVM VM) => VM._values[SeqNo];
 
             public MetaItem(string id, double min, double max)
             {
@@ -404,7 +404,7 @@ namespace ColorInvestigation.Controls
         #region ==============  Tones  =======================
         internal class ColorToneBox
         {
-            private readonly ColorPickerDTVM _owner;
+            private readonly ColorPickerVM _owner;
             public int GridColumn { get; }
             public int GridRow { get; }
             public SolidColorBrush Background { get; } = new SolidColorBrush();
@@ -431,7 +431,7 @@ namespace ColorInvestigation.Controls
                 }
             }
 
-            public ColorToneBox(ColorPickerDTVM owner, int gridColumn, int gridRow)
+            public ColorToneBox(ColorPickerVM owner, int gridColumn, int gridRow)
             {
                 _owner = owner;
                 GridColumn = gridColumn;

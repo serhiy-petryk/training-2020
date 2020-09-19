@@ -14,7 +14,7 @@
              SizeChanged="Control_OnSizeChanged">
 
     <UserControl.DataContext>
-        <controls:ColorPickerDTVM/>
+        <controls:ColorPickerVM/>
     </UserControl.DataContext>
 
     <UserControl.Resources>

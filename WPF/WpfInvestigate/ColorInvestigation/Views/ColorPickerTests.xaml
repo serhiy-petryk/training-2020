@@ -51,7 +51,7 @@
 
                     <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left">
                         <Rectangle.Fill>
-                            <SolidColorBrush x:Name="BrushVMAsync" Color="{Binding ElementName=ColorPickerViewModelAsync, Path=Color, Mode=TwoWay}"/>
+                            <SolidColorBrush x:Name="BrushVMAsync" Color="{Binding ElementName=ColorPickerWithViewModelAsync, Path=Color, Mode=TwoWay}"/>
                         </Rectangle.Fill>
                     </Rectangle>
                     <Button Content="Save Color VMAsync" Margin="5" Height="24" Click="SaveButtonVMAsync_Click" HorizontalAlignment="Left"/>
@@ -60,7 +60,7 @@
 
                     <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left">
                         <Rectangle.Fill>
-                            <SolidColorBrush x:Name="BrushVM" Color="{Binding ElementName=ColorPickerViewModel, Path=Color, Mode=TwoWay}"/>
+                            <SolidColorBrush x:Name="BrushVM" Color="{Binding ElementName=ColorPickerWithViewModel, Path=Color, Mode=TwoWay}"/>
                         </Rectangle.Fill>
                     </Rectangle>
                     <Button Content="Save Color VM" Margin="5" Height="24" Click="SaveButtonVM_Click" HorizontalAlignment="Left"/>
@@ -100,10 +100,10 @@
                     <controls:ColorPickerDT x:Name="ColorPickerDT" Color="Orange"/>
                 </TabItem>
                 <TabItem Header="ViewModelAsync">
-                    <controls:ColorPickerVMAsync x:Name="ColorPickerViewModelAsync" Color="Orange"/>
+                    <controls:ColorPickerVMAsync x:Name="ColorPickerWithViewModelAsync" Color="Orange"/>
                 </TabItem>
                 <TabItem Header="ViewModel">
-                    <controls:ColorPickerVM x:Name="ColorPickerViewModel" Color="Orange"/>
+                    <controls:ColorPickerWithVM x:Name="ColorPickerWithViewModel" Color="Orange"/>
                 </TabItem>
                 <TabItem Header="Simple">
                     <controls:ColorPicker x:Name="ColorPicker" Color="Orange"/>

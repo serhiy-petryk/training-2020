@@ -47,7 +47,7 @@ namespace ColorInvestigation.Controls
     /// </summary>
     public partial class ColorPickerDT : UserControl, INotifyPropertyChanged
     {
-        private ColorPickerDTVM VM => (ColorPickerDTVM)DataContext;
+        private ColorPickerVM VM => (ColorPickerVM)DataContext;
 
         // Constructor
         public ColorPickerDT()
@@ -110,7 +110,7 @@ namespace ColorInvestigation.Controls
             var valueEditor = (TextBox)sender;
             var bindingExpression = valueEditor.GetBindingExpression(TextBox.TextProperty);
             var propertyName = bindingExpression.ParentBinding.Path.Path;
-            var metaData = ColorPickerDTVM.Metadata[propertyName];
+            var metaData = ColorPickerVM.Metadata[propertyName];
             var newText = valueEditor.Text.Substring(0, valueEditor.SelectionStart) + e.Text +
                           valueEditor.Text.Substring(valueEditor.SelectionStart + valueEditor.SelectionLength);
             if (VM.CurrentCulture.NumberFormat.NativeDigits.Contains(e.Text))
@@ -131,7 +131,7 @@ namespace ColorInvestigation.Controls
         private void ColorBoxPopup_OnOpened(object sender, EventArgs e)
         {
             var textBox = Tips.GetVisualChildren(((Popup)sender).Child).OfType<TextBox>().FirstOrDefault();
-            textBox.Text = (textBox.DataContext as ColorPickerDTVM.ColorToneBox).Info;
+            textBox.Text = (textBox.DataContext as ColorPickerVM.ColorToneBox).Info;
             textBox.Focus();
         }
 
@@ -141,7 +141,7 @@ namespace ColorInvestigation.Controls
             var toggleButton = Tips.GetVisualParents(element).OfType<Grid>().SelectMany(grid => grid.Children.OfType<ToggleButton>()).FirstOrDefault();
             toggleButton.IsChecked = false;
 
-            var hsl = (element.DataContext as ColorPickerDTVM.ColorToneBox).GetBackgroundHSL();
+            var hsl = (element.DataContext as ColorPickerVM.ColorToneBox).GetBackgroundHSL();
             VM.CurrentColor = hsl.GetRGB().GetColor();
 
             VM.SetCC(3, hsl.H, hsl.S, hsl.L);
@@ -228,7 +228,7 @@ namespace ColorInvestigation.Controls
             UpdateSlider(HueSlider, null, GetSliderValueByModel("HSV_H"));
             UpdateSlider(AlphaSlider, null, 1.0 - VM.Alpha);
 
-            foreach (var kvp in ColorPickerDTVM.Metadata)
+            foreach (var kvp in ColorPickerVM.Metadata)
                 UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, GetSliderValueByModel(kvp.Key), null);
         }
         #endregion
@@ -236,12 +236,12 @@ namespace ColorInvestigation.Controls
         #region =============  Update sliders  =============
         private double GetModelValueBySlider(string componentName, double sliderValue)
         {
-            var meta = ColorPickerDTVM.Metadata[componentName];
+            var meta = ColorPickerVM.Metadata[componentName];
             return (meta.Max - meta.Min) * sliderValue + meta.Min;
         }
         private double GetSliderValueByModel(string componentName)
         {
-            var meta = ColorPickerDTVM.Metadata[componentName];
+            var meta = ColorPickerVM.Metadata[componentName];
             return (meta.GetValue(VM) - meta.Min) / (meta.Max - meta.Min);
         }
         private void UpdateSlider(FrameworkElement element, double? xValue, double? yValue)

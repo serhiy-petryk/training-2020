@@ -62,7 +62,7 @@
     <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\FlatButtonConverters.cs" />
-    <Compile Include="Controls\ColorPickerDTVM.cs" />
+    <Compile Include="Controls\ColorPickerVM.cs" />
     <Compile Include="Controls\ColorPickerViewModel.cs" />
     <Compile Include="Controls\ColorPickerDT.xaml.cs">
       <DependentUpon>ColorPickerDT.xaml</DependentUpon>
@@ -70,8 +70,8 @@
     <Compile Include="Controls\ColorPickerVMAsync.xaml.cs">
       <DependentUpon>ColorPickerVMAsync.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ColorPickerVM.xaml.cs">
-      <DependentUpon>ColorPickerVM.xaml</DependentUpon>
+    <Compile Include="Controls\ColorPickerWithVM.xaml.cs">
+      <DependentUpon>ColorPickerWithVM.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ColorPickerLabel.xaml.cs">
       <DependentUpon>ColorPickerLabel.xaml</DependentUpon>
@@ -117,7 +117,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\ColorPickerVM.xaml">
+    <Page Include="Controls\ColorPickerWithVM.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

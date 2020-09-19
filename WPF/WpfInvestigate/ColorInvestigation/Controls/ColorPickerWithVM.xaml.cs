@@ -43,14 +43,14 @@ using System.Windows.Media;
 namespace ColorInvestigation.Controls
 {
     /// <summary>
-    /// Interaction logic ColorPickerVM.xaml
+    /// Interaction logic ColorPickerWithVM.xaml
     /// </summary>
-    public partial class ColorPickerVM : UserControl, INotifyPropertyChanged
+    public partial class ColorPickerWithVM : UserControl, INotifyPropertyChanged
     {
         private ColorPickerViewModel VM => (ColorPickerViewModel)DataContext;
 
         // Constructor
-        public ColorPickerVM()
+        public ColorPickerWithVM()
         {
             InitializeComponent();
             VM.AfterUpdatedCallback = UpdateUI;

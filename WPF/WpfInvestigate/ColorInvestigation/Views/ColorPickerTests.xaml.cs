@@ -15,15 +15,15 @@ namespace ColorInvestigation.Views
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e) => ColorPicker.SaveColor();
-        private void SaveButtonVM_Click(object sender, RoutedEventArgs e) => ColorPickerViewModel.SaveColor();
-        private void SaveButtonVMAsync_Click(object sender, RoutedEventArgs e) => ColorPickerViewModelAsync.SaveColor();
+        private void SaveButtonVM_Click(object sender, RoutedEventArgs e) => ColorPickerWithViewModel.SaveColor();
+        private void SaveButtonVMAsync_Click(object sender, RoutedEventArgs e) => ColorPickerWithViewModelAsync.SaveColor();
         private void SaveButtonAsync_Click(object sender, RoutedEventArgs e) => ColorPickerAsync.SaveColor();
         private void SaveButtonLabel_Click(object sender, RoutedEventArgs e) => ColorPickerLabel.SaveColor();
         private void SaveButtonDT_Click(object sender, RoutedEventArgs e) => ColorPickerDT.SaveColor();
 
         private void RestoreButton_Click(object sender, RoutedEventArgs e) => ColorPicker.RestoreColor();
-        private void RestoreButtonVM_Click(object sender, RoutedEventArgs e) => ColorPickerViewModel.RestoreColor();
-        private void RestoreButtonVMAsync_Click(object sender, RoutedEventArgs e) => ColorPickerViewModelAsync.RestoreColor();
+        private void RestoreButtonVM_Click(object sender, RoutedEventArgs e) => ColorPickerWithViewModel.RestoreColor();
+        private void RestoreButtonVMAsync_Click(object sender, RoutedEventArgs e) => ColorPickerWithViewModelAsync.RestoreColor();
         private void RestoreButtonDT_Click(object sender, RoutedEventArgs e) => ColorPickerDT.RestoreColor();
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
