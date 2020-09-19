@@ -26,21 +26,27 @@ namespace ColorInvestigation.Controls
                 new ColorComponent(this, "RGB_B", 0, 255, null,
                     (k) => Color.FromRgb(CurrentColor.R, CurrentColor.G, Convert.ToByte(255 * k))),
                 new ColorComponent(this, "HSL_H", 0, 360, "°",
-                    (k) => new ColorSpaces.HSL(k / 360.0, GetCC(5), GetCC(6)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSL(k / 100.0, GetCC(5), GetCC(6)).GetRGB().GetColor()),
                 new ColorComponent(this, "HSL_S", 0, 100, "%",
                     (k) => new ColorSpaces.HSL(GetCC(4), k / 100.0, GetCC(6)).GetRGB().GetColor()),
                 new ColorComponent(this, "HSL_L", 0, 100, "%",
                     (k) => new ColorSpaces.HSL(GetCC(4), GetCC(5), k / 100.0).GetRGB().GetColor()),
                 new ColorComponent(this, "HSV_H", 0, 360, "°",
-                (k) => new ColorSpaces.HSL(k / 360.0, GetCC(8), GetCC(9)).GetRGB().GetColor()),
+                (k) => new ColorSpaces.HSV(k / 100.0, GetCC(8), GetCC(9)).GetRGB().GetColor()),
                 new ColorComponent(this, "HSV_S", 0, 100, "%",
-                    (k) => new ColorSpaces.HSL(GetCC(7), k / 100.0, GetCC(9)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSV(GetCC(7), k / 100.0, GetCC(9)).GetRGB().GetColor()),
                 new ColorComponent(this, "HSV_V", 0, 100, "%",
-                    (k) => new ColorSpaces.HSL(GetCC(7), GetCC(8), k / 100.0).GetRGB().GetColor())
+                    (k) => new ColorSpaces.HSV(GetCC(7), GetCC(8), k / 100.0).GetRGB().GetColor()),
+                new ColorComponent(this, "LAB_L", 0, 100, null,
+                    (k) => new ColorSpaces.LAB(k, GetCC(11), GetCC(12)).GetRGB().GetColor()),
+                new ColorComponent(this, "LAB_A", -127.5, 127.5, null,
+                    (k) => new ColorSpaces.LAB(GetCC(10), k-127.5, GetCC(12)).GetRGB().GetColor()),
+                new ColorComponent(this, "LAB_B", -127.5, 127.5, null,
+                    (k) => new ColorSpaces.LAB(GetCC(10), GetCC(11), k-127.5).GetRGB().GetColor()),
             };
         }
 
-        public List<ColorComponent> Components { get; }// = new List<ColorComponent>{ new ColorComponent(), new ColorComponent()};
+        public List<ColorComponent> Components { get; }
         #region ==============  Color Component  ===============
         public class ColorComponent : INotifyPropertyChanged
         {
@@ -66,6 +72,7 @@ namespace ColorInvestigation.Controls
             private ColorPickerVM _owner;
             public double SliderControlSize;
             public double SliderControlOffset;
+            private int _gradientCount => ColorSpace == ColorSpace.RGB ? 1 : 100;
             private Func<int, Color> _backgroundGradient;
 
             public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel, Func<int, Color> backgroundGradient)
@@ -75,10 +82,8 @@ namespace ColorInvestigation.Controls
                 _backgroundGradient = backgroundGradient;
                 SpaceMultiplier = Id.StartsWith("LAB") ? 1 : Max - Min;
                 ColorSpace = (ColorSpace)Enum.Parse(typeof(ColorSpace), Id.Split('_')[0]);
-                var gradientCount = ColorSpace == ColorSpace.RGB ? 1 : Convert.ToInt32(Max - Min);
-                BackgroundBrush = new LinearGradientBrush(new GradientStopCollection(Enumerable
-                    .Range(0, gradientCount + 1)
-                    .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / gradientCount))));
+                BackgroundBrush = new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, _gradientCount + 1)
+                    .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / _gradientCount))));
             }
             public void SetSliderValue(double sliderValue) => Value = (Max - Min) * sliderValue + Min;
             public double SliderValue => SliderControlSize * (Value - Min) / (Max - Min) - SliderControlOffset;
@@ -247,7 +252,6 @@ namespace ColorInvestigation.Controls
             }
         }
 
-        private bool _isUpdating;
         internal void SetProperty(double value, [CallerMemberName]string propertyName = null)
         {
             var meta = Metadata[propertyName];
@@ -309,6 +313,7 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ==============  Update Values/UI  ===============
+        private bool _isUpdating;
         private void UpdateValues(ColorSpace baseColorSpace)
         {
             if (_isUpdating) return;

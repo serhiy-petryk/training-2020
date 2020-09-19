@@ -506,9 +506,18 @@
                 <ContentControl x:Name="AA" Grid.Row="1" Grid.Column="4" Content="{Binding Components[1]}" />
                 <ContentControl Grid.Row="2" Grid.Column="4" Content="{Binding Components[2]}" Margin="0 -1" />
                 <ContentControl Grid.Row="3" Grid.Column="4" Content="{Binding Components[3]}" />
+
                 <ContentControl Grid.Row="5" Grid.Column="4" Content="{Binding Components[4]}" />
                 <ContentControl Grid.Row="6" Grid.Column="4" Content="{Binding Components[5]}" Margin="0 -1" />
                 <ContentControl Grid.Row="7" Grid.Column="4" Content="{Binding Components[6]}" />
+
+                <ContentControl Grid.Row="9" Grid.Column="4" Content="{Binding Components[7]}" />
+                <ContentControl Grid.Row="10" Grid.Column="4" Content="{Binding Components[8]}" Margin="0 -1" />
+                <ContentControl Grid.Row="11" Grid.Column="4" Content="{Binding Components[9]}" />
+
+                <ContentControl Grid.Row="13" Grid.Column="4" Content="{Binding Components[10]}" />
+                <ContentControl Grid.Row="14" Grid.Column="4" Content="{Binding Components[11]}" Margin="0 -1" />
+                <ContentControl Grid.Row="15" Grid.Column="4" Content="{Binding Components[12]}" />
             </Grid>
         </Grid>
     </Border>
