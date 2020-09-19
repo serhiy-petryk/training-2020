@@ -12,8 +12,61 @@ using ColorInvestigation.Common;
 namespace ColorInvestigation.Controls
 {
     // ColorPicker ViewModel for DataTemplate
-    internal class ColorPickerVM : INotifyPropertyChanged
+    public class ColorPickerVM : INotifyPropertyChanged
     {
+        public ColorPickerVM()
+        {
+            Components = new List<ColorComponent>
+            {
+                new ColorComponent(this, "RGB_A", 0, 255), new ColorComponent(this, "RGB_R", 0, 255),
+                new ColorComponent(this, "RGB_G", 0, 255), new ColorComponent(this, "RGB_B", 0, 255),
+                new ColorComponent(this, "HSL_H", 0, 360, "°"), new ColorComponent(this, "HSL_S", 0, 100, "%"),
+                new ColorComponent(this, "HSL_L", 0, 100, "%")
+            };
+        }
+
+        public List<ColorComponent> Components { get; }// = new List<ColorComponent>{ new ColorComponent(), new ColorComponent()};
+        #region ==============  Color Component  ===============
+        public class ColorComponent
+        {
+            private double _value;
+            public double Value
+            {
+                get => _value;
+                set
+                {
+                    _value = value;
+                    // if (!_owner._isUpdating)
+                    // _owner.UpdateValues(ColorSpace);
+                }
+            }
+
+            public readonly string Id;
+            public string Label => Id.Split('_')[1];
+            public string ValueLabel { get; }
+            public LinearGradientBrush BackgroundBrush { get; }
+            // public int SeqNo;
+            public readonly double Min;
+            public readonly double Max;
+            public readonly double SpaceMultiplier;
+            internal ColorSpace ColorSpace;
+            private ColorPickerVM _owner;
+
+            public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel = null)
+            {
+                Id = id; Min = min; Max = max;
+                ValueLabel = valueLabel; _owner = owner;
+                SpaceMultiplier = Id.StartsWith("LAB") ? 1 : Max - Min;
+                ColorSpace = (ColorSpace)Enum.Parse(typeof(ColorSpace), Id.Split('_')[0]);
+                var gradientCount = ColorSpace == ColorSpace.RGB ? 1 : Convert.ToInt32(Max - Min);
+                BackgroundBrush = new LinearGradientBrush(new GradientStopCollection(Enumerable
+                    .Range(0, gradientCount + 1)
+                    .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / gradientCount))));
+            }
+            public double Slider_GetModelValue(double sliderValue) => (Max - Min) * sliderValue + Min;
+        }
+        #endregion
+
         internal enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
 
         private const int ComponentNumber = 15;
@@ -402,7 +455,7 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ==============  Tones  =======================
-        internal class ColorToneBox
+        public class ColorToneBox
         {
             private readonly ColorPickerVM _owner;
             public int GridColumn { get; }
