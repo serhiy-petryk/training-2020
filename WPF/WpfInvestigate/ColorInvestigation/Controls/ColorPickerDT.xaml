@@ -31,7 +31,7 @@
                 <Border Grid.Column="1" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding BackgroundBrush}" Focusable="False">
                     <Canvas Background="Transparent" VerticalAlignment="Stretch"
                             MouseDown="Slider_MouseDown" MouseUp="Slider_MouseUp" MouseMove="Slider_MouseMove">
-                        <Border BorderThickness="1" Background="Transparent" BorderBrush="#FF555555" Width="8"
+                        <Border Canvas.Left="{Binding SliderValue}" BorderThickness="1" Background="Transparent" BorderBrush="#FF555555" Width="8"
                                 Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Canvas}}">
                             <Border BorderThickness="1" Background="Transparent" BorderBrush="#FFEEEEEE" Width="6"/>
                         </Border>
@@ -112,7 +112,7 @@
         <ControlTemplate x:Key="ComponentSliderTemplate" TargetType="Control">
             <Border BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{TemplateBinding Background}">
                 <Canvas Background="Transparent" VerticalAlignment="Stretch"
-                        MouseDown="Slider_MouseDown" MouseUp="Slider_MouseUp" MouseMove="Slider_MouseMove">
+                        MouseDown="Slider_MouseDown" MouseUp="Slider_MouseUp" MouseMove="xxSlider_MouseMove">
                     <Border BorderThickness="1" Background="Transparent" BorderBrush="#FF555555" Width="8"
                             Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Canvas}}">
                         <Border BorderThickness="1" Background="Transparent" BorderBrush="#FFEEEEEE" Width="6"/>
@@ -207,7 +207,7 @@
                 <Grid Grid.Column="1" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{StaticResource HueBackgroundBrush}" Margin="5,0"/>
                     <Canvas x:Name="HueSlider" Background="Transparent"
-                            MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
+                            MouseDown="Slider_MouseDown" MouseMove="xxSlider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid Height="12" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
                             <Path Data="M0,0 L6,6 L0,12 Z" Fill="White" HorizontalAlignment="Left"/>
                             <Path Data="M5,1 L0,6 L5,11 Z" Fill="White" HorizontalAlignment="Right"/>
@@ -220,7 +220,7 @@
                     <Rectangle Fill="{Binding HueBrush}" Margin="5,0"/>
                     <Rectangle Fill="{StaticResource AlphaBackgroundBrush}" OpacityMask="{StaticResource AlphaBarOpacityMask}" Margin="5,0"/>
                     <Canvas x:Name="AlphaSlider" Background="Transparent"
-                            MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
+                            MouseDown="Slider_MouseDown" MouseMove="xxSlider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid Height="12" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
                             <Path Data="M0,0 L6,6 L0,12 Z" Fill="White" HorizontalAlignment="Left"/>
                             <Path Data="M5,1 L0,6 L5,11 Z" Fill="White" HorizontalAlignment="Right"/>
@@ -503,7 +503,7 @@
                          Text="{Binding YCbCr_Cr, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- ====================-->
-                <ContentControl Grid.Row="1" Grid.Column="4" Content="{Binding Components[1]}" />
+                <ContentControl x:Name="AA" Grid.Row="1" Grid.Column="4" Content="{Binding Components[1]}" />
                 <ContentControl Grid.Row="2" Grid.Column="4" Content="{Binding Components[2]}" Margin="0 -1" />
                 <ContentControl Grid.Row="3" Grid.Column="4" Content="{Binding Components[3]}" />
                 <ContentControl Grid.Row="5" Grid.Column="4" Content="{Binding Components[4]}" />

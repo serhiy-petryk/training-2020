@@ -27,7 +27,7 @@ namespace ColorInvestigation.Controls
 
         public List<ColorComponent> Components { get; }// = new List<ColorComponent>{ new ColorComponent(), new ColorComponent()};
         #region ==============  Color Component  ===============
-        public class ColorComponent
+        public class ColorComponent : INotifyPropertyChanged
         {
             private double _value;
             public double Value
@@ -36,8 +36,7 @@ namespace ColorInvestigation.Controls
                 set
                 {
                     _value = value;
-                    // if (!_owner._isUpdating)
-                    // _owner.UpdateValues(ColorSpace);
+                    _owner.UpdateValues(ColorSpace);
                 }
             }
 
@@ -45,12 +44,13 @@ namespace ColorInvestigation.Controls
             public string Label => Id.Split('_')[1];
             public string ValueLabel { get; }
             public LinearGradientBrush BackgroundBrush { get; }
-            // public int SeqNo;
             public readonly double Min;
             public readonly double Max;
             public readonly double SpaceMultiplier;
             internal ColorSpace ColorSpace;
             private ColorPickerVM _owner;
+            public double SliderControlSize;
+            public double SliderControlOffset;
 
             public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel = null)
             {
@@ -63,7 +63,23 @@ namespace ColorInvestigation.Controls
                     .Range(0, gradientCount + 1)
                     .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / gradientCount))));
             }
-            public double Slider_GetModelValue(double sliderValue) => (Max - Min) * sliderValue + Min;
+            public void SetSliderValue(double sliderValue) => Value = (Max - Min) * sliderValue + Min;
+            public double SliderValue => SliderControlSize * (Value - Min) / (Max - Min) - SliderControlOffset;
+
+            public void UpdateUI()
+            {
+                OnPropertiesChanged(nameof(SliderValue), nameof(Value));
+            }
+
+            #region ===========  INotifyPropertyChanged  ===============
+            public event PropertyChangedEventHandler PropertyChanged;
+            private void OnPropertiesChanged(params string[] propertyNames)
+            {
+                foreach (var propertyName in propertyNames)
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            #endregion
+
         }
         #endregion
 
@@ -214,12 +230,7 @@ namespace ColorInvestigation.Controls
             var meta = Metadata[propertyName];
             value = Math.Max(meta.Min, Math.Min(meta.Max, value));
             _values[meta.SeqNo] = value;
-            if (!_isUpdating)
-            {
-                _isUpdating = true;
-                UpdateValues(meta.ColorSpace);
-                _isUpdating = false;
-            }
+            UpdateValues(meta.ColorSpace);
         }
         #endregion
 
@@ -277,6 +288,9 @@ namespace ColorInvestigation.Controls
         #region ==============  Update Values/UI  ===============
         private void UpdateValues(ColorSpace baseColorSpace)
         {
+            if (_isUpdating) return;
+            _isUpdating = true;
+
             // Get rgb object
             var rgb = new ColorSpaces.RGB(0, 0, 0);
             if (baseColorSpace == ColorSpace.RGB)
@@ -324,6 +338,7 @@ namespace ColorInvestigation.Controls
             }
 
             UpdateUI();
+            _isUpdating = false;
         }
 
         internal void UpdateUI()
@@ -335,6 +350,9 @@ namespace ColorInvestigation.Controls
 
             AfterUpdatedCallback?.Invoke();
             NewUpdateSliderBrushes();
+
+            foreach (var component in Components)
+                component.UpdateUI();
         }
 
         #endregion
@@ -442,12 +460,12 @@ namespace ColorInvestigation.Controls
                 Brushes["HSV_H"].GradientStops[k].Color = new ColorSpaces.HSV(x, GetCC(7), GetCC(8)).GetRGB().GetColor();
                 Brushes["HSV_S"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), x, GetCC(8)).GetRGB().GetColor();
                 Brushes["HSV_V"].GradientStops[k].Color = new ColorSpaces.HSV(GetCC(6), GetCC(7), x).GetRGB().GetColor();
-                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(x*100, GetCC(10), GetCC(11)).GetRGB().GetColor();
-                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), x*256 - 127.5, GetCC(11)).GetRGB().GetColor();
-                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), GetCC(10), x*256 - 127.5).GetRGB().GetColor();
+                Brushes["LAB_L"].GradientStops[k].Color = new ColorSpaces.LAB(x * 100, GetCC(10), GetCC(11)).GetRGB().GetColor();
+                Brushes["LAB_A"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), x * 256 - 127.5, GetCC(11)).GetRGB().GetColor();
+                Brushes["LAB_B"].GradientStops[k].Color = new ColorSpaces.LAB(GetCC(9), GetCC(10), x * 256 - 127.5).GetRGB().GetColor();
                 Brushes["YCbCr_Y"].GradientStops[k].Color = new ColorSpaces.YCbCr(x, GetCC(13), GetCC(14)).GetRGB().GetColor();
-                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), x-0.5, GetCC(14)).GetRGB().GetColor();
-                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), x-0.5).GetRGB().GetColor();
+                Brushes["YCbCr_Cb"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), x - 0.5, GetCC(14)).GetRGB().GetColor();
+                Brushes["YCbCr_Cr"].GradientStops[k].Color = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), x - 0.5).GetRGB().GetColor();
                 x += xStep;
             }
             OnPropertiesChanged(nameof(Brushes));

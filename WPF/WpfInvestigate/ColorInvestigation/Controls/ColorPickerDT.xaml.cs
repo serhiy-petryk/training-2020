@@ -77,7 +77,30 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ==============  Event handlers  ====================
-        private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e) => VM.UpdateUI();
+        private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            foreach (var component in VM.Components)
+            {
+                var contentControl = Tips.GetVisualChildren(this).OfType<ContentControl>().FirstOrDefault(c => c.Content == component);
+                if (contentControl != null)
+                {
+                    var panel = Tips.GetVisualChildren(contentControl).OfType<Canvas>().FirstOrDefault();
+                    var thumb = panel.Children[0] as FrameworkElement;
+                    if (thumb is Grid)
+                    {
+                        component.SliderControlSize = panel.ActualHeight;
+                        component.SliderControlOffset = thumb.ActualHeight/2;
+                    }
+                    else
+                    {
+                        component.SliderControlSize = panel.ActualWidth - thumb.ActualWidth;
+                        component.SliderControlOffset = 0;
+                    }
+                }
+            }
+            VM.UpdateUI();
+        }
+
         #endregion
 
         #region ================  SelectAll Event Handlers on Focus event  ===============
@@ -180,7 +203,7 @@ namespace ColorInvestigation.Controls
             (sender as UIElement).ReleaseMouseCapture();
         }
 
-        private void Slider_MouseMove(object sender, MouseEventArgs e)
+        private void xxSlider_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -202,6 +225,28 @@ namespace ColorInvestigation.Controls
                     var valueId = sliderName.Replace("Slider_", "");
                     VM.SetProperty(GetModelValueBySlider(valueId, value), valueId);
                 }
+            }
+        }
+
+        private void Slider_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var canvas = sender as Panel;
+                var thumb = canvas.Children[0] as FrameworkElement;
+                var isVertical = thumb is Grid;
+                var sliderName = (canvas.TemplatedParent as FrameworkElement)?.Name ?? canvas.Name;
+
+                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
+                var value = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
+                value = Math.Max(0, Math.Min(1, value));
+
+                if (sliderName == nameof(HueSlider))
+                    VM.HSV_H = GetModelValueBySlider("HSV_H", value);
+                else if (canvas.Name == nameof(AlphaSlider))
+                    VM.Alpha = 1.0 - value;
+                else
+                    ((ColorPickerVM.ColorComponent) canvas.DataContext).SetSliderValue(value);
             }
         }
 
