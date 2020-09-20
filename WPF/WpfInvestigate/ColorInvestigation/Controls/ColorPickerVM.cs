@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace ColorInvestigation.Controls
     {
         public ColorPickerVM()
         {
-            Components = new List<ColorComponent>
+            Components = new ObservableCollection<ColorComponent>
             {
                 new ColorComponent(this, "RGB_A", 0, 255, null, null),
                 new ColorComponent(this, "RGB_R", 0, 255, null,
@@ -50,9 +51,18 @@ namespace ColorInvestigation.Controls
                 new ColorComponent(this, "YCbCr_Cr", -127.5, 127.5, null,
                     (k) => new ColorSpaces.YCbCr(GetCC(13), GetCC(14), k / 100.0 - 0.5).GetRGB().GetColor())
             };
+
+            const int NumberOfTones = 10;
+            Tones = new ColorToneBox[3 * NumberOfTones];
+            for (var k1 = 0; k1 < 3; k1++)
+            for (var k2 = 0; k2 < NumberOfTones; k2++)
+                Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
+
         }
 
-        public List<ColorComponent> Components { get; }
+        public ObservableCollection<ColorComponent> Components { get; } // Collection<ColorComponent> because there is MS designer error 'Type .. is not a collection' in case of Array/List
+        public ColorToneBox[] Tones { get; }
+
         #region ==============  Color Component  ===============
         public class ColorComponent : INotifyPropertyChangedAbstract
         {
@@ -374,7 +384,10 @@ namespace ColorInvestigation.Controls
 
         public override void UpdateProperties()
         {
-            UpdateTones();
+            foreach (var tone in Tones)
+                tone.UpdateProperties();
+
+            // UpdateTones();
             OnPropertiesChanged(Metadata.Keys.ToArray());
             OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
                 nameof(CurrentColorWithoutAlphaBrush));
@@ -504,7 +517,7 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ==============  Tones  =======================
-        public class ColorToneBox
+        public class ColorToneBox: INotifyPropertyChangedAbstract
         {
             private readonly ColorPickerVM _owner;
             public int GridColumn { get; }
@@ -543,37 +556,21 @@ namespace ColorInvestigation.Controls
             internal ColorSpaces.HSL GetBackgroundHSL()
             {
                 if (GridColumn == 0)
-                    return new ColorSpaces.HSL(_owner.GetCC_Old(3), _owner.GetCC_Old(4), 0.025 + 0.05 * GridRow);
+                    return new ColorSpaces.HSL(_owner.GetCC(4), _owner.GetCC(5), 0.025 + 0.05 * GridRow);
                 if (GridColumn == 1)
-                    return new ColorSpaces.HSL(_owner.GetCC_Old(3), _owner.GetCC_Old(4), 0.975 - 0.05 * GridRow);
-                return new ColorSpaces.HSL(_owner.GetCC_Old(3), 0.05 + 0.1 * GridRow, _owner.GetCC_Old(5));
+                    return new ColorSpaces.HSL(_owner.GetCC(4), _owner.GetCC(6), 0.975 - 0.05 * GridRow);
+                return new ColorSpaces.HSL(_owner.GetCC(4), 0.05 + 0.1 * GridRow, _owner.GetCC(6));
             }
 
             private string FormatInfoString(string label, double value1, double value2, double value3) =>
                 (label + ":").PadRight(7) + FormatDouble(value1) + FormatDouble(value2) + FormatDouble(value3);
             private string FormatDouble(double value) => value.ToString("F1", _owner.CurrentCulture).PadLeft(7);
-        }
-
-        private const int NumberOfTones = 10;
-        public ColorToneBox[] Tones { get; private set; }
-
-        private void UpdateTones()
-        {
-            if (Tones == null)
+            public override void UpdateProperties()
             {
-                Tones = new ColorToneBox[3 * NumberOfTones];
-                for (var k1 = 0; k1 < 3; k1++)
-                    for (var k2 = 0; k2 < NumberOfTones; k2++)
-                        Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
+                Background.Color = GetBackgroundHSL().GetRGB().GetColor();
+                Foreground.Color = ColorSpaces.IsDarkColor(Background.Color) ? Colors.White : Colors.Black;
+                OnPropertiesChanged(nameof(Background), nameof(Foreground));
             }
-
-            foreach (var tone in Tones)
-            {
-                tone.Background.Color = tone.GetBackgroundHSL().GetRGB().GetColor();
-                tone.Foreground.Color = ColorSpaces.IsDarkColor(tone.Background.Color) ? Colors.White : Colors.Black;
-            }
-
-            OnPropertiesChanged(nameof(Tones));
         }
         #endregion
     }
