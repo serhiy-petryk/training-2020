@@ -17,7 +17,7 @@ namespace ColorInvestigation.Controls
     {
         public ColorPickerVM()
         {
-            Components = new ObservableCollection<ColorComponent>
+            Components = new []
             {
                 new ColorComponent(this, "RGB_A", 0, 255, null, null),
                 new ColorComponent(this, "RGB_R", 0, 255, null,
@@ -60,7 +60,7 @@ namespace ColorInvestigation.Controls
 
         }
 
-        public ObservableCollection<ColorComponent> Components { get; } // Collection<ColorComponent> because there is MS designer error 'Type .. is not a collection' in case of Array/List
+        public ColorComponent[] Components { get; } // Collection<ColorComponent> because there is MS designer error 'Type .. is not a collection' in case of Array/List
         public ColorToneBox[] Tones { get; }
 
         #region ==============  Color Component  ===============
