@@ -94,7 +94,7 @@ namespace ColorInvestigation.Controls
             public void SetSliderValue(double sliderValue) => Value = (Max - Min) * sliderValue + Min;
             public double SliderValue => SliderControlSize * (Value - Min) / (Max - Min) - SliderControlOffset;
 
-            public override void UpdateUI()
+            public override void UpdateProperties()
             {
                 if (_backgroundGradient !=null)
                     for (var k = 0; k < BackgroundBrush.GradientStops.Count; k++)
@@ -181,7 +181,7 @@ namespace ColorInvestigation.Controls
             {
                 _alpha = value;
                 if (!_isUpdating)
-                    UpdateUI();
+                    UpdateProperties();
             }
         }
         public double RGB_R // in range [0, 255]
@@ -368,11 +368,11 @@ namespace ColorInvestigation.Controls
                 SetCC(13, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
             }
 
-            UpdateUI();
+            UpdateProperties();
             _isUpdating = false;
         }
 
-        public override void UpdateUI()
+        public override void UpdateProperties()
         {
             UpdateTones();
             OnPropertiesChanged(Metadata.Keys.ToArray());
@@ -383,7 +383,7 @@ namespace ColorInvestigation.Controls
             // NewUpdateSliderBrushes();
 
             foreach (var component in Components)
-                component.UpdateUI();
+                component.UpdateProperties();
         }
 
         #endregion

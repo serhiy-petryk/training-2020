@@ -98,7 +98,7 @@ namespace ColorInvestigation.Controls
                     }
                 }
             }
-            VM.UpdateUI();
+            VM.UpdateProperties();
         }
 
         #endregion
