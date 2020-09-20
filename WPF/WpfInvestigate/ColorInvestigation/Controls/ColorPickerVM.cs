@@ -19,7 +19,7 @@ namespace ColorInvestigation.Controls
         {
             Components = new []
             {
-                new ColorComponent(this, "RGB_A", 0, 255, null, null),
+                new ColorComponent(this, "RGB_A", 0, 1, null, null),
                 new ColorComponent(this, "RGB_R", 0, 255, null,
                     (k) => Color.FromRgb(Convert.ToByte(255 * k), CurrentColor.G, CurrentColor.B)),
                 new ColorComponent(this, "RGB_G", 0, 255, null,
@@ -73,7 +73,8 @@ namespace ColorInvestigation.Controls
                 set
                 {
                     _value = value;
-                    _owner.UpdateValues(ColorSpace);
+                    if (Id == "RGB_A") _owner.UpdateProperties();
+                    else _owner.UpdateValues(ColorSpace);
                 }
             }
 
@@ -137,7 +138,7 @@ namespace ColorInvestigation.Controls
         {
             // get => Color.FromArgb(Convert.ToByte(Alpha * 255), Convert.ToByte(RGB_R), Convert.ToByte(RGB_G),
                // Convert.ToByte(RGB_B));
-            get => Color.FromArgb(Convert.ToByte(Components[0].Value), Convert.ToByte(Components[1].Value), Convert.ToByte(Components[2].Value),
+            get => Color.FromArgb(Convert.ToByte((1 - Components[0].Value) * 255), Convert.ToByte(Components[1].Value), Convert.ToByte(Components[2].Value),
                 Convert.ToByte(Components[3].Value));
             set
             {
@@ -156,7 +157,7 @@ namespace ColorInvestigation.Controls
             _brushesCache[index].Color = color;
             return _brushesCache[index];
         }
-        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC_Old(6), 1, 1).GetRGB().GetColor());
+        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC(7), 1, 1).GetRGB().GetColor());
         public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
         public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, new ColorSpaces.RGB(_oldColorData[0] / 255, _oldColorData[1] / 255, _oldColorData[2] / 255).GetColor());

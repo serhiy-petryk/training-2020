@@ -83,22 +83,27 @@ namespace ColorInvestigation.Controls
             {
                 var contentControl = Tips.GetVisualChildren(this).OfType<ContentControl>().FirstOrDefault(c => c.Content == component);
                 if (contentControl != null)
-                {
-                    var panel = Tips.GetVisualChildren(contentControl).OfType<Canvas>().FirstOrDefault();
-                    var thumb = panel.Children[0] as FrameworkElement;
-                    if (thumb is Grid)
-                    {
-                        component.SliderControlSize = panel.ActualHeight;
-                        component.SliderControlOffset = thumb.ActualHeight/2;
-                    }
-                    else
-                    {
-                        component.SliderControlSize = panel.ActualWidth - thumb.ActualWidth;
-                        component.SliderControlOffset = 0;
-                    }
-                }
+                    SetSliderSizesInComponent(component, Tips.GetVisualChildren(contentControl).OfType<Canvas>().FirstOrDefault());
             }
+
+            SetSliderSizesInComponent(VM.Components[0], AlphaSlider);
+
             VM.UpdateProperties();
+        }
+
+        private void SetSliderSizesInComponent(ColorPickerVM.ColorComponent component, Panel panel)
+        {
+            var thumb = panel.Children[0] as FrameworkElement;
+            if (thumb is Grid)
+            {
+                component.SliderControlSize = panel.ActualHeight;
+                component.SliderControlOffset = thumb.ActualHeight / 2;
+            }
+            else
+            {
+                component.SliderControlSize = panel.ActualWidth - thumb.ActualWidth;
+                component.SliderControlOffset = 0;
+            }
         }
 
         #endregion
@@ -242,9 +247,10 @@ namespace ColorInvestigation.Controls
                 value = Math.Max(0, Math.Min(1, value));
 
                 if (sliderName == nameof(HueSlider))
-                    VM.HSV_H = GetModelValueBySlider("HSV_H", value);
+                    // VM.HSV_H = GetModelValueBySlider("HSV_H", value);
+                VM.Components[7].Value = value * 360;
                 else if (canvas.Name == nameof(AlphaSlider))
-                    VM.Alpha = 1.0 - value;
+                    VM.Components[0].Value = value;
                 else
                     ((ColorPickerVM.ColorComponent) canvas.DataContext).SetSliderValue(value);
             }
@@ -269,12 +275,12 @@ namespace ColorInvestigation.Controls
         #region =================  UpdateUI  =================
         private void UpdateUI()
         {
-            UpdateSlider(SaturationAndValueSlider, GetSliderValueByModel("HSV_S"), 1.0 - GetSliderValueByModel("HSV_V"));
-            UpdateSlider(HueSlider, null, GetSliderValueByModel("HSV_H"));
-            UpdateSlider(AlphaSlider, null, 1.0 - VM.Alpha);
+            // UpdateSlider(SaturationAndValueSlider, GetSliderValueByModel("HSV_S"), 1.0 - GetSliderValueByModel("HSV_V"));
+            // UpdateSlider(HueSlider, null, GetSliderValueByModel("HSV_H"));
+            // UpdateSlider(AlphaSlider, null, 1.0 - VM.Alpha);
 
-            foreach (var kvp in ColorPickerVM.Metadata)
-                UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, GetSliderValueByModel(kvp.Key), null);
+            // foreach (var kvp in ColorPickerVM.Metadata)
+               //  UpdateSlider(FindName("Slider_" + kvp.Key) as FrameworkElement, GetSliderValueByModel(kvp.Key), null);
         }
         #endregion
 

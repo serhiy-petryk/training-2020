@@ -207,7 +207,7 @@
                 <Grid Grid.Column="1" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{StaticResource HueBackgroundBrush}" Margin="5,0"/>
                     <Canvas x:Name="HueSlider" Background="Transparent"
-                            MouseDown="Slider_MouseDown" MouseMove="xxSlider_MouseMove" MouseUp="Slider_MouseUp">
+                            MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid Height="12" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
                             <Path Data="M0,0 L6,6 L0,12 Z" Fill="White" HorizontalAlignment="Left"/>
                             <Path Data="M5,1 L0,6 L5,11 Z" Fill="White" HorizontalAlignment="Right"/>
@@ -219,9 +219,9 @@
                 <Grid Grid.Column="2" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{Binding HueBrush}" Margin="5,0"/>
                     <Rectangle Fill="{StaticResource AlphaBackgroundBrush}" OpacityMask="{StaticResource AlphaBarOpacityMask}" Margin="5,0"/>
-                    <Canvas x:Name="AlphaSlider" Background="Transparent"
-                            MouseDown="Slider_MouseDown" MouseMove="xxSlider_MouseMove" MouseUp="Slider_MouseUp">
-                        <Grid Height="12" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
+                    <Canvas x:Name="AlphaSlider" Background="Transparent" DataContext="{Binding Components[0]}"
+                            MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
+                        <Grid Height="12" Canvas.Top="{Binding SliderValue}" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
                             <Path Data="M0,0 L6,6 L0,12 Z" Fill="White" HorizontalAlignment="Left"/>
                             <Path Data="M5,1 L0,6 L5,11 Z" Fill="White" HorizontalAlignment="Right"/>
                         </Grid>
