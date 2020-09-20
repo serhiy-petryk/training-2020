@@ -71,6 +71,7 @@ namespace ColorInvestigation.Controls
                 set
                 {
                     _value = value;
+                    if (Id == "HSV_Hue") _owner.Components[6]._value = value;
                     if (Id == "RGB_A") _owner.UpdateProperties();
                     else _owner.UpdateValues(ColorSpace);
                 }
@@ -376,6 +377,8 @@ namespace ColorInvestigation.Controls
                 var yCbCr = new ColorSpaces.YCbCr(rgb);
                 SetCC(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
             }
+
+            SetCC(16, GetCC(6)); // Set HSV_Hue value
 
             UpdateProperties();
             _isUpdating = false;
