@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -19,7 +17,6 @@ namespace ColorInvestigation.Controls
         {
             Components = new []
             {
-                new ColorComponent(this, "RGB_A", 0, 1, null, null),
                 new ColorComponent(this, "RGB_R", 0, 255, null,
                     (k) => Color.FromRgb(Convert.ToByte(255 * k), CurrentColor.G, CurrentColor.B)),
                 new ColorComponent(this, "RGB_G", 0, 255, null,
@@ -27,29 +24,30 @@ namespace ColorInvestigation.Controls
                 new ColorComponent(this, "RGB_B", 0, 255, null,
                     (k) => Color.FromRgb(CurrentColor.R, CurrentColor.G, Convert.ToByte(255 * k))),
                 new ColorComponent(this, "HSL_H", 0, 360, "°",
-                    (k) => new ColorSpaces.HSL(k / 100.0, GetCC(5), GetCC(6)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSL(k / 100.0, GetCC(4), GetCC(5)).GetRGB().GetColor()),
                 new ColorComponent(this, "HSL_S", 0, 100, "%",
-                    (k) => new ColorSpaces.HSL(GetCC(4), k / 100.0, GetCC(6)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSL(GetCC(3), k / 100.0, GetCC(5)).GetRGB().GetColor()),
                 new ColorComponent(this, "HSL_L", 0, 100, "%",
-                    (k) => new ColorSpaces.HSL(GetCC(4), GetCC(5), k / 100.0).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSL(GetCC(3), GetCC(4), k / 100.0).GetRGB().GetColor()),
                 new ColorComponent(this, "HSV_H", 0, 360, "°",
-                    (k) => new ColorSpaces.HSV(k / 100.0, GetCC(8), GetCC(9)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSV(k / 100.0, GetCC(7), GetCC(8)).GetRGB().GetColor()),
                 new ColorComponent(this, "HSV_S", 0, 100, "%",
-                    (k) => new ColorSpaces.HSV(GetCC(7), k / 100.0, GetCC(9)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSV(GetCC(6), k / 100.0, GetCC(8)).GetRGB().GetColor()),
                 new ColorComponent(this, "HSV_V", 0, 100, "%",
-                    (k) => new ColorSpaces.HSV(GetCC(7), GetCC(8), k / 100.0).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSV(GetCC(6), GetCC(7), k / 100.0).GetRGB().GetColor()),
                 new ColorComponent(this, "LAB_L", 0, 100, null,
-                    (k) => new ColorSpaces.LAB(k, GetCC(11), GetCC(12)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.LAB(k, GetCC(10), GetCC(11)).GetRGB().GetColor()),
                 new ColorComponent(this, "LAB_A", -127.5, 127.5, null,
-                    (k) => new ColorSpaces.LAB(GetCC(10), (k / 100.0 - 0.5) * 255, GetCC(12)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.LAB(GetCC(9), (k / 100.0 - 0.5) * 255, GetCC(11)).GetRGB().GetColor()),
                 new ColorComponent(this, "LAB_B", -127.5, 127.5, null,
-                    (k) => new ColorSpaces.LAB(GetCC(10), GetCC(11), (k / 100.0 - 0.5) * 255).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.LAB(GetCC(9), GetCC(10), (k / 100.0 - 0.5) * 255).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Y", 0, 255, null,
-                    (k) => new ColorSpaces.YCbCr(k / 100.0, GetCC(14), GetCC(15)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.YCbCr(k / 100.0, GetCC(13), GetCC(14)).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Cb", -127.5, 127.5, null,
-                    (k) => new ColorSpaces.YCbCr(GetCC(13), k / 100.0 - 0.5, GetCC(15)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.YCbCr(GetCC(12), k / 100.0 - 0.5, GetCC(14)).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Cr", -127.5, 127.5, null,
-                    (k) => new ColorSpaces.YCbCr(GetCC(13), GetCC(14), k / 100.0 - 0.5).GetRGB().GetColor())
+                    (k) => new ColorSpaces.YCbCr(GetCC(12), GetCC(13), k / 100.0 - 0.5).GetRGB().GetColor()),
+                new ColorComponent(this, "RGB_A", 0, 1), new ColorComponent(this, "HSV_Hue", 0, 360)
             };
 
             const int NumberOfTones = 10;
@@ -92,7 +90,7 @@ namespace ColorInvestigation.Controls
             private int _gradientCount => ColorSpace == ColorSpace.RGB ? 1 : 100;
             private Func<int, Color> _backgroundGradient;
 
-            public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel, Func<int, Color> backgroundGradient)
+            public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel =null, Func<int, Color> backgroundGradient=null)
             {
                 Id = id; Min = min; Max = max;
                 ValueLabel = valueLabel; _owner = owner;
@@ -138,8 +136,8 @@ namespace ColorInvestigation.Controls
         {
             // get => Color.FromArgb(Convert.ToByte(Alpha * 255), Convert.ToByte(RGB_R), Convert.ToByte(RGB_G),
                // Convert.ToByte(RGB_B));
-            get => Color.FromArgb(Convert.ToByte((1 - Components[0].Value) * 255), Convert.ToByte(Components[1].Value), Convert.ToByte(Components[2].Value),
-                Convert.ToByte(Components[3].Value));
+            get => Color.FromArgb(Convert.ToByte((1 - Components[15].Value) * 255), Convert.ToByte(Components[0].Value), Convert.ToByte(Components[1].Value),
+                Convert.ToByte(Components[2].Value));
             set
             {
                 _isUpdating = true;
@@ -157,7 +155,7 @@ namespace ColorInvestigation.Controls
             _brushesCache[index].Color = color;
             return _brushesCache[index];
         }
-        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC(7), 1, 1).GetRGB().GetColor());
+        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC(6), 1, 1).GetRGB().GetColor());
         public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
         public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, new ColorSpaces.RGB(_oldColorData[0] / 255, _oldColorData[1] / 255, _oldColorData[2] / 255).GetColor());
@@ -336,47 +334,47 @@ namespace ColorInvestigation.Controls
             // Get rgb object
             var rgb = new ColorSpaces.RGB(0, 0, 0);
             if (baseColorSpace == ColorSpace.RGB)
-                rgb = new ColorSpaces.RGB(GetCC(1), GetCC(2), GetCC(3));
+                rgb = new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2));
             else if (baseColorSpace == ColorSpace.HSL)
             {
-                rgb = new ColorSpaces.HSL(GetCC(4), GetCC(5), GetCC(6)).GetRGB();
+                rgb = new ColorSpaces.HSL(GetCC(3), GetCC(4), GetCC(5)).GetRGB();
                 // Update HSV
-                Components[7].Value = Components[4].Value; // _hsv.H = _hsl.H;
+                Components[6].Value = Components[3].Value; // _hsv.H = _hsl.H;
                 var hsv = new ColorSpaces.HSV(rgb); // _hsv = new ColorSpaces.HSV(_rgb);
-                SetCC(8, hsv.S, hsv.V);
+                SetCC(7, hsv.S, hsv.V);
             }
             else if (baseColorSpace == ColorSpace.HSV)
             {
-                rgb = new ColorSpaces.HSV(GetCC(7), GetCC(8), GetCC(9)).GetRGB();
+                rgb = new ColorSpaces.HSV(GetCC(6), GetCC(7), GetCC(8)).GetRGB();
                 // Update HSL
-                Components[4].Value = Components[7].Value; // _hsl.H = _hsv.H;
+                Components[3].Value = Components[6].Value; // _hsl.H = _hsv.H;
                 var hsl = new ColorSpaces.HSL(rgb); // _hsl = new ColorSpaces.HSL(_rgb);
-                SetCC(5, hsl.S, hsl.L);
+                SetCC(4, hsl.S, hsl.L);
             }
             else if (baseColorSpace == ColorSpace.LAB)
-                rgb = new ColorSpaces.LAB(GetCC(10), GetCC(11), GetCC(12)).GetRGB();
+                rgb = new ColorSpaces.LAB(GetCC(9), GetCC(10), GetCC(11)).GetRGB();
             else if (baseColorSpace == ColorSpace.YCbCr)
-                rgb = new ColorSpaces.YCbCr(GetCC(13), GetCC(14), GetCC(15)).GetRGB();
+                rgb = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), GetCC(14)).GetRGB();
 
             // Update other objects
             if (baseColorSpace != ColorSpace.RGB)
-                SetCC(1, rgb.R, rgb.G, rgb.B);
+                SetCC(0, rgb.R, rgb.G, rgb.B);
             if (baseColorSpace != ColorSpace.HSL && baseColorSpace != ColorSpace.HSV)
             {
                 var hsl = new ColorSpaces.HSL(rgb);
-                SetCC(4, hsl.H, hsl.S, hsl.L);
+                SetCC(3, hsl.H, hsl.S, hsl.L);
                 var hsv = new ColorSpaces.HSV(rgb);
-                SetCC(7, hsv.H, hsv.S, hsv.V);
+                SetCC(6, hsv.H, hsv.S, hsv.V);
             }
             if (baseColorSpace != ColorSpace.LAB)
             {
                 var lab = new ColorSpaces.LAB(rgb);
-                SetCC(10, lab.L, lab.A, lab.B);
+                SetCC(9, lab.L, lab.A, lab.B);
             }
             if (baseColorSpace != ColorSpace.YCbCr)
             {
                 var yCbCr = new ColorSpaces.YCbCr(rgb);
-                SetCC(13, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
+                SetCC(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
             }
 
             UpdateProperties();
@@ -557,10 +555,10 @@ namespace ColorInvestigation.Controls
             internal ColorSpaces.HSL GetBackgroundHSL()
             {
                 if (GridColumn == 0)
-                    return new ColorSpaces.HSL(_owner.GetCC(4), _owner.GetCC(5), 0.025 + 0.05 * GridRow);
+                    return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.025 + 0.05 * GridRow);
                 if (GridColumn == 1)
-                    return new ColorSpaces.HSL(_owner.GetCC(4), _owner.GetCC(6), 0.975 - 0.05 * GridRow);
-                return new ColorSpaces.HSL(_owner.GetCC(4), 0.05 + 0.1 * GridRow, _owner.GetCC(6));
+                    return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(5), 0.975 - 0.05 * GridRow);
+                return new ColorSpaces.HSL(_owner.GetCC(3), 0.05 + 0.1 * GridRow, _owner.GetCC(5));
             }
 
             private string FormatInfoString(string label, double value1, double value2, double value3) =>

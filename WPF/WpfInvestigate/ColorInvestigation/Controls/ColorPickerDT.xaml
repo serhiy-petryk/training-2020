@@ -219,7 +219,7 @@
                 <Grid Grid.Column="2" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{Binding HueBrush}" Margin="5,0"/>
                     <Rectangle Fill="{StaticResource AlphaBackgroundBrush}" OpacityMask="{StaticResource AlphaBarOpacityMask}" Margin="5,0"/>
-                    <Canvas x:Name="AlphaSlider" Background="Transparent" DataContext="{Binding Components[0]}"
+                    <Canvas x:Name="AlphaSlider" Background="Transparent" DataContext="{Binding Components[15]}"
                             MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid Height="12" Canvas.Top="{Binding SliderValue}" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
                             <Path Data="M0,0 L6,6 L0,12 Z" Fill="White" HorizontalAlignment="Left"/>
@@ -503,25 +503,25 @@
                          Text="{Binding YCbCr_Cr, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- ====================-->
-                <ContentControl x:Name="AA" Grid.Row="1" Grid.Column="4" Content="{Binding Components[1]}" />
-                <ContentControl Grid.Row="2" Grid.Column="4" Content="{Binding Components[2]}" Margin="0 -1" />
-                <ContentControl Grid.Row="3" Grid.Column="4" Content="{Binding Components[3]}" />
+                <ContentControl x:Name="AA" Grid.Row="1" Grid.Column="4" Content="{Binding Components[0]}" />
+                <ContentControl Grid.Row="2" Grid.Column="4" Content="{Binding Components[1]}" Margin="0 -1" />
+                <ContentControl Grid.Row="3" Grid.Column="4" Content="{Binding Components[2]}" />
 
-                <ContentControl Grid.Row="5" Grid.Column="4" Content="{Binding Components[4]}" />
-                <ContentControl Grid.Row="6" Grid.Column="4" Content="{Binding Components[5]}" Margin="0 -1" />
-                <ContentControl Grid.Row="7" Grid.Column="4" Content="{Binding Components[6]}" />
+                <ContentControl Grid.Row="5" Grid.Column="4" Content="{Binding Components[3]}" />
+                <ContentControl Grid.Row="6" Grid.Column="4" Content="{Binding Components[4]}" Margin="0 -1" />
+                <ContentControl Grid.Row="7" Grid.Column="4" Content="{Binding Components[5]}" />
 
-                <ContentControl Grid.Row="9" Grid.Column="4" Content="{Binding Components[7]}" />
-                <ContentControl Grid.Row="10" Grid.Column="4" Content="{Binding Components[8]}" Margin="0 -1" />
-                <ContentControl Grid.Row="11" Grid.Column="4" Content="{Binding Components[9]}" />
+                <ContentControl Grid.Row="9" Grid.Column="4" Content="{Binding Components[6]}" />
+                <ContentControl Grid.Row="10" Grid.Column="4" Content="{Binding Components[7]}" Margin="0 -1" />
+                <ContentControl Grid.Row="11" Grid.Column="4" Content="{Binding Components[8]}" />
 
-                <ContentControl Grid.Row="13" Grid.Column="4" Content="{Binding Components[10]}" />
-                <ContentControl Grid.Row="14" Grid.Column="4" Content="{Binding Components[11]}" Margin="0 -1" />
-                <ContentControl Grid.Row="15" Grid.Column="4" Content="{Binding Components[12]}" />
+                <ContentControl Grid.Row="13" Grid.Column="4" Content="{Binding Components[9]}" />
+                <ContentControl Grid.Row="14" Grid.Column="4" Content="{Binding Components[10]}" Margin="0 -1" />
+                <ContentControl Grid.Row="15" Grid.Column="4" Content="{Binding Components[11]}" />
 
-                <ContentControl Grid.Row="17" Grid.Column="4" Content="{Binding Components[13]}" />
-                <ContentControl Grid.Row="18" Grid.Column="4" Content="{Binding Components[14]}" Margin="0 -1" />
-                <ContentControl Grid.Row="19" Grid.Column="4" Content="{Binding Components[15]}" />
+                <ContentControl Grid.Row="17" Grid.Column="4" Content="{Binding Components[12]}" />
+                <ContentControl Grid.Row="18" Grid.Column="4" Content="{Binding Components[13]}" Margin="0 -1" />
+                <ContentControl Grid.Row="19" Grid.Column="4" Content="{Binding Components[14]}" />
             </Grid>
         </Grid>
     </Border>

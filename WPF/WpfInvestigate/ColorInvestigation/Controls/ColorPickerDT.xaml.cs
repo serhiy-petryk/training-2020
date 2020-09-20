@@ -86,7 +86,7 @@ namespace ColorInvestigation.Controls
                     SetSliderSizesInComponent(component, Tips.GetVisualChildren(contentControl).OfType<Canvas>().FirstOrDefault());
             }
 
-            SetSliderSizesInComponent(VM.Components[0], AlphaSlider);
+            SetSliderSizesInComponent(VM.Components[15], AlphaSlider);
 
             VM.UpdateProperties();
         }
@@ -248,9 +248,9 @@ namespace ColorInvestigation.Controls
 
                 if (sliderName == nameof(HueSlider))
                     // VM.HSV_H = GetModelValueBySlider("HSV_H", value);
-                VM.Components[7].Value = value * 360;
+                VM.Components[6].Value = value * 360;
                 else if (canvas.Name == nameof(AlphaSlider))
-                    VM.Components[0].Value = value;
+                    VM.Components[15].Value = value;
                 else
                     ((ColorPickerVM.ColorComponent) canvas.DataContext).SetSliderValue(value);
             }
