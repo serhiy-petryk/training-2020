@@ -40,7 +40,8 @@
                 <TextBox Grid.Column="2" BorderThickness="1" BorderBrush="Gray" Background="#FF181818" Foreground="White" Margin="0" Padding="0"
                          HorizontalAlignment="Stretch" HorizontalContentAlignment="Right"
                          VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-                         Text="{Binding Value, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding Value, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         GotFocus="ValueEditor_OnGotFocus" PreviewMouseLeftButtonDown="ValueEditor_OnPreviewMouseLeftButtonDown"/>
                 <Label Grid.Column="3" Content="{Binding ValueLabel, Mode=OneTime}" Margin="2 0" Padding="0" Foreground="#FFE0E0E0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Grid>
         </DataTemplate>
@@ -504,25 +505,25 @@
                          Text="{Binding YCbCr_Cr, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- ====================-->
-                <ContentControl x:Name="AA" Grid.Row="1" Grid.Column="4" Content="{Binding Components[0]}" />
-                <ContentControl Grid.Row="2" Grid.Column="4" Content="{Binding Components[1]}" Margin="0 -1" />
-                <ContentControl Grid.Row="3" Grid.Column="4" Content="{Binding Components[2]}" />
+                <ContentControl x:Name="AA" Grid.Row="1" Grid.Column="4" Content="{Binding Components[0]}" Focusable="False" IsTabStop="False"/>
+                <ContentControl Grid.Row="2" Grid.Column="4" Content="{Binding Components[1]}" Focusable="False" IsTabStop="False" Margin="0 -1" />
+                <ContentControl Grid.Row="3" Grid.Column="4" Content="{Binding Components[2]}" Focusable="False" IsTabStop="False" />
 
-                <ContentControl Grid.Row="5" Grid.Column="4" Content="{Binding Components[3]}" />
-                <ContentControl Grid.Row="6" Grid.Column="4" Content="{Binding Components[4]}" Margin="0 -1" />
-                <ContentControl Grid.Row="7" Grid.Column="4" Content="{Binding Components[5]}" />
+                <ContentControl Grid.Row="5" Grid.Column="4" Content="{Binding Components[3]}" Focusable="False" IsTabStop="False" />
+                <ContentControl Grid.Row="6" Grid.Column="4" Content="{Binding Components[4]}" Focusable="False" IsTabStop="False" Margin="0 -1" />
+                <ContentControl Grid.Row="7" Grid.Column="4" Content="{Binding Components[5]}" Focusable="False" IsTabStop="False" />
 
-                <ContentControl Grid.Row="9" Grid.Column="4" Content="{Binding Components[6]}" />
-                <ContentControl Grid.Row="10" Grid.Column="4" Content="{Binding Components[7]}" Margin="0 -1" />
-                <ContentControl Grid.Row="11" Grid.Column="4" Content="{Binding Components[8]}" />
+                <ContentControl Grid.Row="9" Grid.Column="4" Content="{Binding Components[6]}" Focusable="False" IsTabStop="False" />
+                <ContentControl Grid.Row="10" Grid.Column="4" Content="{Binding Components[7]}" Focusable="False" IsTabStop="False" Margin="0 -1" />
+                <ContentControl Grid.Row="11" Grid.Column="4" Content="{Binding Components[8]}" Focusable="False" IsTabStop="False" />
 
-                <ContentControl Grid.Row="13" Grid.Column="4" Content="{Binding Components[9]}" />
-                <ContentControl Grid.Row="14" Grid.Column="4" Content="{Binding Components[10]}" Margin="0 -1" />
-                <ContentControl Grid.Row="15" Grid.Column="4" Content="{Binding Components[11]}" />
+                <ContentControl Grid.Row="13" Grid.Column="4" Content="{Binding Components[9]}" Focusable="False" IsTabStop="False" />
+                <ContentControl Grid.Row="14" Grid.Column="4" Content="{Binding Components[10]}" Focusable="False" IsTabStop="False" Margin="0 -1" />
+                <ContentControl Grid.Row="15" Grid.Column="4" Content="{Binding Components[11]}" Focusable="False" IsTabStop="False" />
 
-                <ContentControl Grid.Row="17" Grid.Column="4" Content="{Binding Components[12]}" />
-                <ContentControl Grid.Row="18" Grid.Column="4" Content="{Binding Components[13]}" Margin="0 -1" />
-                <ContentControl Grid.Row="19" Grid.Column="4" Content="{Binding Components[14]}" />
+                <ContentControl Grid.Row="17" Grid.Column="4" Content="{Binding Components[12]}" Focusable="False" IsTabStop="False" />
+                <ContentControl Grid.Row="18" Grid.Column="4" Content="{Binding Components[13]}" Focusable="False" IsTabStop="False" Margin="0 -1" />
+                <ContentControl Grid.Row="19" Grid.Column="4" Content="{Binding Components[14]}" Focusable="False" IsTabStop="False" />
             </Grid>
         </Grid>
     </Border>
