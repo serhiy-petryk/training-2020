@@ -53,7 +53,6 @@ namespace ColorInvestigation.Controls
         public ColorPickerDT()
         {
             InitializeComponent();
-            VM.AfterUpdatedCallback = UpdateUI;
         }
 
         #region  ==============  User UI  ===========
@@ -93,7 +92,7 @@ namespace ColorInvestigation.Controls
             var thumb = SaturationAndValueSlider.Children[0] as FrameworkElement;
             VM.SaturationAndValueSlider.ThumbSize = new Size(thumb.ActualWidth, thumb.ActualHeight);
 
-            VM.UpdateProperties();
+            VM.UpdateUI();
         }
 
         private void SetSliderSizesInComponent(ColorPickerVM.ColorComponent component, Panel panel)

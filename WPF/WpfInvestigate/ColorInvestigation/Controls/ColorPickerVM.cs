@@ -14,7 +14,8 @@ namespace ColorInvestigation.Controls
     // ColorPicker ViewModel for DataTemplate
     public class ColorPickerVM : INotifyPropertyChangedAbstract
     {
-        public XYSlider SaturationAndValueSlider { get; }= new XYSlider();
+        #region ==============  SaturationAndValueSlider  ============
+        public XYSlider SaturationAndValueSlider { get; } = new XYSlider();
         internal void SetSaturationAndValueSliderValues(double xValue, double yValue)
         {
             _isUpdating = true;
@@ -36,8 +37,9 @@ namespace ColorInvestigation.Controls
                 ySliderValue = SliderSize.Height * (1.0 - value) - ThumbSize.Height / 2;
                 OnPropertiesChanged(nameof(xSliderValue), nameof(ySliderValue));
             }
-            public override void UpdateProperties(){}
+            public override void UpdateUI(){}
         }
+        #endregion
 
         public ColorPickerVM()
         {
@@ -81,7 +83,6 @@ namespace ColorInvestigation.Controls
             for (var k1 = 0; k1 < 3; k1++)
             for (var k2 = 0; k2 < NumberOfTones; k2++)
                 Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
-
         }
 
         public ColorComponent[] Components { get; } // Collection<ColorComponent> because there is MS designer error 'Type .. is not a collection' in case of Array/List
@@ -99,10 +100,8 @@ namespace ColorInvestigation.Controls
                 {
                     _value = value;
                     if (Id == "HSV_Hue") _owner.Components[6]._value = value;
-                    // if (Id == "HSV_Value") _owner.Components[8]._value = 100 - value;
-                    if (Id== "HSV_SaturationAndValue") _owner.Components[8]._value = 100 - value;
 
-                    if (Id == "RGB_A") _owner.UpdateProperties();
+                    if (Id == "RGB_A") _owner.UpdateUI();
                     else _owner.UpdateValues(ColorSpace);
                 }
             }
@@ -134,14 +133,13 @@ namespace ColorInvestigation.Controls
             public void SetSliderValue(double sliderValue) => Value = (Max - Min) * sliderValue + Min;
             public double SliderValue => SliderControlSize * (Value - Min) / (Max - Min) - SliderControlOffset;
 
-            public override void UpdateProperties()
+            public override void UpdateUI()
             {
                 if (_backgroundGradient !=null)
                     for (var k = 0; k < BackgroundBrush.GradientStops.Count; k++)
                         BackgroundBrush.GradientStops[k].Color = _backgroundGradient(k);
                 OnPropertiesChanged(nameof(SliderValue), nameof(Value), nameof(BackgroundBrush));
             }
-
         }
         #endregion
 
@@ -149,7 +147,6 @@ namespace ColorInvestigation.Controls
 
         private const int ComponentNumber = 15;
         internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
-        internal Action AfterUpdatedCallback;
 
         #region  ==============  Public Properties  ================
         public Color Color // Original color
@@ -411,14 +408,14 @@ namespace ColorInvestigation.Controls
             SetCC(16, GetCC(6)); // Set HSV_Hue value
             // SetCC(17, 1 - GetCC(8)); // Set HSV_SaturationAndValue value
 
-            UpdateProperties();
+            UpdateUI();
             _isUpdating = false;
         }
 
-        public override void UpdateProperties()
+        public override void UpdateUI()
         {
             foreach (var tone in Tones)
-                tone.UpdateProperties();
+                tone.UpdateUI();
 
             // UpdateTones();
             // OnPropertiesChanged(Metadata.Keys.ToArray());
@@ -430,7 +427,7 @@ namespace ColorInvestigation.Controls
 
             SaturationAndValueSlider.UpdateProperties(GetCC(7), GetCC(8));
             foreach (var component in Components)
-                component.UpdateProperties();
+                component.UpdateUI();
         }
 
         #endregion
@@ -599,7 +596,7 @@ namespace ColorInvestigation.Controls
             private string FormatInfoString(string label, double value1, double value2, double value3) =>
                 (label + ":").PadRight(7) + FormatDouble(value1) + FormatDouble(value2) + FormatDouble(value3);
             private string FormatDouble(double value) => value.ToString("F1", _owner.CurrentCulture).PadLeft(7);
-            public override void UpdateProperties()
+            public override void UpdateUI()
             {
                 Background.Color = GetBackgroundHSL().GetRGB().GetColor();
                 Foreground.Color = ColorSpaces.IsDarkColor(Background.Color) ? Colors.White : Colors.Black;

@@ -10,6 +10,6 @@ namespace ColorInvestigation.Common
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public abstract void UpdateProperties();
+        public abstract void UpdateUI();
     }
 }
