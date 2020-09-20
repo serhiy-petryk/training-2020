@@ -62,6 +62,7 @@
     <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\FlatButtonConverters.cs" />
+    <Compile Include="Common\INotifyPropertyChangedAbstract.cs" />
     <Compile Include="Controls\ColorPickerVM.cs" />
     <Compile Include="Controls\ColorPickerViewModel.cs" />
     <Compile Include="Controls\ColorPickerDT.xaml.cs">

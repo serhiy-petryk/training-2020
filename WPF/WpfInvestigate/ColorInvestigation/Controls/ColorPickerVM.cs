@@ -12,7 +12,7 @@ using ColorInvestigation.Common;
 namespace ColorInvestigation.Controls
 {
     // ColorPicker ViewModel for DataTemplate
-    public class ColorPickerVM : INotifyPropertyChanged
+    public class ColorPickerVM : INotifyPropertyChangedAbstract
     {
         public ColorPickerVM()
         {
@@ -54,7 +54,7 @@ namespace ColorInvestigation.Controls
 
         public List<ColorComponent> Components { get; }
         #region ==============  Color Component  ===============
-        public class ColorComponent : INotifyPropertyChanged
+        public class ColorComponent : INotifyPropertyChangedAbstract
         {
             private double _value;
             public double Value
@@ -94,22 +94,13 @@ namespace ColorInvestigation.Controls
             public void SetSliderValue(double sliderValue) => Value = (Max - Min) * sliderValue + Min;
             public double SliderValue => SliderControlSize * (Value - Min) / (Max - Min) - SliderControlOffset;
 
-            public void UpdateUI()
+            public override void UpdateUI()
             {
                 if (_backgroundGradient !=null)
                     for (var k = 0; k < BackgroundBrush.GradientStops.Count; k++)
                         BackgroundBrush.GradientStops[k].Color = _backgroundGradient(k);
                 OnPropertiesChanged(nameof(SliderValue), nameof(Value), nameof(BackgroundBrush));
             }
-
-            #region ===========  INotifyPropertyChanged  ===============
-            public event PropertyChangedEventHandler PropertyChanged;
-            private void OnPropertiesChanged(params string[] propertyNames)
-            {
-                foreach (var propertyName in propertyNames)
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-            #endregion
 
         }
         #endregion
@@ -381,7 +372,7 @@ namespace ColorInvestigation.Controls
             _isUpdating = false;
         }
 
-        internal void UpdateUI()
+        public override void UpdateUI()
         {
             UpdateTones();
             OnPropertiesChanged(Metadata.Keys.ToArray());
@@ -583,15 +574,6 @@ namespace ColorInvestigation.Controls
             }
 
             OnPropertiesChanged(nameof(Tones));
-        }
-        #endregion
-
-        #region ===========  INotifyPropertyChanged  ===============
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertiesChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }
