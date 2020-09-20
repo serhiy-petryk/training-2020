@@ -192,12 +192,12 @@
                 <Grid Grid.Column="0" Grid.Row="0" Margin="0,0,5,0">
                     <Rectangle Fill="{Binding HueBrush}"/>
                     <Rectangle Fill="{StaticResource SaturationAndValueSliderBaseBrush}"/>
-                    <Canvas x:Name="SaturationAndValueSlider" Background="Transparent" ClipToBounds="False" DataContext="{Binding Components[18]}"
+                    <Canvas x:Name="SaturationAndValueSlider" Background="Transparent" ClipToBounds="False" DataContext="{Binding SaturationAndValueSlider}"
                             MouseDown="Slider_MouseDown"
                             MouseMove="Slider_MouseMove"
                             MouseUp="Slider_MouseUp">
                         <!--                            MouseMove="SaturationAndValueSlider_MouseMove"-->
-                        <Grid Width="12" Height="12" Canvas.Top="{Binding SliderValue}">
+                        <Grid Width="12" Height="12" Canvas.Top="{Binding ySliderValue}" Canvas.Left="{Binding xSliderValue}">
                             <Ellipse Stroke="Black" Width="12" Height="12" StrokeThickness="1"/>
                             <Ellipse Stroke="White" Width="10" Height="10" StrokeThickness="1"/>
                         </Grid>

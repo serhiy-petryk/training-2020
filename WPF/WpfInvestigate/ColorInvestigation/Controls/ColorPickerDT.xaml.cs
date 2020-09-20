@@ -81,14 +81,17 @@ namespace ColorInvestigation.Controls
         {
             foreach (var component in VM.Components)
             {
-                var contentControl = Tips.GetVisualChildren(this).OfType<ContentControl>().FirstOrDefault(c => c.Content == component);
+                var contentControl = Tips.GetVisualChildren(this).OfType<ContentControl>().FirstOrDefault(cc => cc.Content == component);
                 if (contentControl != null)
                     SetSliderSizesInComponent(component, Tips.GetVisualChildren(contentControl).OfType<Canvas>().FirstOrDefault());
             }
 
             SetSliderSizesInComponent(VM.Components[15], AlphaSlider);
             SetSliderSizesInComponent(VM.Components[16], HueSlider);
-            SetSliderSizesInComponent(VM.Components[18], SaturationAndValueSlider);
+
+            VM.SaturationAndValueSlider.SliderSize = new Size(SaturationAndValueSlider.ActualWidth, SaturationAndValueSlider.ActualHeight);
+            var thumb = SaturationAndValueSlider.Children[0] as FrameworkElement;
+            VM.SaturationAndValueSlider.ThumbSize = new Size(thumb.ActualWidth, thumb.ActualHeight);
 
             VM.UpdateProperties();
         }
@@ -241,11 +244,21 @@ namespace ColorInvestigation.Controls
             {
                 var canvas = sender as Panel;
                 var thumb = canvas.Children[0] as FrameworkElement;
-                var isVertical = thumb is Grid;
-                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
-                var value = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
-                value = Math.Max(0, Math.Min(1, value));
-                ((ColorPickerVM.ColorComponent) canvas.DataContext).SetSliderValue(value);
+                if (canvas.DataContext is ColorPickerVM.XYSlider)
+                {
+                    var x = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).X / canvas.ActualWidth));
+                    var y = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).Y / canvas.ActualHeight));
+                    VM.SetSaturationAndValueSliderValues(x, y);
+                }
+                else
+                {
+                    var isVertical = thumb is Grid;
+                    var value = isVertical
+                        ? e.GetPosition(canvas).Y / canvas.ActualHeight
+                        : (e.GetPosition(canvas).X - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
+                    value = Math.Max(0, Math.Min(1, value));
+                    ((ColorPickerVM.ColorComponent) canvas.DataContext).SetSliderValue(value);
+                }
             }
         }
 
@@ -254,13 +267,12 @@ namespace ColorInvestigation.Controls
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var canvas = sender as Canvas;
-                var x = e.GetPosition(canvas).X;
-                var y = e.GetPosition(canvas).Y;
-                x = Math.Max(0, Math.Min(x, canvas.ActualWidth));
-                y = Math.Max(0, Math.Min(y, canvas.ActualHeight));
+                var x = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).X / canvas.ActualWidth));
+                var y = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).Y / canvas.ActualHeight));
 
+                VM.SetSaturationAndValueSliderValues(y, x);
                 //VM.HSV_S_And_V = new Tuple<double, double>(GetModelValueBySlider("HSV_S", x / canvas.ActualWidth),
-                  //  GetModelValueBySlider("HSV_V", 1 - y / canvas.ActualHeight));
+                //  GetModelValueBySlider("HSV_V", 1 - y / canvas.ActualHeight));
             }
         }
         #endregion

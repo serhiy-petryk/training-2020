@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using System.Windows;
 using System.Windows.Media;
 using ColorInvestigation.Common;
 
@@ -13,6 +14,31 @@ namespace ColorInvestigation.Controls
     // ColorPicker ViewModel for DataTemplate
     public class ColorPickerVM : INotifyPropertyChangedAbstract
     {
+        public XYSlider SaturationAndValueSlider { get; }= new XYSlider();
+        internal void SetSaturationAndValueSliderValues(double xValue, double yValue)
+        {
+            _isUpdating = true;
+            SetCC(7, xValue); // saturation of HSV
+            _isUpdating = false;
+            SetCC(8, 1.0 - yValue); // value of HSV
+        }
+
+        public class XYSlider : INotifyPropertyChangedAbstract
+        {
+            public double xSliderValue { get; private set; }
+            public double ySliderValue { get; private set; }
+            public Size SliderSize;
+            public Size ThumbSize;
+
+            public void UpdateProperties(double saturation, double value)
+            {
+                xSliderValue = SliderSize.Width * saturation - ThumbSize.Width / 2;
+                ySliderValue = SliderSize.Height * (1.0 - value) - ThumbSize.Height / 2;
+                OnPropertiesChanged(nameof(xSliderValue), nameof(ySliderValue));
+            }
+            public override void UpdateProperties(){}
+        }
+
         public ColorPickerVM()
         {
             Components = new []
@@ -47,8 +73,7 @@ namespace ColorInvestigation.Controls
                     (k) => new ColorSpaces.YCbCr(GetCC(12), k / 100.0 - 0.5, GetCC(14)).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Cr", -127.5, 127.5, null,
                     (k) => new ColorSpaces.YCbCr(GetCC(12), GetCC(13), k / 100.0 - 0.5).GetRGB().GetColor()),
-                new ColorComponent(this, "RGB_A", 0, 1), new ColorComponent(this, "HSV_Hue", 0, 360),
-                new ColorComponent(this, "HSV_Saturation", 0, 100), new ColorComponent(this, "HSV_Value", 0, 100)
+                new ColorComponent(this, "RGB_A", 0, 1), new ColorComponent(this, "HSV_Hue", 0, 360)
             };
 
             const int NumberOfTones = 10;
@@ -74,7 +99,8 @@ namespace ColorInvestigation.Controls
                 {
                     _value = value;
                     if (Id == "HSV_Hue") _owner.Components[6]._value = value;
-                    if (Id == "HSV_Value") _owner.Components[8]._value = 100 - value;
+                    // if (Id == "HSV_Value") _owner.Components[8]._value = 100 - value;
+                    if (Id== "HSV_SaturationAndValue") _owner.Components[8]._value = 100 - value;
 
                     if (Id == "RGB_A") _owner.UpdateProperties();
                     else _owner.UpdateValues(ColorSpace);
@@ -383,7 +409,7 @@ namespace ColorInvestigation.Controls
             }
 
             SetCC(16, GetCC(6)); // Set HSV_Hue value
-            SetCC(18, 1 - GetCC(8)); // Set HSV_Value value
+            // SetCC(17, 1 - GetCC(8)); // Set HSV_SaturationAndValue value
 
             UpdateProperties();
             _isUpdating = false;
@@ -399,9 +425,10 @@ namespace ColorInvestigation.Controls
             OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
                 nameof(CurrentColorWithoutAlphaBrush));
 
-            AfterUpdatedCallback?.Invoke();
+            // AfterUpdatedCallback?.Invoke();
             // NewUpdateSliderBrushes();
 
+            SaturationAndValueSlider.UpdateProperties(GetCC(7), GetCC(8));
             foreach (var component in Components)
                 component.UpdateProperties();
         }
