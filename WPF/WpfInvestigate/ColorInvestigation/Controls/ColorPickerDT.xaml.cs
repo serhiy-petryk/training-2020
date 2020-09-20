@@ -88,6 +88,7 @@ namespace ColorInvestigation.Controls
 
             SetSliderSizesInComponent(VM.Components[15], AlphaSlider);
             SetSliderSizesInComponent(VM.Components[16], HueSlider);
+            SetSliderSizesInComponent(VM.Components[18], SaturationAndValueSlider);
 
             VM.UpdateProperties();
         }
@@ -173,7 +174,7 @@ namespace ColorInvestigation.Controls
             var hsl = (element.DataContext as ColorPickerVM.ColorToneBox).GetBackgroundHSL();
             VM.CurrentColor = hsl.GetRGB().GetColor();
 
-            VM.SetCC_Old(3, hsl.H, hsl.S, hsl.L);
+            VM.SetCC(3, hsl.H, hsl.S, hsl.L);
 
             VM.SetProperty(hsl.H * 360, "HSL_H");
         }
@@ -222,7 +223,7 @@ namespace ColorInvestigation.Controls
                 var value = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
                 value = Math.Max(0, Math.Min(1, value));
 
-                if (sliderName == nameof(HueSlider))
+                /*if (sliderName == nameof(HueSlider))
                     VM.HSV_H = GetModelValueBySlider("HSV_H", value);
                 else if (canvas.Name == nameof(AlphaSlider))
                     VM.Alpha = 1.0 - value;
@@ -230,7 +231,7 @@ namespace ColorInvestigation.Controls
                 {
                     var valueId = sliderName.Replace("Slider_", "");
                     VM.SetProperty(GetModelValueBySlider(valueId, value), valueId);
-                }
+                }*/
             }
         }
 
@@ -258,8 +259,8 @@ namespace ColorInvestigation.Controls
                 x = Math.Max(0, Math.Min(x, canvas.ActualWidth));
                 y = Math.Max(0, Math.Min(y, canvas.ActualHeight));
 
-                VM.HSV_S_And_V = new Tuple<double, double>(GetModelValueBySlider("HSV_S", x / canvas.ActualWidth),
-                    GetModelValueBySlider("HSV_V", 1 - y / canvas.ActualHeight));
+                //VM.HSV_S_And_V = new Tuple<double, double>(GetModelValueBySlider("HSV_S", x / canvas.ActualWidth),
+                  //  GetModelValueBySlider("HSV_V", 1 - y / canvas.ActualHeight));
             }
         }
         #endregion

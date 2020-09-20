@@ -47,7 +47,8 @@ namespace ColorInvestigation.Controls
                     (k) => new ColorSpaces.YCbCr(GetCC(12), k / 100.0 - 0.5, GetCC(14)).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Cr", -127.5, 127.5, null,
                     (k) => new ColorSpaces.YCbCr(GetCC(12), GetCC(13), k / 100.0 - 0.5).GetRGB().GetColor()),
-                new ColorComponent(this, "RGB_A", 0, 1), new ColorComponent(this, "HSV_Hue", 0, 360)
+                new ColorComponent(this, "RGB_A", 0, 1), new ColorComponent(this, "HSV_Hue", 0, 360),
+                new ColorComponent(this, "HSV_Saturation", 0, 100), new ColorComponent(this, "HSV_Value", 0, 100)
             };
 
             const int NumberOfTones = 10;
@@ -62,6 +63,7 @@ namespace ColorInvestigation.Controls
         public ColorToneBox[] Tones { get; }
 
         #region ==============  Color Component  ===============
+
         public class ColorComponent : INotifyPropertyChangedAbstract
         {
             private double _value;
@@ -72,6 +74,8 @@ namespace ColorInvestigation.Controls
                 {
                     _value = value;
                     if (Id == "HSV_Hue") _owner.Components[6]._value = value;
+                    if (Id == "HSV_Value") _owner.Components[8]._value = 100 - value;
+
                     if (Id == "RGB_A") _owner.UpdateProperties();
                     else _owner.UpdateValues(ColorSpace);
                 }
@@ -142,11 +146,11 @@ namespace ColorInvestigation.Controls
             set
             {
                 _isUpdating = true;
-                _alpha = value.A / 255.0;
-                RGB_R = value.R;
-                RGB_G = value.G;
+                Components[1].Value = 1.0 - value.A / 255.0;
+                Components[0].Value = value.R;
+                Components[1].Value = value.G;
                 _isUpdating = false;
-                RGB_B = value.B;
+                Components[2].Value = value.B;
             }
         }
 
@@ -160,7 +164,7 @@ namespace ColorInvestigation.Controls
         public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
         public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, new ColorSpaces.RGB(_oldColorData[0] / 255, _oldColorData[1] / 255, _oldColorData[2] / 255).GetColor());
-        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, new ColorSpaces.RGB(GetCC_Old(0), GetCC_Old(1), GetCC_Old(2)).GetColor());
+        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2)).GetColor());
 
         #endregion
 
@@ -177,14 +181,14 @@ namespace ColorInvestigation.Controls
                 Components[k + startIndex].Value = newValues[k] * Components[k + startIndex].SpaceMultiplier;
         }
 
-        private double GetCC_Old(int index) => _values[index] / Metalist[index].SpaceMultiplier;
+        /*private double GetCC_Old(int index) => _values[index] / Metalist[index].SpaceMultiplier;
         internal void SetCC_Old(int startIndex, params double[] newValues)
         {
             for (var k = 0; k < newValues.Length; k++)
                 _values[k + startIndex] = newValues[k] * Metalist[k + startIndex].SpaceMultiplier;
-        }
+        }*/
 
-        public double Alpha // in range [0, 1]
+        /*public double Alpha // in range [0, 1]
         {
             get => _alpha;
             set
@@ -253,8 +257,8 @@ namespace ColorInvestigation.Controls
         public double YCbCr_Cr // in range [-127.5, 127.5]
         {
             get => _values[14]; set => SetProperty(value);
-        }
-        internal Tuple<double, double> HSV_S_And_V // set HSV.S & HSV.V simultaneously (for HueAndSaturation slider)
+        }*/
+        /*internal Tuple<double, double> HSV_S_And_V // set HSV.S & HSV.V simultaneously (for HueAndSaturation slider)
         {
             set
             {
@@ -263,7 +267,7 @@ namespace ColorInvestigation.Controls
                 _isUpdating = false;
                 HSV_V = value.Item2;
             }
-        }
+        }*/
 
         internal void SetProperty(double value, [CallerMemberName]string propertyName = null)
         {
@@ -277,7 +281,7 @@ namespace ColorInvestigation.Controls
         #region ===========  Color component metadata  ============
         internal static Dictionary<string, MetaItem> Metadata;
 
-        static ColorPickerVM()
+        /*static ColorPickerVM()
         {
             for (var k = 0; k < Metalist.Count; k++)
             {
@@ -285,9 +289,9 @@ namespace ColorInvestigation.Controls
                 Metalist[k].ColorSpace = (ColorSpace)Enum.Parse(typeof(ColorSpace), Metalist[k].Id.Split('_')[0]);
             }
             Metadata = Metalist.ToDictionary(a => a.Id, a => a);
-        }
+        }*/
 
-        private static List<MetaItem> Metalist = new List<MetaItem>
+        /*private static List<MetaItem> Metalist = new List<MetaItem>
         {
             // new MetaItem(nameof(Alpha), 0, 255),
             new MetaItem(nameof(RGB_R), 0, 255),
@@ -305,7 +309,7 @@ namespace ColorInvestigation.Controls
             new MetaItem(nameof(YCbCr_Y), 0, 255),
             new MetaItem(nameof(YCbCr_Cb), -127.5, 127.5),
             new MetaItem(nameof(YCbCr_Cr), -127.5, 127.5)
-        };
+        };*/
 
         internal class MetaItem
         {
@@ -379,6 +383,7 @@ namespace ColorInvestigation.Controls
             }
 
             SetCC(16, GetCC(6)); // Set HSV_Hue value
+            SetCC(18, 1 - GetCC(8)); // Set HSV_Value value
 
             UpdateProperties();
             _isUpdating = false;
@@ -390,7 +395,7 @@ namespace ColorInvestigation.Controls
                 tone.UpdateProperties();
 
             // UpdateTones();
-            OnPropertiesChanged(Metadata.Keys.ToArray());
+            // OnPropertiesChanged(Metadata.Keys.ToArray());
             OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
                 nameof(CurrentColorWithoutAlphaBrush));
 
@@ -410,24 +415,24 @@ namespace ColorInvestigation.Controls
 
         internal void SaveColor()
         {
-            _oldColorData.CopyTo(_savedColorData, 0);
+            /*_oldColorData.CopyTo(_savedColorData, 0);
             Array.Copy(_values, _oldColorData, ComponentNumber);
             _oldColorData[_savedColorData.Length - 1] = Alpha;
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));*/
         }
         internal void RestoreColor()
         {
-            _savedColorData.CopyTo(_oldColorData, 0);
+            /*_savedColorData.CopyTo(_oldColorData, 0);
             Array.Copy(_savedColorData, _values, ComponentNumber);
             Alpha = _savedColorData[_savedColorData.Length - 1];
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));*/
         }
         #endregion
 
         #region ===========  Linear gradient brushes for Color components  ==========
         public Dictionary<string, LinearGradientBrush> Brushes { get; private set; }
 
-        private void UpdateSliderBrushes()
+        /*private void UpdateSliderBrushes()
         {
             if (Brushes == null)
             {
@@ -515,7 +520,7 @@ namespace ColorInvestigation.Controls
                 x += xStep;
             }
             OnPropertiesChanged(nameof(Brushes));
-        }
+        }*/
         #endregion
 
         #region ==============  Tones  =======================
