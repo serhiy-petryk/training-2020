@@ -18,6 +18,25 @@ namespace ColorInvestigation.Controls
         public XYSlider HueSlider { get; }
         public XYSlider SaturationAndValueSlider { get; }
         public ColorComponent[] Components { get; }
+        // need to duplicate Component because "Type ColorComponent[]' is not collection" error occurs
+        // for "Content={Binding Components[N]}" line of ColorPicker.xaml in VS designer
+        // I tried to use Array, Collection<T>, List<T>, ReadOnlyCollection<T>, Dictionary<T,V>
+        public ColorComponent RGB_R => Components[0];
+        public ColorComponent RGB_G => Components[1];
+        public ColorComponent RGB_B => Components[2]; 
+        public ColorComponent HSL_H => Components[3];
+        public ColorComponent HSL_S => Components[4]; 
+        public ColorComponent HSL_L => Components[5];
+        public ColorComponent HSV_H => Components[6];
+        public ColorComponent HSV_S => Components[7];
+        public ColorComponent HSV_V => Components[8];
+        public ColorComponent LAB_L => Components[9];
+        public ColorComponent LAB_A => Components[10];
+        public ColorComponent LAB_B => Components[11];
+        public ColorComponent YCbCr_Y => Components[12];
+        public ColorComponent YCbCr_Cb => Components[13];
+        public ColorComponent YCbCr_Cr => Components[14];
+
         public ColorToneBox[] Tones { get; }
 
         #region ==============  Hue/SaturationAndValue Sliders  ============
@@ -103,8 +122,6 @@ namespace ColorInvestigation.Controls
         }
 
         #region ==============  Color Component  ===============
-        public ColorComponent GetComponentById(string Id) => Components.FirstOrDefault(c => c.Id == Id);
-
         public class ColorComponent : INotifyPropertyChangedAbstract
         {
             private double _value;
