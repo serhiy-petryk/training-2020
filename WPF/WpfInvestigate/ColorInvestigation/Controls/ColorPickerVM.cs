@@ -16,7 +16,6 @@ namespace ColorInvestigation.Controls
     {
         internal FrameworkElement Owner;
         public XYSlider AlphaSlider { get; }
-        // private double _alpha => 1.0 - AlphaSlider.yValue;
         public XYSlider HueSlider { get; }
         public XYSlider SaturationAndValueSlider { get; }
         public ColorComponent[] Components { get; }
@@ -46,38 +45,44 @@ namespace ColorInvestigation.Controls
         {
             public double xValue { get; private set; }
             public double yValue { get; private set; }
-            public double xSliderValue => SliderSize.Width * xValue - ThumbSize.Width / 2;
-            public double ySliderValue => SliderSize.Height * yValue - ThumbSize.Height / 2;
-            public Size SliderSize;
-            public Size ThumbSize;
+            public virtual double xSliderValue => SizeOfSlider.Width * xValue - SizeOfThumb.Width / 2;
+            public virtual double ySliderValue => SizeOfSlider.Height * yValue - SizeOfThumb.Height / 2;
             public Action<double, double> SetValuesAction;
+
+            private Size SizeOfSlider;
+            private Size SizeOfThumb;
             public XYSlider(Action<double, double> setValuesAction)
             {
                 SetValuesAction = setValuesAction;
             }
-            public void UpdateProperties(double xValue, double yValue)
+            public void SetProperties(double xValue, double yValue)
             {
                 this.xValue = xValue;
                 this.yValue = yValue;
-                // xSliderValue = SliderSize.Width * xValue - ThumbSize.Width / 2;
-                // ySliderValue = SliderSize.Height * yValue - ThumbSize.Height / 2;
-                OnPropertiesChanged(nameof(xSliderValue), nameof(ySliderValue));
+                UpdateUI();
             }
-            public override void UpdateUI(){}
 
-            public void SetSizes(Panel panel)
+            public override void UpdateUI() => OnPropertiesChanged(nameof(xSliderValue), nameof(ySliderValue));
+
+            public void SetSizeOfControl(Panel panel)
             {
-                SliderSize = new Size(panel.ActualWidth, panel.ActualHeight);
+                SizeOfSlider = new Size(panel.ActualWidth, panel.ActualHeight);
                 var thumb = panel.Children[0] as FrameworkElement;
-                ThumbSize = new Size(thumb.ActualWidth, thumb.ActualHeight);
+                SizeOfThumb = new Size(thumb.ActualWidth, thumb.ActualHeight);
             }
         }
         #endregion
 
         public ColorPickerVM()
         {
-            AlphaSlider = new XYSlider((x, y) => UpdateUI()); //Alpha
+            AlphaSlider = new XYSlider((x, y) =>
+            {
+                AlphaSlider.SetProperties(0, y);
+                UpdateUI();
+            });
+            
             HueSlider = new XYSlider((x, y) => SetCC(6, y)); // hue of HSV
+
             SaturationAndValueSlider = new XYSlider((x, y) =>
             {
                 _isUpdating = true;
@@ -118,7 +123,6 @@ namespace ColorInvestigation.Controls
                     (k) => new ColorSpaces.YCbCr(GetCC(12), k / 100.0 - 0.5, GetCC(14)).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Cr", -127.5, 127.5, null,
                     (k) => new ColorSpaces.YCbCr(GetCC(12), GetCC(13), k / 100.0 - 0.5).GetRGB().GetColor()),
-                // new ColorComponent(this, "RGB_A", 0, 1)
             };
 
             const int NumberOfTones = 10;
@@ -138,11 +142,7 @@ namespace ColorInvestigation.Controls
                 set
                 {
                     _value = Math.Max(Min, Math.Min(Max, value));
-                    if (Id == "HSV_Hue") _owner.Components[6]._value = _value;
-
-                    // if (Id == "RGB_A") _owner.UpdateUI();
-                    //else 
-                        _owner.UpdateValues(ColorSpace);
+                    _owner.UpdateValues(ColorSpace);
                 }
             }
 
@@ -155,8 +155,6 @@ namespace ColorInvestigation.Controls
             public readonly double SpaceMultiplier;
             internal ColorSpace ColorSpace;
             private ColorPickerVM _owner;
-            public double SliderControlSize;
-            public double SliderControlOffset;
             private int _gradientCount => ColorSpace == ColorSpace.RGB ? 1 : 100;
             private Func<int, Color> _backgroundGradient;
 
@@ -170,16 +168,27 @@ namespace ColorInvestigation.Controls
                 BackgroundBrush = new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, _gradientCount + 1)
                     .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / _gradientCount))));
             }
-            public void SetSliderValue(double sliderValue) => Value = (Max - Min) * sliderValue + Min;
-            public double SliderValue => SliderControlSize * (Value - Min) / (Max - Min) - SliderControlOffset;
 
             public override void UpdateUI()
             {
                 if (_backgroundGradient !=null)
                     for (var k = 0; k < BackgroundBrush.GradientStops.Count; k++)
                         BackgroundBrush.GradientStops[k].Color = _backgroundGradient(k);
-                OnPropertiesChanged(nameof(SliderValue), nameof(Value), nameof(BackgroundBrush));
+                OnPropertiesChanged(nameof(xSliderValue), nameof(Value), nameof(BackgroundBrush));
             }
+
+            public double xSliderValue => (SizeOfSlider.Width - SizeOfThumb.Width) * (Value - Min) / (Max - Min);
+            private Size SizeOfSlider;
+            private Size SizeOfThumb;
+            public void SetProperties(double sliderValue) => Value = (Max - Min) * sliderValue + Min;
+
+            public void SetSizeOfControl(Panel panel)
+            {
+                SizeOfSlider = new Size(panel.ActualWidth, panel.ActualHeight);
+                var thumb = panel.Children[0] as FrameworkElement;
+                SizeOfThumb = new Size(thumb.ActualWidth, thumb.ActualHeight);
+            }
+
         }
         #endregion
 
@@ -205,8 +214,7 @@ namespace ColorInvestigation.Controls
             set
             {
                 _isUpdating = true;
-                AlphaSlider.UpdateProperties(0, 1.0 - value.A / 255.0);
-                // SetCC(15, 1.0 - value.A / 255.0);
+                AlphaSlider.SetProperties(0, 1.0 - value.A / 255.0);
                 SetCC(0, value.R / 255.0, value.G / 255.0);
                 _isUpdating = false;
                 SetCC(2, value.B / 255.0);
@@ -295,8 +303,9 @@ namespace ColorInvestigation.Controls
 
         public override void UpdateUI()
         {
-            HueSlider.UpdateProperties(0, GetCC(6));
-            SaturationAndValueSlider.UpdateProperties(GetCC(7), 1.0 - GetCC(8));
+            AlphaSlider.UpdateUI();
+            HueSlider.SetProperties(0, GetCC(6));
+            SaturationAndValueSlider.SetProperties(GetCC(7), 1.0 - GetCC(8));
             foreach (var component in Components)
                 component.UpdateUI();
 

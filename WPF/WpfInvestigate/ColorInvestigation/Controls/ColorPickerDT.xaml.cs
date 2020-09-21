@@ -29,6 +29,8 @@
 //     + - increase step (try ~20 gradient) 
 //      -or/and process only last mouse move / skip late mouse moves
 // 23. ViewModel + з прямими get/set (без формул) - ? propertyUpdate + getter caller name => CallerMemberName
+// 24. Remove Components, inline initilize variables RBR_R, ...
+// 25. ColorComponent as subclass of XYSlider
 
 using ColorInvestigation.Common;
 using System;
@@ -82,33 +84,18 @@ namespace ColorInvestigation.Controls
             var fe = sender as FrameworkElement;
             if (fe.Name == "LeftPanel")
             {
-                // SetSliderSizesInComponent(VM.Components[15], AlphaSlider);
-                VM.AlphaSlider.SetSizes(AlphaSlider);
-                VM.HueSlider.SetSizes(HueSlider);
-                VM.SaturationAndValueSlider.SetSizes(SaturationAndValueSlider);
+                VM.AlphaSlider.SetSizeOfControl(AlphaSlider);
+                VM.HueSlider.SetSizeOfControl(HueSlider);
+                VM.SaturationAndValueSlider.SetSizeOfControl(SaturationAndValueSlider);
             }
             else
             {
-                foreach (var cc in Tips.GetVisualChildren(this).OfType<ContentControl>().Where(cc => cc.Content is ColorPickerVM.ColorComponent))
-                    SetSliderSizesInComponent((ColorPickerVM.ColorComponent) cc.Content, Tips.GetVisualChildren(cc).OfType<Canvas>().FirstOrDefault());
+                foreach (var cc in Tips.GetVisualChildren(this).OfType<ContentControl>()
+                    .Where(cc => cc.Content is ColorPickerVM.ColorComponent))
+                    ((ColorPickerVM.ColorComponent) cc.Content).SetSizeOfControl(Tips.GetVisualChildren(cc).OfType<Canvas>().FirstOrDefault());
             }
 
             VM.UpdateUI();
-        }
-
-        private void SetSliderSizesInComponent(ColorPickerVM.ColorComponent component, Panel panel)
-        {
-            var thumb = panel.Children[0] as FrameworkElement;
-            if (thumb is Grid)
-            {
-                component.SliderControlSize = panel.ActualHeight;
-                component.SliderControlOffset = thumb.ActualHeight / 2;
-            }
-            else
-            {
-                component.SliderControlSize = panel.ActualWidth - thumb.ActualWidth;
-                component.SliderControlOffset = 0;
-            }
         }
         #endregion
 
@@ -207,7 +194,8 @@ namespace ColorInvestigation.Controls
                         ? e.GetPosition(canvas).Y / canvas.ActualHeight
                         : (e.GetPosition(canvas).X - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
                     value = Math.Max(0, Math.Min(1, value));
-                    ((ColorPickerVM.ColorComponent) canvas.DataContext).SetSliderValue(value);
+                    // ((ColorPickerVM.ColorComponent)canvas.DataContext).SetSliderValue(value);
+                    ((ColorPickerVM.ColorComponent)canvas.DataContext).SetProperties(value);
                 }
             }
         }

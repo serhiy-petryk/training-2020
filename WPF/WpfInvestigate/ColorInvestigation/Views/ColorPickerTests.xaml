@@ -97,16 +97,16 @@
             <!-- =============== -->
             <TabControl Grid.Row="1">
                 <TabItem Header="DTViewModel">
-                    <controls:ColorPickerDT x:Name="ColorPickerDT" Color="Orange"/>
+                    <controls:ColorPickerDT x:Name="ColorPickerDT" Color="#CCFF8040"/>
                 </TabItem>
                 <TabItem Header="ViewModelAsync">
-                    <controls:ColorPickerVMAsync x:Name="ColorPickerWithViewModelAsync" Color="Orange"/>
+                    <controls:ColorPickerVMAsync x:Name="ColorPickerWithViewModelAsync" Color="#CCFF8040"/>
                 </TabItem>
                 <TabItem Header="ViewModel">
-                    <controls:ColorPickerWithVM x:Name="ColorPickerWithViewModel" Color="Orange"/>
+                    <controls:ColorPickerWithVM x:Name="ColorPickerWithViewModel" Color="#CCFF8040"/>
                 </TabItem>
                 <TabItem Header="Simple">
-                    <controls:ColorPicker x:Name="ColorPicker" Color="Orange"/>
+                    <controls:ColorPicker x:Name="ColorPicker" Color="#CCFF8040"/>
                 </TabItem>
                 <TabItem Header="Async">
                     <controls:ColorPickerAsync x:Name="ColorPickerAsync" Color="LightBlue"/>

@@ -30,7 +30,7 @@
                 <Border Grid.Column="1" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding BackgroundBrush}" Focusable="False">
                     <Canvas Background="Transparent" VerticalAlignment="Stretch"
                             MouseDown="Slider_MouseDown" MouseUp="Slider_MouseUp" MouseMove="Slider_MouseMove">
-                        <Border Canvas.Left="{Binding SliderValue}" BorderThickness="1" Background="Transparent" BorderBrush="#FF555555" Width="8"
+                        <Border Canvas.Left="{Binding xSliderValue}" BorderThickness="1" Background="Transparent" BorderBrush="#FF555555" Width="8"
                                 Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Canvas}}">
                             <Border BorderThickness="1" Background="Transparent" BorderBrush="#FFEEEEEE" Width="6"/>
                         </Border>
