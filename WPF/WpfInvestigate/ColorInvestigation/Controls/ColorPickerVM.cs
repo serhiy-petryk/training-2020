@@ -183,6 +183,7 @@ namespace ColorInvestigation.Controls
 
             public override double xSliderValue => (SizeOfSlider.Width - SizeOfThumb.Width) * (Value - Min) / (Max - Min);
             public void SetProperties(double sliderValue) => Value = (Max - Min) * sliderValue + Min;
+            public double SpaceValue => Value / SpaceMultiplier;
         }
         #endregion
 
@@ -246,10 +247,8 @@ namespace ColorInvestigation.Controls
             _isUpdating = true;
 
             // Get rgb components
-            var rgb = new ColorSpaces.RGB(0, 0, 0);
-            if (baseColorSpace == ColorSpace.RGB)
-                rgb = new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2));
-            else if (baseColorSpace == ColorSpace.HSL)
+            var rgb = new ColorSpaces.RGB(RGB_R.SpaceValue, RGB_G.SpaceValue, RGB_B.SpaceValue);
+            if (baseColorSpace == ColorSpace.HSL)
             {
                 rgb = new ColorSpaces.HSL(GetCC(3), GetCC(4), GetCC(5)).GetRGB();
                 // Update HSV
