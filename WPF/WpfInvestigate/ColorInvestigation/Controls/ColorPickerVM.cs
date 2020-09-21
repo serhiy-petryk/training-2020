@@ -18,7 +18,7 @@ namespace ColorInvestigation.Controls
         public XYSlider AlphaSlider { get; }
         public XYSlider HueSlider { get; }
         public XYSlider SaturationAndValueSlider { get; }
-        public ColorComponent[] Components { get; }
+        private ColorComponent[] Components { get; }
         // need to duplicate Component because "Type ColorComponent[]' is not collection" error occurs
         // for "Content={Binding Components[N]}" line of ColorPicker.xaml in VS designer
         // I tried to use Array, Collection<T>, List<T>, ReadOnlyCollection<T>, Dictionary<T,V>

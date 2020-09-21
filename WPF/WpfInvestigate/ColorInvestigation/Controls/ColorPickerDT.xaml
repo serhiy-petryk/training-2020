@@ -237,7 +237,7 @@
                     <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource Label}" Text="Tints" TextAlignment="Center"/>
                     <TextBox Grid.Row="1" Grid.Column="2" Style="{StaticResource Label}" Text="Tones" TextAlignment="Center"/>
 
-                    <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" ItemsSource="{Binding Path=Tones}" IsTabStop="False">
+                    <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" ItemsSource="{Binding Path=Tones, Mode=OneTime}" IsTabStop="False">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid x:Name="ColorBoxGrid" UseLayoutRounding="False" SnapsToDevicePixels="False">
@@ -297,8 +297,8 @@
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemContainerStyle>
                             <Style>
-                                <Setter Property="Grid.Row" Value="{Binding GridRow}" />
-                                <Setter Property="Grid.Column" Value="{Binding GridColumn}" />
+                                <Setter Property="Grid.Row" Value="{Binding GridRow, Mode=OneTime}" />
+                                <Setter Property="Grid.Column" Value="{Binding GridColumn, Mode=OneTime}" />
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemsPanel>
