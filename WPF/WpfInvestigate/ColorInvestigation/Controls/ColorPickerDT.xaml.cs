@@ -53,6 +53,7 @@ namespace ColorInvestigation.Controls
         public ColorPickerDT()
         {
             InitializeComponent();
+            VM.Owner = this;
         }
 
         #region  ==============  User UI  ===========
@@ -78,19 +79,24 @@ namespace ColorInvestigation.Controls
         #region ==============  Event handlers  ====================
         private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            foreach (var component in VM.Components)
+            var fe = sender as FrameworkElement;
+            if (fe.Name == "LeftPanel")
             {
-                var contentControl = Tips.GetVisualChildren(this).OfType<ContentControl>().FirstOrDefault(cc => cc.Content == component);
-                if (contentControl != null)
-                    SetSliderSizesInComponent(component, Tips.GetVisualChildren(contentControl).OfType<Canvas>().FirstOrDefault());
+                SetSliderSizesInComponent(VM.Components[15], AlphaSlider);
+
+                VM.HueSlider.SliderSize = new Size(HueSlider.ActualWidth, HueSlider.ActualHeight);
+                var thumb = HueSlider.Children[0] as FrameworkElement;
+                VM.HueSlider.ThumbSize = new Size(thumb.ActualWidth, thumb.ActualHeight);
+
+                VM.SaturationAndValueSlider.SliderSize = new Size(SaturationAndValueSlider.ActualWidth, SaturationAndValueSlider.ActualHeight);
+                thumb = SaturationAndValueSlider.Children[0] as FrameworkElement;
+                VM.SaturationAndValueSlider.ThumbSize = new Size(thumb.ActualWidth, thumb.ActualHeight);
             }
-
-            SetSliderSizesInComponent(VM.Components[15], AlphaSlider);
-            SetSliderSizesInComponent(VM.Components[16], HueSlider);
-
-            VM.SaturationAndValueSlider.SliderSize = new Size(SaturationAndValueSlider.ActualWidth, SaturationAndValueSlider.ActualHeight);
-            var thumb = SaturationAndValueSlider.Children[0] as FrameworkElement;
-            VM.SaturationAndValueSlider.ThumbSize = new Size(thumb.ActualWidth, thumb.ActualHeight);
+            else
+            {
+                foreach (var cc in Tips.GetVisualChildren(this).OfType<ContentControl>().Where(cc => cc.Content is ColorPickerVM.ColorComponent))
+                    SetSliderSizesInComponent((ColorPickerVM.ColorComponent) cc.Content, Tips.GetVisualChildren(cc).OfType<Canvas>().FirstOrDefault());
+            }
 
             VM.UpdateUI();
         }
@@ -190,31 +196,6 @@ namespace ColorInvestigation.Controls
             (sender as UIElement).ReleaseMouseCapture();
         }
 
-        private void xxSlider_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                var canvas = sender as Panel;
-                var thumb = canvas.Children[0] as FrameworkElement;
-                var isVertical = thumb is Grid;
-                var sliderName = (canvas.TemplatedParent as FrameworkElement)?.Name ?? canvas.Name;
-
-                var offset = isVertical ? e.GetPosition(canvas).Y : e.GetPosition(canvas).X;
-                var value = isVertical ? offset / canvas.ActualHeight : (offset - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
-                value = Math.Max(0, Math.Min(1, value));
-
-                /*if (sliderName == nameof(HueSlider))
-                    VM.HSV_H = GetModelValueBySlider("HSV_H", value);
-                else if (canvas.Name == nameof(AlphaSlider))
-                    VM.Alpha = 1.0 - value;
-                else
-                {
-                    var valueId = sliderName.Replace("Slider_", "");
-                    VM.SetProperty(GetModelValueBySlider(valueId, value), valueId);
-                }*/
-            }
-        }
-
         private void Slider_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -225,7 +206,7 @@ namespace ColorInvestigation.Controls
                 {
                     var x = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).X / canvas.ActualWidth));
                     var y = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).Y / canvas.ActualHeight));
-                    VM.SetSaturationAndValueSliderValues(x, y);
+                    ((ColorPickerVM.XYSlider) canvas.DataContext).SetValuesAction(x, y);
                 }
                 else
                 {

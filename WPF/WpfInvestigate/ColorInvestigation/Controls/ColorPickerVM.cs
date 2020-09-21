@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Threading;
 using ColorInvestigation.Common;
 
 namespace ColorInvestigation.Controls
@@ -12,27 +13,28 @@ namespace ColorInvestigation.Controls
     // ColorPicker ViewModel for DataTemplate
     public class ColorPickerVM : INotifyPropertyChangedAbstract
     {
-        #region ==============  SaturationAndValueSlider  ============
-        public XYSlider SaturationAndValueSlider { get; } = new XYSlider();
-        internal void SetSaturationAndValueSliderValues(double xValue, double yValue)
-        {
-            _isUpdating = true;
-            SetCC(7, xValue); // saturation of HSV
-            _isUpdating = false;
-            SetCC(8, 1.0 - yValue); // value of HSV
-        }
+        internal FrameworkElement Owner;
+        public XYSlider HueSlider { get; }
+        public XYSlider SaturationAndValueSlider { get; }
+        public ColorComponent[] Components { get; }
+        public ColorToneBox[] Tones { get; }
 
+        #region ==============  SaturationAndValueSlider  ============
         public class XYSlider : INotifyPropertyChangedAbstract
         {
             public double xSliderValue { get; private set; }
             public double ySliderValue { get; private set; }
             public Size SliderSize;
             public Size ThumbSize;
-
-            public void UpdateProperties(double saturation, double value)
+            public Action<double, double> SetValuesAction;
+            public XYSlider(Action<double, double> setValuesAction)
             {
-                xSliderValue = SliderSize.Width * saturation - ThumbSize.Width / 2;
-                ySliderValue = SliderSize.Height * (1.0 - value) - ThumbSize.Height / 2;
+                SetValuesAction = setValuesAction;
+            }
+            public void UpdateProperties(double xValue, double yValue)
+            {
+                xSliderValue = SliderSize.Width * xValue - ThumbSize.Width / 2;
+                ySliderValue = SliderSize.Height * yValue - ThumbSize.Height / 2;
                 OnPropertiesChanged(nameof(xSliderValue), nameof(ySliderValue));
             }
             public override void UpdateUI(){}
@@ -41,6 +43,15 @@ namespace ColorInvestigation.Controls
 
         public ColorPickerVM()
         {
+            HueSlider = new XYSlider((x, y) => SetCC(6, y)); // hue of HSV
+            SaturationAndValueSlider = new XYSlider((x, y) =>
+            {
+                _isUpdating = true;
+                SetCC(7, x); // saturation of HSV
+                _isUpdating = false;
+                SetCC(8, 1.0 - y); // value of HSV
+            });
+
             Components = new []
             {
                 new ColorComponent(this, "RGB_R", 0, 255, null,
@@ -73,7 +84,7 @@ namespace ColorInvestigation.Controls
                     (k) => new ColorSpaces.YCbCr(GetCC(12), k / 100.0 - 0.5, GetCC(14)).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Cr", -127.5, 127.5, null,
                     (k) => new ColorSpaces.YCbCr(GetCC(12), GetCC(13), k / 100.0 - 0.5).GetRGB().GetColor()),
-                new ColorComponent(this, "RGB_A", 0, 1), new ColorComponent(this, "HSV_Hue", 0, 360)
+                new ColorComponent(this, "RGB_A", 0, 1)
             };
 
             const int NumberOfTones = 10;
@@ -82,9 +93,6 @@ namespace ColorInvestigation.Controls
             for (var k2 = 0; k2 < NumberOfTones; k2++)
                 Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
         }
-
-        public ColorComponent[] Components { get; } // Collection<ColorComponent> because there is MS designer error 'Type .. is not a collection' in case of Array/List
-        public ColorToneBox[] Tones { get; }
 
         #region ==============  Color Component  ===============
         public ColorComponent GetComponentById(string Id) => Components.FirstOrDefault(c => c.Id == Id);
@@ -143,8 +151,6 @@ namespace ColorInvestigation.Controls
         #endregion
 
         internal enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
-
-        private const int ComponentNumber = 15;
         internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
 
         #region  ==============  Public Properties  ================
@@ -251,7 +257,7 @@ namespace ColorInvestigation.Controls
                 SetCC(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
             }
 
-            SetCC(16, GetCC(6)); // Set HSV_Hue value
+            // SetCC(16, GetCC(6)); // Set HSV_Hue value
 
             UpdateUI();
             _isUpdating = false;
@@ -259,19 +265,26 @@ namespace ColorInvestigation.Controls
 
         public override void UpdateUI()
         {
-            foreach (var tone in Tones)
-                tone.UpdateUI();
-            OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
-                nameof(CurrentColorWithoutAlphaBrush));
-            SaturationAndValueSlider.UpdateProperties(GetCC(7), GetCC(8));
+            HueSlider.UpdateProperties(0, GetCC(6));
+            SaturationAndValueSlider.UpdateProperties(GetCC(7), 1.0 - GetCC(8));
             foreach (var component in Components)
                 component.UpdateUI();
+
+            Owner.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+            {
+                OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
+                    nameof(CurrentColorWithoutAlphaBrush));
+                foreach (var tone in Tones)
+                    tone.UpdateUI();
+            }));
+
         }
 
         #endregion
 
         #region ===========  Save & Restore color  =================
 
+        private const int ComponentNumber = 15;
         private double[] _savedColorData = new double[ComponentNumber + 1];
         private double[] _oldColorData = new double[ComponentNumber + 1];
 
