@@ -147,7 +147,8 @@ namespace ColorInvestigation.Controls
                 e.Handled = valueEditor.Text.Contains(VM.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             else if (VM.CurrentCulture.NumberFormat.NegativeSign == e.Text)
                 e.Handled = ((ColorPickerVM.ColorComponent) valueEditor.DataContext).Min >= 0 ||
-                            valueEditor.Text.Contains(VM.CurrentCulture.NumberFormat.NegativeSign) ||
+                            (newText.Length > 1 && newText.Substring(1, newText.Length - 2)
+                                 .Contains(VM.CurrentCulture.NumberFormat.NegativeSign)) ||
                             !(newText.StartsWith(e.Text) || newText.EndsWith(e.Text));
 
             if (e.Handled)

@@ -20,7 +20,7 @@ namespace ColorInvestigation.Controls
         public ColorComponent[] Components { get; }
         public ColorToneBox[] Tones { get; }
 
-        #region ==============  SaturationAndValueSlider  ============
+        #region ==============  Hue/SaturationAndValue Sliders  ============
         public class XYSlider : INotifyPropertyChangedAbstract
         {
             public double xSliderValue { get; private set; }
