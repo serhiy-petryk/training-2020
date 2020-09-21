@@ -224,7 +224,7 @@
                         </TextBox>
                     </Grid>
 
-                    <Grid Grid.Row="0" Grid.Column="1" ToolTip="Current color">
+                    <!--<Grid Grid.Row="0" Grid.Column="1" ToolTip="Current color">
                         <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
                         <Rectangle>
                             <Rectangle.Fill>
@@ -237,7 +237,7 @@
                                  Background="{Binding CurrentColorWithoutAlphaBrush}" Foreground="{Binding CurrentColor_ForegroundBrush}"
                                  Text="{Binding CurrentColor}" >
                         </TextBox>
-                    </Grid>
+                    </Grid>-->
 
                     <Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="80" IsTabStop="True" Focusable="True"
                             Click="ButtonBase_OnClick">
