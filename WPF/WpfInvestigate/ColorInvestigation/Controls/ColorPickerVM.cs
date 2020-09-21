@@ -49,8 +49,9 @@ namespace ColorInvestigation.Controls
             public virtual double ySliderValue => SizeOfSlider.Height * yValue - SizeOfThumb.Height / 2;
             public Action<double, double> SetValuesAction;
 
-            private Size SizeOfSlider;
-            private Size SizeOfThumb;
+            protected Size SizeOfSlider;
+            protected Size SizeOfThumb;
+
             public XYSlider(Action<double, double> setValuesAction)
             {
                 SetValuesAction = setValuesAction;
@@ -133,7 +134,7 @@ namespace ColorInvestigation.Controls
         }
 
         #region ==============  Color Component  ===============
-        public class ColorComponent : INotifyPropertyChangedAbstract
+        public class ColorComponent : XYSlider
         {
             private double _value;
             public double Value
@@ -158,8 +159,11 @@ namespace ColorInvestigation.Controls
             private int _gradientCount => ColorSpace == ColorSpace.RGB ? 1 : 100;
             private Func<int, Color> _backgroundGradient;
 
-            public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel =null, Func<int, Color> backgroundGradient=null)
+            public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel = null,
+                Func<int, Color> backgroundGradient = null) : base(null)
             {
+                SetValuesAction = (x, y) => SetProperties(x);
+
                 Id = id; Min = min; Max = max;
                 ValueLabel = valueLabel; _owner = owner;
                 _backgroundGradient = backgroundGradient;
@@ -177,18 +181,8 @@ namespace ColorInvestigation.Controls
                 OnPropertiesChanged(nameof(xSliderValue), nameof(Value), nameof(BackgroundBrush));
             }
 
-            public double xSliderValue => (SizeOfSlider.Width - SizeOfThumb.Width) * (Value - Min) / (Max - Min);
-            private Size SizeOfSlider;
-            private Size SizeOfThumb;
+            public override double xSliderValue => (SizeOfSlider.Width - SizeOfThumb.Width) * (Value - Min) / (Max - Min);
             public void SetProperties(double sliderValue) => Value = (Max - Min) * sliderValue + Min;
-
-            public void SetSizeOfControl(Panel panel)
-            {
-                SizeOfSlider = new Size(panel.ActualWidth, panel.ActualHeight);
-                var thumb = panel.Children[0] as FrameworkElement;
-                SizeOfThumb = new Size(thumb.ActualWidth, thumb.ActualHeight);
-            }
-
         }
         #endregion
 

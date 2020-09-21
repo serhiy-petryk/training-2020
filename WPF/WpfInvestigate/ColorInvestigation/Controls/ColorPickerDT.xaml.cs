@@ -79,21 +79,12 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ==============  Event handlers  ====================
+
         private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             var fe = sender as FrameworkElement;
-            if (fe.Name == "LeftPanel")
-            {
-                VM.AlphaSlider.SetSizeOfControl(AlphaSlider);
-                VM.HueSlider.SetSizeOfControl(HueSlider);
-                VM.SaturationAndValueSlider.SetSizeOfControl(SaturationAndValueSlider);
-            }
-            else
-            {
-                foreach (var cc in Tips.GetVisualChildren(this).OfType<ContentControl>()
-                    .Where(cc => cc.Content is ColorPickerVM.ColorComponent))
-                    ((ColorPickerVM.ColorComponent) cc.Content).SetSizeOfControl(Tips.GetVisualChildren(cc).OfType<Canvas>().FirstOrDefault());
-            }
+            foreach (var cc in Tips.GetVisualChildren(fe).OfType<Canvas>().Where(cc => cc.DataContext is ColorPickerVM.XYSlider))
+                ((ColorPickerVM.XYSlider)cc.DataContext).SetSizeOfControl(cc);
 
             VM.UpdateUI();
         }
@@ -181,22 +172,12 @@ namespace ColorInvestigation.Controls
             {
                 var canvas = sender as Panel;
                 var thumb = canvas.Children[0] as FrameworkElement;
-                if (canvas.DataContext is ColorPickerVM.XYSlider)
-                {
-                    var x = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).X / canvas.ActualWidth));
-                    var y = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).Y / canvas.ActualHeight));
-                    ((ColorPickerVM.XYSlider) canvas.DataContext).SetValuesAction?.Invoke(x, y);
-                }
-                else
-                {
-                    var isVertical = thumb is Grid;
-                    var value = isVertical
-                        ? e.GetPosition(canvas).Y / canvas.ActualHeight
-                        : (e.GetPosition(canvas).X - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth);
-                    value = Math.Max(0, Math.Min(1, value));
-                    // ((ColorPickerVM.ColorComponent)canvas.DataContext).SetSliderValue(value);
-                    ((ColorPickerVM.ColorComponent)canvas.DataContext).SetProperties(value);
-                }
+                var isVertical = thumb is Grid;
+                var x = Math.Max(0, Math.Min(1.0, isVertical
+                            ? Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).X / canvas.ActualWidth))
+                            : (e.GetPosition(canvas).X - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth)));
+                var y = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).Y / canvas.ActualHeight));
+                ((ColorPickerVM.XYSlider)canvas.DataContext).SetValuesAction?.Invoke(x, y);
             }
         }
         #endregion
