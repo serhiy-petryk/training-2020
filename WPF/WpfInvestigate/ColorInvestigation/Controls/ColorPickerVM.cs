@@ -319,10 +319,14 @@ namespace ColorInvestigation.Controls
         public override void UpdateUI()
         {
             AlphaSlider.UpdateUI();
-            HueSlider.SetProperties(0, GetCC(6));
-            SaturationAndValueSlider.SetProperties(GetCC(7), 1.0 - GetCC(8));
+            HueSlider.SetProperties(0, HSV_H.SpaceValue);
+            SaturationAndValueSlider.SetProperties( HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue);
+
+            // RGB_R.UpdateUI(); RGB_G.UpdateUI(); RGB_B.UpdateUI();
+            // don't work: OnPropertiesChanged("RGB_R", "RGB_G", "RGB_B");
+
             foreach (var component in Components)
-                component.UpdateUI();
+              component.UpdateUI();
 
             Owner.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
             {

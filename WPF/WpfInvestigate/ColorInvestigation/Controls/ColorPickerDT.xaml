@@ -20,13 +20,13 @@
         <DataTemplate DataType="{x:Type controls:ColorPickerVM+ColorComponent}">
             <Grid UseLayoutRounding="False" SnapsToDevicePixels="False">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="16"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="40"/>
                     <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="{Binding Label, Mode=OneTime}" Margin="0 0 -2 0" Padding="0" Foreground="#FFE0E0E0" HorizontalAlignment="Center"/>
+                <Label Grid.Column="0" Content="{Binding Label, Mode=OneTime}" Margin="0 0 -2 0" Padding="0" Foreground="#FFE0E0E0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <Border Grid.Column="1" BorderThickness="1" BorderBrush="Gray" Margin="5 0" Background="{Binding BackgroundBrush}" Focusable="False">
                     <Canvas Background="Transparent" VerticalAlignment="Stretch"
                             MouseDown="Slider_MouseDown" MouseUp="Slider_MouseUp" MouseMove="Slider_MouseMove">
@@ -355,27 +355,27 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <!-- RGB -->
-                <TextBox Grid.Row="0" Margin="0 0 0 4" Text="RGB (Red[0-255], Green[0-255], Blue[0-255])" Style="{StaticResource Label}"/>
+                <TextBox Grid.Row="0" Margin="0 0 20 4" Text="RGB (Red[0-255], Green[0-255], Blue[0-255])" Style="{StaticResource Label}"/>
                 <ContentControl Grid.Row="1" Content="{Binding RGB_R, Mode=OneTime}" Focusable="False" IsTabStop="False"/>
                 <ContentControl Grid.Row="2" Content="{Binding RGB_G, Mode=OneTime}" Focusable="False" IsTabStop="False" Margin="0 -1" />
                 <ContentControl Grid.Row="3" Content="{Binding RGB_B, Mode=OneTime}" Focusable="False" IsTabStop="False" />
                 <!-- HSL -->
-                <TextBox Grid.Row="4" Margin="0 5 0 4" Text="HSL (Hue[0-360], Saturation[0-100], Lightness[0-100])" Style="{StaticResource Label}"/>
+                <TextBox Grid.Row="4" Margin="0 5 20 4" Text="HSL (Hue[0-360], Saturation[0-100], Lightness[0-100])" Style="{StaticResource Label}"/>
                 <ContentControl Grid.Row="5" Content="{Binding HSL_H, Mode=OneTime}" Focusable="False" IsTabStop="False" />
                 <ContentControl Grid.Row="6" Content="{Binding HSL_S, Mode=OneTime}" Focusable="False" IsTabStop="False" Margin="0 -1" />
                 <ContentControl Grid.Row="7" Content="{Binding HSL_L, Mode=OneTime}" Focusable="False" IsTabStop="False" />
                 <!-- HSV -->
-                <TextBox Grid.Row="8" Margin="0 5 0 4" Text="HSV/HSB (Hue[0-360], Saturation[0-100], Value/Brightness[0-100])" Style="{StaticResource Label}"/>
+                <TextBox Grid.Row="8" Margin="0 5 20 4" Text="HSV/HSB (Hue[0-360], Saturation[0-100], Value/Brightness[0-100])" Style="{StaticResource Label}"/>
                 <ContentControl Grid.Row="9" Content="{Binding HSV_H, Mode=OneTime}" Focusable="False" IsTabStop="False" />
                 <ContentControl Grid.Row="10" Content="{Binding HSV_S, Mode=OneTime}" Focusable="False" IsTabStop="False" Margin="0 -1" />
                 <ContentControl Grid.Row="11" Content="{Binding HSV_V, Mode=OneTime}" Focusable="False" IsTabStop="False" />
                 <!-- LAB -->
-                <TextBox Grid.Row="12" Margin="0 5 0 4" Text="Lab (Lightness[0-100], A(Green↔Red)[-127.5, 127.5], B(Blue↔Yellow)[-127.5, 127.5])" Style="{StaticResource Label}"/>
+                <TextBox Grid.Row="12" Margin="0 5 20 4" Text="Lab (Lightness[0-100], A(Green↔Red)[-127.5, 127.5], B(Blue↔Yellow)[-127.5, 127.5])" Style="{StaticResource Label}"/>
                 <ContentControl Grid.Row="13" Content="{Binding LAB_L, Mode=OneTime}" Focusable="False" IsTabStop="False" />
                 <ContentControl Grid.Row="14" Content="{Binding LAB_A, Mode=OneTime}" Focusable="False" IsTabStop="False" Margin="0 -1" />
                 <ContentControl Grid.Row="15" Content="{Binding LAB_B, Mode=OneTime}" Focusable="False" IsTabStop="False" />
                 <!-- YCbCr -->
-                <TextBox Grid.Row="16" Margin="0 5 0 4" Text="YCbCr (Y[0-255], Cb[-127.5, 127.5], Cr[-127.5, 127.5])" Style="{StaticResource Label}"/>
+                <TextBox Grid.Row="16" Margin="0 5 20 4" Text="YCbCr (Y[0-255], Cb[-127.5, 127.5], Cr[-127.5, 127.5])" Style="{StaticResource Label}"/>
                 <ContentControl Grid.Row="17" Content="{Binding YCbCr_Y, Mode=OneTime}" Focusable="False" IsTabStop="False" />
                 <ContentControl Grid.Row="18" Content="{Binding YCbCr_Cb, Mode=OneTime}" Focusable="False" IsTabStop="False" Margin="0 -1" />
                 <ContentControl Grid.Row="19" Content="{Binding YCbCr_Cr, Mode=OneTime}" Focusable="False" IsTabStop="False" />
