@@ -83,14 +83,8 @@ namespace ColorInvestigation.Controls
             if (fe.Name == "LeftPanel")
             {
                 SetSliderSizesInComponent(VM.Components[15], AlphaSlider);
-
-                VM.HueSlider.SliderSize = new Size(HueSlider.ActualWidth, HueSlider.ActualHeight);
-                var thumb = HueSlider.Children[0] as FrameworkElement;
-                VM.HueSlider.ThumbSize = new Size(thumb.ActualWidth, thumb.ActualHeight);
-
-                VM.SaturationAndValueSlider.SliderSize = new Size(SaturationAndValueSlider.ActualWidth, SaturationAndValueSlider.ActualHeight);
-                thumb = SaturationAndValueSlider.Children[0] as FrameworkElement;
-                VM.SaturationAndValueSlider.ThumbSize = new Size(thumb.ActualWidth, thumb.ActualHeight);
+                VM.HueSlider.SetSizes(HueSlider);
+                VM.SaturationAndValueSlider.SetSizes(SaturationAndValueSlider);
             }
             else
             {
@@ -115,7 +109,6 @@ namespace ColorInvestigation.Controls
                 component.SliderControlOffset = 0;
             }
         }
-
         #endregion
 
         #region ================  SelectAll Event Handlers on Focus event  ===============
@@ -146,9 +139,6 @@ namespace ColorInvestigation.Controls
             }
 
             var valueEditor = (TextBox)sender;
-            var bindingExpression = valueEditor.GetBindingExpression(TextBox.TextProperty);
-            var propertyName = bindingExpression.ParentBinding.Path.Path;
-            var component = VM.GetComponentById(propertyName);
             var newText = valueEditor.Text.Substring(0, valueEditor.SelectionStart) + e.Text +
                           valueEditor.Text.Substring(valueEditor.SelectionStart + valueEditor.SelectionLength);
             if (VM.CurrentCulture.NumberFormat.NativeDigits.Contains(e.Text))
@@ -156,7 +146,7 @@ namespace ColorInvestigation.Controls
             if (VM.CurrentCulture.NumberFormat.NumberDecimalSeparator == e.Text)
                 e.Handled = valueEditor.Text.Contains(VM.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             else if (VM.CurrentCulture.NumberFormat.NegativeSign == e.Text)
-                e.Handled = component.Min >= 0 ||
+                e.Handled = ((ColorPickerVM.ColorComponent) valueEditor.DataContext).Min >= 0 ||
                             valueEditor.Text.Contains(VM.CurrentCulture.NumberFormat.NegativeSign) ||
                             !(newText.StartsWith(e.Text) || newText.EndsWith(e.Text));
 

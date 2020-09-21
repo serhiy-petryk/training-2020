@@ -40,7 +40,8 @@
                          HorizontalAlignment="Stretch" HorizontalContentAlignment="Right"
                          VerticalAlignment="Stretch" VerticalContentAlignment="Center"
                          Text="{Binding Value, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         GotFocus="ValueEditor_OnGotFocus" PreviewMouseLeftButtonDown="ValueEditor_OnPreviewMouseLeftButtonDown"/>
+                         GotFocus="ValueEditor_OnGotFocus" PreviewMouseLeftButtonDown="ValueEditor_OnPreviewMouseLeftButtonDown"
+                         PreviewTextInput="ValueEditor_OnPreviewTextInput"/>
                 <Label Grid.Column="3" Content="{Binding ValueLabel, Mode=OneTime}" Margin="2 0" Padding="0" Foreground="#FFE0E0E0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Grid>
         </DataTemplate>

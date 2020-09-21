@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ColorInvestigation.Common;
@@ -38,6 +39,13 @@ namespace ColorInvestigation.Controls
                 OnPropertiesChanged(nameof(xSliderValue), nameof(ySliderValue));
             }
             public override void UpdateUI(){}
+
+            public void SetSizes(Panel panel)
+            {
+                SliderSize = new Size(panel.ActualWidth, panel.ActualHeight);
+                var thumb = panel.Children[0] as FrameworkElement;
+                ThumbSize = new Size(thumb.ActualWidth, thumb.ActualHeight);
+            }
         }
         #endregion
 
@@ -105,8 +113,8 @@ namespace ColorInvestigation.Controls
                 get => _value;
                 set
                 {
-                    _value = value;
-                    if (Id == "HSV_Hue") _owner.Components[6]._value = value;
+                    _value = Math.Max(Min, Math.Min(Max, value));
+                    if (Id == "HSV_Hue") _owner.Components[6]._value = _value;
 
                     if (Id == "RGB_A") _owner.UpdateUI();
                     else _owner.UpdateValues(ColorSpace);
@@ -193,7 +201,7 @@ namespace ColorInvestigation.Controls
 
         #endregion
 
-        #region  ===========  Color component public Properties  ============
+        #region ==============  Update Values/UI  ===============
         // Get color component in space unit
         private double GetCC(int index) => Components[index].Value / Components[index].SpaceMultiplier;
         // Set color components from space unit
@@ -202,16 +210,14 @@ namespace ColorInvestigation.Controls
             for (var k = 0; k < newValues.Length; k++)
                 Components[k + startIndex].Value = newValues[k] * Components[k + startIndex].SpaceMultiplier;
         }
-        #endregion
 
-        #region ==============  Update Values/UI  ===============
         private bool _isUpdating;
         private void UpdateValues(ColorSpace baseColorSpace)
         {
             if (_isUpdating) return;
             _isUpdating = true;
 
-            // Get rgb object
+            // Get rgb components
             var rgb = new ColorSpaces.RGB(0, 0, 0);
             if (baseColorSpace == ColorSpace.RGB)
                 rgb = new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2));
@@ -236,7 +242,7 @@ namespace ColorInvestigation.Controls
             else if (baseColorSpace == ColorSpace.YCbCr)
                 rgb = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), GetCC(14)).GetRGB();
 
-            // Update other objects
+            // Update other components
             if (baseColorSpace != ColorSpace.RGB)
                 SetCC(0, rgb.R, rgb.G, rgb.B);
             if (baseColorSpace != ColorSpace.HSL && baseColorSpace != ColorSpace.HSV)
@@ -256,8 +262,6 @@ namespace ColorInvestigation.Controls
                 var yCbCr = new ColorSpaces.YCbCr(rgb);
                 SetCC(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
             }
-
-            // SetCC(16, GetCC(6)); // Set HSV_Hue value
 
             UpdateUI();
             _isUpdating = false;
@@ -279,7 +283,6 @@ namespace ColorInvestigation.Controls
             }));
 
         }
-
         #endregion
 
         #region ===========  Save & Restore color  =================
