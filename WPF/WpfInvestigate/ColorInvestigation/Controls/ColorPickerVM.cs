@@ -15,6 +15,8 @@ namespace ColorInvestigation.Controls
     public class ColorPickerVM : INotifyPropertyChangedAbstract
     {
         internal FrameworkElement Owner;
+        public XYSlider AlphaSlider { get; }
+        // private double _alpha => 1.0 - AlphaSlider.yValue;
         public XYSlider HueSlider { get; }
         public XYSlider SaturationAndValueSlider { get; }
         public ColorComponent[] Components { get; }
@@ -42,8 +44,10 @@ namespace ColorInvestigation.Controls
         #region ==============  Hue/SaturationAndValue Sliders  ============
         public class XYSlider : INotifyPropertyChangedAbstract
         {
-            public double xSliderValue { get; private set; }
-            public double ySliderValue { get; private set; }
+            public double xValue { get; private set; }
+            public double yValue { get; private set; }
+            public double xSliderValue => SliderSize.Width * xValue - ThumbSize.Width / 2;
+            public double ySliderValue => SliderSize.Height * yValue - ThumbSize.Height / 2;
             public Size SliderSize;
             public Size ThumbSize;
             public Action<double, double> SetValuesAction;
@@ -53,8 +57,10 @@ namespace ColorInvestigation.Controls
             }
             public void UpdateProperties(double xValue, double yValue)
             {
-                xSliderValue = SliderSize.Width * xValue - ThumbSize.Width / 2;
-                ySliderValue = SliderSize.Height * yValue - ThumbSize.Height / 2;
+                this.xValue = xValue;
+                this.yValue = yValue;
+                // xSliderValue = SliderSize.Width * xValue - ThumbSize.Width / 2;
+                // ySliderValue = SliderSize.Height * yValue - ThumbSize.Height / 2;
                 OnPropertiesChanged(nameof(xSliderValue), nameof(ySliderValue));
             }
             public override void UpdateUI(){}
@@ -70,6 +76,7 @@ namespace ColorInvestigation.Controls
 
         public ColorPickerVM()
         {
+            AlphaSlider = new XYSlider((x, y) => UpdateUI()); //Alpha
             HueSlider = new XYSlider((x, y) => SetCC(6, y)); // hue of HSV
             SaturationAndValueSlider = new XYSlider((x, y) =>
             {
@@ -111,7 +118,7 @@ namespace ColorInvestigation.Controls
                     (k) => new ColorSpaces.YCbCr(GetCC(12), k / 100.0 - 0.5, GetCC(14)).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Cr", -127.5, 127.5, null,
                     (k) => new ColorSpaces.YCbCr(GetCC(12), GetCC(13), k / 100.0 - 0.5).GetRGB().GetColor()),
-                new ColorComponent(this, "RGB_A", 0, 1)
+                // new ColorComponent(this, "RGB_A", 0, 1)
             };
 
             const int NumberOfTones = 10;
@@ -133,8 +140,9 @@ namespace ColorInvestigation.Controls
                     _value = Math.Max(Min, Math.Min(Max, value));
                     if (Id == "HSV_Hue") _owner.Components[6]._value = _value;
 
-                    if (Id == "RGB_A") _owner.UpdateUI();
-                    else _owner.UpdateValues(ColorSpace);
+                    // if (Id == "RGB_A") _owner.UpdateUI();
+                    //else 
+                        _owner.UpdateValues(ColorSpace);
                 }
             }
 
@@ -192,12 +200,13 @@ namespace ColorInvestigation.Controls
 
         public Color CurrentColor
         {
-            get => Color.FromArgb(Convert.ToByte((1 - GetCC(15)) * 255), Convert.ToByte(GetCC(0) * 255),
+            get => Color.FromArgb(Convert.ToByte((1 - AlphaSlider.yValue) * 255), Convert.ToByte(GetCC(0) * 255),
                 Convert.ToByte(GetCC(1) * 255), Convert.ToByte(GetCC(2) * 255));
             set
             {
                 _isUpdating = true;
-                SetCC(15, 1.0 - value.A / 255.0);
+                AlphaSlider.UpdateProperties(0, 1.0 - value.A / 255.0);
+                // SetCC(15, 1.0 - value.A / 255.0);
                 SetCC(0, value.R / 255.0, value.G / 255.0);
                 _isUpdating = false;
                 SetCC(2, value.B / 255.0);

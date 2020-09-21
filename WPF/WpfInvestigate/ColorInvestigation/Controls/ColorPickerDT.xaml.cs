@@ -82,7 +82,8 @@ namespace ColorInvestigation.Controls
             var fe = sender as FrameworkElement;
             if (fe.Name == "LeftPanel")
             {
-                SetSliderSizesInComponent(VM.Components[15], AlphaSlider);
+                // SetSliderSizesInComponent(VM.Components[15], AlphaSlider);
+                VM.AlphaSlider.SetSizes(AlphaSlider);
                 VM.HueSlider.SetSizes(HueSlider);
                 VM.SaturationAndValueSlider.SetSizes(SaturationAndValueSlider);
             }
@@ -197,7 +198,7 @@ namespace ColorInvestigation.Controls
                 {
                     var x = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).X / canvas.ActualWidth));
                     var y = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).Y / canvas.ActualHeight));
-                    ((ColorPickerVM.XYSlider) canvas.DataContext).SetValuesAction(x, y);
+                    ((ColorPickerVM.XYSlider) canvas.DataContext).SetValuesAction?.Invoke(x, y);
                 }
                 else
                 {
