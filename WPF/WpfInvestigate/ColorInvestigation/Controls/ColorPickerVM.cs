@@ -183,7 +183,15 @@ namespace ColorInvestigation.Controls
 
             public override double xSliderValue => (SizeOfSlider.Width - SizeOfThumb.Width) * (Value - Min) / (Max - Min);
             public void SetProperties(double sliderValue) => Value = (Max - Min) * sliderValue + Min;
+
             public double SpaceValue => Value / SpaceMultiplier;
+            public void SetSpaceValue(double value, bool updateUI = false)
+            {
+                if (updateUI)
+                    Value = value * SpaceMultiplier;
+                else
+                    _value = value * SpaceMultiplier;
+            }
         }
         #endregion
 
@@ -250,44 +258,58 @@ namespace ColorInvestigation.Controls
             var rgb = new ColorSpaces.RGB(RGB_R.SpaceValue, RGB_G.SpaceValue, RGB_B.SpaceValue);
             if (baseColorSpace == ColorSpace.HSL)
             {
-                rgb = new ColorSpaces.HSL(GetCC(3), GetCC(4), GetCC(5)).GetRGB();
+                rgb = new ColorSpaces.HSL(HSL_H.SpaceValue, HSL_S.SpaceValue, HSL_L.SpaceValue).GetRGB();
                 // Update HSV
-                Components[6].Value = Components[3].Value; // _hsv.H = _hsl.H;
                 var hsv = new ColorSpaces.HSV(rgb); // _hsv = new ColorSpaces.HSV(_rgb);
-                SetCC(7, hsv.S, hsv.V);
+                HSV_H.Value = HSL_H.Value;
+                HSV_S.SetSpaceValue(hsv.S);
+                HSV_V.SetSpaceValue(hsv.V);
             }
             else if (baseColorSpace == ColorSpace.HSV)
             {
-                rgb = new ColorSpaces.HSV(GetCC(6), GetCC(7), GetCC(8)).GetRGB();
+                rgb = new ColorSpaces.HSV(HSV_H.SpaceValue, HSV_S.SpaceValue, HSV_V.SpaceValue).GetRGB();
                 // Update HSL
-                Components[3].Value = Components[6].Value; // _hsl.H = _hsv.H;
                 var hsl = new ColorSpaces.HSL(rgb); // _hsl = new ColorSpaces.HSL(_rgb);
-                SetCC(4, hsl.S, hsl.L);
+                HSL_H.Value = HSV_H.Value;
+                HSL_S.SetSpaceValue(hsl.S);
+                HSL_L.SetSpaceValue(hsl.L);
             }
             else if (baseColorSpace == ColorSpace.LAB)
-                rgb = new ColorSpaces.LAB(GetCC(9), GetCC(10), GetCC(11)).GetRGB();
+                rgb = new ColorSpaces.LAB(LAB_L.SpaceValue, LAB_A.SpaceValue, LAB_B.SpaceValue).GetRGB();
             else if (baseColorSpace == ColorSpace.YCbCr)
-                rgb = new ColorSpaces.YCbCr(GetCC(12), GetCC(13), GetCC(14)).GetRGB();
+                rgb = new ColorSpaces.YCbCr(YCbCr_Y.SpaceValue, YCbCr_Cb.SpaceValue, YCbCr_Cr.SpaceValue).GetRGB();
 
             // Update other components
             if (baseColorSpace != ColorSpace.RGB)
-                SetCC(0, rgb.R, rgb.G, rgb.B);
+            {
+                RGB_R.SetSpaceValue(rgb.R);
+                RGB_G.SetSpaceValue(rgb.G);
+                RGB_B.SetSpaceValue(rgb.B);
+            }
             if (baseColorSpace != ColorSpace.HSL && baseColorSpace != ColorSpace.HSV)
             {
                 var hsl = new ColorSpaces.HSL(rgb);
-                SetCC(3, hsl.H, hsl.S, hsl.L);
+                HSL_H.SetSpaceValue(hsl.H);
+                HSL_S.SetSpaceValue(hsl.S);
+                HSL_L.SetSpaceValue(hsl.L);
                 var hsv = new ColorSpaces.HSV(rgb);
-                SetCC(6, hsv.H, hsv.S, hsv.V);
+                HSV_H.SetSpaceValue(hsv.H);
+                HSV_S.SetSpaceValue(hsv.S);
+                HSV_V.SetSpaceValue(hsv.V);
             }
             if (baseColorSpace != ColorSpace.LAB)
             {
                 var lab = new ColorSpaces.LAB(rgb);
-                SetCC(9, lab.L, lab.A, lab.B);
+                LAB_L.SetSpaceValue(lab.L);
+                LAB_A.SetSpaceValue(lab.A);
+                LAB_B.SetSpaceValue(lab.B);
             }
             if (baseColorSpace != ColorSpace.YCbCr)
             {
                 var yCbCr = new ColorSpaces.YCbCr(rgb);
-                SetCC(12, yCbCr.Y, yCbCr.Cb, yCbCr.Cr);
+                YCbCr_Y.SetSpaceValue(yCbCr.Y);
+                YCbCr_Cb.SetSpaceValue(yCbCr.Cb);
+                YCbCr_Cr.SetSpaceValue(yCbCr.Cr);
             }
 
             UpdateUI();
