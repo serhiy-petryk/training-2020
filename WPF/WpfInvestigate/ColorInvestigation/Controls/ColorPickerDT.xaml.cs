@@ -150,7 +150,9 @@ namespace ColorInvestigation.Controls
             toggleButton.IsChecked = false;
 
             var hsl = (element.DataContext as ColorPickerVM.ColorToneBox).GetBackgroundHSL();
-            VM.SetCC(3, hsl.H, hsl.S, hsl.L);
+            VM.HSL_H.SetSpaceValue(hsl.H);
+            VM.HSL_S.SetSpaceValue(hsl.S);
+            VM.HSL_L.SetSpaceValue(hsl.L, true);
         }
         #endregion
 

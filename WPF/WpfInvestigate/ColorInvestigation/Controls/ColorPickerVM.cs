@@ -82,14 +82,12 @@ namespace ColorInvestigation.Controls
                 UpdateUI();
             });
             
-            HueSlider = new XYSlider((x, y) => SetCC(6, y)); // hue of HSV
+            HueSlider = new XYSlider((x, y) => HSV_H.SetSpaceValue(y, true)); // hue of HSV
 
             SaturationAndValueSlider = new XYSlider((x, y) =>
             {
-                _isUpdating = true;
-                SetCC(7, x); // saturation of HSV
-                _isUpdating = false;
-                SetCC(8, 1.0 - y); // value of HSV
+                HSV_S.SetSpaceValue(x);
+                HSV_V.SetSpaceValue(1.0 - y, true);
             });
 
             Components = new []
@@ -147,14 +145,14 @@ namespace ColorInvestigation.Controls
                 }
             }
 
-            public readonly string Id;
+            private readonly string Id;
             public string Label => Id.Split('_')[1];
             public string ValueLabel { get; }
             public LinearGradientBrush BackgroundBrush { get; }
             public readonly double Min;
-            public readonly double Max;
+            private readonly double Max;
             public readonly double SpaceMultiplier;
-            internal ColorSpace ColorSpace;
+            private ColorSpace ColorSpace;
             private ColorPickerVM _owner;
             private int _gradientCount => ColorSpace == ColorSpace.RGB ? 1 : 100;
             private Func<int, Color> _backgroundGradient;
@@ -218,9 +216,10 @@ namespace ColorInvestigation.Controls
             {
                 _isUpdating = true;
                 AlphaSlider.SetProperties(0, 1.0 - value.A / 255.0);
-                SetCC(0, value.R / 255.0, value.G / 255.0);
+                RGB_R.Value = value.R;
+                RGB_G.Value = value.G;
                 _isUpdating = false;
-                SetCC(2, value.B / 255.0);
+                RGB_B.Value = value.B;
             }
         }
 
@@ -235,18 +234,11 @@ namespace ColorInvestigation.Controls
         public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, new ColorSpaces.RGB(_oldColorData[0] / 255, _oldColorData[1] / 255, _oldColorData[2] / 255).GetColor());
         public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2)).GetColor());
-
         #endregion
 
         #region ==============  Update Values/UI  ===============
         // Get color component in space unit
         private double GetCC(int index) => Components[index].Value / Components[index].SpaceMultiplier;
-        // Set color components from space unit
-        internal void SetCC(int startIndex, params double[] newValues)
-        {
-            for (var k = 0; k < newValues.Length; k++)
-                Components[k + startIndex].Value = newValues[k] * Components[k + startIndex].SpaceMultiplier;
-        }
 
         private bool _isUpdating;
         private void UpdateValues(ColorSpace baseColorSpace)
