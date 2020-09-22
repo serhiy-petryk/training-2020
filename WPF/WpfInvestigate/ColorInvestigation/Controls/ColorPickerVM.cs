@@ -146,11 +146,12 @@ namespace ColorInvestigation.Controls
             public string Label => Id.Split('_')[1];
             public string ValueLabel { get; }
             public LinearGradientBrush BackgroundBrush { get; }
-            public readonly double Min;
-            private readonly double Max;
             public readonly double SpaceMultiplier;
-            private ColorSpace ColorSpace;
+
             private ColorPickerVM _owner;
+            private readonly double Min;
+            private readonly double Max;
+            private ColorSpace ColorSpace;
             private int _gradientCount => ColorSpace == ColorSpace.RGB ? 1 : 100;
             private Func<int, Color> _backgroundGradient;
 
@@ -206,8 +207,8 @@ namespace ColorInvestigation.Controls
 
         public Color CurrentColor
         {
-            get => Color.FromArgb(Convert.ToByte((1 - AlphaSlider.yValue) * 255), Convert.ToByte(GetCC(0) * 255),
-                Convert.ToByte(GetCC(1) * 255), Convert.ToByte(GetCC(2) * 255));
+            get => Color.FromArgb(Convert.ToByte((1 - AlphaSlider.yValue) * 255), Convert.ToByte(RGB_R.Value),
+                Convert.ToByte(RGB_G.Value), Convert.ToByte(RGB_B.Value));
             set
             {
                 _isUpdating = true;
@@ -225,11 +226,11 @@ namespace ColorInvestigation.Controls
             _brushesCache[index].Color = color;
             return _brushesCache[index];
         }
-        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(GetCC(6), 1, 1).GetRGB().GetColor());
+        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(HSV_H.SpaceValue, 1, 1).GetRGB().GetColor());
         public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black);
         public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black);
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, new ColorSpaces.RGB(_oldColorData[0] / 255, _oldColorData[1] / 255, _oldColorData[2] / 255).GetColor());
-        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, new ColorSpaces.RGB(GetCC(0), GetCC(1), GetCC(2)).GetColor());
+        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, new ColorSpaces.RGB(RGB_R.SpaceValue, RGB_G.SpaceValue, RGB_B.SpaceValue).GetColor());
         #endregion
 
         #region ==============  Update Values/UI  ===============
@@ -389,10 +390,10 @@ namespace ColorInvestigation.Controls
             internal ColorSpaces.HSL GetBackgroundHSL()
             {
                 if (GridColumn == 0)
-                    return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(4), 0.025 + 0.05 * GridRow);
+                    return new ColorSpaces.HSL(_owner.HSL_H.SpaceValue, _owner.HSL_S.SpaceValue, 0.025 + 0.05 * GridRow);
                 if (GridColumn == 1)
-                    return new ColorSpaces.HSL(_owner.GetCC(3), _owner.GetCC(5), 0.975 - 0.05 * GridRow);
-                return new ColorSpaces.HSL(_owner.GetCC(3), 0.05 + 0.1 * GridRow, _owner.GetCC(5));
+                    return new ColorSpaces.HSL(_owner.HSL_H.SpaceValue, _owner.HSL_S.SpaceValue, 0.975 - 0.05 * GridRow);
+                return new ColorSpaces.HSL(_owner.HSL_H.SpaceValue, 0.05 + 0.1 * GridRow, _owner.HSL_L.SpaceValue);
             }
 
             private string FormatInfoString(string label, double value1, double value2, double value3) =>
