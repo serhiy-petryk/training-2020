@@ -112,13 +112,6 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ===============  Color box event handlers  ===============
-        private void ColorBoxPopup_OnOpened(object sender, EventArgs e)
-        {
-            var textBox = Tips.GetVisualChildren(((Popup)sender).Child).OfType<TextBox>().FirstOrDefault();
-            textBox.Text = (textBox.DataContext as ColorPickerVM.ColorToneBox).Info;
-            textBox.Focus();
-        }
-
         private void ColorBox_OnSetColor(object sender, RoutedEventArgs e)
         {
             var element = (FrameworkElement)sender;

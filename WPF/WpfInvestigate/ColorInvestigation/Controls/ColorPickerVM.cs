@@ -40,10 +40,10 @@ namespace ColorInvestigation.Controls
         public XYSlider AlphaSlider => Sliders[15];
         public XYSlider HueSlider => Sliders[16];
         public XYSlider SaturationAndValueSlider => Sliders[17];
-        private XYSlider[] Sliders { get; }
 
         public ColorToneBox[] Tones { get; }
 
+        private XYSlider[] Sliders { get; }
         public ColorPickerVM()
         {
             Sliders = new []

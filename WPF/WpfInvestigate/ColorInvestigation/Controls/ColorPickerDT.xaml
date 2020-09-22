@@ -269,8 +269,7 @@
                                     </ToggleButton>
                                     <Popup x:Name="ColorBoxPopup" AllowsTransparency="True" StaysOpen="False" Focusable="False"
                                            Placement="Bottom" PlacementTarget="{Binding ElementName=ColorBox}" PopupAnimation="Slide"
-                                           IsOpen="{Binding ElementName=ColorBoxToggleButton, Path=IsChecked}"
-                                           Opened="ColorBoxPopup_OnOpened">
+                                           IsOpen="{Binding ElementName=ColorBoxToggleButton, Path=IsChecked}">
                                         <Border Margin="0 0 8 8" Background="#FFDAEDF4" BorderBrush="#FF399CBD" BorderThickness="2" CornerRadius="2">
                                             <Border.Effect>
                                                 <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
@@ -282,7 +281,7 @@
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
                                                 <Label Grid.Row="0" Background="#FF9ED1E1" FontSize="12" FontWeight="SemiBold" Content="Color information"/>
-                                                <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" Cursor="Arrow" FontFamily="Courier New"/>
+                                                <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" Cursor="Arrow" FontFamily="Courier New" Text="{Binding Info, Mode=OneWay}"/>
                                                 <Button Grid.Row="2" Background="#FF9ED1E1" BorderThickness="2" Margin="10" IsDefault="True"
                                                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
                                                         Click="ColorBox_OnSetColor">
