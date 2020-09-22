@@ -40,6 +40,7 @@ namespace ColorInvestigation.Common
         /// <param name="color"></param>
         /// <returns></returns>
         public static bool IsDarkColor(Color color) => GetGrayLevel(new RGB(color)) < DarkSplit;
+        public static Color GetForegroundColor(Color backgroundColor) => IsDarkColor(backgroundColor) ? Colors.White : Colors.Black;
 
         /// <summary>
         /// Get invert color based on hue of HSV color space

@@ -101,7 +101,7 @@ namespace ColorInvestigation.Controls
         {
             get
             {
-                _brushesCache[0].Color = ColorSpaces.IsDarkColor(Color) ? Colors.White : Colors.Black;
+                _brushesCache[0].Color = ColorSpaces.GetForegroundColor(Color);
                 return _brushesCache[0];
             }
         }
@@ -109,7 +109,7 @@ namespace ColorInvestigation.Controls
         {
             get
             {
-                _brushesCache[1].Color = ColorSpaces.IsDarkColor(CurrentColor) ? Colors.White : Colors.Black;
+                _brushesCache[1].Color = ColorSpaces.GetForegroundColor(CurrentColor);
                 return _brushesCache[1];
             }
         }
@@ -537,7 +537,7 @@ namespace ColorInvestigation.Controls
             {
                 tone.Background.Color = tone.GetBackgroundHSL(_hsl).GetRGB().GetColor();
                 if (tone.GridColumn == 2)
-                    tone.Foreground.Color = ColorSpaces.IsDarkColor(tone.Background.Color) ? Colors.White : Colors.Black;
+                    tone.Foreground.Color = ColorSpaces.GetForegroundColor(tone.Background.Color);
             }
 
             OnPropertiesChanged(nameof(Tones));
