@@ -179,7 +179,7 @@ namespace ColorInvestigation.Controls
                             ? Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).X / canvas.ActualWidth))
                             : (e.GetPosition(canvas).X - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth)));
                 var y = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).Y / canvas.ActualHeight));
-                ((ColorPickerVM.XYSlider)canvas.DataContext).SetValuesAction?.Invoke(x, y);
+                ((ColorPickerVM.XYSlider)canvas.DataContext).SetProperties(x, y);
             }
         }
         #endregion

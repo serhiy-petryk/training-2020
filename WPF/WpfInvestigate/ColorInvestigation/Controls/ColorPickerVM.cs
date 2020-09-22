@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -47,7 +48,7 @@ namespace ColorInvestigation.Controls
             public double yValue { get; private set; }
             public virtual double xSliderValue => SizeOfSlider.Width * xValue - SizeOfThumb.Width / 2;
             public virtual double ySliderValue => SizeOfSlider.Height * yValue - SizeOfThumb.Height / 2;
-            public Action<double, double> SetValuesAction;
+            protected Action<double, double> SetValuesAction;
 
             protected Size SizeOfSlider;
             protected Size SizeOfThumb;
@@ -56,11 +57,13 @@ namespace ColorInvestigation.Controls
             {
                 SetValuesAction = setValuesAction;
             }
-            public void SetProperties(double xValue, double yValue)
+            public void SetProperties(double xValue, double yValue, bool updateUI = false)
             {
                 this.xValue = xValue;
                 this.yValue = yValue;
-                UpdateUI();
+                SetValuesAction?.Invoke(xValue, yValue);
+                if (updateUI)
+                    UpdateUI();
             }
 
             public override void UpdateUI() => OnPropertiesChanged(nameof(xSliderValue), nameof(ySliderValue));
@@ -76,14 +79,8 @@ namespace ColorInvestigation.Controls
 
         public ColorPickerVM()
         {
-            AlphaSlider = new XYSlider((x, y) =>
-            {
-                AlphaSlider.SetProperties(0, y);
-                UpdateUI();
-            });
-            
+            AlphaSlider = new XYSlider((x, y) => UpdateUI());
             HueSlider = new XYSlider((x, y) => HSV_H.SetSpaceValue(y, true)); // hue of HSV
-
             SaturationAndValueSlider = new XYSlider((x, y) =>
             {
                 HSV_S.SetSpaceValue(x);
@@ -160,7 +157,7 @@ namespace ColorInvestigation.Controls
             public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel = null,
                 Func<int, Color> backgroundGradient = null) : base(null)
             {
-                SetValuesAction = (x, y) => SetProperties(x);
+                SetValuesAction = (x, y) => Value = xValue * SpaceMultiplier;
 
                 Id = id; Min = min; Max = max;
                 ValueLabel = valueLabel; _owner = owner;
@@ -180,7 +177,6 @@ namespace ColorInvestigation.Controls
             }
 
             public override double xSliderValue => (SizeOfSlider.Width - SizeOfThumb.Width) * (Value - Min) / (Max - Min);
-            public void SetProperties(double sliderValue) => Value = (Max - Min) * sliderValue + Min;
 
             public double SpaceValue => Value / SpaceMultiplier;
             public void SetSpaceValue(double value, bool updateUI = false)
@@ -311,8 +307,8 @@ namespace ColorInvestigation.Controls
         public override void UpdateUI()
         {
             AlphaSlider.UpdateUI();
-            HueSlider.SetProperties(0, HSV_H.SpaceValue);
-            SaturationAndValueSlider.SetProperties( HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue);
+            HueSlider.SetProperties(0, HSV_H.SpaceValue, true);
+            SaturationAndValueSlider.SetProperties( HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue, true);
 
             // RGB_R.UpdateUI(); RGB_G.UpdateUI(); RGB_B.UpdateUI();
             // don't work: OnPropertiesChanged("RGB_R", "RGB_G", "RGB_B");
