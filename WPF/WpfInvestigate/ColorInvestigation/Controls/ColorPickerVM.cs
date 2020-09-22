@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -15,11 +14,15 @@ namespace ColorInvestigation.Controls
     // ColorPicker ViewModel for DataTemplate
     public class ColorPickerVM : INotifyPropertyChangedAbstract
     {
+        internal enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
+        internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
+
         internal FrameworkElement Owner;
         public XYSlider AlphaSlider { get; }
         public XYSlider HueSlider { get; }
         public XYSlider SaturationAndValueSlider { get; }
         private ColorComponent[] Components { get; }
+
         // need to duplicate Component because "Type ColorComponent[]' is not collection" error occurs
         // for "Content={Binding Components[N]}" line of ColorPicker.xaml in VS designer
         // I tried to use Array, Collection<T>, List<T>, ReadOnlyCollection<T>, Dictionary<T,V>
@@ -41,42 +44,6 @@ namespace ColorInvestigation.Controls
 
         public ColorToneBox[] Tones { get; }
 
-        #region ==============  Hue/SaturationAndValue Sliders  ============
-        public class XYSlider : INotifyPropertyChangedAbstract
-        {
-            public double xValue { get; private set; }
-            public double yValue { get; private set; }
-            public virtual double xSliderValue => SizeOfSlider.Width * xValue - SizeOfThumb.Width / 2;
-            public virtual double ySliderValue => SizeOfSlider.Height * yValue - SizeOfThumb.Height / 2;
-            protected Action<double, double> SetValuesAction;
-
-            protected Size SizeOfSlider;
-            protected Size SizeOfThumb;
-
-            public XYSlider(Action<double, double> setValuesAction)
-            {
-                SetValuesAction = setValuesAction;
-            }
-            public void SetProperties(double xValue, double yValue, bool updateUI = false)
-            {
-                this.xValue = xValue;
-                this.yValue = yValue;
-                SetValuesAction?.Invoke(xValue, yValue);
-                if (updateUI)
-                    UpdateUI();
-            }
-
-            public override void UpdateUI() => OnPropertiesChanged(nameof(xSliderValue), nameof(ySliderValue));
-
-            public void SetSizeOfControl(Panel panel)
-            {
-                SizeOfSlider = new Size(panel.ActualWidth, panel.ActualHeight);
-                var thumb = panel.Children[0] as FrameworkElement;
-                SizeOfThumb = new Size(thumb.ActualWidth, thumb.ActualHeight);
-            }
-        }
-        #endregion
-
         public ColorPickerVM()
         {
             AlphaSlider = new XYSlider((x, y) => UpdateUI());
@@ -96,7 +63,7 @@ namespace ColorInvestigation.Controls
                 new ColorComponent(this, "RGB_B", 0, 255, null,
                     (k) => Color.FromRgb(CurrentColor.R, CurrentColor.G, Convert.ToByte(255 * k))),
                 new ColorComponent(this, "HSL_H", 0, 360, "°",
-                    (k) => new ColorSpaces.HSL(k / 100.0, GetCC(4), GetCC(5)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSL(k / 100.0, HSL_S.SpaceValue, HSL_L.SpaceValue).GetRGB().GetColor()),
                 new ColorComponent(this, "HSL_S", 0, 100, "%",
                     (k) => new ColorSpaces.HSL(GetCC(3), k / 100.0, GetCC(5)).GetRGB().GetColor()),
                 new ColorComponent(this, "HSL_L", 0, 100, "%",
@@ -127,71 +94,6 @@ namespace ColorInvestigation.Controls
             for (var k2 = 0; k2 < NumberOfTones; k2++)
                 Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
         }
-
-        #region ==============  Color Component  ===============
-        public class ColorComponent : XYSlider
-        {
-            private double _value;
-            public double Value
-            {
-                get => _value;
-                set
-                {
-                    _value = Math.Max(Min, Math.Min(Max, value));
-                    _owner.UpdateValues(ColorSpace);
-                }
-            }
-
-            private readonly string Id;
-            public string Label => Id.Split('_')[1];
-            public string ValueLabel { get; }
-            public LinearGradientBrush BackgroundBrush { get; }
-            public readonly double SpaceMultiplier;
-
-            private ColorPickerVM _owner;
-            private readonly double Min;
-            private readonly double Max;
-            private ColorSpace ColorSpace;
-            private int _gradientCount => ColorSpace == ColorSpace.RGB ? 1 : 100;
-            private Func<int, Color> _backgroundGradient;
-
-            public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel = null,
-                Func<int, Color> backgroundGradient = null) : base(null)
-            {
-                SetValuesAction = (x, y) => Value = xValue * SpaceMultiplier;
-
-                Id = id; Min = min; Max = max;
-                ValueLabel = valueLabel; _owner = owner;
-                _backgroundGradient = backgroundGradient;
-                SpaceMultiplier = Id.StartsWith("LAB") ? 1 : Max - Min;
-                ColorSpace = (ColorSpace)Enum.Parse(typeof(ColorSpace), Id.Split('_')[0]);
-                BackgroundBrush = new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, _gradientCount + 1)
-                    .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / _gradientCount))));
-            }
-
-            public override void UpdateUI()
-            {
-                if (_backgroundGradient !=null)
-                    for (var k = 0; k < BackgroundBrush.GradientStops.Count; k++)
-                        BackgroundBrush.GradientStops[k].Color = _backgroundGradient(k);
-                OnPropertiesChanged(nameof(xSliderValue), nameof(Value), nameof(BackgroundBrush));
-            }
-
-            public override double xSliderValue => (SizeOfSlider.Width - SizeOfThumb.Width) * (Value - Min) / (Max - Min);
-
-            public double SpaceValue => Value / SpaceMultiplier;
-            public void SetSpaceValue(double value, bool updateUI = false)
-            {
-                if (updateUI)
-                    Value = value * SpaceMultiplier;
-                else
-                    _value = value * SpaceMultiplier;
-            }
-        }
-        #endregion
-
-        internal enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
-        internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
 
         #region  ==============  Public Properties  ================
         public Color Color // Original color
@@ -301,6 +203,9 @@ namespace ColorInvestigation.Controls
                 YCbCr_Cr.SetSpaceValue(yCbCr.Cr);
             }
 
+            HueSlider.SetProperties(0, HSV_H.SpaceValue, false);
+            SaturationAndValueSlider.SetProperties(HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue, false);
+
             UpdateUI();
             _isUpdating = false;
         }
@@ -308,8 +213,8 @@ namespace ColorInvestigation.Controls
         public override void UpdateUI()
         {
             AlphaSlider.UpdateUI();
-            HueSlider.SetProperties(0, HSV_H.SpaceValue, true);
-            SaturationAndValueSlider.SetProperties( HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue, true);
+            HueSlider.UpdateUI();
+            SaturationAndValueSlider.UpdateUI();
 
             // RGB_R.UpdateUI(); RGB_G.UpdateUI(); RGB_B.UpdateUI();
             // don't work: OnPropertiesChanged("RGB_R", "RGB_G", "RGB_B");
@@ -350,8 +255,107 @@ namespace ColorInvestigation.Controls
         }
         #endregion
 
-        #region ==============  Tones  =======================
-        public class ColorToneBox: INotifyPropertyChangedAbstract
+        #region ===================  SUBCLASSES  ========================
+        #region ==============  Hue/SaturationAndValue Sliders  ============
+        public class XYSlider : INotifyPropertyChangedAbstract
+        {
+            public double xValue { get; private set; }
+            public double yValue { get; private set; }
+            public virtual double xSliderValue => SizeOfSlider.Width * xValue - SizeOfThumb.Width / 2;
+            public virtual double ySliderValue => SizeOfSlider.Height * yValue - SizeOfThumb.Height / 2;
+            protected Action<double, double> SetValuesAction;
+
+            protected Size SizeOfSlider;
+            protected Size SizeOfThumb;
+
+            public XYSlider(Action<double, double> setValuesAction)
+            {
+                SetValuesAction = setValuesAction;
+            }
+            public void SetProperties(double xValue, double yValue, bool updateUI = false)
+            {
+                this.xValue = xValue;
+                this.yValue = yValue;
+                SetValuesAction?.Invoke(xValue, yValue);
+                if (updateUI)
+                    UpdateUI();
+            }
+
+            public override void UpdateUI() => OnPropertiesChanged(nameof(xSliderValue), nameof(ySliderValue));
+
+            public void SetSizeOfControl(Panel panel)
+            {
+                SizeOfSlider = new Size(panel.ActualWidth, panel.ActualHeight);
+                var thumb = panel.Children[0] as FrameworkElement;
+                SizeOfThumb = new Size(thumb.ActualWidth, thumb.ActualHeight);
+            }
+        }
+        #endregion
+
+        #region ==============  Color Component  ===============
+        public class ColorComponent : XYSlider
+        {
+            private double _value;
+            public double Value
+            {
+                get => _value;
+                set
+                {
+                    _value = Math.Max(Min, Math.Min(Max, value));
+                    _owner.UpdateValues(ColorSpace);
+                }
+            }
+
+            private readonly string Id;
+            public string Label => Id.Split('_')[1];
+            public string ValueLabel { get; }
+            public LinearGradientBrush BackgroundBrush { get; }
+            public readonly double SpaceMultiplier;
+
+            private ColorPickerVM _owner;
+            private readonly double Min;
+            private readonly double Max;
+            private ColorSpace ColorSpace;
+            private int _gradientCount => ColorSpace == ColorSpace.RGB ? 1 : 100;
+            private Func<int, Color> _backgroundGradient;
+
+            public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel = null,
+                Func<int, Color> backgroundGradient = null) : base(null)
+            {
+                SetValuesAction = (x, y) => Value = xValue * SpaceMultiplier;
+
+                Id = id; Min = min; Max = max;
+                ValueLabel = valueLabel; _owner = owner;
+                _backgroundGradient = backgroundGradient;
+                SpaceMultiplier = Id.StartsWith("LAB") ? 1 : Max - Min;
+                ColorSpace = (ColorSpace)Enum.Parse(typeof(ColorSpace), Id.Split('_')[0]);
+                BackgroundBrush = new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, _gradientCount + 1)
+                    .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / _gradientCount))));
+            }
+
+            public override void UpdateUI()
+            {
+                if (_backgroundGradient != null)
+                    for (var k = 0; k < BackgroundBrush.GradientStops.Count; k++)
+                        BackgroundBrush.GradientStops[k].Color = _backgroundGradient(k);
+                OnPropertiesChanged(nameof(xSliderValue), nameof(Value), nameof(BackgroundBrush));
+            }
+
+            public override double xSliderValue => (SizeOfSlider.Width - SizeOfThumb.Width) * (Value - Min) / (Max - Min);
+
+            public double SpaceValue => Value / SpaceMultiplier;
+            public void SetSpaceValue(double value, bool updateUI = false)
+            {
+                if (updateUI)
+                    Value = value * SpaceMultiplier;
+                else
+                    _value = value * SpaceMultiplier;
+            }
+        }
+        #endregion
+
+        #region ==============  ColorToneBox  =======================
+        public class ColorToneBox : INotifyPropertyChangedAbstract
         {
             private readonly ColorPickerVM _owner;
             public int GridColumn { get; }
@@ -406,6 +410,7 @@ namespace ColorInvestigation.Controls
                 OnPropertiesChanged(nameof(Background), nameof(Foreground));
             }
         }
+        #endregion
         #endregion
     }
 }
