@@ -1,36 +1,13 @@
 ﻿// ToDo:
-// +1. fixed mouse move on HSV area
-// +2. Layout
-// +3. Remove all dependency properties + use calculated properties
-//      in setter set variable _isChanging=true
-//      public properties are Color type (not Brush)
-//      ? old/current Color
-//      add rgb tuple to ColorUtilities
-// ?-4. Separate component: ColorComponentSlider
-//      try use calculated properties
 // +5. StartUp color
-// +6. Remove IsMouseDown property (only Capture)
 // ?7. Process value when mouse is clicked
-// +8. Size changed => how Hue don't change
 // 9. Known color: show name + hex (as popup)
-// +10. Tones
-// +11. Binding to dictionary
-// +12. Edited text box for CurrentColor
-// +13. Degree label for Hue
-// -14. Control for slider
-// -?15. ViewModel
-// +16. Click on ColorBox
-// 17. Alpha for old Color in ColorBox
-// +18. Popup for ColorBox info
-// +19. Decimal places for ValueEditor
 // - performance 20. Component Slider - change black/white color
 // - performance21. Component slider - like triangle
 // +22. Производительность - sliders:
 //     + - increase step (try ~20 gradient) 
 //      -or/and process only last mouse move / skip late mouse moves
 // 23. ViewModel + з прямими get/set (без формул) - ? propertyUpdate + getter caller name => CallerMemberName
-// 24. Remove Components, inline initilize variables RBR_R, ...
-// 25. ColorComponent as subclass of XYSlider
 
 using ColorInvestigation.Common;
 using System;

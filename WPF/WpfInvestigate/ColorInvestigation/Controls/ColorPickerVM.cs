@@ -18,43 +18,35 @@ namespace ColorInvestigation.Controls
         internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
 
         internal FrameworkElement Owner;
-        public XYSlider AlphaSlider { get; }
-        public XYSlider HueSlider { get; }
-        public XYSlider SaturationAndValueSlider { get; }
-        private ColorComponent[] Components { get; }
 
         // need to duplicate Component because "Type ColorComponent[]' is not collection" error occurs
         // for "Content={Binding Components[N]}" line of ColorPicker.xaml in VS designer
         // I tried to use Array, Collection<T>, List<T>, ReadOnlyCollection<T>, Dictionary<T,V>
-        public ColorComponent RGB_R => Components[0];
-        public ColorComponent RGB_G => Components[1];
-        public ColorComponent RGB_B => Components[2]; 
-        public ColorComponent HSL_H => Components[3];
-        public ColorComponent HSL_S => Components[4]; 
-        public ColorComponent HSL_L => Components[5];
-        public ColorComponent HSV_H => Components[6];
-        public ColorComponent HSV_S => Components[7];
-        public ColorComponent HSV_V => Components[8];
-        public ColorComponent LAB_L => Components[9];
-        public ColorComponent LAB_A => Components[10];
-        public ColorComponent LAB_B => Components[11];
-        public ColorComponent YCbCr_Y => Components[12];
-        public ColorComponent YCbCr_Cb => Components[13];
-        public ColorComponent YCbCr_Cr => Components[14];
+        public ColorComponent RGB_R => (ColorComponent)Sliders[0];
+        public ColorComponent RGB_G => (ColorComponent)Sliders[1];
+        public ColorComponent RGB_B => (ColorComponent)Sliders[2]; 
+        public ColorComponent HSL_H => (ColorComponent)Sliders[3];
+        public ColorComponent HSL_S => (ColorComponent)Sliders[4]; 
+        public ColorComponent HSL_L => (ColorComponent)Sliders[5];
+        public ColorComponent HSV_H => (ColorComponent)Sliders[6];
+        public ColorComponent HSV_S => (ColorComponent)Sliders[7];
+        public ColorComponent HSV_V => (ColorComponent)Sliders[8];
+        public ColorComponent LAB_L => (ColorComponent)Sliders[9];
+        public ColorComponent LAB_A => (ColorComponent)Sliders[10];
+        public ColorComponent LAB_B => (ColorComponent)Sliders[11];
+        public ColorComponent YCbCr_Y => (ColorComponent)Sliders[12];
+        public ColorComponent YCbCr_Cb => (ColorComponent)Sliders[13];
+        public ColorComponent YCbCr_Cr => (ColorComponent)Sliders[14];
+        public XYSlider AlphaSlider => Sliders[15];
+        public XYSlider HueSlider => Sliders[16];
+        public XYSlider SaturationAndValueSlider => Sliders[17];
+        private XYSlider[] Sliders { get; }
 
         public ColorToneBox[] Tones { get; }
 
         public ColorPickerVM()
         {
-            AlphaSlider = new XYSlider((x, y) => UpdateUI());
-            HueSlider = new XYSlider((x, y) => HSV_H.SetSpaceValue(y, true)); // hue of HSV
-            SaturationAndValueSlider = new XYSlider((x, y) =>
-            {
-                HSV_S.SetSpaceValue(x);
-                HSV_V.SetSpaceValue(1.0 - y, true);
-            });
-
-            Components = new []
+            Sliders = new []
             {
                 new ColorComponent(this, "RGB_R", 0, 255, null,
                     (k) => Color.FromRgb(Convert.ToByte(255 * k), CurrentColor.G, CurrentColor.B)),
@@ -65,27 +57,34 @@ namespace ColorInvestigation.Controls
                 new ColorComponent(this, "HSL_H", 0, 360, "°",
                     (k) => new ColorSpaces.HSL(k / 100.0, HSL_S.SpaceValue, HSL_L.SpaceValue).GetRGB().GetColor()),
                 new ColorComponent(this, "HSL_S", 0, 100, "%",
-                    (k) => new ColorSpaces.HSL(GetCC(3), k / 100.0, GetCC(5)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSL(HSL_H.SpaceValue, k / 100.0, HSL_L.SpaceValue).GetRGB().GetColor()),
                 new ColorComponent(this, "HSL_L", 0, 100, "%",
-                    (k) => new ColorSpaces.HSL(GetCC(3), GetCC(4), k / 100.0).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSL(HSL_H.SpaceValue,HSL_S.SpaceValue, k / 100.0).GetRGB().GetColor()),
                 new ColorComponent(this, "HSV_H", 0, 360, "°",
-                    (k) => new ColorSpaces.HSV(k / 100.0, GetCC(7), GetCC(8)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSV(k / 100.0, HSV_S.SpaceValue, HSV_V.SpaceValue).GetRGB().GetColor()),
                 new ColorComponent(this, "HSV_S", 0, 100, "%",
-                    (k) => new ColorSpaces.HSV(GetCC(6), k / 100.0, GetCC(8)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSV(HSV_H.SpaceValue, k / 100.0, HSV_V.SpaceValue).GetRGB().GetColor()),
                 new ColorComponent(this, "HSV_V", 0, 100, "%",
-                    (k) => new ColorSpaces.HSV(GetCC(6), GetCC(7), k / 100.0).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSV(HSV_H.SpaceValue, HSV_S.SpaceValue, k / 100.0).GetRGB().GetColor()),
                 new ColorComponent(this, "LAB_L", 0, 100, null,
-                    (k) => new ColorSpaces.LAB(k, GetCC(10), GetCC(11)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.LAB(k, LAB_A.SpaceValue, LAB_B.SpaceValue).GetRGB().GetColor()),
                 new ColorComponent(this, "LAB_A", -127.5, 127.5, null,
-                    (k) => new ColorSpaces.LAB(GetCC(9), (k / 100.0 - 0.5) * 255, GetCC(11)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.LAB(LAB_L.SpaceValue, (k / 100.0 - 0.5) * 255, LAB_B.SpaceValue).GetRGB().GetColor()),
                 new ColorComponent(this, "LAB_B", -127.5, 127.5, null,
-                    (k) => new ColorSpaces.LAB(GetCC(9), GetCC(10), (k / 100.0 - 0.5) * 255).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.LAB(LAB_L.SpaceValue, LAB_A.SpaceValue, (k / 100.0 - 0.5) * 255).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Y", 0, 255, null,
-                    (k) => new ColorSpaces.YCbCr(k / 100.0, GetCC(13), GetCC(14)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.YCbCr(k / 100.0, YCbCr_Cb.SpaceValue, YCbCr_Cr.SpaceValue).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Cb", -127.5, 127.5, null,
-                    (k) => new ColorSpaces.YCbCr(GetCC(12), k / 100.0 - 0.5, GetCC(14)).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.YCbCr(YCbCr_Y.SpaceValue, k / 100.0 - 0.5, YCbCr_Cr.SpaceValue).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Cr", -127.5, 127.5, null,
-                    (k) => new ColorSpaces.YCbCr(GetCC(12), GetCC(13), k / 100.0 - 0.5).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.YCbCr(YCbCr_Y.SpaceValue, YCbCr_Cb.SpaceValue, k / 100.0 - 0.5).GetRGB().GetColor()),
+                new XYSlider((x, y) => UpdateUI()), 
+                new XYSlider((x, y) => HSV_H.SetSpaceValue(y, true)),
+                new XYSlider((x, y) =>
+                {
+                    HSV_S.SetSpaceValue(x);
+                    HSV_V.SetSpaceValue(1.0 - y, true);
+                })
             };
 
             const int NumberOfTones = 10;
@@ -136,9 +135,6 @@ namespace ColorInvestigation.Controls
         #endregion
 
         #region ==============  Update Values/UI  ===============
-        // Get color component in space unit
-        private double GetCC(int index) => Components[index].Value / Components[index].SpaceMultiplier;
-
         private bool _isUpdating;
         private void UpdateValues(ColorSpace baseColorSpace)
         {
@@ -212,14 +208,7 @@ namespace ColorInvestigation.Controls
 
         public override void UpdateUI()
         {
-            AlphaSlider.UpdateUI();
-            HueSlider.UpdateUI();
-            SaturationAndValueSlider.UpdateUI();
-
-            // RGB_R.UpdateUI(); RGB_G.UpdateUI(); RGB_B.UpdateUI();
-            // don't work: OnPropertiesChanged("RGB_R", "RGB_G", "RGB_B");
-
-            foreach (var component in Components)
+            foreach (var component in Sliders)
               component.UpdateUI();
 
             Owner.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
