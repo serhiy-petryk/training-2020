@@ -118,8 +118,7 @@ namespace ColorInvestigation.Controls
             var toggleButton = Tips.GetVisualParents(element).OfType<Grid>().SelectMany(grid => grid.Children.OfType<ToggleButton>()).FirstOrDefault();
             toggleButton.IsChecked = false;
 
-            var hsl = (element.DataContext as ColorPickerVM.ColorToneBox).GetBackgroundHSL();
-            VM.CurrentColor = hsl.GetRGB().GetColor(1 - VM.AlphaSlider.yValue);
+            (element.DataContext as ColorPickerVM.ColorToneBox).SetCurrentColor();
         }
         #endregion
 

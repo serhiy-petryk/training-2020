@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -87,11 +89,11 @@ namespace ColorInvestigation.Controls
                 })
             };
 
-            const int NumberOfTones = 10;
-            Tones = new ColorToneBox[3 * NumberOfTones];
+            const int numberOfTones = 10;
+            Tones = new ColorToneBox[3 * numberOfTones];
             for (var k1 = 0; k1 < 3; k1++)
-            for (var k2 = 0; k2 < NumberOfTones; k2++)
-                Tones[k2 + k1 * NumberOfTones] = new ColorToneBox(this, k1, k2);
+            for (var k2 = 0; k2 < numberOfTones; k2++)
+                Tones[k2 + k1 * numberOfTones] = new ColorToneBox(this, k1, k2);
         }
 
         #region  ==============  Public Properties  ================
@@ -383,7 +385,18 @@ namespace ColorInvestigation.Controls
                 GridRow = gridRow;
             }
 
-            internal ColorSpaces.HSL GetBackgroundHSL()
+            public override void UpdateUI()
+            {
+                var hsl = GetBackgroundHSL();
+                Background.Color = hsl.GetRGB().GetColor();
+                Foreground.Color = ColorSpaces.GetForegroundColor(Background.Color);
+                OnPropertiesChanged(nameof(Background), nameof(Foreground));
+            }
+
+            public void SetCurrentColor() =>
+                _owner.CurrentColor = GetBackgroundHSL().GetRGB().GetColor(1 - _owner.AlphaSlider.yValue);
+
+            private ColorSpaces.HSL GetBackgroundHSL()
             {
                 if (GridColumn == 0)
                     return new ColorSpaces.HSL(_owner.HSL_H.SpaceValue, _owner.HSL_S.SpaceValue, 0.025 + 0.05 * GridRow);
@@ -395,12 +408,6 @@ namespace ColorInvestigation.Controls
             private string FormatInfoString(string label, double value1, double value2, double value3) =>
                 (label + ":").PadRight(7) + FormatDouble(value1) + FormatDouble(value2) + FormatDouble(value3);
             private string FormatDouble(double value) => value.ToString("F1", _owner.CurrentCulture).PadLeft(7);
-            public override void UpdateUI()
-            {
-                Background.Color = GetBackgroundHSL().GetRGB().GetColor();
-                Foreground.Color = ColorSpaces.GetForegroundColor(Background.Color);
-                OnPropertiesChanged(nameof(Background), nameof(Foreground));
-            }
         }
         #endregion
         #endregion
