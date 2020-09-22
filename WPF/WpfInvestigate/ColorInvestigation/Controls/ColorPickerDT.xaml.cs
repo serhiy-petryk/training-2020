@@ -119,9 +119,7 @@ namespace ColorInvestigation.Controls
             toggleButton.IsChecked = false;
 
             var hsl = (element.DataContext as ColorPickerVM.ColorToneBox).GetBackgroundHSL();
-            VM.HSL_H.SetSpaceValue(hsl.H);
-            VM.HSL_S.SetSpaceValue(hsl.S);
-            VM.HSL_L.SetSpaceValue(hsl.L, true);
+            VM.CurrentColor = hsl.GetRGB().GetColor(1 - VM.AlphaSlider.yValue);
         }
         #endregion
 

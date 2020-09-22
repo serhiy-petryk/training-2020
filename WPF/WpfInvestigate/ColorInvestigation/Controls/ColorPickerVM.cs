@@ -355,8 +355,8 @@ namespace ColorInvestigation.Controls
             {
                 get
                 {
-                    var rgb = GetBackgroundHSL().GetRGB();
                     var hsl = GetBackgroundHSL();
+                    var rgb = hsl.GetRGB();
                     var hsv = new ColorSpaces.HSV(rgb) { H = hsl.H };
                     var lab = new ColorSpaces.LAB(rgb);
                     var yCbCr = new ColorSpaces.YCbCr(rgb);
