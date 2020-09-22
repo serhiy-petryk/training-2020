@@ -64,7 +64,7 @@ namespace ColorInvestigation.Controls
                     (k) => new ColorSpaces.HSV(k / 100.0, HSV_S.SpaceValue, HSV_V.SpaceValue).GetRGB().GetColor()),
                 new ColorComponent(this, "HSV_S", 0, 100, "%",
                     (k) => new ColorSpaces.HSV(HSV_H.SpaceValue, k / 100.0, HSV_V.SpaceValue).GetRGB().GetColor()),
-                new ColorComponent(this, "HSV_V", 0, 100, "%",
+                new ColorComponent(this, "HSV_V/B", 0, 100, "%",
                     (k) => new ColorSpaces.HSV(HSV_H.SpaceValue, HSV_S.SpaceValue, k / 100.0).GetRGB().GetColor()),
                 new ColorComponent(this, "LAB_L", 0, 100, null,
                     (k) => new ColorSpaces.LAB(k, LAB_A.SpaceValue, LAB_B.SpaceValue).GetRGB().GetColor()),
@@ -78,9 +78,9 @@ namespace ColorInvestigation.Controls
                     (k) => new ColorSpaces.YCbCr(YCbCr_Y.SpaceValue, k / 100.0 - 0.5, YCbCr_Cr.SpaceValue).GetRGB().GetColor()),
                 new ColorComponent(this, "YCbCr_Cr", -127.5, 127.5, null,
                     (k) => new ColorSpaces.YCbCr(YCbCr_Y.SpaceValue, YCbCr_Cb.SpaceValue, k / 100.0 - 0.5).GetRGB().GetColor()),
-                new XYSlider((x, y) => UpdateUI()), 
-                new XYSlider((x, y) => HSV_H.SetSpaceValue(y, true)),
-                new XYSlider((x, y) =>
+                new XYSlider("Alpha", (x, y) => UpdateUI()), 
+                new XYSlider("Hue", (x, y) => HSV_H.SetSpaceValue(y, true)),
+                new XYSlider("SaturationAndValue", (x, y) =>
                 {
                     HSV_S.SetSpaceValue(x);
                     HSV_V.SetSpaceValue(1.0 - y, true);
@@ -248,18 +248,20 @@ namespace ColorInvestigation.Controls
         #region ==============  Hue/SaturationAndValue Sliders  ============
         public class XYSlider : INotifyPropertyChangedAbstract
         {
+            public string Id { get; }
             public double xValue { get; private set; }
             public double yValue { get; private set; }
             public virtual double xSliderValue => SizeOfSlider.Width * xValue - SizeOfThumb.Width / 2;
             public virtual double ySliderValue => SizeOfSlider.Height * yValue - SizeOfThumb.Height / 2;
+
             protected Action<double, double> SetValuesAction;
 
             protected Size SizeOfSlider;
             protected Size SizeOfThumb;
 
-            public XYSlider(Action<double, double> setValuesAction)
+            public XYSlider(string id, Action<double, double> setValuesAction)
             {
-                SetValuesAction = setValuesAction;
+                Id = id; SetValuesAction = setValuesAction;
             }
             public void SetProperties(double xValue, double yValue, bool updateUI = false)
             {
@@ -295,13 +297,13 @@ namespace ColorInvestigation.Controls
                 }
             }
 
-            private readonly string Id;
             public string Label => Id.Split('_')[1];
             public string ValueLabel { get; }
             public LinearGradientBrush BackgroundBrush { get; }
-            public readonly double SpaceMultiplier;
 
+            // private readonly string _id;
             private ColorPickerVM _owner;
+            private readonly double _spaceMultiplier;
             private readonly double Min;
             private readonly double Max;
             private ColorSpace ColorSpace;
@@ -309,14 +311,15 @@ namespace ColorInvestigation.Controls
             private Func<int, Color> _backgroundGradient;
 
             public ColorComponent(ColorPickerVM owner, string id, double min, double max, string valueLabel = null,
-                Func<int, Color> backgroundGradient = null) : base(null)
+                Func<int, Color> backgroundGradient = null) : base(id, null)
             {
-                SetValuesAction = (x, y) => Value = xValue * SpaceMultiplier;
-
-                Id = id; Min = min; Max = max;
-                ValueLabel = valueLabel; _owner = owner;
+                SetValuesAction = (x, y) => Value = xValue * _spaceMultiplier;
+                _owner = owner;
+                Min = min;
+                Max = max;
+                ValueLabel = valueLabel;
                 _backgroundGradient = backgroundGradient;
-                SpaceMultiplier = Id.StartsWith("LAB") ? 1 : Max - Min;
+                _spaceMultiplier = Id.StartsWith("LAB") ? 1 : Max - Min;
                 ColorSpace = (ColorSpace)Enum.Parse(typeof(ColorSpace), Id.Split('_')[0]);
                 BackgroundBrush = new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, _gradientCount + 1)
                     .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / _gradientCount))));
@@ -332,13 +335,13 @@ namespace ColorInvestigation.Controls
 
             public override double xSliderValue => (SizeOfSlider.Width - SizeOfThumb.Width) * (Value - Min) / (Max - Min);
 
-            public double SpaceValue => Value / SpaceMultiplier;
+            public double SpaceValue => Value / _spaceMultiplier;
             public void SetSpaceValue(double value, bool updateUI = false)
             {
                 if (updateUI)
-                    Value = value * SpaceMultiplier;
+                    Value = value * _spaceMultiplier;
                 else
-                    _value = value * SpaceMultiplier;
+                    _value = value * _spaceMultiplier;
             }
         }
         #endregion

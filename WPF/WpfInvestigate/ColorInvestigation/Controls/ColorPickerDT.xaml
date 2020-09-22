@@ -17,6 +17,15 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
+        <DataTemplate DataType="{x:Type controls:ColorPickerVM+XYSlider}">
+            <Canvas Background="Transparent" MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
+                <Grid Height="12" Canvas.Top="{Binding ySliderValue}" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
+                    <Path Data="M0,0 L6,6 L0,12 Z" Fill="White" HorizontalAlignment="Left"/>
+                    <Path Data="M5,1 L0,6 L5,11 Z" Fill="White" HorizontalAlignment="Right"/>
+                </Grid>
+            </Canvas>
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type controls:ColorPickerVM+ColorComponent}">
             <Grid UseLayoutRounding="False" SnapsToDevicePixels="False">
                 <Grid.ColumnDefinitions>
@@ -149,10 +158,7 @@
                     <Rectangle Fill="{Binding HueBrush}"/>
                     <Rectangle Fill="{StaticResource SaturationAndValueSliderBaseBrush}"/>
                     <Canvas Background="Transparent" ClipToBounds="False" DataContext="{Binding SaturationAndValueSlider}"
-                            MouseDown="Slider_MouseDown"
-                            MouseMove="Slider_MouseMove"
-                            MouseUp="Slider_MouseUp">
-                        <!--                            MouseMove="SaturationAndValueSlider_MouseMove"-->
+                            MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                         <Grid Width="12" Height="12" Canvas.Top="{Binding ySliderValue}" Canvas.Left="{Binding xSliderValue}">
                             <Ellipse Stroke="Black" Width="12" Height="12" StrokeThickness="1"/>
                             <Ellipse Stroke="White" Width="10" Height="10" StrokeThickness="1"/>
@@ -163,26 +169,14 @@
                 <!-- HueBar -->
                 <Grid Grid.Column="1" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{StaticResource HueBackgroundBrush}" Margin="5,0"/>
-                    <Canvas Background="Transparent" DataContext="{Binding HueSlider}"
-                            MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
-                        <Grid Height="12" Canvas.Top="{Binding ySliderValue}" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
-                            <Path Data="M0,0 L6,6 L0,12 Z" Fill="White" HorizontalAlignment="Left"/>
-                            <Path Data="M5,1 L0,6 L5,11 Z" Fill="White" HorizontalAlignment="Right"/>
-                        </Grid>
-                    </Canvas>
+                    <ContentControl Content="{Binding HueSlider}"/>
                 </Grid>
 
                 <!-- AlphaBar -->
                 <Grid Grid.Column="2" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{Binding HueBrush}" Margin="5,0"/>
                     <Rectangle Fill="{StaticResource AlphaBackgroundBrush}" OpacityMask="{StaticResource AlphaBarOpacityMask}" Margin="5,0"/>
-                    <Canvas Background="Transparent" DataContext="{Binding AlphaSlider}"
-                            MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
-                        <Grid Height="12" Canvas.Top="{Binding ySliderValue}" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
-                            <Path Data="M0,0 L6,6 L0,12 Z" Fill="White" HorizontalAlignment="Left"/>
-                            <Path Data="M5,1 L0,6 L5,11 Z" Fill="White" HorizontalAlignment="Right"/>
-                        </Grid>
-                    </Canvas>
+                    <ContentControl Content="{Binding AlphaSlider}"/>
                 </Grid>
 
                 <!-- Color boxes -->
