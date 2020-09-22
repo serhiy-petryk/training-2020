@@ -166,13 +166,13 @@
                     </Canvas>
                 </Grid>
 
-                <!-- HueBar -->
+                <!-- HueSlider -->
                 <Grid Grid.Column="1" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{StaticResource HueBackgroundBrush}" Margin="5,0"/>
                     <ContentControl Content="{Binding HueSlider}"/>
                 </Grid>
 
-                <!-- AlphaBar -->
+                <!-- AlphaSlider -->
                 <Grid Grid.Column="2" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{Binding HueBrush}" Margin="5,0"/>
                     <Rectangle Fill="{StaticResource AlphaBackgroundBrush}" OpacityMask="{StaticResource AlphaBarOpacityMask}" Margin="5,0"/>
