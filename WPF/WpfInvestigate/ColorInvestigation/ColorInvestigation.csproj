@@ -58,7 +58,6 @@
     <Compile Include="Common\AnimationHelper.cs" />
     <Compile Include="Common\BindingProxy.cs" />
     <Compile Include="Common\ColorConverters.cs" />
-    <Compile Include="Common\XColorSpaces.cs" />
     <Compile Include="Common\ColorSpaces.Check.cs" />
     <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\Converters.cs" />
