@@ -87,7 +87,7 @@ namespace ColorInvestigation.Controls
                 })
             };
 
-            const int numberOfTones = 10;
+            const int numberOfTones = 11;
             Tones = new ColorToneBox[3 * numberOfTones];
             for (var k1 = 0; k1 < 3; k1++)
             for (var k2 = 0; k2 < numberOfTones; k2++)
@@ -401,10 +401,10 @@ namespace ColorInvestigation.Controls
             private ColorSpaces.HSL GetBackgroundHSL()
             {
                 if (GridColumn == 0)
-                    return new ColorSpaces.HSL(_owner.HSL_H.SpaceValue, _owner.HSL_S.SpaceValue, 0.025 + 0.05 * GridRow);
+                    return new ColorSpaces.HSL(_owner.HSL_H.SpaceValue, _owner.HSL_S.SpaceValue, 0.05 * GridRow);
                 if (GridColumn == 1)
-                    return new ColorSpaces.HSL(_owner.HSL_H.SpaceValue, _owner.HSL_S.SpaceValue, 0.975 - 0.05 * GridRow);
-                return new ColorSpaces.HSL(_owner.HSL_H.SpaceValue, 0.05 + 0.1 * GridRow, _owner.HSL_L.SpaceValue);
+                    return new ColorSpaces.HSL(_owner.HSL_H.SpaceValue, _owner.HSL_S.SpaceValue, 1 - 0.05 * GridRow);
+                return new ColorSpaces.HSL(_owner.HSL_H.SpaceValue, 0.1 * GridRow, _owner.HSL_L.SpaceValue);
             }
 
             private string FormatInfoString(string label, double value1, double value2, double value3) =>

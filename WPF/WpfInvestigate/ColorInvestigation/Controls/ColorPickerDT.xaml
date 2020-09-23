@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:ColorInvestigation.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600"
-             MinHeight="420" MinWidth="500"
+             MinHeight="420" MinWidth="550"
              SnapsToDevicePixels="True"
              UseLayoutRounding="True"
              Background="#FF282828">
@@ -137,9 +137,9 @@
     <Border Padding="10,10,0,10">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*" MinWidth="170"/>
+                <ColumnDefinition Width="3*" MinWidth="200"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="5*" MinWidth="200"/>
+                <ColumnDefinition Width="5*" MinWidth="360"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" x:Name="LeftPanel" SizeChanged="Control_OnSizeChanged">
@@ -150,7 +150,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="1.65*"/>
                 </Grid.RowDefinitions>
 
                 <!-- SaturationAndValueSlider -->
@@ -305,6 +305,7 @@
                             <ItemsPanelTemplate>
                                 <Grid>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
                                         <RowDefinition Height="1*" />
                                         <RowDefinition Height="1*" />
                                         <RowDefinition Height="1*" />
