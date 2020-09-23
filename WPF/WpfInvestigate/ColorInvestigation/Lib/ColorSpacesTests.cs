@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 using ColorInvestigation.Common;
+using ColorInvestigation.Common.ColorSpaces;
 
 namespace ColorInvestigation.Lib
 {
@@ -21,8 +22,8 @@ namespace ColorInvestigation.Lib
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var hsl = new ColorSpaces.HSL(new ColorSpaces.RGB(color));
-                var hsv = new ColorSpaces.HSV(new ColorSpaces.RGB(color));
+                var hsl = new HSL(new RGB(color));
+                var hsv = new HSV(new RGB(color));
 
                 if (Math.Abs(hsl.H - hsv.H) > 0.001)
                     throw new Exception("Check!!!");
@@ -36,7 +37,7 @@ namespace ColorInvestigation.Lib
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var hsl = new ColorSpaces.HSL(new ColorSpaces.RGB(color));
+                var hsl = new HSL(new RGB(color));
 
                 if (hsl.H < MinX) MinX = hsl.H;
                 if (hsl.H > MaxX) MaxX = hsl.H;
@@ -58,7 +59,7 @@ namespace ColorInvestigation.Lib
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var hsv = new ColorSpaces.HSV(new ColorSpaces.RGB(color));
+                var hsv = new HSV(new RGB(color));
 
                 if (hsv.H < MinX) MinX = hsv.H;
                 if (hsv.H > MaxX) MaxX = hsv.H;
@@ -80,7 +81,7 @@ namespace ColorInvestigation.Lib
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var xyz = new ColorSpaces.XYZ(new ColorSpaces.RGB(color));
+                var xyz = new XYZ(new RGB(color));
 
                 if (xyz.X < MinX) MinX = xyz.X;
                 if (xyz.X > MaxX) MaxX = xyz.X;
@@ -102,7 +103,7 @@ namespace ColorInvestigation.Lib
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var lab = new ColorSpaces.LAB(new ColorSpaces.RGB(color));
+                var lab = new LAB(new RGB(color));
 
                 if (lab.L < MinX) MinX = lab.L;
                 if (lab.L > MaxX) MaxX = lab.L;
@@ -117,14 +118,14 @@ namespace ColorInvestigation.Lib
             }
         }
 
-        public static void YCbCrTest(ColorSpaces.YCbCrStandard yCbCrStandard)
+        public static void YCbCrTest(YCbCrStandard yCbCrStandard)
         {
             for (var r = 0; r < 256; r++)
             for (var g = 0; g < 256; g++)
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var yCbCr = new ColorSpaces.YCbCr(new ColorSpaces.RGB(color), yCbCrStandard);
+                var yCbCr = new YCbCr(new RGB(color), yCbCrStandard);
 
                 if (yCbCr.Y < MinX) MinX = yCbCr.Y;
                 if (yCbCr.Y > MaxX) MaxX = yCbCr.Y;

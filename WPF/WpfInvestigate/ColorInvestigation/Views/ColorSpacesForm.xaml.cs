@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using ColorInvestigation.Common;
+using ColorInvestigation.Common.ColorSpaces;
 
 namespace ColorInvestigation.Views
 {
@@ -22,7 +23,7 @@ namespace ColorInvestigation.Views
             for (var h = 0; h <= 100; h += step)
                 for (var s = 0; s <= 100; s += step)
                 {
-                    var back = new ColorSpaces.HSL(h / 100.0, s / 100.0, 0.7).RGB.Color;
+                    var back = new HSL(h / 100.0, s / 100.0, 0.7).RGB.Color;
                     // var btn = new Button { Width = 100, Height = 25, Content = back.ToString(), Background = new SolidColorBrush(back) };
                     var btn = new Button { Width = 80, Height = 25, Content = h + " " + s, Background = new SolidColorBrush(back) };
                     Panel.Children.Add(btn);
@@ -38,7 +39,7 @@ namespace ColorInvestigation.Views
             for (var h = 0; h <= 100; h += step)
                 for (var s = 0; s <= 100; s += step)
                 {
-                    var back = new ColorSpaces.HSV(h / 100.0, s / 100.0, 0.7).RGB.Color;
+                    var back = new HSV(h / 100.0, s / 100.0, 0.7).RGB.Color;
                     var btn = new Button { Width = 80, Height = 25, Content = h + " " + s, Background = new SolidColorBrush(back) };
                     Panel.Children.Add(btn);
                 }
@@ -54,7 +55,7 @@ namespace ColorInvestigation.Views
                 for (var h = 0; h <= 100; h += step)
                     for (var s = 0; s <= 100; s += step)
                     {
-                        var back = new ColorSpaces.HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
+                        var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
                         var btn = new Button { Width = 80, Height = 25, Content = h + " " + s + " " + l, Background = new SolidColorBrush(back) };
                         Panel.Children.Add(btn);
                     }
@@ -71,7 +72,7 @@ namespace ColorInvestigation.Views
                 for (var s = 0; s <= 100; s += step)
                     for (var l = 0; l <= 100; l += step)
                     {
-                        var back = new ColorSpaces.HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
+                        var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
                         var btn = new Button { Width = 80, Height = 25, Content = h + " " + s + " " + l, Background = new SolidColorBrush(back) };
                         Panel.Children.Add(btn);
                     }
@@ -87,7 +88,7 @@ namespace ColorInvestigation.Views
                 for (var h = 0; h <= 100; h += step)
                     for (var s = 0; s <= 100; s += step)
                     {
-                        var back = new ColorSpaces.HSV(h / 100.0, s / 100.0, v / 100.0).RGB.Color;
+                        var back = new HSV(h / 100.0, s / 100.0, v / 100.0).RGB.Color;
                         var btn = new Button { Width = 80, Height = 25, Content = h + " " + s + " " + v, Background = new SolidColorBrush(back) };
                         Panel.Children.Add(btn);
                     }
@@ -103,7 +104,7 @@ namespace ColorInvestigation.Views
                 for (var s = 0; s <= 100; s += step)
                     for (var v = 0; v <= 100; v += step)
                     {
-                        var back = new ColorSpaces.HSV(h / 100.0, s / 100.0, v / 100.0).RGB.Color;
+                        var back = new HSV(h / 100.0, s / 100.0, v / 100.0).RGB.Color;
                         var btn = new Button { Width = 80, Height = 25, Content = h + " " + s + " " + v, Background = new SolidColorBrush(back) };
                         Panel.Children.Add(btn);
                     }
@@ -119,7 +120,7 @@ namespace ColorInvestigation.Views
                 for (var y = 0; y <= 100; y += step)
                     for (var z = 0; z <= 110; z += step)
                     {
-                        var back = new ColorSpaces.XYZ(1.0 * x, 1.0 * y, 1.0 * z).RGB.Color;
+                        var back = new XYZ(1.0 * x, 1.0 * y, 1.0 * z).RGB.Color;
                         var btn = new Button { Width = 80, Height = 25, Content = x + " " + y + " " + z, Background = new SolidColorBrush(back) };
                         Panel.Children.Add(btn);
                     }
@@ -135,7 +136,7 @@ namespace ColorInvestigation.Views
                 for (var z = 0; z <= 110; z += step)
                     for (var x = 0; x <= 100; x += step)
                     {
-                        var back = new ColorSpaces.XYZ(1.0 * x, 1.0 * y, 1.0 * z).RGB.Color;
+                        var back = new XYZ(1.0 * x, 1.0 * y, 1.0 * z).RGB.Color;
                         var btn = new Button { Width = 80, Height = 25, Content = x + " " + y + " " + z, Background = new SolidColorBrush(back) };
                         Panel.Children.Add(btn);
                     }
@@ -152,7 +153,7 @@ namespace ColorInvestigation.Views
             for (var b = -128; b <= 128; b += step2)
             for (var l = 0; l <= 100; l += step)
             {
-                var back = new ColorSpaces.LAB(1.0 * l, 1.0 * a, 1.0 * b).RGB.Color;
+                var back = new LAB(1.0 * l, 1.0 * a, 1.0 * b).RGB.Color;
                 var btn = new Button { Width = 80, Height = 25, Content = l + " " + a + " " + b, Background = new SolidColorBrush(back) };
                 Panel.Children.Add(btn);
             }
@@ -169,7 +170,7 @@ namespace ColorInvestigation.Views
             for (var a = -128; a <= 128; a += step2)
             for (var b = -128; b <= 128; b += step2)
             {
-                var back = new ColorSpaces.LAB(1.0 * l, 1.0 * a, 1.0 * b).RGB.Color;
+                var back = new LAB(1.0 * l, 1.0 * a, 1.0 * b).RGB.Color;
                 var btn = new Button { Width = 80, Height = 25, Content = l + " " + a + " " + b, Background = new SolidColorBrush(back) };
                 Panel.Children.Add(btn);
             }
@@ -177,7 +178,7 @@ namespace ColorInvestigation.Views
             if (wnd != null) wnd.Width = 1400;
         }
 
-        private void ShowYCbCr_CbCrOrder(ColorSpaces.YCbCrStandard yCbCrStandard)
+        private void ShowYCbCr_CbCrOrder(YCbCrStandard yCbCrStandard)
         {
             Panel.Children.Clear();
             var step = 16;
@@ -186,7 +187,7 @@ namespace ColorInvestigation.Views
             for (var cB = -128; cB <= 128; cB += step2)
             for (var cR = -128; cR <= 128; cR += step2)
             {
-                var back = new ColorSpaces.YCbCr(Y / 255.0, cB / 255.0, cR / 255.0, yCbCrStandard).RGB.Color;
+                var back = new YCbCr(Y / 255.0, cB / 255.0, cR / 255.0, yCbCrStandard).RGB.Color;
                 var fore = Y < 128 ? Color.FromRgb(0xCC, 0xCC, 0xCC) : Color.FromRgb(0x33, 0x33, 0x33);
                 var btn = new Button
                 {
@@ -201,7 +202,7 @@ namespace ColorInvestigation.Views
             var wnd = GetWindow(this);
             if (wnd != null) wnd.Width = 1400;
         }
-        private void ShowYCbCr_YOrder(ColorSpaces.YCbCrStandard yCbCrStandard)
+        private void ShowYCbCr_YOrder(YCbCrStandard yCbCrStandard)
         {
             Panel.Children.Clear();
             var step = 16;
@@ -210,7 +211,7 @@ namespace ColorInvestigation.Views
             for (var cR = -128; cR <= 128; cR += step2)
             for (var Y = 0; Y <= 256; Y += step)
             {
-                var back = new ColorSpaces.YCbCr(Y / 255.0, cB / 255.0, cR / 255.0, yCbCrStandard).RGB.Color;
+                var back = new YCbCr(Y / 255.0, cB / 255.0, cR / 255.0, yCbCrStandard).RGB.Color;
                 var fore = Y < 128 ? Color.FromRgb(0xCC, 0xCC, 0xCC) : Color.FromRgb(0x33, 0x33, 0x33);
                 var btn = new Button
                 {
@@ -228,32 +229,32 @@ namespace ColorInvestigation.Views
 
         private void OnShowBT601Click_YOrder(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_YOrder(ColorSpaces.YCbCrStandard.BT601);
+            ShowYCbCr_YOrder(YCbCrStandard.BT601);
         }
 
         private void OnShowBT709Click_YOrder(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_YOrder(ColorSpaces.YCbCrStandard.BT709);
+            ShowYCbCr_YOrder(YCbCrStandard.BT709);
         }
 
         private void OnShowBT2020Click_YOrder(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_YOrder(ColorSpaces.YCbCrStandard.BT2020);
+            ShowYCbCr_YOrder(YCbCrStandard.BT2020);
         }
 
         private void OnShowBT601Click(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_CbCrOrder(ColorSpaces.YCbCrStandard.BT601);
+            ShowYCbCr_CbCrOrder(YCbCrStandard.BT601);
         }
 
         private void OnShowBT709Click(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_CbCrOrder(ColorSpaces.YCbCrStandard.BT709);
+            ShowYCbCr_CbCrOrder(YCbCrStandard.BT709);
         }
 
         private void OnShowBT2020Click(object sender, RoutedEventArgs e)
         {
-            ShowYCbCr_CbCrOrder(ColorSpaces.YCbCrStandard.BT2020);
+            ShowYCbCr_CbCrOrder(YCbCrStandard.BT2020);
         }
 
     }

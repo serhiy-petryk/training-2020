@@ -204,6 +204,5 @@
   <ItemGroup>
     <Resource Include="Color.Investigation.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

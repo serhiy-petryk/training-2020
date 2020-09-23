@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ColorInvestigation.Common;
+using ColorInvestigation.Common.ColorSpaces;
 using ColorInvestigation.Temp;
 
 namespace ColorInvestigation.Views
@@ -22,31 +23,31 @@ namespace ColorInvestigation.Views
 
         public static double HslToGray(Color color)
         {
-            var hsl = new ColorSpaces.HSL(new ColorSpaces.RGB(color));
+            var hsl = new HSL(new RGB(color));
             return hsl.L;
         }
 
         public static double YCbCrBT601(Color color)
         {
-            var yCbCr = new ColorSpaces.YCbCr(new ColorSpaces.RGB(color), ColorSpaces.YCbCrStandard.BT601);
+            var yCbCr = new YCbCr(new RGB(color), YCbCrStandard.BT601);
             return yCbCr.Y;
         }
 
         public static double YCbCrBT709(Color color)
         {
-            var yCbCr = new ColorSpaces.YCbCr(new ColorSpaces.RGB(color), ColorSpaces.YCbCrStandard.BT709);
+            var yCbCr = new YCbCr(new RGB(color), YCbCrStandard.BT709);
             return yCbCr.Y;
         }
 
         public static double YCbCrBT2020(Color color)
         {
-            var yCbCr = new ColorSpaces.YCbCr(new ColorSpaces.RGB(color), ColorSpaces.YCbCrStandard.BT2020);
+            var yCbCr = new YCbCr(new RGB(color), YCbCrStandard.BT2020);
             return yCbCr.Y;
         }
 
         public static double YCbCrMy(Color color)
         {
-            var yCbCr = new ColorSpaces.YCbCr(new ColorSpaces.RGB(color), ColorSpaces.YCbCrStandard.My);
+            var yCbCr = new YCbCr(new RGB(color), YCbCrStandard.My);
             return yCbCr.Y;
         }
 

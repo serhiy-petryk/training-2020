@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ColorInvestigation.Common;
+using ColorInvestigation.Common.ColorSpaces;
 
 namespace ColorInvestigation.Views
 {
@@ -25,8 +26,8 @@ namespace ColorInvestigation.Views
             for (var s = 0; s <= 100; s += step)
             for (var l = 0; l <= 100; l += step)
             {
-                var back = new ColorSpaces.HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorSpaces.GetGrayLevel(new ColorSpaces.RGB(back)));
+                var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
+                var grayLevel = Convert.ToByte(Utils.GetGrayLevel(new RGB(back)));
                 var btn = new Button { Width = 80, Height = 25, Content = h * 3.6 + " " + s + " " + l + " " + grayLevel, Background = new SolidColorBrush(back), Style = style };
                 Panel.Children.Add(btn);
             }
@@ -43,8 +44,8 @@ namespace ColorInvestigation.Views
             for (var s = 0; s <= 100; s += step)
             for (var l = 0; l <= 100; l += step)
             {
-                var back = new ColorSpaces.HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorSpaces.GetGrayLevel(new ColorSpaces.RGB(back)));
+                var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
+                var grayLevel = Convert.ToByte(Utils.GetGrayLevel(new RGB(back)));
                 var btn = new Button { Width = 80, Height = 25, Content = h * 3.6 + " " + s + " " + l + " " + grayLevel, Background = new SolidColorBrush(back), Style = style };
                 Panel.Children.Add(btn);
             }
@@ -61,8 +62,8 @@ namespace ColorInvestigation.Views
             for (var s = 0; s <= 100; s += step)
             for (var l = 0; l <= 100; l += step)
             {
-                var back = new ColorSpaces.HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorSpaces.GetGrayLevel(new ColorSpaces.RGB(back)));
+                var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
+                var grayLevel = Convert.ToByte(Utils.GetGrayLevel(new RGB(back)));
                 var btn = new Button { Width = 80, Height = 25, Content = h * 3.6 + " " + s + " " + l + " " + grayLevel, Background = new SolidColorBrush(back), Style = style };
                 Panel.Children.Add(btn);
             }
@@ -80,8 +81,8 @@ namespace ColorInvestigation.Views
             for (var s = 0; s <= 100; s += step)
             for (var l = 0; l <= 100; l += step)
             {
-                var back = new ColorSpaces.HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorSpaces.GetGrayLevel(new ColorSpaces.RGB(back)));
+                var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
+                var grayLevel = Convert.ToByte(Utils.GetGrayLevel(new RGB(back)));
                 var btn = new Button { Width = 80, Height = 25, Content = h * 3.6 + " " + s + " " + l + " " + grayLevel, Background = new SolidColorBrush(back), Style = style };
                 Panel.Children.Add(btn);
             }
@@ -99,8 +100,8 @@ namespace ColorInvestigation.Views
             for (var s = 0; s <= 100; s += step)
             for (var l = 0; l <= 100; l += step)
             {
-                var back = new ColorSpaces.HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorSpaces.GetGrayLevel(new ColorSpaces.RGB(back)));
+                var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
+                var grayLevel = Convert.ToByte(Utils.GetGrayLevel(new RGB(back)));
                 var btn = new Button { Width = 80, Height = 25, Content = h * 3.6 + " " + s + " " + l + " " + grayLevel, Background = new SolidColorBrush(back), Style = style };
                 Panel.Children.Add(btn);
             }
@@ -117,8 +118,8 @@ namespace ColorInvestigation.Views
             for (var s = 0; s <= 100; s += step)
             for (var l = 0; l <= 100; l += step)
             {
-                var back = new ColorSpaces.HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorSpaces.GetGrayLevel(new ColorSpaces.RGB(back)));
+                var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
+                var grayLevel = Convert.ToByte(Utils.GetGrayLevel(new RGB(back)));
                 var btn = new Button { Width = 80, Height = 25, Content = h * 3.6 + " " + s + " " + l + " " + grayLevel, Background = new SolidColorBrush(back), Style = style };
                 Panel.Children.Add(btn);
             }
@@ -135,9 +136,9 @@ namespace ColorInvestigation.Views
             for (var s = 0; s <= 100; s += step)
             for (var l = 0; l <= 100; l += step)
             {
-                var color = new ColorSpaces.HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorSpaces.GetGrayLevel(new ColorSpaces.RGB(color)));
-                var lab = new ColorSpaces.LAB(new ColorSpaces.RGB(color));
+                var color = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
+                var grayLevel = Convert.ToByte(Utils.GetGrayLevel(new RGB(color)));
+                var lab = new LAB(new RGB(color));
                 var l2 = Convert.ToInt32(lab.L);
                 var a = Convert.ToInt32(lab.A);
                 var b = Convert.ToInt32(lab.B);
@@ -157,8 +158,8 @@ namespace ColorInvestigation.Views
             for (var s = 0; s <= 100; s += step)
             for (var l = 0; l <= 100; l += step)
             {
-                var back = new ColorSpaces.HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorSpaces.GetGrayLevel(new ColorSpaces.RGB(back)));
+                var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
+                var grayLevel = Convert.ToByte(Utils.GetGrayLevel(new RGB(back)));
                 var btn = new Button { Width = 80, Height = 25, Content = h * 3.6 + " " + s + " " + l + " " + grayLevel, Background = new SolidColorBrush(back), Style = style };
                 Panel.Children.Add(btn);
             }
@@ -175,8 +176,8 @@ namespace ColorInvestigation.Views
             for (var s = 0; s <= 100; s += step)
             for (var l = 0; l <= 100; l += step)
             {
-                var back = new ColorSpaces.HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorSpaces.GetGrayLevel(new ColorSpaces.RGB(back)));
+                var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
+                var grayLevel = Convert.ToByte(Utils.GetGrayLevel(new RGB(back)));
                 var btn = new Button
                 {
                     Width = 80, Height = 25, Content = h * 3.6 + " " + s + " " + l + " " + grayLevel,

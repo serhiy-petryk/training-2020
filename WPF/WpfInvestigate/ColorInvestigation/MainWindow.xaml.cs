@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using ColorInvestigation.Common;
+using ColorInvestigation.Common.ColorSpaces;
 using ColorInvestigation.Lib;
 using ColorInvestigation.Views;
 
@@ -25,8 +26,8 @@ namespace ColorInvestigation
             // ColorSpacesTests.XyzTest();
 
             // ColorSpacesTests.YCbCrTest(ColorSpaces.YCbCrStandard.BT601);
-            ColorSpacesTests.YCbCrTest(ColorSpaces.YCbCrStandard.BT709);
-            ColorSpacesTests.YCbCrTest(ColorSpaces.YCbCrStandard.BT2020);
+            ColorSpacesTests.YCbCrTest(YCbCrStandard.BT709);
+            ColorSpacesTests.YCbCrTest(YCbCrStandard.BT2020);
         }
 
         private bool IsEqual(double d1, double d2) => Math.Abs(d1 - d2) < 0.0001;
