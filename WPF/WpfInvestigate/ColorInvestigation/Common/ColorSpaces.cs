@@ -19,12 +19,33 @@ yCbCR (BT601, BT709, BT2020 standards): the YCbCr/YPbCb/YPrCr representation:
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Media;
 
 namespace ColorInvestigation.Common
 {
     public class ColorSpaces
     {
+        static ColorSpaces()
+        {
+            var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).FirstOrDefault(t => t.Namespace == "System.Windows.Media" && t.Name == "KnownColor");
+            if (type != null)
+            {
+                var nameList = Enum.GetValues(type).OfType<object>().Skip(1).Select(a => a.ToString()).OrderBy(a => a).ToList();
+                nameList.AddRange(new[] {"Cyan", "Aqua", "Fuchsia", "Magenta"});// repeating color values: name may be skipped
+                foreach (var colorName in nameList)
+                    if (!KnownColors.ContainsKey(colorName))
+                        KnownColors.Add(colorName, StringToColor(colorName));
+            }
+        }
+
+        /// <summary>
+        /// 141 known colors from System.Windows.Media.KnownColor enumeration
+        /// I don't want to use System.Drawing.KnownColor because I need to add additional assembly to my project
+        /// </summary>
+        public static Dictionary<string, Color> KnownColors { get; } = new Dictionary<string, Color>();
+
         public static Color StringToColor(string hexStringOfColor) => (Color)ColorConverter.ConvertFromString(hexStringOfColor);
 
         /// <summary>
@@ -362,8 +383,8 @@ namespace ColorInvestigation.Common
             {
                 get
                 {
-                    var kB = yCbCrMultipliers[(int) Standard, 0];
-                    var kR = yCbCrMultipliers[(int) Standard, 1];
+                    var kB = yCbCrMultipliers[(int)Standard, 0];
+                    var kR = yCbCrMultipliers[(int)Standard, 1];
                     var r = Math.Min(1.0, Math.Max(0.0, Y + (1 - kR) / 0.5 * Cr));
                     var g = Math.Min(1.0,
                         Math.Max(0.0,
