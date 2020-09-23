@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using ColorInvestigation.Lib;
 
 namespace ColorInvestigation.Common
 {
@@ -134,30 +133,20 @@ namespace ColorInvestigation.Common
                 else if ((value as DynamicBinding)?.Value is string)
                     ss = ((string)((DynamicBinding)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
 
+                ColorSpaces.HSL hsl = null;
                 if (ss != null && ss.Length == 2)
-                {
-                    var h = double.Parse(ss[0], Tips.InvariantCulture);
-                    var s = double.Parse(ss[1], Tips.InvariantCulture);
-                    if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        ColorUtilities.HslToColor(h / 360, s / 100, newL / 100.0);
-                    return new SolidColorBrush(ColorUtilities.HslToColor(h / 360, s / 100, newL / 100.0));
-                }
+                    hsl = new ColorSpaces.HSL(double.Parse(ss[0], Tips.InvariantCulture) / 360,
+                        double.Parse(ss[1], Tips.InvariantCulture) / 100, newL / 100.0);
+                else if (value is Brush brush)
+                    hsl = new ColorSpaces.HSL(new ColorSpaces.RGB(Tips.GetColorFromBrush(brush)));
+                else if (value is DependencyObject d)
+                    hsl = new ColorSpaces.HSL(new ColorSpaces.RGB(Tips.GetActualBackgroundColor(d)));
 
-                if (value is Brush brush)
+                if (hsl != null)
                 {
-                    var hsl = ColorUtilities.ColorToHsl(Tips.GetColorFromBrush(brush));
                     if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL / 100.0);
-                    return new SolidColorBrush(ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL / 100.0));
-                }
-
-                if (value is DependencyObject d)
-                {
-                    var color = Tips.GetActualBackgroundColor(d);
-                    var hsl = ColorUtilities.ColorToHsl(color);
-                    if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL / 100.0);
-                    return new SolidColorBrush(ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL / 100.0));
+                        return new ColorSpaces.HSL(hsl.H, hsl.S, newL / 100.0).GetRGB().GetColor();
+                    return new SolidColorBrush(new ColorSpaces.HSL(hsl.H, hsl.S, newL / 100.0).GetRGB().GetColor());
                 }
             }
 
@@ -177,7 +166,7 @@ namespace ColorInvestigation.Common
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Tuple<double, double, double> hsl = null;
+            ColorSpaces.HSL hsl = null;
             string[] ss = null;
 
             if (value is string)
@@ -188,22 +177,23 @@ namespace ColorInvestigation.Common
                 ss = ((string)((DynamicBinding)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
 
             if (ss != null && ss.Length == 2)
-                hsl = new Tuple<double, double, double>(double.Parse(ss[0], Tips.InvariantCulture), double.Parse(ss[1], Tips.InvariantCulture), 0);
+                hsl = new ColorSpaces.HSL(double.Parse(ss[0], Tips.InvariantCulture) / 360,
+                    double.Parse(ss[1], Tips.InvariantCulture) / 360, 0);
             else if (value is Brush brush)
-                hsl = ColorUtilities.ColorToHsl(Tips.GetColorFromBrush(brush));
+                hsl = new ColorSpaces.HSL(new ColorSpaces.RGB(Tips.GetColorFromBrush(brush)));
             else if (value is DependencyObject d)
-                hsl = ColorUtilities.ColorToHsl(Tips.GetActualBackgroundColor(d));
+                hsl = new ColorSpaces.HSL(new ColorSpaces.RGB(Tips.GetActualBackgroundColor(d)));
 
             if (hsl != null)
             {
-                var color = ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, hsl.Item3);
-                var isDarkColor = ColorUtilities.IsDarkColor(color);
-                var newL = ColorConverterHelper.ConvertValue(hsl.Item3, parameter, _isSplit ? isDarkColor : (bool?) null);
+                var color = hsl.GetRGB().GetColor();
+                var isDarkColor = ColorSpaces.IsDarkColor(color);
+                var newL = ColorConverterHelper.ConvertValue(hsl.L, parameter, _isSplit ? isDarkColor : (bool?) null);
                 if (newL.HasValue)
                 {
                     if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL.Value);
-                    return new SolidColorBrush(ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, newL.Value));
+                        return new ColorSpaces.HSL(hsl.H, hsl.S, newL.Value).GetRGB().GetColor();
+                    return new SolidColorBrush(new ColorSpaces.HSL(hsl.H, hsl.S, newL.Value).GetRGB().GetColor());
                 }
             }
 
@@ -224,7 +214,7 @@ namespace ColorInvestigation.Common
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Tuple<double, double, double> lab = null;
+            ColorSpaces.LAB lab = null;
             string[] ss = null;
 
             if (value is string)
@@ -233,22 +223,22 @@ namespace ColorInvestigation.Common
                 ss = ((string)((BindingProxy)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
 
             if (ss != null && ss.Length == 2)
-                lab = new Tuple<double, double, double>(double.Parse(ss[0], Tips.InvariantCulture), double.Parse(ss[1], Tips.InvariantCulture), 0);
+                lab = new ColorSpaces.LAB(double.Parse(ss[0], Tips.InvariantCulture), double.Parse(ss[1], Tips.InvariantCulture), 0);
             else if (value is Brush brush)
-                lab = ColorUtilities.ColorToLab(Tips.GetColorFromBrush(brush));
+                lab = new ColorSpaces.LAB(new ColorSpaces.RGB(Tips.GetColorFromBrush(brush)));
             else if (value is DependencyObject d)
-                lab = ColorUtilities.ColorToLab(Tips.GetActualBackgroundColor(d));
+                lab = new ColorSpaces.LAB(new ColorSpaces.RGB(Tips.GetActualBackgroundColor(d)));
 
             if (lab != null)
             {
-                var color = ColorUtilities.LabToColor(lab.Item1, lab.Item2, lab.Item3);
-                var isDarkColor = ColorUtilities.IsDarkColor(color);
-                var newL = ColorConverterHelper.ConvertValue(lab.Item1 / 100.0, parameter, _isSplit ? isDarkColor : (bool?)null);
+                var color = lab.GetRGB().GetColor();
+                var isDarkColor = ColorSpaces.IsDarkColor(color);
+                var newL = ColorConverterHelper.ConvertValue(lab.L / 100.0, parameter, _isSplit ? isDarkColor : (bool?)null);
                 if (newL.HasValue)
                 {
                     if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return ColorUtilities.LabToColor(newL.Value * 100.0, lab.Item2, lab.Item3);
-                    return new SolidColorBrush(ColorUtilities.LabToColor( newL.Value * 100.0,  lab.Item2, lab.Item3));
+                        return new ColorSpaces.LAB(newL.Value * 100.0, lab.A, lab.B).GetRGB().GetColor();
+                    return new SolidColorBrush(new ColorSpaces.LAB(newL.Value * 100.0, lab.A, lab.B).GetRGB().GetColor());
                 }
             }
 
@@ -277,8 +267,8 @@ namespace ColorInvestigation.Common
 
             if (color.HasValue)
             {
-                var oldGrayLevel = ColorUtilities.ColorToGrayLevel(color.Value) / 255.0;
-                var isDarkColor = ColorUtilities.IsDarkColor(color.Value);
+                var oldGrayLevel = ColorSpaces.GetGrayLevel(new ColorSpaces.RGB(color.Value)) / 255.0;
+                var isDarkColor = ColorSpaces.IsDarkColor(color.Value);
                 var newGrayLevel = ColorConverterHelper.ConvertValue(oldGrayLevel, parameter, _isSplit ? isDarkColor : (bool?)null);
                 if (newGrayLevel.HasValue)
                 {
