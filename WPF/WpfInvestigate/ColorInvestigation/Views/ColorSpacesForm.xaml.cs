@@ -186,7 +186,7 @@ namespace ColorInvestigation.Views
             for (var cB = -128; cB <= 128; cB += step2)
             for (var cR = -128; cR <= 128; cR += step2)
             {
-                var back = new ColorSpaces.YCbCr(new ColorSpaces.RGB(Y, cB, cR), yCbCrStandard).RGB.Color;
+                var back = new ColorSpaces.YCbCr(new ColorSpaces.RGB(Y / 255.0, cB / 255.0, cR / 255.0), yCbCrStandard).RGB.Color;
                 var fore = Y < 128 ? Color.FromRgb(0xCC, 0xCC, 0xCC) : Color.FromRgb(0x33, 0x33, 0x33);
                 var btn = new Button
                 {
@@ -210,7 +210,7 @@ namespace ColorInvestigation.Views
             for (var cR = -128; cR <= 128; cR += step2)
             for (var Y = 0; Y <= 256; Y += step)
             {
-                var back = new ColorSpaces.YCbCr(new ColorSpaces.RGB(Y, cB, cR), yCbCrStandard).RGB.Color;
+                var back = new ColorSpaces.YCbCr(new ColorSpaces.RGB(Y / 255.0, cB / 255.0, cR / 255.0), yCbCrStandard).RGB.Color;
                 var fore = Y < 128 ? Color.FromRgb(0xCC, 0xCC, 0xCC) : Color.FromRgb(0x33, 0x33, 0x33);
                 var btn = new Button
                 {

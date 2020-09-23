@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ColorInvestigation.Common;
-using ColorInvestigation.Lib;
 using ColorInvestigation.Temp;
 
 namespace ColorInvestigation.Views
