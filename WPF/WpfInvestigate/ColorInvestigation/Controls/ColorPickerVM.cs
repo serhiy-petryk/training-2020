@@ -25,9 +25,9 @@ namespace ColorInvestigation.Controls
         // I tried to use Array, Collection<T>, List<T>, ReadOnlyCollection<T>, Dictionary<T,V>
         public ColorComponent RGB_R => (ColorComponent)Sliders[0];
         public ColorComponent RGB_G => (ColorComponent)Sliders[1];
-        public ColorComponent RGB_B => (ColorComponent)Sliders[2]; 
+        public ColorComponent RGB_B => (ColorComponent)Sliders[2];
         public ColorComponent HSL_H => (ColorComponent)Sliders[3];
-        public ColorComponent HSL_S => (ColorComponent)Sliders[4]; 
+        public ColorComponent HSL_S => (ColorComponent)Sliders[4];
         public ColorComponent HSL_L => (ColorComponent)Sliders[5];
         public ColorComponent HSV_H => (ColorComponent)Sliders[6];
         public ColorComponent HSV_S => (ColorComponent)Sliders[7];
@@ -47,7 +47,7 @@ namespace ColorInvestigation.Controls
         private XYSlider[] Sliders { get; }
         public ColorPickerVM()
         {
-            Sliders = new []
+            Sliders = new[]
             {
                 new ColorComponent("RGB_R", this, 0, 255, null,
                     (k) => Color.FromRgb(Convert.ToByte(255 * k), CurrentColor.G, CurrentColor.B)),
@@ -79,7 +79,7 @@ namespace ColorInvestigation.Controls
                     (k) => new YCbCr(YCbCr_Y.SpaceValue, k / 100.0 - 0.5, YCbCr_Cr.SpaceValue).RGB.Color),
                 new ColorComponent("YCbCr_Cr", this, -127.5, 127.5, null,
                     (k) => new YCbCr(YCbCr_Y.SpaceValue, YCbCr_Cb.SpaceValue, k / 100.0 - 0.5).RGB.Color),
-                new XYSlider("Alpha", (x, y) => UpdateUI()), 
+                new XYSlider("Alpha", (x, y) => UpdateUI()),
                 new XYSlider("Hue", (x, y) => HSV_H.SetSpaceValue(y, true)),
                 new XYSlider("SaturationAndValue", (x, y) =>
                 {
@@ -91,15 +91,15 @@ namespace ColorInvestigation.Controls
             const int numberOfTones = 11;
             Tones = new ColorToneBox[3 * numberOfTones];
             for (var k1 = 0; k1 < 3; k1++)
-            for (var k2 = 0; k2 < numberOfTones; k2++)
-                Tones[k2 + k1 * numberOfTones] = new ColorToneBox(this, k1, k2);
+                for (var k2 = 0; k2 < numberOfTones; k2++)
+                    Tones[k2 + k1 * numberOfTones] = new ColorToneBox(this, k1, k2);
         }
 
         #region  ==============  Public Properties  ================
         public Color Color // Original color
         {
             get => Color.FromArgb(Convert.ToByte((1.0 - _oldColorData[_oldColorData.Length - 1]) * 255),
-                Convert.ToByte(_oldColorData[0] * 255), Convert.ToByte(_oldColorData[1] * 255), Convert.ToByte(_oldColorData[2] *255));
+                Convert.ToByte(_oldColorData[0] * 255), Convert.ToByte(_oldColorData[1] * 255), Convert.ToByte(_oldColorData[2] * 255));
             set
             {
                 CurrentColor = value;
@@ -210,7 +210,7 @@ namespace ColorInvestigation.Controls
         public override void UpdateUI()
         {
             foreach (var component in Sliders)
-              component.UpdateUI();
+                component.UpdateUI();
 
             Owner.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
             {
@@ -233,7 +233,7 @@ namespace ColorInvestigation.Controls
         {
             _oldColorData.CopyTo(_savedColorData, 0);
             for (var k = 0; k < ComponentNumber; k++)
-                _oldColorData[k] = ((ColorComponent) Sliders[k]).SpaceValue;
+                _oldColorData[k] = ((ColorComponent)Sliders[k]).SpaceValue;
             _oldColorData[ComponentNumber] = AlphaSlider.yValue;
             OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
