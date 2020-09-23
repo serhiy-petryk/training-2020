@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:ColorInvestigation.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600"
-             MinHeight="420" MinWidth="550"
+             MinHeight="420" MinWidth="400"
              SnapsToDevicePixels="True"
              UseLayoutRounding="True"
              Background="#FF282828">
@@ -123,7 +123,6 @@
             <Setter Property="Focusable" Value="True"/>
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="Cursor" Value="Arrow"/>
             <Setter Property="Background" Value="#FF555555"/>
             <Setter Property="Foreground" Value="#FFE0E0E0"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -137,9 +136,9 @@
     <Border Padding="10,10,0,10">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*" MinWidth="200"/>
+                <ColumnDefinition Width="4*" MinWidth="170"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="5*" MinWidth="360"/>
+                <ColumnDefinition Width="5*" MinWidth="220"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" x:Name="LeftPanel" SizeChanged="Control_OnSizeChanged">
@@ -200,7 +199,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <TextBox Margin="0" Padding="4" BorderThickness="0"
-                                 IsReadOnly="True" IsTabStop="False" Focusable="True" Cursor="Arrow"
+                                 IsReadOnly="True" IsTabStop="False" Focusable="True"
                                  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"
                                  Background="{Binding ColorWithoutAlphaBrush}" Foreground="{Binding Color_ForegroundBrush}"
                                  Text="{Binding Color, Mode=OneWay}">
@@ -222,10 +221,12 @@
                         </TextBox>
                     </Grid>
 
-                    <Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="80" IsTabStop="True" Focusable="True"
+                    <!--<Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="80" IsTabStop="True" Focusable="True"
                             Click="ButtonBase_OnClick">
                         <TextBlock Text="Known color table" TextWrapping="Wrap" TextAlignment="Center"/>
-                    </Button>
+                    </Button>-->
+
+                    <TextBox Grid.Row="0" Grid.Column="2" Style="{StaticResource Label}" Text="{Binding Path=CurrentColorGrayLevel, Mode=OneWay, StringFormat=Gray level: {0:F1}%}" TextAlignment="Center"/>
 
                     <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Label}" Text="Shades" TextAlignment="Center"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource Label}" Text="Tints" TextAlignment="Center"/>
@@ -279,7 +280,7 @@
                                                 </Grid.RowDefinitions>
                                                 <Label x:Name="InfoHeader" Grid.Row="0" FontSize="12" FontWeight="SemiBold" Content="Color information"
                                                        Background="{Binding Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+20%}"/>
-                                                <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" Cursor="Arrow" FontFamily="Courier New" Text="{Binding Info, Mode=OneWay}"
+                                                <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" FontFamily="Courier New" Text="{Binding Info, Mode=OneWay}"
                                                          Foreground="{Binding ElementName=ColorBoxBorder, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.InstanceWithSplit}, ConverterParameter=+100%}"/>
                                                 <Button Grid.Row="2" BorderThickness="2" Margin="10" IsDefault="True"
                                                         Background="{Binding ElementName=InfoHeader, Path=Background}"
@@ -371,7 +372,7 @@
                 <ContentControl Grid.Row="10" Content="{Binding HSV_S, Mode=OneTime}" Focusable="False" IsTabStop="False" Margin="0 -1" />
                 <ContentControl Grid.Row="11" Content="{Binding HSV_V, Mode=OneTime}" Focusable="False" IsTabStop="False" />
                 <!-- LAB -->
-                <TextBox Grid.Row="12" Margin="0 5 20 4" Text="Lab (Lightness[0-100], A(Green↔Red)[-127.5, 127.5], B(Blue↔Yellow)[-127.5, 127.5])" Style="{StaticResource Label}"/>
+                <TextBox Grid.Row="12" Margin="0 5 20 4" Text="CIELAB (Lightness[0-100], A(Green↔Red)[-127.5, 127.5], B(Blue↔Yellow)[-127.5, 127.5])" Style="{StaticResource Label}"/>
                 <ContentControl Grid.Row="13" Content="{Binding LAB_L, Mode=OneTime}" Focusable="False" IsTabStop="False" />
                 <ContentControl Grid.Row="14" Content="{Binding LAB_A, Mode=OneTime}" Focusable="False" IsTabStop="False" Margin="0 -1" />
                 <ContentControl Grid.Row="15" Content="{Binding LAB_B, Mode=OneTime}" Focusable="False" IsTabStop="False" />

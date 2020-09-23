@@ -133,6 +133,7 @@ namespace ColorInvestigation.Controls
         public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorUtils.GetForegroundColor(CurrentColor));
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, Color.FromRgb(Color.R, Color.G, Color.B));
         public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, Color.FromRgb(CurrentColor.R, CurrentColor.G, CurrentColor.B));
+        public double CurrentColorGrayLevel => ColorUtils.GetGrayLevel(new RGB(CurrentColor)) * 100;
         #endregion
 
         #region ==============  Update Values/UI  ===============
@@ -215,7 +216,7 @@ namespace ColorInvestigation.Controls
             Owner.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
             {
                 OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
-                    nameof(CurrentColorWithoutAlphaBrush));
+                    nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColorGrayLevel));
                 foreach (var tone in Tones)
                     tone.UpdateUI();
             }));
