@@ -25,11 +25,10 @@ using System.Windows.Media;
 
 namespace ColorInvestigation.Common.ColorSpaces
 {
-    #region  ================  Utils  =================
-    public static class Utils
+    #region  ================  Color Utilities  =================
+    public static class ColorUtils
     {
-
-        static Utils()
+        static ColorUtils()
         {
             var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).FirstOrDefault(t => t.Namespace == "System.Windows.Media" && t.Name == "KnownColor");
             if (type != null)
@@ -124,21 +123,21 @@ namespace ColorInvestigation.Common.ColorSpaces
         }
         public HSL(RGB rgb)
         {
-            var max = Utils.threeway_max(rgb.R, rgb.G, rgb.B);
-            var min = Utils.threeway_min(rgb.R, rgb.G, rgb.B);
+            var max = ColorUtils.threeway_max(rgb.R, rgb.G, rgb.B);
+            var min = ColorUtils.threeway_min(rgb.R, rgb.G, rgb.B);
             L = (max + min) / 2;
 
-            if (Utils.is_equal(max, min))
+            if (ColorUtils.is_equal(max, min))
                 H = S = 0.0; // achromatic
             else
             {
                 var d = max - min;
                 S = L > 0.5 ? d / (2.0 - max - min) : d / (max + min);
-                if (Utils.is_equal(max, rgb.R))
+                if (ColorUtils.is_equal(max, rgb.R))
                     H = (rgb.G - rgb.B) / d + (rgb.G < rgb.B ? 6.0 : 0.0);
-                else if (Utils.is_equal(max, rgb.G))
+                else if (ColorUtils.is_equal(max, rgb.G))
                     H = (rgb.B - rgb.R) / d + 2.0;
-                else if (Utils.is_equal(max, rgb.B))
+                else if (ColorUtils.is_equal(max, rgb.B))
                     H = (rgb.R - rgb.G) / d + 4.0;
                 H /= 6.0;
             }
@@ -148,14 +147,14 @@ namespace ColorInvestigation.Common.ColorSpaces
         {
             get
             {
-                if (Utils.is_equal(S, 0.0))
+                if (ColorUtils.is_equal(S, 0.0))
                     return new RGB(L, L, L); // achromatic
 
                 var q = L < 0.5 ? L * (1.0 + S) : L + S - L * S;
                 var p = 2.0 * L - q;
-                var r = hue2rgb(p, q, H + Utils.OneThird);
+                var r = hue2rgb(p, q, H + ColorUtils.OneThird);
                 var g = hue2rgb(p, q, H);
-                var b = hue2rgb(p, q, H - Utils.OneThird);
+                var b = hue2rgb(p, q, H - ColorUtils.OneThird);
                 return new RGB(r, g, b);
             }
         }
@@ -164,9 +163,9 @@ namespace ColorInvestigation.Common.ColorSpaces
         {
             if (t < 0) t += 1.0;
             if (t > 1) t -= 1.0;
-            if (t < Utils.OneSixth) return p + (q - p) * 6.0 * t;
+            if (t < ColorUtils.OneSixth) return p + (q - p) * 6.0 * t;
             if (t < 0.5) return q;
-            if (t < Utils.TwoThirds) return p + (q - p) * (Utils.TwoThirds - t) * 6.0;
+            if (t < ColorUtils.TwoThirds) return p + (q - p) * (ColorUtils.TwoThirds - t) * 6.0;
             return p;
         }
         public override string ToString() => $"H: {H}, S: {S}, L: {L}";
@@ -184,21 +183,21 @@ namespace ColorInvestigation.Common.ColorSpaces
         }
         public HSV(RGB rgb)
         {
-            var max = Utils.threeway_max(rgb.R, rgb.G, rgb.B);
-            var min = Utils.threeway_min(rgb.R, rgb.G, rgb.B);
+            var max = ColorUtils.threeway_max(rgb.R, rgb.G, rgb.B);
+            var min = ColorUtils.threeway_min(rgb.R, rgb.G, rgb.B);
             var d = max - min;
             V = max;
-            S = Utils.is_equal(max, 0.0) ? 0.0 : d / max;
+            S = ColorUtils.is_equal(max, 0.0) ? 0.0 : d / max;
 
-            if (Utils.is_equal(max, min))
+            if (ColorUtils.is_equal(max, min))
                 H = 0.0; // achromatic
             else
             {
-                if (Utils.is_equal(max, rgb.R))
+                if (ColorUtils.is_equal(max, rgb.R))
                     H = (rgb.G - rgb.B) / d + (rgb.G < rgb.B ? 6.0 : 0.0);
-                else if (Utils.is_equal(max, rgb.G))
+                else if (ColorUtils.is_equal(max, rgb.G))
                     H = (rgb.B - rgb.R) / d + 2.0;
-                else if (Utils.is_equal(max, rgb.B))
+                else if (ColorUtils.is_equal(max, rgb.B))
                     H = (rgb.R - rgb.G) / d + 4.0;
                 H /= 6.0;
             }
@@ -269,9 +268,9 @@ namespace ColorInvestigation.Common.ColorSpaces
                 var g = x * -0.9689 + y * 1.8758 + z * 0.0415;
                 var b = x * 0.0557 + y * -0.2040 + z * 1.0570;
 
-                r = Utils.check_double(r > 0.0031308 ? 1.055 * Math.Pow(r, 1 / 2.4) - 0.055 : 12.92 * r);
-                g = Utils.check_double(g > 0.0031308 ? 1.055 * Math.Pow(g, 1 / 2.4) - 0.055 : 12.92 * g);
-                b = Utils.check_double(b > 0.0031308 ? 1.055 * Math.Pow(b, 1 / 2.4) - 0.055 : 12.92 * b);
+                r = ColorUtils.check_double(r > 0.0031308 ? 1.055 * Math.Pow(r, 1 / 2.4) - 0.055 : 12.92 * r);
+                g = ColorUtils.check_double(g > 0.0031308 ? 1.055 * Math.Pow(g, 1 / 2.4) - 0.055 : 12.92 * g);
+                b = ColorUtils.check_double(b > 0.0031308 ? 1.055 * Math.Pow(b, 1 / 2.4) - 0.055 : 12.92 * b);
 
                 return new RGB(r, g, b);
             }
@@ -341,7 +340,7 @@ namespace ColorInvestigation.Common.ColorSpaces
         private static XYZ XyzWhiteReference => new XYZ(95.047, 100.000, 108.883);
         private const double Epsilon = 216.0 / 24389.0; // Intent is 0.008856 = 216/24389
         private const double Kappa = 24389.0 / 27.0; // Intent is 903.3 = 24389/27
-        private static double CubicRoot(double n) => Math.Pow(n, Utils.OneThird);
+        private static double CubicRoot(double n) => Math.Pow(n, ColorUtils.OneThird);
         private static double PivotXyz(double n) => n > Epsilon ? CubicRoot(n) : (Kappa * n + 16) / 116;
     }
     #endregion

@@ -188,7 +188,7 @@ namespace ColorInvestigation.Common
             if (hsl != null)
             {
                 var color = hsl.RGB.Color;
-                var isDarkColor = Utils.IsDarkColor(color);
+                var isDarkColor = ColorUtils.IsDarkColor(color);
                 var newL = ColorConverterHelper.ConvertValue(hsl.L, parameter, _isSplit ? isDarkColor : (bool?) null);
                 if (newL.HasValue)
                 {
@@ -233,7 +233,7 @@ namespace ColorInvestigation.Common
             if (lab != null)
             {
                 var color = lab.RGB.Color;
-                var isDarkColor = Utils.IsDarkColor(color);
+                var isDarkColor = ColorUtils.IsDarkColor(color);
                 var newL = ColorConverterHelper.ConvertValue(lab.L / 100.0, parameter, _isSplit ? isDarkColor : (bool?)null);
                 if (newL.HasValue)
                 {
@@ -268,8 +268,8 @@ namespace ColorInvestigation.Common
 
             if (color.HasValue)
             {
-                var oldGrayLevel = Utils.GetGrayLevel(new RGB(color.Value)) / 255.0;
-                var isDarkColor = Utils.IsDarkColor(color.Value);
+                var oldGrayLevel = ColorUtils.GetGrayLevel(new RGB(color.Value)) / 255.0;
+                var isDarkColor = ColorUtils.IsDarkColor(color.Value);
                 var newGrayLevel = ColorConverterHelper.ConvertValue(oldGrayLevel, parameter, _isSplit ? isDarkColor : (bool?)null);
                 if (newGrayLevel.HasValue)
                 {

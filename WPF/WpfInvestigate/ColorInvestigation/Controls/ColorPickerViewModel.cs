@@ -54,8 +54,8 @@ namespace ColorInvestigation.Controls
             return _brushesCache[index];
         }
         public SolidColorBrush HueBrush => GetCacheBrush(0, new HSV(GetCC(6), 1, 1).RGB.Color);
-        public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, Utils.GetForegroundColor(Color));
-        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, Utils.GetForegroundColor(CurrentColor));
+        public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorUtils.GetForegroundColor(Color));
+        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorUtils.GetForegroundColor(CurrentColor));
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, new RGB(_oldColorData[0] / 255, _oldColorData[1] / 255, _oldColorData[2] / 255).Color);
         public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, new RGB(GetCC(0), GetCC(1), GetCC(2)).Color);
 
@@ -420,7 +420,7 @@ namespace ColorInvestigation.Controls
                     var yCbCr = new YCbCr(rgb);
 
                     var sb = new StringBuilder();
-                    sb.AppendLine("Gray level:" + FormatDouble(Utils.GetGrayLevel(rgb) * 100) + "%");
+                    sb.AppendLine("Gray level:" + FormatDouble(ColorUtils.GetGrayLevel(rgb) * 100) + "%");
                     sb.AppendLine("HEX:".PadRight(5) + rgb.Color);
                     sb.AppendLine(FormatInfoString("RGB", rgb.R * 255, rgb.G * 255, rgb.B * 255));
                     sb.AppendLine(FormatInfoString("HSL", hsl.H * 360, hsl.S * 100, hsl.L * 100));
@@ -468,7 +468,7 @@ namespace ColorInvestigation.Controls
             foreach (var tone in Tones)
             {
                 tone.Background.Color = tone.GetBackgroundHSL().RGB.Color;
-                tone.Foreground.Color = Utils.GetForegroundColor(tone.Background.Color);
+                tone.Foreground.Color = ColorUtils.GetForegroundColor(tone.Background.Color);
             }
 
             OnPropertiesChanged(nameof(Tones));

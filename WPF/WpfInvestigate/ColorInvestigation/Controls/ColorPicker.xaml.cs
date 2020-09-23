@@ -101,8 +101,8 @@ namespace ColorInvestigation.Controls
 
         public SolidColorBrush HueBrush => GetCacheBrush(0, new HSV(GetCC(6), 1, 1).RGB.Color);
 
-        public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, Utils.GetForegroundColor(Color));
-        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, Utils.GetForegroundColor(CurrentColor));
+        public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorUtils.GetForegroundColor(Color));
+        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorUtils.GetForegroundColor(CurrentColor));
 
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3,
             new RGB(_oldColorData[0] / 255, _oldColorData[1] / 255, _oldColorData[2] / 255).Color);
@@ -502,7 +502,7 @@ namespace ColorInvestigation.Controls
             {
                 tone.Background.Color = tone.GetBackgroundHSL().RGB.Color;
                 if (tone.GridColumn == 2)
-                    tone.Foreground.Color = Utils.GetForegroundColor(tone.Background.Color);
+                    tone.Foreground.Color = ColorUtils.GetForegroundColor(tone.Background.Color);
             }
 
             OnPropertiesChanged(nameof(Tones));

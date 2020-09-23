@@ -109,7 +109,7 @@ namespace ColorInvestigation.Controls
         {
             get
             {
-                _brushesCache[0].Color = Utils.GetForegroundColor(Color);
+                _brushesCache[0].Color = ColorUtils.GetForegroundColor(Color);
                 return _brushesCache[0];
             }
         }
@@ -125,7 +125,7 @@ namespace ColorInvestigation.Controls
         {
             get
             {
-                _brushesCache[2].Color = Utils.GetForegroundColor(CurrentColor);
+                _brushesCache[2].Color = ColorUtils.GetForegroundColor(CurrentColor);
                 return _brushesCache[2];
             }
         }
@@ -471,7 +471,7 @@ namespace ColorInvestigation.Controls
             {
                 tone.Background.Color = tone.GetBackgroundHSL().RGB.Color;
                 if (tone.GridColumn == 2)
-                    tone.Foreground.Color = Utils.GetForegroundColor(tone.Background.Color);
+                    tone.Foreground.Color = ColorUtils.GetForegroundColor(tone.Background.Color);
             }
 
             OnPropertiesChanged(nameof(Tones));
