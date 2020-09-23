@@ -69,7 +69,7 @@
     <Compile Include="Common\AnimationHelper.cs" />
     <Compile Include="Common\BindingProxy.cs" />
     <Compile Include="Common\ColorConverters.cs" />
-    <Compile Include="Common\ColorUtilities.cs" />
+    <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\DataTypeMetadata.cs" />
     <Compile Include="Controls\AdornerControl.cs" />
     <Compile Include="Controls\Calculator.xaml.cs">
