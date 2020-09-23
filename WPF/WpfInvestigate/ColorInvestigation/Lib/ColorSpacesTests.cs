@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
+using ColorInvestigation.Common;
+using ColorInvestigation.Controls;
 
 namespace ColorInvestigation.Lib
 {
@@ -20,10 +22,10 @@ namespace ColorInvestigation.Lib
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var hsl = ColorUtilities.ColorToHsl(color);
-                var hsv = ColorUtilities.ColorToHsv(color);
+                var hsl = new ColorSpaces.HSL(new ColorSpaces.RGB(color));
+                var hsv = new ColorSpaces.HSV(new ColorSpaces.RGB(color));
 
-                if (Math.Abs(hsl.Item1 - hsv.Item1) > 0.001)
+                if (Math.Abs(hsl.H - hsv.H) > 0.001)
                     throw new Exception("Check!!!");
             }
         }
@@ -35,16 +37,16 @@ namespace ColorInvestigation.Lib
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var hsl = ColorUtilities.ColorToHsl(color);
+                var hsl = new ColorSpaces.HSL(new ColorSpaces.RGB(color));
 
-                if (hsl.Item1 < MinX) MinX = hsl.Item1;
-                if (hsl.Item1 > MaxX) MaxX = hsl.Item1;
-                if (hsl.Item2 < MinY) MinY = hsl.Item2;
-                if (hsl.Item2 > MaxY) MaxY = hsl.Item2;
-                if (hsl.Item3 < MinZ) MinZ = hsl.Item3;
-                if (hsl.Item3 > MaxZ) MaxZ = hsl.Item3;
+                if (hsl.H < MinX) MinX = hsl.H;
+                if (hsl.H > MaxX) MaxX = hsl.H;
+                if (hsl.S < MinY) MinY = hsl.S;
+                if (hsl.S > MaxY) MaxY = hsl.S;
+                if (hsl.L < MinZ) MinZ = hsl.L;
+                if (hsl.L > MaxZ) MaxZ = hsl.L;
 
-                var backColor = ColorUtilities.HslToColor(hsl.Item1, hsl.Item2, hsl.Item3);
+                var backColor = hsl.GetRGB().Color;
                 if (color != backColor)
                     throw new Exception("Check!!!");
             }
@@ -57,16 +59,16 @@ namespace ColorInvestigation.Lib
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var hsv = ColorUtilities.ColorToHsv(color);
+                var hsv = new ColorSpaces.HSV(new ColorSpaces.RGB(color));
 
-                if (hsv.Item1 < MinX) MinX = hsv.Item1;
-                if (hsv.Item1 > MaxX) MaxX = hsv.Item1;
-                if (hsv.Item2 < MinY) MinY = hsv.Item2;
-                if (hsv.Item2 > MaxY) MaxY = hsv.Item2;
-                if (hsv.Item3 < MinZ) MinZ = hsv.Item3;
-                if (hsv.Item3 > MaxZ) MaxZ = hsv.Item3;
+                if (hsv.H < MinX) MinX = hsv.H;
+                if (hsv.H > MaxX) MaxX = hsv.H;
+                if (hsv.S < MinY) MinY = hsv.S;
+                if (hsv.S > MaxY) MaxY = hsv.S;
+                if (hsv.V < MinZ) MinZ = hsv.V;
+                if (hsv.V > MaxZ) MaxZ = hsv.V;
 
-                var backColor = ColorUtilities.HsvToColor(hsv.Item1, hsv.Item2, hsv.Item3);
+                var backColor = hsv.GetRGB().Color;
                 if (color != backColor)
                     throw new Exception("Check!!!");
             }
@@ -79,16 +81,16 @@ namespace ColorInvestigation.Lib
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var xyz = ColorUtilities.ColorToXyz(color);
+                var xyz = new ColorSpaces.XYZ(new ColorSpaces.RGB(color));
 
-                if (xyz.Item1 < MinX) MinX = xyz.Item1;
-                if (xyz.Item1 > MaxX) MaxX = xyz.Item1;
-                if (xyz.Item2 < MinY) MinY = xyz.Item2;
-                if (xyz.Item2 > MaxY) MaxY = xyz.Item2;
-                if (xyz.Item3 < MinZ) MinZ = xyz.Item3;
-                if (xyz.Item3 > MaxZ) MaxZ = xyz.Item3;
+                if (xyz.X < MinX) MinX = xyz.X;
+                if (xyz.X > MaxX) MaxX = xyz.X;
+                if (xyz.Y < MinY) MinY = xyz.Y;
+                if (xyz.Y > MaxY) MaxY = xyz.Y;
+                if (xyz.Z < MinZ) MinZ = xyz.Z;
+                if (xyz.Z > MaxZ) MaxZ = xyz.Z;
 
-                var backColor = ColorUtilities.XyzToColor(xyz.Item1, xyz.Item2, xyz.Item3);
+                var backColor = xyz.GetRGB().Color;
                 if (color != backColor)
                     throw new Exception("Check!!!");
             }
@@ -101,44 +103,41 @@ namespace ColorInvestigation.Lib
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var lab = ColorUtilities.ColorToLab(color);
+                var lab = new ColorSpaces.LAB(new ColorSpaces.RGB(color));
 
-                if (lab.Item1 < MinX) MinX = lab.Item1;
-                if (lab.Item1 > MaxX) MaxX = lab.Item1;
-                if (lab.Item2 < MinY) MinY = lab.Item2;
-                if (lab.Item2 > MaxY) MaxY = lab.Item2;
-                if (lab.Item3 < MinZ) MinZ = lab.Item3;
-                if (lab.Item3 > MaxZ) MaxZ = lab.Item3;
+                if (lab.L < MinX) MinX = lab.L;
+                if (lab.L > MaxX) MaxX = lab.L;
+                if (lab.A < MinY) MinY = lab.A;
+                if (lab.A > MaxY) MaxY = lab.A;
+                if (lab.B < MinZ) MinZ = lab.B;
+                if (lab.B > MaxZ) MaxZ = lab.B;
 
-                var backColor = ColorUtilities.LabToColor(lab.Item1, lab.Item2, lab.Item3);
+                var backColor = lab.GetRGB().Color;
                 if (color != backColor)
                     throw new Exception("Check!!!");
             }
         }
 
-        public static void YCbCrTest(ColorUtilities.YCbCrStandard yCbCrStandard)
+        public static void YCbCrTest(ColorSpaces.YCbCrStandard yCbCrStandard)
         {
             for (var r = 0; r < 256; r++)
             for (var g = 0; g < 256; g++)
             for (var b = 0; b < 256; b++)
             {
                 var color = Color.FromRgb((byte)r, (byte)g, (byte)b);
-                var yCbCr = ColorUtilities.ColorToYCbCr(color, yCbCrStandard);
+                var yCbCr = new ColorSpaces.YCbCr(new ColorSpaces.RGB(color), yCbCrStandard);
 
-                if (yCbCr.Item1 < MinX) MinX = yCbCr.Item1;
-                if (yCbCr.Item1 > MaxX) MaxX = yCbCr.Item1;
-                if (yCbCr.Item2 < MinY) MinY = yCbCr.Item2;
-                if (yCbCr.Item2 > MaxY) MaxY = yCbCr.Item2;
-                if (yCbCr.Item3 < MinZ) MinZ = yCbCr.Item3;
-                if (yCbCr.Item3 > MaxZ) MaxZ = yCbCr.Item3;
+                if (yCbCr.Y < MinX) MinX = yCbCr.Y;
+                if (yCbCr.Y > MaxX) MaxX = yCbCr.Y;
+                if (yCbCr.Cb < MinY) MinY = yCbCr.Cb;
+                if (yCbCr.Cb > MaxY) MaxY = yCbCr.Cb;
+                if (yCbCr.Cr < MinZ) MinZ = yCbCr.Cr;
+                if (yCbCr.Cr > MaxZ) MaxZ = yCbCr.Cr;
 
-                var backColor = ColorUtilities.YCbCrToColor(yCbCr.Item1, yCbCr.Item2, yCbCr.Item3, yCbCrStandard);
+                var backColor = yCbCr.GetRGB().Color;
                 if (color != backColor)
                     throw new Exception("Check!!!");
             }
         }
-
-
-
     }
 }

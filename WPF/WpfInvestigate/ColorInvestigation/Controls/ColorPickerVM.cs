@@ -55,29 +55,29 @@ namespace ColorInvestigation.Controls
                 new ColorComponent("RGB_B", this, 0, 255, null,
                     (k) => Color.FromRgb(CurrentColor.R, CurrentColor.G, Convert.ToByte(255 * k))),
                 new ColorComponent("HSL_H", this, 0, 360, "°",
-                    (k) => new ColorSpaces.HSL(k / 100.0, HSL_S.SpaceValue, HSL_L.SpaceValue).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSL(k / 100.0, HSL_S.SpaceValue, HSL_L.SpaceValue).GetRGB().Color),
                 new ColorComponent("HSL_S", this, 0, 100, "%",
-                    (k) => new ColorSpaces.HSL(HSL_H.SpaceValue, k / 100.0, HSL_L.SpaceValue).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSL(HSL_H.SpaceValue, k / 100.0, HSL_L.SpaceValue).GetRGB().Color),
                 new ColorComponent("HSL_L", this, 0, 100, "%",
-                    (k) => new ColorSpaces.HSL(HSL_H.SpaceValue,HSL_S.SpaceValue, k / 100.0).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSL(HSL_H.SpaceValue,HSL_S.SpaceValue, k / 100.0).GetRGB().Color),
                 new ColorComponent("HSV_H", this, 0, 360, "°",
-                    (k) => new ColorSpaces.HSV(k / 100.0, HSV_S.SpaceValue, HSV_V.SpaceValue).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSV(k / 100.0, HSV_S.SpaceValue, HSV_V.SpaceValue).GetRGB().Color),
                 new ColorComponent("HSV_S", this, 0, 100, "%",
-                    (k) => new ColorSpaces.HSV(HSV_H.SpaceValue, k / 100.0, HSV_V.SpaceValue).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSV(HSV_H.SpaceValue, k / 100.0, HSV_V.SpaceValue).GetRGB().Color),
                 new ColorComponent("HSV_V/B", this, 0, 100, "%",
-                    (k) => new ColorSpaces.HSV(HSV_H.SpaceValue, HSV_S.SpaceValue, k / 100.0).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.HSV(HSV_H.SpaceValue, HSV_S.SpaceValue, k / 100.0).GetRGB().Color),
                 new ColorComponent("LAB_L", this, 0, 100, null,
-                    (k) => new ColorSpaces.LAB(k, LAB_A.SpaceValue, LAB_B.SpaceValue).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.LAB(k, LAB_A.SpaceValue, LAB_B.SpaceValue).GetRGB().Color),
                 new ColorComponent("LAB_A", this, -127.5, 127.5, null,
-                    (k) => new ColorSpaces.LAB(LAB_L.SpaceValue, (k / 100.0 - 0.5) * 255, LAB_B.SpaceValue).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.LAB(LAB_L.SpaceValue, (k / 100.0 - 0.5) * 255, LAB_B.SpaceValue).GetRGB().Color),
                 new ColorComponent("LAB_B", this, -127.5, 127.5, null,
-                    (k) => new ColorSpaces.LAB(LAB_L.SpaceValue, LAB_A.SpaceValue, (k / 100.0 - 0.5) * 255).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.LAB(LAB_L.SpaceValue, LAB_A.SpaceValue, (k / 100.0 - 0.5) * 255).GetRGB().Color),
                 new ColorComponent("YCbCr_Y", this, 0, 255, null,
-                    (k) => new ColorSpaces.YCbCr(k / 100.0, YCbCr_Cb.SpaceValue, YCbCr_Cr.SpaceValue).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.YCbCr(k / 100.0, YCbCr_Cb.SpaceValue, YCbCr_Cr.SpaceValue).GetRGB().Color),
                 new ColorComponent("YCbCr_Cb", this, -127.5, 127.5, null,
-                    (k) => new ColorSpaces.YCbCr(YCbCr_Y.SpaceValue, k / 100.0 - 0.5, YCbCr_Cr.SpaceValue).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.YCbCr(YCbCr_Y.SpaceValue, k / 100.0 - 0.5, YCbCr_Cr.SpaceValue).GetRGB().Color),
                 new ColorComponent("YCbCr_Cr", this, -127.5, 127.5, null,
-                    (k) => new ColorSpaces.YCbCr(YCbCr_Y.SpaceValue, YCbCr_Cb.SpaceValue, k / 100.0 - 0.5).GetRGB().GetColor()),
+                    (k) => new ColorSpaces.YCbCr(YCbCr_Y.SpaceValue, YCbCr_Cb.SpaceValue, k / 100.0 - 0.5).GetRGB().Color),
                 new XYSlider("Alpha", (x, y) => UpdateUI()), 
                 new XYSlider("Hue", (x, y) => HSV_H.SetSpaceValue(y, true)),
                 new XYSlider("SaturationAndValue", (x, y) =>
@@ -127,7 +127,7 @@ namespace ColorInvestigation.Controls
             _brushesCache[index].Color = color;
             return _brushesCache[index];
         }
-        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(HSV_H.SpaceValue, 1, 1).GetRGB().GetColor());
+        public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(HSV_H.SpaceValue, 1, 1).GetRGB().Color);
         public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.GetForegroundColor(Color));
         public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.GetForegroundColor(CurrentColor));
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, Color.FromRgb(Color.R, Color.G, Color.B));
@@ -199,15 +199,15 @@ namespace ColorInvestigation.Controls
                 YCbCr_Cr.SetSpaceValue(yCbCr.Cr);
             }
 
+            HueSlider.SetProperties(0, HSV_H.SpaceValue, false);
+            SaturationAndValueSlider.SetProperties(HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue, false);
+
             UpdateUI();
             _isUpdating = false;
         }
 
         public override void UpdateUI()
         {
-            HueSlider.SetProperties(0, HSV_H.SpaceValue, false);
-            SaturationAndValueSlider.SetProperties(HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue, false);
-
             foreach (var component in Sliders)
               component.UpdateUI();
 
@@ -243,7 +243,9 @@ namespace ColorInvestigation.Controls
                 ((ColorComponent)Sliders[k]).SetSpaceValue(_oldColorData[k]);
             AlphaSlider.SetProperties(0, _oldColorData[ComponentNumber]);
             OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
-            UpdateUI();
+
+            HueSlider.SetProperties(0, HSV_H.SpaceValue, false);
+            SaturationAndValueSlider.SetProperties(HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue, true);
         }
         #endregion
 
@@ -389,7 +391,7 @@ namespace ColorInvestigation.Controls
             public override void UpdateUI()
             {
                 var hsl = GetBackgroundHSL();
-                Background.Color = hsl.GetRGB().GetColor();
+                Background.Color = hsl.GetRGB().Color;
                 Foreground.Color = ColorSpaces.GetForegroundColor(Background.Color);
                 OnPropertiesChanged(nameof(Background), nameof(Foreground), nameof(Info));
             }

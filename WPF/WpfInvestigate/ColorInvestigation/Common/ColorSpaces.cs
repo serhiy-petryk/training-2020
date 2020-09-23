@@ -51,7 +51,7 @@ namespace ColorInvestigation.Common
         {
             var hsv = new HSV(new RGB(color));
             hsv.H = hsv.H > 0.5 ? hsv.H - 0.5 : hsv.H + 0.5;
-            return hsv.GetRGB().GetColor();
+            return hsv.GetRGB().Color;
         }
 
         private const double DarkSplit = 0.582;
@@ -83,7 +83,7 @@ namespace ColorInvestigation.Common
                 R = color.R / 255.0; G = color.G / 255.0; B = color.B / 255.0;
             }
 
-            public Color GetColor(double alpha = 1.0) => Color.FromArgb(Convert.ToByte(alpha * 255),
+            public Color GetColor(double alpha) => Color.FromArgb(Convert.ToByte(alpha * 255),
                 Convert.ToByte(R * 255), Convert.ToByte(G * 255), Convert.ToByte(B * 255));
 
             public override string ToString() => $"R: {R}, G: {G}, B: {B}";
