@@ -391,7 +391,7 @@ namespace ColorInvestigation.Controls
                 var hsl = GetBackgroundHSL();
                 Background.Color = hsl.GetRGB().GetColor();
                 Foreground.Color = ColorSpaces.GetForegroundColor(Background.Color);
-                OnPropertiesChanged(nameof(Background), nameof(Foreground));
+                OnPropertiesChanged(nameof(Background), nameof(Foreground), nameof(Info));
             }
 
             public void SetCurrentColor() =>
