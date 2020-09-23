@@ -343,9 +343,10 @@ namespace ColorInvestigation.Common
 
             public double Y, Cb, Cr;
             public YCbCrStandard Standard = DefaultYCbCrStandard;
-            public YCbCr(double y, double cB, double cR)
+            public YCbCr(double y, double cB, double cR, YCbCrStandard standard = DefaultYCbCrStandard)
             {
                 Y = y; Cb = cB; Cr = cR;
+                Standard = standard;
             }
             public YCbCr(RGB rgb, YCbCrStandard standard = DefaultYCbCrStandard)
             {
