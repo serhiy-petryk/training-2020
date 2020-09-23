@@ -23,32 +23,32 @@ namespace ColorInvestigation.Views
 
         public static double HslToGray(Color color)
         {
-            var hsl = ColorUtilities.ColorToHsl(color);
-            return hsl.Item3;
+            var hsl = new ColorSpaces.HSL(new ColorSpaces.RGB(color));
+            return hsl.L;
         }
 
         public static double YCbCrBT601(Color color)
         {
-            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrStandard.BT601);
-            return yCbCr.Item1 / 255;
+            var yCbCr = new ColorSpaces.YCbCr(new ColorSpaces.RGB(color), ColorSpaces.YCbCrStandard.BT601);
+            return yCbCr.Y;
         }
 
         public static double YCbCrBT709(Color color)
         {
-            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrStandard.BT709);
-            return yCbCr.Item1 / 255;
+            var yCbCr = new ColorSpaces.YCbCr(new ColorSpaces.RGB(color), ColorSpaces.YCbCrStandard.BT709);
+            return yCbCr.Y;
         }
 
         public static double YCbCrBT2020(Color color)
         {
-            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrStandard.BT2020);
-            return yCbCr.Item1 / 255;
+            var yCbCr = new ColorSpaces.YCbCr(new ColorSpaces.RGB(color), ColorSpaces.YCbCrStandard.BT2020);
+            return yCbCr.Y;
         }
 
         public static double YCbCrMy(Color color)
         {
-            var yCbCr = ColorUtilities.ColorToYCbCr(color, ColorUtilities.YCbCrStandard.My);
-            return yCbCr.Item1 / 255;
+            var yCbCr = new ColorSpaces.YCbCr(new ColorSpaces.RGB(color), ColorSpaces.YCbCrStandard.My);
+            return yCbCr.Y;
         }
 
         private void UpdateData()
