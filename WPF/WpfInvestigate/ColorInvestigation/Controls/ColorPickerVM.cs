@@ -253,7 +253,7 @@ namespace ColorInvestigation.Controls
         #region ==============  Hue/SaturationAndValue Sliders  ============
         public class XYSlider : INotifyPropertyChangedAbstract
         {
-            public string Id { get; }
+            protected string Id { get; }
             public double xValue { get; private set; }
             public double yValue { get; private set; }
             public virtual double xSliderValue => SizeOfSlider.Width * xValue - SizeOfThumb.Width / 2;
@@ -297,8 +297,8 @@ namespace ColorInvestigation.Controls
                 get => _value;
                 set
                 {
-                    _value = Math.Max(Min, Math.Min(Max, value));
-                    _owner.UpdateValues(ColorSpace);
+                    _value = Math.Max(_min, Math.Min(_max, value));
+                    _owner.UpdateValues(_colorSpace);
                 }
             }
 
@@ -306,13 +306,12 @@ namespace ColorInvestigation.Controls
             public string ValueLabel { get; }
             public LinearGradientBrush BackgroundBrush { get; }
 
-            // private readonly string _id;
             private ColorPickerVM _owner;
             private readonly double _spaceMultiplier;
-            private readonly double Min;
-            private readonly double Max;
-            private ColorSpace ColorSpace;
-            private int _gradientCount => ColorSpace == ColorSpace.RGB ? 1 : 100;
+            private readonly double _min;
+            private readonly double _max;
+            private ColorSpace _colorSpace;
+            private int _gradientCount => _colorSpace == ColorSpace.RGB ? 1 : 100;
             private Func<int, Color> _backgroundGradient;
 
             public ColorComponent(string id, ColorPickerVM owner, double min, double max, string valueLabel = null,
@@ -320,12 +319,12 @@ namespace ColorInvestigation.Controls
             {
                 SetValuesAction = (x, y) => Value = xValue * _spaceMultiplier;
                 _owner = owner;
-                Min = min;
-                Max = max;
+                _min = min;
+                _max = max;
                 ValueLabel = valueLabel;
                 _backgroundGradient = backgroundGradient;
-                _spaceMultiplier = Id.StartsWith("LAB") ? 1 : Max - Min;
-                ColorSpace = (ColorSpace)Enum.Parse(typeof(ColorSpace), Id.Split('_')[0]);
+                _spaceMultiplier = Id.StartsWith("LAB") ? 1 : _max - _min;
+                _colorSpace = (ColorSpace)Enum.Parse(typeof(ColorSpace), Id.Split('_')[0]);
                 BackgroundBrush = new LinearGradientBrush(new GradientStopCollection(Enumerable.Range(0, _gradientCount + 1)
                     .Select(n => new GradientStop(Colors.Transparent, 1.0 * n / _gradientCount))));
             }
@@ -338,7 +337,7 @@ namespace ColorInvestigation.Controls
                 OnPropertiesChanged(nameof(xSliderValue), nameof(Value), nameof(BackgroundBrush));
             }
 
-            public override double xSliderValue => (SizeOfSlider.Width - SizeOfThumb.Width) * (Value - Min) / (Max - Min);
+            public override double xSliderValue => (SizeOfSlider.Width - SizeOfThumb.Width) * (Value - _min) / (_max - _min);
 
             public double SpaceValue => Value / _spaceMultiplier;
             public void SetSpaceValue(double value, bool updateUI = false)
