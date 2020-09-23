@@ -142,7 +142,7 @@ namespace ColorInvestigation.Controls
             toggleButton.IsChecked = false;
 
             var hsl = (element.DataContext as ColorPickerViewModel.ColorToneBox).GetBackgroundHSL();
-            VM.CurrentColor = hsl.GetRGB().GetColor();
+            VM.CurrentColor = hsl.RGB.Color;
 
             VM.SetCC(3, hsl.H, hsl.S, hsl.L);
 

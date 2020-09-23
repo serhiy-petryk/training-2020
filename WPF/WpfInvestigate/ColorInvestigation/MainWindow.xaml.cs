@@ -31,9 +31,9 @@ namespace ColorInvestigation
             var c21 = Color.FromRgb(169, 104, 54);
             var c22 = ColorUtilities.ColorToYCbCr(c21, ColorUtilities.YCbCrStandard.BT601);
             var c23 = ColorUtilities.YCbCrToColor(c22.Item1, c22.Item2, c22.Item3, ColorUtilities.YCbCrStandard.BT601);
-            ColorSpacesTests.YCbCrTest(ColorUtilities.YCbCrStandard.BT601);
-            ColorSpacesTests.YCbCrTest(ColorUtilities.YCbCrStandard.BT709);
-            ColorSpacesTests.YCbCrTest(ColorUtilities.YCbCrStandard.BT2020);
+            ColorSpacesTests.YCbCrTest(ColorSpaces.YCbCrStandard.BT601);
+            ColorSpacesTests.YCbCrTest(ColorSpaces.YCbCrStandard.BT709);
+            ColorSpacesTests.YCbCrTest(ColorSpaces.YCbCrStandard.BT2020);
 
 
             var a1 = ColorUtilities.ColorToXyz(Colors.White);

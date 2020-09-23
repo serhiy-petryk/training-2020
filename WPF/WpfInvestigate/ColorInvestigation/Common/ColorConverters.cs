@@ -145,8 +145,8 @@ namespace ColorInvestigation.Common
                 if (hsl != null)
                 {
                     if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return new ColorSpaces.HSL(hsl.H, hsl.S, newL / 100.0).GetRGB().Color;
-                    return new SolidColorBrush(new ColorSpaces.HSL(hsl.H, hsl.S, newL / 100.0).GetRGB().Color);
+                        return new ColorSpaces.HSL(hsl.H, hsl.S, newL / 100.0).RGB.Color;
+                    return new SolidColorBrush(new ColorSpaces.HSL(hsl.H, hsl.S, newL / 100.0).RGB.Color);
                 }
             }
 
@@ -186,14 +186,14 @@ namespace ColorInvestigation.Common
 
             if (hsl != null)
             {
-                var color = hsl.GetRGB().Color;
+                var color = hsl.RGB.Color;
                 var isDarkColor = ColorSpaces.IsDarkColor(color);
                 var newL = ColorConverterHelper.ConvertValue(hsl.L, parameter, _isSplit ? isDarkColor : (bool?) null);
                 if (newL.HasValue)
                 {
                     if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return new ColorSpaces.HSL(hsl.H, hsl.S, newL.Value).GetRGB().Color;
-                    return new SolidColorBrush(new ColorSpaces.HSL(hsl.H, hsl.S, newL.Value).GetRGB().Color);
+                        return new ColorSpaces.HSL(hsl.H, hsl.S, newL.Value).RGB.Color;
+                    return new SolidColorBrush(new ColorSpaces.HSL(hsl.H, hsl.S, newL.Value).RGB.Color);
                 }
             }
 
@@ -231,14 +231,14 @@ namespace ColorInvestigation.Common
 
             if (lab != null)
             {
-                var color = lab.GetRGB().Color;
+                var color = lab.RGB.Color;
                 var isDarkColor = ColorSpaces.IsDarkColor(color);
                 var newL = ColorConverterHelper.ConvertValue(lab.L / 100.0, parameter, _isSplit ? isDarkColor : (bool?)null);
                 if (newL.HasValue)
                 {
                     if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return new ColorSpaces.LAB(newL.Value * 100.0, lab.A, lab.B).GetRGB().Color;
-                    return new SolidColorBrush(new ColorSpaces.LAB(newL.Value * 100.0, lab.A, lab.B).GetRGB().Color);
+                        return new ColorSpaces.LAB(newL.Value * 100.0, lab.A, lab.B).RGB.Color;
+                    return new SolidColorBrush(new ColorSpaces.LAB(newL.Value * 100.0, lab.A, lab.B).RGB.Color);
                 }
             }
 

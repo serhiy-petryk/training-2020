@@ -51,7 +51,7 @@ namespace ColorInvestigation.Common
         {
             var hsv = new HSV(new RGB(color));
             hsv.H = hsv.H > 0.5 ? hsv.H - 0.5 : hsv.H + 0.5;
-            return hsv.GetRGB().Color;
+            return hsv.RGB.Color;
         }
 
         private const double DarkSplit = 0.582;
@@ -91,7 +91,6 @@ namespace ColorInvestigation.Common
         #endregion
 
         #region  ===========  HSL  ============
-
         public class HSL
         {
             public double H, S, L;
@@ -121,17 +120,21 @@ namespace ColorInvestigation.Common
                     H /= 6.0;
                 }
             }
-            public RGB GetRGB()
-            {
-                if (is_equal(S, 0.0))
-                    return new RGB(L, L, L); // achromatic
 
-                var q = L < 0.5 ? L * (1.0 + S) : L + S - L * S;
-                var p = 2.0 * L - q;
-                var r = hue2rgb(p, q, H + OneThird);
-                var g = hue2rgb(p, q, H);
-                var b = hue2rgb(p, q, H - OneThird);
-                return new RGB(r, g, b);
+            public RGB RGB
+            {
+                get
+                {
+                    if (is_equal(S, 0.0))
+                        return new RGB(L, L, L); // achromatic
+
+                    var q = L < 0.5 ? L * (1.0 + S) : L + S - L * S;
+                    var p = 2.0 * L - q;
+                    var r = hue2rgb(p, q, H + OneThird);
+                    var g = hue2rgb(p, q, H);
+                    var b = hue2rgb(p, q, H - OneThird);
+                    return new RGB(r, g, b);
+                }
             }
 
             private static double hue2rgb(double p, double q, double t)
@@ -178,26 +181,30 @@ namespace ColorInvestigation.Common
                 }
             }
 
-            public RGB GetRGB()
+            public RGB RGB
             {
-                var i = (int) (H * 6.0);
-                var f = H * 6.0 - i;
-                var p = V * (1.0 - S);
-                var q = V * (1.0 - f * S);
-                var t = V * (1.0 - (1.0 - f) * S);
-
-                switch (i % 6.0)
+                get
                 {
-                    case 0: return new RGB(V, t, p);
-                    case 1: return new RGB(q, V, p);
-                    case 2: return new RGB(p, V, t);
-                    case 3: return new RGB(p, q, V);
-                    case 4: return new RGB(t, p, V);
-                    case 5: return new RGB(V, p, q);
-                }
+                    var i = (int)(H * 6.0);
+                    var f = H * 6.0 - i;
+                    var p = V * (1.0 - S);
+                    var q = V * (1.0 - f * S);
+                    var t = V * (1.0 - (1.0 - f) * S);
 
-                throw new Exception("Unexpected error!!! Check HSV.GetRGB method");
+                    switch (i % 6.0)
+                    {
+                        case 0: return new RGB(V, t, p);
+                        case 1: return new RGB(q, V, p);
+                        case 2: return new RGB(p, V, t);
+                        case 3: return new RGB(p, q, V);
+                        case 4: return new RGB(t, p, V);
+                        case 5: return new RGB(V, p, q);
+                    }
+
+                    throw new Exception("Unexpected error!!! Check HSV.RGB property");
+                }
             }
+
             public override string ToString() => $"H: {H}, S: {S}, V: {V}";
         }
 
@@ -226,23 +233,27 @@ namespace ColorInvestigation.Common
                 Z = r * 0.0193 + g * 0.1192 + b * 0.9505;
             }
 
-            public RGB GetRGB()
+            public RGB RGB
             {
-                // (Observer = 2°, Illuminant = D65)
-                var x = X / 100.0;
-                var y = Y / 100.0;
-                var z = Z / 100.0;
+                get
+                {
+                    // (Observer = 2°, Illuminant = D65)
+                    var x = X / 100.0;
+                    var y = Y / 100.0;
+                    var z = Z / 100.0;
 
-                var r = x * 3.2406 + y * -1.5372 + z * -0.4986;
-                var g = x * -0.9689 + y * 1.8758 + z * 0.0415;
-                var b = x * 0.0557 + y * -0.2040 + z * 1.0570;
+                    var r = x * 3.2406 + y * -1.5372 + z * -0.4986;
+                    var g = x * -0.9689 + y * 1.8758 + z * 0.0415;
+                    var b = x * 0.0557 + y * -0.2040 + z * 1.0570;
 
-                r = check_double(r > 0.0031308 ? 1.055 * Math.Pow(r, 1 / 2.4) - 0.055 : 12.92 * r);
-                g = check_double(g > 0.0031308 ? 1.055 * Math.Pow(g, 1 / 2.4) - 0.055 : 12.92 * g);
-                b = check_double(b > 0.0031308 ? 1.055 * Math.Pow(b, 1 / 2.4) - 0.055 : 12.92 * b);
+                    r = check_double(r > 0.0031308 ? 1.055 * Math.Pow(r, 1 / 2.4) - 0.055 : 12.92 * r);
+                    g = check_double(g > 0.0031308 ? 1.055 * Math.Pow(g, 1 / 2.4) - 0.055 : 12.92 * g);
+                    b = check_double(b > 0.0031308 ? 1.055 * Math.Pow(b, 1 / 2.4) - 0.055 : 12.92 * b);
 
-                return new RGB(r, g, b);
+                    return new RGB(r, g, b);
+                }
             }
+
             public override string ToString() => $"X: {X}, Y: {Y}, Z: {Z}";
 
             private static double PivotRgb(double n) => (n > 0.04045 ? Math.Pow((n + 0.055) / 1.055, 2.4) : n / 12.92) * 100.0;
@@ -277,24 +288,29 @@ namespace ColorInvestigation.Common
                 B = 200 * (y - z);
             }
 
-            public RGB GetRGB() => GetXYZ().GetRGB();
+            public RGB RGB => XYZ.RGB;
 
-            public XYZ GetXYZ()
+            public XYZ XYZ
             {
-                var y = (L + 16.0) / 116.0;
-                var x = A / 500.0 + y;
-                var z = y - B / 200.0;
+                get
+                {
+                    {
+                        var y = (L + 16.0) / 116.0;
+                        var x = A / 500.0 + y;
+                        var z = y - B / 200.0;
 
-                var white = XyzWhiteReference;
-                var x3 = x * x * x;
-                var z3 = z * z * z;
+                        var white = XyzWhiteReference;
+                        var x3 = x * x * x;
+                        var z3 = z * z * z;
 
-                var xyzX = white.X * (x3 > Epsilon ? x3 : (x - 16.0 / 116.0) / 7.787);
-                var xyzY = white.Y * (L > (Kappa * Epsilon)
-                               ? Math.Pow(((L + 16.0) / 116.0), 3)
-                               : L / Kappa);
-                var xyzZ = white.Z * (z3 > Epsilon ? z3 : (z - 16.0 / 116.0) / 7.787);
-                return new XYZ(xyzX, xyzY, xyzZ);
+                        var xyzX = white.X * (x3 > Epsilon ? x3 : (x - 16.0 / 116.0) / 7.787);
+                        var xyzY = white.Y * (L > (Kappa * Epsilon)
+                                       ? Math.Pow(((L + 16.0) / 116.0), 3)
+                                       : L / Kappa);
+                        var xyzZ = white.Z * (z3 > Epsilon ? z3 : (z - 16.0 / 116.0) / 7.787);
+                        return new XYZ(xyzX, xyzY, xyzZ);
+                    }
+                }
             }
 
             public override string ToString() => $"L: {L}, A: {A}, B: {B}";
@@ -341,14 +357,19 @@ namespace ColorInvestigation.Common
                 Standard = standard;
             }
 
-            public RGB GetRGB()
+            public RGB RGB
             {
-                var kB = yCbCrMultipliers[(int)Standard, 0];
-                var kR = yCbCrMultipliers[(int)Standard, 1];
-                var r = Math.Min(1.0, Math.Max(0.0, Y + (1 - kR) / 0.5 * Cr));
-                var g = Math.Min(1.0, Math.Max(0.0, Y - 2 * kB * (1 - kB) / (1 - kB - kR) * Cb - 2 * kR * (1 - kR) / (1 - kB - kR) * Cr));
-                var b = Math.Min(1.0, Math.Max(0.0, Y + (1 - kB) / 0.5 * Cb));
-                return new RGB(r, g, b);
+                get
+                {
+                    var kB = yCbCrMultipliers[(int) Standard, 0];
+                    var kR = yCbCrMultipliers[(int) Standard, 1];
+                    var r = Math.Min(1.0, Math.Max(0.0, Y + (1 - kR) / 0.5 * Cr));
+                    var g = Math.Min(1.0,
+                        Math.Max(0.0,
+                            Y - 2 * kB * (1 - kB) / (1 - kB - kR) * Cb - 2 * kR * (1 - kR) / (1 - kB - kR) * Cr));
+                    var b = Math.Min(1.0, Math.Max(0.0, Y + (1 - kB) / 0.5 * Cb));
+                    return new RGB(r, g, b);
+                }
             }
 
             /// <summary>

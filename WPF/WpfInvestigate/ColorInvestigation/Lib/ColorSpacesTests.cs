@@ -46,7 +46,7 @@ namespace ColorInvestigation.Lib
                 if (hsl.L < MinZ) MinZ = hsl.L;
                 if (hsl.L > MaxZ) MaxZ = hsl.L;
 
-                var backColor = hsl.GetRGB().Color;
+                var backColor = hsl.RGB.Color;
                 if (color != backColor)
                     throw new Exception("Check!!!");
             }
@@ -68,7 +68,7 @@ namespace ColorInvestigation.Lib
                 if (hsv.V < MinZ) MinZ = hsv.V;
                 if (hsv.V > MaxZ) MaxZ = hsv.V;
 
-                var backColor = hsv.GetRGB().Color;
+                var backColor = hsv.RGB.Color;
                 if (color != backColor)
                     throw new Exception("Check!!!");
             }
@@ -90,7 +90,7 @@ namespace ColorInvestigation.Lib
                 if (xyz.Z < MinZ) MinZ = xyz.Z;
                 if (xyz.Z > MaxZ) MaxZ = xyz.Z;
 
-                var backColor = xyz.GetRGB().Color;
+                var backColor = xyz.RGB.Color;
                 if (color != backColor)
                     throw new Exception("Check!!!");
             }
@@ -112,7 +112,7 @@ namespace ColorInvestigation.Lib
                 if (lab.B < MinZ) MinZ = lab.B;
                 if (lab.B > MaxZ) MaxZ = lab.B;
 
-                var backColor = lab.GetRGB().Color;
+                var backColor = lab.RGB.Color;
                 if (color != backColor)
                     throw new Exception("Check!!!");
             }
@@ -134,7 +134,7 @@ namespace ColorInvestigation.Lib
                 if (yCbCr.Cr < MinZ) MinZ = yCbCr.Cr;
                 if (yCbCr.Cr > MaxZ) MaxZ = yCbCr.Cr;
 
-                var backColor = yCbCr.GetRGB().Color;
+                var backColor = yCbCr.RGB.Color;
                 if (color != backColor)
                     throw new Exception("Check!!!");
             }

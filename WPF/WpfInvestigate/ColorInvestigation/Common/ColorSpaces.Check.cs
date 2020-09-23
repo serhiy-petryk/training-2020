@@ -62,7 +62,7 @@ namespace ColorInvestigation.Common
             foreach (var color in testData)
             {
                 var rgb = new ColorSpaces.RGB(color);
-                var color2 = rgb.GetColor();
+                var color2 = rgb.Color;
                 if (color != color2)
                     throw new Exception($"CheckRGB error. Color: {color}. Color2: {color2}. RGB: {rgb}");
             }
@@ -77,7 +77,7 @@ namespace ColorInvestigation.Common
             {
                 var rgb = new ColorSpaces.RGB(color);
                 var hsl = new ColorSpaces.HSL(rgb);
-                var rgb2 = hsl.GetRGB();
+                var rgb2 = hsl.RGB;
                 if (!AreRGBEqual(rgb, rgb2))
                     throw new Exception($"CheckHSL error. Color: {color}. RGB: {rgb}. RGB2: {rgb2}");
             }
@@ -91,7 +91,7 @@ namespace ColorInvestigation.Common
             {
                 var rgb = new ColorSpaces.RGB(color);
                 var hsv = new ColorSpaces.HSV(rgb);
-                var rgb2 = hsv.GetRGB();
+                var rgb2 = hsv.RGB;
                 if (!AreRGBEqual(rgb, rgb2))
                     throw new Exception($"CheckHSV error. Color: {color}. RGB: {rgb}. RGB2: {rgb2}");
             }
@@ -105,7 +105,7 @@ namespace ColorInvestigation.Common
             {
                 var rgb = new ColorSpaces.RGB(color);
                 var xyz = new ColorSpaces.XYZ(rgb);
-                var color2 = xyz.GetRGB().GetColor();
+                var color2 = xyz.RGB.Color;
                 if (color != color2)
                     throw new Exception($"CheckXYZ error. Color: {color}. Color2: {color2}");
             }
@@ -135,7 +135,7 @@ namespace ColorInvestigation.Common
                 if (lab.A > maxA) maxA = lab.A;
                 if (lab.B > maxB) maxB = lab.B;
 
-                var color2 = lab.GetRGB().GetColor();
+                var color2 = lab.RGB.Color;
                 if (color != color2)
                     throw new Exception($"CheckLAB error. Color: {color}. Color2: {color2}");
             }
@@ -157,7 +157,7 @@ namespace ColorInvestigation.Common
             {
                 var rgb = new ColorSpaces.RGB(color);
                 var yCbCr = new ColorSpaces.YCbCr(rgb, yCbCrStandard);
-                var rgb2 = yCbCr.GetRGB();
+                var rgb2 = yCbCr.RGB;
                 if (!AreRGBEqual(rgb, rgb2))
                     throw new Exception($"CheckYCbCr error. Color: {color}. RGB: {rgb}. RGB2: {rgb2}. yCbCrStandard: {yCbCrStandard}");
             }
