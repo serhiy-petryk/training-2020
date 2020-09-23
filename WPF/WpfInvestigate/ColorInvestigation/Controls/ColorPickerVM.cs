@@ -19,8 +19,8 @@ namespace ColorInvestigation.Controls
 
         internal FrameworkElement Owner;
 
-        // need to duplicate Component because "Type ColorComponent[]' is not collection" error occurs
-        // for "Content={Binding Components[N]}" line of ColorPicker.xaml in VS designer
+        // need to duplicate Sliders because "Type ColorComponent[]' is not collection" error occurs
+        // for "Content={Binding Sliders[N]}" line of ColorPicker.xaml in VS designer
         // I tried to use Array, Collection<T>, List<T>, ReadOnlyCollection<T>, Dictionary<T,V>
         public ColorComponent RGB_R => (ColorComponent)Sliders[0];
         public ColorComponent RGB_G => (ColorComponent)Sliders[1];
@@ -97,8 +97,8 @@ namespace ColorInvestigation.Controls
         #region  ==============  Public Properties  ================
         public Color Color // Original color
         {
-            get => Color.FromArgb(Convert.ToByte(_oldColorData[_oldColorData.Length - 1] * 255),
-                Convert.ToByte(_oldColorData[0]), Convert.ToByte(_oldColorData[1]), Convert.ToByte(_oldColorData[2]));
+            get => Color.FromArgb(Convert.ToByte((1.0 - _oldColorData[_oldColorData.Length - 1]) * 255),
+                Convert.ToByte(_oldColorData[0] * 255), Convert.ToByte(_oldColorData[1] * 255), Convert.ToByte(_oldColorData[2] *255));
             set
             {
                 CurrentColor = value;
@@ -130,8 +130,8 @@ namespace ColorInvestigation.Controls
         public SolidColorBrush HueBrush => GetCacheBrush(0, new ColorSpaces.HSV(HSV_H.SpaceValue, 1, 1).GetRGB().GetColor());
         public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorSpaces.GetForegroundColor(Color));
         public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorSpaces.GetForegroundColor(CurrentColor));
-        public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, new ColorSpaces.RGB(_oldColorData[0] / 255, _oldColorData[1] / 255, _oldColorData[2] / 255).GetColor());
-        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, new ColorSpaces.RGB(RGB_R.SpaceValue, RGB_G.SpaceValue, RGB_B.SpaceValue).GetColor());
+        public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, Color.FromRgb(Color.R, Color.G, Color.B));
+        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, Color.FromRgb(CurrentColor.R, CurrentColor.G, CurrentColor.B));
         #endregion
 
         #region ==============  Update Values/UI  ===============
@@ -199,15 +199,15 @@ namespace ColorInvestigation.Controls
                 YCbCr_Cr.SetSpaceValue(yCbCr.Cr);
             }
 
-            HueSlider.SetProperties(0, HSV_H.SpaceValue, false);
-            SaturationAndValueSlider.SetProperties(HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue, false);
-
             UpdateUI();
             _isUpdating = false;
         }
 
         public override void UpdateUI()
         {
+            HueSlider.SetProperties(0, HSV_H.SpaceValue, false);
+            SaturationAndValueSlider.SetProperties(HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue, false);
+
             foreach (var component in Sliders)
               component.UpdateUI();
 
@@ -230,17 +230,20 @@ namespace ColorInvestigation.Controls
 
         internal void SaveColor()
         {
-            /*_oldColorData.CopyTo(_savedColorData, 0);
-            Array.Copy(_values, _oldColorData, ComponentNumber);
-            _oldColorData[_savedColorData.Length - 1] = Alpha;
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));*/
+            _oldColorData.CopyTo(_savedColorData, 0);
+            for (var k = 0; k < ComponentNumber; k++)
+                _oldColorData[k] = ((ColorComponent) Sliders[k]).SpaceValue;
+            _oldColorData[ComponentNumber] = AlphaSlider.yValue;
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
         }
         internal void RestoreColor()
         {
-            /*_savedColorData.CopyTo(_oldColorData, 0);
-            Array.Copy(_savedColorData, _values, ComponentNumber);
-            Alpha = _savedColorData[_savedColorData.Length - 1];
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));*/
+            _savedColorData.CopyTo(_oldColorData, 0);
+            for (var k = 0; k < ComponentNumber; k++)
+                ((ColorComponent)Sliders[k]).SetSpaceValue(_oldColorData[k]);
+            AlphaSlider.SetProperties(0, _oldColorData[ComponentNumber]);
+            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
+            UpdateUI();
         }
         #endregion
 
