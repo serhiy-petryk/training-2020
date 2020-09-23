@@ -19,8 +19,8 @@ namespace ColorInvestigation
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
-            var a32 = ColorUtilities.ColorToXyz(Color.FromRgb(0, 0, 0x9E));
-            var a42 = ColorUtilities.ColorToLab(Color.FromRgb(0, 0, 0x20));
+            var a32 = new ColorSpaces.XYZ(new ColorSpaces.RGB(Color.FromRgb(0, 0, 0x9E)));
+            var a42 = new ColorSpaces.LAB(new ColorSpaces.RGB(Color.FromRgb(0, 0, 0x20)));
             var rgb = new ColorSpaces.RGB(Color.FromRgb(0, 0, 0x20));
             var lab = new ColorSpaces.LAB(rgb);
             // ColorSpacesTests.HueTest();
@@ -29,17 +29,12 @@ namespace ColorInvestigation
             ColorSpacesTests.XyzTest();
 
             var c21 = Color.FromRgb(169, 104, 54);
-            var c22 = ColorUtilities.ColorToYCbCr(c21, ColorUtilities.YCbCrStandard.BT601);
-            var c23 = ColorUtilities.YCbCrToColor(c22.Item1, c22.Item2, c22.Item3, ColorUtilities.YCbCrStandard.BT601);
+            var c22 = new ColorSpaces.YCbCr(new ColorSpaces.RGB(c21), ColorSpaces.YCbCrStandard.BT601);
+            var c23 = c22.RGB.Color;
             ColorSpacesTests.YCbCrTest(ColorSpaces.YCbCrStandard.BT601);
             ColorSpacesTests.YCbCrTest(ColorSpaces.YCbCrStandard.BT709);
             ColorSpacesTests.YCbCrTest(ColorSpaces.YCbCrStandard.BT2020);
 
-
-            var a1 = ColorUtilities.ColorToXyz(Colors.White);
-            var a2 = ColorUtilities.XyzToColor(a1.Item1, a1.Item2, a1.Item3);
-            var a3 = ColorUtilities.XyzToColor(95.047, 100.000, 108.883);
-            var a31 = ColorUtilities.XyzToColor(95, 100.000, 109);
 
             // ColorXyz.Test(); // OK! 
             // ColorLab.Test(); // OK! 

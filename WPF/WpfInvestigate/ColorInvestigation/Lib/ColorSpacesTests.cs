@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Media;
 using ColorInvestigation.Common;
-using ColorInvestigation.Controls;
 
 namespace ColorInvestigation.Lib
 {
