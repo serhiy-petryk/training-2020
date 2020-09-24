@@ -58,23 +58,7 @@
     <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\FlatButtonConverters.cs" />
     <Compile Include="Common\INotifyPropertyChangedAbstract.cs" />
-    <Compile Include="Controls\ColorPickerVM.cs" />
     <Compile Include="Controls\ColorPickerViewModel.cs" />
-    <Compile Include="Controls\ColorPickerDT.xaml.cs">
-      <DependentUpon>ColorPickerDT.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ColorPickerVMAsync.xaml.cs">
-      <DependentUpon>ColorPickerVMAsync.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ColorPickerWithVM.xaml.cs">
-      <DependentUpon>ColorPickerWithVM.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ColorPickerLabel.xaml.cs">
-      <DependentUpon>ColorPickerLabel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ColorPickerAsync.xaml.cs">
-      <DependentUpon>ColorPickerAsync.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
@@ -105,26 +89,6 @@
     <Compile Include="Views\MonoChromatic.xaml.cs">
       <DependentUpon>MonoChromatic.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\ColorPickerDT.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ColorPickerVMAsync.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ColorPickerWithVM.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ColorPickerLabel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ColorPickerAsync.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\ColorPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

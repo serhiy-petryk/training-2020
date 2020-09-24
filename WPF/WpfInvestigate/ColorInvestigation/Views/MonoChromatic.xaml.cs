@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using ColorInvestigation.Common;
 using ColorInvestigation.Common.ColorSpaces;
 
 namespace ColorInvestigation.Views
