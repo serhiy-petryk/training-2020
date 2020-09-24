@@ -157,10 +157,5 @@ namespace ColorInvestigation.Controls
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            // Debug.Print($"ButtonBase_OnClick");
-        }
     }
 }
