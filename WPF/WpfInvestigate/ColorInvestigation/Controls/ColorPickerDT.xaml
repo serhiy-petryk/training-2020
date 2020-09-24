@@ -268,7 +268,6 @@
                                         <Border x:Name="ColorBoxBorder" Margin="0 0 8 8"  BorderThickness="2" CornerRadius="2"
                                                 BorderBrush="{Binding Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+70%}"
                                                 Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+0%}">
-                                            <!--                                            <Border Margin="0 0 8 8" Background="#FFDAEDF4" BorderBrush="#FF399CBD" BorderThickness="2" CornerRadius="2">-->
                                             <Border.Effect>
                                                 <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
                                             </Border.Effect>
