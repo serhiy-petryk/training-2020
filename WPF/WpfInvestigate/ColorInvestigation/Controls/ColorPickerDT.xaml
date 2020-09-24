@@ -17,6 +17,31 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
+        <Style x:Key="HslMonoStyle" TargetType="ButtonBase">
+            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ButtonBase">
+                        <Border x:Name="Border" CornerRadius="2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+50%}"/>
+                                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+50%}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background}"/>
+                                <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+30%}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+75%}"/>
+        </Style>
+
         <DataTemplate DataType="{x:Type controls:ColorPickerVM+XYSlider}">
             <Canvas Background="Transparent" MouseDown="Slider_MouseDown" MouseMove="Slider_MouseMove" MouseUp="Slider_MouseUp">
                 <Grid Height="12" Canvas.Top="{Binding ySliderValue}" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}">
@@ -221,11 +246,6 @@
                         </TextBox>
                     </Grid>
 
-                    <!--<Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="80" IsTabStop="True" Focusable="True"
-                            Click="ButtonBase_OnClick">
-                        <TextBlock Text="Known color table" TextWrapping="Wrap" TextAlignment="Center"/>
-                    </Button>-->
-
                     <TextBox Grid.Row="0" Grid.Column="2" Style="{StaticResource Label}" Text="{Binding Path=CurrentColorGrayLevel, Mode=OneWay, StringFormat=Gray level: {0:F1}%}" TextAlignment="Center"/>
 
                     <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Label}" Text="Shades" TextAlignment="Center"/>
@@ -236,14 +256,48 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid UseLayoutRounding="False" SnapsToDevicePixels="False">
-                                    <TextBox x:Name="ColorBox" Margin="0" Padding="0" BorderThickness="0"
+                                    <TextBox Margin="0" Padding="0" BorderThickness="0"
                                              IsReadOnly="True" Focusable="True" IsTabStop="False"
                                              VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                                              Background="{Binding Background, Delay=500}" Foreground="{Binding Foreground, Delay=500}"
                                              Text="{Binding Background, Mode=OneWay, Delay=500}">
                                     </TextBox>
-                                    <ToggleButton x:Name="ColorBoxToggleButton" IsThreeState="False" Margin="0" Padding="0" IsTabStop="False"
+                                    <ToggleButton IsThreeState="False" Margin="0" Padding="0" IsTabStop="False"
                                                   IsHitTestVisible="{Binding ElementName=ColorBoxPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}">
+
+                                        <Popup x:Name="ColorBoxPopup" AllowsTransparency="True" StaysOpen="False" Focusable="False"
+                                               PopupAnimation="Slide" Placement="Bottom"
+                                               PlacementTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}}"
+                                               IsOpen="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ToggleButton}}, Path=IsChecked}">
+                                            <Border x:Name="ColorBoxBorder" Margin="0 0 8 8"  BorderThickness="2" CornerRadius="2"
+                                                    BorderBrush="{Binding Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+70%}"
+                                                    Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+0%}">
+                                                <Border.Effect>
+                                                    <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
+                                                </Border.Effect>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Label x:Name="InfoHeader" Grid.Row="0" FontSize="12" FontWeight="SemiBold" Content="Color information"
+                                                       Background="{Binding Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+25%}"
+                                                       Foreground="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.InstanceWithSplit}, ConverterParameter=+85%}"/>
+                                                    <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" FontFamily="Courier New" Text="{Binding Info, Mode=OneWay}"
+                                                         Foreground="{Binding ElementName=ColorBoxBorder, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.InstanceWithSplit}, ConverterParameter=+85%}"
+                                                         SelectionBrush="{Binding ElementName=ColorBoxBorder, Path=BorderBrush}"/>
+                                                    <Button Grid.Row="2" BorderThickness="2" Margin="10" IsDefault="True"
+                                                        Background="{Binding ElementName=InfoHeader, Path=Background}"
+                                                        Style="{StaticResource HslMonoStyle}"
+                                                        Click="ColorBox_OnSetColor">
+                                                        <TextBlock Padding="4" TextAlignment="Center" FontWeight="SemiBold" TextWrapping="Wrap"
+                                                               Text="Click here to set the current color to this color" Width="120" />
+                                                    </Button>
+                                                </Grid>
+                                            </Border>
+                                        </Popup>
+
                                         <ToggleButton.Style>
                                             <Style TargetType="ToggleButton">
                                                 <Setter Property="BorderBrush" Value="{Binding Background, Delay=500}"/>
@@ -262,37 +316,6 @@
                                             </Style>
                                         </ToggleButton.Style>
                                     </ToggleButton>
-                                    <Popup x:Name="ColorBoxPopup" AllowsTransparency="True" StaysOpen="False" Focusable="False"
-                                           Placement="Bottom" PlacementTarget="{Binding ElementName=ColorBox}" PopupAnimation="Slide"
-                                           IsOpen="{Binding ElementName=ColorBoxToggleButton, Path=IsChecked}">
-                                        <Border x:Name="ColorBoxBorder" Margin="0 0 8 8"  BorderThickness="2" CornerRadius="2"
-                                                BorderBrush="{Binding Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+70%}"
-                                                Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+0%}">
-                                            <Border.Effect>
-                                                <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
-                                            </Border.Effect>
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <Label x:Name="InfoHeader" Grid.Row="0" FontSize="12" FontWeight="SemiBold" Content="Color information"
-                                                       Background="{Binding Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+20%}"/>
-                                                <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" FontFamily="Courier New" Text="{Binding Info, Mode=OneWay}"
-                                                         Foreground="{Binding ElementName=ColorBoxBorder, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.InstanceWithSplit}, ConverterParameter=+100%}"
-                                                         SelectionBrush="{Binding ElementName=ColorBoxBorder, Path=BorderBrush}"/>
-                                                <Button Grid.Row="2" BorderThickness="2" Margin="10" IsDefault="True"
-                                                        Background="{Binding ElementName=InfoHeader, Path=Background}"
-                                                        Foreground="{Binding ElementName=InfoHeader, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.InstanceWithSplit}, ConverterParameter=+100%}"
-                                                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                                                        Click="ColorBox_OnSetColor">
-                                                    <TextBlock Padding="4" TextAlignment="Center" FontWeight="SemiBold" TextWrapping="Wrap"
-                                                               Text="Click here to set the current color to this color" Width="120" />
-                                                </Button>
-                                            </Grid>
-                                        </Border>
-                                    </Popup>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
