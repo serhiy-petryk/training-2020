@@ -1,13 +1,13 @@
 ﻿// ToDo:
-// +5. StartUp color
-// ?7. Process value when mouse is clicked
-// 9. Known color: show name + hex (as popup)
-// - performance 20. Component Slider - change black/white color
-// - performance21. Component slider - like triangle
-// +22. Производительность - sliders:
-//     + - increase step (try ~20 gradient) 
-//      -or/and process only last mouse move / skip late mouse moves
-// 23. ViewModel + з прямими get/set (без формул) - ? propertyUpdate + getter caller name => CallerMemberName
+// 1. ColorBox for Color/CurrentColor.
+// 2. ToggleButton + popup
+//      may change layout to: ToggleButton -> Grid -> (ContentPresenter + Popup)
+//      зовнішній вигляд toggleButton = зовнішній вигляд Content
+// 3. Control with 4 tab:
+//      - mini size: RGB sliders
+//      - mini size: HSL sliders
+//      - middle size: current view
+//      - middle size with scroll: color boxes of known colors (140 items)
 
 using ColorInvestigation.Common;
 using System;
