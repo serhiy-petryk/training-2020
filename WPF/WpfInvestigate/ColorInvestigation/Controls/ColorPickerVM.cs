@@ -18,8 +18,6 @@ namespace ColorInvestigation.Controls
         internal enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
         internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
 
-        internal FrameworkElement Owner;
-
         // need to duplicate Sliders because "Type ColorComponent[]' is not collection" error occurs
         // for "Content={Binding Sliders[N]}" line of ColorPicker.xaml in VS designer
         // I tried to use Array, Collection<T>, List<T>, ReadOnlyCollection<T>, Dictionary<T,V>
@@ -213,14 +211,13 @@ namespace ColorInvestigation.Controls
             foreach (var component in Sliders)
                 component.UpdateUI();
 
-            Owner.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
             {
                 OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
                     nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColorGrayLevel));
                 foreach (var tone in Tones)
                     tone.UpdateUI();
             }));
-
         }
         #endregion
 

@@ -239,14 +239,14 @@
                                     <TextBox x:Name="ColorBox" Margin="0" Padding="0" BorderThickness="0"
                                              IsReadOnly="True" Focusable="True" IsTabStop="False"
                                              VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                             Background="{Binding Background, Delay=50}" Foreground="{Binding Foreground, Delay=50}"
-                                             Text="{Binding Background, Mode=OneWay, Delay=50}">
+                                             Background="{Binding Background, Delay=500}" Foreground="{Binding Foreground, Delay=500}"
+                                             Text="{Binding Background, Mode=OneWay, Delay=500}">
                                     </TextBox>
                                     <ToggleButton x:Name="ColorBoxToggleButton" IsThreeState="False" Margin="0" Padding="0" IsTabStop="False"
                                                   IsHitTestVisible="{Binding ElementName=ColorBoxPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}">
                                         <ToggleButton.Style>
                                             <Style TargetType="ToggleButton">
-                                                <Setter Property="BorderBrush" Value="{Binding Background, Delay=50}"/>
+                                                <Setter Property="BorderBrush" Value="{Binding Background, Delay=500}"/>
                                                 <Setter Property="Template">
                                                     <Setter.Value>
                                                         <ControlTemplate TargetType="ToggleButton">
@@ -256,7 +256,7 @@
                                                 </Setter>
                                                 <Style.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
+                                                        <Setter Property="BorderBrush" Value="{Binding Foreground, Delay=500}"/>
                                                     </Trigger>
                                                 </Style.Triggers>
                                             </Style>

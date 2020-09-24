@@ -32,7 +32,6 @@ namespace ColorInvestigation.Controls
         public ColorPickerDT()
         {
             InitializeComponent();
-            VM.Owner = this;
         }
 
         #region  ==============  User UI  ===========
