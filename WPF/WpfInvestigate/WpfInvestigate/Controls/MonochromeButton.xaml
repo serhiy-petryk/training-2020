@@ -19,7 +19,7 @@
                             <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+25%}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background}"/>
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+85%}"/>
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+25%}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
