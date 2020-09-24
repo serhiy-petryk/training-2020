@@ -280,7 +280,8 @@
                                                 <Label x:Name="InfoHeader" Grid.Row="0" FontSize="12" FontWeight="SemiBold" Content="Color information"
                                                        Background="{Binding Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+20%}"/>
                                                 <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" FontFamily="Courier New" Text="{Binding Info, Mode=OneWay}"
-                                                         Foreground="{Binding ElementName=ColorBoxBorder, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.InstanceWithSplit}, ConverterParameter=+100%}"/>
+                                                         Foreground="{Binding ElementName=ColorBoxBorder, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.InstanceWithSplit}, ConverterParameter=+100%}"
+                                                         SelectionBrush="{Binding ElementName=ColorBoxBorder, Path=BorderBrush}"/>
                                                 <Button Grid.Row="2" BorderThickness="2" Margin="10" IsDefault="True"
                                                         Background="{Binding ElementName=InfoHeader, Path=Background}"
                                                         Foreground="{Binding ElementName=InfoHeader, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.InstanceWithSplit}, ConverterParameter=+100%}"
