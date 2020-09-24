@@ -319,7 +319,7 @@ namespace ColorInvestigation.Controls
             public ColorComponent(string id, ColorPickerVM owner, double min, double max, string valueLabel = null,
                 Func<int, Color> backgroundGradient = null) : base(id, null)
             {
-                SetValuesAction = (x, y) => Value = xValue * _spaceMultiplier;
+                SetValuesAction = (x, y) => Value = xValue * (_max - _min) + _min;
                 _owner = owner;
                 _min = min;
                 _max = max;
