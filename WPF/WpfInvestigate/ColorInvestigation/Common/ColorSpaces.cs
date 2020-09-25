@@ -20,7 +20,6 @@ yCbCR (BT601, BT709, BT2020 standards): the YCbCr/YPbCb/YPrCr representation:
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Media;
 
 namespace ColorInvestigation.Common.ColorSpaces

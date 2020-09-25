@@ -13,7 +13,6 @@ using ColorInvestigation.Common;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -38,74 +37,28 @@ namespace ColorInvestigation.Controls
         }
 
         #region  ==============  User UI  ===========
-        #region ===========  DependencyProperty  =================
-        public static readonly DependencyProperty ColorBrush2Property = DependencyProperty.Register("ColorBrush2", typeof(SolidColorBrush),
-            typeof(ColorPicker), new PropertyMetadata(null));
-
-        public SolidColorBrush ColorBrush2
-        {
-            get => (SolidColorBrush)GetValue(ColorBrush2Property);
-            set => SetValue(ColorBrush2Property, value);
-        }
-        #endregion
-
         public Color Color  // Original color
         {
             get => VM.Color;
             set
             {
                 VM.Color = value;
-                // ColorBrush2 = new SolidColorBrush(value);
-                // OnPropertiesChanged(nameof(ColorBrush), nameof(ColorBrush2));
-
                 Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle,
-                    new Action(() =>
-                    {
-                        VM.Color = value;
-                        ColorBrush2 = new SolidColorBrush(value);
-                        _colorBrush = new SolidColorBrush();
-                        OnPropertiesChanged(nameof(ColorBrush), nameof(ColorBrush2));
-                    })); 
-
-                /*Task.Factory.StartNew(() =>
-                {
-                    OnPropertiesChanged(nameof(ColorBrush));
-                });
-                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
-                  new Action(() =>
-                  {
-                      OnPropertiesChanged(nameof(ColorBrush));
-                      Task.Factory.StartNew(() =>
-                      {
-                          OnPropertiesChanged(nameof(ColorBrush));
-                      });
-                  }));*/
-
+                    new Action(() => OnPropertiesChanged(nameof(ColorBrush))));
             }
         }
-
-        private SolidColorBrush _colorBrush = new SolidColorBrush(); 
-        public SolidColorBrush ColorBrush
-        {
-            get
-            {
-                _colorBrush.Color = Color;
-                return _colorBrush;
-            }
-        }
+        public SolidColorBrush ColorBrush => new SolidColorBrush(Color);
 
         public void SaveColor()
         {
             VM.SaveColor();
-            ColorBrush2 = new SolidColorBrush(Color);
-            OnPropertiesChanged(nameof(Color), nameof(ColorBrush), nameof(ColorBrush2));
+            OnPropertiesChanged(nameof(Color), nameof(ColorBrush));
         }
 
         public void RestoreColor()
         {
             VM.RestoreColor();
-            ColorBrush2 = new SolidColorBrush(Color);
-            OnPropertiesChanged(nameof(Color), nameof(ColorBrush), nameof(ColorBrush2));
+            OnPropertiesChanged(nameof(Color), nameof(ColorBrush));
         }
         #endregion
 
