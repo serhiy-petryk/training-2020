@@ -1,0 +1,31 @@
+﻿<Window x:Class="ColorInvestigation.Views.MonoChromeButtons"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MonoChromeButtons" Height="900" Width="950">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Grid.Row="0" Orientation="Horizontal" Margin="0 5">
+            <TextBlock x:Name="CurrentStyle" Margin="5 0" VerticalAlignment="Center"/>
+            <TextBlock Text="Digits show hsl components of background color and gray level" Margin="5 0" VerticalAlignment="Center"/>
+            <Button Click="OnMonoChromeStyleClick">Monochrome</Button>
+            <Button Click="OnHslMonoStyleClick">HslMonoStyle</Button>
+            <Button Click="OnColorPickerHslMonoStyleClick">ColorPicker HslMonoStyle</Button>
+            <Button Click="OnTestStyleClick">Test Style</Button>
+            <Button Click="OnTest2StyleClick">Test Style 2</Button>
+            <Button Click="OnCompareMonochromeClick">Compare Monochrome</Button>
+        </WrapPanel>
+
+        <ScrollViewer Grid.Row="1">
+            <WrapPanel x:Name="Panel" Orientation="Horizontal"></WrapPanel>
+        </ScrollViewer>
+    </Grid>
+
+</Window>

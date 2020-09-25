@@ -159,6 +159,7 @@
                 <Button Click="OnForegroundDiffButtonClick" Margin="5">Foreground difference</Button>
                 <Button Click="OnMonoChromaticButtonClick" Margin="5">MonoChromatic</Button>
                 <Button Click="OnColorPickerButtonClick" Margin="5">Color Picker</Button>
+                <Button Click="OnMonoChromeButtonsButtonClick" Margin="5">MonoChrome buttons</Button>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">

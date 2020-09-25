@@ -62,6 +62,7 @@
     <Compile Include="Controls\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DualPathToggleButtonEffect.cs" />
     <Compile Include="Lib\ColorSpacesTests.cs" />
     <Compile Include="Lib\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>
@@ -86,12 +87,19 @@
     <Compile Include="Views\GrayScaleDiff.xaml.cs">
       <DependentUpon>GrayScaleDiff.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MonoChromeButtons.xaml.cs">
+      <DependentUpon>MonoChromeButtons.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MonoChromatic.xaml.cs">
       <DependentUpon>MonoChromatic.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\ColorPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Lib\ButtonTestStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Lib\FlatButton.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -131,6 +139,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\GrayScaleDiff.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MonoChromeButtons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

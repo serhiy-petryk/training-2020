@@ -40,6 +40,7 @@ namespace ColorInvestigation
         private void OnForegroundDiffButtonClick(object sender, RoutedEventArgs e) => new ForegroundDiff().Show();
         private void OnMonoChromaticButtonClick(object sender, RoutedEventArgs e) => new MonoChromatic().Show();
         private void OnColorPickerButtonClick(object sender, RoutedEventArgs e) => new ColorPickerTests().Show();
+        private void OnMonoChromeButtonsButtonClick(object sender, RoutedEventArgs e) => new MonoChromeButtons().Show();
 
         private void OnChangeHueClick(object sender, RoutedEventArgs e)
         {
