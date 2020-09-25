@@ -37,8 +37,8 @@ namespace WpfInvestigate.Controls
                 var geometry = Tips.GeometryFromString(button.Content);
                 if (geometry != null)
                 {
-                    var path = new Path {Stretch = Stretch.Uniform, Data = geometry};
-                    button.Content = new Viewbox {Child = path};
+                    var path = new Path { Stretch = Stretch.Uniform, Data = geometry };
+                    button.Content = new Viewbox { Child = path };
                 }
 
                 button.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
@@ -74,7 +74,7 @@ namespace WpfInvestigate.Controls
             {
                 var brush = shape.Fill as SolidColorBrush;
                 if (brush == null || brush.IsFrozen || brush.IsSealed)
-                  shape.Fill = new SolidColorBrush();
+                    shape.Fill = new SolidColorBrush();
 
                 var ca = new ColorAnimation(color, AnimationHelper.SlowAnimationDuration);
                 shape.Fill.BeginAnimation(SolidColorBrush.ColorProperty, ca);
