@@ -15,9 +15,6 @@
         <WrapPanel Grid.Row="0" Orientation="Horizontal" Margin="0 5">
             <TextBlock Text="Digits show hsl components of background color and gray level" Margin="5 0" VerticalAlignment="Center"></TextBlock>
             <Button Click="OnHslMonoStyleClick">Mono style (HSL)</Button>
-            <Button Click="OnHslMonoStyle2Click">Mono style(50%) (HSL)</Button>
-            <Button Click="OnHslMonoStyle3Click">Mono style(30%) (HSL)</Button>
-            <Button Click="OnHslMonoStyle4Click">Mono style(75%) (HSL)</Button>
             <Button Click="OnBlackAndWhiteAbsoluteStyleClick">BlackAndWhite Absolute style (HSL)</Button>
             <Button Click="OnBlackAndWhiteRelativeStyleClick">BlackAndWhite Relative style (HSL)</Button>
             <Button Click="OnLabStyleClick">LAB style</Button>

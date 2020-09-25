@@ -34,62 +34,6 @@ namespace ColorInvestigation.Views
             if (wnd != null) wnd.Width = 950;
         }
 
-        private void OnHslMonoStyle2Click(object sender, RoutedEventArgs e)
-        {
-            Panel.Children.Clear();
-            var step = 10;
-            var style = Application.Current.TryFindResource("HslMonoStyle2") as Style;
-            for (var h = 0; h <= 100; h += step)
-            for (var s = 0; s <= 100; s += step)
-            for (var l = 0; l <= 100; l += step)
-            {
-                var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorUtils.GetGrayLevel(new RGB(back)));
-                var btn = new Button { Width = 80, Height = 25, Content = h * 3.6 + " " + s + " " + l + " " + grayLevel, Background = new SolidColorBrush(back), Style = style };
-                Panel.Children.Add(btn);
-            }
-            var wnd = GetWindow(this);
-            if (wnd != null) wnd.Width = 950;
-        }
-
-        private void OnHslMonoStyle3Click(object sender, RoutedEventArgs e)
-        {
-            Panel.Children.Clear();
-            var step = 10;
-            var style = Application.Current.TryFindResource("HslMonoStyle3") as Style;
-            for (var h = 0; h <= 100; h += step)
-            for (var s = 0; s <= 100; s += step)
-            for (var l = 0; l <= 100; l += step)
-            {
-                var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorUtils.GetGrayLevel(new RGB(back)));
-                var btn = new Button { Width = 80, Height = 25, Content = h * 3.6 + " " + s + " " + l + " " + grayLevel, Background = new SolidColorBrush(back), Style = style };
-                Panel.Children.Add(btn);
-            }
-            var wnd = GetWindow(this);
-            if (wnd != null) wnd.Width = 950;
-            MessageBox.Show("done");
-        }
-
-        private void OnHslMonoStyle4Click(object sender, RoutedEventArgs e)
-        {
-            Panel.Children.Clear();
-            var step = 10;
-            var style = Application.Current.TryFindResource("HslMonoStyle4") as Style;
-            for (var h = 0; h <= 100; h += step)
-            for (var s = 0; s <= 100; s += step)
-            for (var l = 0; l <= 100; l += step)
-            {
-                var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
-                var grayLevel = Convert.ToByte(ColorUtils.GetGrayLevel(new RGB(back)));
-                var btn = new Button { Width = 80, Height = 25, Content = h * 3.6 + " " + s + " " + l + " " + grayLevel, Background = new SolidColorBrush(back), Style = style };
-                Panel.Children.Add(btn);
-            }
-            var wnd = GetWindow(this);
-            if (wnd != null) wnd.Width = 950;
-            MessageBox.Show("done");
-        }
-
         private void OnBlackAndWhiteAbsoluteStyleClick(object sender, RoutedEventArgs e)
         {
             Panel.Children.Clear();
