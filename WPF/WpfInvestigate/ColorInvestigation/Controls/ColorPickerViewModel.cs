@@ -88,9 +88,9 @@ namespace ColorInvestigation.Controls
 
             const int numberOfTones = 11;
             Tones = new ColorToneBox[3 * numberOfTones];
-            for (var k1 = 0; k1 < 3; k1++)
+            /*for (var k1 = 0; k1 < 3; k1++)
                 for (var k2 = 0; k2 < numberOfTones; k2++)
-                    Tones[k2 + k1 * numberOfTones] = new ColorToneBox(this, k1, k2);
+                    Tones[k2 + k1 * numberOfTones] = new ColorToneBox(this, k1, k2);*/
         }
 
         #region  ==============  Public Properties  ================
@@ -216,7 +216,7 @@ namespace ColorInvestigation.Controls
                 OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
                     nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColorGrayLevel));
                 foreach (var tone in Tones)
-                    tone.UpdateUI();
+                    tone?.UpdateUI();
             }));
         }
         #endregion

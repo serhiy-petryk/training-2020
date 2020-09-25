@@ -16,11 +16,6 @@ namespace ColorInvestigation.Views
             InitializeComponent();
         }
 
-        private void OnMonoChromeStyleClick(object sender, RoutedEventArgs e)
-        {
-            SetStyle("MonochromeButtonStyle");
-        }
-
         private void SetStyle(string styleName)
         {
             Panel.Children.Clear();
@@ -86,6 +81,11 @@ namespace ColorInvestigation.Views
             CurrentStyle.Text = styleName1;
         }
 
+        private void OnMonoChromeStyleClick(object sender, RoutedEventArgs e)
+        {
+            SetStyle("MonochromeButtonStyle");
+        }
+
         private void OnHslMonoStyleClick(object sender, RoutedEventArgs e)
         {
             SetStyle("HslMonoStyle");
@@ -109,6 +109,11 @@ namespace ColorInvestigation.Views
         private void OnCompareMonochromeClick(object sender, RoutedEventArgs e)
         {
             CompareStyles("MonochromeButtonStyle", "WpfMonochromeButtonStyle");
+        }
+
+        private void OnMonoChromeSmallStyleClick(object sender, RoutedEventArgs e)
+        {
+            SetStyle("MonochromeSmallButtonStyle");
         }
     }
 }

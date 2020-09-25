@@ -182,6 +182,8 @@ namespace ColorInvestigation.Common
                     double.Parse(ss[1], Tips.InvariantCulture) / 360, 0);
             else if (value is Brush brush)
                 hsl = new HSL(new RGB(Tips.GetColorFromBrush(brush)));
+            else if (value is Color color)
+                hsl = new HSL(new RGB(color));
             else if (value is DependencyObject d)
                 hsl = new HSL(new RGB(Tips.GetActualBackgroundColor(d)));
 
