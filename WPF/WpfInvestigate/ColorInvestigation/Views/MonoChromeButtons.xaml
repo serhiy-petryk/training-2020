@@ -21,6 +21,7 @@
             <Button Click="OnColorPickerHslMonoStyleClick">ColorPicker HslMonoStyle</Button>
             <Button Click="OnTestStyleClick">Test Style</Button>
             <Button Click="OnTest2StyleClick">Test Style 2</Button>
+            <Button Click="OnTest3StyleClick">Test Style 3</Button>
             <Button Click="OnCompareMonochromeClick">Compare Monochrome</Button>
             <Button Click="OnMouseOverTestClick">OnMouseOverTest</Button>
             <Button Click="OnPressedTestClick">OnPressedTest</Button>

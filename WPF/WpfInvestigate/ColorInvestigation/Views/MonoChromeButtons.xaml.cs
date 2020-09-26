@@ -126,5 +126,10 @@ namespace ColorInvestigation.Views
         {
             SetStyle("OnPressedTestStyle");
         }
+
+        private void OnTest3StyleClick(object sender, RoutedEventArgs e)
+        {
+            SetStyle("TestColorStyle3");
+        }
     }
 }
