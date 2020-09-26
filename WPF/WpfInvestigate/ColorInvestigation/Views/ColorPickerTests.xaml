@@ -41,7 +41,8 @@
 
             <Grid>
                 <WrapPanel Grid.Row="0" Orientation="Horizontal">
-                    <Button Margin="5 0" BorderThickness="2" Style="{StaticResource TestColorStyle3}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}">
+                    <Button Width="100" Height="40" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
+                            Margin="5 0" BorderThickness="2" Style="{StaticResource TestColorStyle3}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}">
                         <StackPanel Orientation="Horizontal">
                             <Path Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
                             <TextBlock VerticalAlignment="Center" Margin="5 0" Text="TestColorStyle3"/>
