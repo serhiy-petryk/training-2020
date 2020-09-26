@@ -3,6 +3,78 @@
                     xmlns:local="clr-namespace:ColorInvestigation.Lib"
                     xmlns:common="clr-namespace:ColorInvestigation.Common">
 
+    <Style x:Key="TestColorStyle3" TargetType="ButtonBase">
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+75%}"/>
+        <!--<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background}"/>-->
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="baseControl">
+                        <ContentControl>
+                            <ContentControl.Resources>
+                                <Style TargetType="Path">
+                                    <Setter Property="Fill" Value="{Binding ElementName=baseControl, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+60%}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Fill" Value="{Binding ElementName=baseControl, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+85%}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}, Path=IsPressed}" Value="True">
+                                            <Setter Property="Fill" Value="{Binding ElementName=baseControl, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+60%}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ContentControl.Resources>
+                            <!--<ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+60%}"/>-->
+                            <!--<ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Content}"/>-->
+                                <ContentControl VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Content}"/>
+
+                            <!--<ContentControl.Content>
+                                <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}">
+                                    <ContentControl VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Content}"
+                                        Foreground="{Binding ElementName=Border, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+60%}">
+                                    </ContentControl>
+                                </Border>
+                            </ContentControl.Content>-->
+                        </ContentControl>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
+                            </Style>
+                        </Grid.Style>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="baseControl" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+25%}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="baseControl" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+40%}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
+                    <!-- not working <ControlTemplate.Triggers>
+                         <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{Binding ElementName=Border, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+60%}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>-->
+                    <!--<ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+60%}"/>
+                            <Setter Property="BorderBrush" Value="{Binding ElementName=Border, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+30%}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+25%}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+60%}"/>
+                            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+20%}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+60%}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>-->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="OnPressedTestStyle" TargetType="ButtonBase">
         <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+25%}"/>
         <Setter Property="Template">
