@@ -3,7 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:ColorInvestigation.Common">
 
-    <Style x:Key="MonochromeSmallButtonStyle" TargetType="Button">
+    <Style x:Key="MonochromeSmallButtonStyle" TargetType="ButtonBase">
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background}"/>
         <Setter Property="UseLayoutRounding" Value="True"/>

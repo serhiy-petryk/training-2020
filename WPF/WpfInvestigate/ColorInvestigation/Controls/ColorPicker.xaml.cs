@@ -43,8 +43,7 @@ namespace ColorInvestigation.Controls
             set
             {
                 VM.Color = value;
-                Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle,
-                    new Action(() => OnPropertiesChanged(nameof(ColorBrush))));
+                OnPropertiesChanged(nameof(ColorBrush));
             }
         }
         public SolidColorBrush ColorBrush => new SolidColorBrush(Color);

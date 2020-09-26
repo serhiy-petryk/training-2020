@@ -68,6 +68,7 @@ namespace ColorInvestigation.Lib
                         dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
                         dpd.AddValueChanged(button, SetColorsForShapes);
                     }
+                    OnBackgroundChanged(button, null);
                 }));
             }
         }
@@ -82,7 +83,7 @@ namespace ColorInvestigation.Lib
                 var stateGroup = (VisualStateManager.GetVisualStateGroups(buttonChild) as IList<VisualStateGroup>).FirstOrDefault(g => g.Name == "CommonStates");
                 stateGroup?.CurrentState.Storyboard.Begin(buttonChild);
                 // Refresh shapes colors
-                SetColorsForShapes(sender, e);
+                // SetColorsForShapes(sender, e);
             }
         }
 
@@ -109,13 +110,13 @@ namespace ColorInvestigation.Lib
             // var color = button.IsPressed ? Tips.GetActualBackgroundColor(button) : Tips.GetActualForegroundColor(button);
 
             var newColor = Tips.GetActualBackgroundColor(button);
-            if (button.IsPressed) { }
+            /*if (button.IsPressed) { }
             else if (button.IsMouseOver)
                 newColor = (Color)ColorHslBrush.InstanceWithSplit.Convert(button, typeof(Color), "+85%", null);
             else 
-                newColor = (Color)ColorHslBrush.InstanceWithSplit.Convert(button, typeof(Color), "+70%", null);
+                newColor = (Color)ColorHslBrush.InstanceWithSplit.Convert(button, typeof(Color), "+70%", null);*/
 
-            foreach (var shape in Tips.GetVisualChildren(button).OfType<Shape>())
+            /*foreach (var shape in Tips.GetVisualChildren(button).OfType<Shape>())
             {
                 var brush = shape.Fill as SolidColorBrush;
                 if (brush == null || brush.IsFrozen || brush.IsSealed)
@@ -131,7 +132,7 @@ namespace ColorInvestigation.Lib
                         shape.Stroke = new SolidColorBrush();
                     shape.Stroke.BeginAnimation(SolidColorBrush.ColorProperty, ca);
                 }
-            }
+            }*/
         }
         #endregion
     }
