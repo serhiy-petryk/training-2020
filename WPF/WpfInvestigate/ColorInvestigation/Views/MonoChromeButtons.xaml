@@ -22,6 +22,8 @@
             <Button Click="OnTestStyleClick">Test Style</Button>
             <Button Click="OnTest2StyleClick">Test Style 2</Button>
             <Button Click="OnCompareMonochromeClick">Compare Monochrome</Button>
+            <Button Click="OnMouseOverTestClick">OnMouseOverTest</Button>
+            <Button Click="OnPressedTestClick">OnPressedTest</Button>
         </WrapPanel>
 
         <ScrollViewer Grid.Row="1">

@@ -27,10 +27,11 @@ namespace ColorInvestigation.Views
             {
                 var back = new HSL(h / 100.0, s / 100.0, l / 100.0).RGB.Color;
                 var grayLevel = Convert.ToByte(ColorUtils.GetGrayLevel(new RGB(back)) * 100);
-                var btn = new Button
-                {
-                    Width = 80,
-                    Height = 25,
+                        var btn = new Button
+                        {
+                            Width = 80,
+                            Height = 25,
+                            Margin = new Thickness(3),
                     Content = h * 3.6 + " " + s + " " + l + " " + grayLevel,
                     Background = new SolidColorBrush(back),
                     BorderThickness = new Thickness(2),
@@ -39,7 +40,7 @@ namespace ColorInvestigation.Views
                 Panel.Children.Add(btn);
             }
             var wnd = GetWindow(this);
-            if (wnd != null) wnd.Width = 950;
+            if (wnd != null) wnd.Width = 1000;
             CurrentStyle.Text = styleName;
         }
 
@@ -114,6 +115,16 @@ namespace ColorInvestigation.Views
         private void OnMonoChromeSmallStyleClick(object sender, RoutedEventArgs e)
         {
             SetStyle("MonochromeSmallButtonStyle");
+        }
+
+        private void OnMouseOverTestClick(object sender, RoutedEventArgs e)
+        {
+            SetStyle("OnMouseOverTestStyle");
+        }
+
+        private void OnPressedTestClick(object sender, RoutedEventArgs e)
+        {
+            SetStyle("OnPressedTestStyle");
         }
     }
 }

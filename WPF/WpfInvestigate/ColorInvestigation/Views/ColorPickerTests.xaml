@@ -41,11 +41,23 @@
 
             <Grid>
                 <WrapPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button Margin="5 0" Content="1Test" Style="{StaticResource TestColorStyle2}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}"/>
+
+                    <Button Margin="5 0" Style="{StaticResource TestColorStyle2}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"
+                                Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                            <TextBlock VerticalAlignment="Center" Margin="5 0" Text="2Test button (no animate)"
+                                Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
                     <Button Margin="5 0" Style="{StaticResource MonochromeSmallButtonStyle}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}">
                         <StackPanel Orientation="Horizontal">
                             <Path Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"
                                   Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-                            <TextBlock VerticalAlignment="Center" Margin="5 0" Text="Test button (no animate)"
+                            <TextBlock VerticalAlignment="Center" Margin="5 0" Text="3Test button (no animate)"
                                        Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"/>
                         </StackPanel>
                     </Button>
