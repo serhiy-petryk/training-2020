@@ -1,0 +1,16 @@
+﻿
+What to do: see bootstrap in web.
+================================
+
+ToDo:
+====
+1. Corner radius:
+	? only for border
+2. 2 color elements (background + foreground) = like Flat button
+	check using property reflection
+	animated version
+3. Monochrome elements (background) 
+	animated version
+4. Success/info/warning/.. colors and brushes.
+5. Focus as adorner to any element
+
