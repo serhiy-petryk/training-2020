@@ -131,5 +131,10 @@ namespace ColorInvestigation.Views
         {
             SetStyle("TestColorStyle3");
         }
+
+        private void OnMonoChromeSmall1StyleClick(object sender, RoutedEventArgs e)
+        {
+            SetStyle("MonochromeSmallButtonStyle1");
+        }
     }
 }

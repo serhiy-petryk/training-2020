@@ -17,6 +17,7 @@
             <TextBlock Text="Digits show hsl components of background color and gray level" Margin="5 0" VerticalAlignment="Center"/>
             <Button Click="OnMonoChromeStyleClick">Monochrome</Button>
             <Button Click="OnMonoChromeSmallStyleClick">Monochrome small</Button>
+            <Button Click="OnMonoChromeSmall1StyleClick">Monochrome small 1</Button>
             <Button Click="OnHslMonoStyleClick">HslMonoStyle</Button>
             <Button Click="OnColorPickerHslMonoStyleClick">ColorPicker HslMonoStyle</Button>
             <Button Click="OnTestStyleClick">Test Style</Button>
