@@ -176,6 +176,50 @@
                 <Button Width="100" Height="30" Background="Black" Style="{StaticResource TestColorStyle}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Black button</Button>
             </StackPanel>
 
+            <StackPanel Orientation="Horizontal">
+                <Button Background="Aqua" BorderThickness="3" Padding="8" Template="{StaticResource MonochromeSmallButtonTemplate}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                            <TextBlock VerticalAlignment="Center" Margin="5 0" Text="Test"/>
+                        </StackPanel>
+                    </Button.Content>
+
+<!--                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentControl>
+                                    <ContentControl x:Name="CC" Content="{TemplateBinding Content}"
+                                                    Foreground="{Binding ConverterParameter=+70%, ElementName=Border, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}}">
+                                        <ContentControl.Resources>
+                                            <Style TargetType="Path">
+                                                <Setter Property="Fill" Value="{Binding ElementName=CC, Path=Foreground}"/>
+                                            </Style>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </ContentControl>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
+                                        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="{Binding ConverterParameter=+10, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}}"/>
+                                                <Setter Property="BorderBrush" Value="{Binding ConverterParameter=+30%, RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}}"/>
+                                            </Trigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPressed}" Value="True">
+                                                <Setter Property="Background" Value="{Binding ConverterParameter=+60%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}}"/>
+                                                <Setter Property="BorderBrush" Value="{Binding ConverterParameter=+20%, RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>-->
+                </Button>
+            </StackPanel>
+
         </StackPanel>
     </Grid>
 </Window>
