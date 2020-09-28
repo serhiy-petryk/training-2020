@@ -112,9 +112,9 @@ namespace ColorInvestigation.Lib
             var newColor = Tips.GetActualBackgroundColor(button);
             /*if (button.IsPressed) { }
             else if (button.IsMouseOver)
-                newColor = (Color)ColorHslBrush.InstanceWithSplit.Convert(button, typeof(Color), "+85%", null);
+                newColor = (Color)ColorHslBrush.Relative.Convert(button, typeof(Color), "+85%", null);
             else 
-                newColor = (Color)ColorHslBrush.InstanceWithSplit.Convert(button, typeof(Color), "+70%", null);*/
+                newColor = (Color)ColorHslBrush.Relative.Convert(button, typeof(Color), "+70%", null);*/
 
             /*foreach (var shape in Tips.GetVisualChildren(button).OfType<Shape>())
             {

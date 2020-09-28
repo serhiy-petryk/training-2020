@@ -28,18 +28,18 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+50%}"/>
-                                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+50%}"/>
+                                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+50%}"/>
+                                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+50%}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background}"/>
-                                <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+30%}"/>
+                                <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+30%}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+75%}"/>
+            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+75%}"/>
         </Style>
 
         <DataTemplate DataType="{x:Type controls:ColorPickerViewModel+XYSlider}">
@@ -270,8 +270,8 @@
                                                PlacementTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}}"
                                                IsOpen="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ToggleButton}}, Path=IsChecked}">
                                             <Border x:Name="ColorBoxBorder" Margin="0 0 8 8"  BorderThickness="2" CornerRadius="2"
-                                                    BorderBrush="{Binding Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+70%}"
-                                                    Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+0%}">
+                                                    BorderBrush="{Binding Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+70%}"
+                                                    Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Absolute}, ConverterParameter=+0%}">
                                                 <Border.Effect>
                                                     <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
                                                 </Border.Effect>
@@ -282,10 +282,10 @@
                                                         <RowDefinition Height="Auto"/>
                                                     </Grid.RowDefinitions>
                                                     <Label x:Name="InfoHeader" Grid.Row="0" FontSize="12" FontWeight="SemiBold" Content="Color information"
-                                                       Background="{Binding Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+25%}"
-                                                       Foreground="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.InstanceWithSplit}, ConverterParameter=+85%}"/>
+                                                       Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+25%}"
+                                                       Foreground="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.Relative}, ConverterParameter=+85%}"/>
                                                     <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" FontFamily="Courier New" Text="{Binding Info, Mode=OneWay}"
-                                                         Foreground="{Binding ElementName=ColorBoxBorder, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.InstanceWithSplit}, ConverterParameter=+85%}"
+                                                         Foreground="{Binding ElementName=ColorBoxBorder, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.Relative}, ConverterParameter=+85%}"
                                                          SelectionBrush="{Binding ElementName=ColorBoxBorder, Path=BorderBrush}"/>
                                                     <Button Grid.Row="2" BorderThickness="2" Margin="10" IsDefault="True"
                                                         Background="{Binding ElementName=InfoHeader, Path=Background}"
