@@ -177,7 +177,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <Button Background="Aqua" BorderThickness="3" Padding="8" Template="{StaticResource MonochromeSmallButtonTemplate}">
+                <Button Background="Aqua" BorderThickness="3" Padding="8">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Path Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
@@ -185,11 +185,11 @@
                         </StackPanel>
                     </Button.Content>
 
-<!--                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
+                   <Button.Template>
+                        <ControlTemplate TargetType="ButtonBase">
                             <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}">
                                 <ContentControl>
-                                    <ContentControl x:Name="CC" Content="{TemplateBinding Content}"
+                                    <ContentControl x:Name="CC" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
                                                     Foreground="{Binding ConverterParameter=+70%, ElementName=Border, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}}">
                                         <ContentControl.Resources>
                                             <Style TargetType="Path">
@@ -216,7 +216,7 @@
                                 </Border.Style>
                             </Border>
                         </ControlTemplate>
-                    </Button.Template>-->
+                    </Button.Template>
                 </Button>
             </StackPanel>
 
