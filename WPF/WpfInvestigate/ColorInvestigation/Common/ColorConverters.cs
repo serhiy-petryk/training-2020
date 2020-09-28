@@ -160,10 +160,10 @@ namespace ColorInvestigation.Common
 
     public class ColorHslBrush : IValueConverter
     {
-        public static ColorHslBrush Absolute = new ColorHslBrush();
-        public static ColorHslBrush Relative = new ColorHslBrush { _isRelative = true };
+        public static ColorHslBrush Instance = new ColorHslBrush();
+        public static ColorHslBrush NoSplit = new ColorHslBrush{_noSplit = true};
 
-        private bool _isRelative = false;
+        private bool _noSplit = false;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -191,7 +191,7 @@ namespace ColorInvestigation.Common
             {
                 var color = hsl.RGB.Color;
                 var isDarkColor = ColorUtils.IsDarkColor(color);
-                var newL = ColorConverterHelper.ConvertValue(hsl.L, parameter, _isRelative ? isDarkColor : (bool?) null);
+                var newL = ColorConverterHelper.ConvertValue(hsl.L, parameter, !_noSplit ? isDarkColor : (bool?) null);
                 if (newL.HasValue)
                 {
                     if (Tips.GetNotNullableType(targetType) == typeof(Color))
@@ -210,10 +210,10 @@ namespace ColorInvestigation.Common
 
     public class ColorLabBrush : IValueConverter
     {
-        public static ColorLabBrush Absolute = new ColorLabBrush();
-        public static ColorLabBrush Relative = new ColorLabBrush { _isRelative = true };
+        public static ColorLabBrush Instance = new ColorLabBrush();
+        public static ColorLabBrush NoSplit = new ColorLabBrush{_noSplit = true};
 
-        private bool _isRelative = false;
+        private bool _noSplit = false;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -236,7 +236,7 @@ namespace ColorInvestigation.Common
             {
                 var color = lab.RGB.Color;
                 var isDarkColor = ColorUtils.IsDarkColor(color);
-                var newL = ColorConverterHelper.ConvertValue(lab.L / 100.0, parameter, _isRelative ? isDarkColor : (bool?)null);
+                var newL = ColorConverterHelper.ConvertValue(lab.L / 100.0, parameter, !_noSplit ? isDarkColor : (bool?)null);
                 if (newL.HasValue)
                 {
                     if (Tips.GetNotNullableType(targetType) == typeof(Color))
@@ -255,10 +255,10 @@ namespace ColorInvestigation.Common
 
     public class ColorGrayScaleBrush : IValueConverter
     {
-        public static ColorGrayScaleBrush Absolute = new ColorGrayScaleBrush();
-        public static ColorGrayScaleBrush Relative = new ColorGrayScaleBrush { _isRelative = true };
+        public static ColorGrayScaleBrush Instance = new ColorGrayScaleBrush();
+        public static ColorGrayScaleBrush NoSplit = new ColorGrayScaleBrush{_noSplit = true};
 
-        private bool _isRelative = false;
+        private bool _noSplit = false;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -272,7 +272,7 @@ namespace ColorInvestigation.Common
             {
                 var oldGrayLevel = ColorUtils.GetGrayLevel(new RGB(color.Value)) / 255.0;
                 var isDarkColor = ColorUtils.IsDarkColor(color.Value);
-                var newGrayLevel = ColorConverterHelper.ConvertValue(oldGrayLevel, parameter, _isRelative ? isDarkColor : (bool?)null);
+                var newGrayLevel = ColorConverterHelper.ConvertValue(oldGrayLevel, parameter, !_noSplit ? isDarkColor : (bool?)null);
                 if (newGrayLevel.HasValue)
                 {
                     var newGrayValue = System.Convert.ToByte(newGrayLevel * 255.0);
