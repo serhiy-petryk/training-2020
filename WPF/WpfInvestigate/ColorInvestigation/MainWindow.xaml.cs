@@ -1,5 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using System.Windows.Threading;
 using ColorInvestigation.Common;
 using ColorInvestigation.Common.ColorSpaces;
 using ColorInvestigation.Lib;
@@ -48,6 +55,33 @@ namespace ColorInvestigation
             var aa1 = ((string)a1.Value).Split(new[] { " ", "," }, StringSplitOptions.RemoveEmptyEntries);
             var newHue = (int.Parse(aa1[0]) + 20) % 360;
             a1.Value = $"{newHue},{aa1[1]}";
+        }
+
+        private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var button = sender as ButtonBase;
+            if (button != null)
+            {
+                button.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+                {
+                    var dpd1 = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(Control));
+                    dpd1.AddValueChanged(button, OnBackgroundChanged);
+                    OnBackgroundChanged(button, null);
+                }));
+            }
+        }
+        private void OnBackgroundChanged(object sender, EventArgs e)
+        {
+            var button = sender as ButtonBase;
+            if (button != null)
+            {
+                // Refresh button colors
+                var buttonChild = VisualTreeHelper.GetChild(button, 0) as FrameworkElement;
+                var stateGroup = (VisualStateManager.GetVisualStateGroups(buttonChild) as IList<VisualStateGroup>).FirstOrDefault(g => g.Name == "CommonStates");
+                stateGroup?.CurrentState.Storyboard.Begin(buttonChild);
+                // Refresh shapes colors
+                // SetColorsForShapes(sender, e);
+            }
         }
 
     }

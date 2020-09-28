@@ -10,7 +10,7 @@ namespace ColorInvestigation.Common
 
     internal static class ColorConverterHelper
     {
-        internal static double? ConvertValue(double value, object parameter, bool? isUp = null)
+        internal static double ConvertValue(double value, object parameter, bool? isUp = null)
         {
             /* Process parameter of ColorHslBrush/ColorLabBrush/ColorGrayScaleBrush
              value is double in range [0-1.0]
@@ -107,7 +107,7 @@ namespace ColorInvestigation.Common
                     return result;
                 }
             }
-            return null;
+            return value;
         }
     }
 
@@ -189,15 +189,16 @@ namespace ColorInvestigation.Common
 
             if (hsl != null)
             {
-                var color = hsl.RGB.Color;
-                var isDarkColor = ColorUtils.IsDarkColor(color);
-                var newL = ColorConverterHelper.ConvertValue(hsl.L, parameter, !_noSplit ? isDarkColor : (bool?) null);
-                if (newL.HasValue)
+                foreach (var p in parameter.ToString().Split('/'))
                 {
-                    if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return new HSL(hsl.H, hsl.S, newL.Value).RGB.Color;
-                    return new SolidColorBrush(new HSL(hsl.H, hsl.S, newL.Value).RGB.Color);
+                    var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
+                    var newL = ColorConverterHelper.ConvertValue(hsl.L, p, !_noSplit ? isDarkColor : (bool?) null);
+                    hsl = new HSL(hsl.H, hsl.S, newL);
                 }
+
+                if (Tips.GetNotNullableType(targetType) == typeof(Color))
+                    return hsl.RGB.Color;
+                return new SolidColorBrush(hsl.RGB.Color);
             }
 
             if (Tips.GetNotNullableType(targetType) == typeof(Color))
@@ -237,12 +238,10 @@ namespace ColorInvestigation.Common
                 var color = lab.RGB.Color;
                 var isDarkColor = ColorUtils.IsDarkColor(color);
                 var newL = ColorConverterHelper.ConvertValue(lab.L / 100.0, parameter, !_noSplit ? isDarkColor : (bool?)null);
-                if (newL.HasValue)
-                {
-                    if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return new LAB(newL.Value * 100.0, lab.A, lab.B).RGB.Color;
-                    return new SolidColorBrush(new LAB(newL.Value * 100.0, lab.A, lab.B).RGB.Color);
-                }
+                if (Tips.GetNotNullableType(targetType) == typeof(Color))
+                    return new LAB(newL * 100.0, lab.A, lab.B).RGB.Color;
+                return new SolidColorBrush(new LAB(newL * 100.0, lab.A, lab.B).RGB.Color);
+
             }
 
             if (Tips.GetNotNullableType(targetType) == typeof(Color))
@@ -273,11 +272,8 @@ namespace ColorInvestigation.Common
                 var oldGrayLevel = ColorUtils.GetGrayLevel(new RGB(color.Value)) / 255.0;
                 var isDarkColor = ColorUtils.IsDarkColor(color.Value);
                 var newGrayLevel = ColorConverterHelper.ConvertValue(oldGrayLevel, parameter, !_noSplit ? isDarkColor : (bool?)null);
-                if (newGrayLevel.HasValue)
-                {
-                    var newGrayValue = System.Convert.ToByte(newGrayLevel * 255.0);
-                    return new SolidColorBrush(Color.FromRgb(newGrayValue, newGrayValue, newGrayValue));
-                }
+                var newGrayValue = System.Convert.ToByte(newGrayLevel * 255.0);
+                return new SolidColorBrush(Color.FromRgb(newGrayValue, newGrayValue, newGrayValue));
             }
 
             return Brushes.Transparent;
