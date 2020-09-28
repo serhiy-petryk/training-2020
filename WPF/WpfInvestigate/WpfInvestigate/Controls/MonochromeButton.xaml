@@ -15,18 +15,18 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+50%}"/>
-                            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+25%}"/>
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+50%}"/>
+                            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+25%}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+85%}"/>
-                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+25%}"/>
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+85%}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+25%}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+75%}"/>
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+75%}"/>
     </Style>
 
     <Style x:Key="MonochromeButtonStyle" TargetType="{x:Type ButtonBase}">
@@ -45,35 +45,35 @@
                         <Border.Resources>
                             <Storyboard x:Key="NormalState">
                                 <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+0%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+0%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+70%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+70%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+0%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+0%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                             </Storyboard>
                             <Storyboard x:Key="MouseOverState">
                                 <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+10}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+10}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+85%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+85%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+40%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+40%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                             </Storyboard>
                             <Storyboard x:Key="PressedState">
                                 <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+40%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+40%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+0%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+0%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+50%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+50%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                             </Storyboard>
                             <Storyboard x:Key="Disabled">
                                 <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+0%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+0%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+70%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+70%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color"
-                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.InstanceWithSplit}, ConverterParameter=+0%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Relative}, ConverterParameter=+0%}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                                 <DoubleAnimation To="0.35" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                             </Storyboard>
                         </Border.Resources>
