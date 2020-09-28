@@ -3,7 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:ColorInvestigation.Common">
 
-    <ControlTemplate x:Key="MonochromeSmallButtonTemplate" TargetType="Button">
+    <ControlTemplate x:Key="MonochromeSmallButtonTemplate" TargetType="ButtonBase">
         <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}">
             <ContentControl>
                 <ContentControl x:Name="CC" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
