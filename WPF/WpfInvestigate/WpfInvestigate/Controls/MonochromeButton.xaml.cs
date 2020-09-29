@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
@@ -35,6 +36,11 @@ namespace WpfInvestigate.Controls
                 if (geometry != null)
                 {
                     var path = new Path { Stretch = Stretch.Uniform, Data = geometry };
+                    var b = new Binding("Foreground")
+                    {
+                        RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ContentControl), 1)
+                    };
+                    path.SetBinding(Shape.FillProperty, b);
                     button.Content = new Viewbox { Child = path };
                 }
 
@@ -43,14 +49,16 @@ namespace WpfInvestigate.Controls
                     button.Unloaded += OnMonochromeButtonUnloaded;
                     var dpd1 = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(Control));
                     dpd1.AddValueChanged(button, OnBackgroundChanged);
-                    if (Tips.GetVisualChildren(button).Any(a => a is Shape))
+                    /*if (Tips.GetVisualChildren(button).Any(a => a is Shape))
                     {
-                        SetColorsForShapes(button, null);
+                        // SetColorsForShapes(button, null);
                         var dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
                         dpd.AddValueChanged(button, SetColorsForShapes);
                         dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
                         dpd.AddValueChanged(button, SetColorsForShapes);
-                    }
+                    }*/
+
+                    OnBackgroundChanged(button, null);
                 }));
             }
         }
@@ -65,7 +73,7 @@ namespace WpfInvestigate.Controls
                 var stateGroup = (VisualStateManager.GetVisualStateGroups(buttonChild) as IList<VisualStateGroup>).FirstOrDefault(g => g.Name == "CommonStates");
                 stateGroup?.CurrentState?.Storyboard.Begin(buttonChild);
                 // Refresh shapes colors
-                SetColorsForShapes(sender, e);
+                // SetColorsForShapes(sender, e);
             }
         }
 
@@ -76,11 +84,11 @@ namespace WpfInvestigate.Controls
             {
                 button.Loaded -= OnMonochromeButtonLoaded;
                 button.Unloaded -= OnMonochromeButtonUnloaded;
-                var dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
-                dpd.RemoveValueChanged(button, SetColorsForShapes);
-                dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(ButtonBase));
-                dpd.RemoveValueChanged(button, SetColorsForShapes);
-                dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(Control));
+                // var dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
+                //dpd.RemoveValueChanged(button, SetColorsForShapes);
+                //dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(ButtonBase));
+                // dpd.RemoveValueChanged(button, SetColorsForShapes);
+                var dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(Control));
                 dpd.RemoveValueChanged(button, OnBackgroundChanged);
             }
         }

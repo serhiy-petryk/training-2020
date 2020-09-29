@@ -56,7 +56,7 @@
                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                             Focusable="False" IsTabStop="False"
                                             UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
-                                            Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                            Content="{TemplateBinding Content}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
