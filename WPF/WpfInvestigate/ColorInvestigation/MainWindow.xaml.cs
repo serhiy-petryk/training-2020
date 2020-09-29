@@ -57,7 +57,7 @@ namespace ColorInvestigation
             a1.Value = $"{newHue},{aa1[1]}";
         }
 
-        private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
+        private void MonochromeTestButton_OnLoaded(object sender, RoutedEventArgs e)
         {
             var button = sender as ButtonBase;
             if (button != null)
@@ -78,11 +78,25 @@ namespace ColorInvestigation
                 // Refresh button colors
                 var buttonChild = VisualTreeHelper.GetChild(button, 0) as FrameworkElement;
                 var stateGroup = (VisualStateManager.GetVisualStateGroups(buttonChild) as IList<VisualStateGroup>).FirstOrDefault(g => g.Name == "CommonStates");
-                stateGroup?.CurrentState.Storyboard.Begin(buttonChild);
+                stateGroup?.CurrentState?.Storyboard.Begin(buttonChild);
                 // Refresh shapes colors
                 // SetColorsForShapes(sender, e);
             }
         }
 
+        private void ChangeColor_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (((SolidColorBrush)AA.Background).Color == Colors.Blue)
+                AA.Background = new SolidColorBrush(Colors.Green);
+            else
+                AA.Background = new SolidColorBrush(Colors.Blue);
+        }
+
+        private void PART_Border_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var aa1 = Tips.GetVisualParents(sender as FrameworkElement);
+            //
+            // throw new NotImplementedException();
+        }
     }
 }

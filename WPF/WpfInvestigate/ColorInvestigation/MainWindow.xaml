@@ -177,7 +177,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <Button Background="Aqua" BorderThickness="3" Padding="8">
+                <Button x:Name="AA" Background="Aqua" BorderThickness="3" Padding="8">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Path Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
@@ -187,9 +187,10 @@
 
                    <Button.Template>
                         <ControlTemplate TargetType="ButtonBase">
-                            <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" UseLayoutRounding="True">
                                 <ContentControl>
                                     <ContentControl x:Name="CC" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
+                                                    UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                     Foreground="{Binding ConverterParameter=+70%, ElementName=Border, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}">
                                         <ContentControl.Resources>
                                             <Style TargetType="Path">
@@ -219,8 +220,8 @@
                     </Button.Template>
                 </Button>
 
-                <Button Background="Aqua" BorderThickness="3" Padding="8"
-                        Loaded="FrameworkElement_OnLoaded">
+                <Button x:Name="AA1" Background="Aqua" BorderThickness="3" Padding="8"
+                        Loaded="MonochromeTestButton_OnLoaded">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Path Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
@@ -229,17 +230,14 @@
                     </Button.Content>
                     <Button.Template>
                         <ControlTemplate TargetType="ButtonBase">
-                            <Border x:Name="PART_Border" Background="Transparent" BorderThickness="{TemplateBinding BorderThickness}" UseLayoutRounding="True">
-                                <Border.BorderBrush>
-                                    <SolidColorBrush x:Name="PART_BorderBrush"/>
-                                </Border.BorderBrush>
+                            <Border x:Name="PART_Border" Background="Transparent" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" UseLayoutRounding="True" SnapsToDevicePixels="True">
                                 <Border.Resources>
                                     <Storyboard x:Key="NormalState">
                                         <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+0%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
                                         <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+70%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
-                                        <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color"
+                                        <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+0%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
                                     </Storyboard>
                                     <Storyboard x:Key="MouseOverState">
@@ -247,7 +245,7 @@
                                                 To="{Binding ConverterParameter=+10, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
                                         <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+10/+70%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
-                                        <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color"
+                                        <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+10/+30%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
                                     </Storyboard>
                                     <Storyboard x:Key="PressedState">
@@ -255,7 +253,7 @@
                                                 To="{Binding ConverterParameter=+60%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
                                         <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+60%/+70%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
-                                        <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color"
+                                        <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+60%/+20%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
                                     </Storyboard>
                                     <Storyboard x:Key="Disabled">
@@ -263,7 +261,7 @@
                                                 To="{Binding ConverterParameter=+0%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
                                         <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+70%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
-                                        <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color"
+                                        <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+0%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
                                         <DoubleAnimation To="0.35" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
                                     </Storyboard>
@@ -298,6 +296,8 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
+
+                <Button Content="Change Color" Click="ChangeColor_OnClick" Margin="5 0"/>
 
             </StackPanel>
 
