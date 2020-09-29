@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 using ColorInvestigation.Common;
 using ColorInvestigation.Common.ColorSpaces;
@@ -62,6 +63,13 @@ namespace ColorInvestigation
             var button = sender as ButtonBase;
             if (button != null)
             {
+                var geometry = Tips.GeometryFromString(button.Content);
+                if (geometry != null)
+                {
+                    var path = new Path { Stretch = Stretch.Uniform, Data = geometry };
+                    button.Content = new Viewbox { Child = path };
+                }
+
                 button.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
                 {
                     var dpd1 = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(Control));
@@ -90,13 +98,6 @@ namespace ColorInvestigation
                 AA.Background = new SolidColorBrush(Colors.Green);
             else
                 AA.Background = new SolidColorBrush(Colors.Blue);
-        }
-
-        private void PART_Border_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            var aa1 = Tips.GetVisualParents(sender as FrameworkElement);
-            //
-            // throw new NotImplementedException();
         }
     }
 }

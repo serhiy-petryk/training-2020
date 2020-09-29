@@ -97,20 +97,24 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
 
-                        <ContentControl>
-                            <ContentControl x:Name="PART_Content" Margin="{TemplateBinding Padding}"
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            Focusable="False" IsTabStop="False"
-                                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                            Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}">
-                                <ContentControl.Resources>
-                                    <Style TargetType="Path">
-                                        <Setter Property="Fill" Value="{Binding ElementName=PART_Content, Path=Foreground}"/>
-                                    </Style>
-                                </ContentControl.Resources>
-                            </ContentControl>
+                        <ContentControl x:Name="PART_Content" Margin="{TemplateBinding Padding}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Focusable="False" IsTabStop="False"
+                                        UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentControl.Content>
+                                <ContentControl Content="{TemplateBinding Content}"/>
+                            </ContentControl.Content>
+                            <ContentControl.Resources>
+                                <Style TargetType="Path">
+                                    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"/>
+                                </Style>
+                                <Style TargetType="Line">
+                                    <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"/>
+                                </Style>
+                            </ContentControl.Resources>
                         </ContentControl>
+
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -187,6 +191,19 @@
                     <Grid Width="10" Height="10">
                         <Line StrokeThickness="2" X1="0" X2="10" Y1="0" Y2="10" />
                         <Line StrokeThickness="2" X1="0" X2="10" Y1="10" Y2="0" />
+                    </Grid>
+                </Viewbox>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MonochromeAnimatedClearButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource MonochromeAnimatedButtonStyle}" x:Shared="False">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Viewbox UseLayoutRounding="False">
+                    <Grid Width="10" Height="10">
+                        <Line StrokeThickness="2" X1="0" X2="10" Y1="0" Y2="10"/>
+                        <Line StrokeThickness="2" X1="0" X2="10" Y1="10" Y2="0"/>
                     </Grid>
                 </Viewbox>
             </Setter.Value>

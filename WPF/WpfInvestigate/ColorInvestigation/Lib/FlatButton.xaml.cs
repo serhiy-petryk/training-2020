@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -51,6 +52,11 @@ namespace ColorInvestigation.Lib
                 if (geometry != null)
                 {
                     var path = new Path {Stretch = Stretch.Uniform, Data = geometry};
+                    var b = new Binding("Foreground")
+                    {
+                        RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ContentControl), 1)
+                    };
+                    path.SetBinding(Shape.FillProperty, b);
                     button.Content = new Viewbox {Child = path};
                 }
 
@@ -59,14 +65,14 @@ namespace ColorInvestigation.Lib
                     button.Unloaded += OnFlatButtonUnloaded;
                     var dpd1 = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(Control));
                     dpd1.AddValueChanged(button, OnBackgroundChanged);
-                    if (Tips.GetVisualChildren(button).Any(a => a is Shape))
+                    /*if (Tips.GetVisualChildren(button).Any(a => a is Shape))
                     {
                         SetColorsForShapes(button, null);
                         var dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
                         dpd.AddValueChanged(button, SetColorsForShapes);
                         dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
                         dpd.AddValueChanged(button, SetColorsForShapes);
-                    }
+                    }*/
                     OnBackgroundChanged(button, null);
                 }));
             }
@@ -93,11 +99,11 @@ namespace ColorInvestigation.Lib
             {
                 button.Loaded -= OnFlatButtonLoaded;
                 button.Unloaded -= OnFlatButtonUnloaded;
-                var dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
-                dpd.RemoveValueChanged(button, SetColorsForShapes);
-                dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(ButtonBase));
-                dpd.RemoveValueChanged(button, SetColorsForShapes);
-                dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(Control));
+                // var dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
+                // dpd.RemoveValueChanged(button, SetColorsForShapes);
+                // dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(ButtonBase));
+                // dpd.RemoveValueChanged(button, SetColorsForShapes);
+                var dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(Control));
                 dpd.RemoveValueChanged(button, OnBackgroundChanged);
             }
         }

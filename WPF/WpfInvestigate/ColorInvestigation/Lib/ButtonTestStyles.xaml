@@ -310,17 +310,4 @@
         <Setter Property="Foreground" Value="{Binding ConverterParameter=+75%, RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorLabBrush.Instance}}"/>
     </Style>
 
-    <Style x:Key="ClearButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource MonochromeAnimatedButtonStyle}" x:Shared="False">
-        <Setter Property="Content">
-            <Setter.Value>
-                <Viewbox UseLayoutRounding="False">
-                    <Grid Width="10" Height="10">
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="0" Y2="10" />
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="10" Y2="0" />
-                    </Grid>
-                </Viewbox>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
 </ResourceDictionary>
