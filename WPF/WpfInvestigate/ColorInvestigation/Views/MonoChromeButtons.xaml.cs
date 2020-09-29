@@ -84,7 +84,7 @@ namespace ColorInvestigation.Views
 
         private void OnMonoChromeAnimatedStyleClick(object sender, RoutedEventArgs e)
         {
-            SetStyle("MonochromeButtonAnimatedStyle");
+            SetStyle("MonochromeAnimatedButtonStyle");
         }
 
         private void OnHslMonoStyleClick(object sender, RoutedEventArgs e)

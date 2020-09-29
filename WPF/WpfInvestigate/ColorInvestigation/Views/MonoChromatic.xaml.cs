@@ -114,7 +114,7 @@ namespace ColorInvestigation.Views
         {
             Panel.Children.Clear();
             var step = 10;
-            var style = Application.Current.TryFindResource("MonochromeButtonAnimatedStyle") as Style;
+            var style = Application.Current.TryFindResource("MonochromeAnimatedButtonStyle") as Style;
             for (var h = 0; h <= 100; h += step)
             for (var s = 0; s <= 100; s += step)
             for (var l = 0; l <= 100; l += step)

@@ -41,7 +41,7 @@
         <Setter Property="Template" Value="{StaticResource MonochromeButtonTemplate}"/>
     </Style>
 
-    <Style x:Key="MonochromeButtonAnimatedStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MonochromeAnimatedButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="0"/>
         <!-- Can't use binding for background because there is VS Designer error -->
         <Setter Property="Background" Value="Transparent"/>

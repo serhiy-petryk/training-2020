@@ -70,24 +70,24 @@
                         </StackPanel>
                     </Button>
 
-                    <Button BorderThickness="2" Margin="5 0" Style="{StaticResource MonochromeButtonAnimatedStyle}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}">
+                    <Button BorderThickness="2" Margin="5 0" Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}">
                         <StackPanel Orientation="Horizontal">
                             <Path Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"
                                   Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-                            <TextBlock VerticalAlignment="Center" Margin="5 0" Text="MonochromeButtonAnimatedStyle"
+                            <TextBlock VerticalAlignment="Center" Margin="5 0" Text="MonochromeAnimatedButtonStyle"
                                        Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"/>
                         </StackPanel>
                     </Button>
 
-                    <Button BorderThickness="2" Margin="5 0" Style="{StaticResource MonochromeButtonAnimatedStyle}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}">
+                    <Button BorderThickness="2" Margin="5 0" Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}">
                         <StackPanel Orientation="Horizontal">
                             <Path Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-                            <TextBlock VerticalAlignment="Center" Margin="5 0" Text="MonochromeButtonAnimatedStyle"
+                            <TextBlock VerticalAlignment="Center" Margin="5 0" Text="MonochromeAnimatedButtonStyle"
                                        Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"/>
                         </StackPanel>
                     </Button>
 
-                    <Button Content="MonochromeButtonAnimatedStyle" BorderThickness="2" Margin="5 0" Style="{StaticResource MonochromeButtonAnimatedStyle}"
+                    <Button Content="MonochromeAnimatedButtonStyle" BorderThickness="2" Margin="5 0" Style="{StaticResource MonochromeAnimatedButtonStyle}"
                             Background="{Binding ElementName=ColorPicker, Path=ColorBrush}"/>
 
                     <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left">

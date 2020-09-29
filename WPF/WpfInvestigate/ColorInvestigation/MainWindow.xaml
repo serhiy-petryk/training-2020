@@ -132,21 +132,21 @@
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Margin="10 0 5 0">Flat buttons</TextBlock>
-                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Background="Blue" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonAnimatedStyle"/>
-                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Background="Yellow" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonAnimatedStyle"/>
-                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonAnimatedStyle"
+                <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="Blue" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeAnimatedButtonStyle"/>
+                <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="Yellow" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeAnimatedButtonStyle"/>
+                <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeAnimatedButtonStyle"
                         Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
-                <!--<Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Width="200" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonAnimatedStyle (disabled)"
+                <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Width="200" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeAnimatedButtonStyle (disabled)"
                         Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"
                         IsEnabled="False"/>
-                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
+                <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
                         Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
-                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
-                        Background="#FFD98C8C"/>-->
+                <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
+                        Background="#FFD98C8C"/>
                 <Button Style="{StaticResource ClearButtonStyle}" Background="Blue" Width="30" Height="30"/>
-                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Background="Blue" Width="30" Height="30" Content="Blue" BorderThickness="2"/>
+                <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="Blue" Width="30" Height="30" Content="Blue" BorderThickness="2"/>
                 <Button Style="{StaticResource ClearButtonStyle}" Background="#FF5300FF" Width="30" Height="30"/>
-                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Background="#FF5300FF" Height="30" Content="70 100 50" BorderThickness="2"/>
+                <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="#FF5300FF" Height="30" Content="70 100 50" BorderThickness="2"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
