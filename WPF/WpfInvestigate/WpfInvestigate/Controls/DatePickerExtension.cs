@@ -66,7 +66,7 @@ namespace WpfInvestigate.Controls
             button = dp.Template.FindName("PART_Button", dp) as Button;
             var grid = button.Parent as Grid;
             grid.ColumnDefinitions.Add(new ColumnDefinition {Width = GridLength.Auto});
-            var style = dp.FindResource("MonochromeClearButtonStyle") as Style;
+            var style = dp.FindResource("MonochromeAnimatedClearButtonStyle") as Style;
             var clearButton = new Button
             {
                 Name = ClearButtonName, Style = style, Width = 18, Margin = new Thickness(-2, 0, 0, 2),

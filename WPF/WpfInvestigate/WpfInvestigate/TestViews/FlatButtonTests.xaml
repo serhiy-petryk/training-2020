@@ -218,29 +218,29 @@
                             Style="{StaticResource FlatButtonStyle}" Content="Success" />
                     <Button Background="#d4edda" BorderThickness="4" Width="150" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="#d4edda" />
-                    <Button Background="#d4edda" Width="150" Height="30" Style="{StaticResource HslMonoStyle}" Content="#d4edda HslMonoStyle" />
+                    <Button Background="#d4edda" Width="150" Height="30" Style="{StaticResource MonochromeButtonStyle}" Content="#d4edda MonochromeButtonStyle" />
 
-                    <Button Margin="5 0 0 0" Background="#b8e0c2" Width="150" Height="30" Style="{StaticResource HslMonoStyle}" Content="#b8e0c2 HslMonoStyle" />
+                    <Button Margin="5 0 0 0" Background="#b8e0c2" Width="150" Height="30" Style="{StaticResource MonochromeButtonStyle}" Content="#b8e0c2 MonochromeButtonStyle" />
 
                     <Button Margin="5 0 0 0" Background="#28a745" BorderThickness="4" Width="150" Height="30" Style="{StaticResource FlatButtonStyle}" Content="#28a745" />
-                    <Button Background="#28a745" BorderThickness="4" Width="150" Height="30" Style="{StaticResource HslMonoStyle}" Content="HslMonoStyle" />
+                    <Button Background="#28a745" BorderThickness="4" Width="150" Height="30" Style="{StaticResource MonochromeButtonStyle}" Content="MonochromeButtonStyle" />
 
                     <Button Margin="5 0 0 0" Background="#4CAF50" BorderThickness="2" Width="150" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="#4CAF50 CornerRadius" controls:BootstrapEffect.CornerRadius="2"
                             HorizontalContentAlignment="Right" VerticalContentAlignment="Top"/>
                     <Button Background="#4CAF50" BorderThickness="2" Width="150" Height="30"
-                            Style="{StaticResource HslMonoStyle}" Content="HslMonoStyle" controls:BootstrapEffect.CornerRadius="2"
+                            Style="{StaticResource MonochromeButtonStyle}" Content="MonochromeButtonStyle" controls:BootstrapEffect.CornerRadius="2"
                             HorizontalContentAlignment="Right" VerticalContentAlignment="Top"/>
 
                     <Button Margin="5 0 0 0" Background="#4CAF50" Foreground="White" BorderThickness="4" Width="150" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="#4CAF50+White"/>
                     <Button Background="#4CAF50" BorderThickness="4" Width="150" Height="30"
-                            Style="{StaticResource HslMonoStyle}" Content="HslMonoStyle"/>
+                            Style="{StaticResource MonochromeButtonStyle}" Content="MonochromeButtonStyle"/>
 
                     <Button Margin="5 0 0 0" Background="#29a347" BorderThickness="4" Width="150" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="#29a347"/>
                     <Button Background="#29a347" BorderThickness="4" Width="150" Height="30"
-                            Style="{StaticResource HslMonoStyle}" Content="HslMonoStyle"/>
+                            Style="{StaticResource MonochromeButtonStyle}" Content="MonochromeButtonStyle"/>
                 </WrapPanel>
             </StackPanel>
         </Grid>
