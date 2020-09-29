@@ -63,7 +63,7 @@ namespace WpfInvestigate.Controls
                 // Refresh button colors
                 var buttonChild = VisualTreeHelper.GetChild(button, 0) as FrameworkElement;
                 var stateGroup = (VisualStateManager.GetVisualStateGroups(buttonChild) as IList<VisualStateGroup>).FirstOrDefault(g => g.Name == "CommonStates");
-                stateGroup?.CurrentState.Storyboard.Begin(buttonChild);
+                stateGroup?.CurrentState?.Storyboard.Begin(buttonChild);
                 // Refresh shapes colors
                 SetColorsForShapes(sender, e);
             }
