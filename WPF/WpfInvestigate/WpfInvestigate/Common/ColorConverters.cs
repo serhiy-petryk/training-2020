@@ -9,7 +9,7 @@ namespace WpfInvestigate.Common
 {
     internal static class ColorConverterHelper
     {
-        internal static double? ConvertValue(double value, object parameter, bool? isUp = null)
+        internal static double ConvertValue(double value, object parameter, bool? isUp = null)
         {
             /* Process parameter of ColorHslBrush/ColorLabBrush/ColorGrayScaleBrush
              value is double in range [0-1.0]
@@ -106,7 +106,7 @@ namespace WpfInvestigate.Common
                     return result;
                 }
             }
-            return null;
+            return value;
         }
     }
 
@@ -160,7 +160,7 @@ namespace WpfInvestigate.Common
     public class ColorHslBrush : IValueConverter
     {
         public static ColorHslBrush Instance = new ColorHslBrush();
-        public static ColorHslBrush NoSplit = new ColorHslBrush {_noSplit = true};
+        public static ColorHslBrush NoSplit = new ColorHslBrush { _noSplit = true };
 
         private bool _noSplit = false;
 
@@ -181,20 +181,23 @@ namespace WpfInvestigate.Common
                     double.Parse(ss[1], Tips.InvariantCulture) / 360, 0);
             else if (value is Brush brush)
                 hsl = new HSL(new RGB(Tips.GetColorFromBrush(brush)));
+            else if (value is Color color)
+                hsl = new HSL(new RGB(color));
             else if (value is DependencyObject d)
                 hsl = new HSL(new RGB(Tips.GetActualBackgroundColor(d)));
 
             if (hsl != null)
             {
-                var color = hsl.RGB.Color;
-                var isDarkColor = ColorUtils.IsDarkColor(color);
-                var newL = ColorConverterHelper.ConvertValue(hsl.L, parameter, !_noSplit ? isDarkColor : (bool?)null);
-                if (newL.HasValue)
+                foreach (var p in parameter.ToString().Split('/'))
                 {
-                    if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return new HSL(hsl.H, hsl.S, newL.Value).RGB.Color;
-                    return new SolidColorBrush(new HSL(hsl.H, hsl.S, newL.Value).RGB.Color);
+                    var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
+                    var newL = ColorConverterHelper.ConvertValue(hsl.L, p, !_noSplit ? isDarkColor : (bool?)null);
+                    hsl = new HSL(hsl.H, hsl.S, newL);
                 }
+
+                if (Tips.GetNotNullableType(targetType) == typeof(Color))
+                    return hsl.RGB.Color;
+                return new SolidColorBrush(hsl.RGB.Color);
             }
 
             if (Tips.GetNotNullableType(targetType) == typeof(Color))
@@ -234,12 +237,10 @@ namespace WpfInvestigate.Common
                 var color = lab.RGB.Color;
                 var isDarkColor = ColorUtils.IsDarkColor(color);
                 var newL = ColorConverterHelper.ConvertValue(lab.L / 100.0, parameter, !_noSplit ? isDarkColor : (bool?)null);
-                if (newL.HasValue)
-                {
-                    if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return new LAB(newL.Value * 100.0, lab.A, lab.B).RGB.Color;
-                    return new SolidColorBrush(new LAB(newL.Value * 100.0, lab.A, lab.B).RGB.Color);
-                }
+                if (Tips.GetNotNullableType(targetType) == typeof(Color))
+                    return new LAB(newL * 100.0, lab.A, lab.B).RGB.Color;
+                return new SolidColorBrush(new LAB(newL * 100.0, lab.A, lab.B).RGB.Color);
+
             }
 
             if (Tips.GetNotNullableType(targetType) == typeof(Color))
@@ -270,11 +271,8 @@ namespace WpfInvestigate.Common
                 var oldGrayLevel = ColorUtils.GetGrayLevel(new RGB(color.Value)) / 255.0;
                 var isDarkColor = ColorUtils.IsDarkColor(color.Value);
                 var newGrayLevel = ColorConverterHelper.ConvertValue(oldGrayLevel, parameter, !_noSplit ? isDarkColor : (bool?)null);
-                if (newGrayLevel.HasValue)
-                {
-                    var newGrayValue = System.Convert.ToByte(newGrayLevel * 255.0);
-                    return new SolidColorBrush(Color.FromRgb(newGrayValue, newGrayValue, newGrayValue));
-                }
+                var newGrayValue = System.Convert.ToByte(newGrayLevel * 255.0);
+                return new SolidColorBrush(Color.FromRgb(newGrayValue, newGrayValue, newGrayValue));
             }
 
             return Brushes.Transparent;

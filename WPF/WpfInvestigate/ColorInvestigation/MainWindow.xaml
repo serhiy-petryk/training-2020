@@ -299,6 +299,8 @@
 
                 <Button Content="Change Color" Click="ChangeColor_OnClick" Margin="5 0"/>
 
+                <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="Blue" Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red"/>
+
             </StackPanel>
 
         </StackPanel>
