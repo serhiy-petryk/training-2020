@@ -19,7 +19,7 @@
             <Button Click="OnBlackAndWhiteRelativeStyleClick">BlackAndWhite Relative style (HSL)</Button>
             <Button Click="OnLabStyleClick">LAB style</Button>
             <Button Click="OnTestStyleClick">Test style</Button>
-            <Button Click="OnMonochromaticButtonStyleClick">Buttons with monochromatic style</Button>
+            <Button Click="OnMonochromAnimatedButtonStyleClick">Monochrome animated style</Button>
         </WrapPanel>
 
         <ScrollViewer Grid.Row="1">

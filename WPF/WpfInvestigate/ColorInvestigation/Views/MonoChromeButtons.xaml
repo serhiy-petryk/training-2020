@@ -15,8 +15,8 @@
         <WrapPanel Grid.Row="0" Orientation="Horizontal" Margin="0 5">
             <TextBlock x:Name="CurrentStyle" Margin="5 0" VerticalAlignment="Center"/>
             <TextBlock Text="Digits show hsl components of background color and gray level" Margin="5 0" VerticalAlignment="Center"/>
+            <Button Click="OnMonoChromeAnimatedStyleClick">Monochrome Animated</Button>
             <Button Click="OnMonoChromeStyleClick">Monochrome</Button>
-            <Button Click="OnMonoChromeSmallStyleClick">Monochrome small</Button>
             <Button Click="OnHslMonoStyleClick">HslMonoStyle</Button>
             <Button Click="OnColorPickerHslMonoStyleClick">ColorPicker HslMonoStyle</Button>
             <Button Click="OnTestStyleClick">Test Style</Button>

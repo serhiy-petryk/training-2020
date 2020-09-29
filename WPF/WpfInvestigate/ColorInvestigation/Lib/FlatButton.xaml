@@ -3,7 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:ColorInvestigation.Common">
 
-    <ControlTemplate x:Key="MonochromeSmallButtonTemplate" TargetType="ButtonBase">
+    <ControlTemplate x:Key="MonochromeButtonTemplate" TargetType="ButtonBase">
         <Border x:Name="PART_Border" BorderThickness="{TemplateBinding BorderThickness}" UseLayoutRounding="True" SnapsToDevicePixels="True">
             <ContentControl>
                 <ContentControl x:Name="PART_Content" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
@@ -37,11 +37,11 @@
         </Border>
     </ControlTemplate>
 
-    <Style x:Key="MonochromeSmallButtonStyle" TargetType="ButtonBase">
-        <Setter Property="Template" Value="{StaticResource MonochromeSmallButtonTemplate}"/>
+    <Style x:Key="MonochromeButtonStyle" TargetType="ButtonBase">
+        <Setter Property="Template" Value="{StaticResource MonochromeButtonTemplate}"/>
     </Style>
 
-    <Style x:Key="MonochromeButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MonochromeButtonAnimatedStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="0"/>
         <!-- Can't use binding for background because there is VS Designer error -->
         <Setter Property="Background" Value="Transparent"/>

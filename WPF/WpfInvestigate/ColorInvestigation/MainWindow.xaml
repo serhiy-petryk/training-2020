@@ -1,7 +1,7 @@
 ﻿<Window x:Class="ColorInvestigation.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:common="clr-namespace:ColorInvestigation.Common"
         mc:Ignorable="d"
@@ -132,21 +132,21 @@
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Margin="10 0 5 0">Flat buttons</TextBlock>
-                <Button Style="{StaticResource MonochromeButtonStyle}" Background="Blue" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonStyle"/>
-                <Button Style="{StaticResource MonochromeButtonStyle}" Background="Yellow" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonStyle"/>
-                <Button Style="{StaticResource MonochromeButtonStyle}" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonStyle"
+                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Background="Blue" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonAnimatedStyle"/>
+                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Background="Yellow" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonAnimatedStyle"/>
+                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Width="140" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonAnimatedStyle"
                         Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
-                <!--<Button Style="{StaticResource MonochromeButtonStyle}" Width="200" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonStyle (disabled)"
+                <!--<Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Width="200" Height="30" Margin="5 0" BorderThickness="3" Content="MonochromeButtonAnimatedStyle (disabled)"
                         Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"
                         IsEnabled="False"/>
-                <Button Style="{StaticResource MonochromeButtonStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
+                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
                         Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
-                <Button Style="{StaticResource MonochromeButtonStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
+                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Width="30" Height="30" Content="M0,2L6,2L3,5z"
                         Background="#FFD98C8C"/>-->
                 <Button Style="{StaticResource ClearButtonStyle}" Background="Blue" Width="30" Height="30"/>
-                <Button Style="{StaticResource MonochromeButtonStyle}" Background="Blue" Width="30" Height="30" Content="Blue" BorderThickness="2"/>
+                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Background="Blue" Width="30" Height="30" Content="Blue" BorderThickness="2"/>
                 <Button Style="{StaticResource ClearButtonStyle}" Background="#FF5300FF" Width="30" Height="30"/>
-                <Button Style="{StaticResource MonochromeButtonStyle}" Background="#FF5300FF" Height="30" Content="70 100 50" BorderThickness="2"/>
+                <Button Style="{StaticResource MonochromeButtonAnimatedStyle}" Background="#FF5300FF" Height="30" Content="70 100 50" BorderThickness="2"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">

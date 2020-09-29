@@ -110,11 +110,11 @@ namespace ColorInvestigation.Views
             if (wnd != null) wnd.Width = 950;
         }
 
-        private void OnMonochromaticButtonStyleClick(object sender, RoutedEventArgs e)
+        private void OnMonochromAnimatedButtonStyleClick(object sender, RoutedEventArgs e)
         {
             Panel.Children.Clear();
             var step = 10;
-            var style = Application.Current.TryFindResource("MonochromeButtonStyle") as Style;
+            var style = Application.Current.TryFindResource("MonochromeButtonAnimatedStyle") as Style;
             for (var h = 0; h <= 100; h += step)
             for (var s = 0; s <= 100; s += step)
             for (var l = 0; l <= 100; l += step)
