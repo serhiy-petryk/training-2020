@@ -32,7 +32,7 @@ namespace WpfInvestigate.Controls
                 if (DualPathToggleButtonEffect.GetGeometryOff(button) != Geometry.Empty)
                     return;
 
-                var geometry = Tips.GeometryFromString(button.Content);
+                /*var geometry = Tips.GeometryFromString(button.Content);
                 if (geometry != null)
                 {
                     var path = new Path { Stretch = Stretch.Uniform, Data = geometry };
@@ -42,7 +42,7 @@ namespace WpfInvestigate.Controls
                     };
                     path.SetBinding(Shape.FillProperty, b);
                     button.Content = new Viewbox { Child = path };
-                }
+                }*/
 
                 button.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
                 {
