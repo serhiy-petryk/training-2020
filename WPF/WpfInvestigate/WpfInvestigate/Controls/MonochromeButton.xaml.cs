@@ -65,7 +65,7 @@ namespace WpfInvestigate.Controls
         private void OnBackgroundChanged(object sender, EventArgs e)
         {
             var button = sender as ButtonBase;
-            if (button != null)
+            if (button != null && VisualTreeHelper.GetChildrenCount(button) > 0)
             {
                 // Refresh button colors
                 var buttonChild = VisualTreeHelper.GetChild(button, 0) as FrameworkElement;
