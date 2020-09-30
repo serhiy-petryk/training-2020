@@ -161,7 +161,7 @@ namespace ColorInvestigation.Common
     public class ColorHslBrush : IValueConverter
     {
         public static ColorHslBrush Instance = new ColorHslBrush();
-        public static ColorHslBrush NoSplit = new ColorHslBrush{_noSplit = true};
+        public static ColorHslBrush NoSplit = new ColorHslBrush { _noSplit = true };
 
         private bool _noSplit = false;
 
@@ -169,6 +169,7 @@ namespace ColorInvestigation.Common
         {
             HSL hsl = null;
             string[] ss = null;
+            Color? oldColor = null;
 
             if (value is string)
                 ss = ((string)value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
@@ -181,24 +182,27 @@ namespace ColorInvestigation.Common
                 hsl = new HSL(double.Parse(ss[0], Tips.InvariantCulture) / 360,
                     double.Parse(ss[1], Tips.InvariantCulture) / 360, 0);
             else if (value is Brush brush)
-                hsl = new HSL(new RGB(Tips.GetColorFromBrush(brush)));
+                oldColor = Tips.GetColorFromBrush(brush);
             else if (value is Color color)
-                hsl = new HSL(new RGB(color));
+                oldColor = color;
             else if (value is DependencyObject d)
-                hsl = new HSL(new RGB(Tips.GetActualBackgroundColor(d)));
+                oldColor = Tips.GetActualBackgroundColor(d);
+
+            if (oldColor.HasValue)
+                hsl = new HSL(new RGB(oldColor.Value));
 
             if (hsl != null)
             {
                 foreach (var p in parameter.ToString().Split('/'))
                 {
                     var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
-                    var newL = ColorConverterHelper.ConvertValue(hsl.L, p, !_noSplit ? isDarkColor : (bool?) null);
+                    var newL = ColorConverterHelper.ConvertValue(hsl.L, p, !_noSplit ? isDarkColor : (bool?)null);
                     hsl = new HSL(hsl.H, hsl.S, newL);
                 }
 
                 if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                    return hsl.RGB.Color;
-                return new SolidColorBrush(hsl.RGB.Color);
+                    return hsl.RGB.GetColor(oldColor?.A / 255.0 ?? 1.0);
+                return new SolidColorBrush(hsl.RGB.GetColor(oldColor?.A / 255.0 ?? 1.0));
             }
 
             if (Tips.GetNotNullableType(targetType) == typeof(Color))

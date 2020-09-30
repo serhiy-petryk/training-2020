@@ -48,7 +48,7 @@ namespace ColorInvestigation.Lib
                 // if (DualPathToggleButtonEffect.GetGeometryOff(button) != Geometry.Empty)
                    // return;
 
-                var geometry = GetGeometry(button.Content);
+                /*var geometry = GetGeometry(button.Content);
                 if (geometry != null)
                 {
                     var path = new Path {Stretch = Stretch.Uniform, Data = geometry};
@@ -58,7 +58,7 @@ namespace ColorInvestigation.Lib
                     };
                     path.SetBinding(Shape.FillProperty, b);
                     button.Content = new Viewbox {Child = path};
-                }
+                }*/
 
                 button.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
                 {

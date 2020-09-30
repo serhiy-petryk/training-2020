@@ -168,6 +168,7 @@ namespace WpfInvestigate.Common
         {
             HSL hsl = null;
             string[] ss = null;
+            Color? oldColor = null;
 
             if (value is string)
                 ss = ((string)value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
@@ -180,11 +181,14 @@ namespace WpfInvestigate.Common
                 hsl = new HSL(double.Parse(ss[0], Tips.InvariantCulture) / 360,
                     double.Parse(ss[1], Tips.InvariantCulture) / 360, 0);
             else if (value is Brush brush)
-                hsl = new HSL(new RGB(Tips.GetColorFromBrush(brush)));
+                oldColor = Tips.GetColorFromBrush(brush);
             else if (value is Color color)
-                hsl = new HSL(new RGB(color));
+                oldColor = color;
             else if (value is DependencyObject d)
-                hsl = new HSL(new RGB(Tips.GetActualBackgroundColor(d)));
+                oldColor = Tips.GetActualBackgroundColor(d);
+
+            if (oldColor.HasValue)
+                hsl = new HSL(new RGB(oldColor.Value));
 
             if (hsl != null)
             {
@@ -196,8 +200,8 @@ namespace WpfInvestigate.Common
                 }
 
                 if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                    return hsl.RGB.Color;
-                return new SolidColorBrush(hsl.RGB.Color);
+                    return hsl.RGB.GetColor(oldColor?.A/255.0 ?? 1.0);
+                return new SolidColorBrush(hsl.RGB.GetColor(oldColor?.A / 255.0 ?? 1.0));
             }
 
             if (Tips.GetNotNullableType(targetType) == typeof(Color))
