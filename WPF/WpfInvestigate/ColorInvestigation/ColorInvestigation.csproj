@@ -58,6 +58,7 @@
     <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\FlatButtonConverters.cs" />
     <Compile Include="Common\INotifyPropertyChangedAbstract.cs" />
+    <Compile Include="Controls\BootstrapEffect.cs" />
     <Compile Include="Controls\ColorPickerViewModel.cs" />
     <Compile Include="Controls\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
