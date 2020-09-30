@@ -71,10 +71,15 @@
     <Compile Include="Common\ColorConverters.cs" />
     <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\DataTypeMetadata.cs" />
+    <Compile Include="Common\INotifyPropertyChangedAbstract.cs" />
     <Compile Include="Controls\AdornerControl.cs" />
     <Compile Include="Controls\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ColorPicker.xaml.cs">
+      <DependentUpon>ColorPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColorPickerViewModel.cs" />
     <Compile Include="Controls\DatePickerExtension.cs" />
     <Compile Include="Controls\DropDownButtonHelper.cs" />
     <Compile Include="Controls\DualPathToggleButtonEffect.cs" />
@@ -114,6 +119,9 @@
     </Compile>
     <Compile Include="TestViews\CalculatorTests.xaml.cs">
       <DependentUpon>CalculatorTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ColorPickerTests.xaml.cs">
+      <DependentUpon>ColorPickerTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\DualPathToggleButtonEffectTests.xaml.cs">
       <DependentUpon>DualPathToggleButtonEffectTests.xaml</DependentUpon>
@@ -171,6 +179,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ColorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\FlatButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -227,6 +239,10 @@
     <Page Include="TestViews\CalculatorTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\ColorPickerTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\DualPathToggleButtonEffectTests.xaml">
       <SubType>Designer</SubType>
