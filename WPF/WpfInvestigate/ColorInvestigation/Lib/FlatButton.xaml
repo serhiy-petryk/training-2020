@@ -64,9 +64,9 @@
                                 <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+10, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static converters:ColorHslBrush.Instance}}" Duration="{x:Static converters:AnimationHelper.AnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                To="{Binding ConverterParameter=+10/+70%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static converters:ColorHslBrush.Instance}}" Duration="{x:Static converters:AnimationHelper.AnimationDuration}" />
+                                                To="{Binding ConverterParameter=+10/+50%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static converters:ColorHslBrush.Instance}}" Duration="{x:Static converters:AnimationHelper.AnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                To="{Binding ConverterParameter=+10/+30%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static converters:ColorHslBrush.Instance}}" Duration="{x:Static converters:AnimationHelper.AnimationDuration}" />
+                                                To="{Binding ConverterParameter=+10/+80%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static converters:ColorHslBrush.Instance}}" Duration="{x:Static converters:AnimationHelper.AnimationDuration}" />
                             </Storyboard>
                             <Storyboard x:Key="PressedState">
                                 <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"

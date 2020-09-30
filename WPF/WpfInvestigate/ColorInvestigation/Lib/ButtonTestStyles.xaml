@@ -87,11 +87,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ButtonBase">
                     <Border x:Name="Border"
-                            Background="{Binding ConverterParameter=+20%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
-                            BorderBrush="{Binding ConverterParameter=+30%, RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
+                            Background="{Binding ConverterParameter=+10, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
+                            BorderBrush="{Binding ConverterParameter=+10/+50%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"
-                                          TextBlock.Foreground="{Binding ConverterParameter=+70%, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                          TextBlock.Foreground="{Binding ConverterParameter=+10/+80%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
