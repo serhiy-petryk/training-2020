@@ -28,22 +28,58 @@
         </Style>
     </Window.Resources>
 
-    <WrapPanel>
-        <ComboBox Background="Orange" controls:BootstrapEffect.Background="#FF00FF00" MinWidth="100">
-            <TextBlock>LG Nexus 5X</TextBlock>
-            <TextBlock>Huawai Nexus 6P</TextBlock>
-            <TextBlock>iPhone 6S</TextBlock>
-            <TextBlock>iPhone 6S Plus</TextBlock>
-            <TextBlock>Microsoft Lumia 950</TextBlock>
-        </ComboBox>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
-        <DatePicker x:Name="A11" Margin="5" Background="Orange" controls:BootstrapEffect.Background="#FF00FF00"
+        <Slider Grid.Column="0"
+                x:Name="uiScaleSlider"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100"
+                Value="1" Minimum="0.5" Maximum="4"
+                Orientation="Vertical"
+                Ticks="1"
+                IsSnapToTickEnabled="False"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
+
+        <Grid Grid.Column="1">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+
+            <StackPanel Orientation="Vertical">
+                <WrapPanel>
+                    <Label Content="Path data:" VerticalAlignment="Center"/>
+                    <Button Margin="5" Foreground="Green" Width="30" Height="30"
+                        controls:BootstrapEffect.PathData="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z" />
+                </WrapPanel>
+
+                <WrapPanel>
+                    <ComboBox Background="Orange" controls:BootstrapEffect.Background="#FF00FF00" MinWidth="100">
+                        <TextBlock>LG Nexus 5X</TextBlock>
+                        <TextBlock>Huawai Nexus 6P</TextBlock>
+                        <TextBlock>iPhone 6S</TextBlock>
+                        <TextBlock>iPhone 6S Plus</TextBlock>
+                        <TextBlock>Microsoft Lumia 950</TextBlock>
+                    </ComboBox>
+
+                    <DatePicker x:Name="A11" Margin="5" Background="Orange" controls:BootstrapEffect.Background="#FF00FF00"
                     controls:BootstrapEffect.CornerRadius="0"/>
-        <Button x:Name="A1" Margin="5" Background="Orange" Content="Orange button" controls:BootstrapEffect.Background="#FF00FF00" Style="{StaticResource TestStyle}"
+                    <Button x:Name="A1" Margin="5" Background="Orange" Content="Orange button" controls:BootstrapEffect.Background="#FF00FF00" Style="{StaticResource TestStyle}"
                 controls:BootstrapEffect.CornerRadius="0"/>
-        <Button x:Name="A2" Margin="5" Background="Orange" Content="Orange button" controls:BootstrapEffect.Background="#FF00FF00"
+                    <Button x:Name="A2" Margin="5" Background="Orange" Content="Orange button" controls:BootstrapEffect.Background="#FF00FF00"
                 controls:BootstrapEffect.CornerRadius="0"/>
-        <Button x:Name="A3" Margin="5" controls:BootstrapEffect.Background="Aqua" Background="Orange" Content="Orange button" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                    <Button x:Name="A3" Margin="5" controls:BootstrapEffect.Background="Aqua" Background="Orange" Content="Orange button" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
                 controls:BootstrapEffect.CornerRadius="0"/>
-    </WrapPanel>
+                </WrapPanel>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
 </Window>

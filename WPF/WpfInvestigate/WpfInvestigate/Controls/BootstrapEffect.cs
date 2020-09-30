@@ -3,8 +3,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
@@ -14,22 +16,37 @@ namespace WpfInvestigate.Controls
     /// </summary>
     public class BootstrapEffect
     {
-        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.RegisterAttached(
-            "Background", typeof(Brush), typeof(BootstrapEffect), new UIPropertyMetadata(null, OnPropertiesChanged));
-        public static Brush GetBackground(DependencyObject obj) => (Brush)obj.GetValue(BackgroundProperty);
-        public static void SetBackground(DependencyObject obj, Brush value) => obj.SetValue(BackgroundProperty, value);
-        
-        public static readonly DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(
-            "Foreground", typeof(Brush), typeof(BootstrapEffect), new FrameworkPropertyMetadata(null, OnPropertiesChanged));
-        public static Brush GetForeground(DependencyObject obj) => (Brush)obj.GetValue(ForegroundProperty);
-        public static void SetForeground(DependencyObject obj, Brush value) => obj.SetValue(ForegroundProperty, value);
-        //=========
+        #region ================  PathData  ==========================
+        public static readonly DependencyProperty PathDataProperty = DependencyProperty.RegisterAttached(
+            "PathData", typeof(Geometry), typeof(BootstrapEffect), new UIPropertyMetadata(null, OnPathDataChanged));
+        public static Geometry GetPathData(DependencyObject obj) => (Geometry)obj.GetValue(PathDataProperty);
+        public static void SetPathData(DependencyObject obj, Geometry value) => obj.SetValue(PathDataProperty, value);
+
+        private static void OnPathDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ContentControl control)
+            {
+                if (e.NewValue is Geometry geometry)
+                {
+                    var path = new Path { Stretch = Stretch.Uniform, Data = geometry };
+                    var b = new Binding("Foreground")
+                    {
+                        RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Control), 1)
+                    };
+                    path.SetBinding(Shape.FillProperty, b);
+                    control.Content = new Viewbox { Child = path };
+                }
+                else
+                    control.Content = null;
+            }
+        }
+        #endregion
+
+        #region ================  CornerRadius  =======================
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.RegisterAttached(
             "CornerRadius", typeof(double), typeof(BootstrapEffect), new UIPropertyMetadata(double.NaN, OnCornerRadiusChanged));
         public static double GetCornerRadius(DependencyObject obj) => (double)obj.GetValue(CornerRadiusProperty);
         public static void SetCornerRadius(DependencyObject obj, double value) => obj.SetValue(CornerRadiusProperty, value);
-
-        //=====================================
         private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var newRadius = (double)e.NewValue;
@@ -43,7 +60,18 @@ namespace WpfInvestigate.Controls
                 }));
             }
         }
+        #endregion
 
+        // =========================
+        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.RegisterAttached(
+            "Background", typeof(Brush), typeof(BootstrapEffect), new UIPropertyMetadata(null, OnPropertiesChanged));
+        public static Brush GetBackground(DependencyObject obj) => (Brush)obj.GetValue(BackgroundProperty);
+        public static void SetBackground(DependencyObject obj, Brush value) => obj.SetValue(BackgroundProperty, value);
+        
+        public static readonly DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(
+            "Foreground", typeof(Brush), typeof(BootstrapEffect), new FrameworkPropertyMetadata(null, OnPropertiesChanged));
+        public static Brush GetForeground(DependencyObject obj) => (Brush)obj.GetValue(ForegroundProperty);
+        public static void SetForeground(DependencyObject obj, Brush value) => obj.SetValue(ForegroundProperty, value);
         private static void OnPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
