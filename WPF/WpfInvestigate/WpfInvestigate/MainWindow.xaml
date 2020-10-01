@@ -48,7 +48,6 @@
             <Button x:Name="FlatButtonTest" Width="200" Margin="0 5" Content="Ready: FlatButton" Click="FlatButtonTest_OnClick"/>
             <Button x:Name="MonochromeButtonTest" Width="200" Margin="0 5" Content="Ready: MonochromeButton" Click="MonochromeButtonTest_OnClick"/>
             <Button x:Name="ColorPickerTest" Width="200" Margin="0 5" Content="Ready: ColorPickerTest" Click="ColorPickerTest_OnClick"/>
-            <Button x:Name="BootstrapTest" Width="200" Margin="0 5" Content="WiP: BootstrapTest" Click="BootstrapTest_OnClick"/>
         </StackPanel>
 
         <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">

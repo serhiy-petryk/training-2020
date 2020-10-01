@@ -64,4 +64,4 @@
   - https://github.com/peross/WpfCalculatorApp (many functions, like scintific/programmer, -- errors)
   Microsoft (original C++ and XAML) https://github.com/microsoft/calculator https://habr.com/ru/news/t/443018/
 
-15. WPF Bootstrap: https://github.com/simple0812/bootstrap-wpf-style https://www.cnblogs.com/tsliwei/p/6138412.html
+15. WPF Bootstrap: https://github.com/simple0812/bootstrap-wpf-style https://github.com/ptddqr/bootstrap-wpf-style (https://www.cnblogs.com/tsliwei/p/6138412.html)

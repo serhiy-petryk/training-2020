@@ -36,20 +36,22 @@
 
             <StackPanel Orientation="Vertical">
                 <WrapPanel Orientation="Horizontal">
-                    <UserControl Margin="5" Content="Test control" controls:BootstrapEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30"/>
-                    <Button Margin="5" Content="Test control" controls:BootstrapEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                    <UserControl Margin="5" Content="Test control" controls:ControlEffects.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30"/>
+                    <Button Margin="5" Content="Test control" controls:ControlEffects.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30" Style="{StaticResource SimpleButtonStyle}"
                         VerticalContentAlignment="Center"/>
 
-                    <Button Margin="5" Content="Test animated control" controls:BootstrapEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
-                        controls:BootstrapEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+                    <Button Margin="5" Content="Test animated control" controls:ControlEffects.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                        controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
                 </WrapPanel>
 
                 <WrapPanel Orientation="Horizontal">
                     <CheckBox x:Name="cbEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center"/>
                     <Label Content="IsEnabled?" Margin="5 0" VerticalContentAlignment="Center"/>
-                    <Button Margin="5" Content="Test animated control" controls:BootstrapEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
-                        IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
-                        controls:BootstrapEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+                    <Button Margin="5 0" Content="Change color" Click="ChangeColor_OnClick"/>
+
+                    <Button x:Name="TestButton" Margin="5" Content="Test animated control" controls:ControlEffects.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                            IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
+                            controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
                 </WrapPanel>
             </StackPanel>
         </Grid>

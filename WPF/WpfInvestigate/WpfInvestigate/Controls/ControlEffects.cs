@@ -15,11 +15,11 @@ namespace WpfInvestigate.Controls
 {
     /// <summary>
     /// </summary>
-    public class BootstrapEffect
+    public class ControlEffects
     {
         #region ================  PathData  ==========================
         public static readonly DependencyProperty PathDataProperty = DependencyProperty.RegisterAttached(
-            "PathData", typeof(Geometry), typeof(BootstrapEffect), new UIPropertyMetadata(null, OnPathDataChanged));
+            "PathData", typeof(Geometry), typeof(ControlEffects), new UIPropertyMetadata(null, OnPathDataChanged));
         public static Geometry GetPathData(DependencyObject obj) => (Geometry)obj.GetValue(PathDataProperty);
         public static void SetPathData(DependencyObject obj, Geometry value) => obj.SetValue(PathDataProperty, value);
 
@@ -45,7 +45,7 @@ namespace WpfInvestigate.Controls
 
         #region ================  CornerRadius  =======================
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.RegisterAttached(
-            "CornerRadius", typeof(double), typeof(BootstrapEffect), new UIPropertyMetadata(double.NaN, OnCornerRadiusChanged));
+            "CornerRadius", typeof(double), typeof(ControlEffects), new UIPropertyMetadata(double.NaN, OnCornerRadiusChanged));
         public static double GetCornerRadius(DependencyObject obj) => (double)obj.GetValue(CornerRadiusProperty);
         public static void SetCornerRadius(DependencyObject obj, double value) => obj.SetValue(CornerRadiusProperty, value);
         private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -65,7 +65,7 @@ namespace WpfInvestigate.Controls
 
         #region ================  Monochrome  ======================
         public static readonly DependencyProperty MonochromeProperty = DependencyProperty.RegisterAttached(
-            "Monochrome", typeof(Brush), typeof(BootstrapEffect), new UIPropertyMetadata(null, OnMonochromeChanged));
+            "Monochrome", typeof(Brush), typeof(ControlEffects), new UIPropertyMetadata(null, OnMonochromeChanged));
 
         public static Brush GetMonochrome(DependencyObject obj) => (Brush)obj.GetValue(MonochromeProperty);
         public static void SetMonochrome(DependencyObject obj, Brush value) => obj.SetValue(MonochromeProperty, value);
@@ -82,9 +82,9 @@ namespace WpfInvestigate.Controls
                     dpd.AddValueChanged(control, UpdateMonochrome);
                     dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
                     dpd.AddValueChanged(control, UpdateMonochrome);
-
-                    UpdateMonochrome(control, null);
                 }));
+
+                UpdateMonochrome(control, null);
             }
         }
 
@@ -119,7 +119,7 @@ namespace WpfInvestigate.Controls
 
         #region ================  Monochrome Animated ======================
         public static readonly DependencyProperty MonochromeAnimatedProperty = DependencyProperty.RegisterAttached(
-            "MonochromeAnimated", typeof(Brush), typeof(BootstrapEffect), new UIPropertyMetadata(null, OnMonochromeAnimatedChanged));
+            "MonochromeAnimated", typeof(Brush), typeof(ControlEffects), new UIPropertyMetadata(null, OnMonochromeAnimatedChanged));
 
         public static Brush GetMonochromeAnimated(DependencyObject obj) => (Brush)obj.GetValue(MonochromeAnimatedProperty);
         public static void SetMonochromeAnimated(DependencyObject obj, Brush value) => obj.SetValue(MonochromeAnimatedProperty, value);
@@ -136,9 +136,9 @@ namespace WpfInvestigate.Controls
                     dpd.AddValueChanged(control, UpdateMonochromeAnimated);
                     dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
                     dpd.AddValueChanged(control, UpdateMonochromeAnimated);
-
-                    UpdateMonochromeAnimated(control, null);
                 }));
+
+                UpdateMonochromeAnimated(control, null);
             }
         }
         private static void MonochromeAnimatedRemoveEvents(Control control)
@@ -172,12 +172,12 @@ namespace WpfInvestigate.Controls
 
         // =========================
         public static readonly DependencyProperty BackgroundProperty = DependencyProperty.RegisterAttached(
-            "Background", typeof(Brush), typeof(BootstrapEffect), new UIPropertyMetadata(null, OnPropertiesChanged));
+            "Background", typeof(Brush), typeof(ControlEffects), new UIPropertyMetadata(null, OnPropertiesChanged));
         public static Brush GetBackground(DependencyObject obj) => (Brush)obj.GetValue(BackgroundProperty);
         public static void SetBackground(DependencyObject obj, Brush value) => obj.SetValue(BackgroundProperty, value);
         
         public static readonly DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(
-            "Foreground", typeof(Brush), typeof(BootstrapEffect), new FrameworkPropertyMetadata(null, OnPropertiesChanged));
+            "Foreground", typeof(Brush), typeof(ControlEffects), new FrameworkPropertyMetadata(null, OnPropertiesChanged));
         public static Brush GetForeground(DependencyObject obj) => (Brush)obj.GetValue(ForegroundProperty);
         public static void SetForeground(DependencyObject obj, Brush value) => obj.SetValue(ForegroundProperty, value);
         private static void OnPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
