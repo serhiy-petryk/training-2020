@@ -78,47 +78,66 @@ namespace WpfInvestigate.Controls
                 {
                     var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty,
                         typeof(UIElement));
-                    dpd.AddValueChanged(control, UpdateMonochrome);
+                    dpd.AddValueChanged(control, MonochromeUpdate);
                     dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-                    dpd.AddValueChanged(control, UpdateMonochrome);
+                    dpd.AddValueChanged(control, MonochromeUpdate);
                     dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
-                    dpd.AddValueChanged(control, UpdateMonochrome);
+                    dpd.AddValueChanged(control, MonochromeUpdate);
                 }));
 
-                UpdateMonochrome(control, null);
+                MonochromeUpdate(control, null);
             }
         }
 
         private static void MonochromeRemoveEvents(Control control)
         {
             var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(control, UpdateMonochrome);
+            dpd.RemoveValueChanged(control, MonochromeUpdate);
             dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(control, UpdateMonochrome);
+            dpd.RemoveValueChanged(control, MonochromeUpdate);
             dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
-            dpd.RemoveValueChanged(control, UpdateMonochrome);
+            dpd.RemoveValueChanged(control, MonochromeUpdate);
         }
-        private static void UpdateMonochrome(object sender, EventArgs e)
+        private static void MonochromeUpdate(object sender, EventArgs e)
         {
             if (sender is Control control)
             {
-                var isMouseOver = control.IsMouseOver;
-                var isPressed = (control as ButtonBase)?.IsPressed ?? false;
-                var backColor = Tips.GetColorFromBrush(GetMonochrome(control));
-                if (isPressed)
-                    backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+60%", null);
-                else if (isMouseOver)
-                    backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+20%", null);
-
-                var foreColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+75%", null);
-                var borderColor = isPressed || isMouseOver ? (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+30%", null) : backColor;
-
-                control.Background = new SolidColorBrush(backColor);
-                control.Foreground = new SolidColorBrush(foreColor);
-                control.BorderBrush = new SolidColorBrush(borderColor);
-                control.Opacity = control.IsEnabled ? 1.0 : 0.4;
+                var newValues = Monochrome_GetNewColors(control, false);
+                control.Background = new SolidColorBrush(newValues.Item1);
+                control.Foreground = new SolidColorBrush(newValues.Item2);
+                control.BorderBrush = new SolidColorBrush(newValues.Item3);
+                control.Opacity = newValues.Item4;
             }
         }
+
+        private static Tuple<Color, Color, Color, double> Monochrome_GetNewColors(Control control, bool isAnimated)
+        {
+            var isMouseOver = control.IsMouseOver;
+            var isPressed = (control as ButtonBase)?.IsPressed ?? false;
+            var backColor = Tips.GetColorFromBrush(isAnimated ? GetMonochromeAnimated(control) : GetMonochrome(control));
+            if (isPressed)
+                backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+60%", null);
+            else if (isMouseOver)
+                backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+20%", null);
+
+            var foreColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+75%", null);
+            var borderColor = isPressed || isMouseOver ? (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+30%", null) : backColor;
+
+            var opacity = control.IsEnabled ? 1.0 : 0.4;
+
+            if (isAnimated)
+            {
+                if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
+                    control.Background = new SolidColorBrush(backColor);
+                if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
+                    control.Foreground = new SolidColorBrush(foreColor);
+                if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
+                    control.BorderBrush = new SolidColorBrush(borderColor);
+            }
+
+            return new Tuple<Color, Color, Color, double>(backColor, foreColor, borderColor, opacity);
+        }
+
         #endregion
 
         #region ================  Monochrome Animated ======================
@@ -136,54 +155,37 @@ namespace WpfInvestigate.Controls
                 {
                     var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty,
                         typeof(UIElement));
-                    dpd.AddValueChanged(control, UpdateMonochromeAnimated);
+                    dpd.AddValueChanged(control, MonochromeAnimatedUpdate);
                     dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-                    dpd.AddValueChanged(control, UpdateMonochromeAnimated);
+                    dpd.AddValueChanged(control, MonochromeAnimatedUpdate);
                     dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
-                    dpd.AddValueChanged(control, UpdateMonochromeAnimated);
+                    dpd.AddValueChanged(control, MonochromeAnimatedUpdate);
                 }));
 
-                UpdateMonochromeAnimated(control, null);
+                MonochromeAnimatedUpdate(control, null);
             }
         }
         private static void MonochromeAnimatedRemoveEvents(Control control)
         {
             var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(control, UpdateMonochromeAnimated);
+            dpd.RemoveValueChanged(control, MonochromeAnimatedUpdate);
             dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(control, UpdateMonochromeAnimated);
+            dpd.RemoveValueChanged(control, MonochromeAnimatedUpdate);
             dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
-            dpd.RemoveValueChanged(control, UpdateMonochromeAnimated);
+            dpd.RemoveValueChanged(control, MonochromeAnimatedUpdate);
         }
-        private static void UpdateMonochromeAnimated(object sender, EventArgs e)
+        private static void MonochromeAnimatedUpdate(object sender, EventArgs e)
         {
             if (sender is Control control)
             {
-                var isMouseOver = control.IsMouseOver;
-                var isPressed = (control as ButtonBase)?.IsPressed ?? false;
-                var backColor = Tips.GetColorFromBrush(GetMonochromeAnimated(control));
-                if (isPressed)
-                    backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+60%", null);
-                else if (isMouseOver)
-                    backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+20%", null);
+                var newValues = Monochrome_GetNewColors(control, true);
+                AnimateSolidColorBrush((SolidColorBrush)control.Background, newValues.Item1);
+                AnimateSolidColorBrush((SolidColorBrush)control.Foreground, newValues.Item2);
+                AnimateSolidColorBrush((SolidColorBrush)control.BorderBrush, newValues.Item3);
 
-                var foreColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+75%", null);
-                var borderColor = isPressed || isMouseOver ? (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+30%", null) : backColor;
-
-                if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
-                    control.Background = new SolidColorBrush(backColor);
-                if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
-                    control.Foreground = new SolidColorBrush(foreColor);
-                if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
-                    control.BorderBrush = new SolidColorBrush(borderColor);
-
-                AnimateSolidColorBrush((SolidColorBrush)control.Background, backColor);
-                AnimateSolidColorBrush((SolidColorBrush)control.Foreground, foreColor);
-                AnimateSolidColorBrush((SolidColorBrush)control.BorderBrush, borderColor);
-
-                if (!Tips.AreEqual(control.Opacity, control.IsEnabled ? 1.0 : 0.4))
+                if (!Tips.AreEqual(control.Opacity, newValues.Item4))
                 {
-                    var animation = new DoubleAnimation { From = control.Opacity, To = control.IsEnabled ? 1.0 : 0.4, Duration = AnimationHelper.SlowAnimationDuration };
+                    var animation = new DoubleAnimation { From = control.Opacity, To = newValues.Item4, Duration = AnimationHelper.SlowAnimationDuration };
                     control.BeginAnimation(UIElement.OpacityProperty, animation);
                 }
             }
@@ -217,45 +219,77 @@ namespace WpfInvestigate.Controls
                 {
                     var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty,
                         typeof(UIElement));
-                    dpd.AddValueChanged(control, UpdateBichrome);
+                    dpd.AddValueChanged(control, BichromeUpdate);
                     dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-                    dpd.AddValueChanged(control, UpdateBichrome);
+                    dpd.AddValueChanged(control, BichromeUpdate);
                     dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
-                    dpd.AddValueChanged(control, UpdateBichrome);
+                    dpd.AddValueChanged(control, BichromeUpdate);
                 }));
 
-                UpdateBichrome(control, null);
+                BichromeUpdate(control, null);
             }
-
-            /*Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
-            {
-                if (d is Control control && e.Property == BichromeBackgroundProperty)
-                    control.Background = (Brush)e.NewValue;
-                else if (d is Control control2 && e.Property == BichromeForegroundProperty)
-                    control2.Foreground = (Brush)e.NewValue;
-                else if (d is Panel panel && e.Property == BichromeBackgroundProperty)
-                    panel.Background = (Brush)e.NewValue;
-                else if (d is TextBlock textBlock && e.Property == BichromeBackgroundProperty)
-                    textBlock.Background = (Brush)e.NewValue;
-                else return;
-
-                var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-                dpd.RemoveValueChanged(d, UpdateBichrome);
-                dpd.AddValueChanged(d, UpdateBichrome);
-            }));*/
         }
         private static void BichromeRemoveEvents(Control control)
         {
             var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(control, UpdateBichrome);
+            dpd.RemoveValueChanged(control, BichromeUpdate);
             dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(control, UpdateBichrome);
+            dpd.RemoveValueChanged(control, BichromeUpdate);
             dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
-            dpd.RemoveValueChanged(control, UpdateBichrome);
+            dpd.RemoveValueChanged(control, BichromeUpdate);
         }
 
-        private static void UpdateBichrome(object sender, EventArgs e)
+        private static void BichromeUpdate(object sender, EventArgs e)
         {
+            if (sender is Control control)
+            {
+                var newValues = Bichrome_GetNewColors(control);
+                control.Background = new SolidColorBrush(newValues.Item1);
+                control.Foreground = new SolidColorBrush(newValues.Item2);
+                control.BorderBrush = new SolidColorBrush(newValues.Item3);
+                control.Opacity = newValues.Item4;
+            }
+        }
+
+        private static Tuple<Color, Color, Color, double> Bichrome_GetNewColors(Control control)
+        {
+            var isMouseOver = control.IsMouseOver;
+            var isPressed = (control as ButtonBase)?.IsPressed ?? false;
+            var biChromeBackColor = Tips.GetColorFromBrush(GetBichromeBackground(control));
+            var biChromeForeColor = Tips.GetColorFromBrush(GetBichromeForeground(control));
+
+            Color backColor, foreColor, borderColor;
+            var opacity = 0.7;
+
+            if (isPressed)
+            {
+                backColor = biChromeForeColor;
+                foreColor = biChromeBackColor;
+                borderColor = biChromeForeColor;
+            }
+            else if (isMouseOver)
+            {
+                backColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.75);
+                foreColor = biChromeForeColor;
+                borderColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
+                opacity = 1.0;
+            }
+            else
+            {
+                backColor = biChromeBackColor;
+                foreColor = biChromeForeColor;
+                borderColor = biChromeBackColor;
+            }
+            return new Tuple<Color, Color, Color, double>(backColor, foreColor, borderColor, control.IsEnabled ? opacity : 0.35);
+        }
+
+        private static Color ColorMix(Color color1, Color color2, double multiplier)
+        {
+            var multiplier2 = 1.0 - multiplier;
+            return Color.FromArgb(Convert.ToByte(color1.A * multiplier + color2.A * multiplier2),
+                Convert.ToByte(color1.R * multiplier + color2.R * multiplier2),
+                Convert.ToByte(color1.G * multiplier + color2.G * multiplier2),
+                Convert.ToByte(color1.B * multiplier + color2.B * multiplier2));
         }
     }
 }
