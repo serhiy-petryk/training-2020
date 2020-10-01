@@ -21,6 +21,8 @@ namespace WpfInvestigate.TestViews
             var color = new Common.ColorSpaces.HSL(_hue / 360.0, 1, 0.4).RGB.Color;
             ControlEffects.SetMonochrome(TestButtonWhite, new SolidColorBrush(color));
             ControlEffects.SetMonochrome(TestButtonBlack, new SolidColorBrush(color));
+            ControlEffects.SetMonochrome(AnimatedTestButtonWhite, new SolidColorBrush(color));
+            ControlEffects.SetMonochrome(AnimatedTestButtonBlack, new SolidColorBrush(color));
         }
     }
 }

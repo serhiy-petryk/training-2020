@@ -50,16 +50,30 @@
                     <Button Margin="5 0" Content="Change color" Click="ChangeColor_OnClick"/>
 
                     <Grid Background="Black">
-                        <Button x:Name="TestButtonBlack" Margin="5" Content="Test animated control" controls:ControlEffects.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                        <Button x:Name="TestButtonBlack" Margin="5" Content="Test control" controls:ControlEffects.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
                                 IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
                                 controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Background="White">
-                        <Button x:Name="TestButtonWhite" Margin="5" Content="Test animated control" controls:ControlEffects.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                        <Button x:Name="TestButtonWhite" Margin="5" Content="Test control" controls:ControlEffects.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
                                 IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
                                 controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
                 </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                    <Grid Background="Black">
+                        <Button x:Name="AnimatedTestButtonBlack" Margin="5" Content="Test animated control" controls:ControlEffects.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                                IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
+                                controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid Background="White">
+                        <Button x:Name="AnimatedTestButtonWhite" Margin="5" Content="Test animated control" controls:ControlEffects.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                                IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
+                                controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
+                    </Grid>
+                </WrapPanel>
+
             </StackPanel>
         </Grid>
 
