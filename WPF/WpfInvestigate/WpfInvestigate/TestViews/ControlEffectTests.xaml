@@ -33,19 +33,25 @@
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
 
-            <WrapPanel Grid.Row="0" Orientation="Horizontal">
-                <UserControl Margin="5" Content="Test control" controls:BootstrapEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30"/>
-                <Button Margin="5" Content="Test control" controls:BootstrapEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30" Style="{StaticResource SimpleButtonStyle}"
+            <StackPanel Orientation="Vertical">
+                <WrapPanel Orientation="Horizontal">
+                    <UserControl Margin="5" Content="Test control" controls:BootstrapEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30"/>
+                    <Button Margin="5" Content="Test control" controls:BootstrapEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30" Style="{StaticResource SimpleButtonStyle}"
                         VerticalContentAlignment="Center"/>
 
-                <Button Margin="5" Content="Test animated control" controls:BootstrapEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                    <Button Margin="5" Content="Test animated control" controls:BootstrapEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
                         controls:BootstrapEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
-            </WrapPanel>
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                    <CheckBox x:Name="cbEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center"/>
+                    <Label Content="IsEnabled?" Margin="5 0" VerticalContentAlignment="Center"/>
+                    <Button Margin="5" Content="Test animated control" controls:BootstrapEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                        IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
+                        controls:BootstrapEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+                </WrapPanel>
+            </StackPanel>
         </Grid>
 
     </Grid>
