@@ -64,7 +64,7 @@
                                 <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+20%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                To="{Binding ConverterParameter=20%/+75%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                                To="{Binding ConverterParameter=+20%/+75%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                                 <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
                                                 To="{Binding ConverterParameter=+25%/+30%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
                             </Storyboard>
