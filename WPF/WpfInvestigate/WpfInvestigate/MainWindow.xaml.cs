@@ -60,6 +60,7 @@ namespace WpfInvestigate
         private void KeyboardTest_OnClick(object sender, RoutedEventArgs e) => new VirtualKeyboardTests().Show();
         private void BootstrapTest_OnClick(object sender, RoutedEventArgs e) => new BootstrapTests().Show();
         private void ColorPickerTest_OnClick(object sender, RoutedEventArgs e) => new ColorPickerTests().Show();
+        private void ControlEffectTests_OnClick(object sender, RoutedEventArgs e) => new ControlEffectTests().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {

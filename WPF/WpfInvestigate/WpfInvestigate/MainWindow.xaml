@@ -31,13 +31,7 @@
             </ComboBox>
             <Label Content="WiP controls:" Margin="0 10 0 0"/>
             <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
-
-            <UserControl Margin="5" Content="Test control" controls:BootstrapEffect.Monochrome="Orange" Background="Yellow" BorderThickness="2" Width="100" Height="30"/>
-            <Button Margin="5" Content="Test control" controls:BootstrapEffect.Monochrome="Orange" Background="Yellow" BorderThickness="2" Width="100" Height="30" Style="{StaticResource SimpleButtonStyle}"
-                    VerticalContentAlignment="Center"/>
-
-            <Button Margin="5" Content="Test animated control" controls:BootstrapEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="4" Height="30" Style="{StaticResource SimpleButtonStyle}"
-                    controls:BootstrapEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+            <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffects" Click="ControlEffectTests_OnClick"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">

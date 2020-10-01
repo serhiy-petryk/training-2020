@@ -120,6 +120,9 @@
     <Compile Include="TestViews\CalculatorTests.xaml.cs">
       <DependentUpon>CalculatorTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\ControlEffectTests.xaml.cs">
+      <DependentUpon>ControlEffectTests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\ColorPickerTests.xaml.cs">
       <DependentUpon>ColorPickerTests.xaml</DependentUpon>
     </Compile>
@@ -239,6 +242,10 @@
     <Page Include="TestViews\CalculatorTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\ControlEffectTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\ColorPickerTests.xaml">
       <Generator>MSBuild:Compile</Generator>
