@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="600" Width="1000">
 
@@ -30,6 +31,10 @@
             </ComboBox>
             <Label Content="WiP controls:" Margin="0 10 0 0"/>
             <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
+
+            <UserControl Margin="5" Content="Test control" controls:BootstrapEffect.Monochrome="Orange" Background="Yellow" BorderThickness="2" Width="100" Height="30"/>
+            <Button Margin="5" Content="Test control" controls:BootstrapEffect.Monochrome="Orange" Background="Yellow" BorderThickness="2" Width="100" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                    VerticalContentAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -62,6 +63,60 @@ namespace WpfInvestigate.Controls
         }
         #endregion
 
+        #region ================  Monochrome  ======================
+        public static readonly DependencyProperty MonochromeProperty = DependencyProperty.RegisterAttached(
+            "Monochrome", typeof(Brush), typeof(BootstrapEffect), new UIPropertyMetadata(null, OnMonochromeChanged));
+
+        public static Brush GetMonochrome(DependencyObject obj) => (Brush)obj.GetValue(MonochromeProperty);
+        public static void SetMonochrome(DependencyObject obj, Brush value) => obj.SetValue(MonochromeProperty, value);
+        private static void OnMonochromeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is Control control)
+            {
+                RemoveEvents(control);
+
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+                {
+                    var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty,
+                        typeof(UIElement));
+                    dpd.AddValueChanged(control, UpdateMonochrome);
+                    dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
+                    dpd.AddValueChanged(control, UpdateMonochrome);
+
+                    UpdateMonochrome(control, null);
+                }));
+            }
+        }
+
+        private static void RemoveEvents(Control control)
+        {
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpd.RemoveValueChanged(control, UpdateMonochrome);
+            dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
+            dpd.RemoveValueChanged(control, UpdateMonochrome);
+        }
+        private static void UpdateMonochrome(object sender, EventArgs e)
+        {
+            if (sender is Control control)
+            {
+                var isMouseOver = control.IsMouseOver;
+                var isPressed = (control as ButtonBase)?.IsPressed ?? false;
+                var backColor = Tips.GetColorFromBrush(GetMonochrome(control));
+                if (isPressed)
+                    backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+60%", null);
+                else if (isMouseOver)
+                    backColor = (Color) ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+20%", null);
+
+                var foreColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+75%", null);
+                var borderColor = isPressed || isMouseOver ? (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+30%", null) : backColor;
+
+                control.Background = new SolidColorBrush(backColor);
+                control.Foreground = new SolidColorBrush(foreColor);
+                control.BorderBrush = new SolidColorBrush(borderColor);
+            }
+        }
+        #endregion
+
         // =========================
         public static readonly DependencyProperty BackgroundProperty = DependencyProperty.RegisterAttached(
             "Background", typeof(Brush), typeof(BootstrapEffect), new UIPropertyMetadata(null, OnPropertiesChanged));
@@ -90,7 +145,6 @@ namespace WpfInvestigate.Controls
                 dpd.RemoveValueChanged(d, OnMouseOver);
                 dpd.AddValueChanged(d, OnMouseOver);
             }));
-            
         }
 
         private static void OnMouseOver(object sender, EventArgs e)
