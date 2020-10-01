@@ -141,9 +141,9 @@
                         Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"
                         IsEnabled="False"/>
                 <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Width="30" Height="30"
-                        controls:BootstrapEffect.PathData="M0,2L6,2L3,5z"
+                        controls:ControlEffects.PathData="M0,2L6,2L3,5z"
                         Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static common:HueAndSaturationBrush.Instance}, ConverterParameter=70}"/>
-                <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Width="30" Height="30" controls:BootstrapEffect.PathData="M0,2L6,2L3,5z"
+                <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Width="30" Height="30" controls:ControlEffects.PathData="M0,2L6,2L3,5z"
                         Background="#FFD98C8C"/>
                 <Button Style="{StaticResource MonochromeAnimatedClearButtonStyle}" Background="Blue" Width="30" Height="30"/>
                 <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="Blue" Width="30" Height="30" Content="Blue" BorderThickness="2"/>
@@ -310,7 +310,7 @@
                 <Button Style="{StaticResource MonochromeAnimatedButtonStyle}"
                         Margin="5 0" Height="30" Width="30"
                         Background="{Binding ElementName=AA, Path=Background}"
-                        controls:BootstrapEffect.PathData="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
+                        controls:ControlEffects.PathData="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
