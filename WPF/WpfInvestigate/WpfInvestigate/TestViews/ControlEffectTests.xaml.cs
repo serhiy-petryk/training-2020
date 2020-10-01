@@ -19,7 +19,7 @@ namespace WpfInvestigate.TestViews
         private void ChangeColor_OnClick(object sender, RoutedEventArgs e)
         {
             _hue = (_hue + 30) % 360;
-            var color = new Common.ColorSpaces.HSL(_hue / 360.0, 0.7, 0.4).RGB.Color;
+            var color = new Common.ColorSpaces.HSL(_hue / 360.0, 1, 0.4).RGB.Color;
             ControlEffects.SetMonochrome(TestButton, new SolidColorBrush(color));
         }
     }

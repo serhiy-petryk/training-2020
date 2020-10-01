@@ -49,7 +49,7 @@
                     <Label Content="IsEnabled?" Margin="5 0" VerticalContentAlignment="Center"/>
                     <Button Margin="5 0" Content="Change color" Click="ChangeColor_OnClick"/>
 
-                    <Button x:Name="TestButton" Margin="5" Content="Test animated control" controls:ControlEffects.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                    <Button x:Name="TestButton" Margin="5" Content="Test animated control" controls:ControlEffects.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
                             IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
                             controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
                 </WrapPanel>
