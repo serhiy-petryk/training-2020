@@ -114,16 +114,10 @@ namespace WpfInvestigate.Controls
                 var foreColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+75%", null);
                 var borderColor = isPressed || isMouseOver ? (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+30%", null) : backColor;
 
-                if (!control.IsEnabled)
-                {
-                    backColor.ScA = 0.55f;
-                    foreColor.ScA = 0.55f;
-                    borderColor.ScA = 0.55f;
-                }
-
                 control.Background = new SolidColorBrush(backColor);
                 control.Foreground = new SolidColorBrush(foreColor);
                 control.BorderBrush = new SolidColorBrush(borderColor);
+                control.Opacity = control.IsEnabled ? 1.0 : 0.4;
             }
         }
         #endregion

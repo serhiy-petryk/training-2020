@@ -113,7 +113,6 @@
     </Compile>
     <Compile Include="Controls\WatermarkEffect.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
-    <Compile Include="Temp\ColorUtilities.cs" />
     <Compile Include="Temp\OriginalVirtualKeyboard.xaml.cs">
       <DependentUpon>OriginalVirtualKeyboard.xaml</DependentUpon>
     </Compile>
