@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -102,7 +103,7 @@ namespace WpfInvestigate.Controls
         {
             if (sender is Control control)
             {
-                var newValues = Monochrome_GetNewColors(control, false);
+                var newValues = Monochrome_GetNewColors(control);
                 control.Background = new SolidColorBrush(newValues.Item1);
                 control.Foreground = new SolidColorBrush(newValues.Item2);
                 control.BorderBrush = new SolidColorBrush(newValues.Item3);
@@ -110,11 +111,11 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private static Tuple<Color, Color, Color, double> Monochrome_GetNewColors(Control control, bool isAnimated)
+        private static Tuple<Color, Color, Color, double> Monochrome_GetNewColors(Control control, [CallerMemberName] string callerName = null)
         {
             var isMouseOver = control.IsMouseOver;
             var isPressed = (control as ButtonBase)?.IsPressed ?? false;
-            var backColor = Tips.GetColorFromBrush(isAnimated ? GetMonochromeAnimated(control) : GetMonochrome(control));
+            var backColor = Tips.GetColorFromBrush(callerName == nameof(MonochromeUpdate) ? GetMonochrome(control) : GetMonochromeAnimated(control));
             if (isPressed)
                 backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+60%", null);
             else if (isMouseOver)
@@ -122,18 +123,7 @@ namespace WpfInvestigate.Controls
 
             var foreColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+75%", null);
             var borderColor = isPressed || isMouseOver ? (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+30%", null) : backColor;
-
             var opacity = control.IsEnabled ? 1.0 : 0.4;
-
-            if (isAnimated)
-            {
-                if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
-                    control.Background = new SolidColorBrush(backColor);
-                if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
-                    control.Foreground = new SolidColorBrush(foreColor);
-                if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
-                    control.BorderBrush = new SolidColorBrush(borderColor);
-            }
 
             return new Tuple<Color, Color, Color, double>(backColor, foreColor, borderColor, opacity);
         }
@@ -178,7 +168,15 @@ namespace WpfInvestigate.Controls
         {
             if (sender is Control control)
             {
-                var newValues = Monochrome_GetNewColors(control, true);
+                var newValues = Monochrome_GetNewColors(control);
+
+                if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
+                    control.Background = new SolidColorBrush(newValues.Item1);
+                if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
+                    control.Foreground = new SolidColorBrush(newValues.Item2);
+                if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
+                    control.BorderBrush = new SolidColorBrush(newValues.Item3);
+
                 AnimateSolidColorBrush((SolidColorBrush)control.Background, newValues.Item1);
                 AnimateSolidColorBrush((SolidColorBrush)control.Foreground, newValues.Item2);
                 AnimateSolidColorBrush((SolidColorBrush)control.BorderBrush, newValues.Item3);
