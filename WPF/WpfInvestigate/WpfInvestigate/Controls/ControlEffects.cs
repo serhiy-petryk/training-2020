@@ -197,7 +197,7 @@ namespace WpfInvestigate.Controls
         }
         #endregion
 
-        // =============================  Bichrome  ===========================
+        #region =============================  Bichrome  ===========================
         public static readonly DependencyProperty BichromeBackgroundProperty = DependencyProperty.RegisterAttached(
             "BichromeBackground", typeof(Brush), typeof(ControlEffects), new UIPropertyMetadata(null, OnBichromeChanged));
         public static Brush GetBichromeBackground(DependencyObject obj) => (Brush)obj.GetValue(BichromeBackgroundProperty);
@@ -249,12 +249,12 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private static Tuple<Color, Color, Color, double> Bichrome_GetNewColors(Control control)
+        private static Tuple<Color, Color, Color, double> Bichrome_GetNewColors(Control control, [CallerMemberName] string callerName = null)
         {
             var isMouseOver = control.IsMouseOver;
             var isPressed = (control as ButtonBase)?.IsPressed ?? false;
-            var biChromeBackColor = Tips.GetColorFromBrush(GetBichromeBackground(control));
-            var biChromeForeColor = Tips.GetColorFromBrush(GetBichromeForeground(control));
+            var biChromeBackColor = Tips.GetColorFromBrush(callerName == nameof(BichromeUpdate) ? GetBichromeBackground(control) : GetBichromeAnimatedBackground(control));
+            var biChromeForeColor = Tips.GetColorFromBrush(callerName == nameof(BichromeUpdate) ? GetBichromeForeground(control) : GetBichromeAnimatedForeground(control));
 
             Color backColor, foreColor, borderColor;
             var opacity = 0.7;
@@ -289,5 +289,74 @@ namespace WpfInvestigate.Controls
                 Convert.ToByte(color1.G * multiplier + color2.G * multiplier2),
                 Convert.ToByte(color1.B * multiplier + color2.B * multiplier2));
         }
+
+        #endregion
+
+        #region =============================  Bichrome Animated ===========================
+        public static readonly DependencyProperty BichromeAnimatedBackgroundProperty = DependencyProperty.RegisterAttached(
+            "BichromeAnimatedBackground", typeof(Brush), typeof(ControlEffects), new UIPropertyMetadata(null, OnBichromeAnimatedChanged));
+        public static Brush GetBichromeAnimatedBackground(DependencyObject obj) => (Brush)obj.GetValue(BichromeAnimatedBackgroundProperty);
+        public static void SetBichromeAnimatedBackground(DependencyObject obj, Brush value) => obj.SetValue(BichromeAnimatedBackgroundProperty, value);
+
+        public static readonly DependencyProperty BichromeAnimatedForegroundProperty = DependencyProperty.RegisterAttached(
+            "BichromeAnimatedForeground", typeof(Brush), typeof(ControlEffects), new FrameworkPropertyMetadata(null, OnBichromeAnimatedChanged));
+        public static Brush GetBichromeAnimatedForeground(DependencyObject obj) => (Brush)obj.GetValue(BichromeAnimatedForegroundProperty);
+        public static void SetBichromeAnimatedForeground(DependencyObject obj, Brush value) => obj.SetValue(BichromeAnimatedForegroundProperty, value);
+        private static void OnBichromeAnimatedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is Control control)
+            {
+                BichromeAnimatedRemoveEvents(control);
+
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+                {
+                    var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty,
+                        typeof(UIElement));
+                    dpd.AddValueChanged(control, BichromeAnimatedUpdate);
+                    dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
+                    dpd.AddValueChanged(control, BichromeAnimatedUpdate);
+                    dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
+                    dpd.AddValueChanged(control, BichromeAnimatedUpdate);
+                }));
+
+                BichromeAnimatedUpdate(control, null);
+            }
+        }
+        private static void BichromeAnimatedRemoveEvents(Control control)
+        {
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpd.RemoveValueChanged(control, BichromeAnimatedUpdate);
+            dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
+            dpd.RemoveValueChanged(control, BichromeAnimatedUpdate);
+            dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
+            dpd.RemoveValueChanged(control, BichromeAnimatedUpdate);
+        }
+
+        private static void BichromeAnimatedUpdate(object sender, EventArgs e)
+        {
+            if (sender is Control control)
+            {
+                var newValues = Bichrome_GetNewColors(control);
+
+                if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
+                    control.Background = new SolidColorBrush(newValues.Item1);
+                if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
+                    control.Foreground = new SolidColorBrush(newValues.Item2);
+                if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
+                    control.BorderBrush = new SolidColorBrush(newValues.Item3);
+
+                AnimateSolidColorBrush((SolidColorBrush)control.Background, newValues.Item1);
+                AnimateSolidColorBrush((SolidColorBrush)control.Foreground, newValues.Item2);
+                AnimateSolidColorBrush((SolidColorBrush)control.BorderBrush, newValues.Item3);
+
+                if (!Tips.AreEqual(control.Opacity, newValues.Item4))
+                {
+                    var animation = new DoubleAnimation { From = control.Opacity, To = newValues.Item4, Duration = AnimationHelper.SlowAnimationDuration };
+                    control.BeginAnimation(UIElement.OpacityProperty, animation);
+                }
+            }
+        }
+        #endregion
+
     }
 }

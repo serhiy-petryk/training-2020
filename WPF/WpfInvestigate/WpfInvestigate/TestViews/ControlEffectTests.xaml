@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         mc:Ignorable="d"
-        Title="ColorPickerTests" Height="600" Width="700">
+        Title="ColorPickerTests" Height="600" Width="900">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -45,45 +45,59 @@
                 </WrapPanel>
 
                 <WrapPanel Orientation="Horizontal">
-                    <CheckBox x:Name="cbEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center"/>
-                    <Label Content="IsEnabled?" Margin="5 0" VerticalContentAlignment="Center"/>
-                    <Button Margin="5 0" Content="Change color" Click="ChangeColor_OnClick"/>
-
-                    <Grid Background="Black">
-                        <Button x:Name="TestButtonBlack" Margin="5" Content="Test control" controls:ControlEffects.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
-                                IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
-                                controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
-                    </Grid>
-                    <Grid Background="White">
-                        <Button x:Name="TestButtonWhite" Margin="5" Content="Test control" controls:ControlEffects.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
-                                IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
-                                controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
-                    </Grid>
-                </WrapPanel>
-
-                <WrapPanel Orientation="Horizontal">
                     <Label Content="Monochrome:" Margin="5 0" VerticalAlignment="Center"/>
+
+                    <CheckBox x:Name="cbMonochromeEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center"/>
+                    <Label Content="IsEnabled?" Margin="5 0" VerticalContentAlignment="Center"/>
+                    <Button Margin="5 0" Content="Change color" Click="Monochrome_ChangeColor_OnClick"/>
+
                     <Grid Background="Black">
-                        <Button x:Name="AnimatedTestButtonBlack" Margin="5" Content="Test animated control" controls:ControlEffects.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
-                                IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
+                        <Button x:Name="MonochromeButtonBlack" Margin="5" Content="Test control" controls:ControlEffects.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                                IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
                                 controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Background="White">
-                        <Button x:Name="AnimatedTestButtonWhite" Margin="5" Content="Test animated control" controls:ControlEffects.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
-                                IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
+                        <Button x:Name="MonochromeButtonWhite" Margin="5" Content="Test control" controls:ControlEffects.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                                IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
+                                controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid Background="Black">
+                        <Button x:Name="MonochromeAnimatedButtonBlack" Margin="5" Content="Test animated control" controls:ControlEffects.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                                IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
+                                controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid Background="White">
+                        <Button x:Name="MonochromeAnimatedButtonWhite" Margin="5" Content="Test animated control" controls:ControlEffects.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource SimpleButtonStyle}"
+                                IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
                                 controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
                 </WrapPanel>
 
                 <WrapPanel Orientation="Horizontal">
                     <Label Content="Bichrome:" Margin="5 0" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="cbBichromeEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center"/>
+                    <Label Content="IsEnabled?" Margin="5 0" VerticalContentAlignment="Center"/>
+                    <Button Margin="5 0" Content="Change color" Click="Bichrome_ChangeColor_OnClick"/>
+
                     <Grid Background="Black">
-                        <Button Style="{StaticResource SimpleButtonStyle}" Width="140" Height="40" Content="Bichrome" FontWeight="Bold" BorderThickness="2" Margin="5"
+                        <Button x:Name="BichromeButtonBlack" Style="{StaticResource SimpleButtonStyle}" Width="140" Height="40" Content="Bichrome" FontWeight="Bold" BorderThickness="2" Margin="5"
+                                IsEnabled="{Binding ElementName=cbBichromeEnabled, Path=IsChecked}"
                                 controls:ControlEffects.BichromeBackground="Blue" controls:ControlEffects.BichromeForeground="Yellow"/>
                     </Grid>
                     <Grid Background="White">
-                        <Button Style="{StaticResource SimpleButtonStyle}" Width="140" Height="40" Content="Bichrome" FontWeight="Bold" BorderThickness="2" Margin="5"
+                        <Button x:Name="BichromeButtonWhite" Style="{StaticResource SimpleButtonStyle}" Width="140" Height="40" Content="Bichrome" FontWeight="Bold" BorderThickness="2" Margin="5"
+                                IsEnabled="{Binding ElementName=cbBichromeEnabled, Path=IsChecked}"
                                 controls:ControlEffects.BichromeBackground="Blue" controls:ControlEffects.BichromeForeground="Yellow"/>
+                    </Grid>
+                    <Grid Background="Black">
+                        <Button x:Name="BichromeAnimatedButtonBlack" Style="{StaticResource SimpleButtonStyle}" Width="140" Height="40" Content="Bichrome Animated" FontWeight="Bold" BorderThickness="2" Margin="5"
+                                IsEnabled="{Binding ElementName=cbBichromeEnabled, Path=IsChecked}"
+                                controls:ControlEffects.BichromeAnimatedBackground="Blue" controls:ControlEffects.BichromeAnimatedForeground="Yellow"/>
+                    </Grid>
+                    <Grid Background="White">
+                        <Button x:Name="BichromeAnimatedButtonWhite" Style="{StaticResource SimpleButtonStyle}" Width="140" Height="40" Content="Bichrome Animated" FontWeight="Bold" BorderThickness="2" Margin="5"
+                                IsEnabled="{Binding ElementName=cbBichromeEnabled, Path=IsChecked}"
+                                controls:ControlEffects.BichromeAnimatedBackground="Blue" controls:ControlEffects.BichromeAnimatedForeground="Yellow"/>
                     </Grid>
                 </WrapPanel>
 
