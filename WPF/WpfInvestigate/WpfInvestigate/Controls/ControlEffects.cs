@@ -151,7 +151,7 @@ namespace WpfInvestigate.Controls
             var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
             dpd.RemoveValueChanged(control, UpdateMonochromeAnimated);
             dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(control, UpdateMonochrome);
+            dpd.RemoveValueChanged(control, UpdateMonochromeAnimated);
             dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
             dpd.RemoveValueChanged(control, UpdateMonochromeAnimated);
         }
@@ -197,52 +197,65 @@ namespace WpfInvestigate.Controls
         }
         #endregion
 
-        // =========================
-        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.RegisterAttached(
-            "Background", typeof(Brush), typeof(ControlEffects), new UIPropertyMetadata(null, OnPropertiesChanged));
-        public static Brush GetBackground(DependencyObject obj) => (Brush)obj.GetValue(BackgroundProperty);
-        public static void SetBackground(DependencyObject obj, Brush value) => obj.SetValue(BackgroundProperty, value);
+        // =============================  Bichrome  ===========================
+        public static readonly DependencyProperty BichromeBackgroundProperty = DependencyProperty.RegisterAttached(
+            "BichromeBackground", typeof(Brush), typeof(ControlEffects), new UIPropertyMetadata(null, OnBichromeChanged));
+        public static Brush GetBichromeBackground(DependencyObject obj) => (Brush)obj.GetValue(BichromeBackgroundProperty);
+        public static void SetBichromeBackground(DependencyObject obj, Brush value) => obj.SetValue(BichromeBackgroundProperty, value);
 
-        public static readonly DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(
-            "Foreground", typeof(Brush), typeof(ControlEffects), new FrameworkPropertyMetadata(null, OnPropertiesChanged));
-        public static Brush GetForeground(DependencyObject obj) => (Brush)obj.GetValue(ForegroundProperty);
-        public static void SetForeground(DependencyObject obj, Brush value) => obj.SetValue(ForegroundProperty, value);
-        private static void OnPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static readonly DependencyProperty BichromeForegroundProperty = DependencyProperty.RegisterAttached(
+            "BichromeForeground", typeof(Brush), typeof(ControlEffects), new FrameworkPropertyMetadata(null, OnBichromeChanged));
+        public static Brush GetBichromeForeground(DependencyObject obj) => (Brush)obj.GetValue(BichromeForegroundProperty);
+        public static void SetBichromeForeground(DependencyObject obj, Brush value) => obj.SetValue(BichromeForegroundProperty, value);
+        private static void OnBichromeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            if (d is Control control)
             {
-                if (d is Control control && e.Property == BackgroundProperty)
+                BichromeRemoveEvents(control);
+
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+                {
+                    var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty,
+                        typeof(UIElement));
+                    dpd.AddValueChanged(control, UpdateBichrome);
+                    dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
+                    dpd.AddValueChanged(control, UpdateBichrome);
+                    dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
+                    dpd.AddValueChanged(control, UpdateBichrome);
+                }));
+
+                UpdateBichrome(control, null);
+            }
+
+            /*Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            {
+                if (d is Control control && e.Property == BichromeBackgroundProperty)
                     control.Background = (Brush)e.NewValue;
-                else if (d is Control control2 && e.Property == ForegroundProperty)
+                else if (d is Control control2 && e.Property == BichromeForegroundProperty)
                     control2.Foreground = (Brush)e.NewValue;
-                else if (d is Panel panel && e.Property == BackgroundProperty)
+                else if (d is Panel panel && e.Property == BichromeBackgroundProperty)
                     panel.Background = (Brush)e.NewValue;
-                else if (d is TextBlock textBlock && e.Property == BackgroundProperty)
+                else if (d is TextBlock textBlock && e.Property == BichromeBackgroundProperty)
                     textBlock.Background = (Brush)e.NewValue;
                 else return;
 
                 var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-                dpd.RemoveValueChanged(d, OnMouseOver);
-                dpd.AddValueChanged(d, OnMouseOver);
-            }));
+                dpd.RemoveValueChanged(d, UpdateBichrome);
+                dpd.AddValueChanged(d, UpdateBichrome);
+            }));*/
+        }
+        private static void BichromeRemoveEvents(Control control)
+        {
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpd.RemoveValueChanged(control, UpdateBichrome);
+            dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
+            dpd.RemoveValueChanged(control, UpdateBichrome);
+            dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
+            dpd.RemoveValueChanged(control, UpdateBichrome);
         }
 
-        private static void OnMouseOver(object sender, EventArgs e)
+        private static void UpdateBichrome(object sender, EventArgs e)
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
-            {
-                var element = (UIElement)sender;
-                var endColor = element.IsMouseOver ? Colors.Red : ((SolidColorBrush)GetBackground(element)).Color;
-                // VisualStateManager.GoToState((FrameworkElement)element, "Pressed", false);
-                // VisualStateManager.GoToElementState((FrameworkElement)element, "Disabled", false);
-                var startColor = element.IsMouseOver ? ((SolidColorBrush)GetBackground(element)).Color : Colors.Red;
-                var animation = new ColorAnimation(startColor, endColor, TimeSpan.FromMilliseconds(120), FillBehavior.HoldEnd);
-                if (element is Control control)
-                {
-                    control.Background = new SolidColorBrush(startColor);
-                    control.Background.BeginAnimation(SolidColorBrush.ColorProperty, animation);
-                }
-            }));
         }
     }
 }
