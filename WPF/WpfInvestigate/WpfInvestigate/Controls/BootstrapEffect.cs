@@ -73,7 +73,7 @@ namespace WpfInvestigate.Controls
         {
             if (d is Control control)
             {
-                RemoveEvents(control);
+                MonochromeRemoveEvents(control);
 
                 Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
                 {
@@ -88,7 +88,7 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private static void RemoveEvents(Control control)
+        private static void MonochromeRemoveEvents(Control control)
         {
             var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
             dpd.RemoveValueChanged(control, UpdateMonochrome);
@@ -106,6 +106,59 @@ namespace WpfInvestigate.Controls
                     backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+60%", null);
                 else if (isMouseOver)
                     backColor = (Color) ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+20%", null);
+
+                var foreColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+75%", null);
+                var borderColor = isPressed || isMouseOver ? (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+30%", null) : backColor;
+
+                control.Background = new SolidColorBrush(backColor);
+                control.Foreground = new SolidColorBrush(foreColor);
+                control.BorderBrush = new SolidColorBrush(borderColor);
+            }
+        }
+        #endregion
+
+        #region ================  Monochrome Animated ======================
+        public static readonly DependencyProperty MonochromeAnimatedProperty = DependencyProperty.RegisterAttached(
+            "MonochromeAnimated", typeof(Brush), typeof(BootstrapEffect), new UIPropertyMetadata(null, OnMonochromeAnimatedChanged));
+
+        public static Brush GetMonochromeAnimated(DependencyObject obj) => (Brush)obj.GetValue(MonochromeAnimatedProperty);
+        public static void SetMonochromeAnimated(DependencyObject obj, Brush value) => obj.SetValue(MonochromeAnimatedProperty, value);
+        private static void OnMonochromeAnimatedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is Control control)
+            {
+                MonochromeAnimatedRemoveEvents(control);
+
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+                {
+                    var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty,
+                        typeof(UIElement));
+                    dpd.AddValueChanged(control, UpdateMonochromeAnimated);
+                    dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
+                    dpd.AddValueChanged(control, UpdateMonochromeAnimated);
+
+                    UpdateMonochromeAnimated(control, null);
+                }));
+            }
+        }
+        private static void MonochromeAnimatedRemoveEvents(Control control)
+        {
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpd.RemoveValueChanged(control, UpdateMonochromeAnimated);
+            dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
+            dpd.RemoveValueChanged(control, UpdateMonochromeAnimated);
+        }
+        private static void UpdateMonochromeAnimated(object sender, EventArgs e)
+        {
+            if (sender is Control control)
+            {
+                var isMouseOver = control.IsMouseOver;
+                var isPressed = (control as ButtonBase)?.IsPressed ?? false;
+                var backColor = Tips.GetColorFromBrush(GetMonochromeAnimated(control));
+                if (isPressed)
+                    backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+60%", null);
+                else if (isMouseOver)
+                    backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+20%", null);
 
                 var foreColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+75%", null);
                 var borderColor = isPressed || isMouseOver ? (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+30%", null) : backColor;
