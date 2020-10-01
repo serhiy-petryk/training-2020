@@ -51,7 +51,7 @@ namespace WpfInvestigate.Controls
         private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var newRadius = (double)e.NewValue;
-            if (!double.IsNaN(newRadius) && newRadius > 0)
+            if (!double.IsNaN(newRadius) && newRadius >= -0.0001)
             {
                 Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
                 {
@@ -108,7 +108,7 @@ namespace WpfInvestigate.Controls
                 if (isPressed)
                     backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+60%", null);
                 else if (isMouseOver)
-                    backColor = (Color) ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+20%", null);
+                    backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+20%", null);
 
                 var foreColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+75%", null);
                 var borderColor = isPressed || isMouseOver ? (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+30%", null) : backColor;
@@ -170,11 +170,30 @@ namespace WpfInvestigate.Controls
                 var foreColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+75%", null);
                 var borderColor = isPressed || isMouseOver ? (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+30%", null) : backColor;
 
-                control.Background = new SolidColorBrush(backColor);
-                control.Foreground = new SolidColorBrush(foreColor);
-                control.BorderBrush = new SolidColorBrush(borderColor);
-                control.Opacity = control.IsEnabled ? 1.0 : 0.4;
+                if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
+                    control.Background = new SolidColorBrush(backColor);
+                if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
+                    control.Foreground = new SolidColorBrush(foreColor);
+                if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
+                    control.BorderBrush = new SolidColorBrush(borderColor);
+
+                AnimateSolidColorBrush((SolidColorBrush)control.Background, backColor);
+                AnimateSolidColorBrush((SolidColorBrush)control.Foreground, foreColor);
+                AnimateSolidColorBrush((SolidColorBrush)control.BorderBrush, borderColor);
+
+                if (!Tips.AreEqual(control.Opacity, control.IsEnabled ? 1.0 : 0.4))
+                {
+                    var animation = new DoubleAnimation { From = control.Opacity, To = control.IsEnabled ? 1.0 : 0.4, Duration = AnimationHelper.SlowAnimationDuration };
+                    control.BeginAnimation(UIElement.OpacityProperty, animation);
+                }
             }
+        }
+        private static void AnimateSolidColorBrush(SolidColorBrush brush, Color newColor)
+        {
+            if (brush.Color == newColor)
+                return;
+            var animation = new ColorAnimation { From = brush.Color, To = newColor, Duration = Common.AnimationHelper.SlowAnimationDuration };
+            brush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
         }
         #endregion
 
@@ -183,7 +202,7 @@ namespace WpfInvestigate.Controls
             "Background", typeof(Brush), typeof(ControlEffects), new UIPropertyMetadata(null, OnPropertiesChanged));
         public static Brush GetBackground(DependencyObject obj) => (Brush)obj.GetValue(BackgroundProperty);
         public static void SetBackground(DependencyObject obj, Brush value) => obj.SetValue(BackgroundProperty, value);
-        
+
         public static readonly DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(
             "Foreground", typeof(Brush), typeof(ControlEffects), new FrameworkPropertyMetadata(null, OnPropertiesChanged));
         public static Brush GetForeground(DependencyObject obj) => (Brush)obj.GetValue(ForegroundProperty);
@@ -199,7 +218,7 @@ namespace WpfInvestigate.Controls
                 else if (d is Panel panel && e.Property == BackgroundProperty)
                     panel.Background = (Brush)e.NewValue;
                 else if (d is TextBlock textBlock && e.Property == BackgroundProperty)
-                    textBlock.Background = (Brush) e.NewValue;
+                    textBlock.Background = (Brush)e.NewValue;
                 else return;
 
                 var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
@@ -212,11 +231,11 @@ namespace WpfInvestigate.Controls
         {
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
             {
-                var element = (UIElement) sender;
-                var endColor = element.IsMouseOver ? Colors.Red : ((SolidColorBrush) GetBackground(element)).Color;
+                var element = (UIElement)sender;
+                var endColor = element.IsMouseOver ? Colors.Red : ((SolidColorBrush)GetBackground(element)).Color;
                 // VisualStateManager.GoToState((FrameworkElement)element, "Pressed", false);
                 // VisualStateManager.GoToElementState((FrameworkElement)element, "Disabled", false);
-                var startColor = element.IsMouseOver ? ((SolidColorBrush) GetBackground(element)).Color : Colors.Red;
+                var startColor = element.IsMouseOver ? ((SolidColorBrush)GetBackground(element)).Color : Colors.Red;
                 var animation = new ColorAnimation(startColor, endColor, TimeSpan.FromMilliseconds(120), FillBehavior.HoldEnd);
                 if (element is Control control)
                 {
