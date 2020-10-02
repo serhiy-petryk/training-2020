@@ -63,6 +63,8 @@ namespace WpfInvestigate.Controls
         }
         #endregion
 
+        #region ===============  Chrome effects  ===============
+
         #region ================  Monochrome  ======================
         public static readonly DependencyProperty MonochromeProperty = DependencyProperty.RegisterAttached(
             "Monochrome", typeof(Brush), typeof(ControlEffects), new UIPropertyMetadata(null, OnChromeChanged));
@@ -246,6 +248,8 @@ namespace WpfInvestigate.Controls
                 brush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
             }
         }
+        #endregion
+
         #endregion
 
     }
