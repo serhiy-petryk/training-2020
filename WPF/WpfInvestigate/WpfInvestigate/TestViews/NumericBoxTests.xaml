@@ -49,9 +49,12 @@
 
             <Button Grid.Row="0" Click="XButtonBase_OnClick">Set new Value</Button>
 
-            <controls:NumericBox Grid.Row="3" x:Name="AA" Width="200" controls:WatermarkEffect.Watermark="No value"
-                                 Height="64" VisibleButtons="Close,Calculator,UpDown"
-                                 IsNullable="True" Value="23"/>
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <controls:NumericBox x:Name="AA" Width="200" controls:WatermarkEffect.Watermark="No value"
+                                     Height="64" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
+                <controls:NumericBox Margin="5 0" Width="100" controls:WatermarkEffect.Watermark="No value" Background="Yellow" Foreground="Blue"
+                                     Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
+            </StackPanel>
 
             <Label Grid.Row="4" Content="{Binding ElementName=AA, Path=Value}" Background="Yellow" Margin="8" Focusable="True"/>
 
