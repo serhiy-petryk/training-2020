@@ -106,24 +106,23 @@ namespace WpfInvestigate.Controls
         #region ====================  Chrome common methods  ======================
         private static void OnChromeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is Control control)
+            if (!(d is Control control)) return;
+
+            OnChromeUnloaded(control, null);
+
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
-                OnChromeUnloaded(control, null);
+                control.Unloaded += OnChromeUnloaded;
+                var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty,
+                    typeof(UIElement));
+                dpd.AddValueChanged(control, ChromeUpdate);
+                dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
+                dpd.AddValueChanged(control, ChromeUpdate);
+                dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
+                dpd.AddValueChanged(control, ChromeUpdate);
+            }));
 
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
-                {
-                    control.Unloaded += OnChromeUnloaded;
-                    var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty,
-                        typeof(UIElement));
-                    dpd.AddValueChanged(control, ChromeUpdate);
-                    dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-                    dpd.AddValueChanged(control, ChromeUpdate);
-                    dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
-                    dpd.AddValueChanged(control, ChromeUpdate);
-                }));
-
-                ChromeUpdate(control, null);
-            }
+            ChromeUpdate(control, null);
         }
 
         private static void OnChromeUnloaded(object sender, RoutedEventArgs e)
@@ -140,32 +139,36 @@ namespace WpfInvestigate.Controls
 
         private static void ChromeUpdate(object sender, EventArgs e)
         {
-            if (sender is Control control)
+            if (!(sender is Control control)) return;
+
+            var getBackgroundMethod = Chrome_GetBackgroundMethod(control);
+            var newValues = Chrome_GetNewColors(control, getBackgroundMethod);
+
+            if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
+                control.Background = new SolidColorBrush(newValues.Item1);
+            if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
+                control.Foreground = new SolidColorBrush(newValues.Item2);
+            if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
+                control.BorderBrush = new SolidColorBrush(newValues.Item3);
+
+            var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
+            Chrome_SetBrushColor((SolidColorBrush)control.Background, newValues.Item1, noAnimate);
+            Chrome_SetBrushColor((SolidColorBrush)control.Foreground, newValues.Item2, noAnimate);
+            Chrome_SetBrushColor((SolidColorBrush)control.BorderBrush, newValues.Item3, noAnimate);
+
+            if (!Tips.AreEqual(control.Opacity, newValues.Item4))
             {
-                var getBackgroundMethod = Chrome_GetBackgroundMethod(control);
-                var newValues = Chrome_GetNewColors(control, getBackgroundMethod);
-
-                if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
-                    control.Background = new SolidColorBrush(newValues.Item1);
-                if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
-                    control.Foreground = new SolidColorBrush(newValues.Item2);
-                if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
-                    control.BorderBrush = new SolidColorBrush(newValues.Item3);
-
-                var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
-                Chrome_SetBrushColor((SolidColorBrush)control.Background, newValues.Item1, noAnimate);
-                Chrome_SetBrushColor((SolidColorBrush)control.Foreground, newValues.Item2, noAnimate);
-                Chrome_SetBrushColor((SolidColorBrush)control.BorderBrush, newValues.Item3, noAnimate);
-
-                if (!Tips.AreEqual(control.Opacity, newValues.Item4))
+                if (getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground)
+                    control.Opacity = newValues.Item4;
+                else
                 {
-                    if (getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground)
-                        control.Opacity = newValues.Item4;
-                    else
+                    var animation = new DoubleAnimation
                     {
-                            var animation = new DoubleAnimation {From = control.Opacity, To = newValues.Item4, Duration = AnimationHelper.SlowAnimationDuration};
-                            control.BeginAnimation(UIElement.OpacityProperty, animation);
-                    }
+                        From = control.Opacity,
+                        To = newValues.Item4,
+                        Duration = AnimationHelper.SlowAnimationDuration
+                    };
+                    control.BeginAnimation(UIElement.OpacityProperty, animation);
                 }
             }
         }
