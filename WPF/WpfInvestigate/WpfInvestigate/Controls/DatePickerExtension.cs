@@ -66,16 +66,15 @@ namespace WpfInvestigate.Controls
             button = dp.Template.FindName("PART_Button", dp) as Button;
             var grid = button.Parent as Grid;
             grid.ColumnDefinitions.Add(new ColumnDefinition {Width = GridLength.Auto});
-            var style = dp.FindResource("MonochromeAnimatedClearButtonStyle") as Style;
+            var style = dp.FindResource("ClearAnimatedButtonStyle") as Style;
             var clearButton = new Button
             {
                 Name = ClearButtonName, Style = style, Width = 18, Margin = new Thickness(-2, 0, 0, 2),
                 Padding = new Thickness(3.5)
             };
 
-            var binding = new Binding("Background");
-            binding.Source = dp;
-            clearButton.SetBinding(Control.BackgroundProperty, binding);
+            if (dp.Background == null || dp.Background == Brushes.Transparent)
+                dp.Background = Tips.GetActualBackgroundBrush(dp);
 
             clearButton.Click += ClearButton_Click;
             grid.Children.Add(clearButton);
