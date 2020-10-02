@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace LightyTest.Source
+namespace WpfInvestigate.Common
 {
     public static class StoryboardExtensions
     {

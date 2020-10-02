@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -113,8 +115,7 @@ namespace WpfInvestigate.Controls
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
                 control.Unloaded += OnChromeUnloaded;
-                var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty,
-                    typeof(UIElement));
+                var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
                 dpd.AddValueChanged(control, ChromeUpdate);
                 dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
                 dpd.AddValueChanged(control, ChromeUpdate);
@@ -137,39 +138,55 @@ namespace WpfInvestigate.Controls
             dpd.RemoveValueChanged(control, ChromeUpdate);
         }
 
-        private static void ChromeUpdate(object sender, EventArgs e)
+        private static Tuple<Brush, Brush, Brush, Brush, Brush, Brush, Tuple<bool, bool, bool>> Chrome_GetState(Control control)
+        {
+            return new Tuple<Brush, Brush, Brush, Brush, Brush, Brush, Tuple<bool, bool, bool>>(GetMonochrome(control),
+                GetMonochromeAnimated(control), GetBichromeBackground(control), GetBichromeForeground(control),
+                GetBichromeAnimatedBackground(control), GetBichromeAnimatedForeground(control),
+                new Tuple<bool, bool, bool>(control.IsMouseOver, control.IsEnabled,
+                    (control as ButtonBase)?.IsPressed ?? false));
+        }
+        
+        private static async void ChromeUpdate(object sender, EventArgs e)
         {
             if (!(sender is Control control)) return;
 
-            var getBackgroundMethod = Chrome_GetBackgroundMethod(control);
-            var newValues = Chrome_GetNewColors(control, getBackgroundMethod);
-
-            if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
-                control.Background = new SolidColorBrush(newValues.Item1);
-            if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
-                control.Foreground = new SolidColorBrush(newValues.Item2);
-            if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
-                control.BorderBrush = new SolidColorBrush(newValues.Item3);
-
-            var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
-            Chrome_SetBrushColor((SolidColorBrush)control.Background, newValues.Item1, noAnimate);
-            Chrome_SetBrushColor((SolidColorBrush)control.Foreground, newValues.Item2, noAnimate);
-            Chrome_SetBrushColor((SolidColorBrush)control.BorderBrush, newValues.Item3, noAnimate);
-
-            if (!Tips.AreEqual(control.Opacity, newValues.Item4))
+            // sequentially process property changes
+            if (!(control.Resources["semaphore"] is SemaphoreSlim semaphore))
             {
-                if (getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground)
-                    control.Opacity = newValues.Item4;
-                else
-                {
-                    var animation = new DoubleAnimation
-                    {
-                        From = control.Opacity,
-                        To = newValues.Item4,
-                        Duration = AnimationHelper.SlowAnimationDuration
-                    };
-                    control.BeginAnimation(UIElement.OpacityProperty, animation);
-                }
+                semaphore = new SemaphoreSlim(1, 1);
+                control.Resources["semaphore"] = semaphore;
+            }
+
+            await semaphore.WaitAsync();
+            try
+            {
+                // To prevent: the same property changes multiple times
+                var oldState = control.Resources["state"];
+                var newState = Chrome_GetState(control);
+                if (Equals(oldState, newState)) return;
+                control.Resources["state"] = newState;
+
+                var getBackgroundMethod = Chrome_GetBackgroundMethod(control);
+                var newValues = Chrome_GetNewColors(control, getBackgroundMethod);
+
+                if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
+                    control.Background = new SolidColorBrush(newValues.Item1);
+                if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
+                    control.Foreground = new SolidColorBrush(newValues.Item2);
+                if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
+                    control.BorderBrush = new SolidColorBrush(newValues.Item3);
+
+                var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
+                await Task.WhenAll(
+                    Chrome_SetBrushColor((SolidColorBrush) control.Background, newValues.Item1, noAnimate),
+                    Chrome_SetBrushColor((SolidColorBrush) control.Foreground, newValues.Item2, noAnimate),
+                    Chrome_SetBrushColor((SolidColorBrush) control.BorderBrush, newValues.Item3, noAnimate),
+                    Chrome_SetOpacity(control, newValues.Item4, noAnimate));
+            }
+            finally
+            {
+                semaphore.Release();
             }
         }
 
@@ -239,21 +256,34 @@ namespace WpfInvestigate.Controls
             return GetBichromeAnimatedBackground;
         }
 
-        private static void Chrome_SetBrushColor(SolidColorBrush brush, Color newColor, bool noAnimate)
+        private static Task<bool> Chrome_SetBrushColor(SolidColorBrush brush, Color newColor, bool noAnimate)
         {
-            if (brush.Color == newColor) return;
+            if (brush.Color == newColor) return Task.FromResult(false);
 
             if (noAnimate)
-                brush.Color = newColor;
-            else
             {
-                var animation = new ColorAnimation { From = brush.Color, To = newColor, Duration = AnimationHelper.SlowAnimationDuration };
-                brush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+                brush.Color = newColor;
+                return Task.FromResult(false);
             }
+
+            var animation = new ColorAnimation { From = brush.Color, To = newColor, Duration = AnimationHelper.SlowAnimationDuration };
+            return brush.BeginAnimationAsync(SolidColorBrush.ColorProperty, animation);
+        }
+        private static Task<bool> Chrome_SetOpacity(Control control, double newOpacity, bool noAnimate)
+        {
+            if (Tips.AreEqual(control.Opacity, newOpacity)) return Task.FromResult(false);
+
+            if (noAnimate)
+            {
+                control.Opacity = newOpacity;
+                return Task.FromResult(false);
+            }
+
+            var animation = new DoubleAnimation { From = control.Opacity, To = newOpacity, Duration = AnimationHelper.SlowAnimationDuration };
+            return control.BeginAnimationAsync(UIElement.OpacityProperty, animation);
         }
         #endregion
 
         #endregion
-
     }
 }

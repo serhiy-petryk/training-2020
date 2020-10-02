@@ -72,6 +72,7 @@
     <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\DataTypeMetadata.cs" />
     <Compile Include="Common\INotifyPropertyChangedAbstract.cs" />
+    <Compile Include="Common\StoryboardExtensions.cs" />
     <Compile Include="Controls\AdornerControl.cs" />
     <Compile Include="Controls\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
