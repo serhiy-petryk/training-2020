@@ -142,30 +142,27 @@ namespace WpfInvestigate.Controls
             {
                 var getBackgroundMethod = Chrome_GetBackgroundMethod(control);
                 var newValues = Chrome_GetNewColors(control, getBackgroundMethod);
-                if (getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground)
-                {
+
+                if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
                     control.Background = new SolidColorBrush(newValues.Item1);
+                if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
                     control.Foreground = new SolidColorBrush(newValues.Item2);
+                if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
                     control.BorderBrush = new SolidColorBrush(newValues.Item3);
-                    control.Opacity = newValues.Item4;
-                }
-                else
+
+                var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
+                Chrome_SetBrushColor((SolidColorBrush)control.Background, newValues.Item1, noAnimate);
+                Chrome_SetBrushColor((SolidColorBrush)control.Foreground, newValues.Item2, noAnimate);
+                Chrome_SetBrushColor((SolidColorBrush)control.BorderBrush, newValues.Item3, noAnimate);
+
+                if (!Tips.AreEqual(control.Opacity, newValues.Item4))
                 {
-                    if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
-                        control.Background = new SolidColorBrush(newValues.Item1);
-                    if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
-                        control.Foreground = new SolidColorBrush(newValues.Item2);
-                    if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
-                        control.BorderBrush = new SolidColorBrush(newValues.Item3);
-
-                    AnimateSolidColorBrush((SolidColorBrush)control.Background, newValues.Item1);
-                    AnimateSolidColorBrush((SolidColorBrush)control.Foreground, newValues.Item2);
-                    AnimateSolidColorBrush((SolidColorBrush)control.BorderBrush, newValues.Item3);
-
-                    if (!Tips.AreEqual(control.Opacity, newValues.Item4))
+                    if (getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground)
+                        control.Opacity = newValues.Item4;
+                    else
                     {
-                        var animation = new DoubleAnimation { From = control.Opacity, To = newValues.Item4, Duration = AnimationHelper.SlowAnimationDuration };
-                        control.BeginAnimation(UIElement.OpacityProperty, animation);
+                            var animation = new DoubleAnimation {From = control.Opacity, To = newValues.Item4, Duration = AnimationHelper.SlowAnimationDuration};
+                            control.BeginAnimation(UIElement.OpacityProperty, animation);
                     }
                 }
             }
@@ -206,9 +203,9 @@ namespace WpfInvestigate.Controls
                 }
                 else if (isMouseOver)
                 {
-                    backColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.75);
+                    backColor = Chrome_ColorMix(biChromeBackColor, biChromeForeColor, 0.75);
                     foreColor = biChromeForeColor;
-                    borderColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
+                    borderColor = Chrome_ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
                 }
                 else
                 {
@@ -219,7 +216,8 @@ namespace WpfInvestigate.Controls
             }
             return new Tuple<Color, Color, Color, double>(backColor, foreColor, borderColor, opacity);
         }
-        private static Color ColorMix(Color color1, Color color2, double multiplier)
+
+        private static Color Chrome_ColorMix(Color color1, Color color2, double multiplier)
         {
             var multiplier2 = 1.0 - multiplier;
             return Color.FromArgb(Convert.ToByte(color1.A * multiplier + color2.A * multiplier2),
@@ -227,6 +225,7 @@ namespace WpfInvestigate.Controls
                 Convert.ToByte(color1.G * multiplier + color2.G * multiplier2),
                 Convert.ToByte(color1.B * multiplier + color2.B * multiplier2));
         }
+
         private static Func<DependencyObject, Brush> Chrome_GetBackgroundMethod(Control control)
         {
             if (GetMonochrome(control) != null) return GetMonochrome;
@@ -234,12 +233,18 @@ namespace WpfInvestigate.Controls
             if (GetBichromeBackground(control) != null) return GetBichromeBackground;
             return GetBichromeAnimatedBackground;
         }
-        private static void AnimateSolidColorBrush(SolidColorBrush brush, Color newColor)
+
+        private static void Chrome_SetBrushColor(SolidColorBrush brush, Color newColor, bool noAnimate)
         {
-            if (brush.Color == newColor)
-                return;
-            var animation = new ColorAnimation { From = brush.Color, To = newColor, Duration = AnimationHelper.SlowAnimationDuration };
-            brush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+            if (brush.Color == newColor) return;
+
+            if (noAnimate)
+                brush.Color = newColor;
+            else
+            {
+                var animation = new ColorAnimation { From = brush.Color, To = newColor, Duration = AnimationHelper.SlowAnimationDuration };
+                brush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+            }
         }
         #endregion
 
