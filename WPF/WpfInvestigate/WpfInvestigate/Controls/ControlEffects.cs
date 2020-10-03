@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -146,27 +147,36 @@ namespace WpfInvestigate.Controls
                 new Tuple<bool, bool, bool>(control.IsMouseOver, control.IsEnabled,
                     (control as ButtonBase)?.IsPressed ?? false));
         }
-        
+
+        private static int _id = 0;
         private static async void ChromeUpdate(object sender, EventArgs e)
         {
             if (!(sender is Control control)) return;
 
-            // sequentially process property changes
-            if (!(control.Resources["semaphore"] is SemaphoreSlim semaphore))
+            // To prevent: the same property changes multiple times
+            var oldState = control.Resources["state"];
+            var newState = Chrome_GetState(control);
+            if (Equals(oldState, newState)) return;
+            control.Resources["state"] = newState;
+
+            var animationStack = control.Resources["animations"] as Dictionary<int, List<Tuple<IAnimatable, DependencyProperty>>>;
+            if (animationStack == null)
             {
-                semaphore = new SemaphoreSlim(1, 1);
-                control.Resources["semaphore"] = semaphore;
+                animationStack = new Dictionary<int, List<Tuple<IAnimatable, DependencyProperty>>>();
+                control.Resources["animations"] = animationStack;
             }
 
-            await semaphore.WaitAsync();
+            // Stop previous animation
+            foreach (var aa1 in animationStack.Values)
+            foreach (var a1 in aa1)
+                a1.Item1.BeginAnimation(a1.Item2, null);
+
+            var animationsId = _id++;
+            var animations = new List<Tuple<IAnimatable, DependencyProperty>>();
+            animationStack.Add(animationsId, animations);
+
             try
             {
-                // To prevent: the same property changes multiple times
-                var oldState = control.Resources["state"];
-                var newState = Chrome_GetState(control);
-                if (Equals(oldState, newState)) return;
-                control.Resources["state"] = newState;
-
                 var getBackgroundMethod = Chrome_GetBackgroundMethod(control);
                 var newValues = Chrome_GetNewColors(control, getBackgroundMethod);
 
@@ -179,14 +189,14 @@ namespace WpfInvestigate.Controls
 
                 var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
                 await Task.WhenAll(
-                    Chrome_SetBrushColor((SolidColorBrush) control.Background, newValues.Item1, noAnimate),
-                    Chrome_SetBrushColor((SolidColorBrush) control.Foreground, newValues.Item2, noAnimate),
-                    Chrome_SetBrushColor((SolidColorBrush) control.BorderBrush, newValues.Item3, noAnimate),
-                    Chrome_SetOpacity(control, newValues.Item4, noAnimate));
+                    Chrome_SetBrushColor((SolidColorBrush) control.Background, newValues.Item1, noAnimate, animations),
+                    Chrome_SetBrushColor((SolidColorBrush) control.Foreground, newValues.Item2, noAnimate, animations),
+                    Chrome_SetBrushColor((SolidColorBrush) control.BorderBrush, newValues.Item3, noAnimate, animations),
+                    Chrome_SetOpacity(control, newValues.Item4, noAnimate, animations));
             }
             finally
             {
-                semaphore.Release();
+                animationStack.Remove(animationsId);
             }
         }
 
@@ -256,7 +266,7 @@ namespace WpfInvestigate.Controls
             return GetBichromeAnimatedBackground;
         }
 
-        private static Task<bool> Chrome_SetBrushColor(SolidColorBrush brush, Color newColor, bool noAnimate)
+        private static Task<bool> Chrome_SetBrushColor(SolidColorBrush brush, Color newColor, bool noAnimate, List<Tuple<IAnimatable, DependencyProperty>> stack)
         {
             if (brush.Color == newColor) return Task.FromResult(false);
 
@@ -267,9 +277,10 @@ namespace WpfInvestigate.Controls
             }
 
             var animation = new ColorAnimation { From = brush.Color, To = newColor, Duration = AnimationHelper.SlowAnimationDuration };
+            stack.Add(new Tuple<IAnimatable, DependencyProperty>(brush, SolidColorBrush.ColorProperty));
             return brush.BeginAnimationAsync(SolidColorBrush.ColorProperty, animation);
         }
-        private static Task<bool> Chrome_SetOpacity(Control control, double newOpacity, bool noAnimate)
+        private static Task<bool> Chrome_SetOpacity(Control control, double newOpacity, bool noAnimate, List<Tuple<IAnimatable, DependencyProperty>> stack)
         {
             if (Tips.AreEqual(control.Opacity, newOpacity)) return Task.FromResult(false);
 
@@ -280,6 +291,7 @@ namespace WpfInvestigate.Controls
             }
 
             var animation = new DoubleAnimation { From = control.Opacity, To = newOpacity, Duration = AnimationHelper.SlowAnimationDuration };
+            stack.Add(new Tuple<IAnimatable, DependencyProperty>(control, UIElement.OpacityProperty));
             return control.BeginAnimationAsync(UIElement.OpacityProperty, animation);
         }
         #endregion
