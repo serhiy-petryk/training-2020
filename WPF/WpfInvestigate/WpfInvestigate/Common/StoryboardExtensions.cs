@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 
@@ -29,18 +30,13 @@ namespace WpfInvestigate.Common
             return tcs.Task;
         }
 
-        public static Task<bool> BeginAnimationAsync(this IAnimatable animatable, DependencyProperty animationProperty, AnimationTimeline animation)
+        public static Task BeginAnimationAsync(this IAnimatable animatable, DependencyProperty animationProperty, AnimationTimeline animation)
         {
-            var tcs = new TaskCompletionSource<bool>();
-            if (animation != null && animationProperty != null)
-            {
-                animation.Completed += (s, e) => tcs.SetResult(true);
-                animation.Freeze();
-                animatable.BeginAnimation(animationProperty, animation);
-            }
-            else
-                tcs.SetResult(false);
-
+            // state in constructor == animation cancel action
+            var tcs = new TaskCompletionSource<bool>(new Action(() => animatable.BeginAnimation(animationProperty, null)));
+            animation.Completed += (s, e) => tcs.SetResult(true);
+            animation.Freeze();
+            animatable.BeginAnimation(animationProperty, animation);
             return tcs.Task;
         }
     }
