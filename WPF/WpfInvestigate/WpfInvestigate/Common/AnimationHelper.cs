@@ -10,7 +10,8 @@ namespace WpfInvestigate.Common
     #region ======  AnimationHelper  =====
     public static class AnimationHelper
     {
-        public static readonly Duration AnimationDuration = TimeSpan.FromMilliseconds(120);
+        public const double AnimationTime = 120.0;
+        public static readonly Duration AnimationDuration = TimeSpan.FromMilliseconds(AnimationTime);
         public const double SlowAnimationTime = 240.0;
         public static readonly Duration SlowAnimationDuration = TimeSpan.FromMilliseconds(SlowAnimationTime);
 
@@ -40,13 +41,11 @@ namespace WpfInvestigate.Common
         #region ================  Create animation  ===================
 
         public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, Duration? duration = null) =>
-            CreateAnimation(element, GetPropertyPath(new[] {propertyPath}), propertyPath.PropertyType, duration);
-        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, double duration) =>
-            CreateAnimation(element, GetPropertyPath(new[] { propertyPath }), propertyPath.PropertyType, TimeSpan.FromMilliseconds(duration));
-        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty[] propertyPath, double duration) =>
-            CreateAnimation(element, GetPropertyPath(propertyPath), propertyPath[propertyPath.Length - 1].PropertyType, TimeSpan.FromMilliseconds(duration));
-        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty[] propertyPath, Duration? duration = null) =>
-            CreateAnimation(element, GetPropertyPath(propertyPath), propertyPath[propertyPath.Length - 1].PropertyType, duration);
+            CreateAnimation(element, new PropertyPath(propertyPath), propertyPath.PropertyType, duration);
+        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, double? duration) =>
+            CreateAnimation(element, new PropertyPath(propertyPath), propertyPath.PropertyType, TimeSpan.FromMilliseconds(duration ?? AnimationTime));
+        public static Timeline CreateAnimation(this FrameworkElement element, string propertyPath, Type propertyType, double? duration = null) =>
+            CreateAnimation(element, new PropertyPath(propertyPath), propertyType, TimeSpan.FromMilliseconds(duration ?? AnimationTime));
         public static Timeline CreateAnimation(this FrameworkElement element, PropertyPath propertyPath, Type propertyType, Duration? duration = null)
         {
             AnimationTimeline animation = null;
@@ -78,10 +77,6 @@ namespace WpfInvestigate.Common
             Storyboard.SetTargetProperty(animation, new PropertyPath(dataProperty));
             return animation;
         }
-
-        private static PropertyPath GetPropertyPath(DependencyProperty[] propertyPath) =>
-            new PropertyPath(string.Join(".", propertyPath.Select((x, index) => $"({index})")), propertyPath);
-
         #endregion
     }
     #endregion 
