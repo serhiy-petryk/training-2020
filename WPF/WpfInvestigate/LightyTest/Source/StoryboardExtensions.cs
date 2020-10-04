@@ -34,9 +34,10 @@ namespace LightyTest.Source
         {
             // state in constructor == animation cancel action
             var tcs = new TaskCompletionSource<bool>(new Action(() => animatable.BeginAnimation(animationProperty, null)));
-            animation.Completed += (s, e) => tcs.SetResult(true);
-            animation.Freeze();
-            animatable.BeginAnimation(animationProperty, animation);
+            var animationClone = animation.Clone();
+            animationClone.Completed += (s, e) => tcs.SetResult(true);
+            animationClone.Freeze();
+            animatable.BeginAnimation(animationProperty, animationClone);
             return tcs.Task;
         }
     }
