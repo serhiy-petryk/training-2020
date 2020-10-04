@@ -167,32 +167,46 @@ namespace WpfInvestigate.Controls
             if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
                 control.BorderBrush = new SolidColorBrush(newValues.Item3);
 
-            var taskList = control.Resources["tasks"] as List<Task>;
-            if (taskList == null)
-            {
-                taskList = new List<Task>();
-                control.Resources["tasks"] = taskList;
-            }
-
-            // Cancel previous animation
-            foreach (var task in taskList)
-                (task.AsyncState as Action)?.Invoke();
-
             var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
-            var tasks = new[]
+            if (noAnimate)
             {
-                Chrome_SetBrushColor((SolidColorBrush) control.Background, newValues.Item1, noAnimate),
-                Chrome_SetBrushColor((SolidColorBrush) control.Foreground, newValues.Item2, noAnimate),
-                Chrome_SetBrushColor((SolidColorBrush) control.BorderBrush, newValues.Item3, noAnimate),
-                Chrome_SetOpacity(control, newValues.Item4, noAnimate)
-            }.Where(t => t != null).ToArray();
+                if (((SolidColorBrush) control.Background).Color != newValues.Item1)
+                    ((SolidColorBrush) control.Background).Color = newValues.Item1;
+                if (((SolidColorBrush) control.Foreground).Color != newValues.Item2)
+                    ((SolidColorBrush) control.Foreground).Color = newValues.Item2;
+                if (((SolidColorBrush) control.BorderBrush).Color != newValues.Item3)
+                    ((SolidColorBrush) control.BorderBrush).Color = newValues.Item3;
+                if (!Tips.AreEqual(control.Opacity, newValues.Item4))
+                    control.Opacity = newValues.Item4;
+            }
+            else
+            {
+                var sb = control.Resources["animation"] as Storyboard;
+                if (sb == null)
+                {
+                    sb = new Storyboard();
+                    control.Resources["animation"] = sb;
+                    sb.Children.Add(GetColorAnimation(control, "(Border.Background).(SolidColorBrush.Color)"));
+                    sb.Children.Add(GetColorAnimation(control, "(ContentControl.Foreground).(SolidColorBrush.Color)"));
+                    sb.Children.Add(GetColorAnimation(control, "(Border.BorderBrush).(SolidColorBrush.Color)"));
+                    sb.Children.Add(AnimationHelper.GetOpacityAnimation(control, 0, 0));
+                }
 
-            taskList.AddRange(tasks);
-            await Task.WhenAll(tasks);
+                AnimationHelper.SetFromToValues(sb.Children[0], ((SolidColorBrush) control.Background).Color, newValues.Item1);
+                AnimationHelper.SetFromToValues(sb.Children[1], ((SolidColorBrush) control.Foreground).Color, newValues.Item2);
+                AnimationHelper.SetFromToValues(sb.Children[2], ((SolidColorBrush) control.BorderBrush).Color, newValues.Item3);
+                AnimationHelper.SetFromToValues(sb.Children[3], control.Opacity, newValues.Item4); 
 
-            foreach (var task in taskList.Where(t => t.Status == TaskStatus.RanToCompletion))
-                task.Dispose();
-            taskList.Clear();
+                sb.Begin();
+            }
+        }
+
+        private static ColorAnimation GetColorAnimation(FrameworkElement control, string propertyPath)
+        {
+            var animation = new ColorAnimation{Duration = AnimationHelper.SlowAnimationDuration};
+            Storyboard.SetTarget(animation, control);
+            Storyboard.SetTargetProperty(animation, new PropertyPath(propertyPath));
+            return animation;
         }
 
         private static Tuple<Color, Color, Color, double> Chrome_GetNewColors(Control control, Func<DependencyObject, Brush> getBackgroundMethod)
@@ -224,10 +238,7 @@ namespace WpfInvestigate.Controls
                 opacity = control.IsEnabled ? (isMouseOver || isPressed ? 1.0 : 0.7) : 0.35;
                 if (isPressed)
                 {
-                    // backColor = biChromeForeColor;
-                    // foreColor = biChromeBackColor;
-                    // borderColor = biChromeForeColor;
-                    backColor = Chrome_ColorMix(biChromeBackColor, biChromeForeColor, 0.70);
+                    backColor = Chrome_ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
                     foreColor = biChromeForeColor;
                     borderColor = Chrome_ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
                 }
@@ -262,33 +273,6 @@ namespace WpfInvestigate.Controls
             if (GetMonochromeAnimated(control) != null) return GetMonochromeAnimated;
             if (GetBichromeBackground(control) != null) return GetBichromeBackground;
             return GetBichromeAnimatedBackground;
-        }
-
-        private static Task Chrome_SetBrushColor(SolidColorBrush brush, Color newColor, bool noAnimate)
-        {
-            if (brush.Color == newColor) return null;
-
-            if (noAnimate)
-            {
-                brush.Color = newColor;
-                return null;
-            }
-
-            var animation = new ColorAnimation { From = brush.Color, To = newColor, Duration = AnimationHelper.SlowAnimationDuration };
-            return brush.BeginAnimationAsync(SolidColorBrush.ColorProperty, animation);
-        }
-        private static Task Chrome_SetOpacity(Control control, double newOpacity, bool noAnimate)
-        {
-            if (Tips.AreEqual(control.Opacity, newOpacity)) return null;
-
-            if (noAnimate)
-            {
-                control.Opacity = newOpacity;
-                return null;
-            }
-
-            var animation = new DoubleAnimation { From = control.Opacity, To = newOpacity, Duration = AnimationHelper.SlowAnimationDuration };
-            return control.BeginAnimationAsync(UIElement.OpacityProperty, animation);
         }
         #endregion
 
