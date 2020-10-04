@@ -11,22 +11,41 @@ namespace WpfInvestigate.Common
     public static class AnimationHelper
     {
         public static readonly Duration AnimationDuration = TimeSpan.FromMilliseconds(120);
-        public static readonly Duration SlowAnimationDuration = TimeSpan.FromMilliseconds(240);
+        public const double SlowAnimationTime = 240.0;
+        public static readonly Duration SlowAnimationDuration = TimeSpan.FromMilliseconds(SlowAnimationTime);
 
-        public static void SetFromToValues(Timeline timeline, Color from, Color to)
+        #region ========  Set From, To, duration values  ===================
+        public static void SetFromToValues(this Timeline timeline, Color from, Color to)
         {
-            ((ColorAnimation)timeline).From = from; ((ColorAnimation)timeline).To = to;
+            ((ColorAnimation)timeline).From = from;
+            ((ColorAnimation)timeline).To = to;
         }
-
-        public static void SetFromToValues(Timeline timeline, double from, double to)
+        public static void SetFromToValues(this Timeline timeline, double from, double to)
         {
-            ((DoubleAnimation)timeline).From = from; ((DoubleAnimation)timeline).To = to;
+            ((DoubleAnimation)timeline).From = from;
+            ((DoubleAnimation)timeline).To = to;
         }
+        public static void SetFromToValues(this Timeline timeline, Point from, Point to)
+        {
+            ((PointAnimation)timeline).From = from;
+            ((PointAnimation)timeline).To = to;
+        }
+        public static void SetFromToValues(this Timeline timeline, Thickness from, Thickness to)
+        {
+            ((ThicknessAnimation)timeline).From = from;
+            ((ThicknessAnimation)timeline).To = to;
+        }
+        #endregion
 
-        public static Timeline GetFromTo(FrameworkElement element, DependencyProperty propertyPath) =>
-            GetFromTo(element, new[] {propertyPath});
+        #region ================  Create animation  ===================
+        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, Duration? duration = null) =>
+            CreateAnimation(element, new[] { propertyPath }, duration);
+        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, double duration) =>
+            CreateAnimation(element, new[] { propertyPath }, TimeSpan.FromMilliseconds(duration));
+        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty[] propertyPath, double duration) =>
+            CreateAnimation(element, propertyPath, TimeSpan.FromMilliseconds(duration));
 
-        public static Timeline GetFromTo(FrameworkElement element, DependencyProperty[] propertyPath, bool slowDuration = false)
+        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty[] propertyPath, Duration? duration = null)
         {
             var dataProperty = propertyPath[propertyPath.Length - 1];
             AnimationTimeline animation = null;
@@ -38,12 +57,13 @@ namespace WpfInvestigate.Common
             if (animation == null)
                 throw new NotImplementedException();
 
-            animation.Duration = slowDuration ? SlowAnimationDuration : AnimationDuration;
+            animation.Duration = duration ?? AnimationDuration;
             Storyboard.SetTarget(animation, element);
             var path = string.Join(".", propertyPath.Select((x, index) => $"({index})"));
             Storyboard.SetTargetProperty(animation, new PropertyPath(path, propertyPath));
             return animation;
         }
+        #endregion
 
         public static Timeline GetScrollViewerVerticalOffsetAnimation(ScrollViewer element, double from, double to, FillBehavior fillBehavior = FillBehavior.HoldEnd) =>
             GetFromToAnimation(element, ScrollViewerAnimator.VerticalOffsetProperty, from, to, fillBehavior);

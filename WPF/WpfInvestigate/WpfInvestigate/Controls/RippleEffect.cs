@@ -99,22 +99,23 @@ namespace WpfInvestigate.Controls
             grid.Width = fe.ActualWidth;
             grid.Height = fe.ActualHeight;
 
+            var sb = ellipse.Resources["storyboard"] as Storyboard;
+            if (sb == null)
+            {
+                sb = new Storyboard();
+                ellipse.Resources["storyboard"] = sb;
+                sb.Children.Add(ellipse.CreateAnimation(FrameworkElement.MarginProperty, 800));
+                sb.Children.Add(ellipse.CreateAnimation(FrameworkElement.WidthProperty, 800));
+                sb.Children.Add(ellipse.CreateAnimation(UIElement.OpacityProperty, 600));
+            }
+
             var newSize = Math.Max(fe.ActualWidth, fe.ActualHeight) * 3;
             var oldMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
             var newMargin = new Thickness(mousePosition.X - newSize / 2, mousePosition.Y - newSize / 2, 0, 0);
-            var sb = new Storyboard();
 
-            var marginAnimation = AnimationHelper.GetMarginAnimation(ellipse, oldMargin, newMargin);
-            marginAnimation.Duration = TimeSpan.FromMilliseconds(800);
-            sb.Children.Add(marginAnimation);
-
-            var widthAnimation = AnimationHelper.GetWidthAnimation(ellipse, 0, newSize);
-            widthAnimation.Duration = TimeSpan.FromMilliseconds(800);
-            sb.Children.Add(widthAnimation);
-
-            var opacityAnimation = AnimationHelper.GetOpacityAnimation(ellipse, 0.5, 0);
-            opacityAnimation.Duration = TimeSpan.FromMilliseconds(600);
-            sb.Children.Add(opacityAnimation);
+            sb.Children[0].SetFromToValues(oldMargin, newMargin);
+            sb.Children[1].SetFromToValues(0.0, newSize);
+            sb.Children[2].SetFromToValues(0.5, 0.0);
 
             sb.Begin();
         }

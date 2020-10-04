@@ -184,16 +184,16 @@ namespace WpfInvestigate.Controls
                 {
                     sb = new Storyboard();
                     control.Resources["animation"] = sb;
-                    sb.Children.Add(AnimationHelper.GetFromTo(control, new[] { Border.BackgroundProperty, SolidColorBrush.ColorProperty }, true));
-                    sb.Children.Add(AnimationHelper.GetFromTo(control, new[] { Control.ForegroundProperty, SolidColorBrush.ColorProperty }, true));
-                    sb.Children.Add(AnimationHelper.GetFromTo(control, new[] { Border.BorderBrushProperty, SolidColorBrush.ColorProperty }, true));
-                    sb.Children.Add(AnimationHelper.GetFromTo(control, UIElement.OpacityProperty));
+                    sb.Children.Add(control.CreateAnimation(new[] { Border.BackgroundProperty, SolidColorBrush.ColorProperty }, AnimationHelper.SlowAnimationTime));
+                    sb.Children.Add(control.CreateAnimation(new[] { Control.ForegroundProperty, SolidColorBrush.ColorProperty }, AnimationHelper.SlowAnimationTime));
+                    sb.Children.Add(control.CreateAnimation(new[] { Border.BorderBrushProperty, SolidColorBrush.ColorProperty }, AnimationHelper.SlowAnimationTime));
+                    sb.Children.Add(control.CreateAnimation(UIElement.OpacityProperty));
                 }
 
-                AnimationHelper.SetFromToValues(sb.Children[0], ((SolidColorBrush)control.Background).Color, newValues.Item1);
-                AnimationHelper.SetFromToValues(sb.Children[1], ((SolidColorBrush)control.Foreground).Color, newValues.Item2);
-                AnimationHelper.SetFromToValues(sb.Children[2], ((SolidColorBrush)control.BorderBrush).Color, newValues.Item3);
-                AnimationHelper.SetFromToValues(sb.Children[3], control.Opacity, newValues.Item4);
+                sb.Children[0].SetFromToValues(((SolidColorBrush)control.Background).Color, newValues.Item1);
+                sb.Children[1].SetFromToValues(((SolidColorBrush)control.Foreground).Color, newValues.Item2);
+                sb.Children[2].SetFromToValues(((SolidColorBrush)control.BorderBrush).Color, newValues.Item3);
+                sb.Children[3].SetFromToValues(control.Opacity, newValues.Item4);
 
                 sb.Begin();
             }
