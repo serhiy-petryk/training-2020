@@ -5,7 +5,7 @@
                     xmlns:converters="clr-namespace:WpfInvestigate.Controls.FlatButtonConverters"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
-    <Style x:Key="SimpleButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="DefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <!-- Prevent gap between border's border and border's content: <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>-->
@@ -22,7 +22,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ClearAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource SimpleButtonStyle}" x:Shared="False">
+    <Style x:Key="ClearAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
         <Setter Property="controls:ControlEffects.BichromeAnimatedBackground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Background}"/>
         <Setter Property="controls:ControlEffects.BichromeAnimatedForeground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
         <Setter Property="Content">

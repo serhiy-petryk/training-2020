@@ -190,7 +190,7 @@
                                     </DatePickerTextBox>
 
                                     <ToggleButton x:Name="PART_ToggleButton" Grid.Column="1" Focusable="True" IsTabStop="False" Width="20" Padding="2" VerticalAlignment="Stretch"
-                                                  Style="{StaticResource SimpleButtonStyle}"
+                                                  Style="{StaticResource DefaultButtonBaseStyle}"
                                                   controls:ControlEffects.BichromeAnimatedBackground="{TemplateBinding Background}"
                                                   controls:ControlEffects.BichromeAnimatedForeground="{TemplateBinding Foreground}"
                                                   Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"

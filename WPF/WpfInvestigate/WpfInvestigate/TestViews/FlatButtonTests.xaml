@@ -43,7 +43,7 @@
                     <Label Content="FlatButtonStyle"/>
                     <Button Style="{StaticResource FlatButtonStyle}" Background="Blue" Foreground="Yellow" Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red"/>
                     <Button Style="{StaticResource FlatButtonStyle}" Background="Blue" Foreground="Yellow" Width="140" Height="40" Content="No border brush" FontWeight="Bold" BorderThickness="2"/>
-                    <Button Style="{StaticResource SimpleButtonStyle}" Width="140" Height="40" Content="Bichrome" FontWeight="Bold" BorderThickness="2"
+                    <Button Style="{StaticResource DefaultButtonBaseStyle}" Width="140" Height="40" Content="Bichrome" FontWeight="Bold" BorderThickness="2"
                             controls:ControlEffects.BichromeBackground="Blue" controls:ControlEffects.BichromeForeground="Yellow"/>
 
                     <Label Content="disabled FlatButtonStyle"/>

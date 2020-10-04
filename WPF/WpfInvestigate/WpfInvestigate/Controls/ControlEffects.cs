@@ -114,7 +114,7 @@ namespace WpfInvestigate.Controls
             {
                 if (control.Style == null)
                 {
-                    var style = Application.Current.TryFindResource("SimpleButtonStyle") as Style;
+                    var style = Application.Current.TryFindResource("DefaultButtonBaseStyle") as Style;
                     if (style != null && style.TargetType.IsInstanceOfType(control))
                         control.Style = style;
                 }
