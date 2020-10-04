@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -11,6 +12,39 @@ namespace WpfInvestigate.Common
     {
         public static readonly Duration AnimationDuration = TimeSpan.FromMilliseconds(120);
         public static readonly Duration SlowAnimationDuration = TimeSpan.FromMilliseconds(240);
+
+        public static void SetFromToValues(Timeline timeline, Color from, Color to)
+        {
+            ((ColorAnimation)timeline).From = from; ((ColorAnimation)timeline).To = to;
+        }
+
+        public static void SetFromToValues(Timeline timeline, double from, double to)
+        {
+            ((DoubleAnimation)timeline).From = from; ((DoubleAnimation)timeline).To = to;
+        }
+
+        public static Timeline GetFromTo(FrameworkElement element, DependencyProperty propertyPath) =>
+            GetFromTo(element, new[] {propertyPath});
+
+        public static Timeline GetFromTo(FrameworkElement element, DependencyProperty[] propertyPath, bool slowDuration = false)
+        {
+            var dataProperty = propertyPath[propertyPath.Length - 1];
+            AnimationTimeline animation = null;
+            if (dataProperty.PropertyType == typeof(double)) animation = new DoubleAnimation();
+            else if (dataProperty.PropertyType == typeof(Point)) animation = new PointAnimation();
+            else if (dataProperty.PropertyType == typeof(Thickness)) animation = new ThicknessAnimation();
+            else if (dataProperty.PropertyType == typeof(Color)) animation = new ColorAnimation();
+
+            if (animation == null)
+                throw new NotImplementedException();
+
+            animation.Duration = slowDuration ? SlowAnimationDuration : AnimationDuration;
+            Storyboard.SetTarget(animation, element);
+            var path = string.Join(".", propertyPath.Select((x, index) => $"({index})"));
+            Storyboard.SetTargetProperty(animation, new PropertyPath(path, propertyPath));
+            return animation;
+        }
+
         public static Timeline GetScrollViewerVerticalOffsetAnimation(ScrollViewer element, double from, double to, FillBehavior fillBehavior = FillBehavior.HoldEnd) =>
             GetFromToAnimation(element, ScrollViewerAnimator.VerticalOffsetProperty, from, to, fillBehavior);
         public static Timeline GetMarginAnimation(FrameworkElement element, Thickness from, Thickness to, FillBehavior fillBehavior = FillBehavior.HoldEnd) =>

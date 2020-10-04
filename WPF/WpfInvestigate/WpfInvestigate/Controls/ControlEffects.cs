@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -147,7 +145,7 @@ namespace WpfInvestigate.Controls
                     (control as ButtonBase)?.IsPressed ?? false));
         }
 
-        private static async void ChromeUpdate(object sender, EventArgs e)
+        private static void ChromeUpdate(object sender, EventArgs e)
         {
             if (!(sender is Control control)) return;
 
@@ -170,12 +168,12 @@ namespace WpfInvestigate.Controls
             var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
             if (noAnimate)
             {
-                if (((SolidColorBrush) control.Background).Color != newValues.Item1)
-                    ((SolidColorBrush) control.Background).Color = newValues.Item1;
-                if (((SolidColorBrush) control.Foreground).Color != newValues.Item2)
-                    ((SolidColorBrush) control.Foreground).Color = newValues.Item2;
-                if (((SolidColorBrush) control.BorderBrush).Color != newValues.Item3)
-                    ((SolidColorBrush) control.BorderBrush).Color = newValues.Item3;
+                if (((SolidColorBrush)control.Background).Color != newValues.Item1)
+                    ((SolidColorBrush)control.Background).Color = newValues.Item1;
+                if (((SolidColorBrush)control.Foreground).Color != newValues.Item2)
+                    ((SolidColorBrush)control.Foreground).Color = newValues.Item2;
+                if (((SolidColorBrush)control.BorderBrush).Color != newValues.Item3)
+                    ((SolidColorBrush)control.BorderBrush).Color = newValues.Item3;
                 if (!Tips.AreEqual(control.Opacity, newValues.Item4))
                     control.Opacity = newValues.Item4;
             }
@@ -186,27 +184,19 @@ namespace WpfInvestigate.Controls
                 {
                     sb = new Storyboard();
                     control.Resources["animation"] = sb;
-                    sb.Children.Add(GetColorAnimation(control, "(Border.Background).(SolidColorBrush.Color)"));
-                    sb.Children.Add(GetColorAnimation(control, "(ContentControl.Foreground).(SolidColorBrush.Color)"));
-                    sb.Children.Add(GetColorAnimation(control, "(Border.BorderBrush).(SolidColorBrush.Color)"));
-                    sb.Children.Add(AnimationHelper.GetOpacityAnimation(control, 0, 0));
+                    sb.Children.Add(AnimationHelper.GetFromTo(control, new[] { Border.BackgroundProperty, SolidColorBrush.ColorProperty }, true));
+                    sb.Children.Add(AnimationHelper.GetFromTo(control, new[] { Control.ForegroundProperty, SolidColorBrush.ColorProperty }, true));
+                    sb.Children.Add(AnimationHelper.GetFromTo(control, new[] { Border.BorderBrushProperty, SolidColorBrush.ColorProperty }, true));
+                    sb.Children.Add(AnimationHelper.GetFromTo(control, UIElement.OpacityProperty));
                 }
 
-                AnimationHelper.SetFromToValues(sb.Children[0], ((SolidColorBrush) control.Background).Color, newValues.Item1);
-                AnimationHelper.SetFromToValues(sb.Children[1], ((SolidColorBrush) control.Foreground).Color, newValues.Item2);
-                AnimationHelper.SetFromToValues(sb.Children[2], ((SolidColorBrush) control.BorderBrush).Color, newValues.Item3);
-                AnimationHelper.SetFromToValues(sb.Children[3], control.Opacity, newValues.Item4); 
+                AnimationHelper.SetFromToValues(sb.Children[0], ((SolidColorBrush)control.Background).Color, newValues.Item1);
+                AnimationHelper.SetFromToValues(sb.Children[1], ((SolidColorBrush)control.Foreground).Color, newValues.Item2);
+                AnimationHelper.SetFromToValues(sb.Children[2], ((SolidColorBrush)control.BorderBrush).Color, newValues.Item3);
+                AnimationHelper.SetFromToValues(sb.Children[3], control.Opacity, newValues.Item4);
 
                 sb.Begin();
             }
-        }
-
-        private static ColorAnimation GetColorAnimation(FrameworkElement control, string propertyPath)
-        {
-            var animation = new ColorAnimation{Duration = AnimationHelper.SlowAnimationDuration};
-            Storyboard.SetTarget(animation, control);
-            Storyboard.SetTargetProperty(animation, new PropertyPath(propertyPath));
-            return animation;
         }
 
         private static Tuple<Color, Color, Color, double> Chrome_GetNewColors(Control control, Func<DependencyObject, Brush> getBackgroundMethod)
