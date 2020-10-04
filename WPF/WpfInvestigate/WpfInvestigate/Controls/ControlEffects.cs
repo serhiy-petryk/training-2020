@@ -112,6 +112,12 @@ namespace WpfInvestigate.Controls
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
+                if (control.Style == null)
+                {
+                    var style = Application.Current.TryFindResource("SimpleButtonStyle") as Style;
+                    if (style != null && style.TargetType.IsInstanceOfType(control))
+                        control.Style = style;
+                }
                 control.Unloaded += OnChromeUnloaded;
                 var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
                 dpd.AddValueChanged(control, ChromeUpdate);
@@ -119,9 +125,9 @@ namespace WpfInvestigate.Controls
                 dpd.AddValueChanged(control, ChromeUpdate);
                 dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
                 dpd.AddValueChanged(control, ChromeUpdate);
-            }));
 
-            ChromeUpdate(control, null);
+                ChromeUpdate(control, null);
+            }));
         }
 
         private static void OnChromeUnloaded(object sender, RoutedEventArgs e)
