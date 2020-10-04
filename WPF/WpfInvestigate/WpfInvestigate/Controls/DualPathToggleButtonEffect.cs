@@ -151,19 +151,17 @@ namespace WpfInvestigate.Controls
                 viewbox.RenderTransform = new ScaleTransform(1, 1);
             ((ScaleTransform)viewbox.RenderTransform).CenterX = viewbox.ActualWidth / 2;
 
-            var da1 = new DoubleAnimation { From = 1, To = 0, Duration = AnimationHelper.AnimationDuration };
-            Storyboard.SetTarget(da1, viewbox);
-            Storyboard.SetTargetProperty(da1, new PropertyPath("RenderTransform.ScaleX"));
-
-            var da2 = new DoubleAnimation { From = 0, To = 1, BeginTime = AnimationHelper.AnimationDuration.TimeSpan, Duration = AnimationHelper.AnimationDuration };
-            Storyboard.SetTarget(da2, viewbox);
-            Storyboard.SetTargetProperty(da2, new PropertyPath("RenderTransform.ScaleX"));
+            var a1 = viewbox.CreateAnimation(new PropertyPath("RenderTransform.ScaleX"), typeof(double));
+            a1.SetFromToValues(1.0, 0.0);
+            var a2 = viewbox.CreateAnimation(new PropertyPath("RenderTransform.ScaleX"), typeof(double));
+            a2.BeginTime = a1.Duration.TimeSpan;
+            a2.SetFromToValues(0.0, 1.0);
 
             var storyboard = new Storyboard();
-            storyboard.Children.Add(AnimationHelper.GetFrameAnimation(path, Path.DataProperty, Geometry.Empty));
-            storyboard.Children.Add(AnimationHelper.GetFrameAnimation(viewbox, FrameworkElement.MarginProperty, new Thickness()));
-            storyboard.Children.Add(da1);
-            storyboard.Children.Add(da2);
+            storyboard.Children.Add(AnimationHelper.CreateFrameAnimation(path, Path.DataProperty, Geometry.Empty));
+            storyboard.Children.Add(AnimationHelper.CreateFrameAnimation(viewbox, FrameworkElement.MarginProperty, new Thickness()));
+            storyboard.Children.Add(a1);
+            storyboard.Children.Add(a2);
 
             grid.Resources.Add("Animation", storyboard);
             return storyboard;
