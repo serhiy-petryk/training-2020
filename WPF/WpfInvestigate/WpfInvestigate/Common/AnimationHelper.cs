@@ -42,10 +42,10 @@ namespace WpfInvestigate.Common
 
         public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, Duration? duration = null) =>
             CreateAnimation(element, new PropertyPath(propertyPath), propertyPath.PropertyType, duration);
-        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, double? duration) =>
-            CreateAnimation(element, new PropertyPath(propertyPath), propertyPath.PropertyType, TimeSpan.FromMilliseconds(duration ?? AnimationTime));
-        public static Timeline CreateAnimation(this FrameworkElement element, string propertyPath, Type propertyType, double? duration = null) =>
-            CreateAnimation(element, new PropertyPath(propertyPath), propertyType, TimeSpan.FromMilliseconds(duration ?? AnimationTime));
+        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, double duration) =>
+            CreateAnimation(element, new PropertyPath(propertyPath), propertyPath.PropertyType, TimeSpan.FromMilliseconds(duration));
+        public static Timeline CreateAnimation(this FrameworkElement element, string propertyPath, Type propertyType, Duration? duration = null) =>
+            CreateAnimation(element, new PropertyPath(propertyPath), propertyType, duration);
         public static Timeline CreateAnimation(this FrameworkElement element, PropertyPath propertyPath, Type propertyType, Duration? duration = null)
         {
             AnimationTimeline animation = null;

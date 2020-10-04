@@ -184,9 +184,9 @@ namespace WpfInvestigate.Controls
                 {
                     sb = new Storyboard();
                     control.Resources["animation"] = sb;
-                    sb.Children.Add(control.CreateAnimation("(Border.Background).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.SlowAnimationTime));
-                    sb.Children.Add(control.CreateAnimation("(Control.Foreground).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.SlowAnimationTime));
-                    sb.Children.Add(control.CreateAnimation("(Border.BorderBrush).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.SlowAnimationTime));
+                    sb.Children.Add(control.CreateAnimation("(Border.Background).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.SlowAnimationDuration));
+                    sb.Children.Add(control.CreateAnimation("(Control.Foreground).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.SlowAnimationDuration));
+                    sb.Children.Add(control.CreateAnimation("(Border.BorderBrush).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.SlowAnimationDuration));
                     sb.Children.Add(control.CreateAnimation(UIElement.OpacityProperty));
                 }
 
