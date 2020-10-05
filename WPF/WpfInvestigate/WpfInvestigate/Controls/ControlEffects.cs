@@ -50,7 +50,7 @@ namespace WpfInvestigate.Controls
             var newRadius = (double)e.NewValue;
             if (!double.IsNaN(newRadius) && newRadius >= -0.0001)
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() =>
                 {
                     var border = Tips.GetVisualChildren(d).OfType<Border>().FirstOrDefault();
                     if (border != null)

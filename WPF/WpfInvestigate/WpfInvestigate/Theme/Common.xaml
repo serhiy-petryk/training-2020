@@ -4,6 +4,7 @@
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Controls/BootstrapButtons.xaml"/>
         <ResourceDictionary Source="/Controls/FlatButton.xaml"/>
         <ResourceDictionary Source="/Controls/MonochromeButton.xaml"/>
         <ResourceDictionary Source="/Theme/Flags.xaml"/>

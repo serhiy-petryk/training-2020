@@ -180,6 +180,10 @@
     <Compile Include="Theme\Common.xaml.cs">
       <DependentUpon>Common.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\BootstrapButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Calculator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

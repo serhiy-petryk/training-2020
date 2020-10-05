@@ -5,38 +5,6 @@
                     xmlns:converters="clr-namespace:WpfInvestigate.Controls.FlatButtonConverters"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
-    <Style x:Key="DefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
-        <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <!-- Prevent gap between border's border and border's content: <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>-->
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                            Margin="0" Padding="{TemplateBinding Padding}" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                        <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="ClearAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
-        <Setter Property="controls:ChromeEffects.BichromeAnimatedBackground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Background}"/>
-        <Setter Property="controls:ChromeEffects.BichromeAnimatedForeground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
-        <Setter Property="Content">
-            <Setter.Value>
-                <Viewbox UseLayoutRounding="False">
-                    <Grid Width="10" Height="10">
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="0" Y2="10" Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="10" Y2="0" Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
-                    </Grid>
-                </Viewbox>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="FlatButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="0"/>
         <!-- Can't use binding for background because there is VS Designer error -->

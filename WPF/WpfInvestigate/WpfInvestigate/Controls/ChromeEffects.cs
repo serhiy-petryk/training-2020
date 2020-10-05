@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -14,7 +15,14 @@ namespace WpfInvestigate.Controls
     /// </summary>
     public class ChromeEffects
     {
-     
+
+        #region ================  Chrome Settings  ======================
+        public static readonly DependencyProperty ChromeMatrixProperty = DependencyProperty.RegisterAttached(
+            "ChromeMatrix", typeof(string), typeof(ChromeEffects), new UIPropertyMetadata(null, OnChromeChanged));
+        public static string GetChromeMatrix(DependencyObject obj) => (string)obj.GetValue(ChromeMatrixProperty);
+        public static void SetChromeMatrix(DependencyObject obj, string value) => obj.SetValue(ChromeMatrixProperty, value);
+        #endregion
+
         #region ================  Monochrome  ======================
         public static readonly DependencyProperty MonochromeProperty = DependencyProperty.RegisterAttached(
             "Monochrome", typeof(Brush), typeof(ChromeEffects), new UIPropertyMetadata(null, OnChromeChanged));
@@ -155,6 +163,23 @@ namespace WpfInvestigate.Controls
             }
         }
 
+        private static Tuple<Color, Color, Color, double> GetNewColors(Control control, Func<DependencyObject, Brush> getBackgroundMethod)
+        {
+            var isMouseOver = control.IsMouseOver;
+            var isPressed = (control as ButtonBase)?.IsPressed ?? false;
+            var backColor = Tips.GetColorFromBrush(getBackgroundMethod(control));
+
+            var a1 = GetChromeMatrix(control);
+            var matrix = a1.Split(',');
+
+            var opacity = control.IsEnabled ? 1.0 : ColorConverterHelper.ConvertValue(1.0, matrix[9].Trim());
+            var startIndex = isPressed ? 6 : (isMouseOver? 3 : 0);
+            var newBackColor = (Color)ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex].Trim(), null);
+            var foreColor = (Color)ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex + 1].Trim(), null);
+            var borderColor = (Color)ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex + 2].Trim(), null);
+
+            return new Tuple<Color, Color, Color, double>(newBackColor, foreColor, borderColor, opacity);
+        }
         private static Tuple<Color, Color, Color, double> Chrome_GetNewColors(Control control, Func<DependencyObject, Brush> getBackgroundMethod)
         {
             var isMouseOver = control.IsMouseOver;
@@ -162,6 +187,10 @@ namespace WpfInvestigate.Controls
             var backColor = Tips.GetColorFromBrush(getBackgroundMethod(control));
             Color foreColor, borderColor;
             double opacity;
+
+            var a1 = GetChromeMatrix(control);
+            if (a1 != null)
+                return GetNewColors(control, getBackgroundMethod);
 
             if (getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetMonochromeAnimated)
             {

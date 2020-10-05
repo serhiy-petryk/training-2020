@@ -64,7 +64,6 @@ namespace WpfInvestigate
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
-            var a1 = Tips.GetVisualChildren(dp1).ToArray();
         }
 
     }
