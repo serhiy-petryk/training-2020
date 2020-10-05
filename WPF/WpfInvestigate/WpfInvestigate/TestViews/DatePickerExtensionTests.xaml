@@ -51,7 +51,8 @@
 
                 <WrapPanel Margin="0 2 0 0">
                     <Label Content="DatePicker: (nullable)"/>
-                    <DatePicker controls:DatePickerExtension.IsNullable="True" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
+                    <DatePicker controls:DatePickerExtension.IsNullable="True" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}" Background="GreenYellow"
+                                Foreground="Blue"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 2 0 0">

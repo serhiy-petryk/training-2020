@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:common="clr-namespace:WpfInvestigate.Common"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="600" Width="1000">
 
@@ -32,7 +33,12 @@
             <Label Content="WiP controls:" Margin="0 10 0 0"/>
             <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
             <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffects" Click="ControlEffectTests_OnClick"/>
-            <Button x:Name="AA" Style="{StaticResource ClearAnimatedButtonStyle}"/>
+            <!--<Button x:Name="AA" Style="{StaticResource ClearAnimatedButtonStyle}"/>-->
+            <DatePicker x:Name="dp1" Background="Blue" Width="150" Foreground="Green" BorderBrush="Red" Margin="0 5"/>
+            <DatePicker x:Name="dp" Background="Blue" Width="150"
+                        Foreground="Blue"
+                        controls:DatePickerExtension.IsNullable="True" controls:DatePickerExtension.ClearButton="True"
+                        DisplayDateStart="2022/1/1" controls:WatermarkEffect.Watermark="watermark" BorderBrush="Red"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
