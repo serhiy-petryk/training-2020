@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="Controls\ColorPickerViewModel.cs" />
     <Compile Include="Controls\DatePickerExtension.cs" />
+    <Compile Include="Controls\DatePickerHelper.cs" />
     <Compile Include="Controls\DropDownButtonHelper.cs" />
     <Compile Include="Controls\DualPathToggleButtonEffect.cs" />
     <Compile Include="Controls\FlatButton.xaml.cs">
@@ -173,6 +174,9 @@
     </Compile>
     <Compile Include="TestViews\WiPTests.xaml.cs">
       <DependentUpon>WiPTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Theme\Common.xaml.cs">
+      <DependentUpon>Common.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\Calculator.xaml">
       <SubType>Designer</SubType>
