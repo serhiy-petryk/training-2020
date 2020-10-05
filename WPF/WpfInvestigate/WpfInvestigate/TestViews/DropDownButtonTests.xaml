@@ -371,6 +371,14 @@
                     <TextBlock>Microsoft Lumia 950</TextBlock>
                 </ComboBox>
 
+                <ComboBox Width="200" Background="#FFD6EAFF" BorderBrush="Red" Foreground="#FF0069D6" VerticalAlignment="Stretch">
+                    <TextBlock>LG Nexus 5X</TextBlock>
+                    <TextBlock>Huawai Nexus 6P</TextBlock>
+                    <TextBlock>iPhone 6S</TextBlock>
+                    <TextBlock>iPhone 6S Plus</TextBlock>
+                    <TextBlock>Microsoft Lumia 950</TextBlock>
+                </ComboBox>
+
             </ToolBar>
         </Grid>
     </Grid>

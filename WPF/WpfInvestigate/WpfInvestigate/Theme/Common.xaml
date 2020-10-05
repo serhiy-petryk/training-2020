@@ -16,4 +16,8 @@
         <EventSetter Event="Loaded" Handler="OnDatePickerTextBoxLoaded" />
     </Style>
 
+    <Style TargetType="ToolBar">
+        <EventSetter Event="Loaded" Handler="OnToolBarLoaded" />
+    </Style>
+
 </ResourceDictionary>
