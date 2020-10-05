@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using WpfInvestigate.Common;
 using WpfInvestigate.Obsolete;
 using WpfInvestigate.TestViews;
 
@@ -63,6 +64,7 @@ namespace WpfInvestigate
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
+            var a1 = Tips.GetVisualChildren(dp1).ToArray();
         }
 
     }

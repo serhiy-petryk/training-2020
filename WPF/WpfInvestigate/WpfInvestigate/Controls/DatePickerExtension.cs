@@ -68,8 +68,8 @@ namespace WpfInvestigate.Controls
             var style = dp.FindResource("ClearAnimatedButtonStyle") as Style;
             var clearButton = new Button
             {
-                Name = ClearButtonName, Style = style, Width = 18, Margin = new Thickness(-2, 0, 0, 2),
-                Padding = new Thickness(3.5)
+                Name = ClearButtonName, Style = style, Width = 18, Margin = new Thickness(-2, 0, 0, 0),
+                Padding = new Thickness(3)
             };
 
             if (dp.Background == null || dp.Background == Brushes.Transparent)

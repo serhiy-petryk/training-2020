@@ -9,19 +9,11 @@ namespace WpfInvestigate.Controls
 {
     public static class DatePickerHelper
     {
-        public static void HideBorderOfTextBox(FrameworkElement picker)
+        public static void HideBorderOfTextBox(DatePickerTextBox textBox)
         {
-            var borderNames = new[] { "watermark_decorator", "ContentElement" };
-            var textBox = picker is DatePickerTextBox
-                ? picker as DatePickerTextBox
-                : Tips.GetVisualChildren(picker).OfType<DatePickerTextBox>().FirstOrDefault();
-
-            //  Remove textbox background
-            if (textBox != null && textBox.Background != Brushes.Transparent)
-                textBox.Background = Brushes.Transparent;
-
             // Hide border of DatePicker textbox
-            var borders = Tips.GetVisualChildren(picker).OfType<Border>().Where(c => borderNames.Contains(c.Name));
+            var borderNames = new[] { "watermark_decorator", "ContentElement" };
+            var borders = Tips.GetVisualChildren(textBox).OfType<Border>().Where(c => borderNames.Contains(c.Name));
             foreach (var x in borders)
                 x.BorderBrush = Brushes.Transparent;
 

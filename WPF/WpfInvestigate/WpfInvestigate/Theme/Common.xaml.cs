@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls.Primitives;
 
 namespace WpfInvestigate.Theme
 {
@@ -11,7 +12,7 @@ namespace WpfInvestigate.Theme
 
         private void OnDatePickerTextBoxLoaded(object sender, RoutedEventArgs e)
         {
-            Controls.DatePickerHelper.HideBorderOfTextBox((FrameworkElement) sender);
+            Controls.DatePickerHelper.HideBorderOfTextBox(sender as DatePickerTextBox);
         }
     }
 }
