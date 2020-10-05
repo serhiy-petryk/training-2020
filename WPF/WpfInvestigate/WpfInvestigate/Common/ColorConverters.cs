@@ -192,12 +192,13 @@ namespace WpfInvestigate.Common
 
             if (hsl != null)
             {
-                foreach (var p in parameter.ToString().Split('/'))
-                {
-                    var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
-                    var newL = ColorConverterHelper.ConvertValue(hsl.L, p, !_noSplit ? isDarkColor : (bool?)null);
-                    hsl = new HSL(hsl.H, hsl.S, newL);
-                }
+                if (parameter is string)
+                    foreach (var p in parameter.ToString().Split('/'))
+                    {
+                        var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
+                        var newL = ColorConverterHelper.ConvertValue(hsl.L, p, !_noSplit ? isDarkColor : (bool?)null);
+                        hsl = new HSL(hsl.H, hsl.S, newL);
+                    }
 
                 if (Tips.GetNotNullableType(targetType) == typeof(Color))
                     return hsl.RGB.GetColor(oldColor?.A/255.0 ?? 1.0);
