@@ -72,7 +72,7 @@
                     <Button controls:RippleEffect.RippleColor="White" Background="Black" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Black Monochrome" />
                     <Button controls:RippleEffect.RippleColor="Gray" Width="120" Height="30"
-                            controls:ControlEffects.MonochromeAnimated="Gray"
+                            controls:ChromeEffects.MonochromeAnimated="Gray"
                             Content="Gray Monochrome" />
 
                     <!-- from https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp -->

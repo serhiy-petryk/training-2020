@@ -65,8 +65,8 @@
 
                                 <ToggleButton Grid.Column="1" x:Name="PART_ToggleButton" IsTabStop="False" Focusable="False"
                                               Style="{StaticResource DefaultButtonBaseStyle}"
-                                              local:ControlEffects.BichromeAnimatedBackground="{TemplateBinding Background}"
-                                              local:ControlEffects.BichromeAnimatedForeground="{TemplateBinding Foreground}"
+                                              local:ChromeEffects.BichromeAnimatedBackground="{TemplateBinding Background}"
+                                              local:ChromeEffects.BichromeAnimatedForeground="{TemplateBinding Foreground}"
                                               Padding="2" IsThreeState="False" Width="{StaticResource ButtonsWidth}"
                                               IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"
                                               Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCalculatorButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
@@ -74,15 +74,15 @@
 
                                 <RepeatButton Grid.Column="2" x:Name="PART_DownButton" IsTabStop="False" Focusable="False"
                                               Style="{StaticResource DefaultButtonBaseStyle}"
-                                              local:ControlEffects.BichromeAnimatedBackground="{TemplateBinding Background}"
-                                              local:ControlEffects.BichromeAnimatedForeground="{TemplateBinding Foreground}"
+                                              local:ChromeEffects.BichromeAnimatedBackground="{TemplateBinding Background}"
+                                              local:ChromeEffects.BichromeAnimatedForeground="{TemplateBinding Foreground}"
                                               Width="{StaticResource ButtonsWidth}" Delay="500" Interval="30" Padding="2"
                                               Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsUpDownButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                               local:ControlEffects.PathData="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z"/>
                                 <RepeatButton Grid.Column="3" x:Name="PART_UpButton" IsTabStop="False" Focusable="False"
                                               Style="{StaticResource DefaultButtonBaseStyle}"
-                                              local:ControlEffects.BichromeAnimatedBackground="{TemplateBinding Background}"
-                                              local:ControlEffects.BichromeAnimatedForeground="{TemplateBinding Foreground}"
+                                              local:ChromeEffects.BichromeAnimatedBackground="{TemplateBinding Background}"
+                                              local:ChromeEffects.BichromeAnimatedForeground="{TemplateBinding Foreground}"
                                               Width="{StaticResource ButtonsWidth}" Delay="500" Interval="30" Padding="2"
                                               Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsUpDownButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                               local:ControlEffects.PathData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>

@@ -81,6 +81,7 @@
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ColorPickerViewModel.cs" />
+    <Compile Include="Controls\ChromeEffects.cs" />
     <Compile Include="Controls\DatePickerExtension.cs" />
     <Compile Include="Controls\ControlHelper.cs" />
     <Compile Include="Controls\DropDownButtonHelper.cs" />

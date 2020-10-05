@@ -23,8 +23,8 @@
     </Style>
 
     <Style x:Key="ClearAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
-        <Setter Property="controls:ControlEffects.BichromeAnimatedBackground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Background}"/>
-        <Setter Property="controls:ControlEffects.BichromeAnimatedForeground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+        <Setter Property="controls:ChromeEffects.BichromeAnimatedBackground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Background}"/>
+        <Setter Property="controls:ChromeEffects.BichromeAnimatedForeground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
         <Setter Property="Content">
             <Setter.Value>
                 <Viewbox UseLayoutRounding="False">
