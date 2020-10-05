@@ -2,7 +2,34 @@
 ======
 1. Multicolumn combobox
 + 2. Object editor
-3. Refactoring animation
++ 3. Refactoring animation
+
+ToDo 2020-10-05
+===============
+1. Bootstrap button
+	colors: back/fore/border normal/mouseover/pressed/disabled
+2. Focus of control: state of adorner
+3. Check all controls + create control library
+	buttons
+	ripple (ripple color take from background; if chrome - don't run color change when pressed)
+	watermark
+	dropdown button
+	split button
+	colorpicker
+	numeric box
+	time/datetime picker
+	datepicker
+	calculator
+	keyboard
+	dualpathtogglebutton
+	object editor
+	dialogs
+	textbox (text pattern/regex, ???)
+4. Style for combobox dropdown: remove border
+5. Clear chrome button styles: remove old styles
+6. Color space forms
+7. 
+
 
 ToDo 2020-05-07:
 + 1. TimePicker selectors code -> copy шлях визовів методів із старого коду
