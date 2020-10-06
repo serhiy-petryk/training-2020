@@ -87,11 +87,11 @@ namespace WpfInvestigate.Controls
                 child.Margin = new Thickness(-thickness.Left, -thickness.Top, -thickness.Right, -thickness.Bottom);
                 var cornerRadius = Helpers.ControlHelper.GetCornerRadius(element);
                 if (cornerRadius.HasValue)
-                {
-                    const double k = 1.65;
-                    child.CornerRadius = new CornerRadius(cornerRadius.Value.TopLeft * k, cornerRadius.Value.TopRight * k,
-                        cornerRadius.Value.BottomRight * k, cornerRadius.Value.BottomLeft * k);
-                }
+                    child.CornerRadius = new CornerRadius(
+                        cornerRadius.Value.TopLeft + Math.Max(thickness.Left, thickness.Top) / 2,
+                        cornerRadius.Value.TopRight + Math.Max(thickness.Top, thickness.Right) / 2,
+                        cornerRadius.Value.BottomRight + Math.Max(thickness.Right, thickness.Bottom) / 2,
+                        cornerRadius.Value.BottomLeft + Math.Max(thickness.Bottom, thickness.Left) / 2);
                 else
                     child.CornerRadius = new CornerRadius();
 

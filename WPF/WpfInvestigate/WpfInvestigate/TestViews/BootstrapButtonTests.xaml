@@ -111,6 +111,13 @@
                     <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="10 0 20 0"
                             controls:FocusEffect.Brush="Aquamarine"
                             controls:FocusEffect.Thickness="12"
+                            controls:ControlEffects.CornerRadius="14 1 18 8"
+                            controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
+                            controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
+
+                    <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="0"
+                            controls:FocusEffect.Brush="Aquamarine"
+                            controls:FocusEffect.Thickness="10 10 0 20"
                             controls:ControlEffects.CornerRadius="14 0 18 8"
                             controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
                             controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
