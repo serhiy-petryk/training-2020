@@ -132,7 +132,7 @@ namespace WpfInvestigate.Controls
             if (partWatermark == null)
             {
                 var layer = AdornerLayer.GetAdornerLayer(ctrlBox);
-                var adornerControl = layer.GetAdorners(ctrlBox)?.FirstOrDefault(a => a is AdornerControl && ((AdornerControl) a).Child.Name == "Watermark") as AdornerControl;
+                var adornerControl = layer.GetAdorners(ctrlBox)?.OfType<AdornerControl>().FirstOrDefault(a => a.Child.Name == "Watermark");
 
                 if (adornerControl == null)
                 {
@@ -179,7 +179,7 @@ namespace WpfInvestigate.Controls
             {
                 var layer = AdornerLayer.GetAdornerLayer(ctrlBox);
                 var adorners = layer?.GetAdorners(ctrlBox) ?? new Adorner[0];
-                foreach (var adorner in adorners.Where(a => a is AdornerControl && ((AdornerControl) a).Child.Name == "Watermark"))
+                foreach (var adorner in adorners.OfType<AdornerControl>().Where(a => a.Child.Name == "Watermark"))
                     adorner.Visibility = Visibility.Collapsed;
             }
         }

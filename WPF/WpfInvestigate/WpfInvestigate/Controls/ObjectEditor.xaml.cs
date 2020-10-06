@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
@@ -105,11 +105,8 @@ namespace WpfInvestigate.Controls
             
             editor.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
             {
-                // Hide border of DatePicker textbox
-                var borderNames = new[] { "watermark_decorator", "ContentElement" };
-                var borders = Tips.GetVisualChildren(editor).OfType<Border>().Where(c => borderNames.Contains(((Border)c).Name));
-                foreach (var x in borders)
-                    x.BorderBrush = Brushes.Transparent;
+                foreach (var textBox in Tips.GetVisualChildren(editor).OfType<DatePickerTextBox>())
+                    Helpers.ControlHelper.HideBorderOfDatePickerTextBox(textBox);
 
                 editor._isTemplateChanging = false;
                 

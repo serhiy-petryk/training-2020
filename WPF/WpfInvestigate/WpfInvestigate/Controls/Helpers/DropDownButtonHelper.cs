@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace WpfInvestigate.Controls
+namespace WpfInvestigate.Controls.Helpers
 {
     public static class DropDownButtonHelper
     {

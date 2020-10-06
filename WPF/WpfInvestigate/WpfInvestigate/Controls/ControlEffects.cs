@@ -42,21 +42,17 @@ namespace WpfInvestigate.Controls
 
         #region ================  CornerRadius  =======================
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.RegisterAttached(
-            "CornerRadius", typeof(double), typeof(ControlEffects), new UIPropertyMetadata(double.NaN, OnCornerRadiusChanged));
-        public static double GetCornerRadius(DependencyObject obj) => (double)obj.GetValue(CornerRadiusProperty);
-        public static void SetCornerRadius(DependencyObject obj, double value) => obj.SetValue(CornerRadiusProperty, value);
+            "CornerRadius", typeof(CornerRadius), typeof(ControlEffects), new UIPropertyMetadata(new CornerRadius(), OnCornerRadiusChanged));
+        public static CornerRadius GetCornerRadius(DependencyObject obj) => (CornerRadius)obj.GetValue(CornerRadiusProperty);
+        public static void SetCornerRadius(DependencyObject obj, CornerRadius value) => obj.SetValue(CornerRadiusProperty, value);
         private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var newRadius = (double)e.NewValue;
-            if (!double.IsNaN(newRadius) && newRadius >= -0.0001)
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() =>
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() =>
-                {
-                    var border = Tips.GetVisualChildren(d).OfType<Border>().FirstOrDefault();
-                    if (border != null)
-                        border.CornerRadius = new CornerRadius(newRadius);
-                }));
-            }
+                var border = Helpers.ControlHelper.GetMainBorders(d as FrameworkElement).FirstOrDefault();
+                if (border != null)
+                    border.CornerRadius = (CornerRadius)e.NewValue;
+            }));
         }
         #endregion
     }

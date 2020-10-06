@@ -83,8 +83,8 @@
     <Compile Include="Controls\ColorPickerViewModel.cs" />
     <Compile Include="Controls\ChromeEffects.cs" />
     <Compile Include="Controls\DatePickerExtension.cs" />
-    <Compile Include="Controls\ControlHelper.cs" />
-    <Compile Include="Controls\DropDownButtonHelper.cs" />
+    <Compile Include="Controls\Helpers\ControlHelper.cs" />
+    <Compile Include="Controls\Helpers\DropDownButtonHelper.cs" />
     <Compile Include="Controls\DualPathToggleButtonEffect.cs" />
     <Compile Include="Controls\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>
@@ -103,6 +103,7 @@
     <Compile Include="Controls\Others\VirtualKeyboard.Models.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.KeyDefinition.cs" />
     <Compile Include="Controls\ControlEffects.cs" />
+    <Compile Include="Controls\FocusEffect.cs" />
     <Compile Include="Obsolete\xxPathContent.cs" />
     <Compile Include="Obsolete\AnimationHelper.cs" />
     <Compile Include="Obsolete\Events.cs" />
@@ -121,6 +122,9 @@
     </Compile>
     <Compile Include="TestViews\CalculatorTests.xaml.cs">
       <DependentUpon>CalculatorTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\BootstrapButtonTests.xaml.cs">
+      <DependentUpon>BootstrapButtonTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\ControlEffectTests.xaml.cs">
       <DependentUpon>ControlEffectTests.xaml</DependentUpon>
@@ -248,6 +252,10 @@
     <Page Include="TestViews\CalculatorTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\BootstrapButtonTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\ControlEffectTests.xaml">
       <Generator>MSBuild:Compile</Generator>
