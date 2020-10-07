@@ -110,7 +110,7 @@
                             controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
                     <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="10 0 20 0"
                             controls:FocusEffect.Brush="Aquamarine"
-                            controls:FocusEffect.Thickness="12"
+                            controls:FocusEffect.Thickness="2"
                             controls:ControlEffects.CornerRadius="14 1 18 8"
                             controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
                             controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
@@ -129,7 +129,13 @@
                             controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
                             controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
 
-                    <Button Style="{StaticResource BootstrapButton}" Content="BootstrapButton"/>
+                    <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
+                            controls:FocusEffect.Brush="Aquamarine"
+                            controls:ControlEffects.CornerRadius="4 1 8 2"
+                            controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
+                            controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
+                    
+                        <Button Style="{StaticResource BootstrapButton}" Content="BootstrapButton"/>
                 </WrapPanel>
             </StackPanel>
         </Grid>

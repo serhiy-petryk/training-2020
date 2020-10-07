@@ -71,7 +71,7 @@ namespace WpfInvestigate.Controls
                         BorderBrush = new SolidColorBrush(), Focusable = false, IsHitTestVisible = false
                     };
 
-                    animation = new ColorAnimation {Duration = TimeSpan.FromMilliseconds(500)};
+                    animation = new ColorAnimation {Duration = AnimationHelper.SlowAnimationDuration};
                     adorner.Resources.Add("animation", animation);
 
                     adornerControl = new AdornerControl(element) { Child = adorner, UseAdornedElementSize = false };
