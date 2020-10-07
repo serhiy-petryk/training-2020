@@ -17,8 +17,8 @@
         <EventSetter Event="Loaded" Handler="OnDatePickerTextBoxLoaded" />
     </Style>
 
-    <Style TargetType="ToolBar">
+    <!-- VS designer error!!! <Style TargetType="ToolBar">
         <EventSetter Event="Loaded" Handler="OnToolBarLoaded" />
-    </Style>
+    </Style>-->
 
 </ResourceDictionary>

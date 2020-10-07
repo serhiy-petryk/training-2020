@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,6 +32,9 @@ namespace WpfInvestigate.Controls.Helpers
 
         public static void SetBorderOfToolbarComboBoxes(ToolBar toolBar)
         {
+            if (DesignerProperties.GetIsInDesignMode(toolBar))
+                return; // VS designer error
+
             // Set border of comboboxes inside of toolbar (default is white)
             foreach (var comboBox in toolBar.Items.OfType<ComboBox>())
             {
