@@ -14,7 +14,6 @@ namespace WpfInvestigate.Controls
     /// </summary>
     public class ChromeEffects
     {
-
         #region ================  Chrome Settings  ======================
         public static readonly DependencyProperty ChromeMatrixProperty = DependencyProperty.RegisterAttached(
             "ChromeMatrix", typeof(string), typeof(ChromeEffects), new UIPropertyMetadata(null, OnChromeChanged));
