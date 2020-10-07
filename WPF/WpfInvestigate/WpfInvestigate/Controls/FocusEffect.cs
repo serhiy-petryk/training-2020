@@ -67,8 +67,8 @@ namespace WpfInvestigate.Controls
                 {
                     var adorner = new Border
                     {
-                        Name = "Focus", Background = Brushes.Transparent, UseLayoutRounding = true,
-                        BorderBrush = new SolidColorBrush(), Focusable = false, IsHitTestVisible = false
+                        Name = "Focus", Background = Brushes.Transparent, BorderBrush = new SolidColorBrush(),
+                        Focusable = false, IsHitTestVisible = false, UseLayoutRounding = false, SnapsToDevicePixels = false
                     };
 
                     animation = new ColorAnimation {Duration = AnimationHelper.SlowAnimationDuration};
@@ -81,8 +81,8 @@ namespace WpfInvestigate.Controls
                     adornerControl.Visibility = Visibility.Visible;
 
                 var child = (Border)adornerControl.Child;
-                // +0.5: to remove gap between focus and element
-                child.BorderThickness = new Thickness(thickness.Left + 0.5, thickness.Top + 0.5, thickness.Right + 0.5, thickness.Bottom + 0.5);
+                // +0.25: to remove gap between focus and element
+                child.BorderThickness = new Thickness(thickness.Left + 0.25, thickness.Top + 0.25, thickness.Right + 0.25, thickness.Bottom + 0.25);
                 child.Width = element.ActualWidth + thickness.Left + thickness.Right;
                 child.Height = element.ActualHeight + thickness.Top + thickness.Bottom;
                 child.Margin = new Thickness(-thickness.Left, -thickness.Top, -thickness.Right, -thickness.Bottom);

@@ -27,7 +27,7 @@
     <SolidColorBrush x:Key="GrayDarkBrush" Color="#343a40"/>
 
     <Style x:Key="DefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="False"/>
         <Setter Property="UseLayoutRounding" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -66,7 +66,7 @@
         <Setter Property="controls:ControlEffects.CornerRadius" Value="4"/>
         <Setter Property="controls:ChromeEffects.MonochromeAnimated" Value="Gray"/>
         <Setter Property="controls:ChromeEffects.ChromeMatrix" Value="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
-        <Setter Property="controls:FocusEffect.Thickness" Value="2.5"/>
+        <Setter Property="controls:FocusEffect.Thickness" Value="3"/>
         <Setter Property="controls:FocusEffect.Brush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=75}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="12 6"/>
