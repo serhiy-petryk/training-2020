@@ -81,7 +81,8 @@ namespace WpfInvestigate.Controls
                     adornerControl.Visibility = Visibility.Visible;
 
                 var child = (Border)adornerControl.Child;
-                child.BorderThickness = thickness;
+                // +0.5: to remove gap between focus and element
+                child.BorderThickness = new Thickness(thickness.Left + 0.5, thickness.Top + 0.5, thickness.Right + 0.5, thickness.Bottom + 0.5);
                 child.Width = element.ActualWidth + thickness.Left + thickness.Right;
                 child.Height = element.ActualHeight + thickness.Top + thickness.Bottom;
                 child.Margin = new Thickness(-thickness.Left, -thickness.Top, -thickness.Right, -thickness.Bottom);
