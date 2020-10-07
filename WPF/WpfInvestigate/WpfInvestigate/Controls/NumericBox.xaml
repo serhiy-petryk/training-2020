@@ -65,7 +65,6 @@
                                 </Border>
 
                                 <ToggleButton Grid.Column="1" x:Name="PART_ToggleButton" IsTabStop="False" Focusable="False"
-                                              Style="{StaticResource DefaultButtonBaseStyle}"
                                               effects:ChromeEffect.BichromeAnimatedBackground="{TemplateBinding Background}"
                                               effects:ChromeEffect.BichromeAnimatedForeground="{TemplateBinding Foreground}"
                                               Padding="2" IsThreeState="False" Width="{StaticResource ButtonsWidth}"
@@ -74,14 +73,12 @@
                                               effects:PathDataEffect.PathData="M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M7,4V8H17V4H7M7,10V12H9V10H7M11,10V12H13V10H11M15,10V12H17V10H15M7,14V16H9V14H7M11,14V16H13V14H11M15,14V16H17V14H15M7,18V20H9V18H7M11,18V20H13V18H11M15,18V20H17V18H15Z"/>
 
                                 <RepeatButton Grid.Column="2" x:Name="PART_DownButton" IsTabStop="False" Focusable="False"
-                                              Style="{StaticResource DefaultButtonBaseStyle}"
                                               effects:ChromeEffect.BichromeAnimatedBackground="{TemplateBinding Background}"
                                               effects:ChromeEffect.BichromeAnimatedForeground="{TemplateBinding Foreground}"
                                               Width="{StaticResource ButtonsWidth}" Delay="500" Interval="30" Padding="2"
                                               Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsUpDownButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                               effects:PathDataEffect.PathData="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z"/>
                                 <RepeatButton Grid.Column="3" x:Name="PART_UpButton" IsTabStop="False" Focusable="False"
-                                              Style="{StaticResource DefaultButtonBaseStyle}"
                                               effects:ChromeEffect.BichromeAnimatedBackground="{TemplateBinding Background}"
                                               effects:ChromeEffect.BichromeAnimatedForeground="{TemplateBinding Foreground}"
                                               Width="{StaticResource ButtonsWidth}" Delay="500" Interval="30" Padding="2"

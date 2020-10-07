@@ -10,7 +10,6 @@ namespace WpfInvestigate.Controls.Effects
     /// </summary>
     public class PathDataEffect
     {
-        #region ================  PathData  ==========================
         public static readonly DependencyProperty PathDataProperty = DependencyProperty.RegisterAttached(
             "PathData", typeof(Geometry), typeof(PathDataEffect), new UIPropertyMetadata(null, OnPathDataChanged));
         public static Geometry GetPathData(DependencyObject obj) => (Geometry)obj.GetValue(PathDataProperty);
@@ -34,6 +33,5 @@ namespace WpfInvestigate.Controls.Effects
                     control.Content = null;
             }
         }
-        #endregion
     }
 }

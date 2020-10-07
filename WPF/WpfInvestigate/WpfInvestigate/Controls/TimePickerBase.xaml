@@ -191,7 +191,6 @@
                                     </DatePickerTextBox>
 
                                     <ToggleButton x:Name="PART_ToggleButton" Grid.Column="1" Focusable="True" IsTabStop="False" Width="20" Padding="2" VerticalAlignment="Stretch"
-                                                  Style="{StaticResource DefaultButtonBaseStyle}"
                                                   effects:ChromeEffect.BichromeAnimatedBackground="{TemplateBinding Background}"
                                                   effects:ChromeEffect.BichromeAnimatedForeground="{TemplateBinding Foreground}"
                                                   Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"

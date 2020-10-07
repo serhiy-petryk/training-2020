@@ -34,8 +34,7 @@
             <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
             <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
             <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
-            <!--<Button Style="{StaticResource DefaultButtonBaseStyle}" Width="140" Height="40" Content="Bichrome" BorderThickness="2"
-                    controls:ChromeEffect.Monochrome="Blue"/>-->
+
             <StackPanel Orientation="Horizontal">
                 <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
                         effects:FocusEffect.Brush="Aquamarine"
