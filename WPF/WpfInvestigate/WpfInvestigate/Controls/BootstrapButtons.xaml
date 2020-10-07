@@ -29,7 +29,6 @@
     <Style x:Key="DefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="False"/>
-        <!-- ?? Bad CornerRadius <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -42,23 +41,6 @@
                             <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="DefaultButtonBaseStyle2" TargetType="{x:Type ButtonBase}">
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="UseLayoutRounding" Value="False"/>
-        <!--<Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>-->
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                            Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                        <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -85,17 +67,12 @@
         <Setter Property="controls:ChromeEffects.MonochromeAnimated" Value="Gray"/>
         <Setter Property="controls:ChromeEffects.ChromeMatrix" Value="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="8 6"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="12 6"/>
+        <Setter Property="FontSize" Value="16"/>
     </Style>
 
-    <Style x:Key="BootstrapDarkForegroundButton" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="controls:ControlEffects.CornerRadius" Value="4"/>
-        <Setter Property="controls:ChromeEffects.MonochromeAnimated" Value="Gray"/>
+    <Style x:Key="BootstrapDarkForegroundButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
         <Setter Property="controls:ChromeEffects.ChromeMatrix" Value="+0,15,+0,-7.5,15,-10,-10,15,-12.5, 65"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="8 6"/>
-        <Setter Property="FontSize" Value="14"/>
     </Style>
 
     <Style x:Key="PrimaryButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">

@@ -42,18 +42,6 @@
                         controls:ControlEffects.CornerRadius="4"
                         controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
                         controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
-                <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
-                        Style="{StaticResource DefaultButtonBaseStyle2}"
-                        controls:FocusEffect.Brush="Aquamarine"
-                        controls:ControlEffects.CornerRadius="4 1 8 2"
-                        controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
-                        controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
-
-                <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
-                        Style="{StaticResource DefaultButtonBaseStyle2}"
-                        controls:FocusEffect.Brush="Aquamarine"
-                        controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
-                        controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
             </StackPanel>
 
             <Button Margin="4" Padding="4" Width="100" Content="Warning" FontSize="16" BorderThickness="0"

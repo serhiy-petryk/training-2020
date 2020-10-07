@@ -127,13 +127,6 @@
                     </Button>
 
                     <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
-                            Style="{StaticResource DefaultButtonBaseStyle2}"
-                            controls:FocusEffect.Brush="Aquamarine"
-                            controls:FocusEffect.Thickness="1 5 10 15"
-                            controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
-                            controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
-
-                    <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
                             controls:FocusEffect.Brush="Aquamarine"
                             controls:ControlEffects.CornerRadius="4 1 8 2"
                             controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
@@ -142,7 +135,6 @@
                 </WrapPanel>
 
                 <WrapPanel>
-                    <Button Style="{StaticResource BootstrapButton}" Content="BootstrapButton"/>
                     <Button Margin="4" Style="{StaticResource PrimaryButton}" Content="Primary"/>
                     <Button Margin="4" Style="{StaticResource SecondaryButton}" Content="Secondary"/>
                     <Button Margin="4" Style="{StaticResource SuccessButton}" Content="Success"/>
@@ -151,6 +143,36 @@
                     <Button Margin="4" Style="{StaticResource InfoButton}" Content="Info"/>
                     <Button Margin="4" Style="{StaticResource LightButton}" Content="Light"/>
                     <Button Margin="4" Style="{StaticResource DarkButton}" Content="Dark"/>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Bootstrap"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Blue"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource BlueBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Indigo"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource IndigoBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Purple"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource PurpleBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Pink"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource PinkBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Red"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource RedBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Orange"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource OrangeBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapDarkForegroundButton}" Content="Yellow"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource YellowBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Green"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource GreenBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Teal"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource TealBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Cyan"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource CyanBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapDarkForegroundButton}" Content="White"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource WhiteBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Gray"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource GrayBrush}"/>
+                    <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Gray Dark"
+                            controls:ChromeEffects.MonochromeAnimated="{StaticResource GrayDarkBrush}"/>
                 </WrapPanel>
             </StackPanel>
         </Grid>
