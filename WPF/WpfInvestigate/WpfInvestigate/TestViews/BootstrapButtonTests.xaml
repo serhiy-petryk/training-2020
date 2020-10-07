@@ -139,7 +139,18 @@
                             controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
                             controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
                     
-                        <Button Style="{StaticResource BootstrapButton}" Content="BootstrapButton"/>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <Button Style="{StaticResource BootstrapButton}" Content="BootstrapButton"/>
+                    <Button Margin="4" Style="{StaticResource PrimaryButton}" Content="Primary"/>
+                    <Button Margin="4" Style="{StaticResource SecondaryButton}" Content="Secondary"/>
+                    <Button Margin="4" Style="{StaticResource SuccessButton}" Content="Success"/>
+                    <Button Margin="4" Style="{StaticResource DangerButton}" Content="Danger"/>
+                    <Button Margin="4" Style="{StaticResource WarningButton}" Content="Warning"/>
+                    <Button Margin="4" Style="{StaticResource InfoButton}" Content="Info"/>
+                    <Button Margin="4" Style="{StaticResource LightButton}" Content="Light"/>
+                    <Button Margin="4" Style="{StaticResource DarkButton}" Content="Dark"/>
                 </WrapPanel>
             </StackPanel>
         </Grid>

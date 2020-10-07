@@ -117,7 +117,7 @@ namespace WpfInvestigate.Controls
             if (Equals(oldState, newState)) return;
             control.Resources["state"] = newState;
 
-            var getBackgroundMethod = Chrome_GetBackgroundMethod(control);
+            var getBackgroundMethod = GetBackgroundMethod(control);
             var newValues = Chrome_GetNewColors(control, getBackgroundMethod);
 
             if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
@@ -211,15 +211,15 @@ namespace WpfInvestigate.Controls
                 opacity = control.IsEnabled ? (isMouseOver || isPressed ? 1.0 : 0.7) : 0.35;
                 if (isPressed)
                 {
-                    backColor = Chrome_ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
+                    backColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
                     foreColor = biChromeForeColor;
-                    borderColor = Chrome_ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
+                    borderColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
                 }
                 else if (isMouseOver)
                 {
-                    backColor = Chrome_ColorMix(biChromeBackColor, biChromeForeColor, 0.9);
+                    backColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.9);
                     foreColor = biChromeForeColor;
-                    borderColor = Chrome_ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
+                    borderColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
                 }
                 else
                 {
@@ -231,7 +231,7 @@ namespace WpfInvestigate.Controls
             return new Tuple<Color, Color, Color, double>(backColor, foreColor, borderColor, opacity);
         }
 
-        private static Color Chrome_ColorMix(Color color1, Color color2, double multiplier)
+        private static Color ColorMix(Color color1, Color color2, double multiplier)
         {
             var multiplier2 = 1.0 - multiplier;
             return Color.FromArgb(Convert.ToByte(color1.A * multiplier + color2.A * multiplier2),
@@ -240,7 +240,7 @@ namespace WpfInvestigate.Controls
                 Convert.ToByte(color1.B * multiplier + color2.B * multiplier2));
         }
 
-        private static Func<DependencyObject, Brush> Chrome_GetBackgroundMethod(Control control)
+        private static Func<DependencyObject, Brush> GetBackgroundMethod(Control control)
         {
             if (GetMonochrome(control) != null) return GetMonochrome;
             if (GetMonochromeAnimated(control) != null) return GetMonochromeAnimated;
