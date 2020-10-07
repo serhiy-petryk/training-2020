@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
         Title="DatePickerExtensionTests" Height="450" Width="800">
 
@@ -62,7 +63,7 @@
 
                 <WrapPanel Margin="0 2 0 0">
                     <Label Content="DatePicker: (nullable, end date=2022/1/1)"/>
-                    <DatePicker controls:DatePickerExtension.IsNullable="True" DisplayDateStart="2022/1/1" controls:WatermarkEffect.Watermark="watermark" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
+                    <DatePicker controls:DatePickerExtension.IsNullable="True" DisplayDateStart="2022/1/1" effects:WatermarkEffect.Watermark="watermark" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 5 0 0">

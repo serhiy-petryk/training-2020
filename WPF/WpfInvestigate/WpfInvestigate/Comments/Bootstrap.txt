@@ -2,6 +2,9 @@
 What to do: see bootstrap in web.
 ================================
 
+1. https://getbootstrap.com/docs/4.5/getting-started/introduction/
+2. https://mdbootstrap.com/docs/standard/ https://github.com/mdbootstrap/mdb-ui-kit
+
 ToDo:
 ====
 1. Corner radius:

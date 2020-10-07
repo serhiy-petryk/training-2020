@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
         Title="WatermarkTests" Height="400" Width="1000">
 
@@ -65,15 +66,15 @@
 
     <WrapPanel Background="Yellow">
         <TextBlock Text="Textbox:" Margin="0 20 0 0"/>
-        <TextBox x:Name="TestBox" controls:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Height="30" Background="Aquamarine" Padding="0" Width="80"/>
+        <TextBox x:Name="TestBox" effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Height="30" Background="Aquamarine" Padding="0" Width="80"/>
         <Button Content="Change watermark text" Click="ChangeWatermarkText_OnClick"/>
         <Button Content="Change watermark foreground" Click="ChangeWatermarkForeground_OnClick"/>
 
         <TextBlock Text="Custom Textbox:"/>
-        <TextBox controls:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80" Style="{StaticResource CustomTextBox}"/>
+        <TextBox effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80" Style="{StaticResource CustomTextBox}"/>
 
         <TextBlock Text="Rotated Textbox:"/>
-        <TextBox controls:WatermarkEffect.Watermark="Long AAAA" Margin="0 0 0 5" Padding="7"  Width="120" BorderThickness="4 6 8 10" Height="60"
+        <TextBox effects:WatermarkEffect.Watermark="Long AAAA" Margin="0 0 0 5" Padding="7"  Width="120" BorderThickness="4 6 8 10" Height="60"
                  VerticalAlignment="Top" VerticalContentAlignment="Bottom"
                  HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                  BorderBrush="YellowGreen" Background="Aquamarine">
@@ -83,7 +84,7 @@
         </TextBox>
 
         <TextBlock Text="Rotated Numeric:"/>
-        <obsolete:NumericUpDown controls:WatermarkEffect.Watermark="Long AAAA" Margin="0 0 0 5" Padding="7"  Width="180" BorderThickness="4 6 8 10" Height="50"
+        <obsolete:NumericUpDown effects:WatermarkEffect.Watermark="Long AAAA" Margin="0 0 0 5" Padding="7"  Width="180" BorderThickness="4 6 8 10" Height="50"
                  VerticalAlignment="Top" VerticalContentAlignment="Bottom"
                  HorizontalContentAlignment="Right"
                  BorderBrush="YellowGreen" Background="Aquamarine" IsNullable="True">
@@ -93,14 +94,14 @@
         </obsolete:NumericUpDown>
 
         <TextBlock Text="Rotated Textbox:"/>
-        <TextBox controls:WatermarkEffect.Watermark="Long text AAAA " Margin="0 0 0 5" Width="40">
+        <TextBox effects:WatermarkEffect.Watermark="Long text AAAA " Margin="0 0 0 5" Width="40">
             <TextBox.RenderTransform >
                 <RotateTransform CenterX="10" CenterY="20" Angle="5" />
             </TextBox.RenderTransform>
         </TextBox>
 
         <TextBlock Text="ComboBox:"/>
-        <ComboBox x:Name="cb" controls:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 2"  Padding="7"  Width="120" BorderThickness="4 6 8 10" Height="30"
+        <ComboBox x:Name="cb" effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 2"  Padding="7"  Width="120" BorderThickness="4 6 8 10" Height="30"
                   VerticalAlignment="Top" VerticalContentAlignment="Bottom"
                   HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                   BorderBrush="YellowGreen">
@@ -114,7 +115,7 @@
         <Button Content="Clear combobox" Click="ClearCombobox_OnClick" Margin="0 0 0 10"/>
 
         <TextBlock Text="Editable ComboBox:"/>
-        <ComboBox controls:WatermarkEffect.Watermark="AAAA" controls:WatermarkEffect.Foreground="Blue"
+        <ComboBox effects:WatermarkEffect.Watermark="AAAA" effects:WatermarkEffect.Foreground="Blue"
                   Margin="0 0 0 5" IsEditable="True" Width="80" Height="30" Background="Aquamarine">
             <TextBlock>LG Nexus 5X</TextBlock>
             <TextBlock>Huawai Nexus 6P</TextBlock>
@@ -122,7 +123,7 @@
         </ComboBox>
 
         <TextBlock Text="DatePicker:"/>
-        <DatePicker controls:WatermarkEffect.Watermark="AAAA" controls:WatermarkEffect.Foreground="Red"
+        <DatePicker effects:WatermarkEffect.Watermark="AAAA" effects:WatermarkEffect.Foreground="Red"
                     Margin="0 0 0 5" Padding="2"  Width="120" BorderThickness="4 6 8 10" Height="40"
                     Background="Aquamarine" 
                     VerticalAlignment="Top" VerticalContentAlignment="Bottom"
@@ -134,10 +135,10 @@
         </DatePicker>
 
         <TextBlock Text="PasswordBox:"/>
-        <PasswordBox controls:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80"/>
+        <PasswordBox effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80"/>
 
         <TextBlock Text="Hidden PasswordBox:"/>
-        <PasswordBox controls:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80" Visibility="Hidden"/>
+        <PasswordBox effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80" Visibility="Hidden"/>
 
         <DatePicker/>
     </WrapPanel>

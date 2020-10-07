@@ -2,7 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:WpfInvestigate.Controls">
+             xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+             xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects">
 
     <Geometry x:Key="CloseGeometry">M22 4 L18 0 L11 7 L4 0 L0 4 L7 11 L0 18 L4 22 L11 15 L18 22 L22 18 L15 11 L22 4Z</Geometry>
     <Geometry x:Key="DownArrowGeometry">M0 0 L1 1 L2 0 Z</Geometry>
@@ -47,9 +48,9 @@
                                       IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}"
                                       VerticalAlignment="Stretch"
                                       UseLayoutRounding="False"
-                                      controls:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                                      controls:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                      controls:DualPathToggleButtonEffect.Width="9">
+                                      effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                      effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                      effects:DualPathToggleButtonEffect.Width="9">
                             <ToggleButton.Style>
                                 <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
                                     <Style.Triggers>
@@ -74,11 +75,11 @@
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="IsThreeState" Value="False"/>
-        <Setter Property="controls:DualPathToggleButtonEffect.GeometryOff" Value="{StaticResource DownArrowGeometry}"/>
-        <Setter Property="controls:DualPathToggleButtonEffect.GeometryOn" Value="{StaticResource CloseGeometry}"/>
-        <Setter Property="controls:DualPathToggleButtonEffect.Width" Value="9"/>
-        <Setter Property="controls:DualPathToggleButtonEffect.MarginOff" Value="2 0"/>
-        <Setter Property="controls:DualPathToggleButtonEffect.MarginOn" Value="2 0"/>
+        <Setter Property="effects:DualPathToggleButtonEffect.GeometryOff" Value="{StaticResource DownArrowGeometry}"/>
+        <Setter Property="effects:DualPathToggleButtonEffect.GeometryOn" Value="{StaticResource CloseGeometry}"/>
+        <Setter Property="effects:DualPathToggleButtonEffect.Width" Value="9"/>
+        <Setter Property="effects:DualPathToggleButtonEffect.MarginOff" Value="2 0"/>
+        <Setter Property="effects:DualPathToggleButtonEffect.MarginOn" Value="2 0"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
     </Style>
 

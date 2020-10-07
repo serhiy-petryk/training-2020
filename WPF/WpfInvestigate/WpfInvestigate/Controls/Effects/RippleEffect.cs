@@ -1,4 +1,5 @@
 ﻿// Based on https://github.com/Taka414/RippleEffectControl
+
 using System;
 using System.Linq;
 using System.Windows;
@@ -11,7 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
-namespace WpfInvestigate.Controls
+namespace WpfInvestigate.Controls.Effects
 {
     /// <summary>
     /// Ripple Effect for FrameworkElement

@@ -8,53 +8,53 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
-namespace WpfInvestigate.Controls
+namespace WpfInvestigate.Controls.Effects
 {
     /// <summary>
     /// </summary>
-    public class ChromeEffects
+    public class ChromeEffect
     {
         #region ================  Chrome Settings  ======================
         public static readonly DependencyProperty ChromeMatrixProperty = DependencyProperty.RegisterAttached(
-            "ChromeMatrix", typeof(string), typeof(ChromeEffects), new UIPropertyMetadata(null, OnChromeChanged));
+            "ChromeMatrix", typeof(string), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
         public static string GetChromeMatrix(DependencyObject obj) => (string)obj.GetValue(ChromeMatrixProperty);
         public static void SetChromeMatrix(DependencyObject obj, string value) => obj.SetValue(ChromeMatrixProperty, value);
         #endregion
 
         #region ================  Monochrome  ======================
         public static readonly DependencyProperty MonochromeProperty = DependencyProperty.RegisterAttached(
-            "Monochrome", typeof(Brush), typeof(ChromeEffects), new UIPropertyMetadata(null, OnChromeChanged));
+            "Monochrome", typeof(Brush), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
         public static Brush GetMonochrome(DependencyObject obj) => (Brush)obj.GetValue(MonochromeProperty);
         public static void SetMonochrome(DependencyObject obj, Brush value) => obj.SetValue(MonochromeProperty, value);
         #endregion
 
         #region ================  Monochrome Animated ======================
         public static readonly DependencyProperty MonochromeAnimatedProperty = DependencyProperty.RegisterAttached(
-            "MonochromeAnimated", typeof(Brush), typeof(ChromeEffects), new UIPropertyMetadata(null, OnChromeChanged));
+            "MonochromeAnimated", typeof(Brush), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
         public static Brush GetMonochromeAnimated(DependencyObject obj) => (Brush)obj.GetValue(MonochromeAnimatedProperty);
         public static void SetMonochromeAnimated(DependencyObject obj, Brush value) => obj.SetValue(MonochromeAnimatedProperty, value);
         #endregion
 
         #region =============================  Bichrome  ===========================
         public static readonly DependencyProperty BichromeBackgroundProperty = DependencyProperty.RegisterAttached(
-            "BichromeBackground", typeof(Brush), typeof(ChromeEffects), new UIPropertyMetadata(null, OnChromeChanged));
+            "BichromeBackground", typeof(Brush), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
         public static Brush GetBichromeBackground(DependencyObject obj) => (Brush)obj.GetValue(BichromeBackgroundProperty);
         public static void SetBichromeBackground(DependencyObject obj, Brush value) => obj.SetValue(BichromeBackgroundProperty, value);
 
         public static readonly DependencyProperty BichromeForegroundProperty = DependencyProperty.RegisterAttached(
-            "BichromeForeground", typeof(Brush), typeof(ChromeEffects), new FrameworkPropertyMetadata(null, OnChromeChanged));
+            "BichromeForeground", typeof(Brush), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnChromeChanged));
         public static Brush GetBichromeForeground(DependencyObject obj) => (Brush)obj.GetValue(BichromeForegroundProperty);
         public static void SetBichromeForeground(DependencyObject obj, Brush value) => obj.SetValue(BichromeForegroundProperty, value);
         #endregion
 
         #region =============================  Bichrome Animated ===========================
         public static readonly DependencyProperty BichromeAnimatedBackgroundProperty = DependencyProperty.RegisterAttached(
-            "BichromeAnimatedBackground", typeof(Brush), typeof(ChromeEffects), new UIPropertyMetadata(null, OnChromeChanged));
+            "BichromeAnimatedBackground", typeof(Brush), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
         public static Brush GetBichromeAnimatedBackground(DependencyObject obj) => (Brush)obj.GetValue(BichromeAnimatedBackgroundProperty);
         public static void SetBichromeAnimatedBackground(DependencyObject obj, Brush value) => obj.SetValue(BichromeAnimatedBackgroundProperty, value);
 
         public static readonly DependencyProperty BichromeAnimatedForegroundProperty = DependencyProperty.RegisterAttached(
-            "BichromeAnimatedForeground", typeof(Brush), typeof(ChromeEffects), new FrameworkPropertyMetadata(null, OnChromeChanged));
+            "BichromeAnimatedForeground", typeof(Brush), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnChromeChanged));
         public static Brush GetBichromeAnimatedForeground(DependencyObject obj) => (Brush)obj.GetValue(BichromeAnimatedForegroundProperty);
         public static void SetBichromeAnimatedForeground(DependencyObject obj, Brush value) => obj.SetValue(BichromeAnimatedForegroundProperty, value);
         #endregion

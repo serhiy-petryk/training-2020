@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         x:Class="WpfInvestigate.TestViews.TimePickerTests"
         mc:Ignorable="d"
         Title="TimePickerTest" Height="600" Width="1000">
@@ -63,7 +64,7 @@
                 <controls:TimePicker x:Name="AAA" VisibleButtons="None" Width="100" Background="Yellow"
                                  IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" IsNullable="True"
                                  BorderThickness="1" BorderBrush="YellowGreen" FontSize="16"
-                                 controls:WatermarkEffect.Watermark="test" controls:WatermarkEffect.Foreground="Gray"/>
+                                 effects:WatermarkEffect.Watermark="test" effects:WatermarkEffect.Foreground="Gray"/>
                 <TextBox Text="{Binding Path=SelectedTime, ElementName=AAA}"/>
             </WrapPanel>
 
@@ -75,7 +76,7 @@
                              DatePickerMode="True"
                              FontSize="24"
                              DisplayDateStart="2022/1/1"
-                             controls:WatermarkEffect.Watermark="Test"/>
+                             effects:WatermarkEffect.Watermark="Test"/>
                 <Button Click="ChangeDate_OnClick" Content="Change date"/>
                 <Button Click="DatePickerMode_OnClick" Content="Change DatePickerMode"/>
                 <Button Click="TimeFormat_OnClick" Content="TimeFormat_OnClick"/>
@@ -90,7 +91,7 @@
                                          IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
                                          IsNullable="False"
                                          DatePickerMode="True"
-                                         controls:WatermarkEffect.Watermark="test" controls:WatermarkEffect.Foreground="Gray"/>
+                                         effects:WatermarkEffect.Watermark="test" effects:WatermarkEffect.Foreground="Gray"/>
                 <Button Click="ChangeDate1_OnClick" Content="Change date"/>
                 <Button Click="DatePickerMode1_OnClick" Content="Change DatePickerMode"/>
             </WrapPanel>
@@ -113,7 +114,7 @@
                                  IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
                                  IsNullable="True"
                                  DatePickerMode="True"
-                                 controls:WatermarkEffect.Watermark="test" controls:WatermarkEffect.Foreground="Gray"/>
+                                 effects:WatermarkEffect.Watermark="test" effects:WatermarkEffect.Foreground="Gray"/>
                 <Button Click="ChangeDate3_OnClick" Content="Change date"/>
                 <Button Click="DatePickerMode3_OnClick" Content="Change DatePickerMode"/>
             </WrapPanel>

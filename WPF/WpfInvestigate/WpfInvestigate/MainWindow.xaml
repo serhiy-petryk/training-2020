@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-        xmlns:common="clr-namespace:WpfInvestigate.Common"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="600" Width="1000">
 
@@ -32,27 +32,27 @@
             </ComboBox>
             <Label Content="WiP controls:" Margin="0 10 0 0"/>
             <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
-            <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffects" Click="ControlEffectTests_OnClick"/>
+            <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
             <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
             <!--<Button Style="{StaticResource DefaultButtonBaseStyle}" Width="140" Height="40" Content="Bichrome" BorderThickness="2"
-                    controls:ChromeEffects.Monochrome="Blue"/>-->
+                    controls:ChromeEffect.Monochrome="Blue"/>-->
             <StackPanel Orientation="Horizontal">
                 <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
-                        controls:FocusEffect.Brush="Aquamarine"
-                        controls:ControlEffects.CornerRadius="4"
-                        controls:ChromeEffects.MonochromeAnimated="#FF007BFF"
-                        controls:ChromeEffects.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
+                        effects:FocusEffect.Brush="Aquamarine"
+                        effects:ControlEffect.CornerRadius="4"
+                        effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                        effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
             </StackPanel>
 
             <Button Margin="4" Padding="4" Width="100" Content="Warning" FontSize="16" BorderThickness="0"
-                    controls:ControlEffects.CornerRadius="5"
-                    controls:ChromeEffects.MonochromeAnimated="#ffc107"
-                    controls:ChromeEffects.ChromeMatrix="+0,15,+0,-7.5,15,-10,-10,15,-12.5, 65"/>
+                    effects:ControlEffect.CornerRadius="5"
+                    effects:ChromeEffect.MonochromeAnimated="#ffc107"
+                    effects:ChromeEffect.ChromeMatrix="+0,15,+0,-7.5,15,-10,-10,15,-12.5, 65"/>
 
             <Button Margin="4" Padding="4" Width="100" Content="Light" FontSize="16" BorderThickness="0"
-                    controls:ChromeEffects.MonochromeAnimated="#f8f9fa"
-                    controls:ChromeEffects.ChromeMatrix="+0,15,+0,-7.5,15,-10,-10,15,-12.5, 65"
-                    controls:ControlEffects.CornerRadius="4"/>
+                    effects:ChromeEffect.MonochromeAnimated="#f8f9fa"
+                    effects:ChromeEffect.ChromeMatrix="+0,15,+0,-7.5,15,-10,-10,15,-12.5, 65"
+                    effects:ControlEffect.CornerRadius="4"/>
 
         </StackPanel>
 

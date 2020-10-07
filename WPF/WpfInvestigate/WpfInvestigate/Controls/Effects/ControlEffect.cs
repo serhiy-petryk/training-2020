@@ -6,17 +6,16 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using WpfInvestigate.Common;
 
-namespace WpfInvestigate.Controls
+namespace WpfInvestigate.Controls.Effects
 {
     /// <summary>
     /// </summary>
-    public class ControlEffects
+    public class ControlEffect
     {
         #region ================  PathData  ==========================
         public static readonly DependencyProperty PathDataProperty = DependencyProperty.RegisterAttached(
-            "PathData", typeof(Geometry), typeof(ControlEffects), new UIPropertyMetadata(null, OnPathDataChanged));
+            "PathData", typeof(Geometry), typeof(ControlEffect), new UIPropertyMetadata(null, OnPathDataChanged));
         public static Geometry GetPathData(DependencyObject obj) => (Geometry)obj.GetValue(PathDataProperty);
         public static void SetPathData(DependencyObject obj, Geometry value) => obj.SetValue(PathDataProperty, value);
 
@@ -42,7 +41,7 @@ namespace WpfInvestigate.Controls
 
         #region ================  CornerRadius  =======================
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.RegisterAttached(
-            "CornerRadius", typeof(CornerRadius), typeof(ControlEffects), new UIPropertyMetadata(new CornerRadius(), OnCornerRadiusChanged));
+            "CornerRadius", typeof(CornerRadius), typeof(ControlEffect), new UIPropertyMetadata(new CornerRadius(), OnCornerRadiusChanged));
         public static CornerRadius GetCornerRadius(DependencyObject obj) => (CornerRadius)obj.GetValue(CornerRadiusProperty);
         public static void SetCornerRadius(DependencyObject obj, CornerRadius value) => obj.SetValue(CornerRadiusProperty, value);
         private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using WpfInvestigate.Controls;
+using WpfInvestigate.Controls.Effects;
 
 namespace WpfInvestigate.TestViews
 {

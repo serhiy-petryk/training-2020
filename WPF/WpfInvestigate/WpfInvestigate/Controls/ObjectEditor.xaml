@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:WpfInvestigate.Controls"
              xmlns:converters="clr-namespace:WpfInvestigate.Common"
+             xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
              mc:Ignorable="d"
              Loaded="ObjectEditor_OnLoaded">
 
@@ -19,8 +20,8 @@
                      Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
                      TabIndex="{TemplateBinding TabIndex}" IsTabStop="{TemplateBinding IsTabStop}"
                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                     controls:WatermarkEffect.Watermark="{TemplateBinding controls:WatermarkEffect.Watermark}"
-                     controls:WatermarkEffect.Foreground="{TemplateBinding controls:WatermarkEffect.Foreground}"
+                     effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
+                     effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
                      Text="{TemplateBinding Value}"
                      TextChanged="TextBox_OnValueChanged"/>
         </ControlTemplate>
@@ -50,8 +51,8 @@
                                  TabIndex="{TemplateBinding TabIndex}" IsTabStop="{TemplateBinding IsTabStop}"
                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                  IsNullable="{TemplateBinding IsNullable}"
-                                 controls:WatermarkEffect.Watermark="{TemplateBinding controls:WatermarkEffect.Watermark}"
-                                 controls:WatermarkEffect.Foreground="{TemplateBinding controls:WatermarkEffect.Foreground}"
+                                 effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
+                                 effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
                                  MinValue="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=NumericMinValue}"
                                  MaxValue="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=NumericMaxValue}"
                                  DecimalPlaces="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Metadata.DecimalPlaces}"
@@ -67,8 +68,8 @@
                         Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
                         TabIndex="{TemplateBinding TabIndex}" IsTabStop="False"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                        controls:WatermarkEffect.Watermark="{TemplateBinding controls:WatermarkEffect.Watermark}"
-                        controls:WatermarkEffect.Foreground="{TemplateBinding controls:WatermarkEffect.Foreground}"
+                        effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
+                        effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
                         controls:DatePickerExtension.ClearButton="True"
                         controls:DatePickerExtension.IsNullable="{TemplateBinding IsNullable}"
                         SelectedDate="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}"
@@ -90,8 +91,8 @@
                                      TabIndex="{TemplateBinding TabIndex}" IsTabStop="{TemplateBinding IsTabStop}"
                                      IsNullable="{TemplateBinding IsNullable}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                     controls:WatermarkEffect.Watermark="{TemplateBinding controls:WatermarkEffect.Watermark}"
-                                     controls:WatermarkEffect.Foreground="{TemplateBinding controls:WatermarkEffect.Foreground}"
+                                     effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
+                                     effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
                                      SelectedDate="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}"
                                      SelectedDateChanged="DateTimePicker_OnValueChanged" />
         </ControlTemplate>
@@ -106,8 +107,8 @@
                                  TabIndex="{TemplateBinding TabIndex}" IsTabStop="{TemplateBinding IsTabStop}"
                                  IsNullable="{TemplateBinding IsNullable}"
                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                 controls:WatermarkEffect.Watermark="{TemplateBinding controls:WatermarkEffect.Watermark}"
-                                 controls:WatermarkEffect.Foreground="{TemplateBinding controls:WatermarkEffect.Foreground}"
+                                 effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
+                                 effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
                                  SelectedTime="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}"
                                  SelectedTimeChanged="TimePicker_OnValueChanged" />
         </ControlTemplate>

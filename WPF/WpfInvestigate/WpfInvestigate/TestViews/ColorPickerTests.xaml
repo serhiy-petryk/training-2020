@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
         Title="ColorPickerTests" Height="600" Width="700">
 
@@ -42,24 +43,24 @@
                 <WrapPanel Grid.Row="0" Orientation="Horizontal">
                     <Button Margin="5 0" BorderThickness="2" Style="{StaticResource DefaultButtonBaseStyle}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}"
                             Width="30" Height="30" Padding="4"
-                            controls:ChromeEffects.Monochrome="{Binding ElementName=ColorPicker, Path=ColorBrush}"
-                            controls:ControlEffects.PathData="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                            effects:ChromeEffect.Monochrome="{Binding ElementName=ColorPicker, Path=ColorBrush}"
+                            effects:ControlEffect.PathData="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
 
                     <Button Margin="5" Content="Test control" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource DefaultButtonBaseStyle}"
-                            controls:ChromeEffects.Monochrome="{Binding ElementName=ColorPicker, Path=ColorBrush}"
-                            controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
+                            effects:ChromeEffect.Monochrome="{Binding ElementName=ColorPicker, Path=ColorBrush}"
+                            effects:ControlEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
 
                     <Button Margin="5" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource DefaultButtonBaseStyle}" Content="Test animated control"
-                            controls:ChromeEffects.MonochromeAnimated="{Binding ElementName=ColorPicker, Path=ColorBrush}"
-                            controls:ControlEffects.CornerRadius="2" VerticalContentAlignment="Center"/>
+                            effects:ChromeEffect.MonochromeAnimated="{Binding ElementName=ColorPicker, Path=ColorBrush}"
+                            effects:ControlEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
 
                     <Button Margin="5 0" BorderThickness="2" Style="{StaticResource MonochromeButtonStyle}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}"
                             Width="30" Height="30" Padding="4"
-                            controls:ControlEffects.PathData="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                            effects:ControlEffect.PathData="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
 
                     <Button Margin="5 0" BorderThickness="2" Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}"
                             Width="30" Height="30" Padding="4"
-                            controls:ControlEffects.PathData="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                            effects:ControlEffect.PathData="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
 
                     <Button Margin="5 0" BorderThickness="2" Style="{StaticResource MonochromeButtonStyle}" Background="{Binding ElementName=ColorPicker, Path=ColorBrush}">
                         <StackPanel Orientation="Horizontal">

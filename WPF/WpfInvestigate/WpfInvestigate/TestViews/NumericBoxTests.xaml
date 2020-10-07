@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
         Title="NumericBoxTests" Height="450" Width="800">
 
@@ -50,9 +51,9 @@
             <Button Grid.Row="0" Click="XButtonBase_OnClick">Set new Value</Button>
 
             <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <controls:NumericBox x:Name="AA" Width="200" controls:WatermarkEffect.Watermark="No value"
+                <controls:NumericBox x:Name="AA" Width="200" effects:WatermarkEffect.Watermark="No value"
                                      Height="64" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
-                <controls:NumericBox Margin="5 0" Width="100" controls:WatermarkEffect.Watermark="No value" Background="Yellow" Foreground="Blue"
+                <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value" Background="Yellow" Foreground="Blue"
                                      Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
             </StackPanel>
 
@@ -62,22 +63,22 @@
                 <Label Content="IsEnabled:" Margin="5 0"/>
                 <CheckBox x:Name="cbEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
 
-                <controls:NumericBox Width="200" x:Name="nb" controls:WatermarkEffect.Watermark="No value"
+                <controls:NumericBox Width="200" x:Name="nb" effects:WatermarkEffect.Watermark="No value"
                                      BorderThickness="8" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
                                      IsNullable="True" Focusable="True" Value="323"/>
             </WrapPanel>
 
-            <controls:NumericBox Grid.Row="7" Width="200" controls:WatermarkEffect.Watermark="No value"
+            <controls:NumericBox Grid.Row="7" Width="200" effects:WatermarkEffect.Watermark="No value"
                                  FontSize="9" Focusable="True"
                                  IsNullable="True" Value="323"/>
 
-            <controls:NumericBox Grid.Row="8" Width="200" controls:WatermarkEffect.Watermark="No value"
+            <controls:NumericBox Grid.Row="8" Width="200" effects:WatermarkEffect.Watermark="No value"
                                  FontSize="24" Focusable="True"
                                  IsNullable="True" Value="323"/>
 
-            <controls:NumericBox Grid.Row="9" Width="200" controls:WatermarkEffect.Watermark="No value" IsReadOnly="True"
+            <controls:NumericBox Grid.Row="9" Width="200" effects:WatermarkEffect.Watermark="No value" IsReadOnly="True"
                                  IsNullable="True" Value="323"/>
-            <controls:NumericBox Grid.Row="10" Width="200" controls:WatermarkEffect.Watermark="No value" IsEnabled="False"
+            <controls:NumericBox Grid.Row="10" Width="200" effects:WatermarkEffect.Watermark="No value" IsEnabled="False"
                                  IsNullable="True" Value="323"/>
             <Label Grid.Row="11" Content="Value:"/>
             <TextBlock Grid.Row="11" Margin="50 0 0 0" Text="{Binding Path=Value, ElementName=nb}" Background="Yellow" VerticalAlignment="Center"/>

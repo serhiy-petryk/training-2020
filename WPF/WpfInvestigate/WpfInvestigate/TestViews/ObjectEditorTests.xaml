@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
         Title="ObjectEditorTest" Height="450" Width="1000">
 
@@ -42,7 +43,7 @@
                 <TextBlock>Test Object editor</TextBlock>
                 <StackPanel Orientation="Horizontal" Margin="0 5">
                     <Label Content="Numeric Box:"/>
-                    <controls:NumericBox Width="100" controls:WatermarkEffect.Watermark="SelectAll" Value="23" IsNullable="True" MinValue="0" MaxValue="100"/>
+                    <controls:NumericBox Width="100" effects:WatermarkEffect.Watermark="SelectAll" Value="23" IsNullable="True" MinValue="0" MaxValue="100"/>
                 </StackPanel>
 
                 <WrapPanel Orientation="Horizontal">
@@ -77,8 +78,8 @@
 
                     <Label Content="Flexible object editor:"/>
                     <controls:ObjectEditor x:Name="Editor" MinWidth="100"
-                                           controls:WatermarkEffect.Watermark="TestWatermark"
-                                           controls:WatermarkEffect.Foreground="Red"
+                                           effects:WatermarkEffect.Watermark="TestWatermark"
+                                           effects:WatermarkEffect.Foreground="Red"
                                            ValueDataType="{Binding ElementName=cbDataType, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
                                            IsNullable="{Binding ElementName=cbNullable, Path=IsChecked}"
                                            IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>

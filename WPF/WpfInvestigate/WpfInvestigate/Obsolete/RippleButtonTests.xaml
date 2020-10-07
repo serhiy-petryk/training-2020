@@ -8,6 +8,7 @@
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:temp="clr-namespace:WpfInvestigate.Temp"
         xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
         Title="RippleButtonTests" Height="450" Width="800">
 
@@ -141,7 +142,7 @@
 
                 <AdornerDecorator>
                 <ComboBox Name="phonesList" Height="30" VerticalAlignment="Center" Width="100" IsEditable="True" VerticalContentAlignment="Center"
-                          TextBoxBase.TextChanged="ComboBox_TextChanged" controls:WatermarkEffect.Watermark="watermark">
+                          TextBoxBase.TextChanged="ComboBox_TextChanged" effects:WatermarkEffect.Watermark="watermark">
                     <TextBlock>LG Nexus 5X</TextBlock>
                     <TextBlock>Huawai Nexus 6P</TextBlock>
                     <TextBlock>iPhone 6S</TextBlock>
@@ -156,7 +157,7 @@
                     <TextBlock Text="Hellow world!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </obsolete:RippleButton>
 
-                <TextBlock Text="Hellow world!" controls:RippleEffect.RippleColor="White" Margin="8 0" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#6739B6" Foreground="White"/>
+                <TextBlock Text="Hellow world!" effects:RippleEffect.RippleColor="White" Margin="8 0" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#6739B6" Foreground="White"/>
 
                 <obsolete:RippleButton Margin="8 0" Width="70" Height="20" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White">
                     <Button Content="Button" Background="Transparent" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonBase_OnClick"/>

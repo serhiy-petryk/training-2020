@@ -81,11 +81,11 @@
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ColorPickerViewModel.cs" />
-    <Compile Include="Controls\ChromeEffects.cs" />
+    <Compile Include="Controls\Effects\ChromeEffect.cs" />
     <Compile Include="Controls\DatePickerExtension.cs" />
     <Compile Include="Controls\Helpers\ControlHelper.cs" />
     <Compile Include="Controls\Helpers\DropDownButtonHelper.cs" />
-    <Compile Include="Controls\DualPathToggleButtonEffect.cs" />
+    <Compile Include="Controls\Effects\DualPathToggleButtonEffect.cs" />
     <Compile Include="Controls\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>
     </Compile>
@@ -102,20 +102,20 @@
     </Compile>
     <Compile Include="Controls\Others\VirtualKeyboard.Models.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.KeyDefinition.cs" />
-    <Compile Include="Controls\ControlEffects.cs" />
-    <Compile Include="Controls\FocusEffect.cs" />
+    <Compile Include="Controls\Effects\ControlEffect.cs" />
+    <Compile Include="Controls\Effects\FocusEffect.cs" />
     <Compile Include="Obsolete\xxPathContent.cs" />
     <Compile Include="Obsolete\AnimationHelper.cs" />
     <Compile Include="Obsolete\Events.cs" />
     <Compile Include="Obsolete\NumericUpDown.xaml.cs">
       <DependentUpon>NumericUpDown.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RippleEffect.cs" />
+    <Compile Include="Controls\Effects\RippleEffect.cs" />
     <Compile Include="Obsolete\TextBoxExtensions.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WatermarkEffect.cs" />
+    <Compile Include="Controls\Effects\WatermarkEffect.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
     <Compile Include="Temp\OriginalVirtualKeyboard.xaml.cs">
       <DependentUpon>OriginalVirtualKeyboard.xaml</DependentUpon>

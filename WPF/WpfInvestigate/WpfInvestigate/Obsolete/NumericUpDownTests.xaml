@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
         Title="NumericUpDownTests" Height="450" Width="1000">
 
@@ -36,28 +37,28 @@
             <StackPanel Orientation="Vertical">
                 <TextBlock>NumericUpDown</TextBlock>
                 <StackPanel Orientation="Horizontal">
-                    <obsolete:NumericUpDown Width="100" controls:WatermarkEffect.Watermark="SelectAll" Margin="1 0" Value="23" SelectAllOnFocus="True"/>
-                    <obsolete:NumericUpDown controls:WatermarkEffect.Watermark="NotSelectAll" Margin="1 0" Value="23" SelectAllOnFocus="False" IsTabStop="False" IsNullable="True"/>
-                    <obsolete:NumericUpDown Width="100" controls:WatermarkEffect.Watermark="SelectAll" Margin="1 0" Value="23" SelectAllOnFocus="True" IsNullable="True"/>
-                    <obsolete:NumericUpDown Width="100" Height="40" controls:WatermarkEffect.Watermark="NotSelectAll" Margin="1 0" Value="23" SelectAllOnFocus="False"
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="SelectAll" Margin="1 0" Value="23" SelectAllOnFocus="True"/>
+                    <obsolete:NumericUpDown effects:WatermarkEffect.Watermark="NotSelectAll" Margin="1 0" Value="23" SelectAllOnFocus="False" IsTabStop="False" IsNullable="True"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="SelectAll" Margin="1 0" Value="23" SelectAllOnFocus="True" IsNullable="True"/>
+                    <obsolete:NumericUpDown Width="100" Height="40" effects:WatermarkEffect.Watermark="NotSelectAll" Margin="1 0" Value="23" SelectAllOnFocus="False"
                                         VerticalContentAlignment="Top" HorizontalContentAlignment="Right" IsNullable="True"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <CheckBox x:Name="ReadOnlyCheck" Margin="1" Content="IsReadOnly" IsChecked="True" />
-                    <obsolete:NumericUpDown Width="150" controls:WatermarkEffect.Watermark="Test" Margin="1 0" ButtonsWidth="12" StringFormat="pcs. {0:N2} pcs." InterceptManualEnter="False"/>
+                    <obsolete:NumericUpDown Width="150" effects:WatermarkEffect.Watermark="Test" Margin="1 0" ButtonsWidth="12" StringFormat="pcs. {0:N2} pcs." InterceptManualEnter="False"/>
                     <obsolete:NumericUpDown x:Name="AAA" Width="100" Margin="1 0" IsNullable="True" IsReadOnly="True" Focusable="True"/>
-                    <obsolete:NumericUpDown Width="100" controls:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Black" Foreground="White" InterceptManualEnter="False"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Black" Foreground="White" InterceptManualEnter="False"/>
                     <obsolete:NumericUpDown Width="100" Margin="1 0" Background="Black" Foreground="White" HorizontalContentAlignment="Right"
-                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}" IsNullable="True" controls:WatermarkEffect.Watermark="Test"/>
-                    <obsolete:NumericUpDown Width="100" controls:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Blue" Foreground="Yellow" IsNullable="True"/>
-                    <obsolete:NumericUpDown Width="100" Margin="1 0" Background="Blue" Foreground="Yellow" controls:WatermarkEffect.Foreground="GreenYellow"/>
-                    <obsolete:NumericUpDown Width="100" controls:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Yellow" Foreground="Blue" controls:WatermarkEffect.Foreground="Red" IsNullable="True"/>
-                    <obsolete:NumericUpDown Width="100" Margin="1 0" Background="Yellow" IsNullable="True" controls:WatermarkEffect.Watermark="Test"/>
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}" IsNullable="True" effects:WatermarkEffect.Watermark="Test"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Blue" Foreground="Yellow" IsNullable="True"/>
+                    <obsolete:NumericUpDown Width="100" Margin="1 0" Background="Blue" Foreground="Yellow" effects:WatermarkEffect.Foreground="GreenYellow"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Yellow" Foreground="Blue" effects:WatermarkEffect.Foreground="Red" IsNullable="True"/>
+                    <obsolete:NumericUpDown Width="100" Margin="1 0" Background="Yellow" IsNullable="True" effects:WatermarkEffect.Watermark="Test"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBox Width="50" PreviewTextInput="UIElement_OnPreviewTextInput"/>
-                    <obsolete:NumericUpDown x:Name="test1" Width="100" controls:WatermarkEffect.Watermark="Test" Margin="1 0" Interval="0.1" Delay="1000" Focusable="True"
+                    <obsolete:NumericUpDown x:Name="test1" Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Interval="0.1" Delay="1000" Focusable="True"
                                         MinValue="10" SelectAllOnFocus="True" Speedup="True" IsNullable="True" StringFormat="N2" DecimalPlaces="1"/>
                     <Label Content="{Binding ElementName=test1, Path=Value, Mode=OneWay}" ContentStringFormat="StringFormat, Real Value = {0}" Background="Silver" />
                     <obsolete:NumericUpDown x:Name="test2" Width="100" Margin="1 0" Background="Yellow" Foreground="Blue" IsNullable="False"
