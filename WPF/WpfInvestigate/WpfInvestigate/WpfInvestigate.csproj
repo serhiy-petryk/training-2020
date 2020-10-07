@@ -83,6 +83,8 @@
     <Compile Include="Controls\ColorPickerViewModel.cs" />
     <Compile Include="Controls\Effects\ChromeEffect.cs" />
     <Compile Include="Controls\DatePickerExtension.cs" />
+    <Compile Include="Controls\Effects\CornerRadiusEffect.cs" />
+    <Compile Include="Controls\Effects\PathDataEffect.cs" />
     <Compile Include="Controls\Helpers\ControlHelper.cs" />
     <Compile Include="Controls\Helpers\DropDownButtonHelper.cs" />
     <Compile Include="Controls\Effects\DualPathToggleButtonEffect.cs" />
@@ -102,7 +104,6 @@
     </Compile>
     <Compile Include="Controls\Others\VirtualKeyboard.Models.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.KeyDefinition.cs" />
-    <Compile Include="Controls\Effects\ControlEffect.cs" />
     <Compile Include="Controls\Effects\FocusEffect.cs" />
     <Compile Include="Obsolete\xxPathContent.cs" />
     <Compile Include="Obsolete\AnimationHelper.cs" />

@@ -42,7 +42,7 @@
                         VerticalContentAlignment="Center"/>
 
                     <Button Margin="5" Content="Test animated control" effects:ChromeEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource DefaultButtonBaseStyle}"
-                        effects:ControlEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+                        effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
                 </WrapPanel>
 
                 <WrapPanel Orientation="Horizontal">
@@ -55,22 +55,22 @@
                     <Grid Background="Black">
                         <Button x:Name="MonochromeButtonBlack" Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource DefaultButtonBaseStyle}"
                                 IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
-                                effects:ControlEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+                                effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Background="White">
                         <Button x:Name="MonochromeButtonWhite" Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource DefaultButtonBaseStyle}"
                                 IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
-                                effects:ControlEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+                                effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Background="Black">
                         <Button x:Name="MonochromeAnimatedButtonBlack" Margin="5" Content="Test animated control" effects:ChromeEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource DefaultButtonBaseStyle}"
                                 IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
-                                effects:ControlEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+                                effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Background="White">
                         <Button x:Name="MonochromeAnimatedButtonWhite" Margin="5" Content="Test animated control" effects:ChromeEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30" Style="{StaticResource DefaultButtonBaseStyle}"
                                 IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
-                                effects:ControlEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+                                effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
                 </WrapPanel>
 
@@ -106,20 +106,20 @@
                     <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="0"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:FocusEffect.Thickness="11"
-                            effects:ControlEffect.CornerRadius="4"
+                            effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
                     <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="10 0 20 0"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:FocusEffect.Thickness="2"
-                            effects:ControlEffect.CornerRadius="14 1 18 8"
+                            effects:CornerRadiusEffect.CornerRadius="14 1 18 8"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
 
                     <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="0"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:FocusEffect.Thickness="10 10 0 20"
-                            effects:ControlEffect.CornerRadius="14 0 18 8"
+                            effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65">
                         <Button.RenderTransform>
@@ -129,7 +129,7 @@
 
                     <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
                             effects:FocusEffect.Brush="Aquamarine"
-                            effects:ControlEffect.CornerRadius="4 1 8 2"
+                            effects:CornerRadiusEffect.CornerRadius="4 1 8 2"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
                     

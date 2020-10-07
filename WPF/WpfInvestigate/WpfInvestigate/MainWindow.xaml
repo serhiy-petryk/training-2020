@@ -39,20 +39,20 @@
             <StackPanel Orientation="Horizontal">
                 <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
                         effects:FocusEffect.Brush="Aquamarine"
-                        effects:ControlEffect.CornerRadius="4"
+                        effects:CornerRadiusEffect.CornerRadius="4"
                         effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                         effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
             </StackPanel>
 
             <Button Margin="4" Padding="4" Width="100" Content="Warning" FontSize="16" BorderThickness="0"
-                    effects:ControlEffect.CornerRadius="5"
+                    effects:CornerRadiusEffect.CornerRadius="5"
                     effects:ChromeEffect.MonochromeAnimated="#ffc107"
                     effects:ChromeEffect.ChromeMatrix="+0,15,+0,-7.5,15,-10,-10,15,-12.5, 65"/>
 
             <Button Margin="4" Padding="4" Width="100" Content="Light" FontSize="16" BorderThickness="0"
                     effects:ChromeEffect.MonochromeAnimated="#f8f9fa"
                     effects:ChromeEffect.ChromeMatrix="+0,15,+0,-7.5,15,-10,-10,15,-12.5, 65"
-                    effects:ControlEffect.CornerRadius="4"/>
+                    effects:CornerRadiusEffect.CornerRadius="4"/>
 
         </StackPanel>
 
