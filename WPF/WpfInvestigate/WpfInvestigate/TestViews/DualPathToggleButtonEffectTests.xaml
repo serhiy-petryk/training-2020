@@ -174,9 +174,9 @@
                               effects:DualPathToggleButtonEffect.MarginOff="1 7.5 1 7.5"
                               effects:DualPathToggleButtonEffect.MarginOn="1 5 1 5"/>
 
-                <ToggleButton Margin="2 0" Width="26" Height="26"
-                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
-                              Style="{StaticResource FlatButtonStyle}"
+                <ToggleButton Margin="2 0" Width="26" Height="26" BorderThickness="1" BorderBrush="Red"
+                              effects:ChromeEffect.BichromeAnimatedBackground="Blue"
+                              effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               SnapsToDevicePixels="True"
@@ -184,9 +184,9 @@
                               effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
                               effects:DualPathToggleButtonEffect.Width="18"/>
 
-                <ToggleButton Margin="2 0" Width="26" Height="26"
-                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
-                              Style="{StaticResource FlatButtonStyle}"
+                <ToggleButton Margin="2 0" Width="26" Height="26" BorderThickness="1" BorderBrush="Red"
+                              effects:ChromeEffect.BichromeAnimatedBackground="Blue"
+                              effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               SnapsToDevicePixels="True"
@@ -195,9 +195,9 @@
                               effects:DualPathToggleButtonEffect.MarginOff="1 5 1 5"
                               effects:DualPathToggleButtonEffect.MarginOn="2"/>
 
-                <ToggleButton Margin="2 0" Height="26" Padding="1"
-                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
-                              Style="{StaticResource FlatButtonStyle}"
+                <ToggleButton Margin="2 0" Height="26" Padding="1" BorderThickness="1" BorderBrush="Red"
+                              effects:ChromeEffect.BichromeAnimatedBackground="Blue"
+                              effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               SnapsToDevicePixels="False"
@@ -205,9 +205,9 @@
                               effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                               effects:DualPathToggleButtonEffect.Width="11"/>
 
-                <ToggleButton Margin="2 0" Height="26"
-                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
-                              Style="{StaticResource FlatButtonStyle}"
+                <ToggleButton Margin="2 0" Height="26" BorderThickness="1" BorderBrush="Red"
+                              effects:ChromeEffect.BichromeAnimatedBackground="Blue"
+                              effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               SnapsToDevicePixels="True"
@@ -216,9 +216,9 @@
                               effects:DualPathToggleButtonEffect.MarginOff="3 9"
                               effects:DualPathToggleButtonEffect.MarginOn="2 6"/>
 
-                <ToggleButton Margin="2 0" Height="26"
-                              Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Red"
-                              Style="{StaticResource FlatButtonStyle}"
+                <ToggleButton Margin="2 0" Height="26" BorderThickness="1" BorderBrush="Red"
+                              effects:ChromeEffect.BichromeAnimatedBackground="Blue"
+                              effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               SnapsToDevicePixels="True"
@@ -249,8 +249,9 @@
             <ToolBarPanel Grid.Row="2" Margin="5" ClipToBounds="True" Height="26">
                 <ToolBar Background="#FF8194AA" Foreground="Black" Padding="0" BorderThickness="0" ToolBarTray.IsLocked="True" Margin="-5,-2,-13,0" ClipToBounds="True" UseLayoutRounding="True" SnapsToDevicePixels="True">
                     <Label>ToolBarPanel</Label>
-                    <Button Style="{StaticResource FlatButtonStyle}" Foreground="Transparent" Margin="0"
-                            Content="X" FontSize="12" FontWeight="Bold" BorderBrush="Red" BorderThickness="3" />
+                    <Button Margin="0" Content="X" FontSize="12" FontWeight="Bold" BorderBrush="Red" BorderThickness="3"
+                            effects:ChromeEffect.BichromeAnimatedBackground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Path=Background}"
+                            effects:ChromeEffect.BichromeAnimatedForeground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Path=Foreground}"/>
 
                     <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Height="26" Width="26" Margin="4 0"
                             Content="X" FontSize="12" FontWeight="Bold"/>
@@ -324,15 +325,16 @@
                                   effects:DualPathToggleButtonEffect.MarginOff="3 9"
                                   effects:DualPathToggleButtonEffect.MarginOn="3 6"/>
 
-                    <ToggleButton Height="26" Margin="2 0" Padding="0" Foreground="Black"
+                    <ToggleButton Height="26" Margin="2 0" Padding="0"
                                   Focusable="False" IsThreeState="False"
-                                  Style="{StaticResource FlatButtonStyle}"
-                                  ToolTip="No width defined / FlatButtonStyle"
+                                  ToolTip="No width defined"
                                   UseLayoutRounding="True"
                                   effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                   effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                                   effects:DualPathToggleButtonEffect.MarginOff="3 10"
-                                  effects:DualPathToggleButtonEffect.MarginOn="3 7"/>
+                                  effects:DualPathToggleButtonEffect.MarginOn="3 7"
+                                  effects:ChromeEffect.BichromeAnimatedBackground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Path=Background}"
+                                  effects:ChromeEffect.BichromeAnimatedForeground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Path=Foreground}"/>
 
                     <StackPanel Margin="2 0 0 0" Orientation="Horizontal">
                         <RepeatButton Template="{DynamicResource LeftUpDoubleButtonTemplate}" Style="{DynamicResource DoubleButtonStyle}"

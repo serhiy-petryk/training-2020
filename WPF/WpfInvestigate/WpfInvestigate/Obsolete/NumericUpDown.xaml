@@ -57,7 +57,8 @@
                                 </Border>
 
                                 <StackPanel Grid.Column="1" x:Name="PART_Buttons" Orientation="Horizontal">
-                                    <RepeatButton x:Name="PART_DownButton" IsTabStop="False" Focusable="False" Style="{StaticResource FlatButtonStyle}"
+                                    <RepeatButton x:Name="PART_DownButton" IsTabStop="False" Focusable="False"
+                                                  Style="{StaticResource FlatButtonStyle}"
                                                   Width="{TemplateBinding ButtonsWidth}" Delay="{TemplateBinding Delay}" Interval="30" Padding="2"
                                                   effects:PathDataEffect.PathData="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z"/>
                                     <RepeatButton x:Name="PART_UpButton" IsTabStop="False" Focusable="False" Style="{StaticResource FlatButtonStyle}"
