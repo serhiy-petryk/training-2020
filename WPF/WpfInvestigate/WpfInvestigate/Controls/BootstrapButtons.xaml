@@ -114,7 +114,7 @@
         <Setter Property="controls:ChromeEffects.MonochromeAnimated" Value="{StaticResource WarningBrush}"/>
     </Style>
     <Style x:Key="InfoButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="controls:ChromeEffects.MonochromeAnimated" Value="{StaticResource IndigoBrush}"/>
+        <Setter Property="controls:ChromeEffects.MonochromeAnimated" Value="{StaticResource InfoBrush}"/>
     </Style>
     <Style x:Key="LightButton" BasedOn="{StaticResource BootstrapDarkForegroundButton}" TargetType="{x:Type ButtonBase}">
         <Setter Property="controls:ChromeEffects.MonochromeAnimated" Value="{StaticResource LightBrush}"/>
