@@ -37,10 +37,18 @@
 
             <StackPanel Orientation="Horizontal">
                 <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
-                        effects:FocusEffect.Brush="Aquamarine"
                         effects:CornerRadiusEffect.CornerRadius="4"
                         effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                        effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
+                        effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65">
+                    <effects:FocusEffect.Brush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="Yellow" Offset="0.0" />
+                            <GradientStop Color="Red" Offset="0.25" />
+                            <GradientStop Color="Blue" Offset="0.75" />
+                            <GradientStop Color="LimeGreen" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </effects:FocusEffect.Brush>
+                </Button>
 
                 <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
                         effects:ClickEffect.ShiftOnOffsetClick="1.5"

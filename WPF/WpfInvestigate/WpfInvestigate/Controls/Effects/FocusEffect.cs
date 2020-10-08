@@ -15,9 +15,9 @@ namespace WpfInvestigate.Controls.Effects
     public class FocusEffect
     {
         public static readonly DependencyProperty BrushProperty = DependencyProperty.RegisterAttached(
-            "Brush", typeof(SolidColorBrush), typeof(FocusEffect), new UIPropertyMetadata(null, OnBrushChanged));
-        public static SolidColorBrush GetBrush(DependencyObject obj) => (SolidColorBrush)obj.GetValue(BrushProperty);
-        public static void SetBrush(DependencyObject obj, SolidColorBrush value) => obj.SetValue(BrushProperty, value);
+            "Brush", typeof(Brush), typeof(FocusEffect), new UIPropertyMetadata(null, OnBrushChanged));
+        public static Brush GetBrush(DependencyObject obj) => (Brush)obj.GetValue(BrushProperty);
+        public static void SetBrush(DependencyObject obj, Brush value) => obj.SetValue(BrushProperty, value);
 
         public static readonly DependencyProperty ThicknessProperty = DependencyProperty.RegisterAttached(
             "Thickness", typeof(Thickness), typeof(FocusEffect), new UIPropertyMetadata(new Thickness(3)));
@@ -31,7 +31,7 @@ namespace WpfInvestigate.Controls.Effects
             {
                 Element_Unloaded(element, null);
 
-                if (e.NewValue is SolidColorBrush newBrush && newBrush != Brushes.Transparent)
+                if (e.NewValue is Brush newBrush && newBrush != Brushes.Transparent)
                 {
                     Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
                     {
@@ -60,19 +60,21 @@ namespace WpfInvestigate.Controls.Effects
             {
                 var layer = AdornerLayer.GetAdornerLayer(element);
                 var adornerControl = layer.GetAdorners(element)?.OfType<AdornerControl>().FirstOrDefault(a => a.Child.Name == "Focus");
-                var animation = (ColorAnimation) adornerControl?.Child.Resources["animation"];
-                var thickness = GetThickness(element);
+                var colorAnimation = (ColorAnimation)adornerControl?.Child.Resources["ColorAnimation"];
+                var thicknessAnimation = (ThicknessAnimation)adornerControl?.Child.Resources["ThicknessAnimation"];
 
                 if (adornerControl == null)
                 {
                     var adorner = new Border
                     {
-                        Name = "Focus", Background = Brushes.Transparent, BorderBrush = new SolidColorBrush(),
-                        Focusable = false, IsHitTestVisible = false, UseLayoutRounding = false, SnapsToDevicePixels = false
+                        Name = "Focus", Background = Brushes.Transparent, Focusable = false, IsHitTestVisible = false,
+                        UseLayoutRounding = false, SnapsToDevicePixels = false
                     };
 
-                    animation = new ColorAnimation {Duration = AnimationHelper.SlowAnimationDuration};
-                    adorner.Resources.Add("animation", animation);
+                    colorAnimation = new ColorAnimation {Duration = AnimationHelper.SlowAnimationDuration};
+                    adorner.Resources.Add("ColorAnimation", colorAnimation);
+                    thicknessAnimation = new ThicknessAnimation { Duration = AnimationHelper.SlowAnimationDuration };
+                    adorner.Resources.Add("ThicknessAnimation", thicknessAnimation);
 
                     adornerControl = new AdornerControl(element) { Child = adorner, UseAdornedElementSize = false };
                     layer.Add(adornerControl);
@@ -80,9 +82,8 @@ namespace WpfInvestigate.Controls.Effects
                 else
                     adornerControl.Visibility = Visibility.Visible;
 
+                var thickness = GetThickness(element);
                 var child = (Border)adornerControl.Child;
-                // +0.25: to remove gap between focus and element
-                child.BorderThickness = new Thickness(thickness.Left + 0.25, thickness.Top + 0.25, thickness.Right + 0.25, thickness.Bottom + 0.25);
                 child.Width = element.ActualWidth + thickness.Left + thickness.Right;
                 child.Height = element.ActualHeight + thickness.Top + thickness.Bottom;
                 child.Margin = new Thickness(-thickness.Left, -thickness.Top, -thickness.Right, -thickness.Bottom);
@@ -96,13 +97,27 @@ namespace WpfInvestigate.Controls.Effects
                 else
                     child.CornerRadius = new CornerRadius();
 
-                var oldColor = ((SolidColorBrush)child.BorderBrush).Color;
-                var newColor = GetBrush(element).Color;
-                if (oldColor != newColor)
+                var focusBrush = GetBrush(element);
+                if (focusBrush is SolidColorBrush)
                 {
-                    animation.SetFromToValues(oldColor, newColor);
-                    child.BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+                    if (!(child.BorderBrush is SolidColorBrush))
+                      child.BorderBrush = new SolidColorBrush();
+
+                    var oldColor = ((SolidColorBrush)child.BorderBrush).Color;
+                    var newColor = ((SolidColorBrush) focusBrush).Color;
+                    if (oldColor != newColor)
+                    {
+                        colorAnimation.SetFromToValues(oldColor, newColor);
+                        child.BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
+                    }
                 }
+                else
+                    child.BorderBrush = focusBrush.Clone();
+
+                // +0.25: to remove gap between focus and element
+                var newThickness = new Thickness(thickness.Left + 0.25, thickness.Top + 0.25, thickness.Right + 0.25, thickness.Bottom + 0.25);
+                thicknessAnimation.SetFromToValues(child.BorderThickness, newThickness);
+                child.BeginAnimation(Control.BorderThicknessProperty, thicknessAnimation);
             }
             else
             {
@@ -110,13 +125,21 @@ namespace WpfInvestigate.Controls.Effects
                 var adorners = layer?.GetAdorners(element) ?? new Adorner[0];
                 foreach (var adorner in adorners.OfType<AdornerControl>().Where(a => a.Child.Name == "Focus"))
                 {
-                    var oldColor = ((SolidColorBrush)((Border)adorner.Child).BorderBrush).Color;
-                    if (oldColor != Colors.Transparent)
+                    var border = (Border) adorner.Child;
+                    if (border.BorderBrush is SolidColorBrush)
                     {
-                        var animation = (ColorAnimation) adorner.Child.Resources["animation"];
-                        animation.SetFromToValues(oldColor, Colors.Transparent);
-                        ((Border) adorner.Child).BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+                        var oldColor = ((SolidColorBrush)border.BorderBrush).Color;
+                        if (oldColor != Colors.Transparent)
+                        {
+                            var animation = (ColorAnimation)adorner.Child.Resources["ColorAnimation"];
+                            animation.SetFromToValues(oldColor, Colors.Transparent);
+                            border.BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+                        }
                     }
+
+                    var thicknessAnimation = (ThicknessAnimation)adorner.Child.Resources["ThicknessAnimation"];
+                    thicknessAnimation.SetFromToValues(border.BorderThickness, new Thickness());
+                    border.BeginAnimation(Control.BorderThicknessProperty, thicknessAnimation);
                 }
             }
         }
