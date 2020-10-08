@@ -4,8 +4,30 @@
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
                     xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects">
 
-    <!-- Bootstrap Brushes (taken from https://getbootstrap.com/ v4.5.2) -->
-    <SolidColorBrush x:Key="PrimaryBrush" Color="#FF007bff"/>
+    <!-- Colors & Bootstrap Brushes (taken from https://getbootstrap.com/ v4.5.2) -->
+    <Color x:Key="PrimaryColor">#FF007bff</Color>
+    <Color x:Key="SecondaryColor">#FF6c757d</Color>
+    <Color x:Key="SuccessColor">#28a745</Color>
+    <Color x:Key="DangerColor">#dc3545</Color>
+    <Color x:Key="WarningColor">#ffc107</Color>
+    <Color x:Key="InfoColor">#17a2b8</Color>
+    <Color x:Key="LightColor">#f8f9fa</Color>
+    <Color x:Key="DarkColor">#343a40</Color>
+    <Color x:Key="BlueColor">#007bff</Color>
+    <Color x:Key="IndigoColor">#6610f2</Color>
+    <Color x:Key="PurpleColor">#6f42c1</Color>
+    <Color x:Key="PinkColor">#e83e8c</Color>
+    <Color x:Key="RedColor">#dc3545</Color>
+    <Color x:Key="OrangeColor">#fd7e14</Color>
+    <Color x:Key="YellowColor">#ffc107</Color>
+    <Color x:Key="GreenColor">#28a745</Color>
+    <Color x:Key="TealColor">#20c997</Color>
+    <Color x:Key="CyanColor">#17a2b8</Color>
+    <Color x:Key="WhiteColor">#ffffff</Color>
+    <Color x:Key="GrayColor">#6c757d</Color>
+    <Color x:Key="GrayDarkColor">#343a40</Color>
+
+    <!--<SolidColorBrush x:Key="PrimaryBrush" Color="#FF007bff"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="#FF6c757d"/>
     <SolidColorBrush x:Key="SuccessBrush" Color="#28a745"/>
     <SolidColorBrush x:Key="DangerBrush" Color="#dc3545"/>
@@ -25,7 +47,7 @@
     <SolidColorBrush x:Key="CyanBrush" Color="#17a2b8"/>
     <SolidColorBrush x:Key="WhiteBrush" Color="#ffffff"/>
     <SolidColorBrush x:Key="GrayBrush" Color="#6c757d"/>
-    <SolidColorBrush x:Key="GrayDarkBrush" Color="#343a40"/>
+    <SolidColorBrush x:Key="GrayDarkBrush" Color="#343a40"/>-->
 
     <Style x:Key="DefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="SnapsToDevicePixels" Value="False"/>
@@ -79,28 +101,28 @@
     </Style>
 
     <Style x:Key="PrimaryButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource PrimaryBrush}"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource PrimaryColor}"/>
     </Style>
     <Style x:Key="SecondaryButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SecondaryBrush}"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SecondaryColor}"/>
     </Style>
     <Style x:Key="SuccessButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SuccessBrush}"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SuccessColor}"/>
     </Style>
     <Style x:Key="DangerButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource DangerBrush}"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource DangerColor}"/>
     </Style>
     <Style x:Key="WarningButton" BasedOn="{StaticResource BootstrapDarkForegroundButton}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource WarningBrush}"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource WarningColor}"/>
     </Style>
     <Style x:Key="InfoButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource InfoBrush}"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource InfoColor}"/>
     </Style>
     <Style x:Key="LightButton" BasedOn="{StaticResource BootstrapDarkForegroundButton}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource LightBrush}"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource LightColor}"/>
     </Style>
     <Style x:Key="DarkButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource DarkBrush}"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource DarkColor}"/>
     </Style>
 
 </ResourceDictionary>

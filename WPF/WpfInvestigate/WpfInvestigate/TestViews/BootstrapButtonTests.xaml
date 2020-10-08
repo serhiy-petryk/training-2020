@@ -149,31 +149,31 @@
                 <WrapPanel>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Bootstrap"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Blue"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource BlueBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource BlueColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Indigo"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource IndigoBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource IndigoColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Purple"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource PurpleBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource PurpleColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Pink"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource PinkBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource PinkColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Red"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource RedBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource RedColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Orange"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource OrangeBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource OrangeColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapDarkForegroundButton}" Content="Yellow"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource YellowBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource YellowColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Green"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource GreenBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource GreenColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Teal"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource TealBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource TealColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Cyan"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource CyanBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource CyanColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapDarkForegroundButton}" Content="White"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource WhiteBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource WhiteColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Gray"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource GrayBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource GrayColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Gray Dark"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource GrayDarkBrush}"/>
+                            effects:ChromeEffect.MonochromeAnimated="{StaticResource GrayDarkColor}"/>
                 </WrapPanel>
             </StackPanel>
         </Grid>

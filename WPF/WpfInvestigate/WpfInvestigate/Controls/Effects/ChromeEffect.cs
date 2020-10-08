@@ -23,40 +23,40 @@ namespace WpfInvestigate.Controls.Effects
 
         #region ================  Monochrome  ======================
         public static readonly DependencyProperty MonochromeProperty = DependencyProperty.RegisterAttached(
-            "Monochrome", typeof(Brush), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
-        public static Brush GetMonochrome(DependencyObject obj) => (Brush)obj.GetValue(MonochromeProperty);
-        public static void SetMonochrome(DependencyObject obj, Brush value) => obj.SetValue(MonochromeProperty, value);
+            "Monochrome", typeof(Color?), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
+        public static Color? GetMonochrome(DependencyObject obj) => (Color?)obj.GetValue(MonochromeProperty);
+        public static void SetMonochrome(DependencyObject obj, Color? value) => obj.SetValue(MonochromeProperty, value);
         #endregion
 
         #region ================  Monochrome Animated ======================
         public static readonly DependencyProperty MonochromeAnimatedProperty = DependencyProperty.RegisterAttached(
-            "MonochromeAnimated", typeof(Brush), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
-        public static Brush GetMonochromeAnimated(DependencyObject obj) => (Brush)obj.GetValue(MonochromeAnimatedProperty);
-        public static void SetMonochromeAnimated(DependencyObject obj, Brush value) => obj.SetValue(MonochromeAnimatedProperty, value);
+            "MonochromeAnimated", typeof(Color?), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
+        public static Color? GetMonochromeAnimated(DependencyObject obj) => (Color?)obj.GetValue(MonochromeAnimatedProperty);
+        public static void SetMonochromeAnimated(DependencyObject obj, Color? value) => obj.SetValue(MonochromeAnimatedProperty, value);
         #endregion
 
         #region =============================  Bichrome  ===========================
         public static readonly DependencyProperty BichromeBackgroundProperty = DependencyProperty.RegisterAttached(
-            "BichromeBackground", typeof(Brush), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
-        public static Brush GetBichromeBackground(DependencyObject obj) => (Brush)obj.GetValue(BichromeBackgroundProperty);
-        public static void SetBichromeBackground(DependencyObject obj, Brush value) => obj.SetValue(BichromeBackgroundProperty, value);
+            "BichromeBackground", typeof(Color?), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
+        public static Color? GetBichromeBackground(DependencyObject obj) => (Color?)obj.GetValue(BichromeBackgroundProperty);
+        public static void SetBichromeBackground(DependencyObject obj, Color? value) => obj.SetValue(BichromeBackgroundProperty, value);
 
         public static readonly DependencyProperty BichromeForegroundProperty = DependencyProperty.RegisterAttached(
-            "BichromeForeground", typeof(Brush), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnChromeChanged));
-        public static Brush GetBichromeForeground(DependencyObject obj) => (Brush)obj.GetValue(BichromeForegroundProperty);
-        public static void SetBichromeForeground(DependencyObject obj, Brush value) => obj.SetValue(BichromeForegroundProperty, value);
+            "BichromeForeground", typeof(Color?), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnChromeChanged));
+        public static Color? GetBichromeForeground(DependencyObject obj) => (Color?)obj.GetValue(BichromeForegroundProperty);
+        public static void SetBichromeForeground(DependencyObject obj, Color? value) => obj.SetValue(BichromeForegroundProperty, value);
         #endregion
 
         #region =============================  Bichrome Animated ===========================
         public static readonly DependencyProperty BichromeAnimatedBackgroundProperty = DependencyProperty.RegisterAttached(
-            "BichromeAnimatedBackground", typeof(Brush), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
-        public static Brush GetBichromeAnimatedBackground(DependencyObject obj) => (Brush)obj.GetValue(BichromeAnimatedBackgroundProperty);
-        public static void SetBichromeAnimatedBackground(DependencyObject obj, Brush value) => obj.SetValue(BichromeAnimatedBackgroundProperty, value);
+            "BichromeAnimatedBackground", typeof(Color?), typeof(ChromeEffect), new UIPropertyMetadata(null, OnChromeChanged));
+        public static Color? GetBichromeAnimatedBackground(DependencyObject obj) => (Color?)obj.GetValue(BichromeAnimatedBackgroundProperty);
+        public static void SetBichromeAnimatedBackground(DependencyObject obj, Color? value) => obj.SetValue(BichromeAnimatedBackgroundProperty, value);
 
         public static readonly DependencyProperty BichromeAnimatedForegroundProperty = DependencyProperty.RegisterAttached(
-            "BichromeAnimatedForeground", typeof(Brush), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnChromeChanged));
-        public static Brush GetBichromeAnimatedForeground(DependencyObject obj) => (Brush)obj.GetValue(BichromeAnimatedForegroundProperty);
-        public static void SetBichromeAnimatedForeground(DependencyObject obj, Brush value) => obj.SetValue(BichromeAnimatedForegroundProperty, value);
+            "BichromeAnimatedForeground", typeof(Color?), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnChromeChanged));
+        public static Color? GetBichromeAnimatedForeground(DependencyObject obj) => (Color?)obj.GetValue(BichromeAnimatedForegroundProperty);
+        public static void SetBichromeAnimatedForeground(DependencyObject obj, Color? value) => obj.SetValue(BichromeAnimatedForegroundProperty, value);
         #endregion
 
         #region ====================  Chrome common methods  ======================
@@ -98,9 +98,9 @@ namespace WpfInvestigate.Controls.Effects
             dpd.RemoveValueChanged(control, ChromeUpdate);
         }
 
-        private static Tuple<Brush, Brush, Brush, Brush, Brush, Brush, Tuple<bool, bool, bool>> Chrome_GetState(Control control)
+        private static Tuple<Color?, Color?, Color?, Color?, Color?, Color?, Tuple<bool, bool, bool>> Chrome_GetState(Control control)
         {
-            return new Tuple<Brush, Brush, Brush, Brush, Brush, Brush, Tuple<bool, bool, bool>>(GetMonochrome(control),
+            return new Tuple<Color?, Color?, Color?, Color?, Color?, Color?, Tuple<bool, bool, bool>>(GetMonochrome(control),
                 GetMonochromeAnimated(control), GetBichromeBackground(control), GetBichromeForeground(control),
                 GetBichromeAnimatedBackground(control), GetBichromeAnimatedForeground(control),
                 new Tuple<bool, bool, bool>(control.IsMouseOver, control.IsEnabled,
@@ -161,11 +161,11 @@ namespace WpfInvestigate.Controls.Effects
             }
         }
 
-        private static Tuple<Color, Color, Color, double> GetNewColors(Control control, Func<DependencyObject, Brush> getBackgroundMethod)
+        private static Tuple<Color, Color, Color, double> GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
         {
             var isMouseOver = control.IsMouseOver;
             var isPressed = (control as ButtonBase)?.IsPressed ?? false;
-            var backColor = Tips.GetColorFromBrush(getBackgroundMethod(control));
+            var backColor = getBackgroundMethod(control) ?? Colors.Transparent;
 
             var a1 = GetChromeMatrix(control);
             var matrix = a1.Split(',');
@@ -178,11 +178,11 @@ namespace WpfInvestigate.Controls.Effects
 
             return new Tuple<Color, Color, Color, double>(newBackColor, foreColor, borderColor, opacity);
         }
-        private static Tuple<Color, Color, Color, double> Chrome_GetNewColors(Control control, Func<DependencyObject, Brush> getBackgroundMethod)
+        private static Tuple<Color, Color, Color, double> Chrome_GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
         {
             var isMouseOver = control.IsMouseOver;
             var isPressed = (control as ButtonBase)?.IsPressed ?? false;
-            var backColor = Tips.GetColorFromBrush(getBackgroundMethod(control));
+            var backColor = getBackgroundMethod(control) ?? Colors.Transparent;
             Color foreColor, borderColor;
             double opacity;
 
@@ -206,7 +206,7 @@ namespace WpfInvestigate.Controls.Effects
             else
             {
                 var biChromeBackColor = backColor;
-                var biChromeForeColor = Tips.GetColorFromBrush(getBackgroundMethod == GetBichromeBackground ? GetBichromeForeground(control) : GetBichromeAnimatedForeground(control));
+                var biChromeForeColor = (getBackgroundMethod == GetBichromeBackground ? GetBichromeForeground(control) : GetBichromeAnimatedForeground(control)) ?? Colors.Transparent;
 
                 opacity = control.IsEnabled ? (isMouseOver || isPressed ? 1.0 : 0.7) : 0.35;
                 if (isPressed)
@@ -240,7 +240,7 @@ namespace WpfInvestigate.Controls.Effects
                 Convert.ToByte(color1.B * multiplier + color2.B * multiplier2));
         }
 
-        private static Func<DependencyObject, Brush> GetBackgroundMethod(Control control)
+        private static Func<DependencyObject, Color?> GetBackgroundMethod(Control control)
         {
             if (GetMonochrome(control) != null) return GetMonochrome;
             if (GetMonochromeAnimated(control) != null) return GetMonochromeAnimated;
