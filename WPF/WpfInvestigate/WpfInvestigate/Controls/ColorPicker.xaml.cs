@@ -21,9 +21,6 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    /// <summary>
-    /// Interaction logic ColorPicker.xaml
-    /// </summary>
     public partial class ColorPicker : UserControl, INotifyPropertyChanged
     {
         private ColorPickerViewModel VM => (ColorPickerViewModel)DataContext;
@@ -36,7 +33,8 @@ namespace WpfInvestigate.Controls
         }
 
         #region  ==============  User UI  ===========
-        public Color Color  // Original color
+        /// <summary>Original color</summary>
+        public Color Color
         {
             get => VM.Color;
             set

@@ -39,75 +39,75 @@
             <StackPanel Orientation="Vertical">
                 <Label Margin="10 0"/>
                 <WrapPanel>
-                    <Label effects:RippleEffect.RippleColor="Red" Content="Test label"/>
+                    <Label effects:ClickEffect.RippleColor="Red" Content="Test label"/>
 
                     <TextBlock TextWrapping="WrapWithOverflow" Text="PasswordBox:" VerticalAlignment="Center" Background="Aqua" Width="80"/>
-                    <PasswordBox effects:RippleEffect.RippleColor="Red" Width="50" Background="Yellow"/>
+                    <PasswordBox effects:ClickEffect.RippleColor="Red" Width="50" Background="Yellow"/>
 
                     <TextBlock TextWrapping="WrapWithOverflow" Text="FlattButton:" VerticalAlignment="Center" Background="Aqua" Width="80"/>
-                    <Button effects:RippleEffect.RippleColor="White" Style="{StaticResource ClearButtonStyle}" Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Black"
+                    <Button effects:ClickEffect.RippleColor="White" Style="{StaticResource ClearButtonStyle}" Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Black"
                             Width="20" Height="20" Margin="24 0 0 0" />
-                    <Button effects:RippleEffect.RippleColor="White" Width="120" Height="30" Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="Blue" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Width="120" Height="30" Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
+                    <Button effects:ClickEffect.RippleColor="White" Background="Blue" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
 
-                    <Button effects:RippleEffect.RippleColor="White" Background="Blue" BorderThickness="4" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="Blue" BorderThickness="4" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome Blue" />
 
-                    <Button effects:RippleEffect.RippleColor="White" Background="#FF20df20" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#FF20df20" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="MonochromeAnimatedButtonStyle" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#ffae00" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#ffae00" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="MonochromeAnimatedButtonStyle" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#d9a026" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#d9a026" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="MonochromeAnimatedButtonStyle" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="red" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="red" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome Red" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="green" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="green" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Green Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="GreenYellow" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="GreenYellow" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="GreenYellow Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="Yellow" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="Yellow" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Yellow Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="White" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="White" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="White Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="Black" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="Black" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Black Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="Gray" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="Gray" Width="120" Height="30"
                             effects:ChromeEffect.MonochromeAnimated="Gray"
                             Content="Gray Monochrome" />
 
                     <!-- from https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp -->
-                    <Button effects:RippleEffect.RippleColor="White" Background="#5CB85C" Width="120" Height="30" Margin="10 0 0 0"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#5CB85C" Width="120" Height="30" Margin="10 0 0 0"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#337AB7" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#337AB7" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#5BC0DE" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#5BC0DE" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#F0AD4E" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#F0AD4E" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#D9534F" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#D9534F" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
 
                     <!-- from https://getbootstrap.com/docs/4.0/utilities/colors/ -->
-                    <Button effects:RippleEffect.RippleColor="White" Background="#007BFF" Width="120" Height="30" Margin="10 0 0 0"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#007BFF" Width="120" Height="30" Margin="10 0 0 0"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#6C757D" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#6C757D" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#28A745" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#28A745" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#DC3545" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#DC3545" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#FFC107" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#FFC107" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#17A2B8" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#17A2B8" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:RippleEffect.RippleColor="White" Background="#343A40" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="#343A40" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
 
-                    <Button effects:RippleEffect.RippleColor="White" Background="White" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
+                    <Button effects:ClickEffect.RippleColor="White" Background="White" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="White" />
-                    <Button effects:RippleEffect.RippleColor="White" Width="70" Height="30" Content="Button" />
-                    <Button effects:RippleEffect.RippleColor="Black" Width="70" Height="30" Content="Button" />
+                    <Button effects:ClickEffect.RippleColor="White" Width="70" Height="30" Content="Button" />
+                    <Button effects:ClickEffect.RippleColor="Black" Width="70" Height="30" Content="Button" />
                 </WrapPanel>
 
                 <WrapPanel>

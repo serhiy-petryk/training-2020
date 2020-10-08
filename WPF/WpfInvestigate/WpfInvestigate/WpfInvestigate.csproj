@@ -111,7 +111,7 @@
     <Compile Include="Obsolete\NumericUpDown.xaml.cs">
       <DependentUpon>NumericUpDown.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Effects\RippleEffect.cs" />
+    <Compile Include="Controls\Effects\ClickEffect.cs" />
     <Compile Include="Obsolete\TextBoxExtensions.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
