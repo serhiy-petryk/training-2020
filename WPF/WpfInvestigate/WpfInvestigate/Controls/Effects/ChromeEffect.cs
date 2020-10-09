@@ -119,23 +119,25 @@ namespace WpfInvestigate.Controls.Effects
 
             var getBackgroundMethod = GetBackgroundMethod(control);
             var newValues = Chrome_GetNewColors(control, getBackgroundMethod);
+            if (!newValues.Item3.HasValue) 
+                return;
 
             if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
-                control.Background = new SolidColorBrush(newValues.Item1);
+                control.Background = new SolidColorBrush(newValues.Item1.Value);
             if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
-                control.Foreground = new SolidColorBrush(newValues.Item2);
+                control.Foreground = new SolidColorBrush(newValues.Item2.Value);
             if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
-                control.BorderBrush = new SolidColorBrush(newValues.Item3);
+                control.BorderBrush = new SolidColorBrush(newValues.Item3.Value);
 
             var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
             if (noAnimate)
             {
-                if (((SolidColorBrush)control.Background).Color != newValues.Item1)
-                    ((SolidColorBrush)control.Background).Color = newValues.Item1;
-                if (((SolidColorBrush)control.Foreground).Color != newValues.Item2)
-                    ((SolidColorBrush)control.Foreground).Color = newValues.Item2;
-                if (((SolidColorBrush)control.BorderBrush).Color != newValues.Item3)
-                    ((SolidColorBrush)control.BorderBrush).Color = newValues.Item3;
+                if (((SolidColorBrush)control.Background).Color != newValues.Item1.Value)
+                    ((SolidColorBrush)control.Background).Color = newValues.Item1.Value;
+                if (((SolidColorBrush)control.Foreground).Color != newValues.Item2.Value)
+                    ((SolidColorBrush)control.Foreground).Color = newValues.Item2.Value;
+                if (((SolidColorBrush)control.BorderBrush).Color != newValues.Item3.Value)
+                    ((SolidColorBrush)control.BorderBrush).Color = newValues.Item3.Value;
                 if (!Tips.AreEqual(control.Opacity, newValues.Item4))
                     control.Opacity = newValues.Item4;
             }
@@ -152,16 +154,16 @@ namespace WpfInvestigate.Controls.Effects
                     sb.Children.Add(control.CreateAnimation(UIElement.OpacityProperty));
                 }
 
-                sb.Children[0].SetFromToValues(((SolidColorBrush)control.Background).Color, newValues.Item1);
-                sb.Children[1].SetFromToValues(((SolidColorBrush)control.Foreground).Color, newValues.Item2);
-                sb.Children[2].SetFromToValues(((SolidColorBrush)control.BorderBrush).Color, newValues.Item3);
+                sb.Children[0].SetFromToValues(((SolidColorBrush)control.Background).Color, newValues.Item1.Value);
+                sb.Children[1].SetFromToValues(((SolidColorBrush)control.Foreground).Color, newValues.Item2.Value);
+                sb.Children[2].SetFromToValues(((SolidColorBrush)control.BorderBrush).Color, newValues.Item3.Value);
                 sb.Children[3].SetFromToValues(control.Opacity, newValues.Item4);
 
                 sb.Begin();
             }
         }
 
-        private static Tuple<Color, Color, Color, double> GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
+        private static Tuple<Color?, Color?, Color?, double> GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
         {
             var isMouseOver = control.IsMouseOver;
             var isPressed = Mouse.LeftButton == MouseButtonState.Pressed;
@@ -170,15 +172,24 @@ namespace WpfInvestigate.Controls.Effects
             var a1 = GetChromeMatrix(control);
             var matrix = a1.Split(',');
 
-            var opacity = control.IsEnabled ? 1.0 : ColorConverterHelper.ConvertValue(1.0, matrix[9].Trim());
-            var startIndex = isPressed ? 6 : (isMouseOver? 3 : 0);
-            var newBackColor = (Color)ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex].Trim(), null);
-            var foreColor = (Color)ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex + 1].Trim(), null);
-            var borderColor = (Color)ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex + 2].Trim(), null);
+            var opacity = control.IsEnabled ? 1.0 : ColorConverterHelper.ConvertValue(1.0, matrix[0].Trim());
+            var startIndex = (isPressed ? 6 : (isMouseOver? 3 : 0)) + 1;
+            
+            var newBackColor = matrix.Length <= startIndex
+                ? (Color?) null
+                : (Color) ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex].Trim(), null);
+            
+            var foreColor = matrix.Length <= startIndex + 1
+                ? (Color?) null
+                : (Color) ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex + 1].Trim(), null);
 
-            return new Tuple<Color, Color, Color, double>(newBackColor, foreColor, borderColor, opacity);
+            var borderColor = matrix.Length <= startIndex + 2
+                ? (Color?) null
+                : (Color) ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex + 2].Trim(), null);
+
+            return new Tuple<Color?, Color?, Color?, double>(newBackColor, foreColor, borderColor, opacity);
         }
-        private static Tuple<Color, Color, Color, double> Chrome_GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
+        private static Tuple<Color?, Color?, Color?, double> Chrome_GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
         {
             var isMouseOver = control.IsMouseOver;
             var isPressed = Mouse.LeftButton == MouseButtonState.Pressed;
@@ -228,7 +239,7 @@ namespace WpfInvestigate.Controls.Effects
                     borderColor = biChromeBackColor;
                 }
             }
-            return new Tuple<Color, Color, Color, double>(backColor, foreColor, borderColor, opacity);
+            return new Tuple<Color?, Color?, Color?, double>(backColor, foreColor, borderColor, opacity);
         }
 
         private static Color ColorMix(Color color1, Color color2, double multiplier)

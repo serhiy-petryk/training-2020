@@ -103,36 +103,54 @@
                 </WrapPanel>
 
                 <WrapPanel Orientation="Horizontal">
-                    <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="0"
+                    <Button Margin="4" Padding="4" Content="No chrome for click" FontSize="16" BorderThickness="0"
+                            effects:FocusEffect.Thickness="11"
+                            effects:CornerRadiusEffect.CornerRadius="4"
+                            effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10"/>
+                    <Button Margin="4" Padding="4" Content="Test focus" FontSize="16" BorderThickness="0"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:FocusEffect.Thickness="11"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
-                    <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="10 0 20 0"
+                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5"/>
+                    <Button Margin="4" Padding="4" Content="Focus test" FontSize="16" BorderThickness="10 0 20 0"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:FocusEffect.Thickness="2"
                             effects:CornerRadiusEffect.CornerRadius="14 1 18 8"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
+                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5"/>
 
-                    <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="0"
+                    <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="0"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:FocusEffect.Thickness="10 10 0 20"
                             effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65">
+                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5">
                         <Button.RenderTransform>
                             <RotateTransform CenterX="10" CenterY="20" Angle="10" />
                         </Button.RenderTransform>
                     </Button>
 
-                    <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
+                    <Button Margin="4" Padding="4" Content="Corner Test" FontSize="16" BorderThickness="4"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:CornerRadiusEffect.CornerRadius="4 1 8 2"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,-7.5,100,-10,-10,100,-12.5, 65"/>
-                    
+                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5"/>
+
+                    <Button Margin="4" Padding="4" Content="Gradient Focus test" FontSize="16" BorderThickness="4"
+                            effects:CornerRadiusEffect.CornerRadius="4"
+                            effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5">
+                        <effects:FocusEffect.Brush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="Yellow" Offset="0.0" />
+                                <GradientStop Color="Red" Offset="0.33" />
+                                <GradientStop Color="Blue" Offset="0.67" />
+                                <GradientStop Color="LimeGreen" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </effects:FocusEffect.Brush>
+                    </Button>
                 </WrapPanel>
 
                 <WrapPanel>
