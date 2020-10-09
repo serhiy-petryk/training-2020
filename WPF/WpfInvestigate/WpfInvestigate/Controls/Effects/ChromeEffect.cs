@@ -163,83 +163,57 @@ namespace WpfInvestigate.Controls.Effects
             }
         }
 
-        private static Tuple<Color?, Color?, Color?, double> GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
-        {
-            var isMouseOver = control.IsMouseOver;
-            var isPressed = Mouse.LeftButton == MouseButtonState.Pressed;
-            var backColor = getBackgroundMethod(control) ?? Colors.Transparent;
-
-            var a1 = GetChromeMatrix(control);
-            var matrix = a1.Split(',');
-
-            var opacity = control.IsEnabled ? 1.0 : ColorConverterHelper.ConvertValue(1.0, matrix[0].Trim());
-            var startIndex = (isPressed ? 6 : (isMouseOver? 3 : 0)) + 1;
-            
-            var newBackColor = matrix.Length <= startIndex
-                ? (Color?) null
-                : (Color) ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex].Trim(), null);
-            
-            var foreColor = matrix.Length <= startIndex + 1
-                ? (Color?) null
-                : (Color) ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex + 1].Trim(), null);
-
-            var borderColor = matrix.Length <= startIndex + 2
-                ? (Color?) null
-                : (Color) ColorHslBrush.NoSplit.Convert(backColor, typeof(Color), matrix[startIndex + 2].Trim(), null);
-
-            return new Tuple<Color?, Color?, Color?, double>(newBackColor, foreColor, borderColor, opacity);
-        }
         private static Tuple<Color?, Color?, Color?, double> Chrome_GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
         {
             var isMouseOver = control.IsMouseOver;
             var isPressed = Mouse.LeftButton == MouseButtonState.Pressed;
             var backColor = getBackgroundMethod(control) ?? Colors.Transparent;
-            Color foreColor, borderColor;
+            Color? newBackColor = null, foreColor = null, borderColor = null;
             double opacity;
 
-            var a1 = GetChromeMatrix(control);
-            if (a1 != null)
-                return GetNewColors(control, getBackgroundMethod);
-
             if (getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetMonochromeAnimated)
-            {
-                if (isPressed)
-                    backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+60%", null);
-                else if (isMouseOver)
-                    backColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+20%", null);
+            {   // Monochrome effect
+                var matrixDefinition = GetChromeMatrix(control);
+                if (string.IsNullOrEmpty(matrixDefinition))
+                    matrixDefinition = "40, +0%,+75%,+35%, +20%,+20%/+75%,+20%/+30%, +60%,+60%/+75%,+60%/+30%";
 
-                foreColor = (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+75%", null);
-                borderColor = isPressed || isMouseOver
-                    ? (Color)ColorHslBrush.Instance.Convert(backColor, typeof(Color), "+30%", null)
-                    : backColor;
-                opacity = control.IsEnabled ? 1.0 : 0.4;
+                var matrix = matrixDefinition.Split(',');
+
+                opacity = control.IsEnabled ? 1.0 : ColorConverterHelper.ConvertValue(1.0, matrix[0].Trim());
+                var startIndex = isPressed ? 7 : (isMouseOver ? 4 : 1);
+                if (matrix.Length > startIndex)
+                    newBackColor = (Color?) ColorHslBrush.Instance.Convert(backColor, typeof(Color), matrix[startIndex].Trim(), null);
+                if (matrix.Length > startIndex + 1)
+                    foreColor = (Color?) ColorHslBrush.Instance.Convert(backColor, typeof(Color), matrix[startIndex + 1].Trim(), null);
+                if (matrix.Length > startIndex + 2)
+                    borderColor = (Color?) ColorHslBrush.Instance.Convert(backColor, typeof(Color), matrix[startIndex + 2].Trim(), null);
             }
             else
-            {
+            {   // Bichrome effect
                 var biChromeBackColor = backColor;
                 var biChromeForeColor = (getBackgroundMethod == GetBichromeBackground ? GetBichromeForeground(control) : GetBichromeAnimatedForeground(control)) ?? Colors.Transparent;
 
                 opacity = control.IsEnabled ? (isMouseOver || isPressed ? 1.0 : 0.7) : 0.35;
                 if (isPressed)
                 {
-                    backColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
+                    newBackColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
                     foreColor = biChromeForeColor;
                     borderColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
                 }
                 else if (isMouseOver)
                 {
-                    backColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.9);
+                    newBackColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.9);
                     foreColor = biChromeForeColor;
                     borderColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
                 }
                 else
                 {
-                    backColor = biChromeBackColor;
+                    newBackColor = biChromeBackColor;
                     foreColor = biChromeForeColor;
                     borderColor = biChromeBackColor;
                 }
             }
-            return new Tuple<Color?, Color?, Color?, double>(backColor, foreColor, borderColor, opacity);
+            return new Tuple<Color?, Color?, Color?, double>(newBackColor, foreColor, borderColor, opacity);
         }
 
         private static Color ColorMix(Color color1, Color color2, double multiplier)

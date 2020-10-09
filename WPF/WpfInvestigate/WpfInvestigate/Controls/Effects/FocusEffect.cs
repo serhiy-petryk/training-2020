@@ -71,9 +71,9 @@ namespace WpfInvestigate.Controls.Effects
                         UseLayoutRounding = false, SnapsToDevicePixels = false
                     };
 
-                    colorAnimation = new ColorAnimation {Duration = AnimationHelper.SlowAnimationDuration};
+                    colorAnimation = new ColorAnimation {Duration = AnimationHelper.AnimationDuration};
                     adorner.Resources.Add("ColorAnimation", colorAnimation);
-                    thicknessAnimation = new ThicknessAnimation { Duration = AnimationHelper.SlowAnimationDuration };
+                    thicknessAnimation = new ThicknessAnimation { Duration = AnimationHelper.AnimationDuration };
                     adorner.Resources.Add("ThicknessAnimation", thicknessAnimation);
 
                     adornerControl = new AdornerControl(element) { Child = adorner, UseAdornedElementSize = false };

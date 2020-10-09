@@ -38,6 +38,9 @@
             <StackPanel Orientation="Vertical">
                 <WrapPanel Orientation="Horizontal">
                     <UserControl Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30"/>
+                    <UserControl Margin="5" Content="Test control (no effect for click)" Background="Red" BorderThickness="2" Height="30"
+                                 effects:ChromeEffect.Monochrome="Orange"
+                                 effects:ChromeEffect.ChromeMatrix="40, +0%,+75%,+35%, +20%,+20%/+75%,+20%/+30%"/>
                     <Button Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30"
                         VerticalContentAlignment="Center"/>
 
@@ -153,7 +156,7 @@
                     </Button>
                 </WrapPanel>
 
-                <WrapPanel>
+                <WrapPanel Margin="0 30">
                     <Button Margin="4" Style="{StaticResource PrimaryButton}" Content="Primary"/>
                     <Button Margin="4" Style="{StaticResource SecondaryButton}" Content="Secondary"/>
                     <Button Margin="4" Style="{StaticResource SuccessButton}" Content="Success"/>
@@ -178,7 +181,7 @@
                             effects:ChromeEffect.MonochromeAnimated="{StaticResource RedColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Orange"
                             effects:ChromeEffect.MonochromeAnimated="{StaticResource OrangeColor}"/>
-                    <Button Margin="4" Style="{StaticResource BootstrapDarkForegroundButton}" Content="Yellow"
+                    <Button Margin="4" Style="{StaticResource BootstrapLightButton}" Content="Yellow"
                             effects:ChromeEffect.MonochromeAnimated="{StaticResource YellowColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Green"
                             effects:ChromeEffect.MonochromeAnimated="{StaticResource GreenColor}"/>
@@ -186,7 +189,7 @@
                             effects:ChromeEffect.MonochromeAnimated="{StaticResource TealColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Cyan"
                             effects:ChromeEffect.MonochromeAnimated="{StaticResource CyanColor}"/>
-                    <Button Margin="4" Style="{StaticResource BootstrapDarkForegroundButton}" Content="White"
+                    <Button Margin="4" Style="{StaticResource BootstrapLightButton}" Content="White"
                             effects:ChromeEffect.MonochromeAnimated="{StaticResource WhiteColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Gray"
                             effects:ChromeEffect.MonochromeAnimated="{StaticResource GrayColor}"/>
