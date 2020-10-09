@@ -56,6 +56,17 @@ namespace WpfInvestigate.Common.ColorSpaces
         /// <returns>Gray level representation: double [0, 1]
         public static double GetGrayLevel(RGB rgb) => YCbCr.GetGrayLevel(rgb);
 
+        public static HSL GetHSLByGrayLevel(double hue, double saturation, double newGrayLevel)
+        {
+            var grayLevel = GetGrayLevel(new HSL(hue, saturation, 0.5).RGB);
+            double newL;
+            if (grayLevel < newGrayLevel)
+                newL = 1.0 - (1.0 - newGrayLevel) / (1.0 - grayLevel) * 0.5;
+            else
+                newL = newGrayLevel / grayLevel * 0.5;
+            return new HSL(hue, saturation, newL);
+        }
+
         /// <summary>
         /// Define is color dark based on the BT.709 standard of YCbCr color space
         /// </summary>

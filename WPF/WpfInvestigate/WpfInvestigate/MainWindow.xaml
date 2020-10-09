@@ -38,7 +38,7 @@
 
             <StackPanel Orientation="Horizontal">
                 <!--<UserControl Margin="5" Padding="4 0" Content="Test control" effects:ChromeEffect.Monochrome="Orange" BorderThickness="2" Height="40" VerticalContentAlignment="Center"/>-->
-                <Button Width="120" Height="30" Margin="5" Content="White" effects:ChromeEffect.MonochromeAnimated="White"
+                <Button Width="120" Height="30" Margin="5" Content="White" effects:ChromeEffect.MonochromeAnimated="Red"
                         effects:ClickEffect.RippleColor="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated), Converter={x:Static common:ColorHslBrush.Instance}}" />
 
             </StackPanel>
