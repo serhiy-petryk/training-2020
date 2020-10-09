@@ -165,8 +165,16 @@ namespace WpfInvestigate.Controls.Effects
 
         private static Tuple<Color?, Color?, Color?, double> Chrome_GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
         {
-            var isMouseOver = control.IsMouseOver;
             var isPressed = Mouse.LeftButton == MouseButtonState.Pressed;
+            if (isPressed)
+            {
+
+            }
+
+            if (isPressed && ClickEffect.GetRippleColor(control).HasValue)
+                return new Tuple<Color?, Color?, Color?, double>(null, null,  null, 1.0);
+
+            var isMouseOver = control.IsMouseOver;
             var backColor = getBackgroundMethod(control) ?? Colors.Transparent;
             Color? newBackColor = null, foreColor = null, borderColor = null;
             double opacity;
@@ -175,7 +183,7 @@ namespace WpfInvestigate.Controls.Effects
             {   // Monochrome effect
                 var matrixDefinition = GetChromeMatrix(control);
                 if (string.IsNullOrEmpty(matrixDefinition))
-                    matrixDefinition = "40, +0%,+75%,+35%, +20%,+20%/+75%,+20%/+30%, +60%,+60%/+75%,+60%/+30%";
+                    matrixDefinition = "40, +0,+75%,+0, +20%,+20%/+75%,+20%/+30%, +60%,+60%/+75%,+60%/+30%";
 
                 var matrix = matrixDefinition.Split(',');
 

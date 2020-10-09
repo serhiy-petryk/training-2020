@@ -6,6 +6,7 @@
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:common="clr-namespace:WpfInvestigate.Common"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="600" Width="1000">
 
@@ -36,7 +37,10 @@
             <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
 
             <StackPanel Orientation="Horizontal">
-                <UserControl Margin="5" Padding="4 0" Content="Test control" effects:ChromeEffect.Monochrome="Orange" BorderThickness="2" Height="40" VerticalContentAlignment="Center"/>
+                <!--<UserControl Margin="5" Padding="4 0" Content="Test control" effects:ChromeEffect.Monochrome="Orange" BorderThickness="2" Height="40" VerticalContentAlignment="Center"/>-->
+                <Button Width="120" Height="30" Margin="5" Content="White" effects:ChromeEffect.MonochromeAnimated="White"
+                        effects:ClickEffect.RippleColor="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated), Converter={x:Static common:ColorHslBrush.Instance}}" />
+
             </StackPanel>
         </StackPanel>
 
