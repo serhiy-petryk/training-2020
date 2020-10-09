@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
@@ -75,11 +76,11 @@ namespace WpfInvestigate.Controls.Effects
                         control.Style = style;
                 }
                 control.Unloaded += OnChromeUnloaded;
+                control.PreviewMouseLeftButtonDown += ChromeUpdate;
+                control.PreviewMouseLeftButtonUp += ChromeUpdate;
                 var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
                 dpd.AddValueChanged(control, ChromeUpdate);
                 dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-                dpd.AddValueChanged(control, ChromeUpdate);
-                dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
                 dpd.AddValueChanged(control, ChromeUpdate);
 
                 ChromeUpdate(control, null);
@@ -90,11 +91,11 @@ namespace WpfInvestigate.Controls.Effects
         {
             var control = (Control)sender;
             control.Unloaded -= OnChromeUnloaded;
+            control.PreviewMouseLeftButtonDown -= ChromeUpdate;
+            control.PreviewMouseLeftButtonUp -= ChromeUpdate;
             var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
             dpd.RemoveValueChanged(control, ChromeUpdate);
             dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(control, ChromeUpdate);
-            dpd = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(ButtonBase));
             dpd.RemoveValueChanged(control, ChromeUpdate);
         }
 
@@ -103,8 +104,7 @@ namespace WpfInvestigate.Controls.Effects
             return new Tuple<Color?, Color?, Color?, Color?, Color?, Color?, Tuple<bool, bool, bool>>(GetMonochrome(control),
                 GetMonochromeAnimated(control), GetBichromeBackground(control), GetBichromeForeground(control),
                 GetBichromeAnimatedBackground(control), GetBichromeAnimatedForeground(control),
-                new Tuple<bool, bool, bool>(control.IsMouseOver, control.IsEnabled,
-                    (control as ButtonBase)?.IsPressed ?? false));
+                new Tuple<bool, bool, bool>(control.IsMouseOver, control.IsEnabled, Mouse.LeftButton == MouseButtonState.Pressed));
         }
 
         private static void ChromeUpdate(object sender, EventArgs e)
@@ -164,7 +164,7 @@ namespace WpfInvestigate.Controls.Effects
         private static Tuple<Color, Color, Color, double> GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
         {
             var isMouseOver = control.IsMouseOver;
-            var isPressed = (control as ButtonBase)?.IsPressed ?? false;
+            var isPressed = Mouse.LeftButton == MouseButtonState.Pressed;
             var backColor = getBackgroundMethod(control) ?? Colors.Transparent;
 
             var a1 = GetChromeMatrix(control);
@@ -181,7 +181,7 @@ namespace WpfInvestigate.Controls.Effects
         private static Tuple<Color, Color, Color, double> Chrome_GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
         {
             var isMouseOver = control.IsMouseOver;
-            var isPressed = (control as ButtonBase)?.IsPressed ?? false;
+            var isPressed = Mouse.LeftButton == MouseButtonState.Pressed;
             var backColor = getBackgroundMethod(control) ?? Colors.Transparent;
             Color foreColor, borderColor;
             double opacity;
