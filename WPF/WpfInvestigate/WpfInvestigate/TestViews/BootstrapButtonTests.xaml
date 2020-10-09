@@ -37,11 +37,13 @@
 
             <StackPanel Orientation="Vertical">
                 <WrapPanel Orientation="Horizontal">
-                    <UserControl Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30"/>
-                    <UserControl Margin="5" Content="Test control (no effect for click)" Background="Red" BorderThickness="2" Height="30"
+                    <UserControl Margin="5" Padding="4 0" Content="Test control" effects:ChromeEffect.Monochrome="Orange" BorderThickness="2" Height="40" VerticalContentAlignment="Center"/>
+
+                    <UserControl Margin="5" Padding="4 0" Content="Test control (no effect for click)" BorderThickness="2" VerticalContentAlignment="Center"
                                  effects:ChromeEffect.Monochrome="Orange"
                                  effects:ChromeEffect.ChromeMatrix="40, +0%,+75%,+35%, +20%,+20%/+75%,+20%/+30%"/>
-                    <Button Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30"
+                    
+                    <Button Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="Orange" BorderThickness="2" Width="100" Height="30"
                         VerticalContentAlignment="Center"/>
 
                     <Button Margin="5" Content="Test animated control" effects:ChromeEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30"

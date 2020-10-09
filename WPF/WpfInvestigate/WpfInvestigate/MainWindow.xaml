@@ -36,42 +36,8 @@
             <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
 
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="MonochromeAnimatedButtonWhite" Margin="5" Content="Test animated control" effects:ChromeEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
-                        IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
-                        effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
-
-                <!--<Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
-                        effects:CornerRadiusEffect.CornerRadius="4"
-                        effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                        effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5">
-                    <effects:FocusEffect.Brush>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="Yellow" Offset="0.0" />
-                            <GradientStop Color="Red" Offset="0.25" />
-                            <GradientStop Color="Blue" Offset="0.75" />
-                            <GradientStop Color="LimeGreen" Offset="1.0" />
-                        </LinearGradientBrush>
-                    </effects:FocusEffect.Brush>
-                </Button>
-
-                <Button Margin="4" Padding="4" Width="100" Content="Primary" FontSize="16" BorderThickness="4"
-                        effects:ClickEffect.ShiftOnOffsetClick="1.5"
-                        effects:CornerRadiusEffect.CornerRadius="4"
-                        effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                        effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5">
-                </Button>-->
+                <UserControl Margin="5" Padding="4 0" Content="Test control" effects:ChromeEffect.Monochrome="Orange" BorderThickness="2" Height="40" VerticalContentAlignment="Center"/>
             </StackPanel>
-
-            <!--<Button Margin="4" Padding="4" Width="100" Content="Warning" FontSize="16" BorderThickness="0"
-                    effects:CornerRadiusEffect.CornerRadius="5"
-                    effects:ChromeEffect.MonochromeAnimated="#ffc107"
-                    effects:ChromeEffect.ChromeMatrix="65, +0,15,+0, -7.5,15,-10, -10,15,-12.5"/>
-
-            <Button Margin="4" Padding="4" Width="100" Content="Light" FontSize="16" BorderThickness="0"
-                    effects:ChromeEffect.MonochromeAnimated="#f8f9fa"
-                    effects:ChromeEffect.ChromeMatrix="65, +0,15,+0, -7.5,15,-10, -10,15,-12.5"
-                    effects:CornerRadiusEffect.CornerRadius="4"/>-->
-
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
