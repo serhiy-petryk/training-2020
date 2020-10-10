@@ -128,16 +128,6 @@
     <Style x:Key="MonochromeRippleControlStyle" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="White"/>
-        <Setter Property="effects:ClickEffect.RippleColor" Value="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated), Converter={x:Static common:ColorHslBrush.Instance}}"/>
-    </Style>
-    <Style x:Key="MonochromeRippleControlStyle1" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="White"/>
-        <Setter Property="effects:ClickEffect.RippleColor" Value="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated), Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}"/>
-    </Style>
-    <Style x:Key="MonochromeRippleControlStyle2" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="White"/>
         <Setter Property="effects:ClickEffect.RippleColor" Value="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated), Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"/>
     </Style>
 </ResourceDictionary>

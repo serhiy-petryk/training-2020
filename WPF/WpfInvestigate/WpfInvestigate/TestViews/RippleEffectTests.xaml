@@ -51,11 +51,13 @@
                     <Button Width="100" Height="30" Margin="5" Content="White" effects:ChromeEffect.MonochromeAnimated="White" Style="{StaticResource MonochromeRippleControlStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="Black" effects:ChromeEffect.MonochromeAnimated="Black" Style="{StaticResource MonochromeRippleControlStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="Blue" effects:ChromeEffect.MonochromeAnimated="Blue" Style="{StaticResource MonochromeRippleControlStyle}"/>
+                    <!-- from https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp -->
                     <Button Width="100" Height="30" Margin="5" Content="#5CB85C" effects:ChromeEffect.MonochromeAnimated="#5CB85C" Style="{StaticResource MonochromeRippleControlStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="#337AB7" effects:ChromeEffect.MonochromeAnimated="#337AB7" Style="{StaticResource MonochromeRippleControlStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="#5BC0DE" effects:ChromeEffect.MonochromeAnimated="#5BC0DE" Style="{StaticResource MonochromeRippleControlStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="#F0AD4E" effects:ChromeEffect.MonochromeAnimated="#F0AD4E" Style="{StaticResource MonochromeRippleControlStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="#D9534F" effects:ChromeEffect.MonochromeAnimated="#D9534F" Style="{StaticResource MonochromeRippleControlStyle}"/>
+                    <!-- from https://getbootstrap.com/docs/4.0/utilities/colors/ -->
                     <Button Width="100" Height="30" Margin="5" Content="#007BFF" effects:ChromeEffect.MonochromeAnimated="#007BFF" Style="{StaticResource MonochromeRippleControlStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="#6C757D" effects:ChromeEffect.MonochromeAnimated="#6C757D" Style="{StaticResource MonochromeRippleControlStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="#28A745" effects:ChromeEffect.MonochromeAnimated="#28A745" Style="{StaticResource MonochromeRippleControlStyle}"/>
@@ -63,56 +65,6 @@
                     <Button Width="100" Height="30" Margin="5" Content="#FFC107" effects:ChromeEffect.MonochromeAnimated="#FFC107" Style="{StaticResource MonochromeRippleControlStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="#17A2B8" effects:ChromeEffect.MonochromeAnimated="#17A2B8" Style="{StaticResource MonochromeRippleControlStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="#343A40" effects:ChromeEffect.MonochromeAnimated="#343A40" Style="{StaticResource MonochromeRippleControlStyle}"/>
-                </WrapPanel>
-
-                <WrapPanel>
-                    <Button Width="100" Height="30" Margin="5" Content="#FF20df20" effects:ChromeEffect.MonochromeAnimated="#FF20df20" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#ffae00" effects:ChromeEffect.MonochromeAnimated="#ffae00" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#d9a026" effects:ChromeEffect.MonochromeAnimated="#d9a026" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Red" effects:ChromeEffect.MonochromeAnimated="Red" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="green" effects:ChromeEffect.MonochromeAnimated="green" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="GreenYellow" effects:ChromeEffect.MonochromeAnimated="GreenYellow" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Yellow" effects:ChromeEffect.MonochromeAnimated="Yellow" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="White" effects:ChromeEffect.MonochromeAnimated="White" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Black" effects:ChromeEffect.MonochromeAnimated="Black" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Blue" effects:ChromeEffect.MonochromeAnimated="Blue" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#5CB85C" effects:ChromeEffect.MonochromeAnimated="#5CB85C" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#337AB7" effects:ChromeEffect.MonochromeAnimated="#337AB7" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#5BC0DE" effects:ChromeEffect.MonochromeAnimated="#5BC0DE" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#F0AD4E" effects:ChromeEffect.MonochromeAnimated="#F0AD4E" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#D9534F" effects:ChromeEffect.MonochromeAnimated="#D9534F" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#007BFF" effects:ChromeEffect.MonochromeAnimated="#007BFF" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#6C757D" effects:ChromeEffect.MonochromeAnimated="#6C757D" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#28A745" effects:ChromeEffect.MonochromeAnimated="#28A745" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#DC3545" effects:ChromeEffect.MonochromeAnimated="#DC3545" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#FFC107" effects:ChromeEffect.MonochromeAnimated="#FFC107" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#17A2B8" effects:ChromeEffect.MonochromeAnimated="#17A2B8" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#343A40" effects:ChromeEffect.MonochromeAnimated="#343A40" Style="{StaticResource MonochromeRippleControlStyle1}"/>
-                </WrapPanel>
-
-                <WrapPanel>
-                    <Button Width="100" Height="30" Margin="5" Content="#FF20df20" effects:ChromeEffect.MonochromeAnimated="#FF20df20" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#ffae00" effects:ChromeEffect.MonochromeAnimated="#ffae00" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#d9a026" effects:ChromeEffect.MonochromeAnimated="#d9a026" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Red" effects:ChromeEffect.MonochromeAnimated="Red" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="green" effects:ChromeEffect.MonochromeAnimated="green" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="GreenYellow" effects:ChromeEffect.MonochromeAnimated="GreenYellow" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Yellow" effects:ChromeEffect.MonochromeAnimated="Yellow" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="White" effects:ChromeEffect.MonochromeAnimated="White" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Black" effects:ChromeEffect.MonochromeAnimated="Black" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Blue" effects:ChromeEffect.MonochromeAnimated="Blue" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#5CB85C" effects:ChromeEffect.MonochromeAnimated="#5CB85C" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#337AB7" effects:ChromeEffect.MonochromeAnimated="#337AB7" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#5BC0DE" effects:ChromeEffect.MonochromeAnimated="#5BC0DE" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#F0AD4E" effects:ChromeEffect.MonochromeAnimated="#F0AD4E" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#D9534F" effects:ChromeEffect.MonochromeAnimated="#D9534F" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#007BFF" effects:ChromeEffect.MonochromeAnimated="#007BFF" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#6C757D" effects:ChromeEffect.MonochromeAnimated="#6C757D" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#28A745" effects:ChromeEffect.MonochromeAnimated="#28A745" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#DC3545" effects:ChromeEffect.MonochromeAnimated="#DC3545" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#FFC107" effects:ChromeEffect.MonochromeAnimated="#FFC107" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#17A2B8" effects:ChromeEffect.MonochromeAnimated="#17A2B8" Style="{StaticResource MonochromeRippleControlStyle2}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#343A40" effects:ChromeEffect.MonochromeAnimated="#343A40" Style="{StaticResource MonochromeRippleControlStyle2}"/>
                 </WrapPanel>
 
                 <WrapPanel>
@@ -125,65 +77,29 @@
                     <Button effects:ClickEffect.RippleColor="White" Style="{StaticResource ClearButtonStyle}" Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Black"
                             Width="20" Height="20" Margin="24 0 0 0" />
                     <Button effects:ClickEffect.RippleColor="White" Width="120" Height="30" Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
+
+                    <Button BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30" Content="Bichrome"
+                            effects:ClickEffect.RippleColor="White" 
+                            effects:ChromeEffect.BichromeAnimatedBackground="Yellow"
+                            effects:ChromeEffect.BichromeAnimatedForeground="Blue"
+                            Style="{StaticResource DefaultButtonBaseStyle}"/>
+                    <Button BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30" Content="Bichrome"
+                            effects:ClickEffect.RippleColor="White" 
+                            effects:ChromeEffect.BichromeAnimatedBackground="Blue"
+                            effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
+                            Style="{StaticResource DefaultButtonBaseStyle}"/>
                     <Button effects:ClickEffect.RippleColor="White" Background="Blue" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
 
                     <Button effects:ClickEffect.RippleColor="White" Background="Blue" BorderThickness="4" Width="120" Height="30"
                             Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome Blue" />
+                </WrapPanel>
 
-                    <Button effects:ClickEffect.RippleColor="White" Background="#FF20df20" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="MonochromeAnimatedButtonStyle" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#ffae00" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="MonochromeAnimatedButtonStyle" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#d9a026" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="MonochromeAnimatedButtonStyle" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="red" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome Red" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="green" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Green Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="GreenYellow" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="GreenYellow Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="Yellow" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Yellow Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="White" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="White Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="Black" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Black Monochrome" />
-                    <Button Height="30" Content="Gray Monochrome" effects:ChromeEffect.MonochromeAnimated="Gray"
-                            effects:ClickEffect.RippleColor="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated)}" />
-                    <Button Height="30" IsEnabled="False" Content="Gray disabled" effects:ChromeEffect.MonochromeAnimated="Gray"
-                            effects:ClickEffect.RippleColor="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated)}" />
-
-                    <!-- from https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp -->
-                    <Button effects:ClickEffect.RippleColor="White" Background="#5CB85C" Width="120" Height="30" Margin="10 0 0 0"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#337AB7" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#5BC0DE" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#F0AD4E" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#D9534F" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-
-                    <!-- from https://getbootstrap.com/docs/4.0/utilities/colors/ -->
-                    <Button effects:ClickEffect.RippleColor="White" Background="#007BFF" Width="120" Height="30" Margin="10 0 0 0"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#6C757D" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#28A745" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#DC3545" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#FFC107" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#17A2B8" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-                    <Button effects:ClickEffect.RippleColor="White" Background="#343A40" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome" />
-
-                    <Button effects:ClickEffect.RippleColor="White" Background="White" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="White" />
+                <WrapPanel>
+                    <Button Background="White" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30" Content="Red" 
+                            effects:ClickEffect.RippleColor="White"
+                            effects:ChromeEffect.MonochromeAnimated="Red"
+                            Style="{StaticResource DefaultButtonBaseStyle}" />
                     <Button effects:ClickEffect.RippleColor="White" Width="70" Height="30" Content="Button" />
                     <Button effects:ClickEffect.RippleColor="Black" Width="70" Height="30" Content="Button" />
                 </WrapPanel>
