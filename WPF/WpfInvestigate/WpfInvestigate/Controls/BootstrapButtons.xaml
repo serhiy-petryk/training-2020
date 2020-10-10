@@ -58,7 +58,7 @@
                     <!-- Double border: to remove gap between border and content (see https://stackoverflow.com/questions/18581204/how-to-fix-empty-space-between-a-border-and-a-background-in-button-with-rounded) -->
                     <Border x:Name="MainBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0"
                             Margin="0" Padding="0" SnapsToDevicePixels="True">
-                        <Border Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                        <Border Background="Transparent" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}"
                                 Margin="0" Padding="{TemplateBinding Padding}"
                                 CornerRadius="{Binding ElementName=MainBorder, Path=CornerRadius}">
                             <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -68,6 +68,14 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Resources>
+            <Style TargetType="{x:Type Path}">
+                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"/>
+            </Style>
+            <Style TargetType="{x:Type Line}">
+                <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"/>
+            </Style>
+        </Style.Resources>
     </Style>
 
     <Style x:Key="ClearAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
@@ -77,8 +85,8 @@
             <Setter.Value>
                 <Viewbox UseLayoutRounding="False">
                     <Grid Width="10" Height="10">
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="0" Y2="10" Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="10" Y2="0" Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                        <Line StrokeThickness="2" X1="0" X2="10" Y1="0" Y2="10" />
+                        <Line StrokeThickness="2" X1="0" X2="10" Y1="10" Y2="0" />
                     </Grid>
                 </Viewbox>
             </Setter.Value>
