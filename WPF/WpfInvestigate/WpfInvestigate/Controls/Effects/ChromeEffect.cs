@@ -199,13 +199,13 @@ namespace WpfInvestigate.Controls.Effects
                 opacity = control.IsEnabled ? (isMouseOver || isPressed ? 1.0 : 0.7) : 0.35;
                 if (isPressed)
                 {
-                    newBackColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
+                    newBackColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.6);
                     foreColor = biChromeForeColor;
-                    borderColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
+                    borderColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.6);
                 }
                 else if (isMouseOver)
                 {
-                    newBackColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.9);
+                    newBackColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.8);
                     foreColor = biChromeForeColor;
                     borderColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.5);
                 }
