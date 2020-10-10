@@ -302,7 +302,7 @@ namespace WpfInvestigate.Controls
 
         private void AnimateHand(Shape hand, double newValue, double oldValue)
         {
-            if (hand == null || Tips.AreEqual(newValue, oldValue) || !hand.IsVisible)
+            if (hand == null || Tips.AreEqual(newValue, oldValue))
                 return;
 
             if (!(hand.RenderTransform is RotateTransform))
