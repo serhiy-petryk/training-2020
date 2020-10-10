@@ -81,25 +81,22 @@
                     <Button BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30" Content="Bichrome"
                             effects:ClickEffect.RippleColor="White" 
                             effects:ChromeEffect.BichromeAnimatedBackground="Yellow"
-                            effects:ChromeEffect.BichromeAnimatedForeground="Blue"
-                            Style="{StaticResource DefaultButtonBaseStyle}"/>
+                            effects:ChromeEffect.BichromeAnimatedForeground="Blue"/>
                     <Button BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30" Content="Bichrome"
                             effects:ClickEffect.RippleColor="White" 
                             effects:ChromeEffect.BichromeAnimatedBackground="Blue"
-                            effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
-                            Style="{StaticResource DefaultButtonBaseStyle}"/>
+                            effects:ChromeEffect.BichromeAnimatedForeground="Yellow"/>
                     <Button effects:ClickEffect.RippleColor="White" Background="Blue" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
                             Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
 
-                    <Button effects:ClickEffect.RippleColor="White" Background="Blue" BorderThickness="4" Width="120" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Monochrome Blue" />
+                    <Button effects:ClickEffect.RippleColor="White" BorderThickness="4" Width="120" Height="30" Content="Monochrome Blue"
+                            effects:ChromeEffect.MonochromeAnimated="Blue"/>
                 </WrapPanel>
 
                 <WrapPanel>
                     <Button Background="White" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30" Content="Red" 
                             effects:ClickEffect.RippleColor="White"
-                            effects:ChromeEffect.MonochromeAnimated="Red"
-                            Style="{StaticResource DefaultButtonBaseStyle}" />
+                            effects:ChromeEffect.MonochromeAnimated="Red"/>
                     <Button effects:ClickEffect.RippleColor="White" Width="70" Height="30" Content="Button" />
                     <Button effects:ClickEffect.RippleColor="Black" Width="70" Height="30" Content="Button" />
                 </WrapPanel>

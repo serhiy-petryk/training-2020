@@ -183,7 +183,7 @@ namespace WpfInvestigate.Controls.Effects
             {   // Monochrome effect
                 var matrixDefinition = GetChromeMatrix(control);
                 if (string.IsNullOrEmpty(matrixDefinition))
-                    matrixDefinition = "40, +0%,+75%,+0%, +20%,+20%/+75%,+20%/+50%, +60%,+60%/+75%,+60%/+50%";
+                    matrixDefinition = "40, +0%,+70%,+0%, +25%,+25%/+75%,+25%/+50%, +60%,+60%/+75%,+60%/+50%";
 
                 var matrix = matrixDefinition.Split(',');
 
