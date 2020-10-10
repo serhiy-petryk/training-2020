@@ -99,7 +99,7 @@ namespace WpfInvestigate.Controls.Effects
             dpd.RemoveValueChanged(control, ChromeUpdate);
         }
 
-        private static Tuple<Color?, Color?, Color?, Color?, Color?, Color?, Tuple<bool, bool, bool>> Chrome_GetState(Control control)
+        private static Tuple<Color?, Color?, Color?, Color?, Color?, Color?, Tuple<bool, bool, bool>> GetState(Control control)
         {
             return new Tuple<Color?, Color?, Color?, Color?, Color?, Color?, Tuple<bool, bool, bool>>(GetMonochrome(control),
                 GetMonochromeAnimated(control), GetBichromeBackground(control), GetBichromeForeground(control),
@@ -113,12 +113,12 @@ namespace WpfInvestigate.Controls.Effects
 
             // To prevent: the same property changes multiple times
             var oldState = control.Resources["state"];
-            var newState = Chrome_GetState(control);
+            var newState = GetState(control);
             if (Equals(oldState, newState)) return;
             control.Resources["state"] = newState;
 
             var getBackgroundMethod = GetBackgroundMethod(control);
-            var newValues = Chrome_GetNewColors(control, getBackgroundMethod);
+            var newValues = GetNewColors(control, getBackgroundMethod);
             if (!newValues.Item3.HasValue) 
                 return;
 
@@ -163,14 +163,9 @@ namespace WpfInvestigate.Controls.Effects
             }
         }
 
-        private static Tuple<Color?, Color?, Color?, double> Chrome_GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
+        private static Tuple<Color?, Color?, Color?, double> GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
         {
             var isPressed = Mouse.LeftButton == MouseButtonState.Pressed;
-            if (isPressed)
-            {
-
-            }
-
             if (isPressed && ClickEffect.GetRippleColor(control).HasValue)
                 return new Tuple<Color?, Color?, Color?, double>(null, null,  null, 1.0);
 

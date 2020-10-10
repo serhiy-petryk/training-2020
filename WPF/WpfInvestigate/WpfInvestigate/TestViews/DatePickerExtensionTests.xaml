@@ -52,8 +52,7 @@
 
                 <WrapPanel Margin="0 2 0 0">
                     <Label Content="DatePicker: (nullable)"/>
-                    <DatePicker controls:DatePickerExtension.IsNullable="True" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}" Background="GreenYellow"
-                                Foreground="Blue"/>
+                    <DatePicker controls:DatePickerExtension.IsNullable="True" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}" Background="GreenYellow" Foreground="Blue"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 2 0 0">
@@ -68,7 +67,8 @@
 
                 <WrapPanel Margin="0 5 0 0">
                     <Label>ClearButton: IsNullable</Label>
-                    <DatePicker x:Name="dp1" controls:DatePickerExtension.ClearButton="True" controls:DatePickerExtension.IsNullable="True" Height="36" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
+                    <DatePicker x:Name="dp1" controls:DatePickerExtension.ClearButton="True" controls:DatePickerExtension.IsNullable="True" Height="36"
+                                Background="GreenYellow" Foreground="Blue" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
                     <Button Content="Toggle ClearButton property" Click="Debug1_OnClick" />
                 </WrapPanel>
 

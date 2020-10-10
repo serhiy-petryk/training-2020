@@ -22,11 +22,11 @@ namespace WpfInvestigate.Controls.Effects
                 if (e.NewValue is Geometry geometry)
                 {
                     var path = new Path { Stretch = Stretch.Uniform, Data = geometry };
-                    var b = new Binding("Foreground")
+                    /*var b = new Binding("Foreground")
                     {
                         RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Control), 1)
                     };
-                    path.SetBinding(Shape.FillProperty, b);
+                    path.SetBinding(Shape.FillProperty, b);*/
                     control.Content = new Viewbox { Child = path };
                 }
                 else
