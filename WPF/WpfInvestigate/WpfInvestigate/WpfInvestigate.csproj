@@ -127,6 +127,9 @@
     <Compile Include="TestViews\BootstrapButtonTests.xaml.cs">
       <DependentUpon>BootstrapButtonTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\ChromeTests.xaml.cs">
+      <DependentUpon>ChromeTests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\ControlEffectTests.xaml.cs">
       <DependentUpon>ControlEffectTests.xaml</DependentUpon>
     </Compile>
@@ -257,6 +260,10 @@
     <Page Include="TestViews\BootstrapButtonTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ChromeTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestViews\ControlEffectTests.xaml">
       <Generator>MSBuild:Compile</Generator>

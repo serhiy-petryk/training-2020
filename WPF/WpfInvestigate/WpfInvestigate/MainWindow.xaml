@@ -57,6 +57,7 @@
             <Button x:Name="RippleEffectTest" Width="200" Margin="0 5" Content="Ready: RippleEffect" Click="RippleEffectTest_OnClick"/>
             <Button x:Name="FlatButtonTest" Width="200" Margin="0 5" Content="Ready: FlatButton" Click="FlatButtonTest_OnClick"/>
             <Button x:Name="MonochromeButtonTest" Width="200" Margin="0 5" Content="Ready: MonochromeButton" Click="MonochromeButtonTest_OnClick"/>
+            <Button x:Name="ChromeTest" Width="200" Margin="0 5" Content="Ready: Chrome tests" Click="ChromeTest_OnClick"/>
             <Button x:Name="ColorPickerTest" Width="200" Margin="0 5" Content="Ready: ColorPickerTest" Click="ColorPickerTest_OnClick"/>
         </StackPanel>
 

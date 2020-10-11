@@ -61,6 +61,7 @@ namespace WpfInvestigate
         private void ColorPickerTest_OnClick(object sender, RoutedEventArgs e) => new ColorPickerTests().Show();
         private void ControlEffectTests_OnClick(object sender, RoutedEventArgs e) => new ControlEffectTests().Show();
         private void BootstrapButtonTests_OnClick(object sender, RoutedEventArgs e) => new BootstrapButtonTests().Show();
+        private void ChromeTest_OnClick(object sender, RoutedEventArgs e) => new ChromeTests().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
