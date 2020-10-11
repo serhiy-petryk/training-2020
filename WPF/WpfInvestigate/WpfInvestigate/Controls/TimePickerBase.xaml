@@ -288,13 +288,13 @@
                                                                     </ItemsPanelTemplate>
                                                                 </ItemsControl.ItemsPanel>
                                                             </ItemsControl>
- 
-                                                            <Polygon x:Name="PART_HourHand" Canvas.Left="58" Canvas.Top="22" Margin="0 3 0 0" Points="1.5,0, 2.5,0, 4,35, 0,35" Fill="{DynamicResource BlackBrush}" RenderTransformOrigin="0.5,1" />
-                                                            <Polygon x:Name="PART_MinuteHand" Canvas.Top="8" Canvas.Left="58" Margin="0 3 0 0" Points="1.5,0, 2.5,0, 4,49, 0,49" Fill="{DynamicResource BlackBrush}" RenderTransformOrigin="0.5,1" />
+
+                                                            <Polygon x:Name="PART_HourHand" Canvas.Left="60" Canvas.Top="60" Points="-2,0,-0.5,-36,0.5,-36,2,0" Fill="{DynamicResource BlackBrush}" />
+                                                            <Polygon x:Name="PART_MinuteHand" Canvas.Top="60" Canvas.Left="60" Points="-1.5,0,-0.5,-50,0.5,-50,1.5,0" Fill="{DynamicResource BlackBrush}" />
                                                             <Ellipse Canvas.Left="57" Canvas.Top="57" Width="6" Height="6" Fill="{DynamicResource BlackBrush}" />
                                                             <Canvas x:Name="PART_SecondArea" Visibility="{Binding ElementName=PART_SecondSelector, Path=Visibility}">
                                                                 <Ellipse Canvas.Left="57" Canvas.Top="57" Width="6" Height="6" Fill="{StaticResource RedBrush}" />
-                                                                <Polygon x:Name="PART_SecondHand" Canvas.Top="0" Canvas.Left="59.5" Margin="0 9 0 0" Points="0,0,1.5,0,1.5,52,3,65,-1.5,65,0,52" Fill="{StaticResource RedBrush}" RenderTransformOrigin="0.5,0.8" />
+                                                                <Polygon x:Name="PART_SecondHand" Canvas.Top="60" Canvas.Left="60" Points="-1,0,-1,-50,0,-52,1,-50,1,0,3,20,-3,20" Fill="{StaticResource RedBrush}"/>
                                                             </Canvas>
                                                         </Canvas>
                                                     </Viewbox>
