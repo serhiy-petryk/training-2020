@@ -19,7 +19,7 @@ namespace WpfInvestigate.Controls.Effects
             {
                 var border = Helpers.ControlHelper.GetMainBorders(d as FrameworkElement).FirstOrDefault();
                 if (border != null)
-                    border.CornerRadius = (CornerRadius)e.NewValue;
+                    border.CornerRadius = (CornerRadius) e.NewValue;
             }));
         }
     }

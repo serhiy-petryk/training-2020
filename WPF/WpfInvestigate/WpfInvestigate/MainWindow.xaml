@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
@@ -11,17 +12,85 @@
         Title="LIVE MainWindow" Height="600" Width="1000">
 
     <Window.Resources>
-        <ScaleTransform x:Key="ScaleTransform" CenterX="0" CenterY="0"
-                        ScaleX="{Binding ElementName=uiScaleSlider, Path=Value}"
-                        ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}" />
+        <system:Int32 x:Key="Dummy">12</system:Int32>
 
-        <Geometry x:Key="Mwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
-        <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
         <Geometry x:Key="CloseGeometry">M22 4 L18 0 L11 7 L4 0 L0 4 L7 11 L0 18 L4 22 L11 15 L18 22 L22 18 L15 11 L22 4Z</Geometry>
         <Geometry x:Key="DownArrowGeometry">M0 0 L1 1 L2 0 Z</Geometry>
+        <SolidColorBrush x:Key="BorderBrush" Color="#FF3399FF"/>
+        <SolidColorBrush x:Key="ForegroundBrush" Color="#FF0069D6"/>
+
+        <Style x:Key="TestSplitButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="IsThreeState" Value="False"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid x:Name="Root">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="PART_Content" Content="{TemplateBinding Content}" Margin="0" Padding="{TemplateBinding Padding}"
+                                            Foreground="{TemplateBinding Foreground}" BorderThickness="1"
+                                            Style="{StaticResource DefaultButtonBaseStyle}"
+                                            Background="Transparent"
+                                            HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <!--<Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=Root, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=DropDownPart, Path=IsChecked}" Value="True">
+                                                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>-->
+                            </Button>
+                            <ToggleButton Grid.Column="1" x:Name="PART_DropDown" Foreground="{TemplateBinding Foreground}" BorderThickness="0 1 1 1" Padding="0" Margin="0"
+                                      IsThreeState="False" Width="13"
+                                      IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}"
+                                      VerticalAlignment="Stretch"
+                                      UseLayoutRounding="False"
+                                      Style="{StaticResource DefaultButtonBaseStyle}"
+                                      Background="Transparent"
+                                      effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                      effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                      effects:DualPathToggleButtonEffect.Width="9">
+                                <!--<ToggleButton.Style>
+                                    <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=Root, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ToggleButton.Style>-->
+                            </ToggleButton>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="Orange"/>
+                                <Setter TargetName="PART_Content" Property="BorderThickness" Value="1"/>
+                                <Setter TargetName="PART_Content" Property="BorderBrush" Value="Red"/>
+                                <Setter TargetName="PART_DropDown" Property="BorderThickness" Value="1"/>
+                                <Setter TargetName="PART_DropDown" Property="BorderBrush" Value="Red"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <ResourceDictionary x:Key="PopupMenu" x:Shared="False">
-            <ContextMenu x:Key="cm" StaysOpen="False" LayoutTransform="{StaticResource ScaleTransform}">
+            <ContextMenu x:Key="cm" StaysOpen="False">
                 <MenuItem Header="Copy"/>
                 <MenuItem Header="Paste"/>
                 <MenuItem Header="Cut"/>
@@ -30,76 +99,109 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Margin="0 20 0 0">
+    <Grid Margin="10 25 10 10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5">
-            <Label Content="Current culture:"/>
-            <ComboBox x:Name="cbCulture" SelectionChanged="CbCulture_OnSelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate DataType="{x:Type globalization:CultureInfo}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding DisplayName, Mode=OneWay}" />
-                            <TextBlock Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding IetfLanguageTag, StringFormat=(\{0\})}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <Label Content="WiP controls:" Margin="0 10 0 0"/>
-            <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
-            <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
-            <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
+        <Slider Grid.Column="0"
+                x:Name="uiScaleSlider"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100"
+                Value="1" Minimum="0.5" Maximum="4"
+                Orientation="Vertical"
+                Ticks="1"
+                IsSnapToTickEnabled="False"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
 
-            <StackPanel Orientation="Horizontal">
-                <!--<UserControl Margin="5" Padding="4 0" Content="Test control" effects:ChromeEffect.Monochrome="Orange" BorderThickness="2" Height="40" VerticalContentAlignment="Center"/>-->
-                <Button Width="120" Height="30" Margin="5" Content="White" effects:ChromeEffect.MonochromeAnimated="Red"
+        <Grid Grid.Column="1" Margin="0 20 0 0">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5">
+                <Label Content="Current culture:"/>
+                <ComboBox x:Name="cbCulture" SelectionChanged="CbCulture_OnSelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type globalization:CultureInfo}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding DisplayName, Mode=OneWay}" />
+                                <TextBlock Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding IetfLanguageTag, StringFormat=(\{0\})}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Label Content="WiP controls:" Margin="0 10 0 0"/>
+                <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
+                <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
+                <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
+
+                <WrapPanel Orientation="Horizontal" MaxWidth="300">
+                    <Button Margin="5" Height="40" Style="{StaticResource DefaultButtonBaseStyle}" Background="Blue" Foreground="Yellow"
+                        effects:CornerRadiusEffect.CornerRadius="8"
+                        BorderBrush="Red" BorderThickness="4" Content="DefaultButtonBaseStyle"/>
+
+                    <!--<UserControl Margin="5" Padding="4 0" Content="Test control" effects:ChromeEffect.Monochrome="Orange" BorderThickness="2" Height="40" VerticalContentAlignment="Center"/>-->
+                    <Button Width="120" Height="30" Margin="5" Content="White" effects:ChromeEffect.MonochromeAnimated="Red"
                         effects:ClickEffect.RippleColor="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated), Converter={x:Static common:ColorHslBrush.Instance}}" />
 
-                <ToggleButton Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Padding="8 0"
+                    <ToggleButton Height="30" Style="{StaticResource DropDownButtonStyle}" Content="DropDownButtonStyle" Padding="8 0"
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
+                    <ToggleButton Height="30" Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle" Padding="8 0"
+                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <TextBox Width="50"/>
+
+                </WrapPanel>
             </StackPanel>
-        </StackPanel>
 
-        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
-            <Label>Ready:</Label>
-            <Button x:Name="ObjectEditorTest" Margin="5" Content="Ready: ObjectEditor" Click="ObjectEditorTest_OnClick"/>
-            <Button x:Name="DualPathToggleButtonEffectTest" Width="200" Margin="0 5" Content="Ready: DualPathToggleButtonEffect" Click="DualPathToggleButtonEffectTest_OnClick"/>
-            <Button x:Name="DropDownButtonTest" Width="200" Margin="0 5" Content="Ready: DropDownButton" Click="DropDownButtonTest_OnClick"/>
-            <Button x:Name="NumericBoxTest" Width="200" Margin="0 5" Content="Ready: NumericBox" Click="NumericBoxTest_OnClick"/>
-            <Button x:Name="TimePickerTest" Width="200" Margin="0 5" Content="Ready: TimePicker" Click="TimepickerTest_OnClick"/>
-            <Button x:Name="DatePickerExtensionTest" Width="200" Margin="0 5" Content="Ready: DatePickerExtension" Click="DatePickerExtensionTest_OnClick"/>
-            <Button x:Name="CalculatorTest" Width="200" Margin="0 5" Content="Ready: Calculator" Click="CalculatorTest_OnClick"/>
-            <Button x:Name="WatermarkTest" Width="200" Margin="0 5" Content="Watermark Tests" Click="WatermarkTest_OnClick"/>
-            <Button x:Name="RippleEffectTest" Width="200" Margin="0 5" Content="Ready: RippleEffect" Click="RippleEffectTest_OnClick"/>
-            <Button x:Name="FlatButtonTest" Width="200" Margin="0 5" Content="Ready: FlatButton" Click="FlatButtonTest_OnClick"/>
-            <Button x:Name="MonochromeButtonTest" Width="200" Margin="0 5" Content="Ready: MonochromeButton" Click="MonochromeButtonTest_OnClick"/>
-            <Button x:Name="ChromeTest" Width="200" Margin="0 5" Content="Ready: Chrome tests" Click="ChromeTest_OnClick"/>
-            <Button x:Name="ColorPickerTest" Width="200" Margin="0 5" Content="Ready: ColorPickerTest" Click="ColorPickerTest_OnClick"/>
-        </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
+                <Label>Ready:</Label>
+                <Button x:Name="ObjectEditorTest" Margin="5" Content="Ready: ObjectEditor" Click="ObjectEditorTest_OnClick"/>
+                <Button x:Name="DualPathToggleButtonEffectTest" Width="200" Margin="0 5" Content="Ready: DualPathToggleButtonEffect" Click="DualPathToggleButtonEffectTest_OnClick"/>
+                <Button x:Name="DropDownButtonTest" Width="200" Margin="0 5" Content="Ready: DropDownButton" Click="DropDownButtonTest_OnClick"/>
+                <Button x:Name="NumericBoxTest" Width="200" Margin="0 5" Content="Ready: NumericBox" Click="NumericBoxTest_OnClick"/>
+                <Button x:Name="TimePickerTest" Width="200" Margin="0 5" Content="Ready: TimePicker" Click="TimepickerTest_OnClick"/>
+                <Button x:Name="DatePickerExtensionTest" Width="200" Margin="0 5" Content="Ready: DatePickerExtension" Click="DatePickerExtensionTest_OnClick"/>
+                <Button x:Name="CalculatorTest" Width="200" Margin="0 5" Content="Ready: Calculator" Click="CalculatorTest_OnClick"/>
+                <Button x:Name="WatermarkTest" Width="200" Margin="0 5" Content="Watermark Tests" Click="WatermarkTest_OnClick"/>
+                <Button x:Name="RippleEffectTest" Width="200" Margin="0 5" Content="Ready: RippleEffect" Click="RippleEffectTest_OnClick"/>
+                <Button x:Name="FlatButtonTest" Width="200" Margin="0 5" Content="Ready: FlatButton" Click="FlatButtonTest_OnClick"/>
+                <Button x:Name="MonochromeButtonTest" Width="200" Margin="0 5" Content="Ready: MonochromeButton" Click="MonochromeButtonTest_OnClick"/>
+                <Button x:Name="ChromeTest" Width="200" Margin="0 5" Content="Ready: Chrome tests" Click="ChromeTest_OnClick"/>
+                <Button x:Name="ColorPickerTest" Width="200" Margin="0 5" Content="Ready: ColorPickerTest" Click="ColorPickerTest_OnClick"/>
+            </StackPanel>
 
-        <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
-            <Label>Others:</Label>
-            <Button x:Name="KeyboardTest" Margin="5" Content="Others: Keyboard" Click="KeyboardTest_OnClick"/>
-        </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
+                <Label>Others:</Label>
+                <Button x:Name="KeyboardTest" Margin="5" Content="Others: Keyboard" Click="KeyboardTest_OnClick"/>
+            </StackPanel>
 
-        <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
-            <Label>Tests:</Label>
-            <Button x:Name="WiPTest" Margin="5" Content="WiP Tests" Click="WiPTest_OnClick"/>
-        </StackPanel>
+            <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
+                <Label>Tests:</Label>
+                <Button x:Name="WiPTest" Margin="5" Content="WiP Tests" Click="WiPTest_OnClick"/>
+            </StackPanel>
 
-        <StackPanel Grid.Column="4" Orientation="Vertical" Margin="5">
-            <Label>Obsolete:</Label>
-            <Button x:Name="ObsoleteNumericUpDownTest" Width="200" Margin="0 5" Content="Obsolete: NumericUpDown" Click="ObsoleteNumericUpDownTest_OnClick"/>
-            <Button x:Name="ObsoleteRippleButtonTest" Width="250" Margin="0 5" Content="Obsolete (use RippleEffect): RippleButton" Click="ObsoleteRippleButtonTest_OnClick"/>
-            <Button x:Name="ObsoleteTests" Width="200" Margin="0 5" Content="Obsolete: ControlLibrary" Click="ObsoleteControlLibrary_OnClick"/>
-        </StackPanel>
+            <StackPanel Grid.Column="4" Orientation="Vertical" Margin="5">
+                <Label>Obsolete:</Label>
+                <Button x:Name="ObsoleteNumericUpDownTest" Width="200" Margin="0 5" Content="Obsolete: NumericUpDown" Click="ObsoleteNumericUpDownTest_OnClick"/>
+                <Button x:Name="ObsoleteRippleButtonTest" Width="250" Margin="0 5" Content="Obsolete (use RippleEffect): RippleButton" Click="ObsoleteRippleButtonTest_OnClick"/>
+                <Button x:Name="ObsoleteTests" Width="200" Margin="0 5" Content="Obsolete: ControlLibrary" Click="ObsoleteControlLibrary_OnClick"/>
+            </StackPanel>
 
+        </Grid>
     </Grid>
 </Window>

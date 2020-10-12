@@ -56,15 +56,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <!-- Double border: to remove gap between border and content (see https://stackoverflow.com/questions/18581204/how-to-fix-empty-space-between-a-border-and-a-background-in-button-with-rounded) -->
-                    <Border x:Name="MainBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0"
-                            Margin="0" Padding="0" SnapsToDevicePixels="True">
-                        <Border Background="Transparent" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}"
+                    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Border x:Name="BackBorder" Margin="0" Padding="0"
+                                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding BorderBrush}"/>
+                        <Border x:Name="FrontBorder" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
                                 Margin="0" Padding="{TemplateBinding Padding}"
-                                CornerRadius="{Binding ElementName=MainBorder, Path=CornerRadius}">
-                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                CornerRadius="{Binding ElementName=BackBorder, Path=CornerRadius}">
+                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
-                    </Border>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
