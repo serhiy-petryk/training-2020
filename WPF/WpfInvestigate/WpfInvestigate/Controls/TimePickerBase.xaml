@@ -45,7 +45,7 @@
                             <Rectangle x:Name="TodayBackground" Fill="#FFAAAAAA" Opacity="0" RadiusY="1" RadiusX="1"/>
                             <Rectangle x:Name="SelectedBackground" Fill="{StaticResource CalendarBackgroundBrush}" Opacity="0" RadiusY="1" RadiusX="1"/>
                             <Border x:Name="HighlightBackground"  Opacity="0" BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1" Background="{StaticResource CalendarBackgroundBrush}" CornerRadius="1"/>
-                            <ContentPresenter x:Name="NormalText" HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True"/>
+                            <ContentPresenter x:Name="NormalText" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -96,7 +96,7 @@
                             <Rectangle x:Name="TodayBackground" Fill="#FFAAAAAA" Opacity="0" RadiusY="1" RadiusX="1"/>
                             <Rectangle x:Name="SelectedBackground" Fill="{StaticResource CalendarBackgroundBrush}" Opacity="0" RadiusY="1" RadiusX="1"/>
                             <Border x:Name="HighlightBackground"  Opacity="0" BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1" Background="{StaticResource CalendarBackgroundBrush}" CornerRadius="1"/>
-                            <ContentPresenter x:Name="NormalText" TextElement.Foreground="{StaticResource CalendarForegroundBrush}" Margin="5,1,5,1" HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True"/>
+                            <ContentPresenter x:Name="NormalText" TextElement.Foreground="{StaticResource CalendarForegroundBrush}" Margin="5,1,5,1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -198,14 +198,13 @@
                                             BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                             BorderThickness="{TemplateBinding BorderThickness}"
                                             IsHitTestVisible="False"
-                                            Opacity="0"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                            Opacity="0" />
 
                                     <Popup x:Name="PART_Popup" Grid.Column="0" Grid.ColumnSpan="2"
+                                           Focusable="False" SnapsToDevicePixels="True"
+                                           UseLayoutRounding="True"
                                            AllowsTransparency="True"
-                                           Focusable="False"
-                                           Placement="Bottom"
-                                           PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                           Placement="Bottom" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                            PopupAnimation="Fade"
                                            IsOpen="{Binding ElementName=PART_ToggleButton, Path=IsChecked}"
                                            StaysOpen="False">
@@ -229,7 +228,7 @@
                                                         <Viewbox.Resources>
                                                             <SolidColorBrush x:Key="RedBrush" Color="#FFE10000" />
                                                         </Viewbox.Resources>
-                                                        <Canvas Width="120" Height="120" Margin="0" SnapsToDevicePixels="True">
+                                                        <Canvas Width="120" Height="120" Margin="0">
                                                             <Ellipse Width="120" Height="120" Margin="0" Stroke="{DynamicResource BlackBrush}" Opacity="0.7" StrokeThickness="4" Effect="{StaticResource ShadowEffect}"/>
                                                             <Polygon x:Name="PART_HourHand" Canvas.Left="60" Canvas.Top="60" Points="-2.5,0,-0.5,-36,0.5,-36,2.5,0" Fill="{DynamicResource BlackBrush}" />
                                                             <Polygon x:Name="PART_MinuteHand" Canvas.Top="60" Canvas.Left="60" Points="-2,0,-0.5,-46,0.5,-46,2,0" Fill="{DynamicResource BlackBrush}" />

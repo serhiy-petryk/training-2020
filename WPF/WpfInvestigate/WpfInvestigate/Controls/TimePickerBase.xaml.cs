@@ -338,7 +338,7 @@ namespace WpfInvestigate.Controls
                 return;
 
             if (!(hand.RenderTransform is RotateTransform))
-                hand.RenderTransform = new RotateTransform{Angle = oldValue};
+                hand.RenderTransform = new RotateTransform {Angle = oldValue};
 
             var animation = new DoubleAnimation
             {
@@ -350,8 +350,7 @@ namespace WpfInvestigate.Controls
 
         private static void OnSelectedTimeFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var tp = d as TimePickerBase;
-            if (tp != null)
+            if (d is TimePickerBase tp)
             {
                 tp.SelectedTime = (TimeSpan?)CoerceSelectedTime(d, tp.SelectedTime);
                 tp.SetSecondVisibility();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,26 +36,29 @@ namespace WpfInvestigate.Controls.Effects
                 {
                     Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
                     {
-                        element.GotFocus += Element_ChangeFocus;
-                        element.LostFocus += Element_ChangeFocus;
+                        element.SizeChanged += Element_ChangeFocus;
+                        var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+                        dpd.AddValueChanged(element, OnElementFocusChanged );
                         element.Unloaded += Element_Unloaded;
                     }));
                 }
             }
         }
 
+        private static void OnElementFocusChanged(object sender, EventArgs e) => Element_ChangeFocus(sender, null);
         private static void Element_Unloaded(object sender, RoutedEventArgs e)
         {
             var element = (FrameworkElement)sender;
-            element.GotFocus -= Element_ChangeFocus;
-            element.LostFocus -= Element_ChangeFocus;
+            element.SizeChanged += Element_ChangeFocus;
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+            dpd.RemoveValueChanged(element, OnElementFocusChanged);
             element.Unloaded -= Element_Unloaded;
         }
 
         private static void Element_ChangeFocus(object sender, RoutedEventArgs e)
         {
             var element = (FrameworkElement) sender;
-            var isFocused = element.IsFocused;
+            var isFocused = element.IsKeyboardFocusWithin;
 
             if (isFocused)
             {

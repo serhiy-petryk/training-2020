@@ -39,43 +39,21 @@
             <StackPanel Orientation="Vertical">
                 <WrapPanel Margin="0 5">
                     <Label Content="Controls:"/>
-                    <controls:NumericBox x:Name="A1" Margin="5 0" BorderThickness="0" Width="100" effects:WatermarkEffect.Watermark="No value" Background="Yellow" Foreground="Blue"
-                                         Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"
-                                         Focusable="True" GotFocus="Element_OnGotFocus" LostFocus="Element_OnLostFocus"
-                                         effects:FocusEffect.Brush="GreenYellow" effects:FocusEffect.Thickness="2"/>
+                    <controls:NumericBox Margin="5 0" BorderThickness="0" Width="100" Background="Yellow" Foreground="Blue"
+                                         VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"
+                                         effects:WatermarkEffect.Watermark="No value"
+                                         effects:FocusEffect.Brush="Aqua"/>
 
-                    <!--<controls:TimePicker x:Name="A2" Margin="5 0" Background="Yellow" SelectedTimeFormat="Long" IsNullable="True" BorderThickness="0"
-                                         Focusable="True" GotFocus="Element_OnGotFocus" LostFocus="Element_OnLostFocus"
-                                         effects:FocusEffect.Brush="GreenYellow" effects:FocusEffect.Thickness="2"/>
+                    <controls:TimePicker Margin="5 0" Background="Yellow" SelectedTimeFormat="Long" IsNullable="True" BorderThickness="0"
+                                         effects:FocusEffect.Brush="Aqua"/>
 
-                    <controls:DateTimePicker x:Name="A3" Margin="5 0" Background="Yellow" SelectedTimeFormat="Long" IsNullable="True" BorderThickness="0"
-                                             Focusable="True" GotFocus="Element_OnGotFocus" LostFocus="Element_OnLostFocus"
-                                             effects:FocusEffect.Brush="GreenYellow" effects:FocusEffect.Thickness="2" />-->
+                    <controls:DateTimePicker Margin="5 0" Background="Yellow" SelectedTimeFormat="Long" IsNullable="True" BorderThickness="0"
+                                             effects:FocusEffect.Brush="Aqua"/>
 
-                    <controls:TimePicker Width="100" Height="60" Background="Yellow"
-                                         IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" IsNullable="True"
-                                         Padding="6 8 10 12" BorderThickness="4" BorderBrush="YellowGreen" FontSize="24" />
-
-                    <DatePicker x:Name="A4" Margin="5 0" Background="GreenYellow" Foreground="Blue"
-                                Focusable="True" GotFocus="Element_OnGotFocus" LostFocus="Element_OnLostFocus"
+                    <DatePicker Margin="5 0" Background="GreenYellow" Foreground="Blue"
                                 controls:DatePickerExtension.ClearButton="True" 
                                 controls:DatePickerExtension.IsNullable="True"
-                                effects:FocusEffect.Brush="GreenYellow" effects:FocusEffect.Thickness="2"/>
-
-                    <DatePicker x:Name="A5" Margin="5 0" Background="GreenYellow" Foreground="Blue"
-                                Focusable="True" GotFocus="Element_OnGotFocus" LostFocus="Element_OnLostFocus">
-                        <DatePicker.Style>
-                            <Style TargetType="DatePicker">
-                                <Setter Property="BorderBrush" Value="Red"/>
-                                <Setter Property="BorderThickness" Value="2"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsFocused" Value="True">
-                                        <Setter Property="BorderBrush" Value="Aqua"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DatePicker.Style>
-                    </DatePicker>
+                                effects:FocusEffect.Brush="Aqua"/>
                 </WrapPanel>
 
                 <WrapPanel>

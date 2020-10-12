@@ -17,16 +17,5 @@ namespace WpfInvestigate.TestViews
         {
         }
 
-        private void Element_OnGotFocus(object sender, RoutedEventArgs e)
-        {
-            var fe = (FrameworkElement)sender;
-            Debug.Print($"GotFocus: {fe.Name}");
-        }
-
-        private void Element_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            var fe = (FrameworkElement)sender;
-            Debug.Print($"LostFocus: {fe.Name}");
-        }
     }
 }
