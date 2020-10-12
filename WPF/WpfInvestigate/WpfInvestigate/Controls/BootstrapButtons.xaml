@@ -4,50 +4,6 @@
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
                     xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects">
 
-    <!-- Colors & Bootstrap Brushes (taken from https://getbootstrap.com/ v4.5.2) -->
-    <Color x:Key="PrimaryColor">#FF007bff</Color>
-    <Color x:Key="SecondaryColor">#FF6c757d</Color>
-    <Color x:Key="SuccessColor">#28a745</Color>
-    <Color x:Key="DangerColor">#dc3545</Color>
-    <Color x:Key="WarningColor">#ffc107</Color>
-    <Color x:Key="InfoColor">#17a2b8</Color>
-    <Color x:Key="LightColor">#f8f9fa</Color>
-    <Color x:Key="DarkColor">#343a40</Color>
-    <Color x:Key="BlueColor">#007bff</Color>
-    <Color x:Key="IndigoColor">#6610f2</Color>
-    <Color x:Key="PurpleColor">#6f42c1</Color>
-    <Color x:Key="PinkColor">#e83e8c</Color>
-    <Color x:Key="RedColor">#dc3545</Color>
-    <Color x:Key="OrangeColor">#fd7e14</Color>
-    <Color x:Key="YellowColor">#ffc107</Color>
-    <Color x:Key="GreenColor">#28a745</Color>
-    <Color x:Key="TealColor">#20c997</Color>
-    <Color x:Key="CyanColor">#17a2b8</Color>
-    <Color x:Key="WhiteColor">#ffffff</Color>
-    <Color x:Key="GrayColor">#6c757d</Color>
-    <Color x:Key="GrayDarkColor">#343a40</Color>
-
-    <!--<SolidColorBrush x:Key="PrimaryBrush" Color="#FF007bff"/>
-    <SolidColorBrush x:Key="SecondaryBrush" Color="#FF6c757d"/>
-    <SolidColorBrush x:Key="SuccessBrush" Color="#28a745"/>
-    <SolidColorBrush x:Key="DangerBrush" Color="#dc3545"/>
-    <SolidColorBrush x:Key="WarningBrush" Color="#ffc107"/>
-    <SolidColorBrush x:Key="InfoBrush" Color="#17a2b8"/>
-    <SolidColorBrush x:Key="LightBrush" Color="#f8f9fa"/>
-    <SolidColorBrush x:Key="DarkBrush" Color="#343a40"/>
-    <SolidColorBrush x:Key="BlueBrush" Color="#007bff"/>
-    <SolidColorBrush x:Key="IndigoBrush" Color="#6610f2"/>
-    <SolidColorBrush x:Key="PurpleBrush" Color="#6f42c1"/>
-    <SolidColorBrush x:Key="PinkBrush" Color="#e83e8c"/>
-    <SolidColorBrush x:Key="RedBrush" Color="#dc3545"/>
-    <SolidColorBrush x:Key="OrangeBrush" Color="#fd7e14"/>
-    <SolidColorBrush x:Key="YellowBrush" Color="#ffc107"/>
-    <SolidColorBrush x:Key="GreenBrush" Color="#28a745"/>
-    <SolidColorBrush x:Key="TealBrush" Color="#20c997"/>
-    <SolidColorBrush x:Key="CyanBrush" Color="#17a2b8"/>
-    <SolidColorBrush x:Key="WhiteBrush" Color="#ffffff"/>
-    <SolidColorBrush x:Key="GrayBrush" Color="#6c757d"/>
-    <SolidColorBrush x:Key="GrayDarkBrush" Color="#343a40"/>-->
 
     <Style x:Key="DefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="SnapsToDevicePixels" Value="False"/>
@@ -95,6 +51,63 @@
         </Setter>
     </Style>
 
+    <Style x:Key="MonochromeButtonBaseStyle" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background}"/>
+    </Style>
+
+    <Style x:Key="MonochromeRippleButtonBaseStyle" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="White"/>
+        <Setter Property="effects:ClickEffect.RippleColor" Value="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated), Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"/>
+    </Style>
+
+    <!-- ======================================================================== -->
+    <!-- Colors & Bootstrap Brushes (taken from https://getbootstrap.com/ v4.5.2) -->
+    <!-- ======================================================================== -->
+    <Color x:Key="PrimaryColor">#FF007bff</Color>
+    <Color x:Key="SecondaryColor">#FF6c757d</Color>
+    <Color x:Key="SuccessColor">#28a745</Color>
+    <Color x:Key="DangerColor">#dc3545</Color>
+    <Color x:Key="WarningColor">#ffc107</Color>
+    <Color x:Key="InfoColor">#17a2b8</Color>
+    <Color x:Key="LightColor">#f8f9fa</Color>
+    <Color x:Key="DarkColor">#343a40</Color>
+    <Color x:Key="BlueColor">#007bff</Color>
+    <Color x:Key="IndigoColor">#6610f2</Color>
+    <Color x:Key="PurpleColor">#6f42c1</Color>
+    <Color x:Key="PinkColor">#e83e8c</Color>
+    <Color x:Key="RedColor">#dc3545</Color>
+    <Color x:Key="OrangeColor">#fd7e14</Color>
+    <Color x:Key="YellowColor">#ffc107</Color>
+    <Color x:Key="GreenColor">#28a745</Color>
+    <Color x:Key="TealColor">#20c997</Color>
+    <Color x:Key="CyanColor">#17a2b8</Color>
+    <Color x:Key="WhiteColor">#ffffff</Color>
+    <Color x:Key="GrayColor">#6c757d</Color>
+    <Color x:Key="GrayDarkColor">#343a40</Color>
+
+    <!--<SolidColorBrush x:Key="PrimaryBrush" Color="#FF007bff"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="#FF6c757d"/>
+    <SolidColorBrush x:Key="SuccessBrush" Color="#28a745"/>
+    <SolidColorBrush x:Key="DangerBrush" Color="#dc3545"/>
+    <SolidColorBrush x:Key="WarningBrush" Color="#ffc107"/>
+    <SolidColorBrush x:Key="InfoBrush" Color="#17a2b8"/>
+    <SolidColorBrush x:Key="LightBrush" Color="#f8f9fa"/>
+    <SolidColorBrush x:Key="DarkBrush" Color="#343a40"/>
+    <SolidColorBrush x:Key="BlueBrush" Color="#007bff"/>
+    <SolidColorBrush x:Key="IndigoBrush" Color="#6610f2"/>
+    <SolidColorBrush x:Key="PurpleBrush" Color="#6f42c1"/>
+    <SolidColorBrush x:Key="PinkBrush" Color="#e83e8c"/>
+    <SolidColorBrush x:Key="RedBrush" Color="#dc3545"/>
+    <SolidColorBrush x:Key="OrangeBrush" Color="#fd7e14"/>
+    <SolidColorBrush x:Key="YellowBrush" Color="#ffc107"/>
+    <SolidColorBrush x:Key="GreenBrush" Color="#28a745"/>
+    <SolidColorBrush x:Key="TealBrush" Color="#20c997"/>
+    <SolidColorBrush x:Key="CyanBrush" Color="#17a2b8"/>
+    <SolidColorBrush x:Key="WhiteBrush" Color="#ffffff"/>
+    <SolidColorBrush x:Key="GrayBrush" Color="#6c757d"/>
+    <SolidColorBrush x:Key="GrayDarkBrush" Color="#343a40"/>-->
+
     <Style x:Key="BootstrapButton" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
         <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
         <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="Gray"/>
@@ -135,9 +148,4 @@
         <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource DarkColor}"/>
     </Style>
 
-    <Style x:Key="MonochromeRippleControlStyle" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="White"/>
-        <Setter Property="effects:ClickEffect.RippleColor" Value="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated), Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"/>
-    </Style>
 </ResourceDictionary>

@@ -38,7 +38,7 @@
                             <Button x:Name="PART_Content" Content="{TemplateBinding Content}" Margin="0" Padding="{TemplateBinding Padding}"
                                             Foreground="{TemplateBinding Foreground}" BorderThickness="1"
                                             Style="{StaticResource DefaultButtonBaseStyle}"
-                                            Background="Transparent"
+                                            Background="{TemplateBinding Background}"
                                             HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
                                 <!--<Button.Style>
@@ -60,7 +60,7 @@
                                       VerticalAlignment="Stretch"
                                       UseLayoutRounding="False"
                                       Style="{StaticResource DefaultButtonBaseStyle}"
-                                      Background="Transparent"
+                                      Background="{TemplateBinding Background}"
                                       effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                       effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                                       effects:DualPathToggleButtonEffect.Width="9">
@@ -78,11 +78,14 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Root" Property="Background" Value="Orange"/>
-                                <Setter TargetName="PART_Content" Property="BorderThickness" Value="1"/>
                                 <Setter TargetName="PART_Content" Property="BorderBrush" Value="Red"/>
-                                <Setter TargetName="PART_DropDown" Property="BorderThickness" Value="1"/>
                                 <Setter TargetName="PART_DropDown" Property="BorderBrush" Value="Red"/>
                             </Trigger>
+                            <DataTrigger Binding="{Binding ElementName=PART_DropDown, Path=IsChecked}" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="Orange"/>
+                                <Setter TargetName="PART_Content" Property="BorderBrush" Value="Red"/>
+                                <Setter TargetName="PART_DropDown" Property="BorderBrush" Value="Red"/>
+                            </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -160,7 +163,8 @@
                     <ToggleButton Height="30" Style="{StaticResource DropDownButtonStyle}" Content="DropDownButtonStyle" Padding="8 0"
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                    <ToggleButton Height="30" Style="{StaticResource SplitButtonStyle}" Content="SplitButtonStyle" Padding="8 0"
+                    <ToggleButton Height="30" Style="{StaticResource TestSplitButtonStyle}" Content="SplitButtonStyle" Padding="8 0"
+                                  Background="Yellow" Foreground="Blue"
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                     <TextBox Width="50"/>
