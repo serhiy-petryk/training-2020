@@ -41,7 +41,7 @@
 
             <Grid>
                 <WrapPanel Grid.Row="0" Orientation="Horizontal">
-                    <!--<Button Margin="5 0" BorderThickness="2" Height="30" Padding="4"
+                    <Button Margin="5 0" BorderThickness="2" Height="30" Padding="4"
                             effects:ChromeEffect.Monochrome="{Binding ElementName=ColorPicker, Path=Color}"
                             effects:PathDataEffect.PathData="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z">
                         <Grid>
@@ -54,13 +54,13 @@
                             </Viewbox>
                             <TextBlock Grid.Column="1" Foreground="Black" Text="Content"/>
                         </Grid>
-                    </Button>-->
+                    </Button>
 
                     <Button Margin="5 0" BorderThickness="2" Height="30" Padding="4" Content="Content"
                             effects:ChromeEffect.Monochrome="{Binding ElementName=ColorPicker, Path=Color}"
                             effects:PathDataEffect.PathData="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
 
-                    <!--<Button Margin="5 0" BorderThickness="2" Width="30" Height="30" Padding="4"
+                    <Button Margin="5 0" BorderThickness="2" Width="30" Height="30" Padding="4"
                             effects:ChromeEffect.Monochrome="{Binding ElementName=ColorPicker, Path=Color}"
                             effects:PathDataEffect.PathData="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
 
@@ -88,7 +88,7 @@
                             <Path Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
                             <TextBlock VerticalAlignment="Center" Margin="5 0" Text="MonochromeAnimated"/>
                         </StackPanel>
-                    </Button>-->
+                    </Button>
 
                     <Button BorderThickness="2" Margin="5" Content="Monochrome" effects:ChromeEffect.Monochrome="{Binding ElementName=ColorPicker, Path=Color}"/>
 
