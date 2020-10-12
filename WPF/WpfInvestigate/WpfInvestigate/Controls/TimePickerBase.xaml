@@ -229,14 +229,14 @@
                                                         <Viewbox.Resources>
                                                             <SolidColorBrush x:Key="RedBrush" Color="#FFE10000" />
                                                         </Viewbox.Resources>
-                                                        <Canvas Width="120" Height="120" Margin="0" SnapsToDevicePixels="False">
+                                                        <Canvas Width="120" Height="120" Margin="0" SnapsToDevicePixels="True">
                                                             <Ellipse Width="120" Height="120" Margin="0" Stroke="{DynamicResource BlackBrush}" Opacity="0.7" StrokeThickness="4" Effect="{StaticResource ShadowEffect}"/>
                                                             <Polygon x:Name="PART_HourHand" Canvas.Left="60" Canvas.Top="60" Points="-2.5,0,-0.5,-36,0.5,-36,2.5,0" Fill="{DynamicResource BlackBrush}" />
                                                             <Polygon x:Name="PART_MinuteHand" Canvas.Top="60" Canvas.Left="60" Points="-2,0,-0.5,-46,0.5,-46,2,0" Fill="{DynamicResource BlackBrush}" />
                                                             <Ellipse Canvas.Left="57" Canvas.Top="57" Width="6" Height="6" Fill="{DynamicResource BlackBrush}" />
                                                             <Canvas x:Name="PART_SecondArea" Visibility="{Binding ElementName=PART_SecondSelector, Path=Visibility}">
                                                                 <Ellipse Canvas.Left="57" Canvas.Top="57" Width="6" Height="6" Fill="{StaticResource RedBrush}" />
-                                                                <Polygon x:Name="PART_SecondHand" Canvas.Top="60" Canvas.Left="60" Points="-1,0,-1,-50,0,-54,1,-50,1,0,1,0,3,20,-3,20,-1,0" Fill="{StaticResource RedBrush}"/>
+                                                                <Polygon x:Name="PART_SecondHand" Canvas.Top="60" Canvas.Left="60" Points="-1,0,-1,-50,0,-54,1,-50,1,0,3,20,-3,20" Fill="{StaticResource RedBrush}"/>
                                                             </Canvas>
                                                         </Canvas>
                                                     </Viewbox>
