@@ -8,6 +8,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Controls.Helpers;
 
 namespace WpfInvestigate.Controls.Effects
 {
@@ -44,12 +45,8 @@ namespace WpfInvestigate.Controls.Effects
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded,
                 new Action(() =>
                 {
-                    if (d is ToggleButton tb && tb.Content is Grid grid)
-                    {
-                        var viewbox = GetViewbox(grid);
-                        if (viewbox != null)
-                            viewbox.Width = (double)e.NewValue;
-                    }
+                    if (d is ToggleButton tb && GetViewbox(tb) is Viewbox viewbox)
+                        viewbox.Width = (double) e.NewValue;
                 }));
         }
         private static void OnMarginPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -57,14 +54,10 @@ namespace WpfInvestigate.Controls.Effects
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded,
                 new Action(() =>
                 {
-                    if (d is ToggleButton tb && tb.Content is Grid grid &&
+                    if (d is ToggleButton tb && (GetViewbox(tb) is Viewbox viewbox) &&
                         ((tb.IsChecked == true && e.Property == MarginOnProperty) ||
                          (tb.IsChecked != null && e.Property == MarginOffProperty)))
-                    {
-                        var viewbox = GetViewbox(grid);
-                        if (viewbox != null)
-                            viewbox.Margin = (Thickness) e.NewValue;
-                    }
+                        viewbox.Margin = (Thickness)e.NewValue;
                 }));
         }
 
@@ -74,7 +67,7 @@ namespace WpfInvestigate.Controls.Effects
             {
                 Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
                 {
-                    if (!(tb.Content is Grid) && GetGeometryOn(tb) != Geometry.Empty && GetGeometryOff(tb) != Geometry.Empty)
+                    if ((!(tb.Content is FrameworkElement element) || !(GetViewbox(tb) is Viewbox)) && GetGeometryOn(tb) != Geometry.Empty && GetGeometryOff(tb) != Geometry.Empty)
                     {
                         Init(tb);
                         tb.Checked -= OnToggleButtonCheckChanged;
@@ -88,64 +81,23 @@ namespace WpfInvestigate.Controls.Effects
 
         private static void Init(ToggleButton tb)
         {
-            var grid = new Grid {ClipToBounds = true, Margin = new Thickness()};
-            grid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)});
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-
-            var path = new Path
-            {
-                Stretch = Stretch.Uniform, Margin = new Thickness(),
-                Data = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb)
-            };
-            var viewbox = new Viewbox
-            {
-                Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb),
-                Child = path, Width = GetWidth(tb), VerticalAlignment = VerticalAlignment.Stretch
-            };
-
-            if (tb.Content != null)
-            {
-                var contentControl = new ContentPresenter
-                {
-                    Content = tb.Content, Margin = tb.Padding, VerticalAlignment = tb.VerticalContentAlignment,
-                    HorizontalAlignment = tb.HorizontalContentAlignment
-                };
-                tb.Content = null;
-                tb.Padding = new Thickness();
-                // tb.VerticalContentAlignment = VerticalAlignment.Stretch;
-                tb.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-                grid.Children.Add(contentControl);
-                Grid.SetColumn(contentControl, 0);
-            }
-
-            grid.Children.Add(viewbox);
-            Grid.SetColumn(viewbox, 1);
-            tb.Content = grid;
-
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
-            {
-                path.Fill = Tips.GetActualForegroundBrush(tb); // Delay in Tips.GetActualForegroundBrush(tb)
-            }));
+            var viewbox = ControlHelper.AddIconToControl(tb, false, tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb), 
+                GetWidth(tb), tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb));
+            viewbox.Resources.Add("DoubleIcon", true);
         }
 
         private static void OnToggleButtonCheckChanged(object sender, RoutedEventArgs e)
         {
             var tb = (ToggleButton)sender;
-            var grid = tb.Content as Grid;
-
             var newGeometry = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb);
             var newMargin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb);
-            var sb = GetAnimation(grid, newGeometry, newMargin);
+            var sb = GetAnimation(GetViewbox(tb), newGeometry, newMargin);
             sb?.Begin();
         }
 
         //============= Animation service ===================
-        private static Storyboard CreateAnimation(Grid grid)
+        private static Storyboard CreateAnimation(Viewbox viewbox)
         {
-            var viewbox = GetViewbox(grid);
-            if (viewbox == null)
-                return null;
-
             var path = (Path)viewbox.Child;
             if (!(viewbox.RenderTransform is ScaleTransform))
                 viewbox.RenderTransform = new ScaleTransform(1, 1);
@@ -163,16 +115,18 @@ namespace WpfInvestigate.Controls.Effects
             storyboard.Children.Add(a1);
             storyboard.Children.Add(a2);
 
-            grid.Resources.Add("Animation", storyboard);
+            viewbox.Resources.Add("Animation", storyboard);
             return storyboard;
         }
 
-        private static Storyboard GetAnimation(Grid grid, Geometry newGeometry, Thickness newMargin)
+        private static Storyboard GetAnimation(Viewbox viewbox, Geometry newGeometry, Thickness newMargin)
         {
-            var storyboard = (Storyboard)grid.Resources["Animation"];
+            if (viewbox == null) return null;
+
+            var storyboard = (Storyboard)viewbox.Resources["Animation"];
             if (storyboard == null)
             {
-                storyboard = CreateAnimation(grid);
+                storyboard = CreateAnimation(viewbox);
                 if (storyboard == null)
                     return null;
             }
@@ -182,6 +136,7 @@ namespace WpfInvestigate.Controls.Effects
             return storyboard;
         }
 
-        private static Viewbox GetViewbox(Grid grid) => grid.Children.OfType<Viewbox>().FirstOrDefault(vb => Grid.GetColumn(vb) == 1);
+        // private static Viewbox GetViewbox(Grid grid) => grid.Children.OfType<Viewbox>().FirstOrDefault(vb => Grid.GetColumn(vb) == 1);
+        private static Viewbox GetViewbox(ToggleButton tb) => Tips.GetVisualChildren(tb).OfType<Viewbox>().FirstOrDefault(vb => vb.Resources["DoubleIcon"] is bool);
     }
 }

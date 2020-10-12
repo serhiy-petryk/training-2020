@@ -53,6 +53,8 @@
                                 controls:DatePickerExtension.ClearButton="True" 
                                 controls:DatePickerExtension.IsNullable="True"
                                 effects:FocusEffect.Brush="Aqua"/>
+                    <ToggleButton Style="{StaticResource DropDownMonochromeButtonStyle}" Content="AAA"
+                                  effects:ChromeEffect.MonochromeAnimated="Orange"/>
                 </WrapPanel>
 
                 <WrapPanel>
