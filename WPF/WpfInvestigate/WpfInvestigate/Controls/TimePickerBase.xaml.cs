@@ -1,11 +1,9 @@
 ﻿// From MahApps.Metro.Controls
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -59,9 +57,6 @@ namespace WpfInvestigate.Controls
         public static readonly DependencyProperty IsDatePickerVisibleProperty = IsDatePickerVisiblePropertyKey.DependencyProperty;
 
         #endregion
-
-        public static readonly IEnumerable<int> DialIntervalOf5 = Enumerable.Range(0, 12).Select(k => k * 30);
-        public static readonly IEnumerable<int> DialIntervalOf1 = Enumerable.Range(0, 60).Select(k => k * 6).Where(k => k % 30 != 0);
 
         private static readonly TimeSpan MinTimeOfDay = TimeSpan.Zero;
         private static readonly TimeSpan MaxTimeOfDay = TimeSpan.FromDays(1) - TimeSpan.FromTicks(1);
@@ -179,6 +174,43 @@ namespace WpfInvestigate.Controls
             SetSecondVisibility();
             SubscribeEvents();
             ApplyCulture();
+        }
+
+        private void DrawClockDivisions()
+        {
+            if (!((GetTemplateChild("PART_Clock") as Viewbox)?.Child is Canvas canvas) || canvas.Children.Count > 60)
+                return;
+
+            var brush = this.FindResource("BlackBrush") as Brush;
+            for (var k = 0; k < 60; k++)
+            {
+                var isMinute = k % 5 == 0;
+                var division = new Rectangle
+                {
+                    Width = 2, Height = isMinute ? 6 : 2, Fill = brush,
+                    Margin = new Thickness(59, isMinute ? 3 : 5, 0, 0),
+                    RenderTransform = new RotateTransform(6 * k, 1, isMinute ? 57 : 55)
+                };
+                canvas.Children.Insert(0, division);
+            }
+
+            for (var k = 0; k < 12; k++)
+            {
+                var label = new TextBlock
+                {
+                    Text = (k == 0 ? 12 : k).ToString(), Margin = new Thickness(), Padding = new Thickness(),
+                    FontWeight = FontWeights.Normal, FontSize = 14, FontFamily = new FontFamily("Segoe UI")
+                };
+
+                label.Measure(new Size(double.MaxValue, double.MaxValue));
+                label.Margin = new Thickness(60 - label.DesiredSize.Width / 2, label.DesiredSize.Height / 2, 0, 0);
+                var transform = new TransformGroup();
+                transform.Children.Add(new RotateTransform(-30 * k, label.DesiredSize.Width / 2, label.DesiredSize.Height / 2));
+                transform.Children.Add(new RotateTransform(30 * k, label.DesiredSize.Width / 2, 60 - label.DesiredSize.Height / 2));
+                label.RenderTransform = transform;
+
+                canvas.Children.Insert(0, label);
+            }
         }
 
         protected virtual void ApplyCulture()
@@ -341,6 +373,7 @@ namespace WpfInvestigate.Controls
 
         protected virtual void OnPopupOpened(object sender, EventArgs e)
         {
+            DrawClockDivisions();
             SetSelectorValues();
         }
 
