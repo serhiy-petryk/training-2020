@@ -10,15 +10,15 @@ namespace WpfInvestigate.Controls.Effects
 {
     /// <summary>
     /// </summary>
-    public class PathDataEffect
+    public class IconEffect
     {
-        public static readonly DependencyProperty PathDataProperty = DependencyProperty.RegisterAttached(
-            "PathData", typeof(Geometry), typeof(PathDataEffect), new UIPropertyMetadata(null, OnPathDataChanged));
+        public static readonly DependencyProperty GeometryProperty = DependencyProperty.RegisterAttached(
+            "Geometry", typeof(Geometry), typeof(IconEffect), new UIPropertyMetadata(null, OnGeometryChanged));
 
-        public static Geometry GetPathData(DependencyObject obj) => (Geometry)obj.GetValue(PathDataProperty);
-        public static void SetPathData(DependencyObject obj, Geometry value) => obj.SetValue(PathDataProperty, value);
+        public static Geometry GetGeometry(DependencyObject obj) => (Geometry)obj.GetValue(GeometryProperty);
+        public static void SetGeometry(DependencyObject obj, Geometry value) => obj.SetValue(GeometryProperty, value);
 
-        private static void OnPathDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnGeometryChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is ContentControl control) || !(e.NewValue is Geometry geometry)) return;
 
