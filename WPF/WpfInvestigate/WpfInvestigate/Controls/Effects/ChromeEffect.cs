@@ -168,41 +168,42 @@ namespace WpfInvestigate.Controls.Effects
             if (isPressed && ClickEffect.GetRippleColor(control).HasValue)
                 return new Tuple<Color?, Color?, Color?, double>(null, null,  null, 1.0);
 
-            var isMouseOver = control.IsMouseOver;
             var backColor = getBackgroundMethod(control) ?? Colors.Transparent;
             Color? newBackColor = null, foreColor = null, borderColor = null;
-            double opacity;
+            var opacity = 1.0;
 
             if (getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetMonochromeAnimated)
             {   // Monochrome effect
                 var matrixDefinition = GetChromeMatrix(control);
                 if (string.IsNullOrEmpty(matrixDefinition))
-                    matrixDefinition = "40, +0%,+70%,+0%, +25%,+25%/+75%,+25%/+50%, +60%,+60%/+75%,+60%/+50%";
+                    matrixDefinition = "+0%,+70%,+0%,40, +0%,+70%,+0%,100, +25%,+25%/+75%,+25%/+50%,100, +60%,+60%/+75%,+60%/+50%,100";
 
                 var matrix = matrixDefinition.Split(',');
 
-                opacity = control.IsEnabled ? 1.0 : ColorConverterHelper.ConvertValue(1.0, matrix[0].Trim());
-                var startIndex = isPressed ? 7 : (isMouseOver ? 4 : 1);
+                var startIndex = !control.IsEnabled ? 0 : (isPressed ? 12 : (control.IsMouseOver ? 8 : 4));
                 if (matrix.Length > startIndex)
                     newBackColor = (Color?) ColorHslBrush.Instance.Convert(backColor, typeof(Color), matrix[startIndex].Trim(), null);
                 if (matrix.Length > startIndex + 1)
                     foreColor = (Color?) ColorHslBrush.Instance.Convert(backColor, typeof(Color), matrix[startIndex + 1].Trim(), null);
                 if (matrix.Length > startIndex + 2)
                     borderColor = (Color?) ColorHslBrush.Instance.Convert(backColor, typeof(Color), matrix[startIndex + 2].Trim(), null);
+                if (matrix.Length > startIndex + 3)
+                    if (double.TryParse(matrix[startIndex + 3], out var temp))
+                        opacity = temp / 100;
             }
             else
             {   // Bichrome effect
                 var biChromeBackColor = backColor;
                 var biChromeForeColor = (getBackgroundMethod == GetBichromeBackground ? GetBichromeForeground(control) : GetBichromeAnimatedForeground(control)) ?? Colors.Transparent;
 
-                opacity = control.IsEnabled ? (isMouseOver || isPressed ? 1.0 : 0.7) : 0.35;
+                opacity = control.IsEnabled ? (control.IsMouseOver || isPressed ? 1.0 : 0.7) : 0.35;
                 if (isPressed)
                 {
                     newBackColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.6);
                     foreColor = biChromeForeColor;
                     borderColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.6);
                 }
-                else if (isMouseOver)
+                else if (control.IsMouseOver)
                 {
                     newBackColor = ColorMix(biChromeBackColor, biChromeForeColor, 0.8);
                     foreColor = biChromeForeColor;

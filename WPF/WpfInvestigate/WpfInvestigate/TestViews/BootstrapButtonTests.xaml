@@ -41,7 +41,7 @@
 
                     <UserControl Margin="5" Padding="4 0" Content="Test control (no effect for click)" BorderThickness="2" VerticalContentAlignment="Center"
                                  effects:ChromeEffect.Monochrome="Orange"
-                                 effects:ChromeEffect.ChromeMatrix="40, +0%,+75%,+35%, +20%,+20%/+75%,+20%/+30%"/>
+                                 effects:ChromeEffect.ChromeMatrix="+0%,+75%,+35%,40, +0%,+75%,+35%,100, +20%,+20%/+75%,+20%/+30%,100"/>
                     
                     <Button Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="Orange" BorderThickness="2" Width="100" Height="30"
                         VerticalContentAlignment="Center"/>
@@ -112,26 +112,26 @@
                             effects:FocusEffect.Thickness="11"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10"/>
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100"/>
                     <Button Margin="4" Padding="4" Content="Test focus" FontSize="16" BorderThickness="0"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:FocusEffect.Thickness="11"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5"/>
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
                     <Button Margin="4" Padding="4" Content="Focus test" FontSize="16" BorderThickness="10 0 20 0"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:FocusEffect.Thickness="2"
                             effects:CornerRadiusEffect.CornerRadius="14 1 18 8"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5"/>
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
 
                     <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="0"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:FocusEffect.Thickness="10 10 0 20"
                             effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5">
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100">
                         <Button.RenderTransform>
                             <RotateTransform CenterX="10" CenterY="20" Angle="10" />
                         </Button.RenderTransform>
@@ -141,12 +141,12 @@
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:CornerRadiusEffect.CornerRadius="4 1 8 2"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5"/>
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
 
                     <Button Margin="4" Padding="4" Content="Gradient Focus test" FontSize="16" BorderThickness="4"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="65, +0,100,+0, -7.5,100,-10, -10,100,-12.5">
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100">
                         <effects:FocusEffect.Brush>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                 <GradientStop Color="Yellow" Offset="0.0" />
