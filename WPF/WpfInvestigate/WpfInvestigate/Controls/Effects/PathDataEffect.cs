@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -21,12 +22,43 @@ namespace WpfInvestigate.Controls.Effects
                 if (e.NewValue is Geometry geometry)
                 {
                     var path = new Path { Stretch = Stretch.Uniform, Data = geometry };
+                    var viewbox = new Viewbox {Child = path};
+                    if (control.HasContent)
+                    {
+                        var grid = new Grid {VerticalAlignment = VerticalAlignment.Stretch, Background = Brushes.Red};
+                        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                        grid.Children.Add(viewbox);
+                        Grid.SetColumn(viewbox, 0);
+                        var oldContent = control.Content;
+                        if (oldContent is string)
+                        {
+                            var textBlock = new TextBlock
+                            {
+                                Text = (string) oldContent, Foreground = Brushes.Black,
+                                Margin = new Thickness(4, 0, 0, 0),
+                                VerticalAlignment = VerticalAlignment.Center
+                            };
+                            var b = new Binding("Foreground")
+                            {
+                                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Control), 1)
+                            };
+                            textBlock.SetBinding(Control.ForegroundProperty, b);
+                            oldContent = textBlock;
+                        }
+
+                        control.Content = null;
+                        grid.Children.Add(oldContent as UIElement);
+                        Grid.SetColumn(oldContent as UIElement, 1);
+                        control.Content = grid;
+                    }
+                    else
+                        control.Content = viewbox;
                     /*var b = new Binding("Foreground")
                     {
                         RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Control), 1)
                     };
                     path.SetBinding(Shape.FillProperty, b);*/
-                    control.Content = new Viewbox { Child = path };
                 }
                 else
                     control.Content = null;
