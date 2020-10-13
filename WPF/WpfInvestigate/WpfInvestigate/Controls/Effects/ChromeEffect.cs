@@ -66,6 +66,10 @@ namespace WpfInvestigate.Controls.Effects
 
             OnChromeUnloaded(control, null);
 
+            var state = GetState(control);
+            if (!(state.Item1.HasValue || state.Item2.HasValue || (state.Item3.HasValue && state.Item4.HasValue) || (state.Item5.HasValue && state.Item6.HasValue)))
+                return;
+
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
                 if (control.Style == null)

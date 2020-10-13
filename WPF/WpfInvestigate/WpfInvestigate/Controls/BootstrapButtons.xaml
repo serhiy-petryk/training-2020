@@ -51,10 +51,6 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MonochromeButtonBaseStyle" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background}"/>
-    </Style>
-
     <Style x:Key="MonochromeRippleButtonBaseStyle" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="White"/>
