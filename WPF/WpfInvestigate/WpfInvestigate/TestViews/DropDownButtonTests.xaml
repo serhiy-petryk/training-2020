@@ -94,6 +94,7 @@
 
                 <ToggleButton Margin="5" Height="30" Content="Violet" Padding="8 0" Background="Violet"
                               Style="{StaticResource MonochromeSplitButtonStyle}" 
+                              effects:CornerRadiusEffect.CornerRadius="4"
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
             </WrapPanel>
