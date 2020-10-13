@@ -11,6 +11,57 @@
     <SolidColorBrush x:Key="BorderBrush" Color="#FF3399FF"/>
     <SolidColorBrush x:Key="ForegroundBrush" Color="#FF0069D6"/>
 
+    <Style x:Key="SplitButtonStyle" TargetType="ToggleButton">
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="IsThreeState" Value="False"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
+
+                        <Border x:Name="PART_BackBorder" IsHitTestVisible="False" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"/>
+                        
+                        <Grid x:Name="Root" Margin="{TemplateBinding BorderThickness}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="PART_Content" Grid.Column="0" Content="{TemplateBinding Content}" 
+                                    Margin="0" Padding="{TemplateBinding Padding}" BorderThickness="0"
+                                    Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
+                                    Style="{StaticResource DefaultButtonBaseStyle}"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                            </Button>
+
+                            <Rectangle Grid.Column="1" Margin="0 -1" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Stretch"
+                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"/>
+
+                            <ToggleButton x:Name="PART_DropDown" Grid.Column="2" BorderThickness="0" Padding="0" Margin="0"
+                                      IsThreeState="False" Width="14"
+                                      Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
+                                      Style="{StaticResource DefaultButtonBaseStyle}"
+                                      IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}"
+                                      VerticalAlignment="Stretch"
+                                      effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                      effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                      effects:DualPathToggleButtonEffect.Width="9">
+                            </ToggleButton>
+                        </Grid>
+                        
+                        <Border IsHitTestVisible="False" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent"
+                                    CornerRadius="{Binding CornerRadius, ElementName=PART_BackBorder}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="MonochromeSplitButtonStyle" TargetType="ToggleButton">
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>

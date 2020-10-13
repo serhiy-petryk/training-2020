@@ -70,7 +70,22 @@
             </Grid.RowDefinitions>
 
             <WrapPanel Grid.Row="0">
-                <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Text="MonochromeSplitButtonStyle:"/>
+                <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Text="SplitButtonStyle:"/>
+
+                <ToggleButton Margin="5" Height="30" Content="Simplest" Padding="8 0" Background="GreenYellow" Foreground="BlueViolet"
+                              BorderBrush="Orange" BorderThickness="1"
+                              Style="{StaticResource SplitButtonStyle}"
+                              effects:CornerRadiusEffect.CornerRadius="4"
+                              effects:FocusEffect.Brush="Aqua"
+                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                <ToggleButton Margin="5" Height="30" Width="100" Content="Simplest" Padding="8 0" Background="GreenYellow" Foreground="BlueViolet"
+                              VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
+                              BorderBrush="Orange" BorderThickness="4"
+                              Style="{StaticResource SplitButtonStyle}"
+                              effects:CornerRadiusEffect.CornerRadius="12"
+                              effects:FocusEffect.Brush="Aqua"
+                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                 <ToggleButton Margin="5" Height="30" Content="#FFD6EAFF" Padding="8 0" Background="#FFD6EAFF"
                               Style="{StaticResource MonochromeSplitButtonStyle}" 

@@ -12,78 +12,6 @@
         Title="LIVE MainWindow" Height="600" Width="1000">
 
     <Window.Resources>
-        <Style x:Key="TestSplitButtonStyle" TargetType="ToggleButton">
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="IsThreeState" Value="False"/>
-            <Setter Property="UseLayoutRounding" Value="True"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ToggleButton">
-                        <Border ClipToBounds="True" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <Grid ClipToBounds="True">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Button x:Name="PART_Content" Grid.Column="0" Content="{TemplateBinding Content}" Margin="0"
-                                        Style="{StaticResource DefaultButtonBaseStyle}"
-                                        Padding="{TemplateBinding Padding}"
-                                        Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
-                                        BorderThickness="0"
-                                        effects:ClickEffect.RippleColor="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"
-                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                                </Button>
-
-                                <Rectangle Grid.Column="1" Margin="0 -1" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Stretch"
-                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}"/>
-
-                                <ToggleButton Grid.Column="2" x:Name="PART_DropDown" BorderThickness="0" Padding="0" Margin="0"
-                                              Style="{StaticResource DefaultButtonBaseStyle}"
-                                              Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
-                                              IsThreeState="False" Width="14"
-                                              IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}"
-                                              VerticalAlignment="Stretch"
-                                              effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                                              effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                              effects:DualPathToggleButtonEffect.Width="9">
-                                </ToggleButton>
-                            </Grid>
-                        </Border>
-                        <!--<Grid x:Name="Root">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="PART_Content" Content="{TemplateBinding Content}" Margin="0" Padding="{TemplateBinding Padding}"
-                                            BorderThickness="1"
-                                            effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                            effects:ChromeEffect.ChromeMatrix="+0%,+70%,+0%,40, +0%,+70%,+50%,100, +25%,+25%/+75%,+50%,100, +60%,+60%/+75%,+50%,100"
-                                            effects:ClickEffect.RippleColor="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"
-                                            HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                            </Button>
-                            <ToggleButton Grid.Column="1" x:Name="PART_DropDown" BorderThickness="0 1 1 1" Padding="0" Margin="0"
-                                      IsThreeState="False" Width="14"
-                                      IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}"
-                                      VerticalAlignment="Stretch"
-                                      UseLayoutRounding="False"
-                                      effects:ChromeEffect.MonochromeAnimated="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                      effects:ChromeEffect.ChromeMatrix="+0%,+70%,+0%,40, +0%,+70%,+50%,100, +25%,+25%/+75%,+50%,100, +60%,+60%/+75%,+50%,100"
-                                      effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                                      effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                      effects:DualPathToggleButtonEffect.Width="9">
-                            </ToggleButton>
-                        </Grid>-->
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <system:Int32 x:Key="Dummy">12</system:Int32>
 
         <Geometry x:Key="CloseGeometry">M22 4 L18 0 L11 7 L4 0 L0 4 L7 11 L0 18 L4 22 L11 15 L18 22 L22 18 L15 11 L22 4Z</Geometry>
@@ -151,15 +79,6 @@
                 <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
 
                 <WrapPanel Orientation="Horizontal" MaxWidth="300">
-                    <ToggleButton Margin="5" Height="30" Width="200" Content="#FFD6EAFF" Padding="8 0"
-                                  Background="GreenYellow" Foreground="BlueViolet"
-                                  VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
-                                  BorderBrush="Orange" BorderThickness="4"
-                                  Style="{StaticResource TestSplitButtonStyle}"
-                                  effects:CornerRadiusEffect.CornerRadius="12"
-                                  effects:FocusEffect.Brush="Aqua"
-                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-
                     <TextBox Width="50"/>
                 </WrapPanel>
             </StackPanel>
