@@ -98,7 +98,23 @@
 
             </WrapPanel>
 
-            <ToolBar Grid.Row="1" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
+            <WrapPanel Grid.Row="1">
+                <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Text="DropDownButtonStyle:"/>
+                <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Default" Padding="8 0"
+                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Custom colors" Padding="8 0"
+                              Background="Yellow" Foreground="Blue" BorderBrush="Red"
+                              effects:CornerRadiusEffect.CornerRadius="6"
+                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Monochrome" Padding="8 0"
+                              effects:ChromeEffect.MonochromeAnimated="Yellow"
+                              effects:CornerRadiusEffect.CornerRadius="4"
+                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+            </WrapPanel>
+
+            <ToolBar Grid.Row="2" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="30" Background="#FFD6EAFF">
                 <ToggleButton Style="{StaticResource ToolBarSplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Padding="8 0"
                         Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
@@ -107,7 +123,7 @@
                         Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
             </ToolBar>
 
-            <ToolBar Grid.Row="2" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
+            <ToolBar Grid.Row="3" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="50" Background="#FFD6EAFF">
                 <TextBlock x:Name="SplitButtonLabel" Margin="0 0 5 0" VerticalAlignment="Center" Text="SplitButtonStyle (Click count=0):"/>
                 <ToggleButton Style="{StaticResource ToolBarSplitButtonStyle}" Content="Simplest" Margin="0 -1 0 -2"
