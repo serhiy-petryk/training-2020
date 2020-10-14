@@ -38,44 +38,43 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Grid>
-                        <Border x:Name="PART_BackBorder" IsHitTestVisible="False" BorderThickness="0.7"
-                                BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"/>
+                    <Grid SnapsToDevicePixels="True">
+                        <Border x:Name="PART_BackBorder" Margin="0" Padding="0" BorderThickness="1" BorderBrush="Transparent" Background="{TemplateBinding BorderBrush}"/>
 
-                        <Grid x:Name="Root" Margin="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
-                            <Grid.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=PART_BackBorder}" />
-                            </Grid.OpacityMask>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="PART_Content" Grid.Column="0" Content="{TemplateBinding Content}" 
-                                    Margin="0" Padding="{TemplateBinding Padding}" BorderThickness="0"
-                                    Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
-                                    Style="{StaticResource DefaultButtonBaseStyle}"
-                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                            </Button>
+                        <Border x:Name="PART_FrontBorder" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
+                                Margin="0" Padding="0" CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">
 
-                            <Rectangle Grid.Column="1" Margin="0 -1" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Stretch"
-                                       Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"/>
+                            <Grid>
+                                <Grid.OpacityMask>
+                                    <VisualBrush Visual="{Binding ElementName=PART_BackBorder}" />
+                                </Grid.OpacityMask>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-                            <ToggleButton x:Name="PART_DropDown" Grid.Column="2" BorderThickness="0" Padding="0" Margin="0"
-                                          IsThreeState="False" Width="14"
-                                          Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
-                                          Style="{StaticResource DefaultButtonBaseStyle}"
-                                          IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}"
-                                          VerticalAlignment="Stretch"
-                                          effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                                          effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                          effects:DualPathToggleButtonEffect.Width="9">
-                            </ToggleButton>
-                        </Grid>
+                                <Button x:Name="PART_Content" Grid.Column="0" Content="{TemplateBinding Content}" 
+                                        Margin="0" Padding="{TemplateBinding Padding}" BorderThickness="0"
+                                        Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
+                                        Style="{StaticResource DefaultButtonBaseStyle}"
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
-                        <Border IsHitTestVisible="False" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent"
-                                CornerRadius="{Binding CornerRadius, ElementName=PART_BackBorder}"/>
+                                <Rectangle Grid.Column="1" Margin="0 -1" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Stretch"
+                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"/>
+
+                                <ToggleButton x:Name="PART_DropDown" Grid.Column="2" BorderThickness="0" Padding="0" Margin="0"
+                                              IsThreeState="False" Width="14"
+                                              Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
+                                              Style="{StaticResource DefaultButtonBaseStyle}"
+                                              IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}"
+                                              VerticalAlignment="Stretch"
+                                              effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                              effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                              effects:DualPathToggleButtonEffect.Width="9"/>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
