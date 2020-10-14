@@ -6,8 +6,8 @@
 
 
     <Style x:Key="DefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
-        <Setter Property="SnapsToDevicePixels" Value="False"/>
-        <Setter Property="UseLayoutRounding" Value="False"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
