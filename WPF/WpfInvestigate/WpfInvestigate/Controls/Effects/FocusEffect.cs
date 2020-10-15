@@ -119,8 +119,8 @@ namespace WpfInvestigate.Controls.Effects
                     child.BorderBrush = focusBrush.Clone();
 
                 // +0.25: to remove gap between focus and element
-                var newThickness = new Thickness(thickness.Left + 0.25, thickness.Top + 0.25, thickness.Right + 0.25, thickness.Bottom + 0.25);
-                thicknessAnimation.SetFromToValues(child.BorderThickness, newThickness);
+                // var newThickness = new Thickness(thickness.Left + 0.25, thickness.Top + 0.25, thickness.Right + 0.25, thickness.Bottom + 0.25);
+                thicknessAnimation.SetFromToValues(child.BorderThickness, thickness);
                 child.BeginAnimation(Control.BorderThicknessProperty, thicknessAnimation);
             }
             else

@@ -23,11 +23,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid SnapsToDevicePixels="True">
-                        <Border x:Name="PART_BackBorder" Margin="0" Padding="0" BorderThickness="1" BorderBrush="Transparent" Background="{TemplateBinding BorderBrush}"/>
+                        <Border x:Name="PART_BackBorder" Margin="0" Padding="0" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"/>
 
                         <Border x:Name="PART_FrontBorder" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
                                 Margin="0" Padding="0" CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">
-
                             <Grid>
                                 <Grid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=PART_BackBorder}" />

@@ -69,5 +69,7 @@ namespace WpfInvestigate
         }
 
         private void OpenDropDownMenu(object sender, RoutedEventArgs e) => DropDownButtonHelper.OpenDropDownMenu(sender);
+
+        private void ButtonStyleTests_OnClick(object sender, RoutedEventArgs e) => new ButtonStyleTests().Show();
     }
 }
