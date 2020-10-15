@@ -97,6 +97,9 @@
                                     Margin="0" Padding="0"
                                     CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">
                                 <ContentControl Margin="0" Padding="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <ContentControl.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=PART_BackBorder}" />
+                                    </ContentControl.OpacityMask>
                                     <Grid Margin="0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
