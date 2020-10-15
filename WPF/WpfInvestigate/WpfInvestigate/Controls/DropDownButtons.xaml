@@ -22,12 +22,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Grid SnapsToDevicePixels="True">
-                        <Border x:Name="PART_BackBorder" Margin="0" Padding="0" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"/>
+                    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Border x:Name="PART_BackBorder" Margin="0" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"/>
 
-                        <Border x:Name="PART_FrontBorder" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
-                                Margin="0" Padding="0" CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">
-                            <Grid>
+                        <Border x:Name="PART_FrontBorder" Margin="0" Padding="0"
+                                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
+                                CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">
+
+                            <Grid Margin="0">
                                 <Grid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=PART_BackBorder}" />
                                 </Grid.OpacityMask>
@@ -44,15 +46,14 @@
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
-                                <Rectangle Grid.Column="1" Margin="0 -1" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Stretch"
+                                <Rectangle Grid.Column="1" Margin="0" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Stretch"
                                            Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"/>
 
                                 <ToggleButton x:Name="PART_DropDown" Grid.Column="2" BorderThickness="0" Padding="0" Margin="0"
-                                              IsThreeState="False" Width="14"
+                                              IsThreeState="False" Width="15" VerticalAlignment="Stretch"
+                                              IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}"
                                               Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
                                               Style="{StaticResource DefaultButtonBaseStyle}"
-                                              IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked, Mode=TwoWay}"
-                                              VerticalAlignment="Stretch"
                                               effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                               effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                                               effects:DualPathToggleButtonEffect.Width="9"/>
