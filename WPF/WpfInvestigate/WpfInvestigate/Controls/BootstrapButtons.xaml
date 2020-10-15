@@ -11,7 +11,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <!-- Double border (here is my variant (Serhiy Petryk)): to remove gap between border and content (see https://stackoverflow.com/questions/18581204/how-to-fix-empty-space-between-a-border-and-a-background-in-button-with-rounded) -->
+                    <!-- Double border: to remove gap between border and content (see https://stackoverflow.com/questions/18581204/how-to-fix-empty-space-between-a-border-and-a-background-in-button-with-rounded) -->
                     <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
                         <Border x:Name="PART_BackBorder" Margin="0" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"/>
                         <Border x:Name="PART_FrontBorder" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
@@ -19,7 +19,11 @@
                                 CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">
                             <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <!--<ContentPresenter.OpacityMask>
+                                    <VisualBrush Visual="{Binding ElementName=PART_BackBorder}" />
+                                </ContentPresenter.OpacityMask>-->
+                            </ContentPresenter>
                         </Border>
                     </Grid>
                 </ControlTemplate>
