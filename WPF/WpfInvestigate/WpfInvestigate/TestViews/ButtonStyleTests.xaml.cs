@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using WpfInvestigate.Controls.Effects;
 using WpfInvestigate.Controls.Helpers;
 
 namespace WpfInvestigate.TestViews

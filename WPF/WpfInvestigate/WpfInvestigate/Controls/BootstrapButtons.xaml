@@ -15,8 +15,8 @@
                     <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
                         <Border x:Name="PART_BackBorder" Margin="0" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"/>
                         <Border x:Name="PART_FrontBorder" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
-                                Margin="0" Padding="{TemplateBinding Padding}"
-                                CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">
+                                Margin="0" Padding="{TemplateBinding Padding}">
+                            <!--CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">-->
                             <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
@@ -31,10 +31,10 @@
         </Setter>
         <Style.Resources>
             <Style TargetType="{x:Type Path}">
-                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"/>
+                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
             </Style>
             <Style TargetType="{x:Type Line}">
-                <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Foreground}"/>
+                <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
             </Style>
         </Style.Resources>
     </Style>

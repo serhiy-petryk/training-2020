@@ -25,14 +25,27 @@
                         <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
                             <Border x:Name="PART_BackBorder" Margin="0" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"/>
 
-                            <Border x:Name="PART_FrontBorder" Margin="0" Padding="0"
-                                    BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
-                                    CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">
+                            <controls:ClipBorder x:Name="PART_FrontBorder" Margin="0" Padding="0" ClipToBounds="True"
+                                    BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                <!--CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">-->
+                                <!--<Border.Clip>
+                                    <RectangleGeometry RadiusX="18" RadiusY="18" Rect="0,0,100,100"/>
+                                </Border.Clip>-->
+                                <!--<Border.OpacityMask>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Border Background="Black" SnapsToDevicePixels="True"
+                                                CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=Border}}"
+                                                Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}}"
+                                                Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Border}}"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Border.OpacityMask>-->
 
-                                <Grid Margin="0">
-                                    <Grid.OpacityMask>
-                                        <VisualBrush Visual="{Binding ElementName=PART_BackBorder}" />
-                                    </Grid.OpacityMask>
+                                <Grid Margin="0" Background="Transparent">
+                                    <!--<Grid.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=PART_FrontBorder}" />
+                                    </Grid.OpacityMask>-->
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
@@ -43,7 +56,7 @@
                                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>-->
 
-                                    <Button x:Name="PART_Content" Grid.Column="0" Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:DummyConverter.Instance}}" 
+                                    <Button x:Name="PART_Content" Grid.Column="0" Content="{TemplateBinding Content}" 
                                             Margin="0" Padding="{TemplateBinding Padding}" BorderThickness="0"
                                             Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
                                             Style="{StaticResource DefaultButtonBaseStyle}"
@@ -62,11 +75,19 @@
                                                   effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                                                   effects:DualPathToggleButtonEffect.Width="9"/>
                                 </Grid>
-                            </Border>
+                            </controls:ClipBorder>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Resources>
+                <Style TargetType="{x:Type Path}">
+                    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                </Style>
+                <Style TargetType="{x:Type Line}">
+                    <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                </Style>
+            </Style.Resources>
         </Style>
 
         <Style x:Key="TestSplitButtonStyle2" TargetType="ToggleButton">
@@ -84,8 +105,8 @@
                             <Border x:Name="PART_BackBorder" Margin="0" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"/>
 
                             <Border x:Name="PART_FrontBorder" Margin="0" Padding="0"
-                                    BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
-                                    CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">
+                                    BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                <!--CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">-->
 
                                 <ContentControl Margin="0" Padding="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                     <ContentControl.OpacityMask>
@@ -99,7 +120,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Button x:Name="PART_Content" Grid.Column="0" Content="{TemplateBinding Content}" 
+                                        <Button x:Name="PART_Content" Grid.Column="0" Content="{TemplateBinding Content}"
                                                 Margin="0" Padding="{TemplateBinding Padding}" BorderThickness="0"
                                                 Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
                                                 Style="{StaticResource DefaultButtonBaseStyle}"
@@ -124,6 +145,14 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Resources>
+                <Style TargetType="{x:Type Path}">
+                    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                </Style>
+                <Style TargetType="{x:Type Line}">
+                    <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                </Style>
+            </Style.Resources>
         </Style>
 
         <ResourceDictionary x:Key="PopupMenu" x:Shared="False">
@@ -282,14 +311,19 @@
                                   effects:CornerRadiusEffect.CornerRadius="12"
                                   effects:FocusEffect.Brush="Aqua"
                                   Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-                    <ToggleButton Margin="5 0" Width="30" Height="30" Padding="4"
-                                  BorderBrush="Blue" BorderThickness="4"
+
+                    <ToggleButton Margin="5 0" Width="45" Height="30" Padding="4"
+                                  Background="Blue" Foreground="White"
+                                  BorderBrush="Red" BorderThickness="1"
                                   Style="{StaticResource TestSplitButtonStyle}"
-                                  effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                                  effects:CornerRadiusEffect.CornerRadius="4"
+                                  effects:FocusEffect.Brush="Aqua"
+                                  effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                 </WrapPanel>
 
-                <WrapPanel Margin="0 5">
+                <WrapPanel Margin="0 0 0 5">
                     <Label Content="SplitButtonStyle2" VerticalAlignment="Center"/>
 
                     <ToggleButton Margin="5" Height="30" Content="#FFD6EAFF" Padding="8 0" Background="#FFD6EAFF"
@@ -354,10 +388,15 @@
                             effects:CornerRadiusEffect.CornerRadius="12"
                             effects:FocusEffect.Brush="Aqua"
                             Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-                    <ToggleButton Margin="5 0" Width="30" Height="30" Padding="4"
-                                  BorderBrush="Blue" BorderThickness="4"
-                                  Style="{StaticResource TestSplitButtonStyle}"
-                                  effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+
+                    <ToggleButton Margin="5 0" Width="45" Height="30" Padding="4"
+                                  Background="Blue" Foreground="White"
+                                  BorderBrush="Red" BorderThickness="1"
+                                  Style="{StaticResource TestSplitButtonStyle2}"
+                                  effects:CornerRadiusEffect.CornerRadius="4"
+                                  effects:FocusEffect.Brush="Aqua"
+                                  effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                 </WrapPanel>
 
             </StackPanel>

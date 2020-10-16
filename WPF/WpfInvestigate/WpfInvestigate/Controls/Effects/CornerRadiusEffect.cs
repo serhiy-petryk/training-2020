@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -17,8 +16,10 @@ namespace WpfInvestigate.Controls.Effects
         {
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() =>
             {
-                var border = Helpers.ControlHelper.GetMainBorders(d as FrameworkElement).FirstOrDefault();
+                /*var border = Helpers.ControlHelper.GetMainBorders(d as FrameworkElement).FirstOrDefault();
                 if (border != null)
+                    border.CornerRadius = (CornerRadius)e.NewValue;*/
+                foreach (var border in Helpers.ControlHelper.GetMainBorders(d as FrameworkElement))
                     border.CornerRadius = (CornerRadius) e.NewValue;
             }));
         }

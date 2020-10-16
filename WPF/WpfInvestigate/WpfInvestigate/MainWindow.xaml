@@ -27,8 +27,8 @@
                             <Border x:Name="PART_BackBorder" Margin="0" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"/>
 
                             <Border x:Name="PART_FrontBorder" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
-                                    Margin="0" Padding="0"
-                                    CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">
+                                    Margin="0" Padding="0">
+                                <!--CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">-->
 
                                 <Grid Margin="0">
                                     <Grid.OpacityMask>
