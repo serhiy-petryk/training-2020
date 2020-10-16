@@ -11,6 +11,23 @@
         Title="ColorPickerTests" Height="600" Width="1100">
 
     <Window.Resources>
+
+        <ControlTemplate TargetType="Button" x:Key="BorderTestTemplate">
+            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="2" Background="LightBlue" Padding="{TemplateBinding Padding}">
+                <ContentControl Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{TemplateBinding Content}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+        </ControlTemplate>
+
+        <ControlTemplate TargetType="Button" x:Key="ClipBorderTestTemplate">
+            <controls:ClipBorder BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="2" Background="LightBlue" Padding="{TemplateBinding Padding}">
+                <ContentControl Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{TemplateBinding Content}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </controls:ClipBorder>
+        </ControlTemplate>
+
         <Style x:Key="TestDefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="UseLayoutRounding" Value="True"/>
@@ -224,6 +241,35 @@
             </Grid.LayoutTransform>
 
             <StackPanel Orientation="Vertical">
+                <WrapPanel Orientation="Horizontal" Margin="0 5">
+                    <Label Content="ClipBorder test:" VerticalAlignment="Center"/>
+                    <Button Margin="5 0" BorderBrush="Blue" Padding="0" VerticalAlignment="Center" FontSize="16"
+                            Template="{StaticResource BorderTestTemplate}" 
+                            effects:FocusEffect.Brush="Aqua"
+                            effects:CornerRadiusEffect.CornerRadius="20">
+                        <Grid Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                            <TextBlock Background="Yellow" Padding="0" Margin="0" Text="Default border" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Margin="5 0" BorderBrush="Blue" Padding="0" VerticalAlignment="Center" FontSize="16"
+                            Template="{StaticResource ClipBorderTestTemplate}" 
+                            effects:FocusEffect.Brush="Aqua"
+                            effects:CornerRadiusEffect.CornerRadius="20">
+                        <Grid Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                            <TextBlock Background="Yellow" Padding="0" Margin="0" Text="Clip border"/>
+                        </Grid>
+                    </Button>
+                    <Button Margin="5 0" BorderBrush="Blue" Padding="8 0" VerticalAlignment="Center" FontSize="16"
+                            Template="{StaticResource ClipBorderTestTemplate}" 
+                            effects:FocusEffect.Brush="Aqua"
+                            effects:CornerRadiusEffect.CornerRadius="20">
+                        <Grid Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                            <TextBlock Background="Yellow" Padding="0" Margin="0" Text="Content"/>
+                        </Grid>
+                    </Button>
+                </WrapPanel>
+
                 <WrapPanel Orientation="Horizontal">
                     <Label Content="DefaultButtonBaseStyle" VerticalAlignment="Center"/>
 
