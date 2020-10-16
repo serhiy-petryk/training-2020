@@ -51,8 +51,8 @@ namespace WpfInvestigate.Controls
 
         private Geometry _clipGeometry = null;
         private object _oldClip;
-        private const double Tolerance = 0.0001;
 
+        private const double Tolerance = 0.0001;
         private static Geometry GetRoundRectangle(Rect baseRect, Thickness thickness, CornerRadius cornerRadius)
         {
             // Normalizing the corner radius
