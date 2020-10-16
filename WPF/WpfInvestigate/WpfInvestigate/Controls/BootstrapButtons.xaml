@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:WpfInvestigate.Controls"
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
-                    xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects">
+                    xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+                    xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
 
     <Style x:Key="DefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
@@ -12,19 +12,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <!-- Double border: to remove gap between border and content (see https://stackoverflow.com/questions/18581204/how-to-fix-empty-space-between-a-border-and-a-background-in-button-with-rounded) -->
-                    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
-                        <Border x:Name="PART_BackBorder" Margin="0" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"/>
-                        <Border x:Name="PART_FrontBorder" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
-                                Margin="0" Padding="{TemplateBinding Padding}">
-                            <!--CornerRadius="{Binding ElementName=PART_BackBorder, Path=CornerRadius}">-->
+                    <Grid>
+                        <Border Margin="0.5" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="False" UseLayoutRounding="False"/>
+                        <controls:ClipBorder Margin="0" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}"
+                                             BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
+                                             SnapsToDevicePixels="True" UseLayoutRounding="True">
                             <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                <!--<ContentPresenter.OpacityMask>
-                                    <VisualBrush Visual="{Binding ElementName=PART_BackBorder}" />
-                                </ContentPresenter.OpacityMask>-->
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
                             </ContentPresenter>
-                        </Border>
+                        </controls:ClipBorder>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

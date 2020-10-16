@@ -11,6 +11,36 @@
         Title="ColorPickerTests" Height="600" Width="1100">
 
     <Window.Resources>
+        <Style x:Key="TestDefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                        <!-- Double border: to remove gap between border and content (see https://stackoverflow.com/questions/18581204/how-to-fix-empty-space-between-a-border-and-a-background-in-button-with-rounded) -->
+                        <Grid>
+                            <Border x:Name="PART_BackBorder" Margin="0.5" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"/>
+                            <controls:ClipBorder x:Name="PART_FrontBorder" Margin="0" Padding="{TemplateBinding Padding}"
+                                                 BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                                </ContentPresenter>
+                            </controls:ClipBorder>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Resources>
+                <Style TargetType="{x:Type Path}">
+                    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                </Style>
+                <Style TargetType="{x:Type Line}">
+                    <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+
         <Style x:Key="TestSplitButtonStyle" TargetType="ToggleButton">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -42,7 +72,7 @@
                                     </VisualBrush>
                                 </Border.OpacityMask>-->
 
-                                <Grid Margin="0" Background="Transparent">
+                                <Grid Margin="0">
                                     <!--<Grid.OpacityMask>
                                         <VisualBrush Visual="{Binding ElementName=PART_FrontBorder}" />
                                     </Grid.OpacityMask>-->
@@ -221,7 +251,7 @@
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 effects:CornerRadiusEffect.CornerRadius="8"
                                 effects:FocusEffect.Brush="Aqua"/>
-                        <Button Margin="5 0" Content="SimplestX" Padding="8 0"
+                        <Button Margin="5 0" Content="Simplest" Padding="8 0"
                                 Background="GreenYellow" Foreground="BlueViolet"
                                 BorderBrush="Blue" BorderThickness="1"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
@@ -229,7 +259,7 @@
                                 effects:FocusEffect.Brush="Aqua"/>
                     </StackPanel>
 
-                    <Button Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                    <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
                                   Background="GreenYellow" Foreground="BlueViolet"
                                   VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
                                   BorderBrush="Orange" BorderThickness="4"
@@ -237,13 +267,168 @@
                                   effects:CornerRadiusEffect.CornerRadius="12"
                                   effects:FocusEffect.Brush="Aqua"/>
 
-                    <Button Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                    <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
                             Background="Blue" Foreground="White"
                             VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
                             BorderBrush="Blue" BorderThickness="4"
                             Style="{StaticResource DefaultButtonBaseStyle}"
                             effects:CornerRadiusEffect.CornerRadius="12"
                             effects:FocusEffect.Brush="Aqua"/>
+
+                    <Button Margin="5 0" Width="30" Height="30" Padding="4"
+                            Background="Blue" Foreground="White"
+                            BorderBrush="Red" BorderThickness="1"
+                            Style="{StaticResource DefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="4"
+                            effects:FocusEffect.Brush="Aqua"
+                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                    <Button Margin="5 0" Width="30" Height="30" Padding="4"
+                            Background="Blue" Foreground="White" BorderThickness="0"
+                            Style="{StaticResource DefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="4"
+                            effects:FocusEffect.Brush="Aqua"
+                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                    <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
+                            Background="Blue" Foreground="White"
+                            VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
+                            BorderBrush="Blue" BorderThickness="1"
+                            Style="{StaticResource DefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="12"
+                            effects:FocusEffect.Brush="Aqua"/>
+
+                    <Button Margin="0" Padding="0" Height="24"
+                            Background="GreenYellow" Foreground="BlueViolet"
+                            BorderBrush="Blue" BorderThickness="1"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                            SnapsToDevicePixels="False" UseLayoutRounding="False"
+                            Style="{StaticResource DefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="8"
+                            effects:FocusEffect.Brush="Aqua">
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
+                    </Button>
+                    <Button Margin="5 0" Padding="0" Height="24"
+                            Background="GreenYellow" Foreground="BlueViolet"
+                            BorderBrush="Blue" BorderThickness="1"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                            SnapsToDevicePixels="True" UseLayoutRounding="True"
+                            Style="{StaticResource DefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="8"
+                            effects:FocusEffect.Brush="Aqua">
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
+                    </Button>
+                    <Button Margin="5 0" Padding="0" Height="24"
+                            Background="GreenYellow" Foreground="BlueViolet"
+                            BorderBrush="Blue" BorderThickness="1"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                            Style="{StaticResource DefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="8"
+                            effects:FocusEffect.Brush="Aqua">
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
+                    </Button>
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal" Margin="0 5 0 0">
+                    <Label Content="DefaultButtonBaseStyle" VerticalAlignment="Center"/>
+
+                    <Button Margin="5" Height="30" Padding="0"
+                            Background="GreenYellow" Foreground="BlueViolet"
+                            BorderBrush="Blue" BorderThickness="1"
+                            Style="{StaticResource TestDefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="8"
+                            effects:FocusEffect.Brush="Aqua">
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <TextBlock Text="Content" FontSize="24" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Margin="5" Height="30" Content="Simplest" Padding="8 0"
+                            Background="GreenYellow" Foreground="BlueViolet"
+                            BorderBrush="Blue" BorderThickness="1"
+                            Style="{StaticResource TestDefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="8"
+                            effects:FocusEffect.Brush="Aqua"/>
+
+                    <StackPanel Orientation="Horizontal" Background="LightPink">
+                        <Button Margin="5 0" Content="Simplest" Padding="8 0"
+                                Background="GreenYellow" Foreground="BlueViolet" BorderThickness="0"
+                                Style="{StaticResource TestDefaultButtonBaseStyle}"
+                                effects:CornerRadiusEffect.CornerRadius="8"
+                                effects:FocusEffect.Brush="Aqua"/>
+                        <Button Margin="5 0" Content="Simplest" Padding="8 0"
+                                Background="GreenYellow" Foreground="BlueViolet"
+                                BorderBrush="Blue" BorderThickness="1"
+                                Style="{StaticResource TestDefaultButtonBaseStyle}"
+                                effects:CornerRadiusEffect.CornerRadius="8"
+                                effects:FocusEffect.Brush="Aqua"/>
+                    </StackPanel>
+
+                    <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
+                                  Background="GreenYellow" Foreground="BlueViolet"
+                                  VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
+                                  BorderBrush="Orange" BorderThickness="4"
+                                  Style="{StaticResource TestDefaultButtonBaseStyle}"
+                                  effects:CornerRadiusEffect.CornerRadius="12"
+                                  effects:FocusEffect.Brush="Aqua"/>
+
+                    <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
+                            Background="Blue" Foreground="White"
+                            VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
+                            BorderBrush="Blue" BorderThickness="4"
+                            Style="{StaticResource TestDefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="12"
+                            effects:FocusEffect.Brush="Aqua"/>
+
+                    <Button Margin="5 0" Width="30" Height="30" Padding="4"
+                            Background="Blue" Foreground="White"
+                            BorderBrush="Red" BorderThickness="1"
+                            Style="{StaticResource TestDefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="4"
+                            effects:FocusEffect.Brush="Aqua"
+                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                    <Button Margin="5 0" Width="30" Height="30" Padding="4"
+                            Background="Blue" Foreground="White" BorderThickness="0"
+                            Style="{StaticResource TestDefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="4"
+                            effects:FocusEffect.Brush="Aqua"
+                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+
+                    <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
+                            Background="Blue" Foreground="White"
+                            VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
+                            BorderBrush="Blue" BorderThickness="1"
+                            Style="{StaticResource TestDefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="12"
+                            effects:FocusEffect.Brush="Aqua"/>
+
+                    <Button Margin="0" Padding="0" Height="24"
+                            Background="GreenYellow" Foreground="BlueViolet"
+                            BorderBrush="Blue" BorderThickness="1"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                            SnapsToDevicePixels="False" UseLayoutRounding="False"
+                            Style="{StaticResource TestDefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="8"
+                            effects:FocusEffect.Brush="Aqua">
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
+                    </Button>
+                    <Button Margin="5 0" Padding="0" Height="24"
+                            Background="GreenYellow" Foreground="BlueViolet"
+                            BorderBrush="Blue" BorderThickness="1"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                            SnapsToDevicePixels="True" UseLayoutRounding="True"
+                            Style="{StaticResource TestDefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="8"
+                            effects:FocusEffect.Brush="Aqua">
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
+                    </Button>
+                    <Button Margin="5 0" Padding="0" Height="24"
+                            Background="GreenYellow" Foreground="BlueViolet"
+                            BorderBrush="Blue" BorderThickness="1"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                            Style="{StaticResource TestDefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="8"
+                            effects:FocusEffect.Brush="Aqua">
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
+                    </Button>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 5">
@@ -285,7 +470,7 @@
                                 effects:CornerRadiusEffect.CornerRadius="8"
                                 effects:FocusEffect.Brush="Aqua"
                                 Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-                        <ToggleButton Margin="5 0" Content="SimplestX" Padding="8 0"
+                        <ToggleButton Margin="5 0" Content="Simplest" Padding="8 0"
                                 Background="GreenYellow" Foreground="BlueViolet"
                                 BorderBrush="Blue" BorderThickness="1"
                                 Style="{StaticResource TestSplitButtonStyle}"
@@ -362,7 +547,7 @@
                                 effects:CornerRadiusEffect.CornerRadius="8"
                                 effects:FocusEffect.Brush="Aqua"
                                 Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-                        <ToggleButton Margin="5 0" Content="SimplestX" Padding="8 0"
+                        <ToggleButton Margin="5 0" Content="Simplest" Padding="8 0"
                                 Background="GreenYellow" Foreground="BlueViolet"
                                 BorderBrush="Blue" BorderThickness="1"
                                 Style="{StaticResource TestSplitButtonStyle2}"

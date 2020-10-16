@@ -63,8 +63,8 @@ namespace WpfInvestigate.Controls.Helpers
 
         public static IEnumerable<Border> GetMainBorders(FrameworkElement element) =>
             Tips.GetVisualChildren(element).OfType<Border>().Where(b =>
-                Math.Abs(b.ActualWidth - element.ActualWidth) < 1.1 &&
-                Math.Abs(b.ActualHeight - element.ActualHeight) < 1.1);
+                Math.Abs(b.ActualWidth + b.Margin.Left + b.Margin.Right - element.ActualWidth) < 1.1 &&
+                Math.Abs(b.ActualHeight + b.Margin.Top + b.Margin.Bottom - element.ActualHeight) < 1.1);
 
         public static CornerRadius? GetCornerRadius(FrameworkElement element) =>
             GetMainBorders(element).FirstOrDefault(b => b.CornerRadius != new CornerRadius())?.CornerRadius;
