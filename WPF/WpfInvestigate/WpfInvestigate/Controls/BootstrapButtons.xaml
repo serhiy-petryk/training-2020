@@ -5,6 +5,21 @@
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
 
+    <ControlTemplate x:Key="DefaultButtonBaseTemplate" TargetType="{x:Type ButtonBase}">
+        <!-- Double border: to remove gap between border and content (see https://stackoverflow.com/questions/18581204/how-to-fix-empty-space-between-a-border-and-a-background-in-button-with-rounded) -->
+        <Grid>
+            <Border Margin="0.5" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"
+                    SnapsToDevicePixels="False" UseLayoutRounding="False"/>
+            <Border Margin="0" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}"
+                    BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
+                    SnapsToDevicePixels="True" UseLayoutRounding="True">
+                <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" UseLayoutRounding="{TemplateBinding UseLayoutRounding}"/>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+
     <Style x:Key="DefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>

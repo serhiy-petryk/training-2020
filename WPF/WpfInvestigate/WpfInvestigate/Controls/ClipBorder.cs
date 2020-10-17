@@ -45,7 +45,7 @@ namespace WpfInvestigate.Controls
             {
                 // Get the geometry of a rounded rectangle border based on the BorderThickness and CornerRadius
                 _clipGeometry = GetRoundRectangle(new Rect(Child.RenderSize), this.BorderThickness, this.CornerRadius);
-                child.Clip = _clipGeometry;
+                child.Clip = CornerRadius == new CornerRadius() ? null : _clipGeometry;
             }
         }
 

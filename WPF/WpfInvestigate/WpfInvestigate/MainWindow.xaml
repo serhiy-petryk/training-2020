@@ -134,8 +134,8 @@
                 <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
                 <Button x:Name="ButtonStyleTest" Width="200" Margin="0 5" Content="WiP: ButtonStyleTests" Click="ButtonStyleTests_OnClick"/>
 
-                <WrapPanel Orientation="Horizontal" MaxWidth="300">
-                    <Button Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                <!--<WrapPanel Orientation="Horizontal" MaxWidth="300">
+                    <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
                             Background="Blue" Foreground="White"
                             BorderBrush="Red"
                             VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
@@ -143,7 +143,7 @@
                             effects:CornerRadiusEffect.CornerRadius="12"
                             effects:FocusEffect.Brush="Aqua"/>
 
-                    <Button Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                    <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
                             Background="Blue" Foreground="White"
                             BorderThickness="0"
                             VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
@@ -151,7 +151,7 @@
                             effects:CornerRadiusEffect.CornerRadius="12"
                             effects:FocusEffect.Brush="Aqua"/>
 
-                    <Button Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                    <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
                             Background="Yellow" Foreground="Blue"
                             BorderBrush="Blue" BorderThickness="1"
                             VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
@@ -159,9 +159,9 @@
                             effects:CornerRadiusEffect.CornerRadius="12"
                             effects:FocusEffect.Brush="Aqua"/>
 
-                </WrapPanel>
+                </WrapPanel>-->
 
-                <WrapPanel Orientation="Horizontal" MaxWidth="300">
+                <!--<WrapPanel Orientation="Horizontal" MaxWidth="300">
                     <ToggleButton Margin="5" Height="30" Content="#FFD6EAFF" Padding="8 0" Background="#FFD6EAFF"
                                   Style="{StaticResource TestSplitButtonStyle}" 
                                   Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
@@ -230,9 +230,9 @@
                     </Grid>
 
                     <TextBox Width="50"/>
-                </WrapPanel>
+                </WrapPanel>-->
 
-                <WrapPanel MaxWidth="300">
+                <!--<WrapPanel MaxWidth="300">
                     <StackPanel Orientation="Horizontal" Background="LightPink">
                         <Button Margin="5 0" Height="30" Content="Simplest" Padding="8 0"
                                 Background="GreenYellow" Foreground="BlueViolet" BorderThickness="0"
@@ -275,7 +275,7 @@
                             Style="{StaticResource DefaultButtonBaseStyle}"
                             effects:CornerRadiusEffect.CornerRadius="12"
                             effects:FocusEffect.Brush="Aqua"/>
-                </WrapPanel>
+                </WrapPanel>-->
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
