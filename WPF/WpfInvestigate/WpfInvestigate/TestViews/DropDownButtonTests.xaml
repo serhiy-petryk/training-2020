@@ -53,23 +53,10 @@
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
 
-            <WrapPanel Grid.Row="0">
+            <StackPanel Orientation="Vertical">
+
+            <WrapPanel>
                 <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Text="SplitButtonStyle:"/>
 
                 <ToggleButton Margin="5" Height="30" Content="Simplest" Padding="8 0"
@@ -102,13 +89,23 @@
                               effects:FocusEffect.Brush="Aqua"
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
+            </WrapPanel>
+
+            <WrapPanel>
+                    <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Text="MonochromeSplitButtonStyle:"/>
                 <ToggleButton Margin="5" Height="30" Content="#FFD6EAFF" Padding="8 0" Background="#FFD6EAFF"
-                              Style="{StaticResource MonochromeSplitButtonStyle}" 
+                              BorderBrush="Red" BorderThickness="1"
+                              Style="{StaticResource MonochromeSplitButtonStyle}"
+                              effects:CornerRadiusEffect.CornerRadius="4"
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                <ToggleButton Margin="5" Height="30" Content="Yellow" Padding="8 0" Background="Yellow"
-                              Style="{StaticResource MonochromeSplitButtonStyle}" 
-                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+                    <ToggleButton Margin="5" Height="30" Content="Yellow" Padding="8 0" Background="#FFFFFF00"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}" 
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Content="Yellow" Padding="8 0" Background="Yellow"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}" 
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                 <ToggleButton Margin="5" Height="30" Content="Red" Padding="8 0" Background="Red"
                               Style="{StaticResource MonochromeSplitButtonStyle}" 
@@ -126,10 +123,9 @@
                               Style="{StaticResource MonochromeSplitButtonStyle}" 
                               effects:CornerRadiusEffect.CornerRadius="4"
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-
             </WrapPanel>
 
-            <WrapPanel Grid.Row="1">
+            <!--<WrapPanel>
                 <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Text="DropDownButtonStyle:"/>
                 <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Default" Padding="8 0"
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
@@ -145,16 +141,16 @@
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
             </WrapPanel>
 
-            <ToolBar Grid.Row="2" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
+            <ToolBar ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="30" Background="#FFD6EAFF">
                 <ToggleButton Style="{StaticResource ToolBarSplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Padding="8 0"
                         Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                 <ToggleButton Style="{StaticResource ToolBarSplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Padding="8 0" UseLayoutRounding="False"
                         Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-            </ToolBar>
+            </ToolBar>-->
 
-            <ToolBar Grid.Row="3" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
+            <ToolBar ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="50" Background="#FFD6EAFF">
                 <TextBlock x:Name="SplitButtonLabel" Margin="0 0 5 0" VerticalAlignment="Center" Text="SplitButtonStyle (Click count=0):"/>
                 <ToggleButton Style="{StaticResource ToolBarSplitButtonStyle}" Content="Simplest" Margin="0 -1 0 -2"
@@ -173,7 +169,7 @@
                         VerticalContentAlignment="Top" HorizontalContentAlignment="Left" Width="70"/>
             </ToolBar>
 
-            <ToolBar Grid.Row="3" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch" Padding="0" Margin="0 10 0 0" Height="50" Background="#FFD6EAFF">
+            <ToolBar ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch" Padding="0" Margin="0 10 0 0" Height="50" Background="#FFD6EAFF">
                 <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Text="DropDownButtonStyle:"/>
                 <ToggleButton Margin="0 -1 5 -2" Style="{StaticResource ToolBarDropDownButtonStyle}" VerticalContentAlignment="Bottom" Padding="0"
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
@@ -194,40 +190,42 @@
                 </ToggleButton>
             </ToolBar>
 
-            <TextBlock Grid.Row="4" Text="Dummy textbox:" HorizontalAlignment="Left"/>
-            <TextBox Grid.Row="4" Margin="100 0 0 0" Width="50" Background="Yellow" HorizontalAlignment="Left"/>
+            <WrapPanel>
+            <TextBlock Text="Dummy textbox:" HorizontalAlignment="Left"/>
+            <TextBox Margin="100 0 0 0" Width="50" Background="Yellow" HorizontalAlignment="Left"/>
+            </WrapPanel>
 
-            <!-- ======================= -->
-            <TextBlock Grid.Row="6" FontWeight="Bold" Text="Controls:" HorizontalAlignment="Center" Margin="0 20 0 0"/>
+                <!-- ======================= -->
+            <TextBlock FontWeight="Bold" Text="Controls:" HorizontalAlignment="Center" Margin="0 20 0 0"/>
 
-            <WrapPanel Grid.Row="7">
+            <WrapPanel>
                 <ToggleButton x:Name="PopupButton" Margin="5" Content="DropDown button with Popup" IsThreeState="False"
-                          effects:ChromeEffect.MonochromeAnimated="Gainsboro"
-                          IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"/>
+                              effects:ChromeEffect.MonochromeAnimated="Gainsboro"
+                              IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"/>
 
                 <Popup x:Name="PART_Popup"
-                   AllowsTransparency="True"
-                   Focusable="False"
-                   Placement="Bottom"
-                   PlacementTarget="{Binding ElementName=PopupButton}"
-                   PopupAnimation="Fade"
-                   IsOpen="{Binding ElementName=PopupButton, Path=IsChecked}"
-                   StaysOpen="False">
+                       AllowsTransparency="True"
+                       Focusable="False"
+                       Placement="Bottom"
+                       PlacementTarget="{Binding ElementName=PopupButton}"
+                       PopupAnimation="Fade"
+                       IsOpen="{Binding ElementName=PopupButton, Path=IsChecked}"
+                       StaysOpen="False">
                     <controls:Calculator/>
                 </Popup>
 
                 <ToggleButton Margin="5" x:Name="MenuPopupButton" Content="Bad: DropDown button with MenuPopup" IsThreeState="False"
                               effects:ChromeEffect.MonochromeAnimated="Gainsboro"
-                          IsHitTestVisible="{Binding ElementName=PART_MenuPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"/>
+                              IsHitTestVisible="{Binding ElementName=PART_MenuPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"/>
 
                 <Popup x:Name="PART_MenuPopup"
-                   AllowsTransparency="True"
-                   Focusable="False"
-                   Placement="Bottom"
-                   PlacementTarget="{Binding ElementName=MenuPopupButton}"
-                   PopupAnimation="Fade"
-                   IsOpen="{Binding ElementName=MenuPopupButton, Path=IsChecked}"
-                   StaysOpen="False">
+                       AllowsTransparency="True"
+                       Focusable="False"
+                       Placement="Bottom"
+                       PlacementTarget="{Binding ElementName=MenuPopupButton}"
+                       PopupAnimation="Fade"
+                       IsOpen="{Binding ElementName=MenuPopupButton, Path=IsChecked}"
+                       StaysOpen="False">
                     <Menu>
                         <MenuItem Header="Copy"/>
                         <MenuItem Header="Paste"/>
@@ -257,9 +255,9 @@
             </WrapPanel>
 
             <!--  ====================  -->
-            <TextBlock Grid.Row="8" FontWeight="Bold" Text="DualPathToggleButtonEffect:" HorizontalAlignment="Center" Margin="0 20 0 0"/>
+            <TextBlock FontWeight="Bold" Text="DualPathToggleButtonEffect:" HorizontalAlignment="Center" Margin="0 20 0 0"/>
 
-            <ToolBar Grid.Row="9" x:Name="CommandBar3" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
+            <ToolBar x:Name="CommandBar3" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="30" Background="#FFD6EAFF">
 
                 <ToggleButton x:Name="T1" Margin="0 -1 0 -2" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" VerticalAlignment="Stretch"
@@ -395,6 +393,8 @@
                 </ComboBox>
 
             </ToolBar>
+
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

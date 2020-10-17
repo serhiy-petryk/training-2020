@@ -1,7 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -70,24 +73,24 @@ namespace WpfInvestigate.Controls.Effects
             if (!(state.Item1.HasValue || state.Item2.HasValue || (state.Item3.HasValue && state.Item4.HasValue) || (state.Item5.HasValue && state.Item6.HasValue)))
                 return;
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
-            {
-                if (control.Style == null)
+            control.Unloaded += OnChromeUnloaded;
+            control.PreviewMouseLeftButtonDown += ChromeUpdate;
+            control.PreviewMouseLeftButtonUp += ChromeUpdate;
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpd.AddValueChanged(control, ChromeUpdate);
+            dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
+            dpd.AddValueChanged(control, ChromeUpdate);
+
+            //Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            //{
+                if (control.Style == null && control.Template == null)
                 {
                     var style = Application.Current.TryFindResource("DefaultButtonBaseStyle") as Style;
                     if (style != null && style.TargetType.IsInstanceOfType(control))
                         control.Style = style;
                 }
-                control.Unloaded += OnChromeUnloaded;
-                control.PreviewMouseLeftButtonDown += ChromeUpdate;
-                control.PreviewMouseLeftButtonUp += ChromeUpdate;
-                var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-                dpd.AddValueChanged(control, ChromeUpdate);
-                dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-                dpd.AddValueChanged(control, ChromeUpdate);
-
                 ChromeUpdate(control, null);
-            }));
+            //}));
         }
 
         private static void OnChromeUnloaded(object sender, RoutedEventArgs e)
