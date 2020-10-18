@@ -89,6 +89,20 @@
                               effects:FocusEffect.Brush="Aqua"
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
+                    <ToggleButton Margin="5" Height="30" Padding="4" Background="GreenYellow" Foreground="BlueViolet"
+                              BorderBrush="Orange" BorderThickness="2"
+                              Style="{StaticResource SplitButtonStyle}"
+                              effects:CornerRadiusEffect.CornerRadius="4"
+                              effects:FocusEffect.Brush="Aqua"
+                              Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
+                    <ToggleButton.Content>
+                        <Viewbox>
+                            <Path Stretch="Uniform" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                                  Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
+                        </Viewbox>
+                    </ToggleButton.Content>
+                </ToggleButton>
+
             </WrapPanel>
 
             <WrapPanel>
@@ -123,6 +137,21 @@
                               Style="{StaticResource MonochromeSplitButtonStyle}" 
                               effects:CornerRadiusEffect.CornerRadius="4"
                               Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Padding="4" Background="GreenYellow"
+                                  BorderBrush="Orange" BorderThickness="2"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}"
+                                  effects:CornerRadiusEffect.CornerRadius="4"
+                                  effects:FocusEffect.Brush="Aqua"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
+                        <ToggleButton.Content>
+                            <Viewbox>
+                                <Path Stretch="Uniform" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
+                            </Viewbox>
+                        </ToggleButton.Content>
+                    </ToggleButton>
+
             </WrapPanel>
 
             <!--<WrapPanel>

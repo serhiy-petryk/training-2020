@@ -17,7 +17,6 @@ namespace WpfInvestigate.Controls.Helpers
         public static Viewbox AddIconToControl(ContentControl control, bool iconBeforeContent, Geometry icon, double? iconWidth = null, Thickness? iconMargin = null)
         {
             var path = new Path { Stretch = Stretch.Uniform, Margin = new Thickness(), Data = icon };
-            // path.Fill = Brushes.GreenYellow;
             path.SetBinding(Shape.FillProperty, new Binding("Foreground")
             {
                 RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Control), 1)

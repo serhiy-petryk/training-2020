@@ -59,6 +59,14 @@
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template" Value="{StaticResource SplitButtonTemplate}"/>
+        <!--<Style.Resources>
+            <Style TargetType="{x:Type Path}">
+                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+            </Style>
+            <Style TargetType="{x:Type Line}">
+                <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+            </Style>
+        </Style.Resources>-->
     </Style>
 
     <Style x:Key="MonochromeSplitButtonStyle" TargetType="ToggleButton">
