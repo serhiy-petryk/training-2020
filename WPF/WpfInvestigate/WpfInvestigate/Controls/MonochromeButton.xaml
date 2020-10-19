@@ -3,44 +3,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:common="clr-namespace:WpfInvestigate.Common">
 
-    <ControlTemplate x:Key="MonochromeButtonTemplate" TargetType="ButtonBase">
-        <Border x:Name="PART_Border" BorderThickness="{TemplateBinding BorderThickness}" UseLayoutRounding="True" SnapsToDevicePixels="True">
-            <ContentControl>
-                <ContentControl x:Name="PART_Content" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Foreground="{Binding ConverterParameter=+75%, ElementName=PART_Border, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}">
-                    <ContentControl.Resources>
-                        <Style TargetType="Path">
-                            <Setter Property="Fill" Value="{Binding ElementName=PART_Content, Path=Foreground}"/>
-                        </Style>
-                    </ContentControl.Resources>
-                </ContentControl>
-            </ContentControl>
-
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
-                    <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMouseOver}" Value="True">
-                            <Setter Property="Background" Value="{Binding ConverterParameter=+20%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                            <Setter Property="BorderBrush" Value="{Binding ConverterParameter=+30%, RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPressed}" Value="True">
-                            <Setter Property="Background" Value="{Binding ConverterParameter=+60%, RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                            <Setter Property="BorderBrush" Value="{Binding ConverterParameter=+30%, RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
-        </Border>
-    </ControlTemplate>
-
-    <Style x:Key="MonochromeButtonStyle" TargetType="ButtonBase">
-        <Setter Property="Template" Value="{StaticResource MonochromeButtonTemplate}"/>
-    </Style>
-
     <Style x:Key="MonochromeAnimatedButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="0"/>
         <!-- Can't use binding for background because there is VS Designer error -->

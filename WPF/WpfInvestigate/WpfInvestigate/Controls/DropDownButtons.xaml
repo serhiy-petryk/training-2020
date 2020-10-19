@@ -82,20 +82,4 @@
         <Setter Property="effects:DualPathToggleButtonEffect.MarginOn" Value="2 0"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
     </Style>
-
-    <Style x:Key="DropDownMonochromeButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource MonochromeButtonStyle}">
-        <Setter Property="Padding" Value="2"/>
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="IsThreeState" Value="False"/>
-        <Setter Property="effects:DualPathToggleButtonEffect.GeometryOff" Value="{StaticResource DownArrowGeometry}"/>
-        <Setter Property="effects:DualPathToggleButtonEffect.GeometryOn" Value="{StaticResource CloseGeometry}"/>
-        <Setter Property="effects:DualPathToggleButtonEffect.Width" Value="9"/>
-        <Setter Property="effects:DualPathToggleButtonEffect.MarginOff" Value="2 0"/>
-        <Setter Property="effects:DualPathToggleButtonEffect.MarginOn" Value="2 0"/>
-        <Setter Property="UseLayoutRounding" Value="True"/>
-    </Style>
-
 </ResourceDictionary>
