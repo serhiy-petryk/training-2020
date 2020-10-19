@@ -58,6 +58,9 @@
                 <WrapPanel Orientation="Horizontal">
                     <TextBlock Text="DefaultButtonBaseStyle:" VerticalAlignment="Center"/>
 
+                    <Button Margin="5" Height="30" Content="Default" Padding="8 0"
+                            Style="{StaticResource DefaultButtonBaseStyle}"/>
+
                     <Button Margin="5" Height="30" Padding="0"
                             Background="GreenYellow" Foreground="BlueViolet"
                             BorderBrush="Blue" BorderThickness="1"
@@ -174,6 +177,7 @@
 
                 <WrapPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="MonochromeRippleButtonBaseStyle:"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Default" Style="{StaticResource MonochromeRippleButtonBaseStyle}"/>
                     <Button Width="80" Height="30" Margin="5" Content="#FF20df20" effects:ChromeEffect.MonochromeAnimated="#FF20df20" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
                     <Button Width="80" Height="30" Margin="5" Content="Primary" effects:ChromeEffect.MonochromeAnimated="{StaticResource PrimaryColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
                     <Button Width="80" Height="30" Margin="5" Content="Secondary" effects:ChromeEffect.MonochromeAnimated="{StaticResource SecondaryColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
@@ -237,6 +241,10 @@
 
                 <WrapPanel>
                     <TextBlock Text="SplitButtonStyle:" VerticalAlignment="Center"/>
+                    <ToggleButton Margin="5" Height="30" Content="Default"
+                                  Style="{StaticResource SplitButtonStyle}"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
                     <ToggleButton Margin="5" Height="30" Content="Simplest" Padding="8 0"
                                   Background="GreenYellow" Foreground="BlueViolet"
                                   BorderBrush="Blue" BorderThickness="1"
@@ -244,11 +252,12 @@
                                   effects:CornerRadiusEffect.CornerRadius="8"
                                   effects:FocusEffect.Brush="Aqua"
                                   Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
                     <ToggleButton Margin="5" Height="30" Content="Ripple" Padding="8 0"
                                   Background="GreenYellow" Foreground="BlueViolet"
                                   BorderBrush="Blue" BorderThickness="1"
                                   Style="{StaticResource SplitButtonStyle}"
-                                  effects:ClickEffect.RippleColor="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}"
+                                  effects:ClickEffect.RippleColor="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"
                                   effects:CornerRadiusEffect.CornerRadius="8"
                                   effects:FocusEffect.Brush="Aqua"
                                   Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
@@ -312,6 +321,63 @@
                                   Style="{StaticResource SplitButtonStyle}"
                                   effects:CornerRadiusEffect.CornerRadius="8"
                                   Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Text="MonochromeSplitButtonStyle:"/>
+                    <ToggleButton Margin="5" Height="30" Content="Default"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Content="#FFD6EAFF" Padding="8 0" Background="#FFD6EAFF"
+                                  BorderBrush="Red" BorderThickness="1"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}"
+                                  effects:CornerRadiusEffect.CornerRadius="4"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Content="Yellow" Padding="8 0" Background="Yellow"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}" 
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Content="Red" Padding="8 0" Background="Red"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}" 
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Content="Green" Padding="8 0" Background="Green"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}" 
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Content="Blue" Padding="8 0" Background="Blue"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}" 
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Content="Violet" Padding="8 0" Background="Violet"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}" 
+                                  effects:CornerRadiusEffect.CornerRadius="4"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Padding="4" Background="GreenYellow"
+                                  BorderBrush="Orange" BorderThickness="2"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}"
+                                  effects:CornerRadiusEffect.CornerRadius="4"
+                                  effects:FocusEffect.Brush="Aqua"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
+                        <ToggleButton.Content>
+                            <Viewbox>
+                                <Path Stretch="Uniform" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
+                            </Viewbox>
+                        </ToggleButton.Content>
+                    </ToggleButton>
+
+                    <ToggleButton Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                                  Background="Blue" BorderBrush="Blue" BorderThickness="4"
+                                  VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
+                                  Style="{StaticResource MonochromeSplitButtonStyle}"
+                                  effects:CornerRadiusEffect.CornerRadius="12"
+                                  effects:FocusEffect.Brush="Aqua"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
                 </WrapPanel>
 
             </StackPanel>
