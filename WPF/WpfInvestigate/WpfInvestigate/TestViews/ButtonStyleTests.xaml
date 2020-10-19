@@ -4,19 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:common="clr-namespace:WpfInvestigate.Common"
         mc:Ignorable="d"
-        Title="ColorPickerTests" Height="600" Width="1250">
+        Title="ButtonStyleTests" Height="600" Width="1250">
 
     <Window.Resources>
-        <Geometry x:Key="Dummy">M0 0 L1 1 L2 0 Z</Geometry>
-        <ResourceDictionary x:Key="PopupMenu" x:Shared="False">
-            <ContextMenu x:Key="cm" StaysOpen="False">
-                <MenuItem Header="Copy"/>
-                <MenuItem Header="Paste"/>
-                <MenuItem Header="Cut"/>
-                <MenuItem Header="Delete"/>
-            </ContextMenu>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Controls/BootstrapButtons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Geometry x:Key="Dummy">M0 0 L1 1 L2 0 Z</Geometry>
+            <ResourceDictionary x:Key="PopupMenu" x:Shared="False">
+                <ContextMenu x:Key="cm" StaysOpen="False">
+                    <MenuItem Header="Copy"/>
+                    <MenuItem Header="Paste"/>
+                    <MenuItem Header="Cut"/>
+                    <MenuItem Header="Delete"/>
+                </ContextMenu>
+            </ResourceDictionary>
         </ResourceDictionary>
+
     </Window.Resources>
 
     <Grid>
@@ -48,7 +56,7 @@
 
             <StackPanel Orientation="Vertical">
                 <WrapPanel Orientation="Horizontal">
-                    <Label Content="DefaultButtonBaseStyle" VerticalAlignment="Center"/>
+                    <TextBlock Text="DefaultButtonBaseStyle:" VerticalAlignment="Center"/>
 
                     <Button Margin="5" Height="30" Padding="0"
                             Background="GreenYellow" Foreground="BlueViolet"
@@ -164,8 +172,71 @@
 
                 </WrapPanel>
 
-                <WrapPanel Margin="0 5">
-                    <Label Content="SplitButtonStyle0" VerticalAlignment="Center"/>
+                <WrapPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="MonochromeRippleButtonBaseStyle:"/>
+                    <Button Width="80" Height="30" Margin="5" Content="#FF20df20" effects:ChromeEffect.MonochromeAnimated="#FF20df20" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Primary" effects:ChromeEffect.MonochromeAnimated="{StaticResource PrimaryColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Secondary" effects:ChromeEffect.MonochromeAnimated="{StaticResource SecondaryColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Success" effects:ChromeEffect.MonochromeAnimated="{StaticResource SuccessColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Danger" effects:ChromeEffect.MonochromeAnimated="{StaticResource DangerColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Warning" effects:ChromeEffect.MonochromeAnimated="{StaticResource WarningColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Info" effects:ChromeEffect.MonochromeAnimated="{StaticResource InfoColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Light" effects:ChromeEffect.MonochromeAnimated="{StaticResource LightColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Dark" effects:ChromeEffect.MonochromeAnimated="{StaticResource DarkColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="DropDownButtonStyle:"/>
+                    <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Default" Padding="8 0"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Custom colors:" Padding="8 0"
+                                  Background="Yellow" Foreground="Blue" BorderBrush="Red"
+                                  effects:CornerRadiusEffect.CornerRadius="6"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Ripple" Padding="8 0"
+                                  Background="Yellow" Foreground="Blue" BorderBrush="Red"
+                                  effects:ClickEffect.RippleColor="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}"
+                                  effects:CornerRadiusEffect.CornerRadius="6"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Padding="4"
+                                  Background="GreenYellow" Foreground="BlueViolet" BorderBrush="Orange"
+                                  Style="{StaticResource DropDownButtonStyle}"
+                                  effects:CornerRadiusEffect.CornerRadius="4"
+                                  effects:FocusEffect.Brush="Aqua"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
+                        <ToggleButton.Content>
+                            <Viewbox>
+                                <Path Stretch="Uniform" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
+                            </Viewbox>
+                        </ToggleButton.Content>
+                    </ToggleButton>
+
+                    <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Monochrome:" Padding="8 0"
+                                  effects:ChromeEffect.MonochromeAnimated="Yellow"
+                                  effects:CornerRadiusEffect.CornerRadius="4"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Padding="4"
+                                  Style="{StaticResource DropDownButtonStyle}"
+                                  effects:CornerRadiusEffect.CornerRadius="4"
+                                  effects:ChromeEffect.MonochromeAnimated="GreenYellow"
+                                  effects:FocusEffect.Brush="Aqua"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
+                        <ToggleButton.Content>
+                            <Viewbox>
+                                <Path Stretch="Uniform" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
+                            </Viewbox>
+                        </ToggleButton.Content>
+                    </ToggleButton>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <TextBlock Text="SplitButtonStyle:" VerticalAlignment="Center"/>
                     <ToggleButton Margin="5" Height="30" Content="Simplest" Padding="8 0"
                                   Background="GreenYellow" Foreground="BlueViolet"
                                   BorderBrush="Blue" BorderThickness="1"
@@ -173,10 +244,11 @@
                                   effects:CornerRadiusEffect.CornerRadius="8"
                                   effects:FocusEffect.Brush="Aqua"
                                   Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-                    <ToggleButton Margin="5" Height="30" Content="Simplest" Padding="8 0"
+                    <ToggleButton Margin="5" Height="30" Content="Ripple" Padding="8 0"
                                   Background="GreenYellow" Foreground="BlueViolet"
                                   BorderBrush="Blue" BorderThickness="1"
                                   Style="{StaticResource SplitButtonStyle}"
+                                  effects:ClickEffect.RippleColor="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}"
                                   effects:CornerRadiusEffect.CornerRadius="8"
                                   effects:FocusEffect.Brush="Aqua"
                                   Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>

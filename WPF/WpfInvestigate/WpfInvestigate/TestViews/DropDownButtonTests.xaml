@@ -154,51 +154,6 @@
 
                 </WrapPanel>
 
-                <WrapPanel>
-                    <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Text="DropDownButtonStyle:"/>
-                    <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Default" Padding="8 0"
-                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-
-                    <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Custom colors:" Padding="8 0"
-                                  Background="Yellow" Foreground="Blue" BorderBrush="Red"
-                                  effects:CornerRadiusEffect.CornerRadius="6"
-                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-
-                    <ToggleButton Margin="5" Height="30" Padding="4"
-                                  Background="GreenYellow" Foreground="BlueViolet" BorderBrush="Orange"
-                                  Style="{StaticResource DropDownButtonStyle}"
-                                  effects:CornerRadiusEffect.CornerRadius="4"
-                                  effects:FocusEffect.Brush="Aqua"
-                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
-                        <ToggleButton.Content>
-                            <Viewbox>
-                                <Path Stretch="Uniform" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
-                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
-                            </Viewbox>
-                        </ToggleButton.Content>
-                    </ToggleButton>
-
-                    <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Monochrome:" Padding="8 0"
-                                  effects:ChromeEffect.MonochromeAnimated="Yellow"
-                                  effects:CornerRadiusEffect.CornerRadius="4"
-                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-
-                    <ToggleButton Margin="5" Height="30" Padding="4"
-                                  Style="{StaticResource DropDownButtonStyle}"
-                                  effects:CornerRadiusEffect.CornerRadius="4"
-                                  effects:ChromeEffect.MonochromeAnimated="GreenYellow"
-                                  effects:FocusEffect.Brush="Aqua"
-                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
-                        <ToggleButton.Content>
-                            <Viewbox>
-                                <Path Stretch="Uniform" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
-                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
-                            </Viewbox>
-                        </ToggleButton.Content>
-                    </ToggleButton>
-
-                </WrapPanel>
-
                 <!--<ToolBar ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="30" Background="#FFD6EAFF">
                 <ToggleButton Style="{StaticResource ToolBarSplitButtonStyle}" Content="SplitButtonStyle" Margin="0 -1 0 -2" Padding="8 0"
