@@ -5,49 +5,9 @@
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
 
-    <ControlTemplate x:Key="DefaultButtonBaseTemplate" TargetType="{x:Type ButtonBase}">
-        <!-- Double border: to remove gap between border and content (see https://stackoverflow.com/questions/18581204/how-to-fix-empty-space-between-a-border-and-a-background-in-button-with-rounded) -->
-        <Grid>
-            <Border Margin="0.5" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"
-                    SnapsToDevicePixels="False" UseLayoutRounding="False"/>
-            <Border Margin="0" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}"
-                    BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
-                    SnapsToDevicePixels="True" UseLayoutRounding="True">
-                <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" UseLayoutRounding="{TemplateBinding UseLayoutRounding}"/>
-            </Border>
-        </Grid>
-    </ControlTemplate>
-
-    <Style x:Key="DefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="Template" Value="{StaticResource DefaultButtonBaseTemplate}"/>
-        <Style.Resources>
-            <Style TargetType="{x:Type Path}">
-                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
-            </Style>
-            <Style TargetType="{x:Type Line}">
-                <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
-            </Style>
-        </Style.Resources>
-    </Style>
-
-    <Style x:Key="ClearAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
-        <Setter Property="effects:ChromeEffect.BichromeAnimatedBackground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-        <Setter Property="effects:ChromeEffect.BichromeAnimatedForeground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-        <Setter Property="Content">
-            <Setter.Value>
-                <Viewbox UseLayoutRounding="False">
-                    <Grid Width="10" Height="10">
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="0" Y2="10" />
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="10" Y2="0" />
-                    </Grid>
-                </Viewbox>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Controls/ButtonStyles.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MonochromeRippleButtonBaseStyle" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="2"/>
