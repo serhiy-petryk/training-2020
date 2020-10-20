@@ -7,7 +7,7 @@
 
     <Geometry x:Key="CloseGeometry">M22 4 L18 0 L11 7 L4 0 L0 4 L7 11 L0 18 L4 22 L11 15 L18 22 L22 18 L15 11 L22 4Z</Geometry>
     <Geometry x:Key="DownArrowGeometry">M0 0 L1 1 L2 0 Z</Geometry>
-    <sys:String x:Key="NoPressedChromeMatrix">+0%,+70%,+0%,40, +0%,+70%,+0%,100, +25%,+25%/+75%,+50%,100</sys:String>
+    <sys:String x:Key="NoPressedChromeMatrix">+0%,+70%,+0%,40, +0%,+70%,+0%,100, +25%,+25%/+75%,+25%/+50%,100</sys:String>
 
     <Style x:Key="DefaultButtonBaseStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderBrush" Value="Gray"/>
@@ -61,6 +61,14 @@
     </Style>
 
     <Style x:Key="MonochromeRippleButtonBaseStyle" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="White"/>
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+70%,+25%,100, +25%,+25%/+75%,+25%/+50%,100, +60%,+60%/+75%,+60%/+50%,100"/>
+        <Setter Property="effects:ClickEffect.RippleColor" Value="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated), Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"/>
+    </Style>
+
+    <Style x:Key="MonochromeRippleButtonBaseStyle_NoBorder" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="White"/>
         <Setter Property="effects:ClickEffect.RippleColor" Value="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated), Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"/>
     </Style>
@@ -100,7 +108,7 @@
                         <Border x:Name="PART_BackBorder" Margin="0.5" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"/>
 
                         <Border x:Name="PART_FrontBorder" Margin="0" Padding="0"
-                                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="Transparent">
 
                             <Grid Margin="0">
                                 <Grid.ColumnDefinitions>
@@ -155,7 +163,7 @@
                         <Border x:Name="PART_BackBorder" Margin="0.5" Padding="0" BorderThickness="0" Background="{TemplateBinding Background}"/>
 
                         <Border x:Name="PART_FrontBorder" Margin="0" Padding="0"
-                                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="Transparent">
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -195,4 +203,7 @@
         </Setter>
     </Style>
 
+    <Style x:Key="MonochromeSplitButtonStyle_NoBorder" TargetType="ToggleButton" BasedOn="{StaticResource MonochromeSplitButtonStyle}">
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+70%,+0%,100, +0%,+75%,+50%,100"/>
+    </Style>
 </ResourceDictionary>
