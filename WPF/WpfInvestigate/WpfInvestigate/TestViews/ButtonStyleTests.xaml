@@ -238,20 +238,6 @@
                 </WrapPanel>
 
                 <WrapPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="MonochromeRippleButtonBaseStyle:"/>
-                    <Button Width="80" Height="30" Margin="5" Content="Default" Style="{StaticResource MonochromeRippleButtonBaseStyle}"/>
-                    <Button Width="80" Height="30" Margin="5" Content="#FF20df20" effects:ChromeEffect.MonochromeAnimated="#FF20df20" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
-                    <Button Width="80" Height="30" Margin="5" Content="Primary" effects:ChromeEffect.MonochromeAnimated="{StaticResource PrimaryColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
-                    <Button Width="80" Height="30" Margin="5" Content="Secondary" effects:ChromeEffect.MonochromeAnimated="{StaticResource SecondaryColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
-                    <Button Width="80" Height="30" Margin="5" Content="Success" effects:ChromeEffect.MonochromeAnimated="{StaticResource SuccessColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
-                    <Button Width="80" Height="30" Margin="5" Content="Danger" effects:ChromeEffect.MonochromeAnimated="{StaticResource DangerColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
-                    <Button Width="80" Height="30" Margin="5" Content="Warning" effects:ChromeEffect.MonochromeAnimated="{StaticResource WarningColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
-                    <Button Width="80" Height="30" Margin="5" Content="Info" effects:ChromeEffect.MonochromeAnimated="{StaticResource InfoColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
-                    <Button Width="80" Height="30" Margin="5" Content="Light" effects:ChromeEffect.MonochromeAnimated="{StaticResource LightColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
-                    <Button Width="80" Height="30" Margin="5" Content="Dark" effects:ChromeEffect.MonochromeAnimated="{StaticResource DarkColor}" Style="{StaticResource MonochromeRippleButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
-                </WrapPanel>
-
-                <WrapPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="DropDownButtonStyle:"/>
                     <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Default" Padding="8 0"
                                   Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
@@ -271,25 +257,6 @@
                                   Background="GreenYellow" Foreground="BlueViolet" BorderBrush="Orange"
                                   Style="{StaticResource DropDownButtonStyle}"
                                   effects:CornerRadiusEffect.CornerRadius="4"
-                                  effects:FocusEffect.Brush="Aqua"
-                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
-                        <ToggleButton.Content>
-                            <Viewbox>
-                                <Path Stretch="Uniform" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
-                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
-                            </Viewbox>
-                        </ToggleButton.Content>
-                    </ToggleButton>
-
-                    <ToggleButton Margin="5" Height="30" Style="{StaticResource DropDownButtonStyle}" Content="Monochrome:" Padding="8 0"
-                                  effects:ChromeEffect.MonochromeAnimated="Yellow"
-                                  effects:CornerRadiusEffect.CornerRadius="4"
-                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
-
-                    <ToggleButton Margin="5" Height="30" Padding="4"
-                                  Style="{StaticResource DropDownButtonStyle}"
-                                  effects:CornerRadiusEffect.CornerRadius="4"
-                                  effects:ChromeEffect.MonochromeAnimated="GreenYellow"
                                   effects:FocusEffect.Brush="Aqua"
                                   Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
                         <ToggleButton.Content>
@@ -383,6 +350,44 @@
                                   Style="{StaticResource SplitButtonStyle}"
                                   effects:CornerRadiusEffect.CornerRadius="8"
                                   Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="MonochromeButtonBaseStyle:"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Default" Style="{StaticResource MonochromeButtonBaseStyle}"/>
+                    <Button Width="80" Height="30" Margin="5" Content="#FF20df20" effects:ChromeEffect.MonochromeAnimated="#FF20df20" Style="{StaticResource MonochromeButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Primary" effects:ChromeEffect.MonochromeAnimated="{StaticResource PrimaryColor}" Style="{StaticResource MonochromeButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Secondary" effects:ChromeEffect.MonochromeAnimated="{StaticResource SecondaryColor}" Style="{StaticResource MonochromeButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Success" effects:ChromeEffect.MonochromeAnimated="{StaticResource SuccessColor}" Style="{StaticResource MonochromeButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Danger" effects:ChromeEffect.MonochromeAnimated="{StaticResource DangerColor}" Style="{StaticResource MonochromeButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Warning" effects:ChromeEffect.MonochromeAnimated="{StaticResource WarningColor}" Style="{StaticResource MonochromeButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Info" effects:ChromeEffect.MonochromeAnimated="{StaticResource InfoColor}" Style="{StaticResource MonochromeButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Light" effects:ChromeEffect.MonochromeAnimated="{StaticResource LightColor}" Style="{StaticResource MonochromeButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                    <Button Width="80" Height="30" Margin="5" Content="Dark" effects:ChromeEffect.MonochromeAnimated="{StaticResource DarkColor}" Style="{StaticResource MonochromeButtonBaseStyle}" effects:CornerRadiusEffect.CornerRadius="4"/>
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="MonochromeDropDownButton:"/>
+
+                    <ToggleButton Margin="5" Height="30" BorderThickness="2" Content="Monochrome DropDown" Padding="8 0"
+                                  Style="{StaticResource DropDownButtonStyle}"
+                                  effects:ChromeEffect.MonochromeAnimated="Yellow"
+                                  effects:CornerRadiusEffect.CornerRadius="4"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                    <ToggleButton Margin="5" Height="30" Padding="4" BorderThickness="2"
+                                  Style="{StaticResource DropDownButtonStyle}"
+                                  effects:CornerRadiusEffect.CornerRadius="4"
+                                  effects:ChromeEffect.MonochromeAnimated="GreenYellow"
+                                  effects:FocusEffect.Brush="Aqua"
+                                  Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
+                        <ToggleButton.Content>
+                            <Viewbox>
+                                <Path Stretch="Uniform" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
+                            </Viewbox>
+                        </ToggleButton.Content>
+                    </ToggleButton>
                 </WrapPanel>
 
                 <WrapPanel>
@@ -516,7 +521,7 @@
                     <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Text="Toolbar Demo:"/>
                     <ToolBar x:Name="ToolBar" Background="#FFD6EAFF" Height="32" Margin="0" Padding="0" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch">
                         <Button Margin="0 -1 0 -2" Content="Default" Padding="8 0" VerticalAlignment="Stretch"
-                                Style="{StaticResource MonochromeRippleButtonBaseStyle_NoBorder}"
+                                Style="{StaticResource MonochromeButtonBaseStyle_NoBorder}"
                                 effects:ChromeEffect.MonochromeAnimated="{Binding Background, ElementName=ToolBar, Converter={x:Static common:ColorHslBrush.Instance}}"/>
 
                         <ToggleButton Margin="0 -1 0 -2" Style="{StaticResource DropDownButtonStyle}" Content="Monochrome" Padding="8 0"
