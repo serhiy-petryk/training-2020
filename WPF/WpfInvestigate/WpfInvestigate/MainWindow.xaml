@@ -74,7 +74,6 @@
                 <Button x:Name="WatermarkTest" Width="200" Margin="0 5" Content="Watermark Tests" Click="WatermarkTest_OnClick"/>
                 <Button x:Name="RippleEffectTest" Width="200" Margin="0 5" Content="Ready: RippleEffect" Click="RippleEffectTest_OnClick"/>
                 <Button x:Name="FlatButtonTest" Width="200" Margin="0 5" Content="Ready: FlatButton" Click="FlatButtonTest_OnClick"/>
-                <Button x:Name="MonochromeButtonTest" Width="200" Margin="0 5" Content="Ready: MonochromeButton" Click="MonochromeButtonTest_OnClick"/>
                 <Button x:Name="ChromeTest" Width="200" Margin="0 5" Content="Ready: Chrome tests" Click="ChromeTest_OnClick"/>
                 <Button x:Name="ColorPickerTest" Width="200" Margin="0 5" Content="Ready: ColorPickerTest" Click="ColorPickerTest_OnClick"/>
             </StackPanel>
@@ -94,6 +93,7 @@
                 <Button x:Name="ObsoleteNumericUpDownTest" Width="200" Margin="0 5" Content="Obsolete: NumericUpDown" Click="ObsoleteNumericUpDownTest_OnClick"/>
                 <Button x:Name="ObsoleteRippleButtonTest" Width="250" Margin="0 5" Content="Obsolete (use RippleEffect): RippleButton" Click="ObsoleteRippleButtonTest_OnClick"/>
                 <Button x:Name="ObsoleteTests" Width="200" Margin="0 5" Content="Obsolete: ControlLibrary" Click="ObsoleteControlLibrary_OnClick"/>
+                <Button x:Name="ObsoleteMonochromeButtonTest" Width="200" Margin="0 5" Content="Obsolete: MonochromeButton" Click="ObsoleteMonochromeButtonTest_OnClick"/>
             </StackPanel>
 
         </Grid>

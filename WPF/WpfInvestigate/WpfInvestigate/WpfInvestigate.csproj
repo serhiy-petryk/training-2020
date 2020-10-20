@@ -94,7 +94,7 @@
     </Compile>
     <Compile Include="Controls\FlatButtonConverters\FlatButtonConverters.cs" />
     <Compile Include="Controls\KeyAssignmentSet.cs" />
-    <Compile Include="Controls\MonochromeButton.xaml.cs">
+    <Compile Include="Obsolete\MonochromeButton.xaml.cs">
       <DependentUpon>MonochromeButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NumericBox.xaml.cs">
@@ -143,7 +143,7 @@
     <Compile Include="TestViews\DualPathToggleButtonEffectTests.xaml.cs">
       <DependentUpon>DualPathToggleButtonEffectTests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\MonochromeButtonTests.xaml.cs">
+    <Compile Include="Obsolete\TestViews\MonochromeButtonTests.xaml.cs">
       <DependentUpon>MonochromeButtonTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\FlatButtonTests.xaml.cs">
@@ -212,7 +212,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\MonochromeButton.xaml">
+    <Page Include="Obsolete\MonochromeButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -289,7 +289,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestViews\MonochromeButtonTests.xaml">
+    <Page Include="Obsolete\TestViews\MonochromeButtonTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -7,7 +7,7 @@
         <ResourceDictionary Source="/Controls/ButtonStyles.xaml"/>
         <ResourceDictionary Source="/Controls/BootstrapButtons.xaml"/>
         <ResourceDictionary Source="/Controls/FlatButton.xaml"/>
-        <ResourceDictionary Source="/Controls/MonochromeButton.xaml"/>
+        <ResourceDictionary Source="/Obsolete/MonochromeButton.xaml"/>
         <ResourceDictionary Source="/Theme/Flags.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 

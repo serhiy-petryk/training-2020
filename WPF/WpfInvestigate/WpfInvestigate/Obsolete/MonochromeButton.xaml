@@ -1,9 +1,9 @@
-﻿<ResourceDictionary x:Class="WpfInvestigate.Controls.MonochromeButton"
+﻿<ResourceDictionary x:Class="WpfInvestigate.Obsolete.MonochromeButton"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:common="clr-namespace:WpfInvestigate.Common">
 
-    <Style x:Key="MonochromeAnimatedButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="ObsoleteMonochromeAnimatedButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="0"/>
         <!-- Can't use binding for background because there is VS Designer error -->
         <Setter Property="Background" Value="Transparent"/>
@@ -82,7 +82,7 @@
         <EventSetter Event="Loaded" Handler="OnMonochromeButtonLoaded" />
     </Style>
 
-    <Style x:Key="MonochromeAnimatedClearButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource MonochromeAnimatedButtonStyle}" x:Shared="False">
+    <Style x:Key="ObsoleteMonochromeAnimatedClearButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" x:Shared="False">
         <Setter Property="Content">
             <Setter.Value>
                 <Viewbox UseLayoutRounding="False">

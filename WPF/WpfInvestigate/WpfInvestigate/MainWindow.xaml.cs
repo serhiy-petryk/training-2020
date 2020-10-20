@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using WpfInvestigate.Obsolete;
+using WpfInvestigate.Obsolete.TestViews;
 using WpfInvestigate.TestViews;
 
 namespace WpfInvestigate
@@ -50,7 +51,7 @@ namespace WpfInvestigate
         private void WatermarkTest_OnClick(object sender, RoutedEventArgs e) => new WatermarkTests().Show();
         private void DatePickerExtensionTest_OnClick(object sender, RoutedEventArgs e) => new DatePickerExtensionTests().Show();
         private void WiPTest_OnClick(object sender, RoutedEventArgs e) => new WiPTests().Show();
-        private void MonochromeButtonTest_OnClick(object sender, RoutedEventArgs e) => new MonochromeButtonTests().Show();
+        private void ObsoleteMonochromeButtonTest_OnClick(object sender, RoutedEventArgs e) => new MonochromeButtonTests().Show();
         private void FlatButtonTest_OnClick(object sender, RoutedEventArgs e) => new FlatButtonTests().Show();
         private void RippleEffectTest_OnClick(object sender, RoutedEventArgs e) => new RippleEffectTests().Show();
         private void CalculatorTest_OnClick(object sender, RoutedEventArgs e) => new CalculatorTests().Show();

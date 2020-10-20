@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfInvestigate.TestViews.MonochromeButtonTests"
+﻿<Window x:Class="WpfInvestigate.Obsolete.TestViews.MonochromeButtonTests"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -39,19 +39,19 @@
                 <Label Margin="10 0"/>
                 <WrapPanel>
                     <Label Content="BichromeAnimatedClearButtonStyle"/>
-                    <Button Style="{StaticResource MonochromeAnimatedClearButtonStyle}" Background="Blue" Width="40" Height="40" BorderBrush="Red"/>
+                    <Button Style="{StaticResource ObsoleteMonochromeAnimatedClearButtonStyle}" Background="Blue" Width="40" Height="40" BorderBrush="Red"/>
                     <Button Style="{StaticResource ClearAnimatedButtonStyle}" Width="40" Height="40" BorderBrush="Red"
                             effects:ChromeEffect.BichromeAnimatedBackground="White"
                             effects:ChromeEffect.BichromeAnimatedForeground="Blue"/>
 
                     <Label Content="BiAnimatedButtonStyle"/>
-                    <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="Blue" Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red"/>
+                    <Button Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Background="Blue" Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red"/>
                     <Button Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red"
                             effects:ChromeEffect.BichromeAnimatedBackground="Blue"
                             effects:ChromeEffect.BichromeAnimatedForeground="White"/>
 
                     <Label Content="disabled MonochromeAnimatedButtonStyle"/>
-                    <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" IsEnabled="False" Background="Blue" Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red"/>
+                    <Button Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" IsEnabled="False" Background="Blue" Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red"/>
                 </WrapPanel>
 
                 <WrapPanel>
@@ -70,66 +70,66 @@
                     <ToolBarPanel ClipToBounds="True" Height="40">
                         <ToolBar Background="OrangeRed" Height="40" Padding="0" BorderThickness="0" ToolBarTray.IsLocked="True" Margin="-5,0,-13,-4" ClipToBounds="True">
                             <Label Content="not defined" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToolBar}}"/>
-                            <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Width="30" Height="30" Margin="0"
+                            <Button Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Width="30" Height="30" Margin="0"
                         Content="X" FontSize="12" FontWeight="Bold" BorderBrush="Red" />
 
                             <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Margin="0"
                                     Background="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Path=Background}"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                            Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Width="24" Height="24"
                             effects:IconEffect.Geometry="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
 
                             <Label Content="foreground = not defined" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToolBar}}"/>
-                            <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource MonochromeAnimatedButtonStyle}" Width="30" BorderThickness="0" Height="52" Content="X" FontSize="12" FontWeight="Bold" BorderBrush="Red" Margin="0"/>
+                            <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Width="30" BorderThickness="0" Height="52" Content="X" FontSize="12" FontWeight="Bold" BorderBrush="Red" Margin="0"/>
                             <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Margin="0"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                            Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Width="24" Height="24"
                             effects:IconEffect.Geometry="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
 
                             <Label Content="foreground not defined" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToolBar}}"/>
-                            <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" Width="30" Height="30" Margin="0"
+                            <Button Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Width="30" Height="30" Margin="0"
                             Content="X" FontSize="12" FontWeight="Bold" BorderBrush="Red" />
                             <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Margin="0"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                            Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Width="24" Height="24"
                             effects:IconEffect.Geometry="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
 
                             <Label Content="MonochromeAnimatedClearButtonStyle" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToolBar}}"/>
-                            <Button Style="{StaticResource MonochromeAnimatedClearButtonStyle}" Width="30" Height="30" Margin="0" BorderBrush="Red"/>
+                            <Button Style="{StaticResource ObsoleteMonochromeAnimatedClearButtonStyle}" Width="30" Height="30" Margin="0" BorderBrush="Red"/>
                         </ToolBar>
                     </ToolBarPanel>
                 </WrapPanel>
 
                 <ToolBar ClipToBounds="False" Margin="-9 0 -13 0" Height="30" Background="Silver" IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}">
                     <Label Content="Toolbar" Background="GreenYellow" Margin="0 -1 0 -2"/>
-                    <Button Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                    <Button Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ToolBar}, Path=Background}"
                             Margin="1 -1 0 -2" Height="30" Width="29" Content="X" FontSize="12" FontWeight="Bold" BorderBrush="Red" />
-                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Margin="0 -1 0 -2" Height="30" Width="29"
                             Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ToolBar}, Path=Background}"
                             effects:IconEffect.Geometry="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
 
-                    <Button Style="{StaticResource MonochromeAnimatedButtonStyle}" BorderThickness="2"
+                    <Button Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" BorderThickness="2"
                             Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ToolBar}, Path=Background}"
                             Margin="0 -1 0 -2" Height="30" Width="29" Content="X" FontSize="12" FontWeight="Bold">
                     </Button>
-                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Margin="0 -1 0 -2" Height="30" Width="29" BorderThickness="2"
                             Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ToolBar}, Path=Background}"
                             effects:IconEffect.Geometry="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
 
-                    <Button Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                    <Button Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Background="Red"
                             Margin="0 -1 0 -2" Height="30" Width="29" Content="X" FontSize="12" FontWeight="Bold" BorderBrush="Red" />
-                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Margin="0 -1 0 -2" Height="30" Width="29" Background="Red"
                             effects:IconEffect.Geometry="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
 
-                    <Button Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                    <Button Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Background="Red" BorderThickness="2"
                             Margin="0 -1 0 -2" Height="30" Width="29" Content="X" FontSize="12" FontWeight="Bold" BorderBrush="Red" />
-                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Margin="0 -1 0 -2" Height="30" Width="29" Background="Red" BorderThickness="2"
                             effects:IconEffect.Geometry="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
 
@@ -137,63 +137,63 @@
 
                 <WrapPanel Margin="0 5 0 0">
                     <Label Content="NEW:MonochromeAnimatedButtonStyle"/>
-                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="Blue"
+                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Background="Blue"
                             Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red" BorderThickness="0"/>
-                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="Blue"
+                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Background="Blue"
                             Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red" BorderThickness="4"/>
-                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="Yellow"
+                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Background="Yellow"
                             Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red" BorderThickness="4"/>
-                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                    <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}" Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red" BorderThickness="4"/>
 
                     <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
-                            Style="{StaticResource MonochromeAnimatedClearButtonStyle}" Background="Blue"
+                            Style="{StaticResource ObsoleteMonochromeAnimatedClearButtonStyle}" Background="Blue"
                             Width="24" Height="24" BorderThickness="2" BorderBrush="Red"/>
                     <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
-                            Style="{StaticResource MonochromeAnimatedClearButtonStyle}"
+                            Style="{StaticResource ObsoleteMonochromeAnimatedClearButtonStyle}"
                             Width="24" Height="24"/>
 
                     <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Background="Blue"
+                            Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Background="Blue"
                             Width="24" Height="24" BorderBrush="Red" BorderThickness="2"
                             effects:IconEffect.Geometry="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
                     <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}"
+                            Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"
                             Width="24" Height="24"
                             effects:IconEffect.Geometry="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 5 0 0">
                     <Label Content="MonochromeAnimatedButtonStyle for ToggleButtons"/>
-                    <ToggleButton x:Name="PART_ToggleButton" Focusable="True" IsTabStop="False" Style="{StaticResource MonochromeAnimatedButtonStyle}" Width="18" Padding="2 0"
+                    <ToggleButton x:Name="PART_ToggleButton" Focusable="True" IsTabStop="False" Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Width="18" Padding="2 0"
                                   IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
                                   effects:IconEffect.Geometry="M34,52H31V38.5C29.66,39.9 28.16,40.78 26.34,41.45V37.76C27.3,37.45 28.34,36.86 29.46,36C30.59,35.15 31.36,34.15 31.78,33H34V52M45,52V48H37V45L45,33H48V45H50V48H48V52H45M45,45V38.26L40.26,45H45M18,57V23H23V20A2,2 0 0,1 25,18H29C30.11,18 31,18.9 31,20V23H45V20A2,2 0 0,1 47,18H51C52.11,18 53,18.9 53,20V23H58V57H18M21,54H55V31H21V54M48.5,20A1.5,1.5 0 0,0 47,21.5V24.5A1.5,1.5 0 0,0 48.5,26H49.5C50.34,26 51,25.33 51,24.5V21.5A1.5,1.5 0 0,0 49.5,20H48.5M26.5,20A1.5,1.5 0 0,0 25,21.5V24.5A1.5,1.5 0 0,0 26.5,26H27.5A1.5,1.5 0 0,0 29,24.5V21.5A1.5,1.5 0 0,0 27.5,20H26.5Z"/>
                     <Label Content="{Binding ElementName=PART_ToggleButton, Path=IsChecked}"/>
 
                     <ToggleButton x:Name="TestPART_ToggleButton" Focusable="True" IsTabStop="False" Width="28" BorderThickness="2" BorderBrush="Red" Padding="4 4 8 8" Background="Blue"
                                   effects:IconEffect.Geometry="M34,52H31V38.5C29.66,39.9 28.16,40.78 26.34,41.45V37.76C27.3,37.45 28.34,36.86 29.46,36C30.59,35.15 31.36,34.15 31.78,33H34V52M45,52V48H37V45L45,33H48V45H50V48H48V52H45M45,45V38.26L40.26,45H45M18,57V23H23V20A2,2 0 0,1 25,18H29C30.11,18 31,18.9 31,20V23H45V20A2,2 0 0,1 47,18H51C52.11,18 53,18.9 53,20V23H58V57H18M21,54H55V31H21V54M48.5,20A1.5,1.5 0 0,0 47,21.5V24.5A1.5,1.5 0 0,0 48.5,26H49.5C50.34,26 51,25.33 51,24.5V21.5A1.5,1.5 0 0,0 49.5,20H48.5M26.5,20A1.5,1.5 0 0,0 25,21.5V24.5A1.5,1.5 0 0,0 26.5,26H27.5A1.5,1.5 0 0,0 29,24.5V21.5A1.5,1.5 0 0,0 27.5,20H26.5Z"
-                                  Style="{StaticResource MonochromeAnimatedButtonStyle}"/>
+                                  Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"/>
                     <Label Content="{Binding ElementName=TestPART_ToggleButton, Path=IsChecked}"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 5 0 0">
-                    <Button Width="150" Height="30" Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="MonochromeAnimatedButtonStyle" />
+                    <Button Width="150" Height="30" Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Content="MonochromeAnimatedButtonStyle" />
                     <Button Background="Blue" BorderThickness="4" BorderBrush="LightSkyBlue" Width="150" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="MonochromeAnimatedButtonStyle" />
+                            Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Content="MonochromeAnimatedButtonStyle" />
 
                     <ToggleButton x:Name="TB" Focusable="True" IsTabStop="False" Width="58" Padding="2 0"  Background="Blue"
-                                  Style="{StaticResource MonochromeAnimatedButtonStyle}" Content="Toggle"/>
+                                  Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Content="Toggle"/>
                     <Label Content="{Binding ElementName=TB, Path=IsChecked}"/>
 
                     <Button Background="Blue" BorderThickness="2" BorderBrush="LightSkyBlue" Width="30" Height="30"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}">
+                            Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}">
                         <Viewbox>
                             <Path UseLayoutRounding="False" Stretch="Uniform" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"
                                   Data="M34,52H31V38.5C29.66,39.9 28.16,40.78 26.34,41.45V37.76C27.3,37.45 28.34,36.86 29.46,36C30.59,35.15 31.36,34.15 31.78,33H34V52M45,52V48H37V45L45,33H48V45H50V48H48V52H45M45,45V38.26L40.26,45H45M18,57V23H23V20A2,2 0 0,1 25,18H29C30.11,18 31,18.9 31,20V23H45V20A2,2 0 0,1 47,18H51C52.11,18 53,18.9 53,20V23H58V57H18M21,54H55V31H21V54M48.5,20A1.5,1.5 0 0,0 47,21.5V24.5A1.5,1.5 0 0,0 48.5,26H49.5C50.34,26 51,25.33 51,24.5V21.5A1.5,1.5 0 0,0 49.5,20H48.5M26.5,20A1.5,1.5 0 0,0 25,21.5V24.5A1.5,1.5 0 0,0 26.5,26H27.5A1.5,1.5 0 0,0 29,24.5V21.5A1.5,1.5 0 0,0 27.5,20H26.5Z"/>
                         </Viewbox>
                     </Button>
                     <Button Background="Blue" Width="58" Height="58"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}">
+                            Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}">
                         <Viewbox Width="42">
                             <Grid Width="10" Height="10">
                                 <Line StrokeThickness="2" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}" X1="0" X2="10" Y1="0" Y2="10" />
@@ -202,7 +202,7 @@
                         </Viewbox>
                     </Button>
                     <Button Background="Blue" Width="58" Height="58" Padding="16 16 8 8"
-                            Style="{StaticResource MonochromeAnimatedButtonStyle}">
+                            Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}">
                         <Viewbox>
                             <Grid Width="10" Height="10">
                                 <Line StrokeThickness="2" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}" X1="0" X2="10" Y1="0" Y2="10" />
@@ -217,24 +217,24 @@
                     <ToggleButton x:Name="TB2" Focusable="True" IsTabStop="False" Width="28" Height="28" BorderThickness="2" BorderBrush="Red" Padding="4 4 8 8"
                                   Background="Blue"
                                   effects:IconEffect.Geometry="M34,52H31V38.5C29.66,39.9 28.16,40.78 26.34,41.45V37.76C27.3,37.45 28.34,36.86 29.46,36C30.59,35.15 31.36,34.15 31.78,33H34V52M45,52V48H37V45L45,33H48V45H50V48H48V52H45M45,45V38.26L40.26,45H45M18,57V23H23V20A2,2 0 0,1 25,18H29C30.11,18 31,18.9 31,20V23H45V20A2,2 0 0,1 47,18H51C52.11,18 53,18.9 53,20V23H58V57H18M21,54H55V31H21V54M48.5,20A1.5,1.5 0 0,0 47,21.5V24.5A1.5,1.5 0 0,0 48.5,26H49.5C50.34,26 51,25.33 51,24.5V21.5A1.5,1.5 0 0,0 49.5,20H48.5M26.5,20A1.5,1.5 0 0,0 25,21.5V24.5A1.5,1.5 0 0,0 26.5,26H27.5A1.5,1.5 0 0,0 29,24.5V21.5A1.5,1.5 0 0,0 27.5,20H26.5Z"
-                                  Style="{StaticResource MonochromeAnimatedButtonStyle}"/>
+                                  Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}"/>
                     <Label Content="{Binding ElementName=TB2, Path=IsChecked}" VerticalAlignment="Center"/>
 
                     <TextBlock TextWrapping="WrapWithOverflow" Text="MonochromeAnimatedClearButtonStyle:" VerticalAlignment="Center" Background="Aqua"/>
                     <Button Focusable="True" IsTabStop="False" Width="58" Height="58" Padding="8" Background="Blue"
                             BorderThickness="4" BorderBrush="LightSkyBlue" Click="ButtonBase_OnClick"
-                            Style="{StaticResource MonochromeAnimatedClearButtonStyle}"/>
+                            Style="{StaticResource ObsoleteMonochromeAnimatedClearButtonStyle}"/>
                     <Button Focusable="True" IsTabStop="False" Width="58" Height="58" Padding="2" Click="ButtonBase_OnClick"
-                            Style="{StaticResource MonochromeAnimatedClearButtonStyle}"/>
+                            Style="{StaticResource ObsoleteMonochromeAnimatedClearButtonStyle}"/>
                     <Button Focusable="True" IsTabStop="False" Width="58" Height="58" Padding="2" Click="ButtonBase_OnClick"
                             Background="White"
-                            Style="{StaticResource MonochromeAnimatedClearButtonStyle}"/>
+                            Style="{StaticResource ObsoleteMonochromeAnimatedClearButtonStyle}"/>
                     <Button Focusable="True" IsTabStop="False" Width="58" Height="58" Padding="2" Click="ButtonBase_OnClick"
                             Background="Black"
-                            Style="{StaticResource MonochromeAnimatedClearButtonStyle}"/>
+                            Style="{StaticResource ObsoleteMonochromeAnimatedClearButtonStyle}"/>
 
                     <TextBlock TextWrapping="WrapWithOverflow" Text="MonochromeAnimatedClearButtonStyle with margin:" VerticalAlignment="Center" Background="Aqua" Width="100"/>
-                    <Button Style="{StaticResource MonochromeAnimatedClearButtonStyle}" Background="Blue" BorderThickness="1" BorderBrush="Black"
+                    <Button Style="{StaticResource ObsoleteMonochromeAnimatedClearButtonStyle}" Background="Blue" BorderThickness="1" BorderBrush="Black"
                             Width="20" Height="20" Margin="24 0 0 0" />
                 </WrapPanel>
             </StackPanel>

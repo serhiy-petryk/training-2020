@@ -12,7 +12,7 @@ using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls.Effects;
 
-namespace WpfInvestigate.Controls
+namespace WpfInvestigate.Obsolete
 {
     public partial class MonochromeButton
     {
@@ -118,7 +118,7 @@ namespace WpfInvestigate.Controls
                 if (brush == null || brush.IsFrozen || brush.IsSealed)
                     shape.Fill = new SolidColorBrush();
 
-                var ca = new ColorAnimation(newColor, AnimationHelper.SlowAnimationDuration);
+                var ca = new ColorAnimation(newColor, Common.AnimationHelper.SlowAnimationDuration);
                 shape.Fill.BeginAnimation(SolidColorBrush.ColorProperty, ca);
 
                 if (!(shape is Path))
