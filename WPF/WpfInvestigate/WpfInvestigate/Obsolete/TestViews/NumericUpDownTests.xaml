@@ -1,13 +1,12 @@
-﻿<Window x:Class="WpfInvestigate.Obsolete.NumericUpDownTests"
+﻿<Window x:Class="WpfInvestigate.Obsolete.TestViews.NumericUpDownTests"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
-        Title="NumericUpDownTests" Height="450" Width="1000">
+        Title="Obsolete NumericUpDownTests" Height="450" Width="1000">
 
     <Grid>
         <Grid.ColumnDefinitions>

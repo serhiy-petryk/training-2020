@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
 using WpfInvestigate.TestViews;
+using ObsoleteControlLibrary = WpfInvestigate.Obsolete.TestViews.ObsoleteControlLibrary;
 
 namespace WpfInvestigate
 {

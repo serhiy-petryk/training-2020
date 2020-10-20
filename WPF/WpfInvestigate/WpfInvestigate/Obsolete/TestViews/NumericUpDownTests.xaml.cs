@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace WpfInvestigate.Obsolete
+namespace WpfInvestigate.Obsolete.TestViews
 {
     /// <summary>
     /// Interaction logic for NumericUpDownTests.xaml

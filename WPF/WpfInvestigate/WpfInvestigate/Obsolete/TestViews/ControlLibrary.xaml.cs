@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 
-namespace WpfInvestigate.Obsolete
+namespace WpfInvestigate.Obsolete.TestViews
 {
     /// <summary>
     /// Interaction logic for ControlLibrary.xaml

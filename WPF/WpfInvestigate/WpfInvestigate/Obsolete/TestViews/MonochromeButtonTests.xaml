@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
-        Title="Flat Buttons" Height="450" Width="1000">
+        Title="Obsolete MonochromeButtonTests" Height="450" Width="1000">
 
     <Grid>
         <Grid.ColumnDefinitions>

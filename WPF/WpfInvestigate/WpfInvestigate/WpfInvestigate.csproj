@@ -155,7 +155,7 @@
     <Compile Include="TestViews\NumericBoxTests.xaml.cs">
       <DependentUpon>NumericBoxTests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Obsolete\NumericUpDownTests.xaml.cs">
+    <Compile Include="Obsolete\TestViews\NumericUpDownTests.xaml.cs">
       <DependentUpon>NumericUpDownTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\ObjectEditorTests.xaml.cs">
@@ -168,7 +168,7 @@
     <Compile Include="Controls\TimePickerBase.xaml.cs">
       <DependentUpon>TimePickerBase.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Obsolete\RippleButtonTests.xaml.cs">
+    <Compile Include="Obsolete\TestViews\RippleButtonTests.xaml.cs">
       <DependentUpon>RippleButtonTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\RippleEffectTests.xaml.cs">
@@ -224,7 +224,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Obsolete\ControlLibrary.xaml">
+    <Page Include="Obsolete\TestViews\ControlLibrary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -234,7 +234,7 @@
     </Compile>
     <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\Tips.cs" />
-    <Compile Include="Obsolete\ControlLibrary.xaml.cs">
+    <Compile Include="Obsolete\TestViews\ControlLibrary.xaml.cs">
       <DependentUpon>ControlLibrary.xaml</DependentUpon>
     </Compile>
     <Page Include="Obsolete\PathToggleButton.xaml">
@@ -305,7 +305,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Obsolete\NumericUpDownTests.xaml">
+    <Page Include="Obsolete\TestViews\NumericUpDownTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -321,7 +321,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Obsolete\RippleButtonTests.xaml">
+    <Page Include="Obsolete\TestViews\RippleButtonTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

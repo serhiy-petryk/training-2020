@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace WpfInvestigate.Obsolete
+namespace WpfInvestigate.Obsolete.TestViews
 {
     /// <summary>
     /// Interaction logic for RippleButtonTests.xaml
