@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using WpfInvestigate.Controls.Helpers;
 using WpfInvestigate.Obsolete;
 using WpfInvestigate.TestViews;
 
