@@ -29,7 +29,7 @@ namespace WpfInvestigate.Controls.Helpers
 
             if (control.HasContent)
             {
-                var grid = new Grid { ClipToBounds = true, Margin = new Thickness(), SnapsToDevicePixels = true};
+                var grid = new Grid { ClipToBounds = true, Margin = new Thickness(), SnapsToDevicePixels = true };
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = iconBeforeContent ? GridLength.Auto : new GridLength(1, GridUnitType.Star) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = !iconBeforeContent ? GridLength.Auto : new GridLength(1, GridUnitType.Star) });
 
@@ -44,6 +44,7 @@ namespace WpfInvestigate.Controls.Helpers
                     HorizontalAlignment = control.HorizontalContentAlignment
                 };
                 control.Content = null;
+                control.Padding = new Thickness();
                 // tb.VerticalContentAlignment = VerticalAlignment.Stretch;
                 control.HorizontalContentAlignment = HorizontalAlignment.Stretch;
                 grid.Children.Add(contentControl);
@@ -53,8 +54,6 @@ namespace WpfInvestigate.Controls.Helpers
             }
             else
                 control.Content = viewbox;
-            
-            control.Padding = new Thickness();
 
             return viewbox;
         }
