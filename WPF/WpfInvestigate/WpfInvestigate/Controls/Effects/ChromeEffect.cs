@@ -80,7 +80,7 @@ namespace WpfInvestigate.Controls.Effects
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
-                if (control.Style == null && control.Template == null)
+                if (control.Style == null)
                 {
                     var style = Application.Current.TryFindResource("DefaultButtonBaseStyle") as Style;
                     if (style != null && style.TargetType.IsInstanceOfType(control))
