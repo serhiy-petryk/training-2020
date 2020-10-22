@@ -179,10 +179,19 @@
                                                        FontSize="{TemplateBinding FontSize}"
                                                        Foreground="{TemplateBinding Foreground}"
                                                        IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                                                       SelectionBrush="{DynamicResource HighlightBrush}">
-                                    </DatePickerTextBox>
+                                                       SelectionBrush="{DynamicResource HighlightBrush}"/>
 
-                                    <ToggleButton x:Name="PART_ToggleButton" Grid.Column="1" Focusable="True" IsTabStop="False" Width="20" Padding="2" VerticalAlignment="Stretch"
+   <!--                                 <ToggleButton Grid.Column="1" x:Name="PART_ToggleButton" IsTabStop="False" Focusable="False"
+                                                  effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                  effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                  Padding="1" IsThreeState="False" Width="{StaticResource ButtonsWidth}"
+                                                  IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"
+                                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCalculatorButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                  effects:IconEffect.Geometry="M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M7,4V8H17V4H7M7,10V12H9V10H7M11,10V12H13V10H11M15,10V12H17V10H15M7,14V16H9V14H7M11,14V16H13V14H11M15,14V16H17V14H15M7,18V20H9V18H7M11,18V20H13V18H11M15,18V20H17V18H15Z"/>
+-->
+
+                                    <ToggleButton x:Name="PART_ToggleButton" Grid.Column="1" Focusable="True" IsTabStop="False" Width="20" Padding="1"
+                                                  IsThreeState="False" VerticalContentAlignment="Center"
                                                   effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                   effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                   Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
