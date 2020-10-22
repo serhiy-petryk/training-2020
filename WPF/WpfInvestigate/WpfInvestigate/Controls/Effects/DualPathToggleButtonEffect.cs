@@ -42,23 +42,21 @@ namespace WpfInvestigate.Controls.Effects
         //=====================================
         private static void OnWidthPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded,
-                new Action(() =>
-                {
-                    if (d is ToggleButton tb && GetViewbox(tb) is Viewbox viewbox)
-                        viewbox.Width = (double) e.NewValue;
-                }));
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            {
+                if (d is ToggleButton tb && GetViewbox(tb) is Viewbox viewbox)
+                    viewbox.Width = (double)e.NewValue;
+            }));
         }
         private static void OnMarginPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded,
-                new Action(() =>
-                {
-                    if (d is ToggleButton tb && (GetViewbox(tb) is Viewbox viewbox) &&
-                        ((tb.IsChecked == true && e.Property == MarginOnProperty) ||
-                         (tb.IsChecked != null && e.Property == MarginOffProperty)))
-                        viewbox.Margin = (Thickness)e.NewValue;
-                }));
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            {
+                if (d is ToggleButton tb && (GetViewbox(tb) is Viewbox viewbox) &&
+                    ((tb.IsChecked == true && e.Property == MarginOnProperty) ||
+                     (tb.IsChecked != null && e.Property == MarginOffProperty)))
+                    viewbox.Margin = (Thickness)e.NewValue;
+            }));
         }
 
         private static void OnGeometryPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

@@ -481,6 +481,7 @@
                                   Focusable="False" IsThreeState="False"
                                   ToolTip="Open/Close Task panel"
                                   UseLayoutRounding="False"
+                                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                   effects:CornerRadiusEffect.CornerRadius="2"
                                   effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                                   effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
@@ -491,6 +492,7 @@
                                   Focusable="False" IsThreeState="False"
                                   ToolTip="Open/Close Task panel"
                                   UseLayoutRounding="False"
+                                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                   effects:CornerRadiusEffect.CornerRadius="2"
                                   effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                                   effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
@@ -547,6 +549,11 @@
                     <ToolBar x:Name="ToolBar" Background="#FFD6EAFF" Height="32" Margin="0" Padding="0" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch">
                         <Button Margin="0 -1 0 -2" Content="Default" Padding="8 0" VerticalAlignment="Stretch" BorderThickness="1"
                                 Style="{StaticResource MonochromeButtonBaseStyle}"
+                                effects:ChromeEffect.MonochromeAnimated="{Binding Background, ElementName=ToolBar, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+
+                        <Button Margin="0 -1 0 -2" Width="100" Content="BottomRight" Padding="4 0" BorderThickness="1"
+                                Style="{StaticResource MonochromeButtonBaseStyle}"
+                                HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"
                                 effects:ChromeEffect.MonochromeAnimated="{Binding Background, ElementName=ToolBar, Converter={x:Static common:ColorHslBrush.Instance}}"/>
 
                         <ToggleButton Margin="0 -1 0 -2" Style="{StaticResource DropDownButtonStyle}" Content="Monochrome" Padding="8 0"
