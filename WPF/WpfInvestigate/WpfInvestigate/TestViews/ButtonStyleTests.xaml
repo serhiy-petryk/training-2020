@@ -152,7 +152,7 @@
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:FocusEffect.Brush="Aqua"
                             effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
-                            effects:IconEffect.PaddingIfHasContent="4"/>
+                            effects:IconEffect.MarginIfHasContent="4"/>
 
                     <TextBlock Margin="10 0 5 0" VerticalAlignment="Center" Text="SnapsToDevicePixels:"/>
                     <Button Margin="0" Padding="0" Height="24"
