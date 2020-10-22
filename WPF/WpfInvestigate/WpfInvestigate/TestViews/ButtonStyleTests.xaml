@@ -113,14 +113,14 @@
                             effects:CornerRadiusEffect.CornerRadius="12"
                             effects:FocusEffect.Brush="Aqua"/>
 
-                    <Button Margin="5 0" Width="30" Height="30" Padding="4"
+                    <Button Margin="5 0" Width="30" Height="30"
                             Background="Blue" Foreground="White"
                             BorderBrush="Red" BorderThickness="1"
                             Style="{StaticResource DefaultButtonBaseStyle}"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:FocusEffect.Brush="Aqua"
                             effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-                    <Button Margin="5 0" Width="30" Height="30" Padding="4"
+                    <Button Margin="5 0" Width="30" Height="30"
                             Background="Blue" Foreground="White" BorderThickness="0"
                             Style="{StaticResource DefaultButtonBaseStyle}"
                             effects:CornerRadiusEffect.CornerRadius="4"
@@ -164,13 +164,13 @@
                         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
                     </Button>
 
-                    <Button Margin="5 0" Width="30" Height="30" Padding="4"
+                    <Button Margin="5 0" Width="30" Height="30"
                             Background="Blue" Foreground="White" BorderBrush="Red" BorderThickness="2"
                             Style="{StaticResource DefaultButtonBaseStyle}"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:FocusEffect.Brush="Aqua"
                             effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-                    <Button Margin="5 0" Width="30" Height="30" Padding="4"
+                    <Button Margin="5 0" Width="30" Height="30"
                             Background="Blue" Foreground="Yellow" BorderBrush="Red" BorderThickness="2"
                             Style="{StaticResource DefaultButtonBaseStyle}"
                             effects:CornerRadiusEffect.CornerRadius="30"
@@ -267,9 +267,7 @@
                                   effects:FocusEffect.Brush="Aqua"
                                   Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                    <ToggleButton Margin="5 0" Width="45" Height="30" Padding="4"
-                                  Background="Blue" Foreground="White"
-                                  BorderBrush="Red" BorderThickness="1"
+                    <ToggleButton Margin="5 0" Width="45" Height="30" Background="Blue" Foreground="White" BorderBrush="Red"
                                   Style="{StaticResource SplitButtonStyle}"
                                   effects:CornerRadiusEffect.CornerRadius="4"
                                   effects:FocusEffect.Brush="Aqua"
