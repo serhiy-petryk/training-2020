@@ -134,12 +134,34 @@
                             effects:CornerRadiusEffect.CornerRadius="12"
                             effects:FocusEffect.Brush="Aqua"/>
 
+                    <Button Margin="5 0" Height="30"
+                            Background="Blue" Foreground="White" BorderBrush="Red" BorderThickness="2"
+                            Style="{StaticResource DefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="4"
+                            effects:FocusEffect.Brush="Aqua"
+                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                    <Button Margin="5 0" Height="30"
+                            Background="Blue" Foreground="Yellow" BorderBrush="Red" BorderThickness="2"
+                            Style="{StaticResource DefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="30"
+                            effects:FocusEffect.Brush="Aqua"
+                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                    <Button Margin="5 0" Height="30" Content="With icon" Padding="2 0 6 0"
+                            Background="Blue" Foreground="Yellow" BorderBrush="Red" BorderThickness="2"
+                            Style="{StaticResource DefaultButtonBaseStyle}"
+                            effects:CornerRadiusEffect.CornerRadius="4"
+                            effects:FocusEffect.Brush="Aqua"
+                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                            effects:IconEffect.PaddingIfHasContent="4"/>
+
+                    <TextBlock Margin="10 0 5 0" VerticalAlignment="Center" Text="SnapsToDevicePixels:"/>
                     <Button Margin="0" Padding="0" Height="24"
                             Background="GreenYellow" Foreground="BlueViolet"
                             BorderBrush="Blue" BorderThickness="1"
                             VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                             SnapsToDevicePixels="False" UseLayoutRounding="False"
                             Style="{StaticResource DefaultButtonBaseStyle}"
+                            ToolTip="SnapsToDevicePixels/UseLayoutRounding = false"
                             effects:CornerRadiusEffect.CornerRadius="8"
                             effects:FocusEffect.Brush="Aqua">
                         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
@@ -149,6 +171,7 @@
                             BorderBrush="Blue" BorderThickness="1"
                             VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                             SnapsToDevicePixels="True" UseLayoutRounding="True"
+                            ToolTip="SnapsToDevicePixels/UseLayoutRounding = true"
                             Style="{StaticResource DefaultButtonBaseStyle}"
                             effects:CornerRadiusEffect.CornerRadius="8"
                             effects:FocusEffect.Brush="Aqua">
@@ -159,24 +182,11 @@
                             BorderBrush="Blue" BorderThickness="1"
                             VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                             Style="{StaticResource DefaultButtonBaseStyle}"
+                            ToolTip="SnapsToDevicePixels/UseLayoutRounding = default(true)"
                             effects:CornerRadiusEffect.CornerRadius="8"
                             effects:FocusEffect.Brush="Aqua">
                         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
                     </Button>
-
-                    <Button Margin="5 0" Width="30" Height="30"
-                            Background="Blue" Foreground="White" BorderBrush="Red" BorderThickness="2"
-                            Style="{StaticResource DefaultButtonBaseStyle}"
-                            effects:CornerRadiusEffect.CornerRadius="4"
-                            effects:FocusEffect.Brush="Aqua"
-                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-                    <Button Margin="5 0" Width="30" Height="30"
-                            Background="Blue" Foreground="Yellow" BorderBrush="Red" BorderThickness="2"
-                            Style="{StaticResource DefaultButtonBaseStyle}"
-                            effects:CornerRadiusEffect.CornerRadius="30"
-                            effects:FocusEffect.Brush="Aqua"
-                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-
                 </WrapPanel>
 
                 <WrapPanel Orientation="Horizontal">

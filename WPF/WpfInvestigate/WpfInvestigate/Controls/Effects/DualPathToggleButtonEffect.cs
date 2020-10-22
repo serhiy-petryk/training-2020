@@ -79,8 +79,8 @@ namespace WpfInvestigate.Controls.Effects
 
         private static void Init(ToggleButton tb)
         {
-            var viewbox = ControlHelper.AddIconToControl(tb, false, tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb), 
-                GetWidth(tb), tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb));
+            var viewbox = ControlHelper.AddIconToControl(tb, false, tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb),
+                tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb), GetWidth(tb));
             viewbox.Resources.Add("DoubleIcon", true);
         }
 

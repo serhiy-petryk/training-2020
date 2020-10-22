@@ -14,18 +14,14 @@ namespace WpfInvestigate.Controls.Helpers
 {
     public static class ControlHelper
     {
-        public static Viewbox AddIconToControl(ContentControl control, bool iconBeforeContent, Geometry icon, double? iconWidth = null, Thickness? iconMargin = null)
+        public static Viewbox AddIconToControl(ContentControl control, bool iconBeforeContent, Geometry icon, Thickness iconMargin, double iconWidth = double.NaN)
         {
             var path = new Path { Stretch = Stretch.Uniform, Margin = new Thickness(), Data = icon };
             path.SetBinding(Shape.FillProperty, new Binding("Foreground")
             {
                 RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Control), 1)
             });
-            var viewbox = new Viewbox { Child = path, VerticalAlignment = VerticalAlignment.Stretch };
-            if (iconMargin.HasValue)
-                viewbox.Margin = iconMargin.Value;
-            if (iconWidth.HasValue)
-                viewbox.Width = iconWidth.Value;
+            var viewbox = new Viewbox {Child = path, VerticalAlignment = VerticalAlignment.Stretch, Margin = iconMargin, Width = iconWidth};
 
             if (control.HasContent)
             {
