@@ -477,6 +477,27 @@
                                   effects:DualPathToggleButtonEffect.MarginOff="0 7"
                                   effects:DualPathToggleButtonEffect.MarginOn="0 4"/>
 
+                    <ToggleButton Margin="5" Foreground="Blue" Background="Yellow" BorderBrush="Red"
+                                  Width="26" Height="26" Padding="4"
+                                  Style="{StaticResource DefaultButtonBaseStyle}"
+                                  Focusable="False" IsThreeState="False"
+                                  ToolTip="Open/Close Task panel"
+                                  UseLayoutRounding="False"
+                                  effects:CornerRadiusEffect.CornerRadius="2"
+                                  effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                                  effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
+
+                    <ToggleButton Margin="5" Foreground="Blue" Background="Yellow" BorderBrush="Red"
+                                  Width="26" Height="26"
+                                  Style="{StaticResource DefaultButtonBaseStyle}"
+                                  Focusable="False" IsThreeState="False"
+                                  ToolTip="Open/Close Task panel"
+                                  UseLayoutRounding="False"
+                                  effects:CornerRadiusEffect.CornerRadius="2"
+                                  effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                                  effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                                  effects:DualPathToggleButtonEffect.Width="16"/>
+
                     <ToggleButton Margin="5" Width="26" Height="26" Padding="0"
                                   Style="{StaticResource DefaultButtonBaseStyle}"
                                   Focusable="False" IsThreeState="False"
@@ -490,45 +511,36 @@
                                   effects:DualPathToggleButtonEffect.MarginOff="0 7"
                                   effects:DualPathToggleButtonEffect.MarginOn="0 4"/>
 
-                    <ToggleButton Margin="5" Height="26" Width="17" Focusable="False" IsThreeState="False"
+                    <ToggleButton Margin="5" Height="26" BorderThickness="1" BorderBrush="Red" Padding="1"
+                                  effects:ChromeEffect.BichromeAnimatedBackground="Blue"
+                                  effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
+                                  Focusable="False" IsThreeState="False"
+                                  ToolTip="Open/Close Task panel"
+                                  SnapsToDevicePixels="True"
+                                  effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                  effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                  effects:DualPathToggleButtonEffect.MarginOff="2 8.5"
+                                  effects:DualPathToggleButtonEffect.MarginOn="2 6"/>
+
+                    <ToggleButton Margin="5" Height="26" Focusable="False" IsThreeState="False"
                                   Foreground="Blue" Background="Yellow" BorderBrush="Red"
                                   Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                                   ToolTip="SnapsToDevicePixels=True"
                                   SnapsToDevicePixels="True"
                                   effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                   effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                  effects:DualPathToggleButtonEffect.MarginOff="4 0 3 0"
-                                  effects:DualPathToggleButtonEffect.MarginOn="4 0 3 0"/>
+                                  effects:DualPathToggleButtonEffect.MarginOff="1 7.5 1 7.5"
+                                  effects:DualPathToggleButtonEffect.MarginOn="1 5 1 5"/>
 
-                    <ToggleButton Margin="5" Height="26" Width="17" Focusable="False" IsThreeState="False"
+                    <ToggleButton Margin="5" Height="26" Focusable="False" IsThreeState="False"
                                   ToolTip="SnapsToDevicePixels=True" SnapsToDevicePixels="True"
                                   Style="{StaticResource DefaultButtonBaseStyle}"
                                   effects:ChromeEffect.MonochromeAnimated="Aqua"
                                   effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
                                   effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                   effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                  effects:DualPathToggleButtonEffect.MarginOff="4 0 3 0"
-                                  effects:DualPathToggleButtonEffect.MarginOn="4 0 3 0"/>
-
-                    <ToggleButton Margin="5" Height="26" Width="17" Focusable="False" IsThreeState="False" BorderThickness="0"
-                                  ToolTip="SnapsToDevicePixels=True" SnapsToDevicePixels="True"
-                                  Style="{StaticResource DefaultButtonBaseStyle}"
-                                  effects:ChromeEffect.MonochromeAnimated="Aqua"
-                                  effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
-                                  effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                                  effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                  effects:DualPathToggleButtonEffect.MarginOff="5 0 4 0"
-                                  effects:DualPathToggleButtonEffect.MarginOn="5 0 4 0"/>
-
-                    <ToggleButton Margin="5" Height="26" Width="18" Focusable="False" IsThreeState="False" BorderThickness="0"
-                                  ToolTip="SnapsToDevicePixels=True" SnapsToDevicePixels="True"
-                                  Style="{StaticResource DefaultButtonBaseStyle}"
-                                  effects:ChromeEffect.MonochromeAnimated="Aqua"
-                                  effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
-                                  effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                                  effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                  effects:DualPathToggleButtonEffect.MarginOff="4 0 4 0"
-                                  effects:DualPathToggleButtonEffect.MarginOn="4 0 4 0"/>
+                                  effects:DualPathToggleButtonEffect.MarginOff="1 7.5 1 7.5"
+                                  effects:DualPathToggleButtonEffect.MarginOn="1 5 1 5"/>
 
                 </WrapPanel>
 
