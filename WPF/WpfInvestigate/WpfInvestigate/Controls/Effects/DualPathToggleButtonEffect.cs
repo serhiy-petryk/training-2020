@@ -63,7 +63,7 @@ namespace WpfInvestigate.Controls.Effects
         {
             if (d is ToggleButton tb)
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
                 {
                     if ((!(tb.Content is FrameworkElement element) || !(GetViewbox(tb) is Viewbox)) && GetGeometryOn(tb) != Geometry.Empty && GetGeometryOff(tb) != Geometry.Empty)
                     {
