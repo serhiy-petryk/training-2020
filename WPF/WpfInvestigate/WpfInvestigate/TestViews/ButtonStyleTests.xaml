@@ -560,16 +560,26 @@
                                       effects:ChromeEffect.MonochromeAnimated="{Binding Background, ElementName=ToolBar, Converter={x:Static common:ColorHslBrush.Instance}}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                        <ToggleButton Margin="0 -1 0 -2" Content="Split button" Padding="8 0"
+                        <ToggleButton Margin="0 -1 0 -2" Content="Split button" Padding="8 0" BorderThickness="1"
                                       Style="{StaticResource MonochromeSplitButtonStyle}" 
                                       effects:ChromeEffect.MonochromeAnimated="{Binding Background, ElementName=ToolBar, Converter={x:Static common:ColorHslBrush.Instance}}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                        <ToggleButton Margin="0 -1 0 -2" Padding="0"
+                        <ToggleButton Margin="0 -1 0 -2" Padding="2"
                                       Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
-                                      Style="{StaticResource DefaultButtonBaseStyle}"
                                       Focusable="False" IsThreeState="False"
-                                      ToolTip="Open/Close Task panel"
+                                      ToolTip="Padding=2"
+                                      UseLayoutRounding="False"
+                                      effects:ChromeEffect.MonochromeAnimated="{Binding Background, ElementName=ToolBar, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                      effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
+                                      effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                                      effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                                      effects:DualPathToggleButtonEffect.MarginOff="0 7"
+                                      effects:DualPathToggleButtonEffect.MarginOn="0 4"/>
+                        <ToggleButton Margin="0 -1 0 -2" Padding="1"
+                                      Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
+                                      Focusable="False" IsThreeState="False"
+                                      ToolTip="Padding=1"
                                       UseLayoutRounding="False"
                                       effects:ChromeEffect.MonochromeAnimated="{Binding Background, ElementName=ToolBar, Converter={x:Static common:ColorHslBrush.Instance}}"
                                       effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
