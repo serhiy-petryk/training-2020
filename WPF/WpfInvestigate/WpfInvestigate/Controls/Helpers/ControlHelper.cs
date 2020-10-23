@@ -14,14 +14,36 @@ namespace WpfInvestigate.Controls.Helpers
 {
     public static class ControlHelper
     {
-        public static Viewbox AddIconToControl(ContentControl control, bool iconBeforeContent, Geometry icon, Thickness iconMargin, double iconWidth = double.NaN)
+        public static void AddIconToControl(ContentControl control, bool iconBeforeContent, Geometry icon, Thickness iconMargin, double iconWidth = double.NaN)
         {
+            if (control.Resources["AddIcon"] is bool)
+            { // icon already exists
+                var oldViewBox = Tips.GetVisualChildren(control).OfType<Viewbox>().FirstOrDefault(vb => vb.Resources["IconViewBox"] is bool);
+                if (oldViewBox != null)
+                {
+                    // wrong Margin/Width, якщо повторно виконуємо метод => потрібно ускладнити обробку (??? чи це потрібно)
+                    // oldViewBox.Margin = iconMargin;
+                    // oldViewBox.Width = iconWidth;
+                    if (oldViewBox.Child is Path oldPath)
+                        oldPath.Data = icon;
+                }
+                return;
+            }
+            control.Resources["AddIcon"] = true;
+
             var path = new Path { Stretch = Stretch.Uniform, Margin = new Thickness(), Data = icon };
             path.SetBinding(Shape.FillProperty, new Binding("Foreground")
             {
                 RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Control), 1)
             });
-            var viewbox = new Viewbox {Child = path, VerticalAlignment = VerticalAlignment.Stretch, Margin = iconMargin, Width = iconWidth};
+            var viewbox = new Viewbox
+            {
+                Child = path,
+                VerticalAlignment = VerticalAlignment.Stretch,
+                Margin = iconMargin,
+                Width = iconWidth,
+                Resources = {["IconViewBox"] = true}
+            };
 
             if (control.HasContent)
             {
@@ -50,8 +72,6 @@ namespace WpfInvestigate.Controls.Helpers
             }
             else
                 control.Content = viewbox;
-
-            return viewbox;
         }
 
         public static IEnumerable<Border> GetMainBorders(FrameworkElement element) =>

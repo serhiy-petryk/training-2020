@@ -101,16 +101,24 @@ namespace WpfInvestigate.Common
     // Converter for Controls.DoubleButton.xaml
     public class DoubleButtonConverter : IValueConverter
     {
-        public static DoubleButtonConverter LeftUpButton = new DoubleButtonConverter{_isLeftUpButton = true};
-        public static DoubleButtonConverter RightDownButton = new DoubleButtonConverter();
+        public static DoubleButtonConverter LeftUpPolygonPoints = new DoubleButtonConverter{_isLeftUpPolygonPoints = true};
+        public static DoubleButtonConverter RightDownPolygonPoints = new DoubleButtonConverter();
+        public static DoubleButtonConverter RightDownMargin = new DoubleButtonConverter{_isRightDownMargin = true};
 
-        private bool _isLeftUpButton = false;
+        private bool _isLeftUpPolygonPoints = false;
+        private bool _isRightDownMargin = false;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double size)
-                return _isLeftUpButton
-                    ? PointCollection.Parse($"0, 0, {size}, 0, 0, {size}")
-                    : PointCollection.Parse($"0, {size}, {size}, 0, {size}, {size}");
+            if (value is double dValue)
+            {
+                if (_isRightDownMargin)
+                    return new Thickness(-dValue, 0, 0, 0);
+                return _isLeftUpPolygonPoints
+                    ? PointCollection.Parse($"0, 0, {dValue}, 0, 0, {dValue}")
+                    : PointCollection.Parse($"0, {dValue}, {dValue}, 0, {dValue}, {dValue}");
+            }
+
+            if (targetType == typeof(Thickness)) return new Thickness();
             return $"0, 0";
         }
 

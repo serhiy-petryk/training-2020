@@ -79,9 +79,8 @@ namespace WpfInvestigate.Controls.Effects
 
         private static void Init(ToggleButton tb)
         {
-            var viewbox = ControlHelper.AddIconToControl(tb, false, tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb),
+            ControlHelper.AddIconToControl(tb, false, tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb),
                 tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb), GetWidth(tb));
-            viewbox.Resources.Add("DoubleIcon", true);
         }
 
         private static void OnToggleButtonCheckChanged(object sender, RoutedEventArgs e)
@@ -135,6 +134,6 @@ namespace WpfInvestigate.Controls.Effects
         }
 
         // private static Viewbox GetViewbox(Grid grid) => grid.Children.OfType<Viewbox>().FirstOrDefault(vb => Grid.GetColumn(vb) == 1);
-        private static Viewbox GetViewbox(ToggleButton tb) => Tips.GetVisualChildren(tb).OfType<Viewbox>().FirstOrDefault(vb => vb.Resources["DoubleIcon"] is bool);
+        private static Viewbox GetViewbox(ToggleButton tb) => Tips.GetVisualChildren(tb).OfType<Viewbox>().FirstOrDefault(vb => vb.Resources["IconViewBox"] is bool);
     }
 }

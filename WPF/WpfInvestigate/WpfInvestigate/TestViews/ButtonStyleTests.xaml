@@ -33,7 +33,7 @@
                 <Grid>
                     <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
                              StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
-                             Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.LeftUpButton}, ConverterParameter=LeftUpButton}" >
+                             Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.LeftUpPolygonPoints}, ConverterParameter=LeftUpButton}" >
                     </Polygon>
                     <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                       RecognizesAccessKey ="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
@@ -43,7 +43,7 @@
                 <Grid>
                     <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
                              StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
-                             Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.RightDownButton}, ConverterParameter=RightDownButton}" >
+                             Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.RightDownPolygonPoints}, ConverterParameter=RightDownButton}" >
                     </Polygon>
                     <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                       RecognizesAccessKey ="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
@@ -717,7 +717,7 @@
                             <RepeatButton Template="{DynamicResource LeftUpDoubleButtonTemplate}"
                                           Width="26" Height="26" BorderThickness="1" Focusable="False"
                                           Interval="15"
-                                          effects:ChromeEffect.MonochromeAnimated="Aqua"
+                                          Background="Red"
                                           ToolTip="Scroll window tabs to left">
                                 <Path Width="5" Height="10" Margin="-13 -10 0 0" Data="M 5 0 L 0 5 L 5 10 Z" />
                             </RepeatButton>
