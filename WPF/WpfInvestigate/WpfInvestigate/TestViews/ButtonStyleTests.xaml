@@ -32,18 +32,18 @@
             <ControlTemplate x:Key="LeftUpDoubleButtonTemplate" TargetType="{x:Type ButtonBase}">
                 <Grid>
                     <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
-                         StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
-                         Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.Instance}, ConverterParameter=LeftUpButton}" >
+                             StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
+                             Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.LeftUpButton}, ConverterParameter=LeftUpButton}" >
                     </Polygon>
                     <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                  RecognizesAccessKey ="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                      RecognizesAccessKey ="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="RightDownDoubleButtonTemplate" TargetType="{x:Type ButtonBase}">
                 <Grid>
                     <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
                              StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
-                             Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.Instance}, ConverterParameter=RightDownButton}" >
+                             Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.RightDownButton}, ConverterParameter=RightDownButton}" >
                     </Polygon>
                     <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                       RecognizesAccessKey ="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
@@ -697,16 +697,18 @@
 
                         <StackPanel Margin="2 0 0 0" Orientation="Horizontal">
                             <RepeatButton Template="{DynamicResource LeftUpDoubleButtonTemplate}" Style="{DynamicResource DoubleButtonStyle}"
-                                      Width="26" Height="26" BorderThickness="1" Focusable="False"
-                                      Interval="15"
-                                      ToolTip="Scroll window tabs to left">
+                                          Width="26" Height="26" BorderThickness="1" Focusable="False"
+                                          Background="GreenYellow"
+                                          Interval="15"
+                                          ToolTip="Scroll window tabs to left">
                                 <Path Width="5" Height="10" Margin="-13 -10 0 0" Fill="{DynamicResource Mwi.WindowBar.ForegroundBrush}" Data="M 5 0 L 0 5 L 5 10 Z" />
                             </RepeatButton>
 
                             <RepeatButton Template="{DynamicResource RightDownDoubleButtonTemplate}" Style="{DynamicResource DoubleButtonStyle}"
-                                      Margin="-26 0 0 0" Width="26" Height="26" BorderThickness="1" Focusable="False"
-                                      Interval="15"
-                                      ToolTip="Scroll window tabs to right">
+                                          Background="GreenYellow"
+                                          Margin="-26 0 0 0" Width="26" Height="26" BorderThickness="1" Focusable="False"
+                                          Interval="15"
+                                          ToolTip="Scroll window tabs to right">
                                 <Path Width="5" Height="10" Margin="13 10 0 0" Fill="{DynamicResource Mwi.WindowBar.ForegroundBrush}" Data="M 0 0 L 5 5 L 0 10 Z" />
                             </RepeatButton>
                         </StackPanel>

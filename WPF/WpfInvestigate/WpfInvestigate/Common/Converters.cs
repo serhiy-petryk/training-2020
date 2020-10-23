@@ -101,19 +101,16 @@ namespace WpfInvestigate.Common
     // Converter for Controls.DoubleButton.xaml
     public class DoubleButtonConverter : IValueConverter
     {
-        public static DoubleButtonConverter Instance = new DoubleButtonConverter();
+        public static DoubleButtonConverter LeftUpButton = new DoubleButtonConverter{_isLeftUpButton = true};
+        public static DoubleButtonConverter RightDownButton = new DoubleButtonConverter();
+
+        private bool _isLeftUpButton = false;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            try
-            {
-                var templateName = (string)parameter;
-                var size = (double)value;
-                if (templateName == "RightDownButton")
-                    return PointCollection.Parse($"0, {size}, {size}, 0, {size}, {size}");
-                if (templateName == "LeftUpButton")
-                    return PointCollection.Parse($"0, 0, {size}, 0, 0, {size}");
-            }
-            catch { }
+            if (value is double size)
+                return _isLeftUpButton
+                    ? PointCollection.Parse($"0, 0, {size}, 0, 0, {size}")
+                    : PointCollection.Parse($"0, {size}, {size}, 0, {size}, {size}");
             return $"0, 0";
         }
 

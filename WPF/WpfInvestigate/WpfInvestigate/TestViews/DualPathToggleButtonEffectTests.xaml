@@ -28,7 +28,7 @@
             <Grid>
                 <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
                          StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
-                         Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.Instance}, ConverterParameter=RightDownButton}" >
+                         Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.RightDownButton}, ConverterParameter=RightDownButton}" >
                 </Polygon>
                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                   RecognizesAccessKey ="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
@@ -39,7 +39,7 @@
             <Grid>
                 <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
                          StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
-                         Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.Instance}, ConverterParameter=LeftUpButton}" >
+                         Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.LeftUpButton}, ConverterParameter=LeftUpButton}" >
                 </Polygon>
                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                   RecognizesAccessKey ="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
