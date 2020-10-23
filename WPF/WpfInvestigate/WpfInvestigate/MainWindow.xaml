@@ -12,6 +12,112 @@
         Title="LIVE MainWindow" Height="600" Width="1000">
 
     <Window.Resources>
+
+        <Style x:Key="DoubleBaseButtonStyle" TargetType="RepeatButton" BasedOn="{StaticResource DefaultButtonBaseStyle}">
+            <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=ActualHeight}"/>
+            <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=Width}"/>
+            <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+            <Setter Property="Panel.ZIndex" Value="1"/>
+            <Setter Property="Interval" Value="15"/>
+            <Setter Property="UseLayoutRounding" Value="False"/>
+            <Setter Property="SnapsToDevicePixels" Value="False"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Panel.ZIndex" Value="2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="LeftUpDoubleButtonStyle" TargetType="RepeatButton" BasedOn="{StaticResource DoubleBaseButtonStyle}">
+            <Setter Property="Padding" Value="3 3 16 13"/>
+            <Setter Property="effects:IconEffect.Geometry" Value="M 1 0 L 0 1 L 1 2 Z"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                        <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
+                            <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
+                                     StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
+                                     Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.LeftUpPolygonPoints}}">
+                            </Polygon>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RightDownDoubleButtonStyle" TargetType="RepeatButton" BasedOn="{StaticResource DoubleBaseButtonStyle}">
+            <Setter Property="Padding" Value="16 13 3 3"/>
+            <Setter Property="effects:IconEffect.Geometry" Value="M 0 0 L 1 1 L 0 2 Z"/>
+            <Setter Property="Margin" Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.RightDownMargin}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                        <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
+                            <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
+                                     StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}"
+                                     Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.RightDownPolygonPoints}}" >
+                            </Polygon>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ===================== -->
+        <Style x:Key="DoubleButtonPanelStyle" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Style.Resources>
+                <ControlTemplate x:Key="LeftUpDoubleButtonTemplate" TargetType="{x:Type ButtonBase}">
+                    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
+                                 StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
+                                 Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.LeftUpPolygonPoints}}" >
+                        </Polygon>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Grid>
+                </ControlTemplate>
+                <ControlTemplate x:Key="RightDownDoubleButtonTemplate" TargetType="{x:Type ButtonBase}">
+                    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
+                                             StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
+                                             Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.RightDownPolygonPoints}}" >
+                        </Polygon>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Grid>
+                </ControlTemplate>
+
+                <Style x:Key="DoubleBaseButtonStyle" TargetType="RepeatButton">
+                    <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=ActualHeight}"/>
+                    <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=ActualHeight}"/>
+                    <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                    <Setter Property="Panel.ZIndex" Value="1"/>
+                    <Setter Property="Interval" Value="15"/>
+                    <Setter Property="UseLayoutRounding" Value="False"/>
+                    <Setter Property="SnapsToDevicePixels" Value="False"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Panel.ZIndex" Value="2"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <Style x:Key="LeftUpDoubleButtonStyle" TargetType="RepeatButton" BasedOn="{StaticResource DoubleBaseButtonStyle}">
+                    <Setter Property="Template" Value="{StaticResource LeftUpDoubleButtonTemplate}"/>
+                    <Setter Property="effects:IconEffect.Geometry" Value="M 1 0 L 0 1 L 1 2 Z"/>
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+                <Style x:Key="RightDownDoubleButtonStyle" TargetType="RepeatButton" BasedOn="{StaticResource DoubleBaseButtonStyle}">
+                    <Setter Property="Template" Value="{StaticResource RightDownDoubleButtonTemplate}"/>
+                    <Setter Property="effects:IconEffect.Geometry" Value="M 0 0 L 1 1 L 0 2 Z"/>
+                    <Setter Property="Margin" Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.RightDownMargin}}"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+
         <ControlTemplate x:Key="LeftUpDoubleButtonTemplate" TargetType="{x:Type ButtonBase}">
             <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
                 <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
@@ -150,6 +256,21 @@
                             <Path Width="5" Height="10" Margin="13 10 0 0" Data="M 0 0 L 5 5 L 0 10 Z" />
                         </RepeatButton>
                     </StackPanel>-->
+
+                <controls:DoubleTringleButton Margin="0 0 2 0" Width="26" Height="26" Background="Violet"/>
+
+                <StackPanel Orientation="Horizontal" Background="Aqua" Height="26" Width="26">
+                    <RepeatButton Style="{StaticResource LeftUpDoubleButtonStyle}" BorderThickness="1" Focusable="False"
+                                  Padding="3 3 16 13"
+                                  VerticalAlignment="Top"
+                                  HorizontalAlignment="Stretch"
+                                  ToolTip="Scroll window tabs to left"/>
+                    <RepeatButton Style="{StaticResource RightDownDoubleButtonStyle}" BorderThickness="1" Focusable="False"
+                                  Padding="16 13 3 3"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch"
+                                  ToolTip="Scroll window tabs to right"/>
+                </StackPanel>
 
                     <StackPanel Margin="2 0 0 0" Height="26" Orientation="Horizontal" Background="{Binding Source={StaticResource YellowColor}, Converter={x:Static common:ColorHslBrush.Instance}}">
                         <StackPanel.Resources>

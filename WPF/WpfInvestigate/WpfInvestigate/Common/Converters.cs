@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -101,9 +102,34 @@ namespace WpfInvestigate.Common
     // Converter for Controls.DoubleButton.xaml
     public class DoubleButtonConverter : IValueConverter
     {
-        public static DoubleButtonConverter LeftUpPolygonPoints = new DoubleButtonConverter{_isLeftUpPolygonPoints = true};
+        public static DoubleButtonConverter LeftUpPolygonPoints = new DoubleButtonConverter { _isLeftUpPolygonPoints = true };
         public static DoubleButtonConverter RightDownPolygonPoints = new DoubleButtonConverter();
-        public static DoubleButtonConverter RightDownMargin = new DoubleButtonConverter{_isRightDownMargin = true};
+        public static DoubleButtonConverter RightDownMargin = new DoubleButtonConverter { _isRightDownMargin = true };
+
+        private bool _isLeftUpPolygonPoints = false;
+        private bool _isRightDownMargin = false;
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double dValue)
+            {
+                if (_isRightDownMargin)
+                    return new Thickness(-dValue, 0, 0, 0);
+                return _isLeftUpPolygonPoints
+                    ? PointCollection.Parse($"0, 0, {dValue}, 0, 0, {dValue}")
+                    : PointCollection.Parse($"0, {dValue}, {dValue}, 0, {dValue}, {dValue}");
+            }
+
+            if (targetType == typeof(Thickness)) return new Thickness();
+            return $"0, 0";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+    public class XDoubleButtonConverter : IValueConverter
+    {
+        public static XDoubleButtonConverter LeftUpPolygonPoints = new XDoubleButtonConverter { _isLeftUpPolygonPoints = true };
+        public static XDoubleButtonConverter RightDownPolygonPoints = new XDoubleButtonConverter();
+        public static XDoubleButtonConverter RightDownMargin = new XDoubleButtonConverter { _isRightDownMargin = true };
 
         private bool _isLeftUpPolygonPoints = false;
         private bool _isRightDownMargin = false;

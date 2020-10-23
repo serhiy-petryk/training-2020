@@ -82,6 +82,9 @@
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ColorPickerViewModel.cs" />
+    <Compile Include="Controls\DoubleTringleButton.xaml.cs">
+      <DependentUpon>DoubleTringleButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Effects\ChromeEffect.cs" />
     <Compile Include="Controls\DatePickerExtension.cs" />
     <Compile Include="Controls\Effects\CornerRadiusEffect.cs" />
@@ -207,6 +210,10 @@
     <Page Include="Controls\ColorPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DoubleTringleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\FlatButton.xaml">
       <SubType>Designer</SubType>
