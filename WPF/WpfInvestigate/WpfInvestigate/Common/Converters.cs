@@ -98,37 +98,45 @@ namespace WpfInvestigate.Common
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
-    // Converter for Controls.DoubleButton.xaml
-    public class DoubleButtonConverter : IValueConverter
+    public class LeftRightButtonConverter : IValueConverter
     {
-        public static DoubleButtonConverter LeftUpPolygonPoints = new DoubleButtonConverter { _isLeftUpPolygonPoints = true };
-        public static DoubleButtonConverter RightDownPolygonPoints = new DoubleButtonConverter();
-        public static DoubleButtonConverter RightDownMargin = new DoubleButtonConverter { _isRightDownMargin = true };
+        public static LeftRightButtonConverter LeftUpPolygonPoints = new LeftRightButtonConverter { _isLeftUpPolygonPoints = true };
+        public static LeftRightButtonConverter RightDownPolygonPoints = new LeftRightButtonConverter();
+        public static LeftRightButtonConverter BorderWidth = new LeftRightButtonConverter{_isBorderWidth = true};
 
         private bool _isLeftUpPolygonPoints = false;
-        private bool _isRightDownMargin = false;
+        private bool _isBorderWidth = false;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double dValue)
+
+            if (value is FrameworkElement fe)
             {
-                if (_isRightDownMargin)
-                    return new Thickness(-dValue, 0, 0, 0);
-                return _isLeftUpPolygonPoints
-                    ? PointCollection.Parse($"0, 0, {dValue}, 0, 0, {dValue}")
-                    : PointCollection.Parse($"0, {dValue}, {dValue}, 0, {dValue}, {dValue}");
+                double.TryParse(fe.Tag as string, out var temp);
+                if (_isBorderWidth)
+                    return temp;
+
+                var border = temp / 2;
+                var height = fe.ActualHeight - border;
+                var width = fe.ActualWidth - border;
+
+                if (_isLeftUpPolygonPoints)
+                    return new PointCollection(new[] { new Point(border, border), new Point(width, border), new Point(border, height) });
+                
+                return new PointCollection(new[] { new Point(border, height), new Point(width, border), new Point(width, height) });
             }
 
-            if (targetType == typeof(Thickness)) return new Thickness();
-            return $"0, 0";
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
-    public class XDoubleButtonConverter : IValueConverter
+
+    // Converter for Controls.DoubleButton.xaml
+    public class ObsoleteDoubleButtonConverter : IValueConverter
     {
-        public static XDoubleButtonConverter LeftUpPolygonPoints = new XDoubleButtonConverter { _isLeftUpPolygonPoints = true };
-        public static XDoubleButtonConverter RightDownPolygonPoints = new XDoubleButtonConverter();
-        public static XDoubleButtonConverter RightDownMargin = new XDoubleButtonConverter { _isRightDownMargin = true };
+        public static ObsoleteDoubleButtonConverter LeftUpPolygonPoints = new ObsoleteDoubleButtonConverter { _isLeftUpPolygonPoints = true };
+        public static ObsoleteDoubleButtonConverter RightDownPolygonPoints = new ObsoleteDoubleButtonConverter();
+        public static ObsoleteDoubleButtonConverter RightDownMargin = new ObsoleteDoubleButtonConverter { _isRightDownMargin = true };
 
         private bool _isLeftUpPolygonPoints = false;
         private bool _isRightDownMargin = false;

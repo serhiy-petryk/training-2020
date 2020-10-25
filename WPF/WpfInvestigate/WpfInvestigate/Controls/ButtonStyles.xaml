@@ -210,4 +210,58 @@
         <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{x:Null}"/>
     </Style>
 
+    <!-- =============== -->
+    <!-- LeftRightDoubleButton -->
+    <!-- =============== -->
+    <Style x:Key="DoubleBaseButtonStyle" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=ActualHeight}"/>
+        <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=ActualWidth}"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="Panel.ZIndex" Value="1"/>
+        <Setter Property="UseLayoutRounding" Value="False"/>
+        <Setter Property="SnapsToDevicePixels" Value="False"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Panel.ZIndex" Value="2"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="LeftUpDoubleButtonStyle" TargetType="RepeatButton" BasedOn="{StaticResource DoubleBaseButtonStyle}">
+        <Setter Property="effects:IconEffect.Geometry" Value="M 1 0 L 0 1 L 1 2 Z"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True" ClipToBounds="True">
+                        <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
+                                 StrokeThickness="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.BorderWidth}}"
+                                 Points="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.LeftUpPolygonPoints}}">
+                        </Polygon>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RightDownDoubleButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DoubleBaseButtonStyle}">
+        <Setter Property="effects:IconEffect.Geometry" Value="M 0 0 L 1 1 L 0 2 Z"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True" ClipToBounds="True">
+                        <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
+                                 StrokeThickness="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.BorderWidth}}"
+                                 Points="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.RightDownPolygonPoints}}">
+                        </Polygon>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

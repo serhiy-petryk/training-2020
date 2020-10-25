@@ -29,27 +29,6 @@
                 </ContextMenu>
             </ResourceDictionary>
 
-            <ControlTemplate x:Key="LeftUpDoubleButtonTemplate" TargetType="{x:Type ButtonBase}">
-                <Grid>
-                    <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
-                             StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
-                             Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.LeftUpPolygonPoints}, ConverterParameter=LeftUpButton}" >
-                    </Polygon>
-                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      RecognizesAccessKey ="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                </Grid>
-            </ControlTemplate>
-            <ControlTemplate x:Key="RightDownDoubleButtonTemplate" TargetType="{x:Type ButtonBase}">
-                <Grid>
-                    <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
-                             StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
-                             Points="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:DoubleButtonConverter.RightDownPolygonPoints}, ConverterParameter=RightDownButton}" >
-                    </Polygon>
-                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      RecognizesAccessKey ="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                </Grid>
-            </ControlTemplate>
-
             <SolidColorBrush x:Key="Mwi.WindowBar.ForegroundBrush" Color="Black"/>
             <SolidColorBrush x:Key="DoubleButton.BorderBrush" Color="Transparent"/>
             <SolidColorBrush x:Key="DoubleButton.BackgroundBrush" Color="Transparent"/>
@@ -695,41 +674,24 @@
                                       effects:DualPathToggleButtonEffect.MarginOff="1 7.5 1 7.5"
                                       effects:DualPathToggleButtonEffect.MarginOn="1 5 1 5"/>
 
-                        <StackPanel Margin="2 0 0 0" Orientation="Horizontal">
-                            <RepeatButton Template="{DynamicResource LeftUpDoubleButtonTemplate}" Style="{DynamicResource DoubleButtonStyle}"
-                                          Width="26" Height="26" BorderThickness="1" Focusable="False"
-                                          Background="GreenYellow"
-                                          Interval="15"
-                                          ToolTip="Scroll window tabs to left">
-                                <Path Width="5" Height="10" Margin="-13 -10 0 0" Fill="{DynamicResource Mwi.WindowBar.ForegroundBrush}" Data="M 5 0 L 0 5 L 5 10 Z" />
-                            </RepeatButton>
+                        <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="LeftRightDoubleButton:"/>
+                        <Grid Margin="2 0" Height="26" Width="26" Background="Aqua" Tag="1">
+                            <RepeatButton Focusable="False" Interval="15" Style="{StaticResource LeftUpDoubleButtonStyle}"
+                                          Padding="3 3 16 13"
+                                          ToolTip="Scroll window tabs to left"/>
+                            <RepeatButton Focusable="False" Interval="15" Style="{StaticResource RightDownDoubleButtonStyle}"
+                                          Padding="16 13 3 3"
+                                          ToolTip="Scroll window tabs to right"/>
+                        </Grid>
 
-                            <RepeatButton Template="{DynamicResource RightDownDoubleButtonTemplate}" Style="{DynamicResource DoubleButtonStyle}"
-                                          Background="GreenYellow"
-                                          Margin="-26 0 0 0" Width="26" Height="26" BorderThickness="1" Focusable="False"
-                                          Interval="15"
-                                          ToolTip="Scroll window tabs to right">
-                                <Path Width="5" Height="10" Margin="13 10 0 0" Fill="{DynamicResource Mwi.WindowBar.ForegroundBrush}" Data="M 0 0 L 5 5 L 0 10 Z" />
-                            </RepeatButton>
-                        </StackPanel>
-
-                        <StackPanel Margin="2 0 0 0" Orientation="Horizontal">
-                            <RepeatButton Template="{DynamicResource LeftUpDoubleButtonTemplate}"
-                                          Width="26" Height="26" BorderThickness="1" Focusable="False"
-                                          Interval="15"
-                                          Background="Red"
-                                          ToolTip="Scroll window tabs to left">
-                                <Path Width="5" Height="10" Margin="-13 -10 0 0" Data="M 5 0 L 0 5 L 5 10 Z" />
-                            </RepeatButton>
-
-                            <RepeatButton Template="{DynamicResource RightDownDoubleButtonTemplate}"
-                                          Margin="-26 0 0 0" Width="26" Height="26" BorderThickness="1" Focusable="False"
-                                          Interval="15"
-                                          effects:ChromeEffect.MonochromeAnimated="Aqua"
-                                          ToolTip="Scroll window tabs to right">
-                                <Path Width="5" Height="10" Margin="13 10 0 0" Data="M 0 0 L 5 5 L 0 10 Z" />
-                            </RepeatButton>
-                        </StackPanel>
+                        <Grid Margin="2 0" Height="52" Width="40" Background="Aqua" Tag="2">
+                            <RepeatButton Focusable="False" Interval="15" Style="{StaticResource LeftUpDoubleButtonStyle}"
+                                          Padding="8 4 24 24"
+                                          ToolTip="Scroll window tabs to left"/>
+                            <RepeatButton Focusable="False" Interval="15" Style="{StaticResource RightDownDoubleButtonStyle}"
+                                          Padding="24 24 8 4"
+                                          ToolTip="Scroll window tabs to right"/>
+                        </Grid>
                     </WrapPanel>
 
                     <WrapPanel>

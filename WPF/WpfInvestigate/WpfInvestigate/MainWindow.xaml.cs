@@ -67,6 +67,5 @@ namespace WpfInvestigate
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
         }
-
     }
 }
