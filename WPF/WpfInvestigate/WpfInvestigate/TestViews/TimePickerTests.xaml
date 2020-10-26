@@ -3,12 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         x:Class="WpfInvestigate.TestViews.TimePickerTests"
         mc:Ignorable="d"
         Title="TimePickerTest" Height="600" Width="1000">
+
+    <Window.Resources>
+        <system:String x:Key="TestChromeMatrix">+0%,+70%,+0%,40, +0%,+75%,+0%,100, +5%,+5%/+100%,+5%/+100%,100, +0%,+0%/+100%,+0%/+100%,100</system:String>
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -45,6 +49,22 @@
                 <controls:TimePicker x:Name="NNN" Width="100" Height="30" Background="Yellow"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"/>
                 <Button Click="ChangeNullable_OnClick" Content="Change IsNullable" />
+            </WrapPanel>
+
+            <WrapPanel Margin="0 5 0 0">
+                <TextBlock Margin="0 5 5 5"><Run Text="Monochrome Time picker:"/></TextBlock>
+                <controls:TimePicker Margin="5" Width="100" Height="30" Padding="0"
+                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:ChromeEffect.MonochromeAnimated="Aqua"
+                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"/>
+                <controls:TimePicker Margin="5" Width="100" Height="30" Padding="0"
+                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:ChromeEffect.MonochromeAnimated="White"
+                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"/>
+                <controls:TimePicker Margin="5" Width="100" Height="30" Padding="0"
+                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:ChromeEffect.MonochromeAnimated="#FFD6EAFF"
+                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"/>
             </WrapPanel>
 
             <WrapPanel Margin="0 5 0 0">

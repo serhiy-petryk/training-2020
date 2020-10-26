@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-        xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="NumericBoxTests" Height="450" Width="800">
+
+    <Window.Resources>
+        <system:String x:Key="TestChromeMatrix">+0%,+70%,+0%,40, +0%,+75%,+0%,100, +10%,+10%/+75%,+10%/+75%,100, +0%,+0%/+100%,+0%/+100%,100</system:String>
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -29,59 +33,77 @@
                 AutoToolTipPlacement="BottomRight"
                 AutoToolTipPrecision="2"/>
 
-        <Grid Grid.Column="1">
-            <Grid.LayoutTransform>
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+            <StackPanel.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
-            </Grid.LayoutTransform>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+            </StackPanel.LayoutTransform>
 
-            <Button Grid.Row="0" Click="XButtonBase_OnClick">Set new Value</Button>
+            <WrapPanel Orientation="Horizontal" Margin="0 5">
+                <TextBlock Text="Monochrome:" VerticalAlignment="Center"/>
+                <Label Content="IsEnabled:" Margin="5 0" VerticalAlignment="Center"/>
+                <CheckBox x:Name="cbEnabled2" Margin="0 0 5 0" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
 
-            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
+                                     IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
+                                     effects:ChromeEffect.MonochromeAnimated="Aqua"
+                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"
+                                     Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
+                <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
+                                     IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
+                                     effects:ChromeEffect.MonochromeAnimated="White"
+                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"
+                                     Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
+                <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
+                                     IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
+                                     effects:ChromeEffect.Monochrome="#FFD6EAFF"
+                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"
+                                     effects:FocusEffect.Brush="Aqua"
+                                     Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
+                <Button Content="Test monochrome" Focusable="False"
+                        IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
+                        effects:ChromeEffect.Monochrome="#FFD6EAFF"
+                        effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"/>
+            </WrapPanel>
+
+            <WrapPanel Orientation="Horizontal" Margin="0 5">
                 <controls:NumericBox x:Name="AA" Width="200" effects:WatermarkEffect.Watermark="No value"
                                      Height="64" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value" Background="Yellow" Foreground="Blue"
                                      Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
-            </StackPanel>
-
-            <Label Grid.Row="4" Content="{Binding ElementName=AA, Path=Value}" Background="Yellow" Margin="8" Focusable="True"/>
-
-            <WrapPanel Grid.Row="6" Orientation="Horizontal" Margin="0 2">
-                <Label Content="IsEnabled:" Margin="5 0"/>
-                <CheckBox x:Name="cbEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
-
-                <controls:NumericBox Width="200" x:Name="nb" effects:WatermarkEffect.Watermark="No value"
-                                     BorderThickness="8" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
-                                     IsNullable="True" Focusable="True" Value="323"/>
+                <TextBlock Margin="5 0 0 0" Text="Value of first control:" VerticalAlignment="Center"/>
+                <Label Content="{Binding ElementName=AA, Path=Value}" Background="Yellow" Margin="8" Focusable="True" VerticalAlignment="Center"/>
+                <Button Click="XButtonBase_OnClick">Set new Value</Button>
             </WrapPanel>
 
-            <controls:NumericBox Grid.Row="7" Width="200" effects:WatermarkEffect.Watermark="No value"
-                                 FontSize="9" Focusable="True"
-                                 IsNullable="True" Value="323"/>
+            <WrapPanel Orientation="Horizontal" Margin="0 2">
+                <Label Content="IsEnabled:" Margin="5 0" VerticalAlignment="Center"/>
+                <CheckBox x:Name="cbEnabled" Margin="0 0 5 0" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
 
-            <controls:NumericBox Grid.Row="8" Width="200" effects:WatermarkEffect.Watermark="No value"
-                                 FontSize="24" Focusable="True"
-                                 IsNullable="True" Value="323"/>
+                <controls:NumericBox Width="120" x:Name="nb" effects:WatermarkEffect.Watermark="No value"
+                                     BorderThickness="8" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
+                                     IsNullable="True" Focusable="True" Value="323"/>
+                <TextBlock Margin="5 0 0 0" Text="Value of control:" VerticalAlignment="Center"/>
+                <TextBlock Margin="5 0" Text="{Binding Path=Value, ElementName=nb}" Background="Yellow" VerticalAlignment="Center"/>
+            </WrapPanel>
 
-            <controls:NumericBox Grid.Row="9" Width="200" effects:WatermarkEffect.Watermark="No value" IsReadOnly="True"
-                                 IsNullable="True" Value="323"/>
-            <controls:NumericBox Grid.Row="10" Width="200" effects:WatermarkEffect.Watermark="No value" IsEnabled="False"
-                                 IsNullable="True" Value="323"/>
-            <Label Grid.Row="11" Content="Value:"/>
-            <TextBlock Grid.Row="11" Margin="50 0 0 0" Text="{Binding Path=Value, ElementName=nb}" Background="Yellow" VerticalAlignment="Center"/>
-        </Grid>
+            <WrapPanel>
+                <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="No value"
+                                     VerticalAlignment="Center"
+                                     FontSize="9" Focusable="True"
+                                     IsNullable="True" Value="323"/>
+
+                <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="No value"
+                                     VerticalAlignment="Center"
+                                     FontSize="24" Focusable="True"
+                                     IsNullable="True" Value="323"/>
+
+                <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="No value" IsReadOnly="True"
+                                     VerticalAlignment="Center"
+                                     IsNullable="True" Value="323"/>
+                <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="No value" IsEnabled="False"
+                                     VerticalAlignment="Center"
+                                     IsNullable="True" Value="323"/>
+            </WrapPanel>
+        </StackPanel>
     </Grid>
 </Window>
