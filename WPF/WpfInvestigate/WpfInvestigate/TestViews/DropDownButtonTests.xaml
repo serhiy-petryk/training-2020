@@ -163,10 +163,10 @@
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
-                              effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                              effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
-                              effects:DualPathToggleButtonEffect.MarginOff="4 7 5 7"
-                              effects:DualPathToggleButtonEffect.MarginOn="5">
+                              effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                              effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
+                              effects:DoubleIconToggleButtonEffect.MarginOff="4 7 5 7"
+                              effects:DoubleIconToggleButtonEffect.MarginOn="5">
                     </ToggleButton>
 
                     <CheckBox IsChecked="False" IsThreeState="False" Style="{StaticResource {x:Static ToolBar.CheckBoxStyleKey}}"
@@ -179,10 +179,10 @@
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                               Focusable="False" IsThreeState="False"
                               Checked="OpenDropDownMenu"
-                              effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                              effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                              effects:DualPathToggleButtonEffect.MarginOff="2 10"
-                              effects:DualPathToggleButtonEffect.MarginOn="3 8"
+                              effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              effects:DoubleIconToggleButtonEffect.MarginOff="2 10"
+                              effects:DoubleIconToggleButtonEffect.MarginOn="3 8"
                               Resources="{StaticResource PopupMenu}"/>
 
                     <ToggleButton x:Name="T3" Margin="0 -1 0 -2" VerticalAlignment="Stretch" Width="180"
@@ -192,10 +192,10 @@
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               Checked="OpenDropDownMenu"
-                              effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                              effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                              effects:DualPathToggleButtonEffect.MarginOff="1 12 1 10"
-                              effects:DualPathToggleButtonEffect.MarginOn="0.5 8.5 0.5 8.5"
+                              effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              effects:DoubleIconToggleButtonEffect.MarginOff="1 12 1 10"
+                              effects:DoubleIconToggleButtonEffect.MarginOn="0.5 8.5 0.5 8.5"
                               Resources="{StaticResource PopupMenu}">
                         <TextBlock Margin="5 0" VerticalAlignment="Center">Wide toggle button</TextBlock>
                     </ToggleButton>
@@ -205,10 +205,10 @@
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                               Focusable="False" IsThreeState="False"
                               Checked="OpenDropDownMenu"
-                              effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                              effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                              effects:DualPathToggleButtonEffect.MarginOff="1 11"
-                              effects:DualPathToggleButtonEffect.MarginOn="0 8.5 0 7.5"
+                              effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              effects:DoubleIconToggleButtonEffect.MarginOff="1 11"
+                              effects:DoubleIconToggleButtonEffect.MarginOn="0 8.5 0 7.5"
                               Resources="{StaticResource PopupMenu}">
                         <TextBlock Margin="3 0 5 0" VerticalAlignment="Center">Toggle button</TextBlock>
                     </ToggleButton>
@@ -247,10 +247,10 @@
                                 <Grid Grid.Column="1">
                                     <ToggleButton x:Name="TB" Foreground="#FF0069D6" BorderThickness="1 0 0 0" Width="16" Padding="0" Margin="-1 0 0 0"
                                               VerticalAlignment="Stretch" IsThreeState="False" Checked="OpenDropDownMenu"
-                                              effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                                              effects:DualPathToggleButtonEffect.MarginOff="0 11"
-                                              effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                              effects:DualPathToggleButtonEffect.MarginOn="0 8"
+                                              effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                              effects:DoubleIconToggleButtonEffect.MarginOff="0 11"
+                                              effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                              effects:DoubleIconToggleButtonEffect.MarginOn="0 8"
                                               Resources="{StaticResource PopupMenu}">
                                         <ToggleButton.Style>
                                             <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">

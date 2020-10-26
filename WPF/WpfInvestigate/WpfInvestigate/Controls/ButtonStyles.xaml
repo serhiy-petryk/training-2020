@@ -62,11 +62,11 @@
 
     <Style x:Key="DropDownButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource DefaultButtonBaseStyle}">
         <Setter Property="IsThreeState" Value="False"/>
-        <Setter Property="effects:DualPathToggleButtonEffect.GeometryOff" Value="{StaticResource DownArrowGeometry}"/>
-        <Setter Property="effects:DualPathToggleButtonEffect.GeometryOn" Value="{StaticResource CloseGeometry}"/>
-        <Setter Property="effects:DualPathToggleButtonEffect.Width" Value="9"/>
-        <Setter Property="effects:DualPathToggleButtonEffect.MarginOff" Value="3 0"/>
-        <Setter Property="effects:DualPathToggleButtonEffect.MarginOn" Value="3 0"/>
+        <Setter Property="effects:DoubleIconToggleButtonEffect.GeometryOff" Value="{StaticResource DownArrowGeometry}"/>
+        <Setter Property="effects:DoubleIconToggleButtonEffect.GeometryOn" Value="{StaticResource CloseGeometry}"/>
+        <Setter Property="effects:DoubleIconToggleButtonEffect.Width" Value="9"/>
+        <Setter Property="effects:DoubleIconToggleButtonEffect.MarginOff" Value="3 0"/>
+        <Setter Property="effects:DoubleIconToggleButtonEffect.MarginOn" Value="3 0"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
     </Style>
 
@@ -116,9 +116,9 @@
                                               Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
                                               Style="{StaticResource DefaultButtonBaseStyle}"
                                               UseLayoutRounding="True" SnapsToDevicePixels="True"
-                                              effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                                              effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                              effects:DualPathToggleButtonEffect.Width="9"/>
+                                              effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                              effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                              effects:DoubleIconToggleButtonEffect.Width="9"/>
                             </Grid>
                         </Border>
                     </Grid>
@@ -188,9 +188,9 @@
                                               UseLayoutRounding="True" SnapsToDevicePixels="True"
                                               effects:ChromeEffect.MonochromeAnimated="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                               effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
-                                              effects:DualPathToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
-                                              effects:DualPathToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                              effects:DualPathToggleButtonEffect.Width="9"/>
+                                              effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                              effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                              effects:DoubleIconToggleButtonEffect.Width="9"/>
                             </Grid>
                         </Border>
                     </Grid>

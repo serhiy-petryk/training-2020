@@ -29,7 +29,7 @@ namespace WpfInvestigate.Obsolete
             {
                 OnMonochromeButtonUnloaded(sender, e);
 
-                if (DualPathToggleButtonEffect.GetGeometryOff(button) != Geometry.Empty)
+                if (DoubleIconToggleButtonEffect.GetGeometryOff(button) != Geometry.Empty)
                     return;
 
                 /*var geometry = Tips.GeometryFromString(button.Content);

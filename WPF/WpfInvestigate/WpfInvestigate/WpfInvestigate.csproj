@@ -88,7 +88,7 @@
     <Compile Include="Controls\Effects\IconEffect.cs" />
     <Compile Include="Controls\Helpers\ControlHelper.cs" />
     <Compile Include="Controls\Helpers\DropDownButtonHelper.cs" />
-    <Compile Include="Controls\Effects\DualPathToggleButtonEffect.cs" />
+    <Compile Include="Controls\Effects\DoubleIconToggleButtonEffect.cs" />
     <Compile Include="Controls\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>
     </Compile>
