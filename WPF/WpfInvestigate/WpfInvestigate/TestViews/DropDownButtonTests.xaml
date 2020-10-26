@@ -101,7 +101,7 @@
                 <WrapPanel>
                     <ToggleButton x:Name="PopupButton" Margin="5" Content="DropDown button with Popup" IsThreeState="False"
                               effects:ChromeEffect.MonochromeAnimated="Gainsboro"
-                              IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"/>
+                              IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}"/>
 
                     <Popup x:Name="PART_Popup"
                        AllowsTransparency="True"
@@ -116,7 +116,7 @@
 
                     <ToggleButton Margin="5" x:Name="MenuPopupButton" Content="Bad: DropDown button with MenuPopup" IsThreeState="False"
                               effects:ChromeEffect.MonochromeAnimated="Gainsboro"
-                              IsHitTestVisible="{Binding ElementName=PART_MenuPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}"/>
+                              IsHitTestVisible="{Binding ElementName=PART_MenuPopup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}"/>
 
                     <Popup x:Name="PART_MenuPopup"
                        AllowsTransparency="True"

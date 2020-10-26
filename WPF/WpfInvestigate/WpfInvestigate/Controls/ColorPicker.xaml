@@ -263,7 +263,7 @@
                                              Text="{Binding Background, Mode=OneWay, Delay=500}">
                                     </TextBox>
                                     <ToggleButton IsThreeState="False" Margin="0" Padding="0" IsTabStop="False"
-                                                  IsHitTestVisible="{Binding ElementName=ColorBoxPopup, Path=IsOpen, Converter={x:Static common:InverseBoolConverter.Instance}}">
+                                                  IsHitTestVisible="{Binding ElementName=ColorBoxPopup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}">
 
                                         <Popup x:Name="ColorBoxPopup" AllowsTransparency="True" StaysOpen="False" Focusable="False"
                                                PopupAnimation="Slide" Placement="Bottom"

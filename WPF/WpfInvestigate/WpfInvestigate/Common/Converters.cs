@@ -87,17 +87,6 @@ namespace WpfInvestigate.Common
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
-    public class InverseBoolConverter : IValueConverter
-    {
-        public static InverseBoolConverter Instance = new InverseBoolConverter();
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value == null || Equals(value, false) || Equals(value, 0) || Equals(value, "");
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
-
     public class MathConverter : IValueConverter
     {
         public static MathConverter Instance = new MathConverter();
@@ -105,11 +94,15 @@ namespace WpfInvestigate.Common
         {
             if (value is double d)
             {
-                var s = parameter as string;
-                if (s.StartsWith("-"))
-                    return d - double.Parse(s.Substring(1));
-                if (s.StartsWith("+"))
-                    return d + double.Parse(s.Substring(1));
+                var s = (parameter as string ?? "").Trim();
+                if (s.StartsWith("-")) return d - double.Parse(s.Substring(1));
+                if (s.StartsWith("+")) return d + double.Parse(s.Substring(1));
+            }
+
+            if (value is bool b)
+            {
+                var s = (parameter as string ?? "").Trim();
+                if (s == "!") return !b;
             }
             return value;
         }
