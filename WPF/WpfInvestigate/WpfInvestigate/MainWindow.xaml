@@ -62,7 +62,7 @@
                     <controls:TimePicker Margin="5" Width="100" Height="30"
                                          IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
                                          effects:ChromeEffect.MonochromeAnimated="Aqua"/>
-                    <TextBox Margin="5 0" Width="80" BorderBrush="Black" BorderThickness="1"></TextBox>
+                    <TextBox Margin="5 0" Width="80" BorderBrush="Black" BorderThickness="1" Background="{StaticResource PrimaryBrush}"></TextBox>
                 </StackPanel>
             </StackPanel>
 

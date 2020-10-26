@@ -544,47 +544,47 @@
                                       effects:FocusEffect.Brush="Aqua"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                        <ToggleButton Margin="5" Height="30" Content="Bootstrap yellow" Padding="4 0" Background="{Binding Source={StaticResource YellowColor}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                        <ToggleButton Margin="5" Height="30" Content="Bootstrap yellow" Padding="4 0" Background="{StaticResource YellowBrush}"
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                        <ToggleButton Margin="5" Height="30" Content="Primary" Padding="4 0" Background="{Binding Source={StaticResource PrimaryColor}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                        <ToggleButton Margin="5" Height="30" Content="Primary" Padding="4 0" Background="{StaticResource PrimaryBrush}"
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                        <ToggleButton Margin="5" Height="30" Content="Secondary" Padding="4 0" Background="{Binding Source={StaticResource SecondaryColor}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                        <ToggleButton Margin="5" Height="30" Content="Secondary" Padding="4 0" Background="{StaticResource SecondaryBrush}"
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                        <ToggleButton Margin="5" Height="30" Content="Success" Padding="4 0" Background="{Binding Source={StaticResource SuccessColor}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                        <ToggleButton Margin="5" Height="30" Content="Success" Padding="4 0" Background="{StaticResource SuccessBrush}"
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                        <ToggleButton Margin="5" Height="30" Content="Danger" Padding="4 0" Background="{Binding Source={StaticResource DangerColor}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                        <ToggleButton Margin="5" Height="30" Content="Danger" Padding="4 0" Background="{StaticResource DangerBrush}"
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                        <ToggleButton Margin="5" Height="30" Content="Warning" Padding="4 0" Background="{Binding Source={StaticResource WarningColor}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                        <ToggleButton Margin="5" Height="30" Content="Warning" Padding="4 0" Background="{StaticResource WarningBrush}"
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                        <ToggleButton Margin="5" Height="30" Content="Info" Padding="4 0" Background="{Binding Source={StaticResource InfoColor}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                        <ToggleButton Margin="5" Height="30" Content="Info" Padding="4 0" Background="{StaticResource InfoBrush}"
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                        <ToggleButton Margin="5" Height="30" Content="Light" Padding="4 0" Background="{Binding Source={StaticResource LightColor}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                        <ToggleButton Margin="5" Height="30" Content="Light" Padding="4 0" Background="{StaticResource LightBrush}"
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
-                        <ToggleButton Margin="5" Height="30" Content="Dark" Padding="4 0" Background="{Binding Source={StaticResource DarkColor}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                        <ToggleButton Margin="5" Height="30" Content="Dark" Padding="4 0" Background="{StaticResource DarkBrush}"
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
