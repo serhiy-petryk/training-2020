@@ -43,7 +43,8 @@
                 <WrapPanel Grid.Row="0" Orientation="Horizontal">
                     <Button Margin="5 0" BorderThickness="2" Height="30" Padding="4"
                             effects:ChromeEffect.Monochrome="{Binding ElementName=ColorPicker, Path=Color}"
-                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z">
+                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                            effects:IconEffect.MarginIfHasContent="3">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -52,19 +53,20 @@
                             <Viewbox Grid.Column="0">
                                 <Path Stretch="Uniform" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
                             </Viewbox>
-                            <TextBlock Grid.Column="1" Foreground="Black" Text="Content"/>
+                            <TextBlock Grid.Column="1" Margin="4 0 0 0" Foreground="Black" Text="Content"/>
                         </Grid>
                     </Button>
 
                     <Button Margin="5 0" BorderThickness="2" Height="30" Padding="4" Content="Content"
                             effects:ChromeEffect.Monochrome="{Binding ElementName=ColorPicker, Path=Color}"
-                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                            effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                            effects:IconEffect.MarginIfHasContent="3"/>
 
-                    <Button Margin="5 0" BorderThickness="2" Width="30" Height="30" Padding="4"
+                    <Button Margin="5 0" BorderThickness="2" Width="30" Height="30" Padding="2"
                             effects:ChromeEffect.Monochrome="{Binding ElementName=ColorPicker, Path=Color}"
                             effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
 
-                    <Button Margin="5 0" BorderThickness="2" Width="30" Height="30" Padding="4"
+                    <Button Margin="5 0" BorderThickness="2" Width="30" Height="30" Padding="1"
                             effects:ChromeEffect.MonochromeAnimated="{Binding ElementName=ColorPicker, Path=Color}"
                             effects:IconEffect.Geometry="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
 
