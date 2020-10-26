@@ -9,10 +9,6 @@
         mc:Ignorable="d"
         Title="NumericBoxTests" Height="450" Width="800">
 
-    <Window.Resources>
-        <system:String x:Key="TestChromeMatrix">+0%,+70%,+0%,40, +0%,+75%,+0%,100, +10%,+10%/+75%,+10%/+75%,100, +0%,+0%/+100%,+0%/+100%,100</system:String>
-    </Window.Resources>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -49,31 +45,12 @@
                                      Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
-                                     effects:ChromeEffect.MonochromeAnimated="Aqua"
-                                     effects:ChromeEffect.ChromeMatrix="+0%,+70%,+0%,40, +0%,+75%,+0%,100, +10%,+10%/+75%,+10%/+75%,100, +0%,+0%/+100%,+0%/+100%,100"
-                                     Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
-                <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
-                                     IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
                                      effects:ChromeEffect.MonochromeAnimated="White"
-                                     Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
-                <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
-                                     IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
-                                     effects:ChromeEffect.MonochromeAnimated="White"
-                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"
                                      Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
                                      effects:ChromeEffect.Monochrome="#FFD6EAFF"
                                      Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
-                <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
-                                     IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
-                                     effects:ChromeEffect.Monochrome="#FFD6EAFF"
-                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"
-                                     Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
-                <Button Content="Test monochrome" Focusable="False"
-                        IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
-                        effects:ChromeEffect.Monochrome="#FFD6EAFF"
-                        effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"/>
             </WrapPanel>
 
             <WrapPanel Orientation="Horizontal" Margin="0 5">
