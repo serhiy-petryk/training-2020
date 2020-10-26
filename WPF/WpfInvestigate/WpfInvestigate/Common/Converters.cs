@@ -98,6 +98,25 @@ namespace WpfInvestigate.Common
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
+    public class MathConverter : IValueConverter
+    {
+        public static MathConverter Instance = new MathConverter();
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double d)
+            {
+                var s = parameter as string;
+                if (s.StartsWith("-"))
+                    return d - double.Parse(s.Substring(1));
+                if (s.StartsWith("+"))
+                    return d + double.Parse(s.Substring(1));
+            }
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+
     public class LeftRightButtonConverter : IValueConverter
     {
         public static LeftRightButtonConverter LeftUpPolygonPoints = new LeftRightButtonConverter { _isLeftUpPolygonPoints = true };
