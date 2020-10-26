@@ -131,9 +131,9 @@ namespace WpfInvestigate.Controls.Effects
             {
                 sb = new Storyboard();
                 ellipse.Resources["storyboard"] = sb;
-                sb.Children.Add(ellipse.CreateAnimation(FrameworkElement.MarginProperty, 800));
-                sb.Children.Add(ellipse.CreateAnimation(FrameworkElement.WidthProperty, 800));
-                sb.Children.Add(ellipse.CreateAnimation(UIElement.OpacityProperty, 600));
+                sb.Children.Add(ellipse.CreateAnimation(FrameworkElement.MarginProperty));
+                sb.Children.Add(ellipse.CreateAnimation(FrameworkElement.WidthProperty));
+                sb.Children.Add(ellipse.CreateAnimation(UIElement.OpacityProperty));
             }
 
             var newSize = Math.Max(fe.ActualWidth, fe.ActualHeight) * 3;
@@ -143,6 +143,10 @@ namespace WpfInvestigate.Controls.Effects
             sb.Children[1].SetFromToValues(0.0, newSize);
             sb.Children[2].SetFromToValues(0.5, 0.0);
 
+            var newDuration = Math.Max(300, newSize * 2.25);
+            sb.Children[0].Duration = TimeSpan.FromMilliseconds(newDuration);
+            sb.Children[1].Duration = sb.Children[0].Duration;
+            sb.Children[2].Duration = TimeSpan.FromMilliseconds(newDuration * 2 / 3);
             sb.Begin();
         }
     }
