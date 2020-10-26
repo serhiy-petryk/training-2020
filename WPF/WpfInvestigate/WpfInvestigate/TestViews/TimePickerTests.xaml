@@ -54,7 +54,10 @@
                                      effects:ChromeEffect.MonochromeAnimated="Aqua"/>
                 <controls:TimePicker Margin="5" Width="100" Height="30"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
-                                     effects:ChromeEffect.MonochromeAnimated="White"/>
+                                     effects:ChromeEffect.MonochromeAnimated="{StaticResource WhiteColor}"/>
+                <controls:TimePicker Margin="5" Width="100" Height="30"
+                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:ChromeEffect.MonochromeAnimated="{StaticResource DarkColor}"/>
                 <controls:TimePicker Margin="5" Width="100" Height="30"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
                                      effects:ChromeEffect.MonochromeAnimated="#FFD6EAFF"/>

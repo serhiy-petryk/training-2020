@@ -45,7 +45,11 @@
                                      Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
-                                     effects:ChromeEffect.MonochromeAnimated="White"
+                                     effects:ChromeEffect.MonochromeAnimated="{StaticResource WhiteColor}"
+                                     Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
+                <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
+                                     IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
+                                     effects:ChromeEffect.MonochromeAnimated="{StaticResource DarkColor}"
                                      Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
