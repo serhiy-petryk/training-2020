@@ -10,10 +10,6 @@
         mc:Ignorable="d"
         Title="TimePickerTest" Height="600" Width="1000">
 
-    <Window.Resources>
-        <system:String x:Key="TestChromeMatrix">+0%,+70%,+0%,40, +0%,+75%,+0%,100, +5%,+5%/+100%,+5%/+100%,100, +0%,+0%/+100%,+0%/+100%,100</system:String>
-    </Window.Resources>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -55,16 +51,13 @@
                 <TextBlock Margin="0 5 5 5"><Run Text="Monochrome Time picker:"/></TextBlock>
                 <controls:TimePicker Margin="5" Width="100" Height="30"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
-                                     effects:ChromeEffect.MonochromeAnimated="Aqua"
-                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"/>
+                                     effects:ChromeEffect.MonochromeAnimated="Aqua"/>
                 <controls:TimePicker Margin="5" Width="100" Height="30"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
-                                     effects:ChromeEffect.MonochromeAnimated="White"
-                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"/>
+                                     effects:ChromeEffect.MonochromeAnimated="White"/>
                 <controls:TimePicker Margin="5" Width="100" Height="30"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
-                                     effects:ChromeEffect.MonochromeAnimated="#FFD6EAFF"
-                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"/>
+                                     effects:ChromeEffect.MonochromeAnimated="#FFD6EAFF"/>
             </WrapPanel>
 
             <WrapPanel Margin="0 5 0 0">

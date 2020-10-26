@@ -326,12 +326,20 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Base" Property="BorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush)}" />
                             </Trigger>
-                            <Trigger SourceName="PART_TextBox" Property="IsFocused" Value="True">
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsFocused" Value="True" />
+                                    <Condition Property="effects:ChromeEffect.MonochromeAnimated" Value="{x:Null}"/>
+                                </MultiTrigger.Conditions>
                                 <Setter TargetName="Base" Property="BorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsKeyboardFocusWithin" Value="True" />
+                                    <Condition Property="effects:ChromeEffect.MonochromeAnimated" Value="{x:Null}"/>
+                                </MultiTrigger.Conditions>
                                 <Setter TargetName="Base" Property="BorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
-                            </Trigger>
+                            </MultiTrigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="1" />
                             </Trigger>

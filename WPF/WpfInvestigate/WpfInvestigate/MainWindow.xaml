@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="600" Width="1000">
 
@@ -57,6 +59,10 @@
                 <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
 
                 <StackPanel Orientation="Horizontal" Background="#FFEEEEEE" HorizontalAlignment="Left">
+                    <controls:TimePicker Margin="5" Width="100" Height="30"
+                                         IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                         effects:ChromeEffect.MonochromeAnimated="Aqua"/>
+                    <TextBox Margin="5 0" Width="80" BorderBrush="Black" BorderThickness="1"></TextBox>
                 </StackPanel>
             </StackPanel>
 

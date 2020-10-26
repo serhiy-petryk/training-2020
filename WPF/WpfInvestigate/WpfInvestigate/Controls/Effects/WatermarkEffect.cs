@@ -132,6 +132,8 @@ namespace WpfInvestigate.Controls.Effects
             if (partWatermark == null)
             {
                 var layer = AdornerLayer.GetAdornerLayer(ctrlBox);
+                if (layer == null) return;
+
                 var adornerControl = layer.GetAdorners(ctrlBox)?.OfType<AdornerControl>().FirstOrDefault(a => a.Child.Name == "Watermark");
 
                 if (adornerControl == null)
