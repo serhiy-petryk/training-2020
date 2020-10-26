@@ -55,7 +55,6 @@
                 <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
                 <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
                 <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
-                <Button x:Name="ButtonStyleTest" Width="200" Margin="0 5" Content="WiP: ButtonStyleTests" Click="ButtonStyleTests_OnClick"/>
 
                 <StackPanel Orientation="Horizontal" Background="#FFEEEEEE" HorizontalAlignment="Left">
                 </StackPanel>
@@ -64,7 +63,6 @@
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
                 <Label>Ready:</Label>
                 <Button x:Name="ObjectEditorTest" Margin="5" Content="Ready: ObjectEditor" Click="ObjectEditorTest_OnClick"/>
-                <Button x:Name="DualPathToggleButtonEffectTest" Width="200" Margin="0 5" Content="Ready: DualPathToggleButtonEffect" Click="DualPathToggleButtonEffectTest_OnClick"/>
                 <Button x:Name="DropDownButtonTest" Width="200" Margin="0 5" Content="Ready: DropDownButton" Click="DropDownButtonTest_OnClick"/>
                 <Button x:Name="NumericBoxTest" Width="200" Margin="0 5" Content="Ready: NumericBox" Click="NumericBoxTest_OnClick"/>
                 <Button x:Name="TimePickerTest" Width="200" Margin="0 5" Content="Ready: TimePicker" Click="TimepickerTest_OnClick"/>
@@ -75,6 +73,7 @@
                 <Button x:Name="FlatButtonTest" Width="200" Margin="0 5" Content="Ready: FlatButton" Click="FlatButtonTest_OnClick"/>
                 <Button x:Name="ChromeTest" Width="200" Margin="0 5" Content="Ready: Chrome tests" Click="ChromeTest_OnClick"/>
                 <Button x:Name="ColorPickerTest" Width="200" Margin="0 5" Content="Ready: ColorPickerTest" Click="ColorPickerTest_OnClick"/>
+                <Button x:Name="ButtonStyleTest" Width="200" Margin="0 5" Content="Ready: ButtonStyleTests" Click="ButtonStyleTests_OnClick"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
@@ -93,6 +92,7 @@
                 <Button x:Name="ObsoleteRippleButtonTest" Width="250" Margin="0 5" Content="Obsolete (use RippleEffect): RippleButton" Click="ObsoleteRippleButtonTest_OnClick"/>
                 <Button x:Name="ObsoleteTests" Width="200" Margin="0 5" Content="Obsolete: ControlLibrary" Click="ObsoleteControlLibrary_OnClick"/>
                 <Button x:Name="ObsoleteMonochromeButtonTest" Width="200" Margin="0 5" Content="Obsolete: MonochromeButton" Click="ObsoleteMonochromeButtonTest_OnClick"/>
+                <Button x:Name="ObsoleteDualPathToggleButtonEffectTest" Width="200" Margin="0 5" Content="Obsolete: DualPathToggleButtonEffect" Click="ObsoleteDualPathToggleButtonEffectTest_OnClick"/>
             </StackPanel>
 
         </Grid>
