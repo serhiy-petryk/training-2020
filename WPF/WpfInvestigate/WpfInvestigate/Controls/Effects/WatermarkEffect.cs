@@ -159,6 +159,7 @@ namespace WpfInvestigate.Controls.Effects
                 child.Padding = ctrlBox.Padding;
                 child.Width = ctrlBox.ActualWidth;
                 child.Height = ctrlBox.ActualHeight;
+                child.FontSize = ctrlBox.FontSize;
                 child.VerticalAlignment = ctrlBox.VerticalAlignment;
                 child.VerticalContentAlignment = ctrlBox.VerticalContentAlignment;
                 child.HorizontalAlignment = ctrlBox.HorizontalAlignment;
