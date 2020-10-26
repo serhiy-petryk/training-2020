@@ -53,15 +53,15 @@
 
             <WrapPanel Margin="0 5 0 0">
                 <TextBlock Margin="0 5 5 5"><Run Text="Monochrome Time picker:"/></TextBlock>
-                <controls:TimePicker Margin="5" Width="100" Height="30" Padding="0"
+                <controls:TimePicker Margin="5" Width="100" Height="30"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
                                      effects:ChromeEffect.MonochromeAnimated="Aqua"
                                      effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"/>
-                <controls:TimePicker Margin="5" Width="100" Height="30" Padding="0"
+                <controls:TimePicker Margin="5" Width="100" Height="30"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
                                      effects:ChromeEffect.MonochromeAnimated="White"
                                      effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"/>
-                <controls:TimePicker Margin="5" Width="100" Height="30" Padding="0"
+                <controls:TimePicker Margin="5" Width="100" Height="30"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
                                      effects:ChromeEffect.MonochromeAnimated="#FFD6EAFF"
                                      effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"/>

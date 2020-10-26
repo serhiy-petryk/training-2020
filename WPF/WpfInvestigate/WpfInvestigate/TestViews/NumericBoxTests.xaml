@@ -46,7 +46,15 @@
                 <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
                                      effects:ChromeEffect.MonochromeAnimated="Aqua"
-                                     effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"
+                                     Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
+                <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
+                                     IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
+                                     effects:ChromeEffect.MonochromeAnimated="Aqua"
+                                     effects:ChromeEffect.ChromeMatrix="+0%,+70%,+0%,40, +0%,+75%,+0%,100, +10%,+10%/+75%,+10%/+75%,100, +0%,+0%/+100%,+0%/+100%,100"
+                                     Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
+                <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
+                                     IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
+                                     effects:ChromeEffect.MonochromeAnimated="White"
                                      Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
@@ -56,8 +64,11 @@
                 <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
                                      effects:ChromeEffect.Monochrome="#FFD6EAFF"
+                                     Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
+                <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
+                                     IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
+                                     effects:ChromeEffect.Monochrome="#FFD6EAFF"
                                      effects:ChromeEffect.ChromeMatrix="{StaticResource TestChromeMatrix}"
-                                     effects:FocusEffect.Brush="Aqua"
                                      Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
                 <Button Content="Test monochrome" Focusable="False"
                         IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
@@ -88,21 +99,13 @@
 
             <WrapPanel>
                 <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="No value"
-                                     VerticalAlignment="Center"
-                                     FontSize="9" Focusable="True"
-                                     IsNullable="True" Value="323"/>
-
+                                     VerticalAlignment="Center" FontSize="9" Focusable="True" IsNullable="True" Value="323"/>
                 <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="No value"
-                                     VerticalAlignment="Center"
-                                     FontSize="24" Focusable="True"
-                                     IsNullable="True" Value="323"/>
-
+                                     VerticalAlignment="Center" FontSize="24" Focusable="True" IsNullable="True" Value="323"/>
                 <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="No value" IsReadOnly="True"
-                                     VerticalAlignment="Center"
-                                     IsNullable="True" Value="323"/>
+                                     VerticalAlignment="Center" IsNullable="True" Value="323"/>
                 <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="No value" IsEnabled="False"
-                                     VerticalAlignment="Center"
-                                     IsNullable="True" Value="323"/>
+                                     VerticalAlignment="Center" IsNullable="True" Value="323"/>
             </WrapPanel>
         </StackPanel>
     </Grid>

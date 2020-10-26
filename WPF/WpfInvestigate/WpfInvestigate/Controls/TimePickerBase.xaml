@@ -153,6 +153,7 @@
             <Setter Property="MinHeight" Value="26" />
             <Setter Property="MinWidth" Value="126" />
             <Setter Property="Padding" Value="2" />
+            <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource UserInputControlChromeMatrix}"/>
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Template">
                 <Setter.Value>

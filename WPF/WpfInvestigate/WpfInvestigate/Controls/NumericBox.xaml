@@ -25,6 +25,7 @@
             <Setter Property="Padding" Value="1" />
             <Setter Property="Focusable" Value="True" />
             <Setter Property="IsTabStop" Value="True" />
+            <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource UserInputControlChromeMatrix}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
