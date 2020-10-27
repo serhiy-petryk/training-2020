@@ -1,0 +1,93 @@
+﻿<Window x:Class="WpfInvestigate.TestViews.ControlDemo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:common="clr-namespace:WpfInvestigate.Common"
+        xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="ControlDemo" Height="600" Width="1250">
+
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Controls/BootstrapButtons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Geometry x:Key="DemoGeometry">M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z</Geometry>
+            <Geometry x:Key="Mwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
+            <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
+
+            <ResourceDictionary x:Key="PopupMenu" x:Shared="False">
+                <ContextMenu x:Key="cm" StaysOpen="False">
+                    <MenuItem Header="Copy"/>
+                    <MenuItem Header="Paste"/>
+                    <MenuItem Header="Cut"/>
+                    <MenuItem Header="Delete"/>
+                </ContextMenu>
+            </ResourceDictionary>
+
+            <collections:ArrayList x:Key="Items">
+                <TextBlock>LG Nexus 5X</TextBlock>
+                <TextBlock>Huawai Nexus 6P</TextBlock>
+                <TextBlock>iPhone 6S</TextBlock>
+                <TextBlock>iPhone 6S Plus</TextBlock>
+                <TextBlock>Microsoft Lumia 950</TextBlock>
+            </collections:ArrayList>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" ZIndex="1" Background="White">
+            <Slider Grid.Column="0"
+                    x:Name="uiScaleSlider"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.5" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="0 10 0 0">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Orientation="Vertical" Margin="0 10 0 0">
+                    <WrapPanel Orientation="Horizontal" Margin="0 0 0 5">
+                        <TextBlock Margin="0 0 5 0" Text="CheckBox:" VerticalAlignment="Center"/>
+                        <CheckBox Margin="0 0 5 0" Content="Content" IsThreeState="False" IsChecked="True" VerticalAlignment="Center"/>
+
+                        <CheckBox Margin="0 0 5 0" Content="Monochrome" IsThreeState="False" IsChecked="True" VerticalAlignment="Center"
+                                  effects:ChromeEffect.MonochromeAnimated="Aqua"/>
+                    </WrapPanel>
+
+                    <WrapPanel Orientation="Horizontal" Margin="0 0 0 5">
+                        <TextBlock Text="Combobox:" VerticalAlignment="Center" Margin="0 0 5 0"/>
+
+                        <ComboBox Margin="0 0 5 0" Width="120" Background="#FFD6EAFF" BorderBrush="#FF0069D6" Foreground="#FF0069D6" VerticalAlignment="Stretch"
+                                  ItemsSource="{StaticResource Items}"/>
+
+                        <ComboBox Margin="0 0 5 0" Width="120" Background="#FFD6EAFF" BorderBrush="#FF0069D6" Foreground="#FF0069D6" VerticalAlignment="Stretch"
+                                  ItemsSource="{StaticResource Items}"
+                                  effects:ChromeEffect.MonochromeAnimated="Aqua"/>
+                    </WrapPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>

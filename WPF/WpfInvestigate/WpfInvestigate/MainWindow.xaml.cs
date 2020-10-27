@@ -68,5 +68,7 @@ namespace WpfInvestigate
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
         }
+
+        private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
     }
 }

@@ -26,34 +26,6 @@
                     <MenuItem Header="Delete"/>
                 </ContextMenu>
             </ResourceDictionary>
-
-            <SolidColorBrush x:Key="Mwi.WindowBar.ForegroundBrush" Color="Black"/>
-            <SolidColorBrush x:Key="DoubleButton.BorderBrush" Color="Transparent"/>
-            <SolidColorBrush x:Key="DoubleButton.BackgroundBrush" Color="Transparent"/>
-            <SolidColorBrush x:Key="DoubleButton.MouseOver.BorderBrush" Color="#FF3399FF"/>
-            <SolidColorBrush x:Key="DoubleButton.MouseOver.BackgroundBrush" Color="#FFC2E0FF"/>
-            <SolidColorBrush x:Key="DoubleButton.Pressed.BorderBrush" Color="#FF3399FF"/>
-            <SolidColorBrush x:Key="DoubleButton.Pressed.BackgroundBrush" Color="#FF99CCFF"/>
-            <Style x:Key="DoubleButtonStyle" TargetType="ButtonBase">
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="False">
-                        <Setter Property="BorderBrush" Value="{DynamicResource DoubleButton.BorderBrush}" />
-                        <Setter Property="Background" Value="{DynamicResource DoubleButton.BackgroundBrush}" />
-                    </Trigger>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="BorderBrush" Value="{DynamicResource DoubleButton.MouseOver.BorderBrush}" />
-                        <Setter Property="Background" Value="{DynamicResource DoubleButton.MouseOver.BackgroundBrush}" />
-                    </Trigger>
-                    <Trigger Property="IsPressed" Value="True">
-                        <Setter Property="BorderBrush" Value="{DynamicResource DoubleButton.Pressed.BorderBrush}" />
-                        <Setter Property="Background" Value="{DynamicResource DoubleButton.Pressed.BackgroundBrush}" />
-                    </Trigger>
-                    <Trigger Property="IsEnabled" Value="False">
-                        <Setter Property="Opacity" Value="0.3" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
         </ResourceDictionary>
     </Window.Resources>
 
