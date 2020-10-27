@@ -131,10 +131,8 @@
 
         <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource WhiteColor}" options:Freeze="True" />
         <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource Gray6}" options:Freeze="True" />
-        <SolidColorBrush x:Key="ControlsDisabledBrush" Color="#A5FFFFFF" options:Freeze="True" />
         <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{StaticResource Gray6}" options:Freeze="True" />
         <SolidColorBrush x:Key="TextBrush" Color="{StaticResource BlackColor}" options:Freeze="True" />
-        <SolidColorBrush x:Key="TextBoxFocusBorderBrush" Color="{StaticResource BlackColor}" options:Freeze="True" />
         <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" options:Freeze="True" />
         <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" options:Freeze="True" />
 
@@ -192,13 +190,6 @@
                                     <Button x:Name="PART_ClearButton" Grid.Column="2" Focusable="True" IsTabStop="False" Width="16" Padding="3 3 2 2"
                                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsClearButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                             Style="{StaticResource ClearAnimatedButtonStyle}" VerticalAlignment="Stretch"/>
-
-                                    <Border x:Name="DisabledVisualElement" Grid.Column="0" Grid.ColumnSpan="3"
-                                            Background="{DynamicResource ControlsDisabledBrush}"
-                                            BorderBrush="{DynamicResource ControlsDisabledBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            IsHitTestVisible="False"
-                                            Opacity="0" />
 
                                     <Popup x:Name="PART_Popup" Grid.Column="0" Grid.ColumnSpan="2"
                                            Focusable="False" SnapsToDevicePixels="True"
@@ -322,26 +313,13 @@
                         </Grid>
 
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Base" Property="BorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush)}" />
-                            </Trigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
-                                    <Condition Property="IsFocused" Value="True" />
+                                    <Condition Property="IsEnabled" Value="False" />
                                     <Condition Property="effects:ChromeEffect.MonochromeAnimated" Value="{x:Null}"/>
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Base" Property="BorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
+                                <Setter Property="Opacity" Value="0.4" />
                             </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsKeyboardFocusWithin" Value="True" />
-                                    <Condition Property="effects:ChromeEffect.MonochromeAnimated" Value="{x:Null}"/>
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="Base" Property="BorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
-                            </MultiTrigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="1" />
-                            </Trigger>
                             <Trigger Property="IsReadOnly" Value="True">
                                 <Setter TargetName="PART_Calendar" Property="IsHitTestVisible" Value="False" />
                                 <Setter TargetName="PART_Selectors" Property="IsHitTestVisible" Value="False" />

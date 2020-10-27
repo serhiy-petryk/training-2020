@@ -39,32 +39,41 @@
 
             <WrapPanel Margin="0 5 0 0">
                 <TextBlock Margin="0 5"><Run Text="Time picker"/></TextBlock>
-                <Label Content="TimePicker (not nullable):"/>
-                <controls:TimePicker Width="100" Height="30" Padding="0"
-                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" />
-                <controls:TimePicker x:Name="NNN" Width="100" Height="30" Background="Yellow"
-                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"/>
+                <Label Content="TimePicker (not nullable):" Margin="0 0 5 0"/>
+                <controls:TimePicker Width="100" Height="30" Padding="0" Margin="0 0 5 0"
+                                     IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long" />
+                <controls:TimePicker x:Name="NNN" Width="100" Height="30" Background="Yellow" Margin="0 0 5 0"
+                                     IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long"/>
                 <Button Click="ChangeNullable_OnClick" Content="Change IsNullable" />
             </WrapPanel>
 
             <WrapPanel Margin="0 5 0 0">
-                <TextBlock Margin="0 5 5 5"><Run Text="Monochrome Time picker:"/></TextBlock>
+                <TextBlock Margin="0 5 5 5" Text="Monochrome Time picker:" VerticalAlignment="Center"/>
+
+                <CheckBox x:Name="IsEnabled" Margin="0 0 5 0" Content="IsReadOnly?" IsChecked="True" VerticalAlignment="Center" />
+
                 <controls:TimePicker Margin="5" Width="100" Padding="0" IsNullable="True"
                                      VerticalAlignment="Center"
                                      VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
-                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long"
                                      effects:WatermarkEffect.Watermark="First"
                                      effects:ChromeEffect.MonochromeAnimated="Aqua"/>
                 <controls:TimePicker Margin="5" IsNullable="True"
-                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long"
                                      effects:WatermarkEffect.Watermark="Element 2"
                                      effects:ChromeEffect.MonochromeAnimated="{StaticResource WhiteColor}"/>
                 <controls:TimePicker Margin="5" IsNullable="True"
-                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long"
                                      effects:WatermarkEffect.Watermark="element 3"
                                      effects:ChromeEffect.MonochromeAnimated="{StaticResource DarkColor}"/>
                 <controls:TimePicker Margin="5" Width="100" IsNullable="True"
-                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long"
                                      effects:WatermarkEffect.Watermark="element 4"
                                      effects:ChromeEffect.MonochromeAnimated="#FFD6EAFF"/>
             </WrapPanel>
