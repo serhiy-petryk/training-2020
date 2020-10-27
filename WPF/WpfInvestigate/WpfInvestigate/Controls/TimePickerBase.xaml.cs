@@ -198,7 +198,8 @@ namespace WpfInvestigate.Controls
             {
                 var label = new TextBlock
                 {
-                    Text = (k == 0 ? 12 : k).ToString(), Margin = new Thickness(), Padding = new Thickness(),
+                    Text = (k == 0 ? 12 : k).ToString(), Foreground = brush,
+                    Margin = new Thickness(), Padding = new Thickness(),
                     FontWeight = FontWeights.Normal, FontSize = 14, FontFamily = new FontFamily("Segoe UI")
                 };
 

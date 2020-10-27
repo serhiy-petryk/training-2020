@@ -61,10 +61,14 @@
                 <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
 
                 <StackPanel Orientation="Horizontal" Background="#FFEEEEEE" HorizontalAlignment="Left">
-                    <controls:TimePicker Margin="5" Width="100" Height="30"
+                    <!--<controls:TimePicker Margin="5" IsNullable="True"
                                          IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
-                                         effects:ChromeEffect.MonochromeAnimated="Aqua"/>
-                    <TextBox Margin="5 0" Width="80" BorderBrush="Black" BorderThickness="1" Background="{StaticResource PrimaryBrush}"></TextBox>
+                                         effects:WatermarkEffect.Watermark="element 3"
+                                         effects:ChromeEffect.MonochromeAnimated="{StaticResource YellowColor}"/>-->
+                    <controls:TimePicker Margin="5" IsNullable="True"
+                                         IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                         effects:WatermarkEffect.Watermark="element 3"
+                                         effects:ChromeEffect.MonochromeAnimated="{StaticResource DarkColor}"/>
                 </StackPanel>
             </StackPanel>
 
