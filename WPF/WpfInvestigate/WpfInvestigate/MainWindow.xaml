@@ -58,6 +58,7 @@
                 <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
                 <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
                 <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
+                <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
 
                 <StackPanel Orientation="Horizontal" Background="#FFEEEEEE" HorizontalAlignment="Left">
                     <controls:TimePicker Margin="5" Width="100" Height="30"

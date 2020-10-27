@@ -86,6 +86,18 @@
                                   ItemsSource="{StaticResource Items}"
                                   effects:ChromeEffect.MonochromeAnimated="Aqua"/>
                     </WrapPanel>
+
+                    <WrapPanel Orientation="Horizontal" Margin="0 0 0 5">
+                        <ToolBar Background="#FFD6EAFF" Height="32" Margin="0" Padding="0" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch">
+                            <ComboBox Margin="0 0 5 0" Width="100" Background="#FFD6EAFF" BorderBrush="#FF0069D6" Foreground="#FF0069D6" VerticalAlignment="Stretch"
+                                      ItemsSource="{StaticResource Items}"/>
+                        </ToolBar>
+                    </WrapPanel>
+
+                    <WrapPanel Orientation="Horizontal" Margin="0 0 0 5">
+                        <ComboBox Margin="0 0 5 0" Width="100" Background="#FFD6EAFF" BorderBrush="#FF0069D6" Foreground="#FF0069D6" VerticalAlignment="Stretch"
+                                  ItemsSource="{StaticResource Items}"/>
+                    </WrapPanel>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

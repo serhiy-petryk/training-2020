@@ -122,6 +122,9 @@
     <Compile Include="Temp\OriginalVirtualKeyboard.xaml.cs">
       <DependentUpon>OriginalVirtualKeyboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Temp\TempControl.xaml.cs">
+      <DependentUpon>TempControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\ControlDemo.xaml.cs">
       <DependentUpon>ControlDemo.xaml</DependentUpon>
     </Compile>
@@ -263,6 +266,10 @@
     <Page Include="Temp\OriginalVirtualKeyboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Temp\TempControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestViews\ControlDemo.xaml">
       <Generator>MSBuild:Compile</Generator>

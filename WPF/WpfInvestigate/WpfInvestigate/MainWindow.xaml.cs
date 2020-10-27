@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
+using WpfInvestigate.Temp;
 using WpfInvestigate.TestViews;
 
 namespace WpfInvestigate
@@ -70,5 +71,7 @@ namespace WpfInvestigate
         }
 
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
+
+        private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
     }
 }
