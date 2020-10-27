@@ -49,17 +49,23 @@
 
             <WrapPanel Margin="0 5 0 0">
                 <TextBlock Margin="0 5 5 5"><Run Text="Monochrome Time picker:"/></TextBlock>
-                <controls:TimePicker Margin="5" Width="100" Height="30"
+                <controls:TimePicker Margin="5" Width="100" Padding="0" IsNullable="True"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:WatermarkEffect.Watermark="First"
                                      effects:ChromeEffect.MonochromeAnimated="Aqua"/>
-                <controls:TimePicker Margin="5" Width="100" Height="30"
+                <controls:TimePicker Margin="5" IsNullable="True"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:WatermarkEffect.Watermark="Element 2"
                                      effects:ChromeEffect.MonochromeAnimated="{StaticResource WhiteColor}"/>
-                <controls:TimePicker Margin="5" Width="100" Height="30"
+                <controls:TimePicker Margin="5" IsNullable="True"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:WatermarkEffect.Watermark="element 3"
                                      effects:ChromeEffect.MonochromeAnimated="{StaticResource DarkColor}"/>
-                <controls:TimePicker Margin="5" Width="100" Height="30"
+                <controls:TimePicker Margin="5" Width="100" IsNullable="True"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:WatermarkEffect.Watermark="element 4"
                                      effects:ChromeEffect.MonochromeAnimated="#FFD6EAFF"/>
             </WrapPanel>
 

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using WpfInvestigate.Controls.Helpers;
 
-namespace WpfInvestigate.Theme
+namespace WpfInvestigate.Themes
 {
     public partial class Common
     {
