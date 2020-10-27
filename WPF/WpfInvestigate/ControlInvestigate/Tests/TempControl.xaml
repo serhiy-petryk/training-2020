@@ -5,8 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="TempControl" Height="450" Width="800">
-    <Window.Resources>
-    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -61,7 +59,7 @@
                     </WrapPanel>
 
                     <WrapPanel>
-                        <DatePickerTextBox Width="100" Height="30" Background="Aqua" Style="{DynamicResource DatePickerTextBoxStyle1}"/>
+                        <DatePickerTextBox Width="100" Height="30" Background="Aqua"/>
                     </WrapPanel>
 
                 </StackPanel>
