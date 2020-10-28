@@ -40,7 +40,7 @@
                 <Label Margin="10 0"/>
                 <WrapPanel>
                     <Label Content="ClearButtonStyle"/>
-                    <Button Style="{StaticResource ClearButtonStyle}" Background="Blue" Foreground="Yellow" Width="40" Height="40" BorderBrush="Red"/>
+                    <Button Style="{StaticResource ObsoleteClearButtonStyle}" Background="Blue" Foreground="Yellow" Width="40" Height="40" BorderBrush="Red"/>
                     
                     <Label Content="FlatButtonStyle"/>
                     <Button Style="{StaticResource FlatButtonStyle}" Background="Blue" Foreground="Yellow" Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red"/>
@@ -93,7 +93,7 @@
                             effects:IconEffect.Geometry="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z"/>
 
                             <Label Content="ClearButtonStyle" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToolBar}}"/>
-                            <Button Style="{StaticResource ClearButtonStyle}" Foreground="Transparent" Width="30" Height="30" Margin="0" BorderBrush="Red"/>
+                            <Button Style="{StaticResource ObsoleteClearButtonStyle}" Foreground="Transparent" Width="30" Height="30" Margin="0" BorderBrush="Red"/>
                         </ToolBar>
                     </ToolBarPanel>
                 </WrapPanel>
@@ -131,10 +131,10 @@
                             Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red" BorderThickness="4"/>
 
                     <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
-                            Style="{StaticResource ClearButtonStyle}" Background="Blue" Foreground="Yellow"
+                            Style="{StaticResource ObsoleteClearButtonStyle}" Background="Blue" Foreground="Yellow"
                             Width="24" Height="24" BorderThickness="2" BorderBrush="Red"/>
                     <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
-                            Style="{StaticResource ClearButtonStyle}"
+                            Style="{StaticResource ObsoleteClearButtonStyle}"
                             Width="24" Height="24"/>
 
                     <Button IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
@@ -207,18 +207,18 @@
                     <TextBlock TextWrapping="WrapWithOverflow" Text="ClearButtonStyle:" VerticalAlignment="Center" Background="Aqua"/>
                     <Button Focusable="True" IsTabStop="False" Width="58" Height="58" Padding="8" Background="Blue" Foreground="Yellow"
                             BorderThickness="4" BorderBrush="LightSkyBlue" Click="ButtonBase_OnClick"
-                            Style="{StaticResource ClearButtonStyle}"/>
+                            Style="{StaticResource ObsoleteClearButtonStyle}"/>
                     <Button Focusable="True" IsTabStop="False" Width="58" Height="58" Padding="2" Click="ButtonBase_OnClick"
-                            Style="{StaticResource ClearButtonStyle}"/>
+                            Style="{StaticResource ObsoleteClearButtonStyle}"/>
                     <Button Focusable="True" IsTabStop="False" Width="58" Height="58" Padding="2" Click="ButtonBase_OnClick"
                             Background="White" Foreground="Black"
-                            Style="{StaticResource ClearButtonStyle}"/>
+                            Style="{StaticResource ObsoleteClearButtonStyle}"/>
                     <Button Focusable="True" IsTabStop="False" Width="58" Height="58" Padding="2" Click="ButtonBase_OnClick"
                             Background="Black" Foreground="White"
-                            Style="{StaticResource ClearButtonStyle}"/>
+                            Style="{StaticResource ObsoleteClearButtonStyle}"/>
 
                     <TextBlock TextWrapping="WrapWithOverflow" Text="ClearButtonStyle with margin:" VerticalAlignment="Center" Background="Aqua" Width="100"/>
-                    <Button Style="{StaticResource ClearButtonStyle}" Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Black"
+                    <Button Style="{StaticResource ObsoleteClearButtonStyle}" Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Black"
                             Width="20" Height="20" Margin="24 0 0 0" />
                 </WrapPanel>
             </StackPanel>
