@@ -6,7 +6,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 
-namespace WpfInvestigate.Controls.FlatButtonConverters
+namespace WpfInvestigate.Obsolete.FlatButtonConverters
 {
     public class GetBorderColorConverter : DependencyObject, IValueConverter
     {

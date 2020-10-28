@@ -92,7 +92,7 @@
     <Compile Include="Controls\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FlatButtonConverters\FlatButtonConverters.cs" />
+    <Compile Include="Obsolete\FlatButtonConverters\FlatButtonConverters.cs" />
     <Compile Include="Controls\KeyAssignmentSet.cs" />
     <Compile Include="Obsolete\MonochromeButton.xaml.cs">
       <DependentUpon>MonochromeButton.xaml</DependentUpon>
