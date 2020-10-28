@@ -10,7 +10,6 @@
 
     <Window.Resources>
         <ResourceDictionary>
-
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Controls/BootstrapButtons.xaml" />
             </ResourceDictionary.MergedDictionaries>

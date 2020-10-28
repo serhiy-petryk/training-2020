@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-        xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         mc:Ignorable="d"
         Title="WatermarkTests" Height="400" Width="1000">
 
@@ -84,14 +83,14 @@
         </TextBox>
 
         <TextBlock Text="Rotated Numeric:"/>
-        <obsolete:NumericUpDown effects:WatermarkEffect.Watermark="Long AAAA" Margin="0 0 0 5" Padding="7"  Width="180" BorderThickness="4 6 8 10" Height="50"
-                 VerticalAlignment="Top" VerticalContentAlignment="Bottom"
-                 HorizontalContentAlignment="Right"
-                 BorderBrush="YellowGreen" Background="Aquamarine" IsNullable="True">
-            <obsolete:NumericUpDown.RenderTransform>
+        <controls:NumericBox effects:WatermarkEffect.Watermark="Long AAAA" Margin="0 0 0 5" Padding="7"  Width="180" BorderThickness="4 6 8 10" Height="50"
+                             VerticalAlignment="Top" VerticalContentAlignment="Bottom"
+                             HorizontalContentAlignment="Right"
+                             BorderBrush="YellowGreen" Background="Aquamarine" IsNullable="True">
+            <controls:NumericBox.RenderTransform>
                 <RotateTransform CenterX="10" CenterY="20" Angle="5" />
-            </obsolete:NumericUpDown.RenderTransform>
-        </obsolete:NumericUpDown>
+            </controls:NumericBox.RenderTransform>
+        </controls:NumericBox>
 
         <TextBlock Text="Rotated Textbox:"/>
         <TextBox effects:WatermarkEffect.Watermark="Long text AAAA " Margin="0 0 0 5" Width="40">

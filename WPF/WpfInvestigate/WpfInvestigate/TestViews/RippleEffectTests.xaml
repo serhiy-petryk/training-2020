@@ -3,12 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfInvestigate.TestViews"
-        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
-        xmlns:common="clr-namespace:WpfInvestigate.Common"
         mc:Ignorable="d"
         Title="RippleEffectTests" Height="450" Width="800">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Obsolete/FlatButton.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>

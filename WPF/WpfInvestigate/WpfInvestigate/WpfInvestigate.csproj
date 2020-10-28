@@ -89,7 +89,7 @@
     <Compile Include="Controls\Helpers\ControlHelper.cs" />
     <Compile Include="Controls\Helpers\DropDownButtonHelper.cs" />
     <Compile Include="Controls\Effects\DoubleIconToggleButtonEffect.cs" />
-    <Compile Include="Controls\FlatButton.xaml.cs">
+    <Compile Include="Obsolete\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Obsolete\FlatButtonConverters\FlatButtonConverters.cs" />
@@ -106,7 +106,6 @@
     <Compile Include="Controls\Others\VirtualKeyboard.Models.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.KeyDefinition.cs" />
     <Compile Include="Controls\Effects\FocusEffect.cs" />
-    <Compile Include="Obsolete\xxPathContent.cs" />
     <Compile Include="Obsolete\AnimationHelper.cs" />
     <Compile Include="Obsolete\Events.cs" />
     <Compile Include="Obsolete\NumericUpDown.xaml.cs">
@@ -214,7 +213,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\FlatButton.xaml">
+    <Page Include="Obsolete\FlatButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

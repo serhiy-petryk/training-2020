@@ -1,4 +1,4 @@
-﻿namespace WpfInvestigate.Controls
+﻿namespace WpfInvestigate.Obsolete
 {
     /// <summary>
     /// Interaction logic for FlatButton.xaml

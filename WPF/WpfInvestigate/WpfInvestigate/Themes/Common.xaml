@@ -8,8 +8,6 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Controls/ButtonStyles.xaml"/>
         <ResourceDictionary Source="/Controls/BootstrapButtons.xaml"/>
-        <ResourceDictionary Source="/Controls/FlatButton.xaml"/>
-        <ResourceDictionary Source="/Obsolete/MonochromeButton.xaml"/>
         <ResourceDictionary Source="/Themes/Flags.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
