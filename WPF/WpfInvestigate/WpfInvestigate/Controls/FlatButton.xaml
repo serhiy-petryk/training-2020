@@ -5,7 +5,7 @@
                     xmlns:converters="clr-namespace:WpfInvestigate.Controls.FlatButtonConverters"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
-    <Style x:Key="FlatButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="ObsoleteFlatButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="0"/>
         <!-- Can't use binding for background because there is VS Designer error -->
         <Setter Property="Background" Value="Transparent"/>
@@ -64,7 +64,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ObsoleteClearButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource FlatButtonStyle}" x:Shared="False">
+    <Style x:Key="ObsoleteClearButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource ObsoleteFlatButtonStyle}" x:Shared="False">
         <Setter Property="Content">
             <Setter.Value>
                 <Viewbox UseLayoutRounding="False">

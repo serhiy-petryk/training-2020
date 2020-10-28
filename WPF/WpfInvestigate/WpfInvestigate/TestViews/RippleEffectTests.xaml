@@ -76,7 +76,7 @@
                     <TextBlock TextWrapping="WrapWithOverflow" Text="FlattButton:" VerticalAlignment="Center" Background="Aqua" Width="80"/>
                     <Button effects:ClickEffect.RippleColor="White" Style="{StaticResource ClearAnimatedButtonStyle}" Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Black"
                             Width="20" Height="20" Margin="24 0 0 0" />
-                    <Button effects:ClickEffect.RippleColor="White" Width="120" Height="30" Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
+                    <Button effects:ClickEffect.RippleColor="White" Width="120" Height="30" Style="{StaticResource ObsoleteFlatButtonStyle}" Content="FlatButtonStyle" />
 
                     <Button BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30" Content="Bichrome"
                             effects:ClickEffect.RippleColor="White" 
@@ -87,7 +87,7 @@
                             effects:ChromeEffect.BichromeAnimatedBackground="Blue"
                             effects:ChromeEffect.BichromeAnimatedForeground="Yellow"/>
                     <Button effects:ClickEffect.RippleColor="White" Background="Blue" Foreground="Yellow" BorderThickness="4" BorderBrush="LightSkyBlue" Width="120" Height="30"
-                            Style="{StaticResource FlatButtonStyle}" Content="FlatButtonStyle" />
+                            Style="{StaticResource ObsoleteFlatButtonStyle}" Content="FlatButtonStyle" />
 
                     <Button effects:ClickEffect.RippleColor="White" BorderThickness="4" Width="120" Height="30" Content="Monochrome Blue"
                             effects:ChromeEffect.MonochromeAnimated="Blue"/>

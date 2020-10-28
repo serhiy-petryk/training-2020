@@ -152,7 +152,7 @@
     <Compile Include="Obsolete\TestViews\MonochromeButtonTests.xaml.cs">
       <DependentUpon>MonochromeButtonTests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\FlatButtonTests.xaml.cs">
+    <Compile Include="Obsolete\TestViews\FlatButtonTests.xaml.cs">
       <DependentUpon>FlatButtonTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\DatePickerExtensionTests.xaml.cs">
@@ -307,7 +307,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestViews\FlatButtonTests.xaml">
+    <Page Include="Obsolete\TestViews\FlatButtonTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
