@@ -4,8 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ControlInvestigate"
+        xmlns:temp="clr-namespace:ControlInvestigate.Temp"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <Style TargetType="temp:TestObject">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="temp:TestObject">
+                        <TextBlock Background="Yellow" Text="{Binding TestProperty}"></TextBlock>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -39,6 +52,7 @@
 
                     <WrapPanel Orientation="Horizontal" Margin="0 0 0 5">
                         <Button x:Name="TempControl" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
+                        <temp:TestObject></temp:TestObject>
                     </WrapPanel>
                 </StackPanel>
             </ScrollViewer>

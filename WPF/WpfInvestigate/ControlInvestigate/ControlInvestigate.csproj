@@ -51,6 +51,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Temp\TestObject.cs" />
     <Compile Include="Tests\TempControl.xaml.cs">
       <DependentUpon>TempControl.xaml</DependentUpon>
     </Compile>
