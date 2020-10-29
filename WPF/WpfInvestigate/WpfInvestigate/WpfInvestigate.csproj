@@ -84,7 +84,6 @@
     </Compile>
     <Compile Include="Controls\ColorPickerViewModel.cs" />
     <Compile Include="Controls\DialogItems\DialogItems.cs" />
-    <Compile Include="Controls\DialogItems\StoryboardExtensions.cs" />
     <Compile Include="Controls\Effects\ChromeEffect.cs" />
     <Compile Include="Controls\DatePickerExtension.cs" />
     <Compile Include="Controls\Effects\CornerRadiusEffect.cs" />
