@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:common="clr-namespace:WpfInvestigate.Common"
              mc:Ignorable="d"
              Width="Auto" Height="Auto" MinWidth="50" MinHeight="50" MaxWidth="1000">
 
@@ -15,9 +16,18 @@
             <EventSetter Event="DragDelta" Handler="ResizeThumb_OnDragDelta"/>
         </Style>
 
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#FFE2EBF4" />
         <SolidColorBrush x:Key="BorderBrush" Color="#FF749DCA" />
         <SolidColorBrush x:Key="HeaderBrush" Color="#FFABC4DF" />
-        <SolidColorBrush x:Key="BackgroundBrush" Color="#FFE2EBF4" />
+        <SolidColorBrush x:Key="HeaderTextBrush" Color="White" />
+        <SolidColorBrush x:Key="HeaderButtonBrush" Color="Black" />
+        <SolidColorBrush x:Key="TextBrush" Color="Black" />
+        <!-- Monochrome <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource SuccessColor}" />
+        <SolidColorBrush x:Key="HeaderBrush" Color="{Binding Source={StaticResource BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}" />
+        <SolidColorBrush x:Key="HeaderTextBrush" Color="{Binding Source={StaticResource HeaderBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}" />
+        <SolidColorBrush x:Key="BorderBrush" Color="{Binding Source={StaticResource HeaderBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}" />
+        <SolidColorBrush x:Key="TextBrush" Color="{Binding Source={StaticResource BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}" />
+        <SolidColorBrush x:Key="IconBrush" Color="{Binding Source={StaticResource BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}" />-->
     </UserControl.Resources>
 
     <Grid>
@@ -37,9 +47,10 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" x:Name="CaptionControl" Height="30" VerticalAlignment="Top" Foreground="White" Padding="5"
+                    <TextBlock Grid.Column="0" x:Name="CaptionControl" Height="30" Padding="5" VerticalAlignment="Top"
+                               Foreground="{StaticResource HeaderTextBrush}"
                                TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
-                    <Button Grid.Column="1" Margin="0 0 4 0" Foreground="Black" Style="{StaticResource TextButtonStyle}"
+                    <Button Grid.Column="1" Margin="0 0 4 0" Foreground="{StaticResource HeaderButtonBrush}" Style="{StaticResource TextButtonStyle}"
                             HorizontalAlignment="Right" VerticalAlignment="Center"
                             FontFamily="Marlett" Content="r"
                             Command="ApplicationCommands.Close" CommandParameter="{Binding}" />
@@ -51,8 +62,15 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Viewbox Grid.Column="0" x:Name="IconBox" Width="28" Margin="4 0 0 0" />
-                    <TextBlock Grid.Column="1" x:Name="MessageTextControl" Margin="8" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="14"/>
+                    <Viewbox Grid.Column="0" x:Name="IconBox" Width="28" Margin="4 0 0 0">
+                        <!-- Monochrome <Viewbox.Resources>
+                            <Style TargetType="{x:Type Path}">
+                                <Setter Property="Fill" Value="{StaticResource IconBrush}"/>
+                            </Style>
+                        </Viewbox.Resources>-->
+                    </Viewbox>
+                    <TextBlock Grid.Column="1" x:Name="MessageTextControl" Margin="8" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="14"
+                               Foreground="{StaticResource TextBrush}"/>
                 </Grid>
 
                 <Grid Grid.Row="2" x:Name="ButtonsArea" Margin="0 5 0 0"/>
