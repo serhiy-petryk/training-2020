@@ -19,7 +19,7 @@ namespace WpfInvestigate.TestViews.DialogExamples
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var image = new Image();
-            image.Source = new BitmapImage(new Uri("/TestViews/DialogExamples/1.jpg", UriKind.Relative));
+            image.Source = new BitmapImage(new Uri("/TestViews/DialogExamples/1.jpg", UriKind.RelativeOrAbsolute));
             DialogItems.Show(this, image, null, items => items.CloseOnClickBackground = false);
         }
     }

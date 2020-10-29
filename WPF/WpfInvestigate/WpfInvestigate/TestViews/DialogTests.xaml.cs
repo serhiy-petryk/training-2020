@@ -53,7 +53,7 @@ namespace WpfInvestigate.TestViews
         private void OnClickShowImagePopup(object sender, RoutedEventArgs e)
         {
             var image = new Image();
-            image.Source = new BitmapImage(new Uri("TestViews/DialogExamples/1.jpg", UriKind.Relative));
+            image.Source = new BitmapImage(new Uri("/TestViews/DialogExamples/1.jpg", UriKind.RelativeOrAbsolute));
             DialogItems.Show(this, image);
         }
 
@@ -61,7 +61,7 @@ namespace WpfInvestigate.TestViews
         {
             ClearSubGrid();
             var image = new Image();
-            image.Source = new BitmapImage(new Uri("TestViews/DialogExamples/1.jpg", UriKind.Relative));
+            image.Source = new BitmapImage(new Uri("/TestViews/DialogExamples/1.jpg", UriKind.RelativeOrAbsolute));
             DialogItems.Show(this.subGrid, image);
         }
 
@@ -137,7 +137,7 @@ namespace WpfInvestigate.TestViews
         private void OnClickShowImage(object sender, RoutedEventArgs e)
         {
             var image = new Image();
-            image.Source = new BitmapImage(new Uri("TestViews/DialogExamples/1.jpg", UriKind.Relative));
+            image.Source = new BitmapImage(new Uri("/TestViews/DialogExamples/1.jpg", UriKind.RelativeOrAbsolute));
             image.PreviewMouseLeftButtonDown += (o, args) => ApplicationCommands.Close.Execute(null, image);
             DialogItems.Show(this, image, null, _closeOnClickBackgroundCallback);
         }
@@ -146,7 +146,7 @@ namespace WpfInvestigate.TestViews
         {
             ClearSubGrid();
             var image = new Image();
-            image.Source = new BitmapImage(new Uri("TestViews/DialogExamples/1.jpg", UriKind.Relative));
+            image.Source = new BitmapImage(new Uri("/TestViews/DialogExamples/1.jpg", UriKind.RelativeOrAbsolute));
             DialogItems.Show(this.subGrid, image, null, _closeOnClickBackgroundCallback);
         }
 
