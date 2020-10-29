@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WpfInvestigate.Obsolete
+namespace WpfInvestigate.Obsolete.TestViews
 {
     /// <summary>
     /// Interaction logic for DualPathToggleButtonEffectTests.xaml

@@ -7,7 +7,7 @@
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
-        Title="Flat Buttons" Height="800" Width="1000">
+        Title="Obsolete Flat Buttons" Height="800" Width="1000">
 
     <Window.Resources>
         <ResourceDictionary>
