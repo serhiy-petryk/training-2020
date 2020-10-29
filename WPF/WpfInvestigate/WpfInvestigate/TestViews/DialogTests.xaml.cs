@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using WpfInvestigate.Controls;
 using WpfInvestigate.Controls.DialogItems;
 using WpfInvestigate.TestViews.DialogExamples;
 

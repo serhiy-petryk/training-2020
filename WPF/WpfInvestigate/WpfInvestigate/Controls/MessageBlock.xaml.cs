@@ -6,9 +6,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
-using WpfInvestigate.Controls.DialogItems;
 
-namespace WpfInvestigate.TestViews.DialogExamples
+namespace WpfInvestigate.Controls
 {
     public partial class MessageBlock : UserControl
     {
@@ -18,7 +17,7 @@ namespace WpfInvestigate.TestViews.DialogExamples
         {
             var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
             var content = new MessageBlock(messageText, caption, icon, buttons);
-            DialogItems.ShowDialog(null, content, style, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            DialogItems.DialogItems.ShowDialog(null, content, style, DialogItems.DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
             return content._result;
         }
 
@@ -65,7 +64,7 @@ namespace WpfInvestigate.TestViews.DialogExamples
         private void OnButtonClick(object parameter)
         {
             _result = parameter?.ToString();
-            ApplicationCommands.Close.Execute(null, ((DialogItems)Parent).Items[0] as FrameworkElement);
+            ApplicationCommands.Close.Execute(null, ((DialogItems.DialogItems)Parent).Items[0] as FrameworkElement);
         }
 
         #region ==========  Moving && resizing  =========

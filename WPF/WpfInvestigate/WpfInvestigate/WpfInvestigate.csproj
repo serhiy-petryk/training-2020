@@ -171,7 +171,7 @@
     <Compile Include="TestViews\DialogExamples\CustomStyleWindowPopup.xaml.cs">
       <DependentUpon>CustomStyleWindowPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\DialogExamples\MessageBlock.xaml.cs">
+    <Compile Include="Controls\MessageBlock.xaml.cs">
       <DependentUpon>MessageBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\DialogExamples\MultipleLightBoxWindow.xaml.cs">
@@ -370,7 +370,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestViews\DialogExamples\MessageBlock.xaml">
+    <Page Include="Controls\MessageBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
