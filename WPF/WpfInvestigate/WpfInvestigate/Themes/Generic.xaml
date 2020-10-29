@@ -2,6 +2,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/DropDownButtons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/DialogItems/DialogItems.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

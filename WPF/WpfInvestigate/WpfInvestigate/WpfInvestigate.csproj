@@ -73,6 +73,7 @@
     <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\DataTypeMetadata.cs" />
     <Compile Include="Common\INotifyPropertyChangedAbstract.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Controls\AdornerControl.cs" />
     <Compile Include="Controls\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
@@ -82,6 +83,8 @@
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ColorPickerViewModel.cs" />
+    <Compile Include="Controls\DialogItems\DialogItems.cs" />
+    <Compile Include="Controls\DialogItems\StoryboardExtensions.cs" />
     <Compile Include="Controls\Effects\ChromeEffect.cs" />
     <Compile Include="Controls\DatePickerExtension.cs" />
     <Compile Include="Controls\Effects\CornerRadiusEffect.cs" />
@@ -157,6 +160,36 @@
     <Compile Include="TestViews\DatePickerExtensionTests.xaml.cs">
       <DependentUpon>DatePickerExtensionTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\DialogExamples\BuiltinStyleWindow.xaml.cs">
+      <DependentUpon>BuiltinStyleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DialogExamples\BuiltinStyleWindowPopup.xaml.cs">
+      <DependentUpon>BuiltinStyleWindowPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DialogExamples\CustomStyleWindow.xaml.cs">
+      <DependentUpon>CustomStyleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DialogExamples\CustomStyleWindowPopup.xaml.cs">
+      <DependentUpon>CustomStyleWindowPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DialogExamples\MessageBlock.xaml.cs">
+      <DependentUpon>MessageBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DialogExamples\MultipleLightBoxWindow.xaml.cs">
+      <DependentUpon>MultipleLightBoxWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DialogExamples\MultipleLightBoxWindowPopup.xaml.cs">
+      <DependentUpon>MultipleLightBoxWindowPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DialogExamples\SampleDialog.xaml.cs">
+      <DependentUpon>SampleDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DialogExamples\SampleDialogMovable.xaml.cs">
+      <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DialogTests.xaml.cs">
+      <DependentUpon>DialogTests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\NumericBoxTests.xaml.cs">
       <DependentUpon>NumericBoxTests.xaml</DependentUpon>
     </Compile>
@@ -210,6 +243,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ColorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DialogItems\DialogItems.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DialogItems\DialogItemsCommon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -313,6 +354,46 @@
     <Page Include="TestViews\DatePickerExtensionTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\DialogExamples\BuiltinStyleWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DialogExamples\BuiltinStyleWindowPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DialogExamples\CustomStyleWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DialogExamples\CustomStyleWindowPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DialogExamples\MessageBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DialogExamples\MultipleLightBoxWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DialogExamples\MultipleLightBoxWindowPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DialogExamples\SampleDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DialogExamples\SampleDialogMovable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DialogTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\NumericBoxTests.xaml">
       <SubType>Designer</SubType>
@@ -474,6 +555,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Comments\Bootstrap.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="TestViews\DialogExamples\1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -85,6 +85,7 @@
                 <Button x:Name="ChromeTest" Width="200" Margin="0 5" Content="Ready: Chrome tests" Click="ChromeTest_OnClick"/>
                 <Button x:Name="ColorPickerTest" Width="200" Margin="0 5" Content="Ready: ColorPickerTest" Click="ColorPickerTest_OnClick"/>
                 <Button x:Name="ButtonStyleTest" Width="200" Margin="0 5" Content="Ready: ButtonStyleTests" Click="ButtonStyleTests_OnClick"/>
+                <Button x:Name="DialogItemsTest" Width="200" Margin="0 5" Content="Ready: DialogItemsTests" Click="DialogItemsTests_OnClick"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
