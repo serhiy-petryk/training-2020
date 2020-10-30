@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:common="clr-namespace:WpfInvestigate.Common"
              mc:Ignorable="d"
-             Width="Auto" Height="Auto" MinWidth="50" MinHeight="50" MaxWidth="1000">
+             Width="Auto" Height="Auto" MinWidth="50" MinHeight="50" MaxWidth="1000"
+             FontSize="14">
 
     <UserControl.Resources>
         <ResourceDictionary>
-        <ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary Source="/Controls/BootstrapButtons.xaml"/>
-        </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Controls/BootstrapButtons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
             <Style x:Key="ResizeThumb" TargetType="Thumb">
                 <Setter Property="Opacity" Value="0.01"/>
                 <Setter Property="Focusable" Value="False"/>
@@ -29,54 +30,53 @@
             <Border BorderThickness="7 2 7 7"
                 Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"
                 BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
-            <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="15"/>
-                </Grid.RowDefinitions>
+                <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="15"/>
+                    </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0" Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" x:Name="CaptionControl" Height="30" Padding="0 5" VerticalAlignment="Top"
+                    <Grid Grid.Row="0" Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" x:Name="CaptionControl" Height="30" Padding="0 5" VerticalAlignment="Top"
                                Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
                                Text="{Binding Caption}"
                                TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
-                    <Button Grid.Column="1" Margin="0 0 4 0"
+                        <Button Grid.Column="1" Margin="0 0 4 0"
                             Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
                             Style="{StaticResource TextButtonStyle}"
                             HorizontalAlignment="Right" VerticalAlignment="Center"
                             FontFamily="Marlett" Content="r"
                             Command="ApplicationCommands.Close" CommandParameter="{Binding}" />
-                    <Thumb Grid.Column="0" x:Name="MoveThumb" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>
-                </Grid>
+                        <Thumb Grid.Column="0" x:Name="MoveThumb" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>
+                    </Grid>
 
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Viewbox Grid.Column="0" x:Name="IconBox" Width="24" Margin="8 0 0 0"
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="0" x:Name="IconBox" Width="24" Margin="8 0 0 0"
                              Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
-                        <Path Stretch="Fill" Data="{Binding Icon}"
+                            <Path Stretch="Fill" Data="{Binding Icon}"
                               Fill="{Binding IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                    </Viewbox>
-                    <TextBox Grid.Column="1" x:Name="MessageTextControl" IsReadOnly="True" Margin="8" BorderThickness="0"
+                        </Viewbox>
+                        <TextBox Grid.Column="1" x:Name="MessageTextControl" IsReadOnly="True" Margin="8" BorderThickness="0"
                              HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="14"
                              Background="Transparent"
                              Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
                              Text="{Binding MessageText, Mode=OneWay}"/>
+                    </Grid>
+
+                    <Grid Grid.Row="2" x:Name="ButtonsArea"/>
+
                 </Grid>
-
-                <Grid Grid.Row="2" x:Name="ButtonsArea" Margin="0 5 0 0"/>
-
-            </Grid>
-        </Border>
+            </Border>
         </Border>
 
         <Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>

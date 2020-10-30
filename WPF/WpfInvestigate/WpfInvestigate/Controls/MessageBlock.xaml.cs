@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Common.ColorSpaces;
+using WpfInvestigate.Controls.Helpers;
 
 namespace WpfInvestigate.Controls
 {
@@ -35,6 +36,7 @@ namespace WpfInvestigate.Controls
         public Geometry Icon { get; private set; }
         public Color BaseColor { get; private set; }
         public Color? BaseIconColor { get; private set; }
+        public string[] Buttons { get; private set; }
 
         public Color IconColor => BaseIconColor.HasValue && BaseIconColor.Value != BaseColor
             ? BaseIconColor.Value
@@ -60,6 +62,7 @@ namespace WpfInvestigate.Controls
             MessageText = messageText;
             Caption = caption;
             Icon = icon;
+            Buttons = buttons;
 
             /*if (icon != null)
                 IconBox.Child = Application.Current.TryFindResource($"MessageBlock{icon.Value}Icon") as FrameworkElement;
@@ -67,18 +70,22 @@ namespace WpfInvestigate.Controls
 
             if (buttons != null && buttons.Length > 0)
             {
-                ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                 for (var k = 0; k < buttons.Length; k++)
                 {
-                    ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
-                    var btn = new Button { Margin = new Thickness(8, 4, 8, 4), Content = buttons[k] };
-                    Grid.SetColumn(btn, k + 1);
+                    ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                    var btn = new Button {Content = buttons[k], Padding = new Thickness(0)};
+                    Grid.SetColumn(btn, k);
                     ButtonsArea.Children.Add(btn);
                     btn.Command = _cmdClickButton;
                     btn.CommandParameter = buttons[k];
                 }
-                ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             }
+        }
+
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        {
+            base.OnRenderSizeChanged(sizeInfo);
+            UpdateUI();
         }
 
         private void OnButtonClick(object parameter)
@@ -195,5 +202,29 @@ namespace WpfInvestigate.Controls
                 Height = ActualHeight - change;
         }
         #endregion
+
+        private void UpdateUI()
+        {
+            if (ButtonsArea.Children.Count > 0)
+            {
+                var maxWidth = ButtonsArea.Children.OfType<ContentControl>().Max(c => ControlHelper.MeasureString((string)c.Content, c).Width) + 4.0;
+                MinWidth = Math.Min(MaxWidth, (maxWidth + 2) * ButtonsArea.Children.Count);
+
+                // First measure
+                if (double.IsNaN(Width) && ActualWidth < (MaxWidth + MinWidth) / 2)
+                    Width = (MaxWidth + MinWidth) / 2;
+
+                var space = ActualWidth - MinWidth;
+                var padding = Math.Min(20.0, space / (4 * ButtonsArea.Children.Count));
+                var buttonWidth = maxWidth + 2 * padding;
+
+                foreach (ButtonBase button in ButtonsArea.Children)
+                    if (!Tips.AreEqual(button.Width, buttonWidth))
+                        button.Width = buttonWidth;
+
+                if (!Tips.AreEqual(padding, ButtonsArea.Margin.Left) || !Tips.AreEqual(padding, ButtonsArea.Margin.Right))
+                    ButtonsArea.Margin = new Thickness(padding, 5, padding, 0);
+            }
+        }
     }
 }

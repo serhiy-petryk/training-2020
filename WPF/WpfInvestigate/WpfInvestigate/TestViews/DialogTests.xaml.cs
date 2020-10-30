@@ -217,13 +217,13 @@ namespace WpfInvestigate.TestViews
         }
         private void OnClickWarningMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
-                "Caption of Message block", MessageBlock.MessageBlockIcon.Warning);
+            var aa = MessageBlock.Show("Message",
+                "Caption of Message block", MessageBlock.MessageBlockIcon.Warning, new[] { "OK", "Cancel", "Right", "Left" });
         }
         private void OnClickInformationMessageBlock(object sender, RoutedEventArgs e)
         {
             var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
-                "Caption of Message block", MessageBlock.MessageBlockIcon.Info);
+                "Caption of Message block", MessageBlock.MessageBlockIcon.Info, new[] { "OK" });
         }
         private void OnClickSuccessMessageBlock(object sender, RoutedEventArgs e)
         {

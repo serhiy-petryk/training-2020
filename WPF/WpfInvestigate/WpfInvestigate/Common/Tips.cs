@@ -76,6 +76,7 @@ namespace WpfInvestigate.Common
             }
         }
         #endregion =============================
+
         #region =============  Colors  =============
         public static Brush GetActualBackgroundBrush(DependencyObject d)
         {

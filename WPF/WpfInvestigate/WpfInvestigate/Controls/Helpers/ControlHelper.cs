@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +15,15 @@ namespace WpfInvestigate.Controls.Helpers
 {
     public static class ControlHelper
     {
+        public static Size MeasureString(string candidate, Control fontControl)
+        {
+            var formattedText = new FormattedText(candidate, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
+                new Typeface(fontControl.FontFamily, fontControl.FontStyle, fontControl.FontWeight,
+                    fontControl.FontStretch), fontControl.FontSize, Brushes.Black, new NumberSubstitution(),
+                TextFormattingMode.Display);
+
+            return new Size(formattedText.Width, formattedText.Height);
+        }
         public static void AddIconToControl(ContentControl control, bool iconBeforeContent, Geometry icon, Thickness iconMargin, double iconWidth = double.NaN)
         {
             if (control.Resources["AddIcon"] is bool)
