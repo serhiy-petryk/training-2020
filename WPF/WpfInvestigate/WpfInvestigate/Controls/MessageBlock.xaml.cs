@@ -6,40 +6,64 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
+using WpfInvestigate.Common.ColorSpaces;
 
 namespace WpfInvestigate.Controls
 {
     public partial class MessageBlock : UserControl
     {
-        public enum MessageBlockIcon { Question, Stop, Error, Warning, Information, Success }
+        private static readonly Color _defaultBaseColor = ColorUtils.StringToColor("#FFE2EBF4");
+        public enum MessageBlockIcon { Question, Stop, Error, Warning, Info, Success }
+
+        private static readonly string[] _iconColors = {"Primary", "Danger", "Danger", "Warning", "Info", "Success"};
 
         public static string Show(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
         {
             var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
-            var content = new MessageBlock(messageText, caption, icon, buttons);
+            var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
+            var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int) icon] + "Color") as Color?;
+
+            // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
+            var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
             DialogItems.DialogItems.ShowDialog(null, content, style, DialogItems.DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
             return content._result;
         }
 
         // =================  Instance  ================
+        public string MessageText { get; private set; }
+        public string Caption { get; private set; }
+        public Geometry Icon { get; private set; }
+        public Color BaseColor { get; private set; }
+        public Color? BaseIconColor { get; private set; }
+
+        public Color IconColor => BaseIconColor.HasValue && BaseIconColor.Value != BaseColor
+            ? BaseIconColor.Value
+            : (Color) ColorHslBrush.Instance.Convert(BaseIconColor ?? BaseColor, typeof(Color), "+70%", null);
+
         private string _result;
         private RelayCommand _cmdClickButton { get; }
 
         private MessageBlock()
         {
             InitializeComponent();
-        }
-        private MessageBlock(string messageText, string caption, MessageBlockIcon? icon, string[] buttons) : this()
-        {
-            // Data = data;
             DataContext = this;
             _cmdClickButton = new RelayCommand(OnButtonClick);
 
-            MessageTextControl.Text = messageText;
-            CaptionControl.Text = caption;
-            if (icon != null)
+            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            if (currentWindow != null)
+                MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);
+        }
+        private MessageBlock(Color? baseColor, string messageText, string caption, Geometry icon, Color? iconColor, string[] buttons) : this()
+        {
+            BaseColor = baseColor ?? _defaultBaseColor;
+            BaseIconColor = iconColor;
+            MessageText = messageText;
+            Caption = caption;
+            Icon = icon;
+
+            /*if (icon != null)
                 IconBox.Child = Application.Current.TryFindResource($"MessageBlock{icon.Value}Icon") as FrameworkElement;
-            IconBox.Visibility = IconBox.Child == null ? Visibility.Collapsed : Visibility.Visible;
+            IconBox.Visibility = IconBox.Child == null ? Visibility.Collapsed : Visibility.Visible;*/
 
             if (buttons != null && buttons.Length > 0)
             {
@@ -55,10 +79,6 @@ namespace WpfInvestigate.Controls
                 }
                 ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             }
-
-            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            if (currentWindow != null)
-                MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);
         }
 
         private void OnButtonClick(object parameter)
