@@ -17,10 +17,10 @@
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="MessageBoxButtonStyle" TargetType="Button" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
-                <Setter Property="Padding" Value="0 2"/>
+                <Setter Property="Padding" Value="0 1"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+30%}"/>
-                <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+0%,100, +25%,+25%/+50%,+25%/+50%,100"/>
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +25%,+25%/+50%,+25%/+50%,100"/>
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -38,8 +38,8 @@
         <Border BorderThickness="2" CornerRadius="1" Padding="0"
                 BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
             <Border BorderThickness="7 2 7 7"
-                Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"
-                BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
+                    Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"
+                    BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
                 <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -54,15 +54,15 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" x:Name="CaptionControl" Height="30" Padding="0 5" VerticalAlignment="Top"
-                               Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
-                               Text="{Binding Caption}"
-                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                                   Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
+                                   Text="{Binding Caption}"
+                                   TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                         <Button Grid.Column="1" Margin="0 0 4 0"
-                            Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
-                            Style="{StaticResource TextButtonStyle}"
-                            HorizontalAlignment="Right" VerticalAlignment="Center"
-                            FontFamily="Marlett" Content="r"
-                            Command="ApplicationCommands.Close" CommandParameter="{Binding}" />
+                                Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
+                                Style="{StaticResource TextButtonStyle}"
+                                HorizontalAlignment="Right" VerticalAlignment="Center"
+                                FontFamily="Marlett" Content="r"
+                                Command="ApplicationCommands.Close" CommandParameter="{Binding}" />
                         <Thumb Grid.Column="0" x:Name="MoveThumb" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>
                     </Grid>
 
@@ -72,15 +72,14 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Viewbox Grid.Column="0" x:Name="IconBox" Width="24" Margin="8 0 0 0"
-                             Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                 Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
                             <Path Stretch="Fill" Data="{Binding Icon}"
-                              Fill="{Binding IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                  Fill="{Binding IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                         </Viewbox>
-                        <TextBox Grid.Column="1" x:Name="MessageTextControl" IsReadOnly="True" Margin="8" BorderThickness="0"
-                             HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="14"
-                             Background="Transparent"
-                             Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
-                             Text="{Binding MessageText, Mode=OneWay}"/>
+                        <TextBox Grid.Column="1" x:Name="MessageTextControl" IsReadOnly="True" Padding="0" BorderThickness="0" Background="Transparent"
+                                 Margin="8" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                 Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
+                                 Text="{Binding MessageText, Mode=OneWay}"/>
                     </Grid>
 
                     <Grid Grid.Row="2" x:Name="ButtonsArea"/>
