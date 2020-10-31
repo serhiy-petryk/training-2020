@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,27 +41,22 @@ namespace WpfInvestigate.Controls
         public Color BaseColor { get; private set; }
         public Color? BaseIconColor { get; private set; }
 
-        private string[] Buttons
+        private IEnumerable<string> Buttons
         {
             set
             {
                 ButtonsArea.Children.Clear();
                 ButtonsArea.ColumnDefinitions.Clear();
 
-                if (value != null && value.Length > 0)
+                foreach (var content in value ?? new string[0])
                 {
-                    for (var k = 0; k < value.Length; k++)
-                    {
-                        ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                        // var btn = new Button { Content = value[k], Padding = new Thickness(0) };
-                        var btn = new Button { Content = value[k], Style = Resources["MessageBoxButtonStyle"] as Style };
-                        Grid.SetColumn(btn, k);
-                        ButtonsArea.Children.Add(btn);
-                        btn.Command = _cmdClickButton;
-                        btn.CommandParameter = value[k];
-                    }
+                    ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                    var button = new Button { Content = content };
+                    Grid.SetColumn(button, ButtonsArea.ColumnDefinitions.Count - 1);
+                    ButtonsArea.Children.Add(button);
+                    button.Command = _cmdClickButton;
+                    button.CommandParameter = content;
                 }
-
             }
         }
 

@@ -16,11 +16,11 @@
                 <ResourceDictionary Source="/Controls/BootstrapButtons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <Style x:Key="MessageBoxButtonStyle" TargetType="Button" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
+            <Style TargetType="Button" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
                 <Setter Property="Padding" Value="0 1"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +25%,+25%/+50%,+25%/+50%,100"/>
+                <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
