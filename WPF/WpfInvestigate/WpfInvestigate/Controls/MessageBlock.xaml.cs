@@ -31,10 +31,11 @@ namespace WpfInvestigate.Controls
             // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
             DialogItems.DialogItems.ShowDialog(null, content, style, DialogItems.DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
-            return content._result;
+            return content.Result;
         }
 
         // =================  Instance  ================
+        public string Result { get; private set; }
         public string MessageText { get; private set; }
         public string Caption { get; private set; }
         public Geometry Icon { get; private set; }
@@ -51,11 +52,9 @@ namespace WpfInvestigate.Controls
                 foreach (var content in value ?? new string[0])
                 {
                     ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                    var button = new Button { Content = content };
+                    var button = new Button {Content = content, Command = _cmdClickButton, CommandParameter = content};
                     Grid.SetColumn(button, ButtonsArea.ColumnDefinitions.Count - 1);
                     ButtonsArea.Children.Add(button);
-                    button.Command = _cmdClickButton;
-                    button.CommandParameter = content;
                 }
             }
         }
@@ -64,8 +63,7 @@ namespace WpfInvestigate.Controls
             ? BaseIconColor.Value
             : (Color) ColorHslBrush.Instance.Convert(BaseIconColor ?? BaseColor, typeof(Color), "+70%", null);
 
-        private string _result;
-        private RelayCommand _cmdClickButton { get; }
+        private RelayCommand _cmdClickButton;
 
         private MessageBlock()
         {
@@ -95,7 +93,7 @@ namespace WpfInvestigate.Controls
 
         private void OnButtonClick(object parameter)
         {
-            _result = parameter?.ToString();
+            Result = parameter?.ToString();
             ApplicationCommands.Close.Execute(null, ((DialogItems.DialogItems)Parent).Items[0] as FrameworkElement);
         }
 
