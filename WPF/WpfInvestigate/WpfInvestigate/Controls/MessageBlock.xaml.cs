@@ -13,8 +13,11 @@ namespace WpfInvestigate.Controls
 {
     public partial class MessageBlock : UserControl
     {
-        private static readonly Color _defaultBaseColor = ColorUtils.StringToColor("#FFE2EBF4");
         public enum MessageBlockIcon { Question, Stop, Error, Warning, Info, Success }
+
+        // static MessageBlock() => DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageBlock), new FrameworkPropertyMetadata(typeof(MessageBlock)));
+
+        private static readonly Color _defaultBaseColor = ColorUtils.StringToColor("#FFE2EBF4");
 
         private static readonly string[] _iconColors = {"Primary", "Danger", "Danger", "Warning", "Info", "Success"};
 
@@ -49,7 +52,8 @@ namespace WpfInvestigate.Controls
                     for (var k = 0; k < value.Length; k++)
                     {
                         ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                        var btn = new Button { Content = value[k], Padding = new Thickness(0) };
+                        // var btn = new Button { Content = value[k], Padding = new Thickness(0) };
+                        var btn = new Button { Content = value[k], Style = Resources["MessageBoxButtonStyle"] as Style };
                         Grid.SetColumn(btn, k);
                         ButtonsArea.Children.Add(btn);
                         btn.Command = _cmdClickButton;

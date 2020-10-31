@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:common="clr-namespace:WpfInvestigate.Common"
+             xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
              mc:Ignorable="d"
              Width="Auto" Height="Auto" MinWidth="50" MinHeight="50" MaxWidth="1000"
+             UseLayoutRounding="True"
              FontSize="14">
 
     <UserControl.Resources>
@@ -13,6 +15,14 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Controls/BootstrapButtons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="MessageBoxButtonStyle" TargetType="Button" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
+                <Setter Property="Padding" Value="0 2"/>
+                <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+30%}"/>
+                <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+0%,100, +25%,+25%/+50%,+25%/+50%,100"/>
+            </Style>
+
             <Style x:Key="ResizeThumb" TargetType="Thumb">
                 <Setter Property="Opacity" Value="0.01"/>
                 <Setter Property="Focusable" Value="False"/>

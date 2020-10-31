@@ -26,6 +26,7 @@ namespace WpfInvestigate.Controls.Effects
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
             dpd.AddValueChanged(element, UpdateBorders);
 
+            // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
             element.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => UpdateBorders(element, null)));
         }
         private static void OnObjectUnloaded(object sender, RoutedEventArgs e)
@@ -39,7 +40,12 @@ namespace WpfInvestigate.Controls.Effects
 
         private static void UpdateBorders(object sender, EventArgs e)
         {
-            if (!(sender is FrameworkElement element) || !element.IsLoaded) return;
+            if (!(sender is FrameworkElement element)) return;
+            if (!element.IsLoaded)
+            {
+                element.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => UpdateBorders(sender, e)));
+                return;
+            }
 
             var newCornerRadius = GetCornerRadius(element);
             foreach (var border in ControlHelper.GetMainBorders(element))

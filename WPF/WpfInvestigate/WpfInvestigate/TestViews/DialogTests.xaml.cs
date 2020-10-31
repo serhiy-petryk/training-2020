@@ -198,7 +198,7 @@ namespace WpfInvestigate.TestViews
         private void OnClickMessageBlock(object sender, RoutedEventArgs e)
         {
             var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
-                "Caption of Message block");
+                "Caption of Message block", null, new[] { "OK", "Cancel", "Right", "Left" });
         }
         private void OnClickQuestionMessageBlock(object sender, RoutedEventArgs e)
         {
