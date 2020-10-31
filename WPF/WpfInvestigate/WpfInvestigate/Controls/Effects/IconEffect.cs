@@ -19,7 +19,7 @@ namespace WpfInvestigate.Controls.Effects
 
         //==================
         public static readonly DependencyProperty MarginIfHasContentProperty = DependencyProperty.RegisterAttached("MarginIfHasContent",
-            typeof(Thickness), typeof(DoubleIconToggleButtonEffect), new UIPropertyMetadata(new Thickness(), OnPropertiesChanged));
+            typeof(Thickness), typeof(IconEffect), new UIPropertyMetadata(new Thickness(), OnPropertiesChanged));
         public static Thickness GetMarginIfHasContent(DependencyObject obj) => (Thickness)obj.GetValue(MarginIfHasContentProperty);
         public static void SetMarginIfHasContent(DependencyObject obj, Thickness value) => obj.SetValue(MarginIfHasContentProperty, value);
         //==================
