@@ -88,7 +88,7 @@
 
                                 <Button Grid.Column="4" x:Name="PART_ClearButton" IsTabStop="False" Focusable="False"
                                         Width="{StaticResource ButtonsWidth}" Padding="2.5"
-                                        Style="{StaticResource ClearAnimatedButtonStyle}"
+                                        Style="{StaticResource ClearBichromeAnimatedButtonStyle}"
                                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
                                 <Popup x:Name="PART_Popup"

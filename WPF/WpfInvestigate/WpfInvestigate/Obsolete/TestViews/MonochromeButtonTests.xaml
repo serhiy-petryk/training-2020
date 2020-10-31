@@ -48,7 +48,7 @@
                 <WrapPanel>
                     <Label Content="BichromeAnimatedClearButtonStyle"/>
                     <Button Style="{StaticResource ObsoleteMonochromeAnimatedClearButtonStyle}" Background="Blue" Width="40" Height="40" BorderBrush="Red"/>
-                    <Button Style="{StaticResource ClearAnimatedButtonStyle}" Width="40" Height="40" BorderBrush="Red"
+                    <Button Style="{StaticResource ClearBichromeAnimatedButtonStyle}" Width="40" Height="40" BorderBrush="Red"
                             effects:ChromeEffect.BichromeAnimatedBackground="White"
                             effects:ChromeEffect.BichromeAnimatedForeground="Blue"/>
 

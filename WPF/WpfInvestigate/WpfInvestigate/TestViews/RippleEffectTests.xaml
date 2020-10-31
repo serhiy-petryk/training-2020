@@ -79,7 +79,7 @@
                     <PasswordBox effects:ClickEffect.RippleColor="Red" Width="50" Background="Yellow"/>
 
                     <TextBlock TextWrapping="WrapWithOverflow" Text="FlattButton:" VerticalAlignment="Center" Background="Aqua" Width="80"/>
-                    <Button effects:ClickEffect.RippleColor="White" Style="{StaticResource ClearAnimatedButtonStyle}" Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Black"
+                    <Button effects:ClickEffect.RippleColor="White" Style="{StaticResource ClearBichromeAnimatedButtonStyle}" Background="Blue" Foreground="Yellow" BorderThickness="1" BorderBrush="Black"
                             Width="20" Height="20" Margin="24 0 0 0" />
                     <Button effects:ClickEffect.RippleColor="White" Width="120" Height="30" Style="{StaticResource ObsoleteFlatButtonStyle}" Content="FlatButtonStyle" />
 

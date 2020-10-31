@@ -56,6 +56,7 @@
     <SolidColorBrush x:Key="GrayBrush" Color="{Binding Source={StaticResource GrayColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
     <SolidColorBrush x:Key="GrayDarkBrush" Color="{Binding Source={StaticResource GrayDarkColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
 
+    <!-- Bootstrap Buttons -->
     <Style x:Key="BootstrapButton" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
         <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
         <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="Gray"/>

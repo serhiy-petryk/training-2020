@@ -189,7 +189,7 @@
 
                                     <Button x:Name="PART_ClearButton" Grid.Column="2" Focusable="True" IsTabStop="False" Width="16" Padding="3 3 2 2"
                                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsClearButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                            Style="{StaticResource ClearAnimatedButtonStyle}" VerticalAlignment="Stretch"/>
+                                            Style="{StaticResource ClearBichromeAnimatedButtonStyle}" VerticalAlignment="Stretch"/>
 
                                     <Popup x:Name="PART_Popup" Grid.Column="0" Grid.ColumnSpan="2"
                                            Focusable="False" SnapsToDevicePixels="True"

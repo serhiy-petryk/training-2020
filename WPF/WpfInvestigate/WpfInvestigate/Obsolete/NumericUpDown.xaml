@@ -68,7 +68,7 @@
                                         <RepeatButton x:Name="PART_UpButton" IsTabStop="False" Focusable="False" Style="{StaticResource ObsoleteFlatButtonStyle}"
                                                   Width="{TemplateBinding ButtonsWidth}" Delay="{TemplateBinding Delay}" Interval="30" Padding="2"
                                                   effects:IconEffect.Geometry="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
-                                        <Button x:Name="PART_ClearButton" IsTabStop="False" Focusable="False" Style="{StaticResource ClearAnimatedButtonStyle}" Width="{TemplateBinding ButtonsWidth}" Padding="3"/>
+                                        <Button x:Name="PART_ClearButton" IsTabStop="False" Focusable="False" Style="{StaticResource ClearBichromeAnimatedButtonStyle}" Width="{TemplateBinding ButtonsWidth}" Padding="3"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>
