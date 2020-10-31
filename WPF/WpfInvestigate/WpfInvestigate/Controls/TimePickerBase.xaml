@@ -345,7 +345,6 @@
         </Style>
 
         <Style BasedOn="{StaticResource TimePartPickerBase}" TargetType="{x:Type controls:DateTimePicker}">
-            <Setter Property="Width" Value="110" />
             <Setter Property="IsTodayHighlighted" Value="True" />
             <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a date and time" />
             <Style.Triggers>
