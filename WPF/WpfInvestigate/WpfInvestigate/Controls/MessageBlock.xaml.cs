@@ -36,7 +36,29 @@ namespace WpfInvestigate.Controls
         public Geometry Icon { get; private set; }
         public Color BaseColor { get; private set; }
         public Color? BaseIconColor { get; private set; }
-        public string[] Buttons { get; private set; }
+
+        private string[] Buttons
+        {
+            set
+            {
+                ButtonsArea.Children.Clear();
+                ButtonsArea.ColumnDefinitions.Clear();
+
+                if (value != null && value.Length > 0)
+                {
+                    for (var k = 0; k < value.Length; k++)
+                    {
+                        ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                        var btn = new Button { Content = value[k], Padding = new Thickness(0) };
+                        Grid.SetColumn(btn, k);
+                        ButtonsArea.Children.Add(btn);
+                        btn.Command = _cmdClickButton;
+                        btn.CommandParameter = value[k];
+                    }
+                }
+
+            }
+        }
 
         public Color IconColor => BaseIconColor.HasValue && BaseIconColor.Value != BaseColor
             ? BaseIconColor.Value
@@ -63,23 +85,6 @@ namespace WpfInvestigate.Controls
             Caption = caption;
             Icon = icon;
             Buttons = buttons;
-
-            /*if (icon != null)
-                IconBox.Child = Application.Current.TryFindResource($"MessageBlock{icon.Value}Icon") as FrameworkElement;
-            IconBox.Visibility = IconBox.Child == null ? Visibility.Collapsed : Visibility.Visible;*/
-
-            if (buttons != null && buttons.Length > 0)
-            {
-                for (var k = 0; k < buttons.Length; k++)
-                {
-                    ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                    var btn = new Button {Content = buttons[k], Padding = new Thickness(0)};
-                    Grid.SetColumn(btn, k);
-                    ButtonsArea.Children.Add(btn);
-                    btn.Command = _cmdClickButton;
-                    btn.CommandParameter = buttons[k];
-                }
-            }
         }
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
@@ -205,6 +210,15 @@ namespace WpfInvestigate.Controls
 
         private void UpdateUI()
         {
+
+            /*var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            if (currentWindow != null)
+            {
+                var newMaxWidth = Math.Max(400, currentWindow.ActualWidth * 0.9);
+                if (MaxWidth < newMaxWidth)
+                    MaxWidth = newMaxWidth;
+            }*/
+
             if (ButtonsArea.Children.Count > 0)
             {
                 var maxWidth = ButtonsArea.Children.OfType<ContentControl>().Max(c => ControlHelper.MeasureString((string)c.Content, c).Width) + 4.0;
