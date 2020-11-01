@@ -59,7 +59,7 @@
                                    Text="{Binding Caption}"
                                    TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                         <!-- Close button -->
-                        <Button Grid.Column="1" Margin="0 0 4 0" 
+                        <Button Grid.Column="1" Margin="0 0 4 0" Width="20" Padding="2"
                                 Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"
                                 HorizontalAlignment="Right" VerticalAlignment="Center"
                                 Command="ApplicationCommands.Close" CommandParameter="{Binding}" />

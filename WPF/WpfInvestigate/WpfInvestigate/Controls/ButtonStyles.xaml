@@ -38,9 +38,6 @@
             <Style TargetType="{x:Type Path}">
                 <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
             </Style>
-            <Style TargetType="{x:Type Line}">
-                <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
-            </Style>
         </Style.Resources>
     </Style>
 
@@ -48,16 +45,7 @@
     <Style x:Key="ClearBichromeAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
         <Setter Property="effects:ChromeEffect.BichromeAnimatedBackground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:ChromeEffect.BichromeAnimatedForeground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-        <Setter Property="Content">
-            <Setter.Value>
-                <Viewbox UseLayoutRounding="False">
-                    <Grid Width="10" Height="10">
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="0" Y2="10" />
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="10" Y2="0" />
-                    </Grid>
-                </Viewbox>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="effects:IconEffect.Geometry" Value="{StaticResource CloseThinGeometry}"/>
     </Style>
 
     <!-- Base color is background of parent panel -->
@@ -65,16 +53,7 @@
         <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100,100"/>
         <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
-        <Setter Property="Content">
-            <Setter.Value>
-                <Viewbox UseLayoutRounding="False">
-                    <Grid Width="10" Height="10">
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="0" Y2="10" />
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="10" Y2="0" />
-                    </Grid>
-                </Viewbox>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="effects:IconEffect.Geometry" Value="{StaticResource CloseThinGeometry}"/>
     </Style>
 
     <Style x:Key="DropDownButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource DefaultButtonBaseStyle}">

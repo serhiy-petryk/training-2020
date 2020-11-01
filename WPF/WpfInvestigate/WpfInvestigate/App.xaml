@@ -7,6 +7,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/Common.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/ButtonStyles.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/DropDownButtons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/DialogItems/DialogItemsCommon.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/DialogItems/DialogItems.xaml" />
