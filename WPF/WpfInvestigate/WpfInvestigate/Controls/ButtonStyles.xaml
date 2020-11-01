@@ -45,7 +45,7 @@
     <Style x:Key="ClearBichromeAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
         <Setter Property="effects:ChromeEffect.BichromeAnimatedBackground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:ChromeEffect.BichromeAnimatedForeground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-        <Setter Property="effects:IconEffect.Geometry" Value="{StaticResource CloseThinGeometry}"/>
+        <Setter Property="effects:IconEffect.Geometry" Value="{StaticResource CloseGeometry}"/>
     </Style>
 
     <!-- Base color is background of parent panel -->
@@ -53,7 +53,7 @@
         <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100,100"/>
         <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
-        <Setter Property="effects:IconEffect.Geometry" Value="{StaticResource CloseThinGeometry}"/>
+        <Setter Property="effects:IconEffect.Geometry" Value="{StaticResource CloseGeometry}"/>
     </Style>
 
     <Style x:Key="DropDownButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource DefaultButtonBaseStyle}">

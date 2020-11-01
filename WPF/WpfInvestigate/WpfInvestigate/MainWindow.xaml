@@ -72,7 +72,7 @@
 
                     <Button Margin="2 0" Width="32" Height="32" Padding="0"
                             effects:ChromeEffect.MonochromeAnimated="Aqua"
-                            effects:IconEffect.Geometry="{StaticResource CloseThinGeometry}"/>
+                            effects:IconEffect.Geometry="{StaticResource CloseGeometry}"/>
                     <Button Margin="2 0" Width="32" Height="32" Padding="0"
                             effects:ChromeEffect.MonochromeAnimated="Aqua"
                             effects:IconEffect.Geometry="{StaticResource CloseGeometry}"/>
