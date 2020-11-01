@@ -52,7 +52,7 @@ namespace WpfInvestigate.Controls.Helpers
                 VerticalAlignment = VerticalAlignment.Stretch,
                 Margin = iconMargin,
                 Width = iconWidth,
-                Resources = {["IconViewBox"] = true}
+                Resources = { ["IconViewBox"] = true }
             };
 
             if (control.HasContent)
@@ -84,6 +84,7 @@ namespace WpfInvestigate.Controls.Helpers
                 control.Content = viewbox;
         }
 
+        #region  ==========  Control Border  =============
         public static IEnumerable<Border> GetMainBorders(FrameworkElement element) =>
             Tips.GetVisualChildren(element).OfType<Border>().Where(b =>
                 Math.Abs(b.ActualWidth + b.Margin.Left + b.Margin.Right - element.ActualWidth) < 1.1 &&
@@ -226,6 +227,7 @@ namespace WpfInvestigate.Controls.Helpers
 
             return roundedRectGeometry;
         }
+        #endregion
 
     }
 }

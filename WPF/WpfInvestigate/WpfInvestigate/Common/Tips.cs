@@ -24,21 +24,6 @@ namespace WpfInvestigate.Common
 
         public static void Beep() => SystemSounds.Beep.Play();
 
-        public static Geometry GeometryFromString(object o)
-        {
-            if (o is string)
-            {
-                const string pathString = "FMLHVCQSTAZ+-,.0123456789fmlhvcqstaz";
-                var s = ((string) o).Trim();
-                if (!string.IsNullOrEmpty(s) && s.Length > 2 && "FfMm".Any(s[0].ToString().Contains) &&
-                    "Zz".Any(s[s.Length - 1].ToString().Contains) && (s.Contains(',') || s.Contains(' ')) &&
-                    s.All(c => pathString.Contains(c) || char.IsWhiteSpace(c)))
-                    try { return Geometry.Parse(s); }
-                    catch { } // ignored
-            }
-            return null;
-        }
-
         // ===================================
         public static List<DependencyObject> GetElementsUnderMouseClick(UIElement sender, MouseButtonEventArgs e)
         {
