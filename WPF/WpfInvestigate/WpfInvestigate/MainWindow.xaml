@@ -56,23 +56,10 @@
                 <Label Content="WiP controls:" Margin="0 10 0 0"/>
                 <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
                 <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
-                <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="WiP: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
                 <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
                 <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
 
-                <StackPanel Orientation="Horizontal" Background="#FFEEEEEE" HorizontalAlignment="Left">
-                    <!--<controls:TimePicker Margin="5" IsNullable="True"
-                                         IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
-                                         effects:WatermarkEffect.Watermark="element 3"
-                                         effects:ChromeEffect.MonochromeAnimated="{StaticResource YellowColor}"/>-->
-                    <controls:TimePicker Margin="5" IsNullable="True"
-                                         IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"
-                                         effects:WatermarkEffect.Watermark="element 3"
-                                         effects:ChromeEffect.MonochromeAnimated="{StaticResource DarkColor}"/>
-
-                    <Button Margin="2 0" Width="32" Height="32" Padding="0"
-                            effects:ChromeEffect.MonochromeAnimated="Aqua"
-                            effects:IconEffect.Geometry="{StaticResource CloseGeometry}"/>
+                <StackPanel Orientation="Horizontal" Background="#FFCCCCCC" HorizontalAlignment="Stretch">
                 </StackPanel>
             </StackPanel>
 
@@ -95,6 +82,7 @@
             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
                 <Label>Others:</Label>
                 <Button x:Name="KeyboardTest" Margin="5" Content="Others: Keyboard" Click="KeyboardTest_OnClick"/>
+                <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="Others: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
             </StackPanel>
 
             <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
