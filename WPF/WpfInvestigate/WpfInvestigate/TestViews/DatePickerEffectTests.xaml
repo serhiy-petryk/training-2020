@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfInvestigate.TestViews.DatePickerExtensionTests"
+﻿<Window x:Class="WpfInvestigate.TestViews.DatePickerEffectTests"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
-        Title="DatePickerExtensionTests" Height="450" Width="800">
+        Title="DatePickerEffectTests" Height="450" Width="800">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,7 +38,7 @@
                 <Label FontWeight="Bold">ToDo:</Label>
                 <Label Margin="8 0 0 0" Padding="0">-ClearButton</Label>
 
-                <Label Margin="0 5 0 0" FontWeight="Bold">DatePickerExtension: IsNullable support, Min/Max dates support</Label>
+                <Label Margin="0 5 0 0" FontWeight="Bold">DatePickerEffect: IsNullable support, Min/Max dates support</Label>
 
                 <WrapPanel Margin="0 2 0 0">
                     <Label Content="IsEnabled:" Margin="5 0 0 0"/>
@@ -47,38 +47,38 @@
 
                 <WrapPanel Margin="0 2 0 0">
                     <Label Content="DatePicker: (not nullable)"/>
-                    <DatePicker controls:DatePickerExtension.IsNullable="False" Height="40" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
+                    <DatePicker effects:DatePickerEffect.IsNullable="False" Height="40" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 2 0 0">
                     <Label Content="DatePicker: (nullable)"/>
-                    <DatePicker controls:DatePickerExtension.IsNullable="True" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}" Background="GreenYellow" Foreground="Blue"/>
+                    <DatePicker effects:DatePickerEffect.IsNullable="True" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}" Background="GreenYellow" Foreground="Blue"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 2 0 0">
                     <Label Content="DatePicker: (not nullable, end date=2022/1/1)"/>
-                    <DatePicker controls:DatePickerExtension.IsNullable="False" DisplayDateStart="2022/1/1" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
+                    <DatePicker effects:DatePickerEffect.IsNullable="False" DisplayDateStart="2022/1/1" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 2 0 0">
                     <Label Content="DatePicker: (nullable, end date=2022/1/1)"/>
-                    <DatePicker controls:DatePickerExtension.IsNullable="True" DisplayDateStart="2022/1/1" effects:WatermarkEffect.Watermark="watermark" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
+                    <DatePicker effects:DatePickerEffect.IsNullable="True" DisplayDateStart="2022/1/1" effects:WatermarkEffect.Watermark="watermark" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 5 0 0">
                     <Label>ClearButton: IsNullable</Label>
-                    <DatePicker x:Name="dp1" controls:DatePickerExtension.ClearButton="True" controls:DatePickerExtension.IsNullable="True" Height="36"
+                    <DatePicker x:Name="dp1" effects:DatePickerEffect.ClearButton="True" effects:DatePickerEffect.IsNullable="True" Height="36"
                                 Background="GreenYellow" Foreground="Blue" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
                     <Button Content="Toggle ClearButton property" Click="Debug1_OnClick" />
                     <DatePicker Margin="5 0" Height="36" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
-                                controls:DatePickerExtension.ClearButton="True"
-                                controls:DatePickerExtension.IsNullable="True"
+                                effects:DatePickerEffect.ClearButton="True"
+                                effects:DatePickerEffect.IsNullable="True"
                                 effects:ChromeEffect.MonochromeAnimated="GreenYellow"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 5 0 0">
                     <Label>ClearButton: Is not sNullable</Label>
-                    <DatePicker x:Name="dp2" controls:DatePickerExtension.ClearButton="True" controls:DatePickerExtension.IsNullable="False" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
+                    <DatePicker x:Name="dp2" effects:DatePickerEffect.ClearButton="True" effects:DatePickerEffect.IsNullable="False" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
                     <Button Content="Toggle ClearButton property" Click="Debug2_OnClick" />
                 </WrapPanel>
 

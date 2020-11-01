@@ -94,7 +94,7 @@
                 <Button x:Name="DropDownButtonTest" Width="200" Margin="0 5" Content="Ready: DropDownButton" Click="DropDownButtonTest_OnClick"/>
                 <Button x:Name="NumericBoxTest" Width="200" Margin="0 5" Content="Ready: NumericBox" Click="NumericBoxTest_OnClick"/>
                 <Button x:Name="TimePickerTest" Width="200" Margin="0 5" Content="Ready: TimePicker" Click="TimepickerTest_OnClick"/>
-                <Button x:Name="DatePickerExtensionTest" Width="200" Margin="0 5" Content="Ready: DatePickerExtension" Click="DatePickerExtensionTest_OnClick"/>
+                <Button x:Name="DatePickerEffectTest" Width="200" Margin="0 5" Content="Ready: DatePickerEffect" Click="DatePickerEffectTest_OnClick"/>
                 <Button x:Name="CalculatorTest" Width="200" Margin="0 5" Content="Ready: Calculator" Click="CalculatorTest_OnClick"/>
                 <Button x:Name="WatermarkTest" Width="200" Margin="0 5" Content="Watermark Tests" Click="WatermarkTest_OnClick"/>
                 <Button x:Name="RippleEffectTest" Width="200" Margin="0 5" Content="Ready: RippleEffect" Click="RippleEffectTest_OnClick"/>

@@ -70,8 +70,8 @@
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
                         effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
-                        controls:DatePickerExtension.ClearButton="True"
-                        controls:DatePickerExtension.IsNullable="{TemplateBinding IsNullable}"
+                        effects:DatePickerEffect.ClearButton="True"
+                        effects:DatePickerEffect.IsNullable="{TemplateBinding IsNullable}"
                         SelectedDate="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}"
                         SelectedDateChanged="DatePicker_OnValueChanged">
                 <DatePicker.Resources>

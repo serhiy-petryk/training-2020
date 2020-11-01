@@ -8,20 +8,20 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
-namespace WpfInvestigate.Controls
+namespace WpfInvestigate.Controls.Effects
 {
     /// <summary>
-    /// DatePickerExtension.IsNullable property: supports IsNullable and DisplayDateStart/End (as Minimum/Maximum dates) for SelectedDate of DatePicker
-    /// DatePickerExtension.ClearButton property: hide/show clear button for DatePicker
-    /// Usage:  <DatePicker controls:DatePickerExtension.ClearButton="True" controls:DatePickerExtension.IsNullable="True" />
+    /// DatePickerEffect.IsNullable property: supports IsNullable and DisplayDateStart/End (as Minimum/Maximum dates) for SelectedDate of DatePicker
+    /// DatePickerEffect.ClearButton property: hide/show clear button for DatePicker
+    /// Usage:  <DatePicker controls:DatePickerEffect.ClearButton="True" controls:DatePickerEffect.IsNullable="True" />
     /// </summary>
-    public class DatePickerExtension
+    public class DatePickerEffect
     {
         #region ===============  ClearButton attached property  ================
-        private const string ClearButtonName = "DatePickerExtensionClearButton";
+        private const string ClearButtonName = "DatePickerEffectClearButton";
 
         public static readonly DependencyProperty ClearButtonProperty = DependencyProperty.RegisterAttached("ClearButton",
-            typeof(bool), typeof(DatePickerExtension), new PropertyMetadata(false, propertyChangedCallback: OnClearButtonChanged));
+            typeof(bool), typeof(DatePickerEffect), new PropertyMetadata(false, propertyChangedCallback: OnClearButtonChanged));
 
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         public static void SetClearButton(DependencyObject d, bool value) => d.SetValue(ClearButtonProperty, value);
@@ -32,7 +32,7 @@ namespace WpfInvestigate.Controls
         {
             if (!(d is DatePicker dp))
             {
-                Debug.Print($"DatePickerExtension.ClearButton is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+                Debug.Print($"DatePickerEffect.ClearButton is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
                 return;
             }
 
@@ -107,7 +107,7 @@ namespace WpfInvestigate.Controls
 
         #region ===============  IsNullable attached property  ================
         public static readonly DependencyProperty IsNullableProperty = DependencyProperty.RegisterAttached("IsNullable",
-            typeof(bool?), typeof(DatePickerExtension), new PropertyMetadata(null, propertyChangedCallback: OnIsNullableChanged));
+            typeof(bool?), typeof(DatePickerEffect), new PropertyMetadata(null, propertyChangedCallback: OnIsNullableChanged));
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         public static void SetIsNullable(DependencyObject d, bool? value) => d.SetValue(IsNullableProperty, value);
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
@@ -117,7 +117,7 @@ namespace WpfInvestigate.Controls
         {
             if (!(d is DatePicker dp))
             {
-                Debug.Print($"DatePickerExtension.IsNullable is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+                Debug.Print($"DatePickerEffect.IsNullable is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
                 return;
             }
 

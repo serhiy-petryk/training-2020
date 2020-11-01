@@ -85,7 +85,7 @@
     <Compile Include="Controls\ColorPickerViewModel.cs" />
     <Compile Include="Controls\DialogItems\DialogItems.cs" />
     <Compile Include="Controls\Effects\ChromeEffect.cs" />
-    <Compile Include="Controls\DatePickerExtension.cs" />
+    <Compile Include="Controls\Effects\DatePickerEffect.cs" />
     <Compile Include="Controls\Effects\CornerRadiusEffect.cs" />
     <Compile Include="Controls\Effects\IconEffect.cs" />
     <Compile Include="Controls\Helpers\ControlHelper.cs" />
@@ -156,8 +156,8 @@
     <Compile Include="Obsolete\TestViews\FlatButtonTests.xaml.cs">
       <DependentUpon>FlatButtonTests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\DatePickerExtensionTests.xaml.cs">
-      <DependentUpon>DatePickerExtensionTests.xaml</DependentUpon>
+    <Compile Include="TestViews\DatePickerEffectTests.xaml.cs">
+      <DependentUpon>DatePickerEffectTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\DialogExamples\BuiltinStyleWindow.xaml.cs">
       <DependentUpon>BuiltinStyleWindow.xaml</DependentUpon>
@@ -350,7 +350,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestViews\DatePickerExtensionTests.xaml">
+    <Page Include="TestViews\DatePickerEffectTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

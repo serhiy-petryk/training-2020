@@ -61,11 +61,11 @@
                 </WrapPanel>
 
                 <WrapPanel>
-                    <DatePicker Width="150" controls:DatePickerExtension.IsNullable="True" controls:DatePickerExtension.ClearButton="True"
+                    <DatePicker Width="150" effects:DatePickerEffect.IsNullable="True" effects:DatePickerEffect.ClearButton="True"
                     DisplayDateStart="2022/1/1" effects:WatermarkEffect.Watermark="watermark" BorderBrush="Red"/>
                     <DatePicker x:Name="dp" Background="Blue" Width="150"
                                 Foreground="{Binding ConverterParameter=+100%, RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                controls:DatePickerExtension.IsNullable="True" controls:DatePickerExtension.ClearButton="True"
+                                effects:DatePickerEffect.IsNullable="True" effects:DatePickerEffect.ClearButton="True"
                     DisplayDateStart="2022/1/1" effects:WatermarkEffect.Watermark="watermark" BorderBrush="Red"/>
                     <Button Margin="10 0" Click="OnChangeBackgroundClick">Change background</Button>
                 </WrapPanel>

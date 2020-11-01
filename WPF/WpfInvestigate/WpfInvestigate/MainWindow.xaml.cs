@@ -46,7 +46,7 @@ namespace WpfInvestigate
         private void TimepickerTest_OnClick(object sender, RoutedEventArgs e) => new TimePickerTests().Show();
         private void ObjectEditorTest_OnClick(object sender, RoutedEventArgs e) => new ObjectEditorTests().Show();
         private void WatermarkTest_OnClick(object sender, RoutedEventArgs e) => new WatermarkTests().Show();
-        private void DatePickerExtensionTest_OnClick(object sender, RoutedEventArgs e) => new DatePickerExtensionTests().Show();
+        private void DatePickerEffectTest_OnClick(object sender, RoutedEventArgs e) => new DatePickerEffectTests().Show();
         private void WiPTest_OnClick(object sender, RoutedEventArgs e) => new WiPTests().Show();
         private void RippleEffectTest_OnClick(object sender, RoutedEventArgs e) => new RippleEffectTests().Show();
         private void CalculatorTest_OnClick(object sender, RoutedEventArgs e) => new CalculatorTests().Show();

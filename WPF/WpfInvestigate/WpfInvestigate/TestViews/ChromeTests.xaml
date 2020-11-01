@@ -50,8 +50,8 @@
                                              effects:FocusEffect.Brush="Aqua"/>
 
                     <DatePicker Margin="5 0" Background="GreenYellow" Foreground="Blue"
-                                controls:DatePickerExtension.ClearButton="True" 
-                                controls:DatePickerExtension.IsNullable="True"
+                                effects:DatePickerEffect.ClearButton="True" 
+                                effects:DatePickerEffect.IsNullable="True"
                                 effects:FocusEffect.Brush="Aqua"/>
                 </WrapPanel>
 
