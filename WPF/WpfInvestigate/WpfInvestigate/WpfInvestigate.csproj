@@ -229,10 +229,6 @@
     <Compile Include="Themes\Common.xaml.cs">
       <DependentUpon>Common.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\BootstrapButtons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\ButtonStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

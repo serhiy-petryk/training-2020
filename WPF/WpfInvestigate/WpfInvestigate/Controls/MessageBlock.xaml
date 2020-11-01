@@ -11,26 +11,20 @@
              FontSize="14">
 
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Controls/BootstrapButtons.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
+        <Style TargetType="Button" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
+            <Setter Property="Padding" Value="0 1"/>
+            <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
+            <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+            <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
+        </Style>
 
-            <Style TargetType="Button" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
-                <Setter Property="Padding" Value="0 1"/>
-                <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
-            </Style>
-
-            <Style x:Key="ResizeThumb" TargetType="Thumb">
-                <Setter Property="Opacity" Value="0.01"/>
-                <Setter Property="Focusable" Value="False"/>
-                <Setter Property="IsTabStop" Value="False"/>
-                <EventSetter Event="DragStarted" Handler="Thumb_OnDragStarted"/>
-                <EventSetter Event="DragDelta" Handler="ResizeThumb_OnDragDelta"/>
-            </Style>
-        </ResourceDictionary>
+        <Style x:Key="ResizeThumb" TargetType="Thumb">
+            <Setter Property="Opacity" Value="0.01"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <EventSetter Event="DragStarted" Handler="Thumb_OnDragStarted"/>
+            <EventSetter Event="DragDelta" Handler="ResizeThumb_OnDragDelta"/>
+        </Style>
     </UserControl.Resources>
 
     <Grid>

@@ -3,10 +3,55 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:common="clr-namespace:WpfInvestigate.Common"
         mc:Ignorable="d"
         Title="ColorPickerTests" Height="600" Width="900">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BootstrapButton" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
+                <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="Gray"/>
+                <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
+                <Setter Property="effects:FocusEffect.Thickness" Value="3"/>
+                <Setter Property="effects:FocusEffect.Brush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=72}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="12 6"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+
+            <Style x:Key="BootstrapLightButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
+                <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0,15,+0,65, +0,15,+0,100, +7.5,15,+10,100, +10,15,+12.5,100"/>
+            </Style>
+
+            <Style x:Key="PrimaryButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource PrimaryColor}"/>
+            </Style>
+            <Style x:Key="SecondaryButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SecondaryColor}"/>
+            </Style>
+            <Style x:Key="SuccessButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SuccessColor}"/>
+            </Style>
+            <Style x:Key="DangerButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource DangerColor}"/>
+            </Style>
+            <Style x:Key="WarningButton" BasedOn="{StaticResource BootstrapLightButton}" TargetType="{x:Type ButtonBase}">
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource WarningColor}"/>
+            </Style>
+            <Style x:Key="InfoButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource InfoColor}"/>
+            </Style>
+            <Style x:Key="LightButton" BasedOn="{StaticResource BootstrapLightButton}" TargetType="{x:Type ButtonBase}">
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource LightColor}"/>
+            </Style>
+            <Style x:Key="DarkButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource DarkColor}"/>
+            </Style>
+
+        </ResourceDictionary>
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>

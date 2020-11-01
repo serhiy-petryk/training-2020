@@ -3,12 +3,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
-                    xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects">
-
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Controls/BootstrapButtons.xaml"/>
-        <ResourceDictionary Source="/Themes/Flags.xaml"/>
-    </ResourceDictionary.MergedDictionaries>
+                    xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+                    xmlns:common="clr-namespace:WpfInvestigate.Common">
 
     <DropShadowEffect x:Key="ShadowEffect" BlurRadius="10" ShadowDepth="2" po:Freeze="True" />
 
@@ -18,6 +14,54 @@
     <system:String x:Key="NoPressedChromeMatrix">+0%,+70%,+0%,40, +0%,+70%,+0%,100, +25%,+25%/+75%,+25%/+50%,100</system:String>
     <system:String x:Key="UserInputControlChromeMatrix">+0%,+70%,+0%,50, +0%,+75%,+15%,100, +15%,+15%/+100%,+15%/+50%,100</system:String>
 
+    <!-- ======================================================================== -->
+    <!-- Colors & Bootstrap Brushes (taken from https://getbootstrap.com/ v4.5.2) -->
+    <!-- ======================================================================== -->
+    <Color x:Key="PrimaryColor">#FF007bff</Color>
+    <Color x:Key="SecondaryColor">#FF6c757d</Color>
+    <Color x:Key="SuccessColor">#28a745</Color>
+    <Color x:Key="DangerColor">#dc3545</Color>
+    <Color x:Key="WarningColor">#ffc107</Color>
+    <Color x:Key="InfoColor">#17a2b8</Color>
+    <Color x:Key="LightColor">#f8f9fa</Color>
+    <Color x:Key="DarkColor">#343a40</Color>
+    <Color x:Key="BlueColor">#007bff</Color>
+    <Color x:Key="IndigoColor">#6610f2</Color>
+    <Color x:Key="PurpleColor">#6f42c1</Color>
+    <Color x:Key="PinkColor">#e83e8c</Color>
+    <Color x:Key="RedColor">#dc3545</Color>
+    <Color x:Key="OrangeColor">#fd7e14</Color>
+    <Color x:Key="YellowColor">#ffc107</Color>
+    <Color x:Key="GreenColor">#28a745</Color>
+    <Color x:Key="TealColor">#20c997</Color>
+    <Color x:Key="CyanColor">#17a2b8</Color>
+    <Color x:Key="WhiteColor">#ffffff</Color>
+    <Color x:Key="GrayColor">#6c757d</Color>
+    <Color x:Key="GrayDarkColor">#343a40</Color>
+
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{Binding Source={StaticResource PrimaryColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{Binding Source={StaticResource SecondaryColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="SuccessBrush" Color="{Binding Source={StaticResource SuccessColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="DangerBrush" Color="{Binding Source={StaticResource DangerColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="WarningBrush" Color="{Binding Source={StaticResource WarningColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="InfoBrush" Color="{Binding Source={StaticResource InfoColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="LightBrush" Color="{Binding Source={StaticResource LightColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="DarkBrush" Color="{Binding Source={StaticResource DarkColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="BlueBrush" Color="{Binding Source={StaticResource BlueColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="IndigoBrush" Color="{Binding Source={StaticResource IndigoColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="PurpleBrush" Color="{Binding Source={StaticResource PurpleColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="PinkBrush" Color="{Binding Source={StaticResource PinkColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="RedBrush" Color="{Binding Source={StaticResource RedColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="OrangeBrush" Color="{Binding Source={StaticResource OrangeColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="YellowBrush" Color="{Binding Source={StaticResource YellowColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="GreenBrush" Color="{Binding Source={StaticResource GreenColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="TealBrush" Color="{Binding Source={StaticResource TealColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="CyanBrush" Color="{Binding Source={StaticResource CyanColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{Binding Source={StaticResource WhiteColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="GrayBrush" Color="{Binding Source={StaticResource GrayColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+    <SolidColorBrush x:Key="GrayDarkBrush" Color="{Binding Source={StaticResource GrayDarkColor}, Converter={x:Static common:ColorHslBrush.Instance}, Mode=OneTime}"/>
+
+    <!-- Default style for controls -->
     <Style TargetType="DatePickerTextBox">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Template">
