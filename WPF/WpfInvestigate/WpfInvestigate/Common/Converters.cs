@@ -45,6 +45,7 @@ namespace WpfInvestigate.Common
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value;
     }
 
+    // is using in ToggleGridVisibilityButton (DG3.1 project)
     public class GridLinesVisibilityConverter : IValueConverter
     {
         public static GridLinesVisibilityConverter Instance = new GridLinesVisibilityConverter();
