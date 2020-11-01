@@ -17,26 +17,6 @@ namespace WpfInvestigate.Common
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
-    public class PercentageConverter : DependencyObject, IValueConverter
-    { // return = (double)ConverterValue * ConverterParameter /100;
-        public static PercentageConverter Instance = new PercentageConverter();
-        public static PercentageConverter InstanceForPadding = new PercentageConverter{_isPadding = true};
-        private bool _isPadding = false;
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            double percent;
-            if (value is double && parameter is string && double.TryParse((string)parameter, NumberStyles.Any, Tips.InvariantCulture, out percent))
-            {
-                var v = (double) value * percent / 100;
-                if (_isPadding)
-                    return new Thickness(2 * v, v, 2 * v, v);
-                return v;
-            }
-            return value;
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
-
     public class ChangeTypeConverter : DependencyObject, IValueConverter
     {
         public static ChangeTypeConverter Instance = new ChangeTypeConverter();
@@ -95,14 +75,25 @@ namespace WpfInvestigate.Common
             if (value is double d)
             {
                 var s = (parameter as string ?? "").Trim();
-                if (s.StartsWith("-")) return d - double.Parse(s.Substring(1));
-                if (s.StartsWith("+")) return d + double.Parse(s.Substring(1));
+                if (s.StartsWith("-")) d -= double.Parse(s.Substring(1));
+                else if (s.StartsWith("+")) d += double.Parse(s.Substring(1));
+                else if (s.StartsWith("%")) d *= double.Parse(s.Substring(1)) / 100.0;
+                // else if (s.StartsWith("*")) d *= double.Parse(s.Substring(1));
+                // else if (s.StartsWith("/")) d /= double.Parse(s.Substring(1));
+                else
+                    throw new Exception($"Undefined operator in MathConvertor: {parameter}");
+
+                if (targetType == typeof(Thickness))
+                    return new Thickness(d);
+                return d;
             }
 
             if (value is bool b)
             {
                 var s = (parameter as string ?? "").Trim();
                 if (s == "!") return !b;
+                else
+                    throw new Exception($"Undefined operator in MathConvertor: {parameter}");
             }
             return value;
         }
