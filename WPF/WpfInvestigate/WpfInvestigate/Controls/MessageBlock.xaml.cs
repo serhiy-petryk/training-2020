@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -26,11 +27,23 @@ namespace WpfInvestigate.Controls
         {
             var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
             var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
-            var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int) icon] + "Color") as Color?;
+            var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
 
             // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
             DialogItems.DialogItems.ShowDialog(null, content, style, DialogItems.DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            return content.Result;
+        }
+
+        public static async Task<string> ShowAsync(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
+        {
+            var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
+            var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
+            var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
+
+            // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
+            var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
+            await DialogItems.DialogItems.ShowAsync(null, content, style, DialogItems.DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
             return content.Result;
         }
 

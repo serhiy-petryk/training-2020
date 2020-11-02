@@ -16,6 +16,7 @@
     <ItemsPanelTemplate x:Key="DefaultPanel">
         <Grid x:Name="ItemsPanel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </ItemsPanelTemplate>
+
     <Style x:Key="DefaultContainerStyle" TargetType="{x:Type ContentControl}">
         <Setter Property="ContentTemplate">
             <Setter.Value>

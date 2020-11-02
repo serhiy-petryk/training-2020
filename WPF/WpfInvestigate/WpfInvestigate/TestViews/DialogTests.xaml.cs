@@ -225,10 +225,11 @@ namespace WpfInvestigate.TestViews
             var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
                 "Caption of Message block", MessageBlock.MessageBlockIcon.Error);
         }
-        private void OnClickWarningMessageBlock(object sender, RoutedEventArgs e)
+        private async void OnClickWarningMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = MessageBlock.Show("Message",
+            var aa = await MessageBlock.ShowAsync("Message (Show Async)",
                 "Caption of Message block", MessageBlock.MessageBlockIcon.Warning, new[] { "OK", "Cancel", "Right", "Left" });
+            await MessageBlock.ShowAsync($"You pressed '{aa ?? "X"}' button", null, MessageBlock.MessageBlockIcon.Info, new[] { "OK" });
         }
         private void OnClickInformationMessageBlock(object sender, RoutedEventArgs e)
         {
@@ -237,10 +238,9 @@ namespace WpfInvestigate.TestViews
         }
         private void OnClickSuccessMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+            var aa = MessageBlock.Show("Message (Show) ",
                 "Caption of Message block", MessageBlock.MessageBlockIcon.Success, new []{"OK", "Cancel"});
-            if (aa != null)
-                MessageBlock.Show($"You pressed '{aa}' button", null, MessageBlock.MessageBlockIcon.Info, new[] { "OK" });
+            MessageBlock.Show($"You pressed '{aa ?? "X" }' button", null, MessageBlock.MessageBlockIcon.Info, new[] { "OK" });
         }
     }
 }
