@@ -174,12 +174,6 @@
     <Compile Include="Controls\MessageBlock.xaml.cs">
       <DependentUpon>MessageBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\DialogExamples\MultipleLightBoxWindow.xaml.cs">
-      <DependentUpon>MultipleLightBoxWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TestViews\DialogExamples\MultipleLightBoxWindowPopup.xaml.cs">
-      <DependentUpon>MultipleLightBoxWindowPopup.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TestViews\DialogExamples\SampleDialog.xaml.cs">
       <DependentUpon>SampleDialog.xaml</DependentUpon>
     </Compile>
@@ -367,14 +361,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\MessageBlock.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TestViews\DialogExamples\MultipleLightBoxWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TestViews\DialogExamples\MultipleLightBoxWindowPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

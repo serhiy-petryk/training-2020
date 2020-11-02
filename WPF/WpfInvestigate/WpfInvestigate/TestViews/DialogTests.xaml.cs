@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -18,6 +19,7 @@ namespace WpfInvestigate.TestViews
         public DialogTests()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         private Style MovableDialogStyle => TryFindResource("MovableDialogStyle") as Style;
@@ -67,11 +69,17 @@ namespace WpfInvestigate.TestViews
         }
 
         #region 別ウィンドウで開くサンプルなど
-        private void OnClickShowMultiplePopup(object sender, RoutedEventArgs e)
+        private async void OnClickShowMultiplePopup(object sender, RoutedEventArgs e)
         {
-            var win = new MultipleLightBoxWindowPopup();
-            win.Owner = this;
-            win.Show();
+            var style = Resources["MultipleDialogs"] as Style;
+
+            DialogItems.Show(this, new SampleDialog(), style);
+
+            await Task.Delay(500);
+            DialogItems.Show(this, new SampleDialog(), style);
+
+            await Task.Delay(500);
+            DialogItems.Show(this, new SampleDialog(), style);
         }
 
         private void ShowBuiltinStyleWindowPopup(object sender, RoutedEventArgs e)
@@ -152,11 +160,16 @@ namespace WpfInvestigate.TestViews
         }
 
         #region 別ウィンドウで開くサンプルなど
-        private void OnClickShowMultiple(object sender, RoutedEventArgs e)
+        private async void OnClickShowMultiple(object sender, RoutedEventArgs e)
         {
-            var win = new MultipleLightBoxWindow();
-            win.Owner = this;
-            win.Show();
+            var style = Resources["MultipleDialogs"] as Style;
+            DialogItems.Show(this, new SampleDialog(), style, items => items.CloseOnClickBackground = false);
+
+            await Task.Delay(500);
+            DialogItems.Show(this, new SampleDialog(), style);
+
+            await Task.Delay(500);
+            DialogItems.Show(this, new SampleDialog(), style);
         }
 
         private void ShowBuiltinStyleWindow(object sender, RoutedEventArgs e)
