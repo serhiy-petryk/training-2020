@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Controls.DialogItems;
-using WpfInvestigate.TestViews.DialogExamples;
 
 namespace WpfInvestigate.TestViews
 {
@@ -16,6 +15,8 @@ namespace WpfInvestigate.TestViews
     /// </summary>
     public partial class DialogTests
     {
+        private BitmapImage _testImage = new BitmapImage(new Uri("/TestViews/Resources/1.jpg", UriKind.RelativeOrAbsolute));
+
         public DialogTests()
         {
             InitializeComponent();
@@ -55,23 +56,21 @@ namespace WpfInvestigate.TestViews
         }
         private void OnClickShowImagePopup(object sender, RoutedEventArgs e)
         {
-            var image = new Image();
-            image.Source = new BitmapImage(new Uri("/TestViews/DialogExamples/1.jpg", UriKind.RelativeOrAbsolute));
+            var image = new Image {Source = _testImage};
             DialogItems.Show(this, image);
         }
 
         private void OnClickShowInGridPopup(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
-            var image = new Image();
-            image.Source = new BitmapImage(new Uri("/TestViews/DialogExamples/1.jpg", UriKind.RelativeOrAbsolute));
+            var image = new Image {Source = _testImage};
             DialogItems.Show(this.subGrid, image);
         }
 
         #region 別ウィンドウで開くサンプルなど
         private async void OnClickShowMultiplePopup(object sender, RoutedEventArgs e)
         {
-            var style = Resources["MultipleDialogs"] as Style;
+            var style = Resources["MultipleDialogStyle"] as Style;
 
             DialogItems.Show(this, new SampleDialog(), style);
 
@@ -84,16 +83,16 @@ namespace WpfInvestigate.TestViews
 
         private void ShowBuiltinStyleWindowPopup(object sender, RoutedEventArgs e)
         {
-            var win = new BuiltinStyleWindowPopup();
-            win.Owner = this;
-            win.Show();
+            var style = Resources["DialogBultinStyle"] as Style;
+            var image = new Image {Source = _testImage};
+            DialogItems.Show(this, image, style);
         }
 
         private void ShowCustomStyleWindowPopup(object sender, RoutedEventArgs e)
         {
-            var win = new CustomStyleWindowPopup();
-            win.Owner = this;
-            win.Show();
+            var style = Resources["DialogCustomStyle"] as Style;
+            var image = new Image {Source = _testImage};
+            DialogItems.Show(this, image, style);
         }
 
         private void OnClickShowButtonMovablePopup(object sender, RoutedEventArgs e)
@@ -145,8 +144,7 @@ namespace WpfInvestigate.TestViews
         }
         private void OnClickShowImage(object sender, RoutedEventArgs e)
         {
-            var image = new Image();
-            image.Source = new BitmapImage(new Uri("/TestViews/DialogExamples/1.jpg", UriKind.RelativeOrAbsolute));
+            var image = new Image {Source = _testImage};
             image.PreviewMouseLeftButtonDown += (o, args) => ApplicationCommands.Close.Execute(null, image);
             DialogItems.Show(this, image, null, _closeOnClickBackgroundCallback);
         }
@@ -154,15 +152,14 @@ namespace WpfInvestigate.TestViews
         private void OnClickShowInGrid(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
-            var image = new Image();
-            image.Source = new BitmapImage(new Uri("/TestViews/DialogExamples/1.jpg", UriKind.RelativeOrAbsolute));
+            var image = new Image {Source = _testImage};
             DialogItems.Show(this.subGrid, image, null, _closeOnClickBackgroundCallback);
         }
 
         #region 別ウィンドウで開くサンプルなど
         private async void OnClickShowMultiple(object sender, RoutedEventArgs e)
         {
-            var style = Resources["MultipleDialogs"] as Style;
+            var style = Resources["MultipleDialogStyle"] as Style;
             DialogItems.Show(this, new SampleDialog(), style, items => items.CloseOnClickBackground = false);
 
             await Task.Delay(500);
@@ -174,16 +171,16 @@ namespace WpfInvestigate.TestViews
 
         private void ShowBuiltinStyleWindow(object sender, RoutedEventArgs e)
         {
-            var win = new BuiltinStyleWindow();
-            win.Owner = this;
-            win.Show();
+            var style = Resources["DialogBultinStyle"] as Style;
+            var image = new Image {Source = _testImage};
+            DialogItems.Show(this, image, style, items => items.CloseOnClickBackground = false);
         }
 
         private void ShowCustomStyleWindow(object sender, RoutedEventArgs e)
         {
-            var win = new CustomStyleWindow();
-            win.Owner = this;
-            win.Show();
+            var style = Resources["DialogCustomStyle"] as Style;
+            var image = new Image {Source = _testImage};
+            DialogItems.Show(this, image, style, items => items.CloseOnClickBackground = false);
         }
         private void OnClickShowButtonMovable(object sender, RoutedEventArgs e)
         {

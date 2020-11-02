@@ -159,25 +159,13 @@
     <Compile Include="TestViews\DatePickerEffectTests.xaml.cs">
       <DependentUpon>DatePickerEffectTests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\DialogExamples\BuiltinStyleWindow.xaml.cs">
-      <DependentUpon>BuiltinStyleWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TestViews\DialogExamples\BuiltinStyleWindowPopup.xaml.cs">
-      <DependentUpon>BuiltinStyleWindowPopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TestViews\DialogExamples\CustomStyleWindow.xaml.cs">
-      <DependentUpon>CustomStyleWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TestViews\DialogExamples\CustomStyleWindowPopup.xaml.cs">
-      <DependentUpon>CustomStyleWindowPopup.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\MessageBlock.xaml.cs">
       <DependentUpon>MessageBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\DialogExamples\SampleDialog.xaml.cs">
+    <Compile Include="TestViews\SampleDialog.xaml.cs">
       <DependentUpon>SampleDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\DialogExamples\SampleDialogMovable.xaml.cs">
+    <Compile Include="TestViews\SampleDialogMovable.xaml.cs">
       <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\DialogTests.xaml.cs">
@@ -344,31 +332,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestViews\DialogExamples\BuiltinStyleWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TestViews\DialogExamples\BuiltinStyleWindowPopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TestViews\DialogExamples\CustomStyleWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TestViews\DialogExamples\CustomStyleWindowPopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\MessageBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestViews\DialogExamples\SampleDialog.xaml">
+    <Page Include="TestViews\SampleDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestViews\DialogExamples\SampleDialogMovable.xaml">
+    <Page Include="TestViews\SampleDialogMovable.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -538,7 +510,7 @@
     <Resource Include="Comments\Bootstrap.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TestViews\DialogExamples\1.jpg" />
+    <Resource Include="TestViews\Resources\1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
