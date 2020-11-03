@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestDll"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls;assembly=WpfInvestigate"
+        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects;assembly=WpfInvestigate"
         mc:Ignorable="d"
         Title="Terst DLL" Height="450" Width="800">
 
@@ -35,7 +36,9 @@
 
             <StackPanel Orientation="Vertical">
                 <WrapPanel Orientation="Horizontal">
-                    <controls:NumericBox Value="23"/>
+                    <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value"
+                                         effects:ChromeEffect.MonochromeAnimated="Aqua"
+                                         Height="28" VisibleButtons="Close,Calculator,UpDown" IsNullable="True" Value="23"/>
                 </WrapPanel>
             </StackPanel>
 

@@ -70,6 +70,7 @@
                     <Button Width="100" Height="30" Margin="5" Content="#FFC107" effects:ChromeEffect.MonochromeAnimated="#FFC107" Style="{StaticResource MonochromeButtonBaseStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="#17A2B8" effects:ChromeEffect.MonochromeAnimated="#17A2B8" Style="{StaticResource MonochromeButtonBaseStyle}"/>
                     <Button Width="100" Height="30" Margin="5" Content="#343A40" effects:ChromeEffect.MonochromeAnimated="#343A40" Style="{StaticResource MonochromeButtonBaseStyle}"/>
+                    <Button Width="400" Height="30" Margin="5" Content="#343A40 Long button" effects:ChromeEffect.MonochromeAnimated="#343A40" Style="{StaticResource MonochromeButtonBaseStyle}"/>
                 </WrapPanel>
 
                 <WrapPanel>

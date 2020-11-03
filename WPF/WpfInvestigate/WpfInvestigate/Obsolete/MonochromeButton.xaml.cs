@@ -118,7 +118,7 @@ namespace WpfInvestigate.Obsolete
                 if (brush == null || brush.IsFrozen || brush.IsSealed)
                     shape.Fill = new SolidColorBrush();
 
-                var ca = new ColorAnimation(newColor, Common.AnimationHelper.SlowAnimationDuration);
+                var ca = new ColorAnimation(newColor, Common.AnimationHelper.AnimationDurationSlow);
                 shape.Fill.BeginAnimation(SolidColorBrush.ColorProperty, ca);
 
                 if (!(shape is Path))

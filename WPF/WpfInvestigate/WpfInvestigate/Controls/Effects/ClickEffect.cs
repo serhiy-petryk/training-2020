@@ -143,7 +143,7 @@ namespace WpfInvestigate.Controls.Effects
             sb.Children[1].SetFromToValues(0.0, newSize);
             sb.Children[2].SetFromToValues(0.5, 0.0);
 
-            var newDuration = Math.Max(300, newSize * 1.5);
+            var newDuration = Math.Min(1000, Math.Max(300, newSize * 2.5));
             sb.Children[0].Duration = TimeSpan.FromMilliseconds(newDuration);
             sb.Children[1].Duration = sb.Children[0].Duration;
             sb.Children[2].Duration = TimeSpan.FromMilliseconds(newDuration * 2 / 3);

@@ -18,22 +18,22 @@
                         </Border.BorderBrush>
                         <Border.Resources>
                             <Storyboard x:Key="NormalState">
-                                <DoubleAnimation To="0.7" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
-                                <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetBackgroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
-                                <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetForegroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
-                                <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetBackgroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                <DoubleAnimation To="0.7" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
+                                <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetBackgroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
+                                <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetForegroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
+                                <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetBackgroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
                             </Storyboard>
                             <Storyboard x:Key="MouseOverState">
-                                <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
-                                <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetMouseOverBackgroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
-                                <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetForegroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
-                                <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetBorderColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
+                                <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetMouseOverBackgroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
+                                <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetForegroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
+                                <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetBorderColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
                             </Storyboard>
                             <Storyboard x:Key="PressedState">
-                                <DoubleAnimation To="0.7" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
-                                <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetForegroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
-                                <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetBackgroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
-                                <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetForegroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                <DoubleAnimation To="0.7" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
+                                <ColorAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetForegroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
+                                <ColorAnimation Storyboard.TargetName="PART_Content" Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetBackgroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
+                                <ColorAnimation Storyboard.TargetName="PART_BorderBrush" Storyboard.TargetProperty="Color" To="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static obsoleteConverters:GetForegroundColorConverter.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
                             </Storyboard>
                         </Border.Resources>
 
@@ -45,7 +45,7 @@
                                 <VisualState x:Name="Pressed" Storyboard="{StaticResource PressedState}"/>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation To="0.35" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.SlowAnimationDuration}" />
+                                        <DoubleAnimation To="0.35" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

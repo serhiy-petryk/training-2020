@@ -12,8 +12,7 @@ namespace WpfInvestigate.Common
     {
         public const double AnimationTime = 120.0;
         public static readonly Duration AnimationDuration = TimeSpan.FromMilliseconds(AnimationTime);
-        public const double SlowAnimationTime = 240.0;
-        public static readonly Duration SlowAnimationDuration = TimeSpan.FromMilliseconds(SlowAnimationTime);
+        public static readonly Duration AnimationDurationSlow = TimeSpan.FromMilliseconds(AnimationTime * 2);
 
         #region =================  Set From/To values  ===================
         public static void SetFromToValues(this Timeline timeline, Color from, Color to)
