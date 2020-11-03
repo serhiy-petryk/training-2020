@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridInvestigation", "GridIn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlInvestigate", "ControlInvestigate\ControlInvestigate.csproj", "{117DB82E-27F6-42FD-ACEF-1E8FA040FDFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDll", "TestDll\TestDll.csproj", "{334CF11F-5DA0-4C4B-9391-73DD668C5129}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{117DB82E-27F6-42FD-ACEF-1E8FA040FDFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{117DB82E-27F6-42FD-ACEF-1E8FA040FDFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{117DB82E-27F6-42FD-ACEF-1E8FA040FDFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{334CF11F-5DA0-4C4B-9391-73DD668C5129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{334CF11F-5DA0-4C4B-9391-73DD668C5129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{334CF11F-5DA0-4C4B-9391-73DD668C5129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{334CF11F-5DA0-4C4B-9391-73DD668C5129}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
