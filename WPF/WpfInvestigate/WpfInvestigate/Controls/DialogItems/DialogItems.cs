@@ -71,13 +71,8 @@ namespace WpfInvestigate.Controls.DialogItems
         public static async void Show(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var adorner = GetAdorner(owner);
-            if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner, style);
-
-            if (adorner.Child != null && adorner.Child is DialogItems)
-                ((DialogItems)adorner.Child).AddDialog(content);
-
+            var adorner = GetAdorner(owner) ?? await CreateAdornerAsync(owner, style);
+            ((DialogItems)adorner.Child).AddDialog(content);
             afterCreationCallback?.Invoke((DialogItems)adorner.Child);
         }
 
@@ -91,16 +86,11 @@ namespace WpfInvestigate.Controls.DialogItems
         public static async Task ShowAsync(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var adorner = GetAdorner(owner);
-            if (adorner == null) 
-                adorner = await CreateAdornerAsync(owner, style);
+            var adorner = GetAdorner(owner) ?? await CreateAdornerAsync(owner, style);
 
-            if (adorner.Child != null && adorner.Child is DialogItems)
-            {
-                var task = ((DialogItems) adorner.Child).AddDialogAsync(content);
-                afterCreationCallback?.Invoke((DialogItems)adorner.Child);
-                await task;
-            }
+            var task = ((DialogItems)adorner.Child).AddDialogAsync(content);
+            afterCreationCallback?.Invoke((DialogItems)adorner.Child);
+            await task;
         }
 
         /// <summary>
@@ -112,9 +102,7 @@ namespace WpfInvestigate.Controls.DialogItems
         public static void ShowDialog(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var adorner = GetAdorner(owner);
-            if (adorner == null) 
-                adorner = CreateAdornerModal(owner, style);
+            var adorner = GetAdorner(owner) ?? CreateAdornerModal(owner, style);
 
             var frame = new DispatcherFrame();
             ((DialogItems) adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
