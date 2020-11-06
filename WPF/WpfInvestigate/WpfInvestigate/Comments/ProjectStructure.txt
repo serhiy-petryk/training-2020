@@ -1,0 +1,80 @@
+﻿
+-- Переробити конфігурацію коду як в MahApps: Controls/Styles/Themes
+    Почати з Dialogs(Lighty)
+    Примінити у WpfInvestigation
+    Примінити у MyWpfMwi
+    Примінити у DG.3.1
+
+Old ToDo DG.3.1\DgView\ToDo.Old.txt (2020-03-01)
++1. Templates:
+ plus: ? може менше коду
+ plus: можна використовувати Name
+ minus: запізнення з OnApplyTemplate для активованих в XAML єлементів
+ minus for Tempalte: підтримка подій
+ minus: VS XAML designer не показує активовані в XAML єлементи
+ minus: помилки в проектах, які використовують Template approach
+ Conclusion:
+ взяти за основу style approach (not template!!) і спробувати замість Name для binding використати Uid
+
+Control types:
+1. UserControl with template
+2. UserControl without template
+3. Успадкований control with template
+4. Успадкований control without template
+5. Only XAML control (no cs file)
+================
+Project objects:
+1. Controls folder
+?2. Styles folder
+3. Themes folder
+4. Themes/Generic.xaml file
+
+Styles in Generic.xaml впливають тільки на стиль для DLL і не впливають на поточний проект.
+
+=========
+!!! RULES for controls:
+=========
+1. Усі стилі збирати у файлі /Themes/Generic.xaml.
+2. У файлі /App.xaml вказати силку на файл /Themes/Generic.xaml.
+1 і 2 правило дають впевненість, що все буде працювати однаково, як в поточному проекті, так і в DLL.
+3. XAML file for control with cs:
+    Локальні елементи (Static resources) вказувати у Control.Resources
+    Templates вказувати у Control.Template
+    default setters вказувати у заголовку xaml file
+    reference of xaml file in /Themes/Generic.xaml
+4. Only XAML file (no cs file): as ResourceDictionary + reference in /Themes/Generic.xaml
+
+
+1. Організація у E:\Users\System\Downloads\WpfStyles-master\src\Styles\ project:
+===============================================================================
+    Project has only styles and doesn’t have templates.
+    Styles xaml files are in /Styles folder
+    /Styles/Generic.xaml looks like:
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="/Themes/Styles/Button.xaml" />
+            <ResourceDictionary Source="/Themes/Styles/CheckBox.xaml" />
+            ………..
+        </ResourceDictionary.MergedDictionaries>
+    Content of App.xaml:
+        <Application.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="/Themes/Styles/Generic.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+                <SolidColorBrush x:Key="AccentColorBrush" Color="#007ACC" />
+            </ResourceDictionary>
+        </Application.Resources>
+
+2. Організація у MahApps project:
+=================================
+    У папці Controls зберігаються cs files of controls
+    У папці Themes зберігаються ResourceDictionary with styles. Template is inside style.
+    Файл Themes/Generic.xaml включає словники із папки Themes:
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Underline.xaml" />
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Badged.xaml" />
+
+
+
+
+

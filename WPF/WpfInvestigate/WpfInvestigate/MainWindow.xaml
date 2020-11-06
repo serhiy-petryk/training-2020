@@ -6,6 +6,7 @@
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:examples="clr-namespace:WpfInvestigate.Examples"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="600" Width="1000">
 
@@ -60,6 +61,7 @@
                 <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
 
                 <StackPanel Orientation="Horizontal" Background="#FFCCCCCC" HorizontalAlignment="Stretch">
+                    <examples:ButtonWithTemplate Content="ButtonWithTemplate"/>
                 </StackPanel>
             </StackPanel>
 

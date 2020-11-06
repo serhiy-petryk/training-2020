@@ -91,6 +91,9 @@
     <Compile Include="Controls\Helpers\ControlHelper.cs" />
     <Compile Include="Controls\Helpers\DropDownButtonHelper.cs" />
     <Compile Include="Controls\Effects\DoubleIconToggleButtonEffect.cs" />
+    <Compile Include="Examples\ButtonWithTemplate.xaml.cs">
+      <DependentUpon>ButtonWithTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Obsolete\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>
     </Compile>
@@ -230,6 +233,10 @@
     <Page Include="Controls\DialogItems\DialogItemsCommon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Examples\ButtonWithTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Obsolete\FlatButton.xaml">
       <SubType>Designer</SubType>
@@ -400,6 +407,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\ControlExamples.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Flags.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -511,6 +522,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="TestViews\Resources\1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\ProjectStructure.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
