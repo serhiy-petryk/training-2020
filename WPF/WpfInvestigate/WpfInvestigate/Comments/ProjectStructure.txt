@@ -43,6 +43,9 @@ Styles in Generic.xaml впливають тільки на стиль для DL
     default setters вказувати у заголовку xaml file
     reference of xaml file in /Themes/Generic.xaml
 4. Only XAML file (no cs file): as ResourceDictionary + reference in /Themes/Generic.xaml
+5. Якщо ResourceDictionaries використовує StaticResource of other resourceDictionary, то краще вказувати StaticResources in MergeDictionary, а не об'являти їх глобально у файлі app.xaml.
+Це дає автономність для ResourceDictionary, чистоту файлу app.xaml і однаково поведінку контролів, як у поточному проекті, так і в DLL.
+
 
 
 1. Організація у E:\Users\System\Downloads\WpfStyles-master\src\Styles\ project:
