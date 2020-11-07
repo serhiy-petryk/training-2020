@@ -7,8 +7,9 @@
              Width="200"
              Background="Aqua"
              effects:CornerRadiusEffect.CornerRadius="4">
+
     <Button.Resources>
-        <SolidColorBrush x:Key="Test" Color="{StaticResource YellowColor}"></SolidColorBrush>
+        <SolidColorBrush x:Key="Test" Color="{StaticResource YellowColor}"/>
     </Button.Resources>
 
     <Button.Template>

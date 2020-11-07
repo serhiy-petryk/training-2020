@@ -94,6 +94,9 @@
     <Compile Include="Examples\ButtonWithTemplate.xaml.cs">
       <DependentUpon>ButtonWithTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Examples\UserControlExample.xaml.cs">
+      <DependentUpon>UserControlExample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Obsolete\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>
     </Compile>
@@ -235,6 +238,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Examples\ButtonWithTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Examples\UserControlExample.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

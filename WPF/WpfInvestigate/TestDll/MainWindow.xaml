@@ -43,6 +43,8 @@
 
                     <examples:ButtonWithTemplate Content="ButtonWithTemplate"/>
 
+                    <examples:UserControlExample Content="UserControlExample"/>
+
                     <Grid Margin="2 0" Height="52" Width="40" Background="Aqua" Tag="4">
                         <RepeatButton Focusable="False" Interval="15" Style="{StaticResource LeftUpDoubleButtonStyle}"
                                       Padding="8 4 24 24"

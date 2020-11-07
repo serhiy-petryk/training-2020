@@ -46,6 +46,11 @@ Styles in Generic.xaml впливають тільки на стиль для DL
 5. Якщо ResourceDictionaries використовує StaticResource of other resourceDictionary, то краще вказувати StaticResources in MergeDictionary, а не об'являти їх глобально у файлі app.xaml.
 Це дає автономність для ResourceDictionary, чистоту файлу app.xaml і однаково поведінку контролів, як у поточному проекті, так і в DLL.
 
+================
+!!! Bad practice:
+================
+1. XAML control: не визначити структуру елемента зразу (це властивість Content, яка легко може випадково перевизначитися при використанні), а потрібно використовувати шаблон.
+Якщо так робити, то структура елемента зміниться, якщо при використанні користуватися властивістю Content.
 
 
 1. Організація у E:\Users\System\Downloads\WpfStyles-master\src\Styles\ project:
