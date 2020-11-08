@@ -78,10 +78,10 @@
     <Compile Include="Controls\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ColorPicker.xaml.cs">
-      <DependentUpon>ColorPicker.xaml</DependentUpon>
+    <Compile Include="Controls\ColorControl.xaml.cs">
+      <DependentUpon>ColorControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ColorPickerViewModel.cs" />
+    <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DialogItems\DialogItems.cs" />
     <Compile Include="Controls\Effects\ChromeEffect.cs" />
     <Compile Include="Controls\Effects\DatePickerEffect.cs" />
@@ -223,7 +223,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ColorPicker.xaml">
+    <Page Include="Controls\ColorControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -12,14 +12,14 @@ using WpfInvestigate.Common.ColorSpaces;
 
 namespace WpfInvestigate.Controls
 {
-    // ColorPicker ViewModel for DataTemplate
-    public class ColorPickerViewModel : INotifyPropertyChangedAbstract
+    // ColorControl ViewModel for DataTemplate
+    public class ColorControlViewModel : INotifyPropertyChangedAbstract
     {
         internal enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
         internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
 
         // need to duplicate Sliders because "Type ColorComponent[]' is not collection" error occurs
-        // for "Content={Binding Sliders[N]}" line of ColorPicker.xaml in VS designer
+        // for "Content={Binding Sliders[N]}" line of ColorControl.xaml in VS designer
         // I tried to use Array, Collection<T>, List<T>, ReadOnlyCollection<T>, Dictionary<T,V>
         public ColorComponent RGB_R => (ColorComponent)Sliders[0];
         public ColorComponent RGB_G => (ColorComponent)Sliders[1];
@@ -43,7 +43,7 @@ namespace WpfInvestigate.Controls
         public ColorToneBox[] Tones { get; }
 
         private XYSlider[] Sliders { get; }
-        public ColorPickerViewModel()
+        public ColorControlViewModel()
         {
             Sliders = new[]
             {
@@ -305,7 +305,7 @@ namespace WpfInvestigate.Controls
             public string ValueLabel { get; }
             public LinearGradientBrush BackgroundBrush { get; }
 
-            private ColorPickerViewModel _owner;
+            private ColorControlViewModel _owner;
             private readonly double _spaceMultiplier;
             private readonly double _min;
             private readonly double _max;
@@ -313,7 +313,7 @@ namespace WpfInvestigate.Controls
             private int _gradientCount => _colorSpace == ColorSpace.RGB ? 1 : 100;
             private Func<int, Color> _backgroundGradient;
 
-            public ColorComponent(string id, ColorPickerViewModel owner, double min, double max, string valueLabel = null,
+            public ColorComponent(string id, ColorControlViewModel owner, double min, double max, string valueLabel = null,
                 Func<int, Color> backgroundGradient = null) : base(id, null)
             {
                 SetValuesAction = (x, y) => Value = xValue * (_max - _min) + _min;
@@ -352,7 +352,7 @@ namespace WpfInvestigate.Controls
         #region ==============  ColorToneBox  =======================
         public class ColorToneBox : INotifyPropertyChangedAbstract
         {
-            private readonly ColorPickerViewModel _owner;
+            private readonly ColorControlViewModel _owner;
             public int GridColumn { get; }
             public int GridRow { get; }
             public SolidColorBrush Background { get; } = new SolidColorBrush();
@@ -379,7 +379,7 @@ namespace WpfInvestigate.Controls
                 }
             }
 
-            public ColorToneBox(ColorPickerViewModel owner, int gridColumn, int gridRow)
+            public ColorToneBox(ColorControlViewModel owner, int gridColumn, int gridRow)
             {
                 _owner = owner;
                 GridColumn = gridColumn;

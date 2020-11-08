@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         mc:Ignorable="d"
-        Title="ColorPickerTests" Height="600" Width="900">
+        Title="ControlEffectTests" Height="600" Width="900">
 
     <Grid>
         <Grid.ColumnDefinitions>

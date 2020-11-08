@@ -4,17 +4,17 @@ using System.Windows.Media;
 namespace WpfInvestigate.TestViews
 {
     /// <summary>
-    /// Interaction logic for ColorPickerTests.xaml
+    /// Interaction logic for ColorControlTests.xaml
     /// </summary>
-    public partial class ColorPickerTests : Window
+    public partial class ColorControlTests : Window
     {
-        public ColorPickerTests()
+        public ColorControlTests()
         {
             InitializeComponent();
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e) => ColorPicker.SaveColor();
-        private void RestoreButton_Click(object sender, RoutedEventArgs e) => ColorPicker.RestoreColor();
+        private void SaveButton_Click(object sender, RoutedEventArgs e) => ColorControl.SaveColor();
+        private void RestoreButton_Click(object sender, RoutedEventArgs e) => ColorControl.RestoreColor();
 
         private void ChangeColorButton_Click(object sender, RoutedEventArgs e)
         {

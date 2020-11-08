@@ -6,7 +6,7 @@
         xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         mc:Ignorable="d"
-        Title="ColorPickerTests" Height="600" Width="900">
+        Title="BootstrapButtonTests" Height="600" Width="900">
 
     <Window.Resources>
         <ResourceDictionary>

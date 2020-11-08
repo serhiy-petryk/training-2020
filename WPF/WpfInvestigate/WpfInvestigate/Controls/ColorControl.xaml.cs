@@ -21,12 +21,12 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    public partial class ColorPicker : UserControl, INotifyPropertyChanged
+    public partial class ColorControl : UserControl, INotifyPropertyChanged
     {
-        private ColorPickerViewModel VM => (ColorPickerViewModel)DataContext;
+        private ColorControlViewModel VM => (ColorControlViewModel)DataContext;
 
         // Constructor
-        public ColorPicker()
+        public ColorControl()
         {
             InitializeComponent();
             SaveColor();
@@ -63,8 +63,8 @@ namespace WpfInvestigate.Controls
         private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             var fe = sender as FrameworkElement;
-            foreach (var cc in Tips.GetVisualChildren(fe).OfType<Canvas>().Where(cc => cc.DataContext is ColorPickerViewModel.XYSlider))
-                ((ColorPickerViewModel.XYSlider)cc.DataContext).SetSizeOfControl(cc);
+            foreach (var cc in Tips.GetVisualChildren(fe).OfType<Canvas>().Where(cc => cc.DataContext is ColorControlViewModel.XYSlider))
+                ((ColorControlViewModel.XYSlider)cc.DataContext).SetSizeOfControl(cc);
 
             VM.UpdateUI();
         }
@@ -121,7 +121,7 @@ namespace WpfInvestigate.Controls
             var toggleButton = Tips.GetVisualParents(element).OfType<Grid>().SelectMany(grid => grid.Children.OfType<ToggleButton>()).FirstOrDefault();
             toggleButton.IsChecked = false;
 
-            (element.DataContext as ColorPickerViewModel.ColorToneBox).SetCurrentColor();
+            (element.DataContext as ColorControlViewModel.ColorToneBox).SetCurrentColor();
         }
         #endregion
 
@@ -148,7 +148,7 @@ namespace WpfInvestigate.Controls
                     ? e.GetPosition(canvas).X / canvas.ActualWidth
                     : (e.GetPosition(canvas).X - thumb.ActualWidth / 2) / (canvas.ActualWidth - thumb.ActualWidth)));
                 var y = Math.Max(0, Math.Min(1.0, e.GetPosition(canvas).Y / canvas.ActualHeight));
-                ((ColorPickerViewModel.XYSlider)canvas.DataContext).SetProperties(x, y);
+                ((ColorControlViewModel.XYSlider)canvas.DataContext).SetProperties(x, y);
             }
         }
         #endregion

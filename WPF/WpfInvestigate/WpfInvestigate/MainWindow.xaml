@@ -79,7 +79,7 @@
                 <Button x:Name="WatermarkTest" Width="200" Margin="0 5" Content="Watermark Tests" Click="WatermarkTest_OnClick"/>
                 <Button x:Name="RippleEffectTest" Width="200" Margin="0 5" Content="Ready: RippleEffect" Click="RippleEffectTest_OnClick"/>
                 <Button x:Name="ChromeTest" Width="200" Margin="0 5" Content="Ready: Chrome tests" Click="ChromeTest_OnClick"/>
-                <Button x:Name="ColorPickerTest" Width="200" Margin="0 5" Content="Ready: ColorPickerTest" Click="ColorPickerTest_OnClick"/>
+                <Button x:Name="ColorControlTest" Width="200" Margin="0 5" Content="Ready: ColorControlTest" Click="ColorControlTest_OnClick"/>
                 <Button x:Name="ButtonStyleTest" Width="200" Margin="0 5" Content="Ready: ButtonStyleTests" Click="ButtonStyleTests_OnClick"/>
                 <Button x:Name="DialogItemsTest" Width="200" Margin="0 5" Content="Ready: DialogItemsTests" Click="DialogItemsTests_OnClick"/>
             </StackPanel>
