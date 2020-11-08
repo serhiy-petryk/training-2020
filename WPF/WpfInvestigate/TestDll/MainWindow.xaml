@@ -43,7 +43,7 @@
 
                     <examples:ButtonWithTemplate Content="ButtonWithTemplate"/>
 
-                    <examples:UserControlExample Content="UserControlExample"/>
+                    <examples:UserControlExample/>
 
                     <Grid Margin="2 0" Height="52" Width="40" Background="Aqua" Tag="4">
                         <RepeatButton Focusable="False" Interval="15" Style="{StaticResource LeftUpDoubleButtonStyle}"
@@ -55,7 +55,6 @@
                     </Grid>
 
                     <controls:TimePicker Width="100" Height="30" Background="Yellow" Foreground="Blue" Margin="0 0 5 0" SelectedTimeFormat="Long"/>
-
 
                 </WrapPanel>
             </StackPanel>

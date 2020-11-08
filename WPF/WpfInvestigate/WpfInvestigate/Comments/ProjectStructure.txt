@@ -48,6 +48,11 @@ Styles in Generic.xaml впливають тільки на стиль для DL
 Це дає автономність для ResourceDictionary, чистоту файлу app.xaml і однаково поведінку контролів, як у поточному проекті, так і в DLL.
 
 ================
+!!! My practice:
+================
+1. Control (xaml + cs): xaml => all code in UserControl.Reference, the final style is at end of Resources (Calculator, DateTimePickerBase, NumericBox)
+
+================
 !!! Bad practice:
 ================
 1. XAML control: не визначити структуру елемента зразу (це властивість Content, яка легко може випадково перевизначитися при використанні), а потрібно використовувати шаблон.
