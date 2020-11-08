@@ -60,12 +60,12 @@
                 <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
                 <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
 
-                <StackPanel Orientation="Horizontal" Background="#FFCCCCCC" HorizontalAlignment="Stretch">
+                <WrapPanel Orientation="Horizontal" Background="#FFCCCCCC" HorizontalAlignment="Stretch" MaxWidth="230">
                     <controls:TimePicker Width="100" Height="30" Background="Yellow" Foreground="Blue" Margin="0 0 5 0" SelectedTimeFormat="Long"/>
                     <DatePicker effects:DatePickerEffect.ClearButton="True" Height="40"/>
                     <examples:ButtonWithTemplate Content="ButtonWithTemplate"/>
                     <examples:UserControlExample/>
-                </StackPanel>
+                </WrapPanel>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">

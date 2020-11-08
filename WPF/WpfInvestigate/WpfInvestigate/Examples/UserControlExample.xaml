@@ -15,7 +15,7 @@
     </Control.Resources>
 
     <Control.Template>
-        <ControlTemplate TargetType="local:UserControlExample">
+        <ControlTemplate TargetType="Control">
             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Aqua" >
                 <Border Margin="0" Padding="2" Background="Yellow" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                         BorderThickness="4" BorderBrush="{StaticResource Test}"
