@@ -40,7 +40,7 @@ namespace WpfInvestigate.Controls
             set
             {
                 VM.Color = value;
-                OnPropertiesChanged(nameof(ColorBrush));
+                OnPropertiesChanged(nameof(Color), nameof(ColorBrush));
             }
         }
         public SolidColorBrush ColorBrush => new SolidColorBrush(Color);
