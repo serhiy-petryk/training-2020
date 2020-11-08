@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:common="clr-namespace:WpfInvestigate.Common"
              xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+             xmlns:controls="clr-namespace:WpfInvestigate.Controls"
              mc:Ignorable="d"
              Width="Auto" Height="Auto" MinWidth="50" MinHeight="50" MaxWidth="1000"
              UseLayoutRounding="True"
@@ -25,72 +26,80 @@
             <EventSetter Event="DragStarted" Handler="Thumb_OnDragStarted"/>
             <EventSetter Event="DragDelta" Handler="ResizeThumb_OnDragDelta"/>
         </Style>
+
+        <Style TargetType="controls:MessageBlock">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="controls:MessageBlock">
+                        <Grid>
+                            <Grid Effect="{StaticResource ShadowEffect}"/>
+                            <Border BorderThickness="2" CornerRadius="1" Padding="0"
+                                    BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
+                                <Border BorderThickness="7 2 7 7"
+                                        Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                        BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
+                                    <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="15"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0" Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <!-- Header text -->
+                                            <TextBlock Grid.Column="0" x:Name="CaptionControl" Height="30" Padding="0 5" VerticalAlignment="Top"
+                                                       Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
+                                                       Text="{Binding Caption}"
+                                                       TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                                            <!-- Close button -->
+                                            <Button Grid.Column="1" Margin="0 0 4 0" Width="20" Padding="2"
+                                                    Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"
+                                                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                    Command="ApplicationCommands.Close" CommandParameter="{Binding}" />
+
+                                            <Thumb Grid.Column="0" x:Name="MoveThumb" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <!-- Left icon -->
+                                            <Viewbox Grid.Column="0" x:Name="IconBox" Width="24" Margin="8 0 0 0"
+                                                     Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                                <Path Stretch="Fill" Data="{Binding Icon}" Fill="{Binding IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                            </Viewbox>
+                                            <!-- Message -->
+                                            <TextBox Grid.Column="1" x:Name="MessageTextControl" IsReadOnly="True" Padding="0" BorderThickness="0" Background="Transparent"
+                                                     Margin="8" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                     Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
+                                                     Text="{Binding MessageText, Mode=OneWay}"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="2" x:Name="PART_ButtonsArea"/>
+
+                                    </Grid>
+                                </Border>
+                            </Border>
+
+                            <Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="ResizeTop" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="ResizeRight" Width="7" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="ResizeBottom" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="ResizeTopLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="ResizeTopRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="ResizeBottomLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="ResizeBottomRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
-
-    <Grid>
-        <Grid Effect="{StaticResource ShadowEffect}"/>
-        <Border BorderThickness="2" CornerRadius="1" Padding="0"
-                BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
-            <Border BorderThickness="7 2 7 7"
-                    Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"
-                    BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
-                <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="15"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0" Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <!-- Header text -->
-                        <TextBlock Grid.Column="0" x:Name="CaptionControl" Height="30" Padding="0 5" VerticalAlignment="Top"
-                                   Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
-                                   Text="{Binding Caption}"
-                                   TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
-                        <!-- Close button -->
-                        <Button Grid.Column="1" Margin="0 0 4 0" Width="20" Padding="2"
-                                Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"
-                                HorizontalAlignment="Right" VerticalAlignment="Center"
-                                Command="ApplicationCommands.Close" CommandParameter="{Binding}" />
-
-                        <Thumb Grid.Column="0" x:Name="MoveThumb" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>
-                    </Grid>
-
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <!-- Left icon -->
-                        <Viewbox Grid.Column="0" x:Name="IconBox" Width="24" Margin="8 0 0 0"
-                                 Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
-                            <Path Stretch="Fill" Data="{Binding Icon}" Fill="{Binding IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                        </Viewbox>
-                        <!-- Message -->
-                        <TextBox Grid.Column="1" x:Name="MessageTextControl" IsReadOnly="True" Padding="0" BorderThickness="0" Background="Transparent"
-                                 Margin="8" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                 Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
-                                 Text="{Binding MessageText, Mode=OneWay}"/>
-                    </Grid>
-
-                    <Grid Grid.Row="2" x:Name="ButtonsArea"/>
-
-                </Grid>
-            </Border>
-        </Border>
-
-        <Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-        <Thumb x:Name="ResizeTop" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-        <Thumb x:Name="ResizeRight" Width="7" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-        <Thumb x:Name="ResizeBottom" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-        <Thumb x:Name="ResizeTopLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
-        <Thumb x:Name="ResizeTopRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
-        <Thumb x:Name="ResizeBottomLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
-        <Thumb x:Name="ResizeBottomRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
-    </Grid>
 </UserControl>

@@ -50,7 +50,7 @@ Styles in Generic.xaml впливають тільки на стиль для DL
 ================
 !!! My practice:
 ================
-1. Control (xaml + cs): xaml => all code in UserControl.Reference, the final style is at end of Resources (Calculator, DateTimePickerBase, NumericBox)
+1. Control (xaml + cs): xaml => all code in UserControl.Reference, the final style is at end of Resources (Calculator, DateTimePickers, NumericBox, ObjectEditor)
 
 ================
 !!! Bad practice:

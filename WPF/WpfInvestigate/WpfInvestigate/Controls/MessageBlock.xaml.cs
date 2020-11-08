@@ -55,20 +55,16 @@ namespace WpfInvestigate.Controls
         public Color BaseColor { get; private set; }
         public Color? BaseIconColor { get; private set; }
 
+        private Grid _buttonsArea;
+
+        private IEnumerable<string> _buttons;
         private IEnumerable<string> Buttons
         {
+            get => _buttons;
             set
             {
-                ButtonsArea.Children.Clear();
-                ButtonsArea.ColumnDefinitions.Clear();
-
-                foreach (var content in value ?? new string[0])
-                {
-                    ButtonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                    var button = new Button {Content = content, Command = _cmdClickButton, CommandParameter = content};
-                    Grid.SetColumn(button, ButtonsArea.ColumnDefinitions.Count - 1);
-                    ButtonsArea.Children.Add(button);
-                }
+                _buttons = value;
+                RefreshButtons();
             }
         }
 
@@ -96,6 +92,13 @@ namespace WpfInvestigate.Controls
             Caption = caption;
             Icon = icon;
             Buttons = buttons;
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            _buttonsArea = GetTemplateChild("PART_ButtonsArea") as Grid;
+            RefreshButtons();
         }
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
@@ -219,6 +222,22 @@ namespace WpfInvestigate.Controls
         }
         #endregion
 
+        private void RefreshButtons()
+        {
+            if (_buttonsArea == null) return;
+
+            _buttonsArea.Children.Clear();
+            _buttonsArea.ColumnDefinitions.Clear();
+
+            foreach (var content in _buttons ?? new string[0])
+            {
+                _buttonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                var button = new Button { Content = content, Command = _cmdClickButton, CommandParameter = content };
+                Grid.SetColumn(button, _buttonsArea.ColumnDefinitions.Count - 1);
+                _buttonsArea.Children.Add(button);
+            }
+        }
+
         private void UpdateUI()
         {
 
@@ -230,25 +249,25 @@ namespace WpfInvestigate.Controls
                     MaxWidth = newMaxWidth;
             }*/
 
-            if (ButtonsArea.Children.Count > 0)
+            if (_buttonsArea.Children.Count > 0)
             {
-                var maxWidth = ButtonsArea.Children.OfType<ContentControl>().Max(c => ControlHelper.MeasureString((string)c.Content, c).Width) + 4.0;
-                MinWidth = Math.Min(MaxWidth, (maxWidth + 2) * ButtonsArea.Children.Count);
+                var maxWidth = _buttonsArea.Children.OfType<ContentControl>().Max(c => ControlHelper.MeasureString((string)c.Content, c).Width) + 4.0;
+                MinWidth = Math.Min(MaxWidth, (maxWidth + 2) * _buttonsArea.Children.Count);
 
                 // First measure
                 if (double.IsNaN(Width) && ActualWidth < (MaxWidth + MinWidth) / 2)
                     Width = (MaxWidth + MinWidth) / 2;
 
                 var space = ActualWidth - MinWidth;
-                var padding = Math.Min(20.0, space / (4 * ButtonsArea.Children.Count));
+                var padding = Math.Min(20.0, space / (4 * _buttonsArea.Children.Count));
                 var buttonWidth = maxWidth + 2 * padding;
 
-                foreach (ButtonBase button in ButtonsArea.Children)
+                foreach (ButtonBase button in _buttonsArea.Children)
                     if (!Tips.AreEqual(button.Width, buttonWidth))
                         button.Width = buttonWidth;
 
-                if (!Tips.AreEqual(padding, ButtonsArea.Margin.Left) || !Tips.AreEqual(padding, ButtonsArea.Margin.Right))
-                    ButtonsArea.Margin = new Thickness(padding, 5, padding, 0);
+                if (!Tips.AreEqual(padding, _buttonsArea.Margin.Left) || !Tips.AreEqual(padding, _buttonsArea.Margin.Right))
+                    _buttonsArea.Margin = new Thickness(padding, 5, padding, 0);
             }
         }
     }
