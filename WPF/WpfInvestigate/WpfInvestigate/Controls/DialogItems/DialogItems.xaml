@@ -14,7 +14,7 @@
     </ControlTemplate>
 
     <ItemsPanelTemplate x:Key="DefaultPanel">
-        <Grid x:Name="ItemsPanel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid x:Name="ItemsPanel" HorizontalAlignment="Left" VerticalAlignment="Top"/>
     </ItemsPanelTemplate>
 
     <Style x:Key="DefaultContainerStyle" TargetType="{x:Type ContentControl}">
@@ -29,13 +29,6 @@
 
     <!-- Style for movable dialogs -->
     <Style x:Key="MovableDialogStyle" TargetType="{x:Type dialogItems:DialogItems}">
-        <Setter Property="ItemsPanel">
-            <Setter.Value>
-                <ItemsPanelTemplate>
-                    <Grid x:Name="ItemsPanel" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                </ItemsPanelTemplate>
-            </Setter.Value>
-        </Setter>
         <Setter Property="ItemContainerStyle" Value="{x:Null}" />
     </Style>
 

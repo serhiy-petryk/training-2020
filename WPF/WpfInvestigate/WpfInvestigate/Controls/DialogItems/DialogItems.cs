@@ -62,6 +62,21 @@ namespace WpfInvestigate.Controls.DialogItems
             };
         }
 
+        private static void CenterControl(FrameworkElement owner, FrameworkElement childControl)
+        {
+            if (!childControl.IsLoaded)
+            {
+                childControl.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => CenterControl(owner, childControl)));
+                return;
+            }
+
+            owner.Margin = new Thickness
+            {
+                Left = Math.Max(0, (owner.ActualWidth - childControl.ActualWidth) / 2),
+                Top = Math.Max(0, (owner.ActualHeight - childControl.ActualHeight) / 2)
+            };
+        }
+
         /// <summary>
         /// Displays the DialogItems modelessly.
         /// </summary>
@@ -71,9 +86,8 @@ namespace WpfInvestigate.Controls.DialogItems
         public static async void Show(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var adorner = GetAdorner(owner) ?? await CreateAdornerAsync(owner, style);
-            ((DialogItems)adorner.Child).AddDialog(content);
-            afterCreationCallback?.Invoke((DialogItems)adorner.Child);
+            var dialogItems = (DialogItems) (GetAdorner(owner) ?? await CreateAdornerAsync(owner, style)).Child;
+            dialogItems.AddDialog(content);
         }
 
         /// <summary>
@@ -86,11 +100,8 @@ namespace WpfInvestigate.Controls.DialogItems
         public static async Task ShowAsync(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var adorner = GetAdorner(owner) ?? await CreateAdornerAsync(owner, style);
-
-            var task = ((DialogItems)adorner.Child).AddDialogAsync(content);
-            afterCreationCallback?.Invoke((DialogItems)adorner.Child);
-            await task;
+            var dialogItems = (DialogItems) (GetAdorner(owner) ?? await CreateAdornerAsync(owner, style)).Child;
+            await dialogItems.AddDialogAsync(content);
         }
 
         /// <summary>
@@ -102,13 +113,11 @@ namespace WpfInvestigate.Controls.DialogItems
         public static void ShowDialog(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var adorner = GetAdorner(owner) ?? CreateAdornerModal(owner, style);
+            var dialogItems = (DialogItems) (GetAdorner(owner) ?? CreateAdornerModal(owner, style)).Child;
 
             var frame = new DispatcherFrame();
-            ((DialogItems) adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
-            ((DialogItems) adorner.Child).AddDialog(content);
-
-            afterCreationCallback?.Invoke((DialogItems)adorner.Child);
+            dialogItems.AllDialogClosed += (s, e) => frame.Continue = false;
+            dialogItems.AddDialog(content);
 
             Dispatcher.PushFrame(frame);
         }
@@ -256,7 +265,11 @@ namespace WpfInvestigate.Controls.DialogItems
 
             // Add item
             Items.Add(dialog);
-            InvalidateVisual();
+
+            if (ItemsHostPanel.HorizontalAlignment == HorizontalAlignment.Left && ItemsHostPanel.VerticalAlignment == VerticalAlignment.Top)
+                CenterControl(ItemsPresenter, dialog);
+
+            // InvalidateVisual();
         }
 
         protected async Task<bool> AddDialogAsync(FrameworkElement dialog)

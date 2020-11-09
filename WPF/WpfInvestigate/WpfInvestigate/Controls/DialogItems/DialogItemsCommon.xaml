@@ -18,10 +18,10 @@
     </ControlTemplate>
 
     <ItemsPanelTemplate x:Key="HorizontalPanel">
-        <StackPanel Orientation="Horizontal"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
     </ItemsPanelTemplate>
     <ItemsPanelTemplate x:Key="VerticalPanel">
-        <StackPanel Orientation="Vertical" />
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
     </ItemsPanelTemplate>
 
     <ControlTemplate x:Key="LightGlassTemplate">

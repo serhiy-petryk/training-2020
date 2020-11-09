@@ -36,9 +36,13 @@
             </Style>
 
             <Style x:Key="MultipleDialogStyle" TargetType="{x:Type dialogItems:DialogItems}">
-                <Setter Property="Template" Value="{StaticResource DarkBackgroundTemplate}" />
+                <!--<Setter Property="Template" Value="{StaticResource DarkBackgroundTemplate}" />
                 <Setter Property="ItemsPanel" Value="{StaticResource HorizontalPanel}" />
-                <Setter Property="ItemContainerStyle" Value="{StaticResource PhotoCardStyle}" />
+                <Setter Property="ItemContainerStyle" Value="{StaticResource PhotoCardStyle}" />-->
+
+                <Setter Property="Template" Value="{StaticResource DefaultTemplate}" />
+                <Setter Property="ItemsPanel" Value="{StaticResource VerticalPanel}" />
+                <Setter Property="ItemContainerStyle" Value="{StaticResource DefaultContainerStyle}" />
 
                 <Setter Property="InitializeStoryboard" Value="{StaticResource ZoomInAnimation}" />
                 <Setter Property="DisposeStoryboard" Value="{StaticResource ZoomOutAnimation}" />
