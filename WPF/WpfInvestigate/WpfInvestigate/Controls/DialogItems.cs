@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -16,26 +17,13 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for DialogItems.xaml
     /// </summary>
-    public partial class DialogItems : ItemsControl
+    public class DialogItems : ItemsControl
     {
-        private Action<FrameworkElement> _closedDelegate;
-
-        public EventHandler AllDialogClosed;
-        public EventHandler CompleteInitializeDialogItems;
-
+    
         static DialogItems()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogItems), new FrameworkPropertyMetadata(typeof(DialogItems)));
         }
-
-        public DialogItems()
-        {
-            if (CloseOnClickBackground)
-                MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
-        }
-
-        protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
-        protected override bool IsItemItsOwnContainerOverride(object item) => false;
 
         /// <summary>
         /// Usage example: DialogItems.Show(owner, content, style, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
@@ -45,21 +33,8 @@ namespace WpfInvestigate.Controls
         /// <returns></returns>
         public static Action<DialogItems> GetAfterCreationCallbackForMovableDialog(FrameworkElement content, bool closeOnClickBackground)
         {
-            return dialogItems =>
-            {
-                content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
-                {
-                    dialogItems.CloseOnClickBackground = closeOnClickBackground;
-
-                    // center content position
-                    if (dialogItems.ItemsPresenter != null)
-                        dialogItems.ItemsPresenter.Margin = new Thickness
-                        {
-                            Left = Math.Max(0, (dialogItems.ItemsPresenter.ActualWidth - content.ActualWidth) / 2),
-                            Top = Math.Max(0, (dialogItems.ItemsPresenter.ActualHeight - content.ActualHeight) / 2)
-                        };
-                }));
-            };
+            return dialogItems => content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
+                new Action(() => dialogItems.CloseOnClickBackground = closeOnClickBackground));
         }
 
         private static void CenterControl(FrameworkElement owner, FrameworkElement childControl)
@@ -214,6 +189,21 @@ namespace WpfInvestigate.Controls
 
             return adorner;
         }
+
+        #region ==========  Instance  ===============
+
+        public DialogItems()
+        {
+            if (CloseOnClickBackground)
+                MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
+        }
+
+        private Action<FrameworkElement> _closedDelegate;
+        public EventHandler AllDialogClosed;
+        public EventHandler CompleteInitializeDialogItems;
+
+        protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
+        protected override bool IsItemItsOwnContainerOverride(object item) => false;
 
         private Panel _itemsHostPanel;
         public Panel ItemsHostPanel
@@ -430,6 +420,8 @@ namespace WpfInvestigate.Controls
             if (Equals(e.NewValue, true))
                 dialogItems.MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
         }
+        #endregion
+
         #endregion
 
     }

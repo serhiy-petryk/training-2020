@@ -31,7 +31,7 @@ namespace WpfInvestigate.Controls
 
             // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            DialogItems.ShowDialog(null, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            DialogItems.ShowDialog(null, content);
             return content.Result;
         }
 
@@ -43,7 +43,7 @@ namespace WpfInvestigate.Controls
 
             // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            await DialogItems.ShowAsync(null, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            await DialogItems.ShowAsync(null, content);
             return content.Result;
         }
 

@@ -100,21 +100,21 @@ namespace WpfInvestigate.TestViews
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.Show(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            DialogItems.Show(subGrid, content);
             MessageBox.Show("dialog item already shown");
         }
         private void OnClickShowDialogMovableButtonPopup(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.ShowDialog(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            DialogItems.ShowDialog(subGrid, content);
             MessageBox.Show("dialog item already shown");
         }
         private async void OnClickShowAsyncMovableButtonPopup(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            await DialogItems.ShowAsync(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            await DialogItems.ShowAsync(subGrid, content);
             MessageBox.Show("dialog item already shown");
         }
         #endregion
@@ -187,21 +187,21 @@ namespace WpfInvestigate.TestViews
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.Show(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+            DialogItems.Show(subGrid, content, null);
             MessageBox.Show("dialog item already shown");
         }
         private void OnClickShowDialogMovableButton(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.ShowDialog(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+            DialogItems.ShowDialog(subGrid, content);
             MessageBox.Show("dialog item already shown");
         }
         private async void OnClickShowAsyncMovableButton(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            await DialogItems.ShowAsync(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+            await DialogItems.ShowAsync(subGrid, content);
             MessageBox.Show("dialog item already shown");
         }
         #endregion
