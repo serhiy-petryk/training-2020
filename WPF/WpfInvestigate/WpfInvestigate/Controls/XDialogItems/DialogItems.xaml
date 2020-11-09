@@ -3,7 +3,7 @@
                     xmlns:dialogItems="clr-namespace:WpfInvestigate.Controls.DialogItems">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="DialogItemsCommon.xaml" />
+        <ResourceDictionary Source="/Themes/Common.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- Default Styles -->

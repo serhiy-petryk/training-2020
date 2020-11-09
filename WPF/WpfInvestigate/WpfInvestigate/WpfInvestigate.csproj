@@ -82,7 +82,7 @@
       <DependentUpon>ColorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ColorControlViewModel.cs" />
-    <Compile Include="Controls\DialogItems\DialogItems.cs" />
+    <Compile Include="Controls\XDialogItems\DialogItems.cs" />
     <Compile Include="Controls\Effects\ChromeEffect.cs" />
     <Compile Include="Controls\Effects\DatePickerEffect.cs" />
     <Compile Include="Controls\Effects\CornerRadiusEffect.cs" />
@@ -227,11 +227,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\DialogItems\DialogItems.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DialogItems\DialogItemsCommon.xaml">
+    <Page Include="Controls\XDialogItems\DialogItems.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -3,7 +3,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
-                    xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects">
+                    xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+                    xmlns:common="clr-namespace:WpfInvestigate.Common">
 
     <DropShadowEffect x:Key="ShadowEffect" BlurRadius="10" ShadowDepth="2" po:Freeze="True" />
 
@@ -68,6 +69,28 @@
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource WhiteColor}"/>
     <SolidColorBrush x:Key="GrayBrush" Color="{StaticResource GrayColor}"/>
     <SolidColorBrush x:Key="GrayDarkBrush" Color="{StaticResource GrayDarkColor}"/>
+
+    <!-- ========= -->
+    <!-- Animation -->
+    <!-- ========= -->
+    <Storyboard x:Key="FadeInAnimation">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDuration}"/>
+    </Storyboard>
+    <Storyboard x:Key="FadeOutAnimation">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0" Duration="{x:Static common:AnimationHelper.AnimationDuration}"/>
+    </Storyboard>
+    <Storyboard x:Key="ZoomInAnimation">
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDuration}"/>
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDuration}"/>
+        <!-- ↓When changing the center point -->
+        <!--<PointAnimation Storyboard.TargetProperty="RenderTransformOrigin" To="0,0" Duration="00:00:00" />-->
+    </Storyboard>
+    <Storyboard x:Key="ZoomOutAnimation">
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="1.0" To="0" Duration="{x:Static common:AnimationHelper.AnimationDuration}"/>
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="1.0" To="0" Duration="{x:Static common:AnimationHelper.AnimationDuration}"/>
+        <!-- ↓When changing the center point -->
+        <!--<PointAnimation Storyboard.TargetProperty="RenderTransformOrigin" To="0,0" Duration="00:00:00" />-->
+    </Storyboard>
 
     <!-- Default style for controls -->
     <Style TargetType="DatePickerTextBox">
