@@ -82,6 +82,7 @@
       <DependentUpon>ColorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ColorControlViewModel.cs" />
+    <Compile Include="Controls\DialogItems.cs" />
     <Compile Include="Controls\Effects\ChromeEffect.cs" />
     <Compile Include="Controls\Effects\DatePickerEffect.cs" />
     <Compile Include="Controls\Effects\CornerRadiusEffect.cs" />
@@ -89,9 +90,6 @@
     <Compile Include="Controls\Helpers\ControlHelper.cs" />
     <Compile Include="Controls\Helpers\DropDownButtonHelper.cs" />
     <Compile Include="Controls\Effects\DoubleIconToggleButtonEffect.cs" />
-    <Compile Include="Controls\DialogItems.xaml.cs">
-      <DependentUpon>DialogItems.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Examples\ButtonWithTemplate.xaml.cs">
       <DependentUpon>ButtonWithTemplate.xaml</DependentUpon>
     </Compile>
@@ -228,10 +226,6 @@
     <Page Include="Controls\ColorControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DialogItems.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Examples\ButtonWithTemplate.xaml">
       <SubType>Designer</SubType>
