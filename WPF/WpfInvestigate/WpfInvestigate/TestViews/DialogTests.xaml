@@ -3,22 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:dialogItems="clr-namespace:WpfInvestigate.Controls.DialogItems"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-        Title="MainWindow" Width="1000" Height="750" mc:Ignorable="d">
+        Title="MainWindow" Width="1300" Height="750" mc:Ignorable="d">
 
     <Window.Resources>
-        <ControlTemplate x:Key="DarkBackgroundTemplate">
-            <Grid Background="#88000000" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                <ItemsPresenter />
-            </Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="LightBackgroundTemplate">
-            <Grid Background="#88FFFFFF" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                <ItemsPresenter />
-            </Grid>
-        </ControlTemplate>
-
         <ItemsPanelTemplate x:Key="HorizontalPanel">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
         </ItemsPanelTemplate>
@@ -91,33 +79,38 @@
             </Setter>
         </Style>
 
-        <Style x:Key="MultipleDialogStyle" TargetType="{x:Type dialogItems:DialogItems}">
-            <!--<Setter Property="Template" Value="{StaticResource DarkBackgroundTemplate}" />
-                <Setter Property="ItemsPanel" Value="{StaticResource HorizontalPanel}" />
-                <Setter Property="ItemContainerStyle" Value="{StaticResource PhotoCardStyle}" />-->
+        <Style x:Key="ItemWithMarginContainerStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <ContentPresenter Content="{Binding}" Margin="10"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-            <Setter Property="Template" Value="{StaticResource DefaultTemplate}" />
+        <Style x:Key="WithMarginStyle" TargetType="{x:Type controls:DialogItems}">
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemWithMarginContainerStyle}"/>
+        </Style>
+
+        <Style x:Key="MultipleDialogStyle" TargetType="{x:Type controls:DialogItems}">
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemWithMarginContainerStyle}"/>
             <Setter Property="ItemsPanel" Value="{StaticResource VerticalPanel}" />
-            <Setter Property="ItemContainerStyle" Value="{StaticResource DefaultContainerStyle}" />
-
             <Setter Property="InitializeStoryboard" Value="{StaticResource ZoomInAnimation}" />
             <Setter Property="DisposeStoryboard" Value="{StaticResource ZoomOutAnimation}" />
             <Setter Property="OpenStoryboard" Value="{StaticResource ZoomInAnimation}" />
             <Setter Property="CloseStoryboard" Value="{StaticResource ZoomOutAnimation}" />
-
-            <!--<Setter Property="CloseOnClickBackground" Value="False" />-->
-
             <Setter Property="IsParallelInitialize" Value="False" />
             <Setter Property="IsParallelDispose" Value="False" />
         </Style>
 
-        <Style x:Key="DialogBultinStyle" TargetType="{x:Type dialogItems:DialogItems}">
+        <Style x:Key="DialogBultinStyle" TargetType="{x:Type controls:DialogItems}">
             <Setter Property="Template" Value="{StaticResource DarkGlassTemplate}" />
             <Setter Property="ItemsPanel" Value="{StaticResource HorizontalPanel}" />
             <Setter Property="ItemContainerStyle" Value="{StaticResource PhotoCardStyle}" />
         </Style>
 
-        <Style x:Key="DialogCustomStyle" TargetType="{x:Type dialogItems:DialogItems}">
+        <Style x:Key="DialogCustomStyle" TargetType="{x:Type controls:DialogItems}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>

@@ -1,8 +1,5 @@
-﻿// ===============================================================
-// Based on the https://github.com/sourcechord/Lighty (MIT licence)
-// ===============================================================
-
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -15,9 +12,12 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
-namespace WpfInvestigate.Controls.DialogItems
+namespace WpfInvestigate.Controls
 {
-    public class DialogItems : ItemsControl
+    /// <summary>
+    /// Interaction logic for DialogItems.xaml
+    /// </summary>
+    public partial class DialogItems : ItemsControl
     {
         private Action<FrameworkElement> _closedDelegate;
 
@@ -28,8 +28,11 @@ namespace WpfInvestigate.Controls.DialogItems
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogItems), new FrameworkPropertyMetadata(typeof(DialogItems)));
         }
+
         public DialogItems()
         {
+            InitializeComponent();
+
             if (CloseOnClickBackground)
                 MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
         }
@@ -86,7 +89,7 @@ namespace WpfInvestigate.Controls.DialogItems
         public static async void Show(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var dialogItems = (DialogItems) (GetAdorner(owner) ?? await CreateAdornerAsync(owner, style)).Child;
+            var dialogItems = (DialogItems)(GetAdorner(owner) ?? await CreateAdornerAsync(owner, style)).Child;
             dialogItems.AddDialog(content);
         }
 
@@ -100,7 +103,7 @@ namespace WpfInvestigate.Controls.DialogItems
         public static async Task ShowAsync(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var dialogItems = (DialogItems) (GetAdorner(owner) ?? await CreateAdornerAsync(owner, style)).Child;
+            var dialogItems = (DialogItems)(GetAdorner(owner) ?? await CreateAdornerAsync(owner, style)).Child;
             await dialogItems.AddDialogAsync(content);
         }
 
@@ -113,7 +116,7 @@ namespace WpfInvestigate.Controls.DialogItems
         public static void ShowDialog(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var dialogItems = (DialogItems) (GetAdorner(owner) ?? CreateAdornerModal(owner, style)).Child;
+            var dialogItems = (DialogItems)(GetAdorner(owner) ?? CreateAdornerModal(owner, style)).Child;
 
             var frame = new DispatcherFrame();
             dialogItems.AllDialogClosed += (s, e) => frame.Continue = false;
@@ -128,10 +131,10 @@ namespace WpfInvestigate.Controls.DialogItems
             var win = element as Window;
             var target = win?.Content as UIElement ?? element;
 
-            if (target == null) 
+            if (target == null)
                 return null;
             var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null) 
+            if (layer == null)
                 return null;
 
             var current = layer.GetAdorners(target)?.OfType<AdornerControl>()?.SingleOrDefault();
@@ -144,10 +147,10 @@ namespace WpfInvestigate.Controls.DialogItems
             var win = element as Window;
             var target = win?.Content as UIElement ?? element;
 
-            if (target == null) 
+            if (target == null)
                 return null;
             var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null) 
+            if (layer == null)
                 return null;
 
             // Since there is no Adorner for the dialog, create a new one and set and return it.
@@ -194,7 +197,7 @@ namespace WpfInvestigate.Controls.DialogItems
                     tcs.SetResult(adorner);
                 else
                     dialogItems.CompleteInitializeDialogItems += (s, e) => tcs.SetResult(adorner);
-            })); 
+            }));
             return tcs.Task;
         }
 
@@ -303,7 +306,7 @@ namespace WpfInvestigate.Controls.DialogItems
             else
                 await DestroyDialogAsync(dialog);
 
-            if (index != -1 && count == 1) 
+            if (index != -1 && count == 1)
                 await DestroyAdornerAsync();
 
             _closedDelegate?.Invoke(dialog);
@@ -311,8 +314,13 @@ namespace WpfInvestigate.Controls.DialogItems
 
         private static async void DialogItems_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            // var dialogItems = (DialogItems)sender;
+            // var tasks = new List<Task>();
+            // foreach(FrameworkElement item in dialogItems.Items)
+               // tasks.Add(dialogItems.RemoveDialogAsync(item));
+
             var dialogItems = (DialogItems)sender;
-            var tasks = dialogItems.Items.Cast<FrameworkElement>().Select(dialogItems.RemoveDialogAsync);
+            var tasks = Enumerable.Cast<FrameworkElement>(dialogItems.Items.OfType<FrameworkElement>().ToArray()).Select(dialogItems.RemoveDialogAsync);
             await Task.WhenAll(tasks);
             await dialogItems.DestroyAdornerAsync();
         }
@@ -416,7 +424,7 @@ namespace WpfInvestigate.Controls.DialogItems
         }
         // Using a DependencyProperty as the backing store for CloseOnClickBackground.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CloseOnClickBackgroundProperty =
-            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogItems), new PropertyMetadata(true, CloseOnClickBackgroundChanged ));
+            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogItems), new PropertyMetadata(true, CloseOnClickBackgroundChanged));
         private static void CloseOnClickBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var dialogItems = (DialogItems)d;
@@ -426,5 +434,6 @@ namespace WpfInvestigate.Controls.DialogItems
                 dialogItems.MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
         }
         #endregion
+
     }
 }

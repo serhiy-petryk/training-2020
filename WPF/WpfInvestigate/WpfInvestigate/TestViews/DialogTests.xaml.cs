@@ -6,7 +6,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using WpfInvestigate.Controls;
-using WpfInvestigate.Controls.DialogItems;
 
 namespace WpfInvestigate.TestViews
 {
@@ -23,7 +22,9 @@ namespace WpfInvestigate.TestViews
             DataContext = this;
         }
 
-        private Style MovableDialogStyle => TryFindResource("MovableDialogStyle") as Style;
+        // private Style MovableDialogStyle => TryFindResource("MovableDialogStyle") as Style;
+        private Style WithMarginStyle => TryFindResource("WithMarginStyle") as Style;
+
         private void ClearSubGrid()
         {
             var layer = AdornerLayer.GetAdornerLayer(subGrid);
@@ -57,14 +58,14 @@ namespace WpfInvestigate.TestViews
         private void OnClickShowImagePopup(object sender, RoutedEventArgs e)
         {
             var image = new Image {Source = _testImage};
-            DialogItems.Show(this, image);
+            DialogItems.Show(this, image, WithMarginStyle);
         }
 
         private void OnClickShowInGridPopup(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var image = new Image {Source = _testImage};
-            DialogItems.Show(this.subGrid, image);
+            DialogItems.Show(this.subGrid, image, WithMarginStyle);
         }
 
         #region 別ウィンドウで開くサンプルなど
@@ -99,21 +100,21 @@ namespace WpfInvestigate.TestViews
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.Show(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            DialogItems.Show(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
             MessageBox.Show("dialog item already shown");
         }
         private void OnClickShowDialogMovableButtonPopup(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.ShowDialog(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            DialogItems.ShowDialog(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
             MessageBox.Show("dialog item already shown");
         }
         private async void OnClickShowAsyncMovableButtonPopup(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            await DialogItems.ShowAsync(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            await DialogItems.ShowAsync(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
             MessageBox.Show("dialog item already shown");
         }
         #endregion
@@ -146,14 +147,14 @@ namespace WpfInvestigate.TestViews
         {
             var image = new Image {Source = _testImage};
             image.PreviewMouseLeftButtonDown += (o, args) => ApplicationCommands.Close.Execute(null, image);
-            DialogItems.Show(this, image, null, _closeOnClickBackgroundCallback);
+            DialogItems.Show(this, image, WithMarginStyle, _closeOnClickBackgroundCallback);
         }
 
         private void OnClickShowInGrid(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var image = new Image {Source = _testImage};
-            DialogItems.Show(this.subGrid, image, null, _closeOnClickBackgroundCallback);
+            DialogItems.Show(this.subGrid, image, WithMarginStyle, _closeOnClickBackgroundCallback);
         }
 
         #region 別ウィンドウで開くサンプルなど
@@ -186,21 +187,21 @@ namespace WpfInvestigate.TestViews
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.Show(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+            DialogItems.Show(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
             MessageBox.Show("dialog item already shown");
         }
         private void OnClickShowDialogMovableButton(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            DialogItems.ShowDialog(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+            DialogItems.ShowDialog(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
             MessageBox.Show("dialog item already shown");
         }
         private async void OnClickShowAsyncMovableButton(object sender, RoutedEventArgs e)
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            await DialogItems.ShowAsync(subGrid, content, MovableDialogStyle, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
+            await DialogItems.ShowAsync(subGrid, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, false));
             MessageBox.Show("dialog item already shown");
         }
         #endregion

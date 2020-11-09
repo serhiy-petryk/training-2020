@@ -25,25 +25,25 @@ namespace WpfInvestigate.Controls
 
         public static string Show(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
         {
-            var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
+            // var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
             var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
             var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
 
             // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            DialogItems.DialogItems.ShowDialog(null, content, style, DialogItems.DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            DialogItems.ShowDialog(null, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
             return content.Result;
         }
 
         public static async Task<string> ShowAsync(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
         {
-            var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
+            // var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
             var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
             var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
 
             // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            await DialogItems.DialogItems.ShowAsync(null, content, style, DialogItems.DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
+            await DialogItems.ShowAsync(null, content, null, DialogItems.GetAfterCreationCallbackForMovableDialog(content, true));
             return content.Result;
         }
 
@@ -110,7 +110,7 @@ namespace WpfInvestigate.Controls
         private void OnButtonClick(object parameter)
         {
             Result = parameter?.ToString();
-            ApplicationCommands.Close.Execute(null, ((DialogItems.DialogItems)Parent).Items[0] as FrameworkElement);
+            ApplicationCommands.Close.Execute(null, ((DialogItems)Parent).Items[0] as FrameworkElement);
         }
 
         #region ==========  Moving && resizing  =========

@@ -4,9 +4,9 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/DialogItems.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/ButtonStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/DropDownButtons.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/XDialogItems/DialogItems.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="controls:NumericBox">
