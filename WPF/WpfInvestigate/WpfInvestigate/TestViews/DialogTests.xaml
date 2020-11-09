@@ -241,6 +241,8 @@
         <StackPanel Grid.Row="7" Grid.Column="0" Orientation="Vertical">
             <TextBlock Text="Message blocks" />
             <StackPanel Orientation="Horizontal">
+                <Button Margin="5" Width="100" Click="OnClickSyncMessageBlock" Content="Sync" />
+                <Button Margin="5" Width="100" Click="OnClickAsyncMessageBlock" Content="Async" />
                 <Button Margin="5" Width="100" Click="OnClickMessageBlock" Content="Message" />
                 <Button Margin="5" Width="100" Click="OnClickQuestionMessageBlock" Content="Question" />
                 <Button Margin="5" Width="100" Click="OnClickStopMessageBlock" Content="Stop" />

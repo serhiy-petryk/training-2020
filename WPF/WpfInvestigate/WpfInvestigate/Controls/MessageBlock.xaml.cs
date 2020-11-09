@@ -47,6 +47,18 @@ namespace WpfInvestigate.Controls
             return content.Result;
         }
 
+        public static string Show2(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
+        {
+            // var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
+            var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
+            var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
+
+            // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
+            var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
+            DialogItems.Show(null, content);
+            return content.Result;
+        }
+
         // =================  Instance  ================
         public string Result { get; private set; }
         public string MessageText { get; private set; }

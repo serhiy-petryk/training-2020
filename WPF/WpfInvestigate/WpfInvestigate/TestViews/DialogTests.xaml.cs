@@ -206,6 +206,16 @@ namespace WpfInvestigate.TestViews
         }
         #endregion
 
+        private void OnClickSyncMessageBlock(object sender, RoutedEventArgs e)
+        {
+            var a1 = MessageBlock.Show2("Message text Message text Message text Message text Message text Message text ",
+                "Show Sync", null, new[] { "OK", "Cancel", "Right", "Left" });
+        }
+        private async void OnClickAsyncMessageBlock(object sender, RoutedEventArgs e)
+        {
+            var a1 = await MessageBlock.ShowAsync("Message text Message text Message text Message text Message text Message text ",
+                "Show Async", null, new[] { "OK", "Cancel", "Right", "Left" });
+        }
         private void OnClickMessageBlock(object sender, RoutedEventArgs e)
         {
             var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
