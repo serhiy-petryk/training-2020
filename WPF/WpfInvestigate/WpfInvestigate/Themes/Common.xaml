@@ -74,10 +74,18 @@
     <!-- Animation -->
     <!-- ========= -->
     <Storyboard x:Key="FadeInAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDuration}"/>
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}">
+            <DoubleAnimation.EasingFunction>
+                <CubicEase EasingMode="EaseInOut" />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
     </Storyboard>
     <Storyboard x:Key="FadeOutAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0" Duration="{x:Static common:AnimationHelper.AnimationDuration}"/>
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}">
+            <DoubleAnimation.EasingFunction>
+                <CubicEase EasingMode="EaseInOut" />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
     </Storyboard>
     <Storyboard x:Key="ZoomInAnimation">
         <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDuration}"/>

@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -14,15 +16,26 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    /// <summary>
-    /// Interaction logic for DialogItems.xaml
-    /// </summary>
     public class DialogItems : ItemsControl
     {
-    
         static DialogItems()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogItems), new FrameworkPropertyMetadata(typeof(DialogItems)));
+        }
+
+        private static void CenterControl(FrameworkElement host, FrameworkElement childControl)
+        {
+            if (!childControl.IsLoaded)
+            {
+                childControl.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => CenterControl(host, childControl)));
+                return;
+            }
+
+            host.Margin = new Thickness
+            {
+                Left = Math.Max(0, (host.ActualWidth - childControl.ActualWidth) / 2),
+                Top = Math.Max(0, (host.ActualHeight - childControl.ActualHeight) / 2)
+            };
         }
 
         /// <summary>
@@ -33,22 +46,20 @@ namespace WpfInvestigate.Controls
         /// <returns></returns>
         public static Action<DialogItems> GetAfterCreationCallbackForMovableDialog(FrameworkElement content, bool closeOnClickBackground)
         {
-            return dialogItems => content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
-                new Action(() => dialogItems.CloseOnClickBackground = closeOnClickBackground));
-        }
-
-        private static void CenterControl(FrameworkElement owner, FrameworkElement childControl)
-        {
-            if (!childControl.IsLoaded)
+            return dialogItems =>
             {
-                childControl.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => CenterControl(owner, childControl)));
-                return;
-            }
+                content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+                {
+                    dialogItems.CloseOnClickBackground = closeOnClickBackground;
 
-            owner.Margin = new Thickness
-            {
-                Left = Math.Max(0, (owner.ActualWidth - childControl.ActualWidth) / 2),
-                Top = Math.Max(0, (owner.ActualHeight - childControl.ActualHeight) / 2)
+                    // center content position
+                    if (dialogItems.ItemsPresenter != null)
+                        dialogItems.ItemsPresenter.Margin = new Thickness
+                        {
+                            Left = Math.Max(0, (dialogItems.ItemsPresenter.ActualWidth - content.ActualWidth) / 2),
+                            Top = Math.Max(0, (dialogItems.ItemsPresenter.ActualHeight - content.ActualHeight) / 2)
+                        };
+                }));
             };
         }
 
@@ -61,8 +72,14 @@ namespace WpfInvestigate.Controls
         public static async void Show(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var dialogItems = (DialogItems)(GetAdorner(owner) ?? await CreateAdornerAsync(owner, style)).Child;
-            dialogItems.AddDialog(content);
+            var adorner = GetAdorner(owner);
+            if (adorner == null)
+                adorner = await CreateAdornerAsync(owner, style);
+
+            if (adorner.Child != null && adorner.Child is DialogItems)
+                ((DialogItems)adorner.Child).AddDialog(content);
+
+            afterCreationCallback?.Invoke((DialogItems)adorner.Child);
         }
 
         /// <summary>
@@ -75,8 +92,16 @@ namespace WpfInvestigate.Controls
         public static async Task ShowAsync(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var dialogItems = (DialogItems)(GetAdorner(owner) ?? await CreateAdornerAsync(owner, style)).Child;
-            await dialogItems.AddDialogAsync(content);
+            var adorner = GetAdorner(owner);
+            if (adorner == null)
+                adorner = await CreateAdornerAsync(owner, style);
+
+            if (adorner.Child != null && adorner.Child is DialogItems)
+            {
+                var task = ((DialogItems)adorner.Child).AddDialogAsync(content);
+                afterCreationCallback?.Invoke((DialogItems)adorner.Child);
+                await task;
+            }
         }
 
         /// <summary>
@@ -88,11 +113,15 @@ namespace WpfInvestigate.Controls
         public static void ShowDialog(UIElement owner, FrameworkElement content, Style style = null, Action<DialogItems> afterCreationCallback = null)
         {
             owner = owner ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var dialogItems = (DialogItems)(GetAdorner(owner) ?? CreateAdornerModal(owner, style)).Child;
+            var adorner = GetAdorner(owner);
+            if (adorner == null)
+                adorner = CreateAdornerModal(owner, style);
 
             var frame = new DispatcherFrame();
-            dialogItems.AllDialogClosed += (s, e) => frame.Continue = false;
-            dialogItems.AddDialog(content);
+            ((DialogItems)adorner.Child).AllDialogClosed += (s, e) => frame.Continue = false;
+            ((DialogItems)adorner.Child).AddDialog(content);
+
+            afterCreationCallback?.Invoke((DialogItems)adorner.Child);
 
             Dispatcher.PushFrame(frame);
         }
@@ -190,20 +219,127 @@ namespace WpfInvestigate.Controls
             return adorner;
         }
 
-        #region ==========  Instance  ===============
+        //=================================================
+        //=================================================
+        #region ==============  Instance  =================
+
+        public async void Show(FrameworkElement content, UIElement host = null)
+        {
+            host = host ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            await CreateAdornerAsync(host);
+            // AddDialog(content);
+            Items.Add(content);
+        }
+        public void ShowDialog(FrameworkElement content, UIElement host = null)
+        {
+            host = host ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var adorner = CreateAdornerModal(host);
+            var frame = new DispatcherFrame();
+            AllDialogClosed += (s, e) => frame.Continue = false;
+            //AddDialog(content);
+            Items.Add(content);
+
+            Dispatcher.PushFrame(frame);
+        }
+        public async Task ShowAsync(FrameworkElement content, UIElement host = null)
+        {
+            host = host ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            await CreateAdornerAsync(host);
+            await AddDialogAsync(content);
+        }
+
+        private AdornerControl CreateAdornerModal(UIElement host)
+        {
+            var adorner = CreateAdornerCore(host);
+            if (!IsParallelInitialize)
+            {
+                var frame = new DispatcherFrame();
+                CompleteInitializeDialogItems += (s, e) => frame.Continue = false;
+                Dispatcher.PushFrame(frame);
+            }
+            return adorner;
+        }
+        private Task<AdornerControl> CreateAdornerAsync(UIElement host)
+        {
+            var tcs = new TaskCompletionSource<AdornerControl>();
+            var adorner = CreateAdornerCore(host);
+
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            {
+                // When executing animations in parallel or when there is no dialogitems background animation,
+                // this asynchronous method is completed immediately.
+                if (IsParallelInitialize || InitializeStoryboard == null)
+                    tcs.SetResult(adorner);
+                else
+                    CompleteInitializeDialogItems += (s, e) => tcs.SetResult(adorner);
+            }));
+            return tcs.Task;
+        }
+        private AdornerControl CreateAdornerCore(UIElement host)
+        {
+            // If it is a Window class, use the Content property.
+            var win = host as Window;
+            var target = win?.Content as UIElement ?? host;
+
+            if (target == null)
+                return null;
+            var layer = AdornerLayer.GetAdornerLayer(target);
+            if (layer == null)
+                return null;
+
+            // Since there is no Adorner for the dialog, create a new one and set and return it.
+            var adorner = new AdornerControl(target);
+            adorner.Child = this;
+
+            // If Adorner is set for Window, set margin to cancel Margin of Content element.
+            if (win != null)
+            {
+                var content = win.Content as FrameworkElement;
+                var margin = content.Margin;
+                // adorner.Margin = new Thickness(-margin.Left, -margin.Top, margin.Right, margin.Bottom);
+                // adorner.UseAdornedElementSize = false;
+            }
+
+            // If the target is Enable when the dialog is displayed, disable it only while the dialog is displayed.
+            if (target.IsEnabled)
+            {
+                target.IsEnabled = false;
+                AllDialogClosed += (s, e) => target.IsEnabled = true;
+            }
+            // Added a process to remove Adorner when all dialogs are cleared
+            AllDialogClosed += (s, e) => layer.Remove(adorner);
+            // Microsoft bug???: CloseOnClickBackground is changing after "layer.Add(adorner)" in MultipleLightBoxWindow example
+            var temp = CloseOnClickBackground;
+            layer.Add(adorner);
+            CloseOnClickBackground = temp;
+            return adorner;
+        }
+
+
+        private Action<FrameworkElement> _closedDelegate;
+
+        public EventHandler AllDialogClosed;
+        public EventHandler CompleteInitializeDialogItems;
 
         public DialogItems()
         {
             if (CloseOnClickBackground)
                 MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
+            ((INotifyCollectionChanged)Items).CollectionChanged += DialogItems_CollectionChanged;
         }
 
-        private Action<FrameworkElement> _closedDelegate;
-        public EventHandler AllDialogClosed;
-        public EventHandler CompleteInitializeDialogItems;
+        private void DialogItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach(var item in e.NewItems.OfType<FrameworkElement>())
+                    AddDialog(item, false);
+            }
+        }
 
         protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
         protected override bool IsItemItsOwnContainerOverride(object item) => false;
+
 
         private Panel _itemsHostPanel;
         public Panel ItemsHostPanel
@@ -225,8 +361,11 @@ namespace WpfInvestigate.Controls
         /// FrameworkElement passed as an argument is added to the displayed dialog item.
         /// </summary>
         /// <param name="dialog"></param>
-        protected void AddDialog(FrameworkElement dialog)
+        public void AddDialog(FrameworkElement dialog, bool add = true)
         {
+            if (dialog == null)
+                return;
+
             dialog.Loaded += (sender, args) =>
             {
                 var parent = dialog.Parent as FrameworkElement;
@@ -254,12 +393,16 @@ namespace WpfInvestigate.Controls
             };
 
             // Add item
-            Items.Add(dialog);
+            if (add)
+            {
+                Items.Add(dialog);
+                InvalidateVisual();
+            }
 
-            if (ItemsHostPanel.HorizontalAlignment == HorizontalAlignment.Left && ItemsHostPanel.VerticalAlignment == VerticalAlignment.Top)
-                CenterControl(ItemsPresenter, dialog);
-
-            // InvalidateVisual();
+            if (ItemsHostPanel != null && ItemsHostPanel.HorizontalAlignment == HorizontalAlignment.Left &&
+                    ItemsHostPanel.VerticalAlignment == VerticalAlignment.Top)
+                    CenterControl(ItemsPresenter, dialog);
+            
         }
 
         protected async Task<bool> AddDialogAsync(FrameworkElement dialog)
@@ -276,7 +419,8 @@ namespace WpfInvestigate.Controls
             };
             _closedDelegate += closedHandler;
 
-            AddDialog(dialog);
+            // AddDialog(dialog);
+            Items.Add(dialog);
 
             return await tcs.Task;
         }
@@ -301,13 +445,8 @@ namespace WpfInvestigate.Controls
 
         private static async void DialogItems_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            // var dialogItems = (DialogItems)sender;
-            // var tasks = new List<Task>();
-            // foreach(FrameworkElement item in dialogItems.Items)
-               // tasks.Add(dialogItems.RemoveDialogAsync(item));
-
             var dialogItems = (DialogItems)sender;
-            var tasks = Enumerable.Cast<FrameworkElement>(dialogItems.Items.OfType<FrameworkElement>().ToArray()).Select(dialogItems.RemoveDialogAsync);
+            var tasks = dialogItems.Items.Cast<FrameworkElement>().Select(dialogItems.RemoveDialogAsync);
             await Task.WhenAll(tasks);
             await dialogItems.DestroyAdornerAsync();
         }
@@ -423,6 +562,5 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #endregion
-
     }
 }

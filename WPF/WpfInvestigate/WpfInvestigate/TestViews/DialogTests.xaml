@@ -166,6 +166,13 @@
         <!--<Button Grid.Row="2" Margin="5" Width="100" Click="OnClickShowDialogMovableButtonPopup" Content="ShowDialog" />-->
 
         <StackPanel Grid.Row="2" Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="5" Width="100" Click="OnClickSyncTest" Content="Sync Test" />
+                <Button Margin="5" Width="100" Click="OnClickDialogTest" Content="Dialog Test" />
+                <Button Margin="5" Width="100" Click="OnClickAsyncTest" Content="Async Test" />
+                <Button Margin="5" Click="XOnClickShowMultiplePopup" Content="Show multiple dialogs" />
+            </StackPanel>
+
             <TextBlock Text="Basic Usage" />
             <TextBlock Text="How to show DialogItems" />
             <StackPanel Orientation="Horizontal">

@@ -31,7 +31,10 @@ namespace WpfInvestigate.Controls
 
             // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            DialogItems.ShowDialog(null, content);
+            // DialogItems.ShowDialog(null, content);
+            var dialogItems = new DialogItems();
+            dialogItems.ShowDialog(content);
+
             return content.Result;
         }
 
@@ -43,7 +46,9 @@ namespace WpfInvestigate.Controls
 
             // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            await DialogItems.ShowAsync(null, content);
+            // await DialogItems.ShowAsync(null, content);
+            var dialogItems = new DialogItems();
+            await dialogItems.ShowAsync(content);
             return content.Result;
         }
 
@@ -55,7 +60,9 @@ namespace WpfInvestigate.Controls
 
             // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            DialogItems.Show(null, content);
+            // DialogItems.Show(null, content);
+            var dialogItems = new DialogItems();
+            dialogItems.Show(content);
             return content.Result;
         }
 
