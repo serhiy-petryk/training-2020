@@ -527,8 +527,6 @@
   <ItemGroup>
     <Resource Include="Comments\ProjectStructure.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\Effects\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
