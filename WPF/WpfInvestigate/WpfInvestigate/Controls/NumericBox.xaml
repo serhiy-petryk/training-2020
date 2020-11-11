@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WpfInvestigate.Controls"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:common="clr-namespace:WpfInvestigate.Common"
-             xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+             xmlns:effects="clr-namespace:WpfInvestigate.Effects"
              mc:Ignorable="d" 
              GotFocus="OnNumericBoxGotFocus">
 

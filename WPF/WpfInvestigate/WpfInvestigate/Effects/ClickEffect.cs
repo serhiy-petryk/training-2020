@@ -12,8 +12,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Controls;
 
-namespace WpfInvestigate.Controls.Effects
+namespace WpfInvestigate.Effects
 {
     /// <summary>
     /// Ripple Effect for FrameworkElement

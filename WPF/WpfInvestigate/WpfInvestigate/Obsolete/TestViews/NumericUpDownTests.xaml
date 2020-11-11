@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
-        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         mc:Ignorable="d"
         Title="Obsolete NumericUpDownTests" Height="450" Width="1000">
 

@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
-        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         mc:Ignorable="d"
         Title="Obsolete ControlLibrary" Height="450" Width="800">
 

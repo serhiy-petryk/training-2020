@@ -8,8 +8,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Controls;
 
-namespace WpfInvestigate.Controls.Effects
+namespace WpfInvestigate.Effects
 {
     /// <summary>
     /// </summary>
@@ -91,7 +92,7 @@ namespace WpfInvestigate.Controls.Effects
                 child.Width = element.ActualWidth + thickness.Left + thickness.Right;
                 child.Height = element.ActualHeight + thickness.Top + thickness.Bottom;
                 child.Margin = new Thickness(-thickness.Left, -thickness.Top, -thickness.Right, -thickness.Bottom);
-                var cornerRadius = Helpers.ControlHelper.GetCornerRadius(element);
+                var cornerRadius = Controls.Helpers.ControlHelper.GetCornerRadius(element);
                 if (cornerRadius.HasValue)
                     child.CornerRadius = new CornerRadius(
                         cornerRadius.Value.TopLeft + Math.Max(thickness.Left, thickness.Top) / 2,

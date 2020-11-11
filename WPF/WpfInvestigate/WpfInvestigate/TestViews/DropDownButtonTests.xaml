@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         mc:Ignorable="d"
         Title="ToggleButtonAndPopup" Height="900" Width="1250">
 

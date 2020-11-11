@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                    xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
-                    xmlns:common="clr-namespace:WpfInvestigate.Common">
+                    xmlns:common="clr-namespace:WpfInvestigate.Common"
+                    xmlns:effects="clr-namespace:WpfInvestigate.Effects">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />

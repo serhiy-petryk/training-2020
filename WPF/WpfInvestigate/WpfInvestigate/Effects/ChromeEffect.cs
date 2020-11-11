@@ -8,7 +8,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
-namespace WpfInvestigate.Controls.Effects
+namespace WpfInvestigate.Effects
 {
     /// <summary>
     /// </summary>

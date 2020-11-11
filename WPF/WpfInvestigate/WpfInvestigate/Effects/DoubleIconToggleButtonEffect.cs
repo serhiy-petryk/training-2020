@@ -10,7 +10,7 @@ using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls.Helpers;
 
-namespace WpfInvestigate.Controls.Effects
+namespace WpfInvestigate.Effects
 {
     public class DoubleIconToggleButtonEffect
     {

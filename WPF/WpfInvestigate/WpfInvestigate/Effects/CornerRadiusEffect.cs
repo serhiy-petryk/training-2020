@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using WpfInvestigate.Controls.Helpers;
 
-namespace WpfInvestigate.Controls.Effects
+namespace WpfInvestigate.Effects
 {
     /// <summary>
     /// </summary>

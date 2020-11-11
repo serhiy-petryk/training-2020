@@ -1,12 +1,11 @@
-﻿<Window
+﻿<Window x:Class="WpfInvestigate.TestViews.TimePickerTests"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        x:Class="WpfInvestigate.TestViews.TimePickerTests"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         mc:Ignorable="d"
         Title="TimePickerTest" Height="600" Width="1000">
 

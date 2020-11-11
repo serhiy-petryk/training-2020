@@ -8,8 +8,9 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Controls;
 
-namespace WpfInvestigate.Controls.Effects
+namespace WpfInvestigate.Effects
 {
     /// <summary>
     /// Supports textBox, passwordBox, editable combobox, numeric box, datetime/time picker

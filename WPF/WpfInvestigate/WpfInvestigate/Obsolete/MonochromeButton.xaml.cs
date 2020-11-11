@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
-using WpfInvestigate.Controls.Effects;
+using WpfInvestigate.Effects;
 
 namespace WpfInvestigate.Obsolete
 {

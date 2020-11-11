@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
-        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
+        xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         mc:Ignorable="d"
         Title="Obsolete Flat Buttons" Height="800" Width="1000">
 

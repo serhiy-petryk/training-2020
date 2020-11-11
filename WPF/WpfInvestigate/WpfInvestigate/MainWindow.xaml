@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-        xmlns:effects="clr-namespace:WpfInvestigate.Controls.Effects"
         xmlns:examples="clr-namespace:WpfInvestigate.Examples"
+        xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="600" Width="1000">
 
