@@ -144,6 +144,7 @@
         </Style>
     </Window.Resources>
 
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -160,10 +161,26 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="SemiBold" Margin="0 10 0 0" Text="Based on https://github.com/sourcechord/Lighty (MIT licence)" />
-        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="14" FontWeight="SemiBold" Margin="0 10 0 0" Text="//////// DialogItems" />
+        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="14" FontWeight="SemiBold" Margin="0 20 0 0" Text="//////// Message Blocks" />
 
-        <StackPanel Grid.Row="2" Grid.Column="0">
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
+            <WrapPanel Orientation="Horizontal" MaxWidth="500">
+                <Button Margin="5" Width="100" Click="OnClickSyncMessageBlock" Content="Sync" />
+                <Button Margin="5" Width="100" Click="OnClickAsyncMessageBlock" Content="Async" />
+                <Button Margin="5" Width="100" Click="OnClickMessageBlock" Content="Message" />
+                <Button Margin="5" Width="100" Click="OnClickQuestionMessageBlock" Content="Question" />
+                <Button Margin="5" Width="100" Click="OnClickStopMessageBlock" Content="Stop" />
+                <Button Margin="5" Width="100" Click="OnClickErrorMessageBlock" Content="Error" />
+                <Button Margin="5" Width="100" Click="OnClickWarningMessageBlock" Content="Warning" />
+                <Button Margin="5" Width="100" Click="OnClickInformationMessageBlock" Content="Information" />
+                <Button Margin="5" Width="100" Click="OnClickSuccessMessageBlock" Content="Success" />
+            </WrapPanel>
+        </StackPanel>
+
+<TextBlock Grid.Row="2" Grid.Column="0" FontSize="16" FontWeight="SemiBold" Margin="0 10 0 0" Text="Based on https://github.com/sourcechord/Lighty (MIT licence)" />
+        <TextBlock Grid.Row="3" Grid.Column="0" FontSize="14" FontWeight="SemiBold" Margin="0 10 0 0" Text="//////// DialogItems" />
+
+        <StackPanel Grid.Row="4" Grid.Column="0">
             <StackPanel Orientation="Horizontal" Margin="10">
                 <CheckBox x:Name="CloseOnClickBackgroundCheckBox" Content="CloseOnClickBackground?" IsThreeState="False" IsChecked="True"/>
             </StackPanel>
@@ -183,7 +200,7 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical" >
+        <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Vertical" >
             <TextBlock Text="Advanced Usage" />
             <StackPanel Orientation="Horizontal">
                 <Button Margin="5" Width="100" Click="OnClickShowInGridPopup" Content="Show into Grid" />
@@ -203,23 +220,7 @@
             </StackPanel>
         </StackPanel>
 
-        <Grid Grid.Row="2" Grid.RowSpan="5" Grid.Column="1" x:Name="subGrid" Width="450" Height="400"/>
-
-        <TextBlock Grid.Row="4" Grid.Column="0" FontSize="14" FontWeight="SemiBold" Margin="0 20 0 0" Text="//////// Message Blocks" />
-
-        <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Vertical">
-            <WrapPanel Orientation="Horizontal" MaxWidth="500">
-                <Button Margin="5" Width="100" Click="OnClickSyncMessageBlock" Content="Sync" />
-                <Button Margin="5" Width="100" Click="OnClickAsyncMessageBlock" Content="Async" />
-                <Button Margin="5" Width="100" Click="OnClickMessageBlock" Content="Message" />
-                <Button Margin="5" Width="100" Click="OnClickQuestionMessageBlock" Content="Question" />
-                <Button Margin="5" Width="100" Click="OnClickStopMessageBlock" Content="Stop" />
-                <Button Margin="5" Width="100" Click="OnClickErrorMessageBlock" Content="Error" />
-                <Button Margin="5" Width="100" Click="OnClickWarningMessageBlock" Content="Warning" />
-                <Button Margin="5" Width="100" Click="OnClickInformationMessageBlock" Content="Information" />
-                <Button Margin="5" Width="100" Click="OnClickSuccessMessageBlock" Content="Success" />
-            </WrapPanel>
-        </StackPanel>
-
+        <Grid Grid.Row="1" Grid.RowSpan="5" Grid.Column="1" x:Name="subGrid" Width="450" Height="400"/>
     </Grid>
+    </ScrollViewer>
 </Window>
