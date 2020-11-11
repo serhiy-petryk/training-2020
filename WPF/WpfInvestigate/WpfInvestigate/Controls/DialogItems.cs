@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ===============================================================
+// Based on the https://github.com/sourcechord/Lighty (MIT licence)
+// ===============================================================
+
+using System;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
@@ -40,6 +44,19 @@ namespace WpfInvestigate.Controls
         //=================================================
         #region ==============  Instance  =================
 
+        public EventHandler AllDialogClosed;
+        public EventHandler CompleteInitializeDialogItems;
+
+        public DialogItems()
+        {
+            ((INotifyCollectionChanged)Items).CollectionChanged += (sender, e) =>
+            {
+                if (e.Action == NotifyCollectionChangedAction.Add)
+                    foreach (var item in e.NewItems.OfType<FrameworkElement>())
+                        AddDialogInternal(item);
+            };
+        }
+
         #region ==========  Public methods ===========
         public async void Show(FrameworkElement content, UIElement host = null)
         {
@@ -80,24 +97,8 @@ namespace WpfInvestigate.Controls
 
         private Action<FrameworkElement> _closedDelegate;
 
-        public EventHandler AllDialogClosed;
-        public EventHandler CompleteInitializeDialogItems;
-
-        public DialogItems()
-        {
-            if (CloseOnClickBackground)
-                MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
-            ((INotifyCollectionChanged) Items).CollectionChanged += (sender, e) =>
-            {
-                if (e.Action == NotifyCollectionChangedAction.Add)
-                    foreach (var item in e.NewItems.OfType<FrameworkElement>())
-                        AddDialogInternal(item);
-            };
-        }
-
         protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
         protected override bool IsItemItsOwnContainerOverride(object item) => false;
-
 
         private Panel _itemsHostPanel;
         private Panel ItemsHostPanel
@@ -111,8 +112,6 @@ namespace WpfInvestigate.Controls
                 return _itemsHostPanel;
             }
         }
-
-        private ItemsPresenter ItemsPresenter => ItemsHostPanel?.TemplatedParent as ItemsPresenter;
 
         #region Dialog display related processing
 
@@ -183,16 +182,16 @@ namespace WpfInvestigate.Controls
             return adorner;
         }
 
-        private void AddDialogInternal(FrameworkElement dialog)
+        private void AddDialogInternal(FrameworkElement content)
         {
-            if (dialog == null)
+            if (content == null)
                 return;
 
-            dialog.Loaded += (sender, args) =>
+            content.Loaded += (sender, args) =>
             {
-                var parent = dialog.Parent as FrameworkElement;
+                var parent = content.Parent as FrameworkElement;
                 var animation = OpenStoryboard;
-                var container = ContainerFromElement(dialog) as FrameworkElement;
+                var container = ContainerFromElement(content) as FrameworkElement;
                 container.Focus();
                 container.MouseLeftButtonDown += (s, e) => e.Handled = true;
 
@@ -205,7 +204,7 @@ namespace WpfInvestigate.Controls
                 container.RenderTransformOrigin = new Point(0.5, 0.5);
 
                 // For the added dialog, set the handler for ApplicationCommands.Close command.
-                dialog.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(dialog)));
+                content.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(content)));
 
                 // Set a handler for ApplicationCommands.Close command in ItemsControl.
                 // (ItemsContainer In order to send it a Close command so that it can be closed.)
@@ -215,7 +214,7 @@ namespace WpfInvestigate.Controls
             };
 
             if (ItemsHostPanel != null && ItemsHostPanel.HorizontalAlignment == HorizontalAlignment.Left && ItemsHostPanel.VerticalAlignment == VerticalAlignment.Top)
-                CenterControl(ItemsPresenter, dialog);
+                CenterControl(ItemsHostPanel.TemplatedParent as FrameworkElement, content);
         }
 
         protected async Task<bool> AddDialogAsync(FrameworkElement dialog)
@@ -254,14 +253,6 @@ namespace WpfInvestigate.Controls
             _closedDelegate?.Invoke(dialog);
         }
 
-        private static async void DialogItems_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var dialogItems = (DialogItems)sender;
-            var tasks = dialogItems.Items.Cast<FrameworkElement>().Select(dialogItems.RemoveDialogAsync);
-            await Task.WhenAll(tasks);
-            await dialogItems.DestroyAdornerAsync();
-        }
-
         #endregion
 
         #region Various methods to execute Animation related Storyboard
@@ -270,6 +261,17 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
             await InitializeAdornerAsync();
+        }
+
+        protected override async void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            if (CloseOnClickBackground)
+            {
+                var tasks = Items.Cast<FrameworkElement>().Select(RemoveDialogAsync);
+                await Task.WhenAll(tasks);
+                await DestroyAdornerAsync();
+            }
         }
 
         protected async Task InitializeAdornerAsync()
@@ -284,7 +286,6 @@ namespace WpfInvestigate.Controls
             var ret = await DisposeStoryboard.BeginAsync(this);
             // Issues an event asking you to delete this Adorner.
             AllDialogClosed?.Invoke(this, null);
-            MouseLeftButtonDown -= DialogItems_MouseLeftButtonDown;
             return ret;
         }
 
@@ -361,15 +362,7 @@ namespace WpfInvestigate.Controls
         }
         // Using a DependencyProperty as the backing store for CloseOnClickBackground.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CloseOnClickBackgroundProperty =
-            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogItems), new PropertyMetadata(true, CloseOnClickBackgroundChanged));
-        private static void CloseOnClickBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var dialogItems = (DialogItems)d;
-            dialogItems.MouseLeftButtonDown -= DialogItems_MouseLeftButtonDown;
-            // Added a process to delete Adorner by clicking the background
-            if (Equals(e.NewValue, true))
-                dialogItems.MouseLeftButtonDown += DialogItems_MouseLeftButtonDown;
-        }
+            DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogItems), new PropertyMetadata(true));
         #endregion
 
         #endregion
