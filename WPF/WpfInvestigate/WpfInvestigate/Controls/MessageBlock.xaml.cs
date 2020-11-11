@@ -23,15 +23,11 @@ namespace WpfInvestigate.Controls
 
         private static readonly string[] _iconColors = {"Primary", "Danger", "Danger", "Warning", "Info", "Success"};
 
-        public static string Show(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
+        public static string ShowDialog(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
         {
-            // var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
             var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
             var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
-
-            // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            // DialogItems.ShowDialog(null, content);
             var dialogItems = new DialogItems();
             dialogItems.ShowDialog(content);
 
@@ -40,27 +36,19 @@ namespace WpfInvestigate.Controls
 
         public static async Task<string> ShowAsync(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
         {
-            // var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
             var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
             var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
-
-            // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            // await DialogItems.ShowAsync(null, content);
             var dialogItems = new DialogItems();
             await dialogItems.ShowAsync(content);
             return content.Result;
         }
 
-        public static string Show2(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
+        public static string Show(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
         {
-            // var style = Application.Current.TryFindResource("MovableDialogStyle") as Style;
             var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
             var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
-
-            // var content = new MessageBlock(null, messageText, caption, iconGeometry, iconColor, buttons);
             var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            // DialogItems.Show(null, content);
             var dialogItems = new DialogItems();
             dialogItems.Show(content);
             return content.Result;

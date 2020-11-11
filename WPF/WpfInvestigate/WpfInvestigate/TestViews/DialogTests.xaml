@@ -167,11 +167,11 @@
             <WrapPanel Orientation="Horizontal" MaxWidth="500">
                 <Button Margin="5" Width="100" Click="OnClickSyncMessageBlock" Content="Sync" />
                 <Button Margin="5" Width="100" Click="OnClickAsyncMessageBlock" Content="Async" />
-                <Button Margin="5" Width="100" Click="OnClickMessageBlock" Content="Message" />
+                <Button Margin="5" Width="100" Click="OnClickDialogMessageBlock" Content="Dialog" />
                 <Button Margin="5" Width="100" Click="OnClickQuestionMessageBlock" Content="Question" />
                 <Button Margin="5" Width="100" Click="OnClickStopMessageBlock" Content="Stop" />
                 <Button Margin="5" Width="100" Click="OnClickErrorMessageBlock" Content="Error" />
-                <Button Margin="5" Width="100" Click="OnClickWarningMessageBlock" Content="Warning" />
+                <Button Margin="5" Width="100" Click="OnClickWarningMessageBlock" Content="Warning (async)" />
                 <Button Margin="5" Width="100" Click="OnClickInformationMessageBlock" Content="Information" />
                 <Button Margin="5" Width="100" Click="OnClickSuccessMessageBlock" Content="Success" />
             </WrapPanel>

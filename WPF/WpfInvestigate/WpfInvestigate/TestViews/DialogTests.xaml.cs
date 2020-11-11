@@ -144,7 +144,7 @@ namespace WpfInvestigate.TestViews
 
         private void OnClickSyncMessageBlock(object sender, RoutedEventArgs e)
         {
-            var a1 = MessageBlock.Show2("Message text Message text Message text Message text Message text Message text ",
+            var a1 = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
                 "Show Sync", null, new[] { "OK", "Cancel", "Right", "Left" });
         }
         private async void OnClickAsyncMessageBlock(object sender, RoutedEventArgs e)
@@ -152,24 +152,24 @@ namespace WpfInvestigate.TestViews
             var a1 = await MessageBlock.ShowAsync("Message text Message text Message text Message text Message text Message text ",
                 "Show Async", null, new[] { "OK", "Cancel", "Right", "Left" });
         }
-        private void OnClickMessageBlock(object sender, RoutedEventArgs e)
+        private void OnClickDialogMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
-                "Caption of Message block", null, new[] { "OK", "Cancel", "Right", "Left" });
+            var aa = MessageBlock.ShowDialog("Message text Message text Message text Message text Message text Message text ",
+                "Show Dialog", null, new[] { "OK", "Cancel", "Right", "Left" });
         }
         private void OnClickQuestionMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+            var aa = MessageBlock.ShowDialog("Message text Message text Message text Message text Message text Message text ",
                 "Caption of Message block", MessageBlock.MessageBlockIcon.Question);
         }
         private void OnClickStopMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+            var aa = MessageBlock.ShowDialog("Message text Message text Message text Message text Message text Message text ",
                 "Caption of Message block", MessageBlock.MessageBlockIcon.Stop);
         }
         private void OnClickErrorMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+            var aa = MessageBlock.ShowDialog("Message text Message text Message text Message text Message text Message text ",
                 "Caption of Message block", MessageBlock.MessageBlockIcon.Error);
         }
         private async void OnClickWarningMessageBlock(object sender, RoutedEventArgs e)
@@ -180,14 +180,14 @@ namespace WpfInvestigate.TestViews
         }
         private void OnClickInformationMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+            var aa = MessageBlock.ShowDialog("Message text Message text Message text Message text Message text Message text ",
                 "Caption of Message block", MessageBlock.MessageBlockIcon.Info, new[] { "OK" });
         }
         private void OnClickSuccessMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = MessageBlock.Show("Message (Show) ",
+            var aa = MessageBlock.ShowDialog("Message (Show) ",
                 "Caption of Message block", MessageBlock.MessageBlockIcon.Success, new []{"OK", "Cancel"});
-            MessageBlock.Show($"You pressed '{aa ?? "X" }' button", null, MessageBlock.MessageBlockIcon.Info, new[] { "OK" });
+            MessageBlock.ShowDialog($"You pressed '{aa ?? "X" }' button", null, MessageBlock.MessageBlockIcon.Info, new[] { "OK" });
         }
 
         private void OnClickSyncTest(object sender, RoutedEventArgs e)

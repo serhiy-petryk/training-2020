@@ -39,9 +39,4 @@
         </Setter>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
     </Style>
-
-    <Style x:Key="MovableDialogStyle" TargetType="{x:Type controls:DialogItems}">
-        <Setter Property="ItemContainerStyle" Value="{x:Null}" />
-    </Style>
-
 </ResourceDictionary>
