@@ -104,7 +104,6 @@
                 <Button x:Name="ObsoleteDualPathToggleButtonEffectTest" Width="200" Margin="0 5" Content="Obsolete: DualPathToggleButtonEffect" Click="ObsoleteDualPathToggleButtonEffectTest_OnClick"/>
                 <Button x:Name="ObsoleteFlatButtonTest" Width="200" Margin="0 5" Content="Obsolete: FlatButton" Click="ObsoleteFlatButtonTest_OnClick"/>
             </StackPanel>
-
         </Grid>
     </Grid>
 </Window>
