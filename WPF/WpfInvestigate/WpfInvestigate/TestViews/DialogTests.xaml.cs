@@ -99,11 +99,8 @@ namespace WpfInvestigate.TestViews
             dialogItems.Items.Add(new SampleDialog());
         }
 
-        private async void xxXOnClickShowMultiplePopup(object sender, RoutedEventArgs e)
+        private async void OnClickAddDialogMethodPopup(object sender, RoutedEventArgs e)
         {
-            // var style = Resources["MultipleDialogStyle"] as Style;
-
-            // DialogItems.Show(this, new SampleDialog(), style);
             var dialogs = new DialogItems { Style = Resources["MultipleDialogStyle"] as Style };
             dialogs.Show(null, this);
 

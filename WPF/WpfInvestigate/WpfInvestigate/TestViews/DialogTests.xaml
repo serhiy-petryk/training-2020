@@ -193,6 +193,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button Margin="5" Width="100" Click="OnClickShowInGridPopup" Content="Show into Grid" />
                 <Button Margin="5" Click="OnClickShowMultiplePopup" Content="Show multiple dialogs" />
+                <Button Margin="5" Click="OnClickAddDialogMethodPopup" Content="Add dialog method" />
             </StackPanel>
             <TextBlock Text="Builtin Styles" />
             <StackPanel Orientation="Horizontal">
