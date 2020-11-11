@@ -20,7 +20,9 @@ namespace WpfInvestigate.Controls
             None = 0,
             Close = 1,
             Calculator = 2,
-            UpDown = 4,
+            LeftDown = 4,
+            RightDown = 8,
+            Up = 16
         }
 
         private int _numberOfIntervals = 0;
@@ -49,7 +51,9 @@ namespace WpfInvestigate.Controls
         public readonly CultureInfo Culture;
         public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;
         public bool IsCalculatorButtonVisible => (VisibleButtons & Buttons.Calculator) == Buttons.Calculator;
-        public bool IsUpDownButtonsVisible => (VisibleButtons & Buttons.UpDown) == Buttons.UpDown;
+        public bool IsDownButtonsVisible => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown || (VisibleButtons & Buttons.RightDown) == Buttons.RightDown;
+        public bool IsUpButtonsVisible => (VisibleButtons & Buttons.Up) == Buttons.Up;
+        public int DownButtonColumn => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown ? 0 : 3;
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
         private static readonly Regex RegexStringFormatNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
@@ -434,7 +438,7 @@ namespace WpfInvestigate.Controls
 
         private static void OnVisibleButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((NumericBox)d).OnPropertiesChanged(new[] { nameof(IsCloseButtonVisible), nameof(IsCalculatorButtonVisible), nameof(IsUpDownButtonsVisible) });
+            ((NumericBox)d).OnPropertiesChanged(new[] { nameof(IsCloseButtonVisible), nameof(IsCalculatorButtonVisible), nameof(IsUpButtonsVisible), nameof(IsDownButtonsVisible), nameof(DownButtonColumn) });
         }
 
         // ================================================
