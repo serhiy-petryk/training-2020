@@ -40,7 +40,7 @@
                 <CheckBox x:Name="cbEnabled2" Margin="0 0 5 0" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
 
                 <controls:NumericBox Margin="5 0" Width="70" effects:WatermarkEffect.Watermark="No value" Background="Yellow" Foreground="Blue"
-                                     Height="30" VisibleButtons="LeftDown,Up" IsNullable="True" Value="0" FontWeight="SemiBold" FontSize="13"
+                                     Height="24" VisibleButtons="LeftDown,Up" IsNullable="True" Value="0" FontWeight="SemiBold" FontSize="13"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
                                      effects:CornerRadiusEffect.CornerRadius="2"
                                      BorderThickness="1" BorderBrush="Gray" HorizontalContentAlignment="Center"/>

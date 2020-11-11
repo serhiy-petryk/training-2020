@@ -30,7 +30,7 @@
             <Setter Property="IsTabStop" Value="True" />
             <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource UserInputControlChromeMatrix}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -41,35 +41,31 @@
                             <Grid Background="{TemplateBinding Background}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Border Grid.Column="1" BorderThickness="1" Padding="0" Margin="{TemplateBinding Padding}">
-                                    <TextBox x:Name="PART_TextBox" BorderThickness="0" Margin="0" Padding="0"
-                                                 VerticalAlignment="Center"
-                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                 Background="Transparent" Foreground="{TemplateBinding Foreground}"
-                                                 IsTabStop="{TemplateBinding IsTabStop}"
-                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                 TabIndex="{TemplateBinding TabIndex}"/>
-                                    <Border.Style>
-                                        <Style TargetType="Border">
-                                            <Setter Property="BorderBrush" Value="Transparent"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="BorderBrush" Value="{StaticResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
-                                </Border>
+                                <Rectangle Grid.Column="1" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}" Fill="{TemplateBinding BorderBrush}"
+                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TextBoxLeftBorderVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
-                                <ToggleButton Grid.Column="2" x:Name="PART_ToggleButton" IsTabStop="False" Focusable="False"
+                                <TextBox Grid.Column="2" x:Name="PART_TextBox" BorderThickness="0" Margin="{TemplateBinding Padding}" Padding="0"
+                                         VerticalAlignment="Center"
+                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                         Background="Transparent" Foreground="{TemplateBinding Foreground}"
+                                         IsTabStop="{TemplateBinding IsTabStop}"
+                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                         TabIndex="{TemplateBinding TabIndex}"/>
+
+                                <Rectangle Grid.Column="3" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}" Fill="{TemplateBinding BorderBrush}"
+                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TextBoxRightBorderVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+
+                                <ToggleButton Grid.Column="4" x:Name="PART_ToggleButton" IsTabStop="False" Focusable="False"
                                               effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                               effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                               Padding="1" IsThreeState="False" Width="{StaticResource ButtonsWidth}"
@@ -85,7 +81,7 @@
                                               BorderThickness="0"
                                               Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDownButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                               effects:IconEffect.Geometry="{StaticResource MinusGeometry}"/>
-                                <RepeatButton Grid.Column="4" x:Name="PART_UpButton" IsTabStop="False" Focusable="False"
+                                <RepeatButton Grid.Column="6" x:Name="PART_UpButton" IsTabStop="False" Focusable="False"
                                               effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                               effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                               Width="{StaticResource ButtonsWidth}" Delay="500" Interval="30" Padding="1"
@@ -93,7 +89,7 @@
                                               Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsUpButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                               effects:IconEffect.Geometry="{StaticResource PlusGeometry}"/>
 
-                                <Button Grid.Column="5" x:Name="PART_ClearButton" IsTabStop="False" Focusable="False"
+                                <Button Grid.Column="7" x:Name="PART_ClearButton" IsTabStop="False" Focusable="False"
                                         Width="{StaticResource ButtonsWidth}" Padding="1.5"
                                         BorderThickness="0"
                                         Style="{StaticResource ClearBichromeAnimatedButtonStyle}"
