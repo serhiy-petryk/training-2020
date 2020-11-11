@@ -25,25 +25,6 @@ namespace WpfInvestigate.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogItems), new FrameworkPropertyMetadata(typeof(DialogItems)));
         }
 
-        private static void CenterControl(FrameworkElement host, FrameworkElement childControl)
-        {
-            if (!childControl.IsLoaded)
-            {
-                childControl.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => CenterControl(host, childControl)));
-                return;
-            }
-
-            host.Margin = new Thickness
-            {
-                Left = Math.Max(0, (host.ActualWidth - childControl.ActualWidth) / 2),
-                Top = Math.Max(0, (host.ActualHeight - childControl.ActualHeight) / 2)
-            };
-        }
-
-        //=================================================
-        //=================================================
-        #region ==============  Instance  =================
-
         public EventHandler AllDialogClosed;
         public EventHandler CompleteInitializeDialogItems;
 
@@ -184,11 +165,18 @@ namespace WpfInvestigate.Controls
 
         private void AddDialogInternal(FrameworkElement content)
         {
-            if (content == null)
-                return;
-
             content.Loaded += (sender, args) =>
             {
+                if (ItemsHostPanel.HorizontalAlignment == HorizontalAlignment.Left && ItemsHostPanel.VerticalAlignment == VerticalAlignment.Top)
+                { // center the dialog content
+                    var panel = ItemsHostPanel.TemplatedParent as FrameworkElement;
+                    panel.Margin = new Thickness
+                    {
+                        Left = Math.Max(0, (panel.ActualWidth - content.ActualWidth) / 2),
+                        Top = Math.Max(0, (panel.ActualHeight - content.ActualHeight) / 2)
+                    };
+                }
+
                 var parent = content.Parent as FrameworkElement;
                 var animation = OpenStoryboard;
                 var container = ContainerFromElement(content) as FrameworkElement;
@@ -212,9 +200,6 @@ namespace WpfInvestigate.Controls
 
                 animation?.BeginAsync(container);
             };
-
-            if (ItemsHostPanel != null && ItemsHostPanel.HorizontalAlignment == HorizontalAlignment.Left && ItemsHostPanel.VerticalAlignment == VerticalAlignment.Top)
-                CenterControl(ItemsHostPanel.TemplatedParent as FrameworkElement, content);
         }
 
         protected async Task<bool> AddDialogAsync(FrameworkElement dialog)
@@ -363,8 +348,6 @@ namespace WpfInvestigate.Controls
         // Using a DependencyProperty as the backing store for CloseOnClickBackground.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CloseOnClickBackgroundProperty =
             DependencyProperty.Register("CloseOnClickBackground", typeof(bool), typeof(DialogItems), new PropertyMetadata(true));
-        #endregion
-
         #endregion
     }
 }
