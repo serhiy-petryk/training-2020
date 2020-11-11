@@ -23,7 +23,6 @@ namespace WpfInvestigate.TestViews
             DataContext = this;
         }
 
-        // private Style MovableDialogStyle => TryFindResource("MovableDialogStyle") as Style;
         private Style WithMarginStyle => TryFindResource("WithMarginStyle") as Style;
 
         private void ClearSubGrid()
@@ -34,41 +33,37 @@ namespace WpfInvestigate.TestViews
                     layer.Remove(toRemove);
         }
 
+
         private void OnClickShowButtonPopup(object sender, RoutedEventArgs e)
         {
-            // DialogItems.Show(null, new SampleDialog());
-            var dialogItems = new DialogItems();
+            var dialogItems = new DialogItems{CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value};
             dialogItems.Show(new SampleDialog());
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowDialogButtonPopup(object sender, RoutedEventArgs e)
         {
-            // DialogItems.ShowDialog(null, new SampleDialog());
-            var dialogItems = new DialogItems();
+            var dialogItems = new DialogItems { CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             dialogItems.ShowDialog(new SampleDialog());
             MessageBox.Show("dialog item already shown");
         }
 
         private async void OnClickShowAsyncButtonPopup(object sender, RoutedEventArgs e)
         {
-            // await DialogItems.ShowAsync(null, new SampleDialog());
-            var dialogItems = new DialogItems();
+            var dialogItems = new DialogItems { CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             await dialogItems.ShowAsync(new SampleDialog());
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowUserControlPopup(object sender, RoutedEventArgs e)
         {
-            // DialogItems.Show(this, new SampleDialog());
-            var dialogItems = new DialogItems();
+            var dialogItems = new DialogItems { CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             dialogItems.Show(new SampleDialog(), this);
         }
         private void OnClickShowImagePopup(object sender, RoutedEventArgs e)
         {
             var image = new Image {Source = _testImage};
-            // DialogItems.Show(this, image, WithMarginStyle);
-            var dialogItems = new DialogItems{Style = WithMarginStyle};
+            var dialogItems = new DialogItems{Style = WithMarginStyle, CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             dialogItems.Show(image, this);
         }
 
@@ -76,58 +71,48 @@ namespace WpfInvestigate.TestViews
         {
             ClearSubGrid();
             var image = new Image {Source = _testImage};
-            // DialogItems.Show(this.subGrid, image, WithMarginStyle);
-            var dialogItems = new DialogItems { Style = WithMarginStyle };
+            var dialogItems = new DialogItems { Style = WithMarginStyle, CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             dialogItems.Show(image, subGrid);
         }
 
         #region 別ウィンドウで開くサンプルなど
         private async void OnClickShowMultiplePopup(object sender, RoutedEventArgs e)
         {
-            // var style = Resources["MultipleDialogStyle"] as Style;
-
-            // DialogItems.Show(this, new SampleDialog(), style);
-            var dialogItems = new DialogItems { Style = Resources["MultipleDialogStyle"] as Style };
+            var dialogItems = new DialogItems { Style = Resources["MultipleDialogStyle"] as Style, CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             dialogItems.Show(new SampleDialog(), this);
 
             await Task.Delay(500);
-            // DialogItems.Show(this, new SampleDialog(), style);
             dialogItems.Items.Add(new SampleDialog());
 
             await Task.Delay(500);
-            // DialogItems.Show(this, new SampleDialog(), style);
             dialogItems.Items.Add(new SampleDialog());
         }
 
         private async void OnClickAddDialogMethodPopup(object sender, RoutedEventArgs e)
         {
-            var dialogs = new DialogItems { Style = Resources["MultipleDialogStyle"] as Style };
+            var dialogs = new DialogItems { Style = Resources["MultipleDialogStyle"] as Style, CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             dialogs.Show(null, this);
 
             dialogs.AddDialog(new SampleDialog());
-            await Task.Delay(1000);
+            await Task.Delay(500);
 
             dialogs.AddDialog(new SampleDialog());
-            await Task.Delay(1000);
+            await Task.Delay(500);
 
             dialogs.AddDialog(new SampleDialog());
         }
 
         private void ShowBuiltinStyleWindowPopup(object sender, RoutedEventArgs e)
         {
-            // var style = Resources["DialogBultinStyle"] as Style;
             var image = new Image {Source = _testImage};
-            // DialogItems.Show(this, image, style);
-            var dialogItems = new DialogItems { Style = Resources["DialogBultinStyle"] as Style };
+            var dialogItems = new DialogItems { Style = Resources["DialogBultinStyle"] as Style, CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             dialogItems.Show(image, this);
         }
 
         private void ShowCustomStyleWindowPopup(object sender, RoutedEventArgs e)
         {
-            // var style = Resources["DialogCustomStyle"] as Style;
             var image = new Image {Source = _testImage};
-            // DialogItems.Show(this, image, style);
-            var dialogItems = new DialogItems { Style = Resources["DialogCustomStyle"] as Style };
+            var dialogItems = new DialogItems { Style = Resources["DialogCustomStyle"] as Style, CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             dialogItems.Show(image, this);
         }
 
@@ -135,8 +120,7 @@ namespace WpfInvestigate.TestViews
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            // DialogItems.Show(subGrid, content);
-            var dialogItems = new DialogItems();
+            var dialogItems = new DialogItems{ CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             dialogItems.Show(content, subGrid);
             MessageBox.Show("dialog item already shown");
         }
@@ -144,8 +128,7 @@ namespace WpfInvestigate.TestViews
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            // DialogItems.ShowDialog(subGrid, content);
-            var dialogItems = new DialogItems();
+            var dialogItems = new DialogItems{ CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             dialogItems.ShowDialog(content, subGrid);
             MessageBox.Show("dialog item already shown");
         }
@@ -153,122 +136,7 @@ namespace WpfInvestigate.TestViews
         {
             ClearSubGrid();
             var content = new SampleDialogMovable();
-            // await DialogItems.ShowAsync(subGrid, content);
-            var dialogItems = new DialogItems();
-            await dialogItems.ShowAsync(content, subGrid);
-            MessageBox.Show("dialog item already shown");
-        }
-        #endregion
-
-        // ================================================
-        private Action<DialogItems> _closeOnClickBackgroundCallback = items => items.CloseOnClickBackground = false;
-        private void OnClickShowButton(object sender, RoutedEventArgs e)
-        {
-            // DialogItems.Show(this, new SampleDialog(), null, _closeOnClickBackgroundCallback);
-            var dialogItems = new DialogItems{CloseOnClickBackground = false};
-            dialogItems.Show(new SampleDialog());
-            MessageBox.Show("dialog item already shown");
-        }
-
-        private void OnClickShowDialogButton(object sender, RoutedEventArgs e)
-        {
-            //DialogItems.ShowDialog(this, new SampleDialog(), null, _closeOnClickBackgroundCallback);
-            var dialogItems = new DialogItems {CloseOnClickBackground = false};
-            dialogItems.ShowDialog(new SampleDialog());
-            MessageBox.Show("dialog item already shown");
-        }
-
-        private async void OnClickShowAsyncButton(object sender, RoutedEventArgs e)
-        {
-            //await DialogItems.ShowAsync(this, new SampleDialog(), null, _closeOnClickBackgroundCallback);
-            var dialogItems = new DialogItems {CloseOnClickBackground = false};
-            await dialogItems.ShowAsync(new SampleDialog());
-            MessageBox.Show("dialog item already shown");
-        }
-
-        private void OnClickShowUserControl(object sender, RoutedEventArgs e)
-        {
-            // DialogItems.Show(this, new SampleDialog(), null, _closeOnClickBackgroundCallback);
-            var dialogItems = new DialogItems {CloseOnClickBackground = false};
-            dialogItems.Show(new SampleDialog(), this);
-
-        }
-        private void OnClickShowImage(object sender, RoutedEventArgs e)
-        {
-            var image = new Image {Source = _testImage};
-            image.PreviewMouseLeftButtonDown += (o, args) => ApplicationCommands.Close.Execute(null, image);
-            // DialogItems.Show(this, image, WithMarginStyle, _closeOnClickBackgroundCallback);
-            var dialogItems = new DialogItems { Style = WithMarginStyle, CloseOnClickBackground = false};
-            dialogItems.Show(image, this);
-        }
-
-        private void OnClickShowInGrid(object sender, RoutedEventArgs e)
-        {
-            ClearSubGrid();
-            var image = new Image {Source = _testImage};
-            // DialogItems.Show(this.subGrid, image, WithMarginStyle, _closeOnClickBackgroundCallback);
-            var dialogItems = new DialogItems { Style = WithMarginStyle, CloseOnClickBackground = false};
-            dialogItems.Show(image, subGrid);
-        }
-
-        #region 別ウィンドウで開くサンプルなど
-        private async void OnClickShowMultiple(object sender, RoutedEventArgs e)
-        {
-            var style = Resources["MultipleDialogStyle"] as Style;
-            // DialogItems.Show(this, new SampleDialog(), style, items => items.CloseOnClickBackground = false);
-            var dialogItems = new DialogItems { Style = Resources["MultipleDialogStyle"] as Style, CloseOnClickBackground = false};
-            dialogItems.Show(new SampleDialog(), this);
-
-            await Task.Delay(500);
-            // DialogItems.Show(this, new SampleDialog(), style);
-            dialogItems.Items.Add(new SampleDialog());
-
-            await Task.Delay(500);
-            //DialogItems.Show(this, new SampleDialog(), style);
-            dialogItems.Items.Add(new SampleDialog());
-        }
-
-        private void ShowBuiltinStyleWindow(object sender, RoutedEventArgs e)
-        {
-            var style = Resources["DialogBultinStyle"] as Style;
-            var image = new Image {Source = _testImage};
-            // DialogItems.Show(this, image, style, items => items.CloseOnClickBackground = false);
-            var dialogItems = new DialogItems { Style = Resources["DialogBultinStyle"] as Style, CloseOnClickBackground = false};
-            dialogItems.Show(image, this);
-        }
-
-        private void ShowCustomStyleWindow(object sender, RoutedEventArgs e)
-        {
-            // var style = Resources["DialogCustomStyle"] as Style;
-            var image = new Image {Source = _testImage};
-            // DialogItems.Show(this, image, style, items => items.CloseOnClickBackground = false);
-            var dialogItems = new DialogItems { Style = Resources["DialogCustomStyle"] as Style, CloseOnClickBackground = false};
-            dialogItems.Show(image, this);
-        }
-        private void OnClickShowButtonMovable(object sender, RoutedEventArgs e)
-        {
-            ClearSubGrid();
-            var content = new SampleDialogMovable();
-            // DialogItems.Show(subGrid, content, null);
-            var dialogItems = new DialogItems {CloseOnClickBackground = false};
-            dialogItems.Show(content, subGrid);
-            MessageBox.Show("dialog item already shown");
-        }
-        private void OnClickShowDialogMovableButton(object sender, RoutedEventArgs e)
-        {
-            ClearSubGrid();
-            var content = new SampleDialogMovable();
-            // DialogItems.ShowDialog(subGrid, content);
-            var dialogItems = new DialogItems { CloseOnClickBackground = false };
-            dialogItems.ShowDialog(content, subGrid);
-            MessageBox.Show("dialog item already shown");
-        }
-        private async void OnClickShowAsyncMovableButton(object sender, RoutedEventArgs e)
-        {
-            ClearSubGrid();
-            var content = new SampleDialogMovable();
-            // await DialogItems.ShowAsync(subGrid, content);
-            var dialogItems = new DialogItems { CloseOnClickBackground = false };
+            var dialogItems = new DialogItems{ CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             await dialogItems.ShowAsync(content, subGrid);
             MessageBox.Show("dialog item already shown");
         }

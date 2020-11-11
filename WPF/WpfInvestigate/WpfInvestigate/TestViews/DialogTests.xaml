@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-        Title="MainWindow" Width="1300" Height="750" mc:Ignorable="d">
+        Title="MainWindow" Width="1000" Height="600" mc:Ignorable="d">
 
     <Window.Resources>
         <ItemsPanelTemplate x:Key="HorizontalPanel">
@@ -160,17 +160,14 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="SemiBold" Margin="0 10 0 0" Text="Taken from https://github.com/sourcechord/Lighty (MIT licence)" />
-        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="14" FontWeight="SemiBold" Margin="0 10 0 0" Text="//////// DialogItems: closeOnClickBackground = true" />
+        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="SemiBold" Margin="0 10 0 0" Text="Based on https://github.com/sourcechord/Lighty (MIT licence)" />
+        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="14" FontWeight="SemiBold" Margin="0 10 0 0" Text="//////// DialogItems" />
 
         <!--<Button Grid.Row="2" Margin="5" Width="100" Click="OnClickShowDialogMovableButtonPopup" Content="ShowDialog" />-->
 
         <StackPanel Grid.Row="2" Grid.Column="0">
-            <StackPanel Orientation="Horizontal">
-                <Button Margin="5" Width="100" Click="OnClickSyncTest" Content="Sync Test" />
-                <Button Margin="5" Width="100" Click="OnClickDialogTest" Content="Dialog Test" />
-                <Button Margin="5" Width="100" Click="OnClickAsyncTest" Content="Async Test" />
-                <Button Margin="5" Click="XOnClickShowMultiplePopup" Content="Show multiple dialogs" />
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <CheckBox x:Name="CloseOnClickBackgroundCheckBox" Content="CloseOnClickBackground?" IsThreeState="False" IsChecked="True"/>
             </StackPanel>
 
             <TextBlock Text="Basic Usage" />
@@ -208,47 +205,12 @@
             </StackPanel>
         </StackPanel>
 
-        <TextBlock Grid.Row="4" Grid.Column="0" FontSize="14" FontWeight="SemiBold" Margin="0 20 0 0" Text="//////// DialogBlock: closeOnClickBackground = false (default)"/>
-        <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Vertical">
-            <TextBlock Text="Basic Usage" />
-            <TextBlock Text="How to show DialogItems" />
-            <StackPanel Orientation="Horizontal">
-                <Button Margin="5" Width="100" Click="OnClickShowButton" Content="Show" />
-                <Button Margin="5" Width="100" Click="OnClickShowDialogButton" Content="ShowDialog" />
-                <Button Margin="5" Width="100" Click="OnClickShowAsyncButton" Content="ShowAsync" />
-            </StackPanel>
-
-            <TextBlock Text="Show FrameworkElement/UserControl" />
-            <StackPanel Orientation="Horizontal">
-                <Button Margin="5" Width="100" Click="OnClickShowUserControl" Content="Show UserControl" />
-                <Button Margin="5" Width="100" Click="OnClickShowImage" Content="Show Image" />
-            </StackPanel>
-        </StackPanel>
-
-        <StackPanel Grid.Row="6" Grid.Column="0" Orientation="Vertical">
-            <TextBlock Text="Advanced Usage" />
-            <StackPanel Orientation="Horizontal">
-                <Button Margin="5" Width="100" Click="OnClickShowInGrid" Content="Show into Grid" />
-                <Button Margin="5" Click="OnClickShowMultiple" Content="Show multiple dialogs" />
-            </StackPanel>
-            <TextBlock Text="Builtin Styles" />
-            <StackPanel Orientation="Horizontal">
-                <Button Margin="5" Width="100" Click="ShowBuiltinStyleWindow" Content="Builtin Style" />
-                <Button Margin="5" Width="100" Click="ShowCustomStyleWindow" Content="Custom Style" />
-            </StackPanel>
-            <TextBlock Text="Movable Styles" />
-            <StackPanel Orientation="Horizontal">
-                <Button Margin="5" Width="100" Click="OnClickShowButtonMovable" Content="Show" />
-                <Button Margin="5" Width="100" Click="OnClickShowDialogMovableButton" Content="ShowDialog" />
-                <Button Margin="5" Width="100" Click="OnClickShowAsyncMovableButton" Content="ShowAsync" />
-            </StackPanel>
-        </StackPanel>
-
         <Grid Grid.Row="2" Grid.RowSpan="5" Grid.Column="1" x:Name="subGrid" Width="450" Height="400"/>
 
-        <StackPanel Grid.Row="7" Grid.Column="0" Orientation="Vertical">
-            <TextBlock Text="Message blocks" />
-            <StackPanel Orientation="Horizontal">
+        <TextBlock Grid.Row="4" Grid.Column="0" FontSize="14" FontWeight="SemiBold" Margin="0 20 0 0" Text="//////// Message Blocks" />
+
+        <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Vertical">
+            <WrapPanel Orientation="Horizontal" MaxWidth="500">
                 <Button Margin="5" Width="100" Click="OnClickSyncMessageBlock" Content="Sync" />
                 <Button Margin="5" Width="100" Click="OnClickAsyncMessageBlock" Content="Async" />
                 <Button Margin="5" Width="100" Click="OnClickMessageBlock" Content="Message" />
@@ -258,7 +220,7 @@
                 <Button Margin="5" Width="100" Click="OnClickWarningMessageBlock" Content="Warning" />
                 <Button Margin="5" Width="100" Click="OnClickInformationMessageBlock" Content="Information" />
                 <Button Margin="5" Width="100" Click="OnClickSuccessMessageBlock" Content="Success" />
-            </StackPanel>
+            </WrapPanel>
         </StackPanel>
 
     </Grid>
