@@ -15,7 +15,7 @@
         <Geometry x:Key="PlusGeometry">F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z</Geometry>
         <Geometry x:Key="MinusGeometry">F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z</Geometry>
 
-        <system:Double x:Key="ButtonsWidth">16</system:Double>
+        <system:Double x:Key="ButtonsWidth">14</system:Double>
 
         <Style TargetType="local:NumericBox">
             <Setter Property="BorderBrush" Value="Black"/>
@@ -90,7 +90,7 @@
                                               effects:IconEffect.Geometry="{StaticResource PlusGeometry}"/>
 
                                 <Button Grid.Column="7" x:Name="PART_ClearButton" IsTabStop="False" Focusable="False"
-                                        Width="{StaticResource ButtonsWidth}" Padding="1.5"
+                                        Width="{StaticResource ButtonsWidth}" Padding="1"
                                         BorderThickness="0"
                                         Style="{StaticResource ClearBichromeAnimatedButtonStyle}"
                                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
