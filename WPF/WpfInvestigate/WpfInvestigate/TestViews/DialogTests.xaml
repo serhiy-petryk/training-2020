@@ -163,8 +163,6 @@
         <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="SemiBold" Margin="0 10 0 0" Text="Based on https://github.com/sourcechord/Lighty (MIT licence)" />
         <TextBlock Grid.Row="1" Grid.Column="0" FontSize="14" FontWeight="SemiBold" Margin="0 10 0 0" Text="//////// DialogItems" />
 
-        <!--<Button Grid.Row="2" Margin="5" Width="100" Click="OnClickShowDialogMovableButtonPopup" Content="ShowDialog" />-->
-
         <StackPanel Grid.Row="2" Grid.Column="0">
             <StackPanel Orientation="Horizontal" Margin="10">
                 <CheckBox x:Name="CloseOnClickBackgroundCheckBox" Content="CloseOnClickBackground?" IsThreeState="False" IsChecked="True"/>
