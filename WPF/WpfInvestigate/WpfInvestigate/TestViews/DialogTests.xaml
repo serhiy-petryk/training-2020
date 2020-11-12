@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-        Title="MainWindow" Width="1000" Height="600" mc:Ignorable="d">
+        Title="MainWindow" Width="1000" Height="600" Background="Gainsboro">
 
     <Window.Resources>
         <ItemsPanelTemplate x:Key="HorizontalPanel">
@@ -144,7 +144,7 @@
         </Style>
     </Window.Resources>
 
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="20" Background="Yellow">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="20" Background="White">
         <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
