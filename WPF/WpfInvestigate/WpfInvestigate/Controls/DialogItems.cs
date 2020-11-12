@@ -126,11 +126,10 @@ namespace WpfInvestigate.Controls
         private AdornerControl CreateAdornerCore(UIElement host)
         {
             // If it is a Window class, use the Content property.
-            var win = host as Window;
-            var target = win?.Content as UIElement ?? host;
-
+            var target = (host as Window)?.Content as UIElement ?? host;
             if (target == null)
                 return null;
+
             var layer = AdornerLayer.GetAdornerLayer(target);
             if (layer == null)
                 return null;
@@ -138,15 +137,6 @@ namespace WpfInvestigate.Controls
             // Since there is no Adorner for the dialog, create a new one and set and return it.
             var adorner = new AdornerControl(target);
             adorner.Child = this;
-
-            // If Adorner is set for Window, set margin to cancel Margin of Content element.
-            if (win != null)
-            {
-                var content = win.Content as FrameworkElement;
-                var margin = content.Margin;
-                // adorner.Margin = new Thickness(-margin.Left, -margin.Top, margin.Right, margin.Bottom);
-                // adorner.UseAdornedElementSize = false;
-            }
 
             // If the target is Enable when the dialog is displayed, disable it only while the dialog is displayed.
             if (target.IsEnabled)
