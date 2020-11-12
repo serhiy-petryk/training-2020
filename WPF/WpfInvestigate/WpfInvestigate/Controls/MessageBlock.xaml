@@ -32,7 +32,6 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:MessageBlock">
                         <Grid>
-                            <Grid Effect="{StaticResource ShadowEffect}"/>
                             <Border BorderThickness="2" CornerRadius="1" Padding="0"
                                     BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
                                 <Border BorderThickness="5 2 5 5"
