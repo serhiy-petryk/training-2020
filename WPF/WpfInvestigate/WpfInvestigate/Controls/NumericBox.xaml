@@ -51,7 +51,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Rectangle Grid.Column="1" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}" Fill="{TemplateBinding BorderBrush}"
-                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TextBoxLeftBorderVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsTextBoxLeftBorderVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
                                 <TextBox Grid.Column="2" x:Name="PART_TextBox" BorderThickness="0" Margin="{TemplateBinding Padding}" Padding="0"
                                          VerticalAlignment="Center"
@@ -63,7 +63,7 @@
                                          TabIndex="{TemplateBinding TabIndex}"/>
 
                                 <Rectangle Grid.Column="3" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}" Fill="{TemplateBinding BorderBrush}"
-                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TextBoxRightBorderVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsTextBoxRightBorderVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
                                 <ToggleButton Grid.Column="4" x:Name="PART_ToggleButton" IsTabStop="False" Focusable="False"
                                               effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"

@@ -53,8 +53,8 @@ namespace WpfInvestigate.Controls
         public bool IsCalculatorButtonVisible => (VisibleButtons & Buttons.Calculator) == Buttons.Calculator;
         public bool IsDownButtonsVisible => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown || (VisibleButtons & Buttons.RightDown) == Buttons.RightDown;
         public bool IsUpButtonsVisible => (VisibleButtons & Buttons.Up) == Buttons.Up;
-        public bool TextBoxLeftBorderVisible => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown;
-        public bool TextBoxRightBorderVisible => (VisibleButtons & Buttons.Calculator) == Buttons.Calculator || (VisibleButtons & Buttons.RightDown) == Buttons.RightDown || (VisibleButtons & Buttons.Up) == Buttons.Up || (VisibleButtons & Buttons.Close) == Buttons.Close;
+        public bool IsTextBoxLeftBorderVisible => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown;
+        public bool IsTextBoxRightBorderVisible => (VisibleButtons & Buttons.Calculator) == Buttons.Calculator || (VisibleButtons & Buttons.RightDown) == Buttons.RightDown || (VisibleButtons & Buttons.Up) == Buttons.Up || (VisibleButtons & Buttons.Close) == Buttons.Close;
         public int DownButtonColumn => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown ? 0 : 5;
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
@@ -440,7 +440,7 @@ namespace WpfInvestigate.Controls
 
         private static void OnVisibleButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((NumericBox)d).OnPropertiesChanged(new[] { nameof(IsCloseButtonVisible), nameof(IsCalculatorButtonVisible), nameof(IsUpButtonsVisible), nameof(IsDownButtonsVisible), nameof(DownButtonColumn), nameof(TextBoxLeftBorderVisible), nameof(TextBoxRightBorderVisible) });
+            ((NumericBox)d).OnPropertiesChanged(new[] { nameof(IsCloseButtonVisible), nameof(IsCalculatorButtonVisible), nameof(IsUpButtonsVisible), nameof(IsDownButtonsVisible), nameof(DownButtonColumn), nameof(IsTextBoxLeftBorderVisible), nameof(IsTextBoxRightBorderVisible) });
         }
 
         // ================================================

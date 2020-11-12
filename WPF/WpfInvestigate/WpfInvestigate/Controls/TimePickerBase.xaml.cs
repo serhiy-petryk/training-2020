@@ -64,6 +64,7 @@ namespace WpfInvestigate.Controls
         public readonly CultureInfo Culture;
         public bool IsPopupButtonVisible => (VisibleButtons & Buttons.Popup) == Buttons.Popup;
         public bool IsClearButtonVisible => (VisibleButtons & Buttons.Clear) == Buttons.Clear;
+        public bool IsTextBoxBorderVisible => (VisibleButtons & Buttons.Popup) == Buttons.Popup || (VisibleButtons & Buttons.Clear) == Buttons.Clear;
 
         private Button _clearButton;
         private bool _isTimeChanging;
@@ -499,7 +500,7 @@ namespace WpfInvestigate.Controls
 
         private static void OnVisibleButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePicker) d).OnPropertiesChanged(new[] {nameof(IsPopupButtonVisible), nameof(IsClearButtonVisible)});
+            ((TimePicker) d).OnPropertiesChanged(new[] {nameof(IsPopupButtonVisible), nameof(IsClearButtonVisible), nameof(IsTextBoxBorderVisible)});
         }
 
 
