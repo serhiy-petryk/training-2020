@@ -174,8 +174,9 @@ namespace WpfInvestigate.TestViews
         }
         private async void OnClickWarningMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = await MessageBlock.ShowAsync("Message (Show Async)",
-                "Caption of Message block", MessageBlock.MessageBlockIcon.Warning, new[] { "OK", "Cancel", "Right", "Left" });
+            var aa = await MessageBlock.ShowAsync("Message (Show Async)", "Caption of Message block",
+                MessageBlock.MessageBlockIcon.Warning, new[] {"OK", "Cancel", "Right", "Left"});
+
             await MessageBlock.ShowAsync($"You pressed '{aa ?? "X"}' button", null, MessageBlock.MessageBlockIcon.Info, new[] { "OK" });
         }
         private void OnClickInformationMessageBlock(object sender, RoutedEventArgs e)
@@ -185,125 +186,10 @@ namespace WpfInvestigate.TestViews
         }
         private void OnClickSuccessMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = MessageBlock.ShowDialog("Message (Show) ",
-                "Caption of Message block", MessageBlock.MessageBlockIcon.Success, new []{"OK", "Cancel"});
+            var aa = MessageBlock.ShowDialog("Message (Show) ", "Caption of Message block",
+                MessageBlock.MessageBlockIcon.Success, new[] {"OK", "Cancel"}, false);
+
             MessageBlock.ShowDialog($"You pressed '{aa ?? "X" }' button", null, MessageBlock.MessageBlockIcon.Info, new[] { "OK" });
-        }
-
-        private void OnClickSyncTest(object sender, RoutedEventArgs e)
-        {
-            var dialogItems = new DialogItems();
-            dialogItems.Show(new SampleDialog());
-            MessageBox.Show("dialog item already shown");
-
-            /*var host = Application.Current.Windows.OfType<Window>().First(x => x.IsActive);
-            var oldAdorner = GetAdorner(host);
-            var dialogItems = new DialogItems();
-            var adorner = DialogItems.CreateAdornerCore(host, dialogItems);
-            var frame = new DispatcherFrame();
-            dialogItems.AllDialogClosed += (s, e2) => frame.Continue = false;
-
-            dialogItems.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
-            {
-                dialogItems.AddDialog(new SampleDialog());
-                Dispatcher.PushFrame(frame);
-            }));*/
-        }
-
-        private static AdornerControl GetAdorner(UIElement element)
-        {
-            // If it is a Window class, use the Content property.
-            var win = element as Window;
-            var target = win?.Content as UIElement ?? element;
-
-            if (target == null)
-                return null;
-            var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null)
-                return null;
-
-            var current = layer.GetAdorners(target)?.OfType<AdornerControl>()?.SingleOrDefault();
-            return current;
-        }
-
-
-        private async void OnClickAsyncTest(object sender, RoutedEventArgs e)
-        {
-            var dialogItems = new DialogItems();
-            await dialogItems.ShowAsync(new SampleDialog());
-            MessageBox.Show("dialog item already shown");
-
-            /*var host = Application.Current.Windows.OfType<Window>().First(x => x.IsActive);
-            var dialogItems = new DialogItems();
-            // await CreateAdornerAsync(host, style));
-            var adorner = DialogItems.CreateAdornerCore(host, dialogItems);
-            var frame = new DispatcherFrame();
-            dialogItems.AllDialogClosed += (s, e2) => frame.Continue = false;
-
-            await dialogItems.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(async () =>
-            {
-                await dialogItems.AddDialogAsync(new SampleDialog());
-                // Dispatcher.PushFrame(frame);
-            }));*/
-        }
-
-        private void OnClickDialogTest(object sender, RoutedEventArgs e)
-        {
-            var dialogItems = new DialogItems();
-            dialogItems.ShowDialog(new SampleDialog());
-            MessageBox.Show("dialog item already shown");
-
-            /*var host = Application.Current.Windows.OfType<Window>().First(x => x.IsActive);
-            var dialogItems = new DialogItems();
-            var adorner = DialogItems.CreateAdornerCore(host, dialogItems);*/
-
-            /*
-            var adorner = DialogItems.CreateAdornerModal(host, dialogItems);
-             *             var frame = new DispatcherFrame();
-            dialogItems.AllDialogClosed += (s, e) => frame.Continue = false;
-            dialogItems.AddDialog(content);
-
-            Dispatcher.PushFrame(frame);
-
-             */
-
-            /*var frame = new DispatcherFrame();
-            dialogItems.AllDialogClosed += (s, e2) => frame.Continue = false;
-
-            dialogItems.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
-            {
-                dialogItems.AddDialog(new SampleDialog());
-                Dispatcher.PushFrame(frame);
-            }));*/
-        }
-
-        private async void XOnClickShowMultiplePopup(object sender, RoutedEventArgs e)
-        {
-            var style = Resources["MultipleDialogStyle"] as Style;
-            var d1 = new DialogItems{Style = style};
-            d1.Show(new SampleDialog());
-
-            await Task.Delay(500);
-            d1.Items.Add(new SampleDialog());
-
-            await Task.Delay(500);
-            d1.Items.Add(new SampleDialog());
-
-            /*var d2 = new DialogItems { Style = style };
-            d2.Show(new SampleDialog());
-
-            await Task.Delay(500);
-
-            var d3 = new DialogItems { Style = style };
-            d3.Show(new SampleDialog());*/
-
-            /*DialogItems.Show(this, new SampleDialog(), style);
-
-            await Task.Delay(500);
-            DialogItems.Show(this, new SampleDialog(), style);
-
-            await Task.Delay(500);
-            DialogItems.Show(this, new SampleDialog(), style);*/
         }
     }
 }

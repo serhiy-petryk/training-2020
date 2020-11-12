@@ -23,44 +23,72 @@ namespace WpfInvestigate.Controls
 
         private static readonly string[] _iconColors = {"Primary", "Danger", "Danger", "Warning", "Info", "Success"};
 
-        public static string ShowDialog(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
+        #region ============  Public Static Methods  =============
+        public static MessageBlock CreateMessageBlock(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
-            var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
-            var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
-            var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            var dialogItems = new DialogItems();
-            dialogItems.ShowDialog(content);
+            var messageBlock = new MessageBlock { MessageText = messageText, Caption = caption, IsCloseButtonVisible = isCloseButtonVisible };
+            if (icon != null)
+            {
+                messageBlock.Icon = Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
+                messageBlock.BaseIconColor = Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
+                if (messageBlock.BaseIconColor.HasValue)
+                    messageBlock.BaseColor = messageBlock.BaseIconColor.Value;
+            }
+            if (buttons != null)
+                messageBlock.Buttons = buttons;
 
-            return content.Result;
+            return messageBlock;
         }
 
-        public static async Task<string> ShowAsync(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
+        public static string ShowDialog(MessageBlock messageBlock)
         {
-            var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
-            var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
-            var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
             var dialogItems = new DialogItems();
-            await dialogItems.ShowAsync(content);
-            return content.Result;
+            dialogItems.ShowDialog(messageBlock);
+            return messageBlock.Result;
+        }
+        public static async Task<string> ShowAsync(MessageBlock messageBlock)
+        {
+            var dialogItems = new DialogItems();
+            await dialogItems.ShowAsync(messageBlock);
+            return messageBlock.Result;
+        }
+        public static string Show(MessageBlock messageBlock)
+        {
+            var dialogItems = new DialogItems();
+            dialogItems.Show(messageBlock);
+            return messageBlock.Result;
         }
 
-        public static string Show(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null)
+        public static string ShowDialog(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
-            var iconGeometry = icon == null ? null : Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
-            var iconColor = icon == null ? null : Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
-            var content = new MessageBlock(iconColor, messageText, caption, iconGeometry, iconColor, buttons);
-            var dialogItems = new DialogItems();
-            dialogItems.Show(content);
-            return content.Result;
+            var messageBlock = CreateMessageBlock(messageText, caption, icon, buttons, isCloseButtonVisible);
+            new DialogItems().ShowDialog(messageBlock);
+            return messageBlock.Result;
         }
+
+        public static async Task<string> ShowAsync(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        {
+            var messageBlock = CreateMessageBlock(messageText, caption, icon, buttons, isCloseButtonVisible);
+            await new DialogItems().ShowAsync(messageBlock);
+            return messageBlock.Result;
+        }
+
+        public static string Show(string messageText, string caption, MessageBlockIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        {
+            var messageBlock = CreateMessageBlock(messageText, caption, icon, buttons, isCloseButtonVisible);
+            new DialogItems().Show(messageBlock);
+            return messageBlock.Result;
+        }
+        #endregion
 
         // =================  Instance  ================
         public string Result { get; private set; }
-        public string MessageText { get; private set; }
-        public string Caption { get; private set; }
-        public Geometry Icon { get; private set; }
-        public Color BaseColor { get; private set; }
-        public Color? BaseIconColor { get; private set; }
+        public string MessageText { get; set; }
+        public string Caption { get; set; }
+        public Geometry Icon { get; set; }
+        public Color BaseColor { get; set; } = _defaultBaseColor;
+        public Color? BaseIconColor { get; set; }
+        public bool IsCloseButtonVisible { get; set; } = true;
 
         private Grid _buttonsArea;
 
@@ -90,15 +118,6 @@ namespace WpfInvestigate.Controls
             var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             if (currentWindow != null)
                 MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);
-        }
-        private MessageBlock(Color? baseColor, string messageText, string caption, Geometry icon, Color? iconColor, string[] buttons) : this()
-        {
-            BaseColor = baseColor ?? _defaultBaseColor;
-            BaseIconColor = iconColor;
-            MessageText = messageText;
-            Caption = caption;
-            Icon = icon;
-            Buttons = buttons;
         }
 
         public override void OnApplyTemplate()

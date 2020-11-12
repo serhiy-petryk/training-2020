@@ -173,7 +173,7 @@
                     <Button Margin="5" Width="100" Click="OnClickErrorMessageBlock" Content="Error" />
                     <Button Margin="5" Width="100" Click="OnClickWarningMessageBlock" Content="Warning (async)" />
                     <Button Margin="5" Width="100" Click="OnClickInformationMessageBlock" Content="Information" />
-                    <Button Margin="5" Width="100" Click="OnClickSuccessMessageBlock" Content="Success" />
+                    <Button Margin="5" Click="OnClickSuccessMessageBlock" Content="Success (hidden Close button)" />
                 </WrapPanel>
             </StackPanel>
 

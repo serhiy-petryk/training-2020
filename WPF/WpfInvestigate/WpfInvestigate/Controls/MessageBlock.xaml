@@ -60,6 +60,7 @@
                                             <Button Grid.Column="1" Margin="0 0 4 0" Width="20" Padding="2"
                                                     Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"
                                                     HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                     Command="ApplicationCommands.Close" CommandParameter="{Binding}" />
 
                                             <Thumb Grid.Column="0" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>
