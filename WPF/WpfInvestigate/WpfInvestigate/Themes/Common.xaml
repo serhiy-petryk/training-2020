@@ -156,12 +156,12 @@
                                     <VisualState x:Name="Pressed" Storyboard="{StaticResource PressedState}"/>-->
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Duration="0:0:0.12" />
+                                        <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Duration="{StaticResource AnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation To="0.5" Storyboard.TargetProperty="Opacity" Duration="0:0:0.12" />
+                                        <DoubleAnimation To="0.5" Storyboard.TargetProperty="Opacity" Duration="{StaticResource AnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
