@@ -38,16 +38,14 @@ namespace WpfInvestigate.Controls
 
         protected override Size MeasureOverride(Size constraint)
         {
-            if (UseAdornedElementSize)
-            {
-                constraint = AdornedElement.RenderSize;
-                _child.Width = constraint.Width;
-                _child.Height = constraint.Height;
-            }
-            else
-                constraint = new Size(_child.Width, _child.Height);
+            var newSize = UseAdornedElementSize
+                ? AdornedElement.RenderSize
+                : new Size(constraint.Width, constraint.Height);
 
-            _child.Measure(constraint);
+            _child.Width = newSize.Width;
+            _child.Height = newSize.Height;
+            _child.Measure(newSize);
+
             return _child.DesiredSize;
         }
 
