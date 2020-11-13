@@ -156,10 +156,7 @@ namespace WpfInvestigate.Controls
             }
             // Added a process to remove Adorner when all dialogs are cleared
             AllDialogClosed += (s, e) => layer.Remove(adorner);
-            // Microsoft bug???: CloseOnClickBackground is changing after "layer.Add(adorner)" in MultipleLightBoxWindow example
-            var temp = CloseOnClickBackground;
             layer.Add(adorner);
-            CloseOnClickBackground = temp;
             return adorner;
         }
 
