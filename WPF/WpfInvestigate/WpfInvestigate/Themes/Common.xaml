@@ -73,27 +73,29 @@
     <!-- ========= -->
     <!-- Animation -->
     <!-- ========= -->
+    <x:Static x:Key="AnimationDuration" Member="common:AnimationHelper.AnimationDuration"/>
+
     <Storyboard x:Key="FadeInAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="{StaticResource AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
         </DoubleAnimation>
     </Storyboard>
     <Storyboard x:Key="FadeOutAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0" Duration="{StaticResource AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
         </DoubleAnimation>
     </Storyboard>
     <Storyboard x:Key="ZoomInAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="0" To="1.0" Duration="{StaticResource AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
         </DoubleAnimation>
-        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="0" To="1.0" Duration="{StaticResource AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
@@ -102,12 +104,12 @@
         <!--<PointAnimation Storyboard.TargetProperty="RenderTransformOrigin" To="0,0" Duration="00:00:00" />-->
     </Storyboard>
     <Storyboard x:Key="ZoomOutAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="1.0" To="0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="1.0" To="0" Duration="{StaticResource AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
         </DoubleAnimation>
-        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="1.0" To="0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="1.0" To="0" Duration="{StaticResource AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
@@ -136,6 +138,39 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a date"></Setter>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource UserInputControlChromeMatrix}"/>
+    </Style>
+
+    <Style TargetType="TextBox">
+        <!--<Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="Black"/>-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Name="Bd" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" 
+                                Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <!-- Bindings for VisualState have to define in Resources because there is C# error -->
+                                <!--<VisualState x:Name="Normal" Storyboard="{StaticResource NormalState}"/>
+                                    <VisualState x:Name="MouseOver" Storyboard="{StaticResource MouseOverState}"/>
+                                    <VisualState x:Name="Pressed" Storyboard="{StaticResource PressedState}"/>-->
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Duration="0:0:0.12" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation To="0.5" Storyboard.TargetProperty="Opacity" Duration="0:0:0.12" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ScrollViewer Name="PART_ContentHost" Background="{TemplateBinding Background}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- VS designer error!!! <Style TargetType="ToolBar">
