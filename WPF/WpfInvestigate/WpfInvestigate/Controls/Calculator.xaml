@@ -14,64 +14,6 @@
     <UserControl.Resources>
         <SolidColorBrush x:Key="IndicatorColor" Color="{x:Static SystemColors.InfoColor}"/>
 
-        <!-- ===  Light theme  === -->
-       <!--<SolidColorBrush x:Key="ControlBackColor" Color="#FFC0E0FF"/>
-        <SolidColorBrush x:Key="EqualOperatorButtonBrush" Color="{x:Static SystemColors.InactiveCaptionColor}"/>
-        <LinearGradientBrush x:Key="OperatorButtonBrush" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="#FFE0F0FF" Offset="0"/>
-            <GradientStop Color="#FFD0E0FF" Offset="0.25" />
-            <GradientStop Color="#FFC0D0FF" Offset="0.75" />
-            <GradientStop Color="#FFD0F0FF" Offset="1" />
-        </LinearGradientBrush>
-
-        <Style TargetType="ButtonBase" x:Key="CommonStyle">
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="MinHeight" Value="16"/>
-            <Setter Property="MaxHeight" Value="48"/>
-            <Setter Property="MinWidth" Value="16"/>
-            <Setter Property="MaxWidth" Value="68"/>
-            <Setter Property="Margin" Value="2"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="Focusable" Value="False"/>
-        </Style>
-        <Style x:Key="DigitButton" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
-            <EventSetter Event="Click" Handler="DigitButton_OnClick"/>
-        </Style>-->
-
-        <!-- ===  Dark theme  === -->
-        <sys:String x:Key="DigitButtonHsl">0,0</sys:String>
-        <sys:String x:Key="OperatorButtonHsl">180,100</sys:String>
-        <sys:String x:Key="EqualButtonHsl">0,100</sys:String>
-
-        <common:BindingProxy x:Key="DigitButtonHslProxy" Value="{DynamicResource DigitButtonHsl}"/>
-        <common:BindingProxy x:Key="OperatorButtonHslProxy" Value="{DynamicResource OperatorButtonHsl}"/>
-        <common:BindingProxy x:Key="EqualButtonHslProxy" Value="{DynamicResource EqualButtonHsl}"/>
-
-        <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource DigitButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}"/>
-
-        <LinearGradientBrush x:Key="DigitButtonBrush" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="{Binding Source={StaticResource DigitButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
-            <GradientStop Color="{Binding Source={StaticResource DigitButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
-            <GradientStop Color="{Binding Source={StaticResource DigitButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
-            <GradientStop Color="{Binding Source={StaticResource DigitButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="1.0"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="OperatorButtonBrush" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="{Binding Source={StaticResource OperatorButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
-            <GradientStop Color="{Binding Source={StaticResource OperatorButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
-            <GradientStop Color="{Binding Source={StaticResource OperatorButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
-            <GradientStop Color="{Binding Source={StaticResource OperatorButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="1.0"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="EqualOperatorButtonBrush" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="{Binding Source={StaticResource EqualButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
-            <GradientStop Color="{Binding Source={StaticResource EqualButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
-            <GradientStop Color="{Binding Source={StaticResource EqualButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
-            <GradientStop Color="{Binding Source={StaticResource EqualButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="1.0"/>
-        </LinearGradientBrush>
-
         <Style TargetType="ButtonBase" x:Key="CommonStyle">
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="Foreground" Value="White"/>
@@ -107,23 +49,68 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="DigitButton" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
-            <Setter Property="Background" Value="{StaticResource DigitButtonBrush}"/>
+
+        <!-- Light theme -->
+        <sys:String x:Key="BackgroundHsl">210,100</sys:String>
+        <sys:String x:Key="DigitButtonHsl">210,100</sys:String>
+        <sys:String x:Key="OperatorButtonHsl">240,100</sys:String>
+        <sys:String x:Key="EqualButtonHsl">270,100</sys:String>
+
+        <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource BackgroundHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=73}"/>
+        <Style x:Key="DigitButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
+            <Setter Property="Background" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='100,0.0/80,0.3/73,0.85/100,1.0'}"/>
+            <Setter Property="Foreground" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=35}"/>
             <EventSetter Event="Click" Handler="DigitButton_OnClick"/>
         </Style>
-
-        <!-- Common region -->
-        <Style x:Key="OperatorButton" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
-            <Setter Property="Background" Value="{StaticResource OperatorButtonBrush}"/>
+        <Style x:Key="OperatorButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
+            <Setter Property="Background" Value="{Binding Source={StaticResource OperatorButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='100,0.0/80,0.3/73,0.85/100,1.0'}"/>
+            <Setter Property="Foreground" Value="{Binding Source={StaticResource OperatorButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=35}"/>
             <EventSetter Event="Click" Handler="Operator_OnButtonClick"/>
         </Style>
         <Style TargetType="RepeatButton" BasedOn="{StaticResource CommonStyle}">
-            <Setter Property="Background" Value="{StaticResource OperatorButtonBrush}"/>
+            <Setter Property="Background" Value="{Binding Source={StaticResource OperatorButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='100,0.0/80,0.3/73,0.85/100,1.0'}"/>
+            <Setter Property="Foreground" Value="{Binding Source={StaticResource OperatorButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=35}"/>
             <Setter Property="MaxWidth" Value="48"/>
             <Setter Property="Interval" Value="30"/>
             <Setter Property="Delay" Value="500"/>
             <EventSetter Event="Click" Handler="Operator_OnButtonClick"/>
         </Style>
+        <Style x:Key="EqualButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
+            <Setter Property="Background" Value="{Binding Source={StaticResource EqualButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='100,0.0/80,0.3/73,0.85/100,1.0'}"/>
+            <Setter Property="Foreground" Value="{Binding Source={StaticResource EqualButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=35}"/>
+            <EventSetter Event="Click" Handler="Operator_OnButtonClick"/>
+        </Style>
+
+        <!-- Dark theme -->
+        <!--<sys:String x:Key="BackgroundHsl">0,0</sys:String>
+        <sys:String x:Key="DigitButtonHsl">0,0</sys:String>
+        <sys:String x:Key="OperatorButtonHsl">180,50</sys:String>
+        <sys:String x:Key="EqualButtonHsl">120,50</sys:String>
+
+        <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource BackgroundHsl}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}"/>
+        <Style x:Key="DigitButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
+            <Setter Property="Background" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='40,0.0/20,0.3/13,0.85/40,1.0'}"/>
+            <Setter Property="Foreground" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
+            <EventSetter Event="Click" Handler="DigitButton_OnClick"/>
+        </Style>
+        <Style x:Key="OperatorButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
+            <Setter Property="Background" Value="{Binding Source={StaticResource OperatorButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='40,0.0/20,0.3/13,0.85/40,1.0'}"/>
+            <Setter Property="Foreground" Value="{Binding Source={StaticResource OperatorButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
+            <EventSetter Event="Click" Handler="Operator_OnButtonClick"/>
+        </Style>
+        <Style TargetType="RepeatButton" BasedOn="{StaticResource CommonStyle}">
+            <Setter Property="Background" Value="{Binding Source={StaticResource OperatorButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='40,0.0/20,0.3/13,0.85/40,1.0'}"/>
+            <Setter Property="Foreground" Value="{Binding Source={StaticResource OperatorButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
+            <Setter Property="MaxWidth" Value="48"/>
+            <Setter Property="Interval" Value="30"/>
+            <Setter Property="Delay" Value="500"/>
+            <EventSetter Event="Click" Handler="Operator_OnButtonClick"/>
+        </Style>
+        <Style x:Key="EqualButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
+            <Setter Property="Background" Value="{Binding Source={StaticResource EqualButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='40,0.0/20,0.3/13,0.85/40,1.0'}"/>
+            <Setter Property="Foreground" Value="{Binding Source={StaticResource EqualButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
+            <EventSetter Event="Click" Handler="Operator_OnButtonClick"/>
+        </Style>-->
 
         <!-- ========== -->
         <!-- Calculator -->
@@ -214,31 +201,31 @@
                                     </Grid.ColumnDefinitions>
                                     <RepeatButton Grid.Column="0" Content="↑" Tag="++"/>
                                     <RepeatButton Grid.Column="1" Content="↓" Tag="--"/>
-                                    <Button Grid.Column="2" Style="{StaticResource OperatorButton}" Content="C" Tag="Clear"/>
-                                    <Button Grid.Column="3" Style="{StaticResource OperatorButton}" Content="←" Tag="Backspace"/>
+                                    <Button Grid.Column="2" Style="{StaticResource OperatorButtonStyle}" Content="C" Tag="Clear"/>
+                                    <Button Grid.Column="3" Style="{StaticResource OperatorButtonStyle}" Content="←" Tag="Backspace"/>
                                 </Grid>
-                                <Button Grid.Column="3" Grid.Row="1" Style="{StaticResource OperatorButton}" Content="÷" Tag="/"/>
+                                <Button Grid.Column="3" Grid.Row="1" Style="{StaticResource OperatorButtonStyle}" Content="÷" Tag="/"/>
 
-                                <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource DigitButton}" Content="7"/>
-                                <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource DigitButton}" Content="8"/>
-                                <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource DigitButton}" Content="9"/>
-                                <Button Grid.Column="3" Grid.Row="2" Style="{StaticResource OperatorButton}" Content="×" Tag="*"/>
+                                <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource DigitButtonStyle}" Content="7"/>
+                                <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource DigitButtonStyle}" Content="8"/>
+                                <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource DigitButtonStyle}" Content="9"/>
+                                <Button Grid.Column="3" Grid.Row="2" Style="{StaticResource OperatorButtonStyle}" Content="×" Tag="*"/>
 
-                                <Button Grid.Column="0" Grid.Row="3" Style="{StaticResource DigitButton}" Content="4"/>
-                                <Button Grid.Column="1" Grid.Row="3" Style="{StaticResource DigitButton}" Content="5"/>
-                                <Button Grid.Column="2" Grid.Row="3" Style="{StaticResource DigitButton}" Content="6"/>
-                                <Button Grid.Column="3" Grid.Row="3" Style="{StaticResource OperatorButton}" Content="-" Tag="-"/>
+                                <Button Grid.Column="0" Grid.Row="3" Style="{StaticResource DigitButtonStyle}" Content="4"/>
+                                <Button Grid.Column="1" Grid.Row="3" Style="{StaticResource DigitButtonStyle}" Content="5"/>
+                                <Button Grid.Column="2" Grid.Row="3" Style="{StaticResource DigitButtonStyle}" Content="6"/>
+                                <Button Grid.Column="3" Grid.Row="3" Style="{StaticResource OperatorButtonStyle}" Content="-" Tag="-"/>
 
-                                <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource DigitButton}" Content="1"/>
-                                <Button Grid.Column="1" Grid.Row="4" Style="{StaticResource DigitButton}" Content="2"/>
-                                <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource DigitButton}" Content="3"/>
-                                <Button Grid.Column="3" Grid.Row="4" Style="{StaticResource OperatorButton}" Content="+" Tag="+"/>
+                                <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource DigitButtonStyle}" Content="1"/>
+                                <Button Grid.Column="1" Grid.Row="4" Style="{StaticResource DigitButtonStyle}" Content="2"/>
+                                <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource DigitButtonStyle}" Content="3"/>
+                                <Button Grid.Column="3" Grid.Row="4" Style="{StaticResource OperatorButtonStyle}" Content="+" Tag="+"/>
 
-                                <Button Grid.Column="0" Grid.Row="5" Style="{StaticResource OperatorButton}" Content="±" Tag="Sign"/>
-                                <Button Grid.Column="1" Grid.Row="5" Style="{StaticResource DigitButton}" Content="0"/>
-                                <Button Grid.Column="2" Grid.Row="5" Style="{StaticResource OperatorButton}" 
+                                <Button Grid.Column="0" Grid.Row="5" Style="{StaticResource OperatorButtonStyle}" Content="±" Tag="Sign"/>
+                                <Button Grid.Column="1" Grid.Row="5" Style="{StaticResource DigitButtonStyle}" Content="0"/>
+                                <Button Grid.Column="2" Grid.Row="5" Style="{StaticResource OperatorButtonStyle}" 
                                         Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalSeparator}" Tag="."/>
-                                <Button Grid.Column="3" Grid.Row="5" Style="{StaticResource OperatorButton}" Content="=" Tag="=" Background="{StaticResource EqualOperatorButtonBrush}"/>
+                                <Button Grid.Column="3" Grid.Row="5" Style="{StaticResource EqualButtonStyle}" Content="=" Tag="="/>
                             </Grid>
                         </Border>
                     </ControlTemplate>

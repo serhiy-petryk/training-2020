@@ -179,7 +179,7 @@ namespace WpfInvestigate.Common
 
             if (ss != null && ss.Length == 2)
                 hsl = new HSL(double.Parse(ss[0], Tips.InvariantCulture) / 360,
-                    double.Parse(ss[1], Tips.InvariantCulture) / 360, 0);
+                    double.Parse(ss[1], Tips.InvariantCulture) / 100, 0);
             else if (value is Brush brush)
                 oldColor = Tips.GetColorFromBrush(brush);
             else if (value is Color color)
@@ -281,6 +281,42 @@ namespace WpfInvestigate.Common
             }
 
             return Brushes.Transparent;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+
+    public class GradientMonochromeBrush : IValueConverter
+    {
+        public static GradientMonochromeBrush Instance = new GradientMonochromeBrush();
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string && parameter is string)
+            {
+                var ss = ((string) value).Split(new[] {",", " "}, StringSplitOptions.RemoveEmptyEntries);
+                if (ss.Length >= 2)
+                {
+                    var hue = double.Parse(ss[0], Tips.InvariantCulture) / 360;
+                    var saturation = double.Parse(ss[1], Tips.InvariantCulture) / 100;
+                    var lightness = ss.Length > 2 ? double.Parse(ss[2], Tips.InvariantCulture) / 100 : 0.0;
+
+                    var gradientStops = new GradientStopCollection( );
+                    foreach (var p in parameter.ToString().Split('/'))
+                    {
+                        var pp = p.Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                        if (pp.Length == 2)
+                        {
+                            var newL = ColorConverterHelper.ConvertValue(lightness, pp[0]);
+                            var hsl = new HSL(hue, saturation, newL);
+                            var offset = double.Parse(pp[1].Trim(), Tips.InvariantCulture);
+                            gradientStops.Add(new GradientStop(hsl.RGB.Color, offset));
+                        }
+                    }
+
+                    return new LinearGradientBrush(gradientStops, new Point(0, 0), new Point(0, 1));
+                }
+            }
+            return Brushes.Transparent; 
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
