@@ -227,7 +227,7 @@ namespace WpfInvestigate.Controls
             picker._isDateChanging = true;
             var dt = (DateTime?)e.NewValue;
             picker.SelectedDate = dt;
-            picker.SelectedTime = dt.HasValue ? dt.Value.TimeOfDay : (TimeSpan?)null;
+            picker.SelectedTime = dt?.TimeOfDay;
             picker.OnSelectedDateChanged(new RoutedPropertyChangedEventArgs<DateTime?>((DateTime?)e.OldValue, (DateTime?)e.NewValue, SelectedDateChangedEvent));
 
             picker._isDateChanging = false;
@@ -244,12 +244,16 @@ namespace WpfInvestigate.Controls
             if (dt == null)
                 return picker.IsNullable ? (DateTime?)null : picker._defaultDate;
 
+            if (!picker.DatePickerMode && picker._popup.IsOpen && dt.Value.TimeOfDay == TimeSpan.Zero) // Calendar is changing
+                dt = dt.Value + picker.SelectedTime;
+            else if (picker.DatePickerMode) dt = dt.Value.Date; // OnlyDate mode
+
             if (picker.DisplayDateStart.HasValue && picker.DisplayDateStart.Value > dt.Value)
                 return picker.DisplayDateStart.Value;
             if (picker.DisplayDateEnd.HasValue && picker.DisplayDateEnd.Value < dt.Value)
                 return picker.DisplayDateEnd.Value;
 
-            return picker.DatePickerMode ? dt.Value.Date : dt.Value;
+            return dt.Value;
         }
 
         private void SetDatePartValues()

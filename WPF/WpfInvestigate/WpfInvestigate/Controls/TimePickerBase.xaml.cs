@@ -70,7 +70,7 @@ namespace WpfInvestigate.Controls
         private bool _isTimeChanging;
         private bool _isTextChanging;
         private bool _textInputChanged;
-        private Popup _popup;
+        protected Popup _popup;
         protected DatePickerTextBox _textBox;
 
         static TimePickerBase()

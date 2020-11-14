@@ -105,7 +105,7 @@
                              IsNullable="False"
                              DatePickerMode="True"
                              FontSize="24"
-                             DisplayDateStart="2022/1/1"
+                             DisplayDateStart="2002/1/1"
                              effects:WatermarkEffect.Watermark="Test"/>
                 <Button Click="ChangeDate_OnClick" Content="Change date"/>
                 <Button Click="DatePickerMode_OnClick" Content="Change DatePickerMode"/>
