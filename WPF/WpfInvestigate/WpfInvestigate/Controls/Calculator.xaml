@@ -15,7 +15,7 @@
         <SolidColorBrush x:Key="IndicatorColor" Color="{x:Static SystemColors.InfoColor}"/>
 
         <!-- ===  Light theme  === -->
-       <SolidColorBrush x:Key="ControlBackColor" Color="#FFC0E0FF"/>
+       <!--<SolidColorBrush x:Key="ControlBackColor" Color="#FFC0E0FF"/>
         <SolidColorBrush x:Key="EqualOperatorButtonBrush" Color="{x:Static SystemColors.InactiveCaptionColor}"/>
         <LinearGradientBrush x:Key="OperatorButtonBrush" EndPoint="0,1" StartPoint="0,0">
             <GradientStop Color="#FFE0F0FF" Offset="0"/>
@@ -38,38 +38,38 @@
         </Style>
         <Style x:Key="DigitButton" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
             <EventSetter Event="Click" Handler="DigitButton_OnClick"/>
-        </Style>
+        </Style>-->
 
         <!-- ===  Dark theme  === -->
-        <!--<sys:String x:Key="DigitHsl">0,0</sys:String>
-        <sys:String x:Key="OperatorHsl">180,100</sys:String>
-        <sys:String x:Key="EqualHsl">0,100</sys:String>
+        <sys:String x:Key="DigitButtonHsl">0,0</sys:String>
+        <sys:String x:Key="OperatorButtonHsl">180,100</sys:String>
+        <sys:String x:Key="EqualButtonHsl">0,100</sys:String>
 
-        <common:BindingProxy x:Key="DigitHslProxy" Value="{DynamicResource DigitHsl}"/>
-        <common:BindingProxy x:Key="OperatorHslProxy" Value="{DynamicResource OperatorHsl}"/>
-        <common:BindingProxy x:Key="EqualHslProxy" Value="{DynamicResource EqualHsl}"/>
+        <common:BindingProxy x:Key="DigitButtonHslProxy" Value="{DynamicResource DigitButtonHsl}"/>
+        <common:BindingProxy x:Key="OperatorButtonHslProxy" Value="{DynamicResource OperatorButtonHsl}"/>
+        <common:BindingProxy x:Key="EqualButtonHslProxy" Value="{DynamicResource EqualButtonHsl}"/>
 
-        <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource DigitHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}"/>
+        <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource DigitButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}"/>
 
         <LinearGradientBrush x:Key="DigitButtonBrush" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="{Binding Source={StaticResource DigitHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
-            <GradientStop Color="{Binding Source={StaticResource DigitHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
-            <GradientStop Color="{Binding Source={StaticResource DigitHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
-            <GradientStop Color="{Binding Source={StaticResource DigitHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="1.0"/>
+            <GradientStop Color="{Binding Source={StaticResource DigitButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
+            <GradientStop Color="{Binding Source={StaticResource DigitButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
+            <GradientStop Color="{Binding Source={StaticResource DigitButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
+            <GradientStop Color="{Binding Source={StaticResource DigitButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="1.0"/>
         </LinearGradientBrush>
 
         <LinearGradientBrush x:Key="OperatorButtonBrush" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="{Binding Source={StaticResource OperatorHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
-            <GradientStop Color="{Binding Source={StaticResource OperatorHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
-            <GradientStop Color="{Binding Source={StaticResource OperatorHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
-            <GradientStop Color="{Binding Source={StaticResource OperatorHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="1.0"/>
+            <GradientStop Color="{Binding Source={StaticResource OperatorButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
+            <GradientStop Color="{Binding Source={StaticResource OperatorButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
+            <GradientStop Color="{Binding Source={StaticResource OperatorButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
+            <GradientStop Color="{Binding Source={StaticResource OperatorButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="1.0"/>
         </LinearGradientBrush>
 
         <LinearGradientBrush x:Key="EqualOperatorButtonBrush" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="{Binding Source={StaticResource EqualHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
-            <GradientStop Color="{Binding Source={StaticResource EqualHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
-            <GradientStop Color="{Binding Source={StaticResource EqualHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
-            <GradientStop Color="{Binding Source={StaticResource EqualHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="1.0"/>
+            <GradientStop Color="{Binding Source={StaticResource EqualButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
+            <GradientStop Color="{Binding Source={StaticResource EqualButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
+            <GradientStop Color="{Binding Source={StaticResource EqualButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
+            <GradientStop Color="{Binding Source={StaticResource EqualButtonHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="1.0"/>
         </LinearGradientBrush>
 
         <Style TargetType="ButtonBase" x:Key="CommonStyle">
@@ -110,7 +110,7 @@
         <Style x:Key="DigitButton" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
             <Setter Property="Background" Value="{StaticResource DigitButtonBrush}"/>
             <EventSetter Event="Click" Handler="DigitButton_OnClick"/>
-        </Style>-->
+        </Style>
 
         <!-- Common region -->
         <Style x:Key="OperatorButton" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
