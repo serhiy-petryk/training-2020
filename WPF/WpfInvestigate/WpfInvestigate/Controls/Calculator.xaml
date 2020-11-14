@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WpfInvestigate.Controls"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:controls="clr-namespace:WpfInvestigate.Controls"
              xmlns:common="clr-namespace:WpfInvestigate.Common"
+             xmlns:effects="clr-namespace:WpfInvestigate.Effects"
              PreviewMouseLeftButtonDown="Calculator_OnPreviewMouseLeftButtonDown"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -13,8 +15,8 @@
         <SolidColorBrush x:Key="IndicatorColor" Color="{x:Static SystemColors.InfoColor}"/>
 
         <!-- ===  Light theme  === -->
-        <SolidColorBrush x:Key="ControlBackColor" Color="#FFC0E0FF"/>
-        <SolidColorBrush x:Key="EqualOperatorButtonBrush"  Color="{x:Static SystemColors.InactiveCaptionColor}"/>
+       <SolidColorBrush x:Key="ControlBackColor" Color="#FFC0E0FF"/>
+        <SolidColorBrush x:Key="EqualOperatorButtonBrush" Color="{x:Static SystemColors.InactiveCaptionColor}"/>
         <LinearGradientBrush x:Key="OperatorButtonBrush" EndPoint="0,1" StartPoint="0,0">
             <GradientStop Color="#FFE0F0FF" Offset="0"/>
             <GradientStop Color="#FFD0E0FF" Offset="0.25" />
@@ -39,24 +41,35 @@
         </Style>
 
         <!-- ===  Dark theme  === -->
-        <!--<SolidColorBrush x:Key="ControlBackColor" Color="Black"/>
+        <!--<sys:String x:Key="DigitHsl">0,0</sys:String>
+        <sys:String x:Key="OperatorHsl">180,100</sys:String>
+        <sys:String x:Key="EqualHsl">0,100</sys:String>
+
+        <common:BindingProxy x:Key="DigitHslProxy" Value="{DynamicResource DigitHsl}"/>
+        <common:BindingProxy x:Key="OperatorHslProxy" Value="{DynamicResource OperatorHsl}"/>
+        <common:BindingProxy x:Key="EqualHslProxy" Value="{DynamicResource EqualHsl}"/>
+
+        <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource DigitHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}"/>
+
         <LinearGradientBrush x:Key="DigitButtonBrush" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="#FF606060" Offset="0"/>
-            <GradientStop Color="#FF303030" Offset="0.25" />
-            <GradientStop Color="#FF202020" Offset="0.75" />
-            <GradientStop Color="#FF606060" Offset="1" />
+            <GradientStop Color="{Binding Source={StaticResource DigitHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
+            <GradientStop Color="{Binding Source={StaticResource DigitHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
+            <GradientStop Color="{Binding Source={StaticResource DigitHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
+            <GradientStop Color="{Binding Source={StaticResource DigitHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="1.0"/>
         </LinearGradientBrush>
+
         <LinearGradientBrush x:Key="OperatorButtonBrush" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="#FF606080" Offset="0"/>
-            <GradientStop Color="#FF303050" Offset="0.25" />
-            <GradientStop Color="#FF202040" Offset="0.75" />
-            <GradientStop Color="#FF606080" Offset="1" />
+            <GradientStop Color="{Binding Source={StaticResource OperatorHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
+            <GradientStop Color="{Binding Source={StaticResource OperatorHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
+            <GradientStop Color="{Binding Source={StaticResource OperatorHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
+            <GradientStop Color="{Binding Source={StaticResource OperatorHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="1.0"/>
         </LinearGradientBrush>
+
         <LinearGradientBrush x:Key="EqualOperatorButtonBrush" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="#FF7080A0" Offset="0"/>
-            <GradientStop Color="#FF405080" Offset="0.25" />
-            <GradientStop Color="#FF304070" Offset="0.75" />
-            <GradientStop Color="#FF7080A0" Offset="1" />
+            <GradientStop Color="{Binding Source={StaticResource EqualHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=40}" Offset="0.0"/>
+            <GradientStop Color="{Binding Source={StaticResource EqualHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="0.3"/>
+            <GradientStop Color="{Binding Source={StaticResource EqualHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}" Offset="0.85"/>
+            <GradientStop Color="{Binding Source={StaticResource EqualHslProxy}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=20}" Offset="1.0"/>
         </LinearGradientBrush>
 
         <Style TargetType="ButtonBase" x:Key="CommonStyle">
@@ -71,6 +84,7 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="Focusable" Value="False"/>
+            <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ButtonBase">
@@ -98,6 +112,7 @@
             <EventSetter Event="Click" Handler="DigitButton_OnClick"/>
         </Style>-->
 
+        <!-- Common region -->
         <Style x:Key="OperatorButton" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
             <Setter Property="Background" Value="{StaticResource OperatorButtonBrush}"/>
             <EventSetter Event="Click" Handler="Operator_OnButtonClick"/>
@@ -113,7 +128,7 @@
         <!-- ========== -->
         <!-- Calculator -->
         <!-- ========== -->
-        <Style TargetType="local:Calculator">
+        <Style TargetType="controls:Calculator">
             <Setter Property="Width" Value="170"/>
             <Setter Property="Height" Value="220"/>
             <Setter Property="BorderBrush" Value="LightSkyBlue"/>
@@ -121,9 +136,10 @@
             <Setter Property="Background" Value="{StaticResource ControlBackColor}"/>
             <Setter Property="Padding" Value="2"/>
             <Setter Property="Focusable" Value="True"/>
+            <Setter Property="SnapsToDevicePixels" Value="False"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type local:Calculator}">
+                    <ControlTemplate TargetType="{x:Type controls:Calculator}">
                         <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
                             Focusable="False" MinWidth="120" MaxWidth="400" MinHeight="200" MaxHeight="300"
@@ -144,7 +160,7 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
-                                <Border Grid.ColumnSpan="4" Grid.Row="0" BorderThickness="1" BorderBrush="Gray" Margin="4" Background="{StaticResource IndicatorColor}">
+                                <Border Grid.ColumnSpan="4" Grid.Row="0" BorderThickness="1" CornerRadius="2" BorderBrush="Gray" Margin="4" Background="{StaticResource IndicatorColor}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>

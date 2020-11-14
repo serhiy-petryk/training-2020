@@ -105,7 +105,7 @@
                                        StaysOpen="False">
                                     <Grid>
                                         <Border Margin="0 0 10 10" Effect="{StaticResource ShadowEffect}" BorderThickness="0" Background="White"/>
-                                        <local:Calculator Focusable="True" Margin="0,0,10,10" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
+                                        <local:Calculator effects:CornerRadiusEffect.CornerRadius="3" Focusable="True" Margin="0,0,10,10" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
                                     </Grid>
                                 </Popup>
                             </Grid>
