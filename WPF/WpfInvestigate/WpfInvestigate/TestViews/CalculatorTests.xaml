@@ -3,16 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfInvestigate.TestViews"
-        xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         mc:Ignorable="d"
-        Title="CalculatorTests" Height="900" Width="500">
+        Title="CalculatorTests" Height="300" Width="350">
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Slider Grid.Column="0"
@@ -34,41 +32,24 @@
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Button Grid.Row="0" Click="OnSetValueButtonClick">Set new Value</Button>
 
-            <controls:Calculator x:Name="Calc" Grid.Row="2" Grid.Column="0" Style="{StaticResource DarkCalculatorStyle}"/>
-            <controls:Calculator Grid.Row="2" Grid.Column="1" Style="{StaticResource LightCalculatorStyle}"/>
+            <controls:Calculator x:Name="DarkCalc" Margin="5" Grid.Row="1" Grid.Column="0" Style="{StaticResource DarkCalculatorStyle}"
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <controls:Calculator x:Name="LightCalc" Margin="5" Grid.Row="1" Grid.Column="1" Style="{StaticResource LightCalculatorStyle}"
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
-            <Label Grid.Row="3" Content="{Binding ElementName=Calc, Path=Value}" Background="Yellow"/>
-
-            <StackPanel Grid.Row="6" Orientation="Horizontal">
-                <Viewbox Width="120" UseLayoutRounding="False" SnapsToDevicePixels="False">
-                    <controls:Calculator UseLayoutRounding="False" SnapsToDevicePixels="False" Style="{StaticResource LightCalculatorStyle}"/>
-                </Viewbox>
-                <Viewbox Width="100" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                    <controls:Calculator UseLayoutRounding="True" SnapsToDevicePixels="True"/>
-                </Viewbox>
-            </StackPanel>
-
-            <Viewbox Grid.Row="7" Width="250" Height="330">
-                <controls:Calculator/>
-            </Viewbox>
-
+            <Label Grid.Row="2" Margin="5" Grid.Column="0" Content="{Binding ElementName=DarkCalc, Path=Value}" Background="Yellow"/>
+            <Label Grid.Row="2" Margin="5" Grid.Column="1" Content="{Binding ElementName=LightCalc, Path=Value}" Background="Yellow"/>
         </Grid>
     </Grid>
 </Window>

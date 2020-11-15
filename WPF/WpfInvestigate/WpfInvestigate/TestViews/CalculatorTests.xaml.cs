@@ -15,7 +15,7 @@ namespace WpfInvestigate.TestViews
 
         private void OnSetValueButtonClick(object sender, RoutedEventArgs e)
         {
-            Calc.Value = (Calc.Value ?? 100M) + 10;
+            DarkCalc.Value = (DarkCalc.Value ?? 100M) + 10;
         }
     }
 }
