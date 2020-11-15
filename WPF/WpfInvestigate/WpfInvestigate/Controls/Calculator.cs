@@ -52,8 +52,6 @@ namespace WpfInvestigate.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            // _calendar = GetTemplateChild(ElementCalendar) as Calendar;
-            var aa1 = Tips.GetVisualChildren(this).OfType<ButtonBase>().ToArray();
 
             foreach (var button in Tips.GetVisualChildren(this).OfType<ButtonBase>().ToArray())
             {
@@ -84,19 +82,16 @@ namespace WpfInvestigate.Controls
             ResetInterval();
         }
 
-        private static Dictionary<Key, string> _digitKeys = new Dictionary<Key, string>
+        private static Dictionary<Key, string> _keys = new Dictionary<Key, string>
         {
             {Key.D0, "0"}, {Key.D1, "1"}, {Key.D2, "2"}, {Key.D3, "3"}, {Key.D4, "4"}, {Key.D5, "5"}, {Key.D6, "6"},
             {Key.D7, "7"}, {Key.D8, "8"}, {Key.D9, "9"}, {Key.NumPad0, "0"}, {Key.NumPad1, "1"}, {Key.NumPad2, "2"},
             {Key.NumPad3, "3"}, {Key.NumPad4, "4"}, {Key.NumPad5, "5"}, {Key.NumPad6, "6"}, {Key.NumPad7, "7"},
-            {Key.NumPad8, "8"}, {Key.NumPad9, "9"}
-        };
-        private static Dictionary<Key, string> _operatorKeys = new Dictionary<Key, string>
-        {
-            {Key.Up, "++"}, {Key.Down, "--"}, {Key.C, "Clear"}, {Key.Back, "Backspace"}, {Key.Left, "Backspace"},
-            {Key.Divide, "/"}, {Key.Multiply, "*"}, {Key.Subtract, "-"}, {Key.OemMinus, "-"}, {Key.Add, "+"},
-            {Key.Return, "="}, {Key.OemPlus, "="}, {Key.Decimal, "."}, {Key.OemPeriod, "."}, {Key.OemComma, "."},
-            {Key.OemQuestion, "/"}, {Key.Delete, "Delete"}
+            {Key.NumPad8, "8"}, {Key.NumPad9, "9"}, {Key.Up, "++"}, {Key.Down, "--"}, {Key.C, "Clear"},
+            {Key.Back, "Backspace"}, {Key.Left, "Backspace"}, {Key.Divide, "/"}, {Key.Multiply, "*"},
+            {Key.Subtract, "-"}, {Key.OemMinus, "-"}, {Key.Add, "+"}, {Key.Return, "="}, {Key.OemPlus, "="},
+            {Key.Decimal, "."}, {Key.OemPeriod, "."}, {Key.OemComma, "."}, {Key.OemQuestion, "/"},
+            {Key.Delete, "Delete"}
         };
         private static Dictionary<Key, string> _shiftKeys = new Dictionary<Key, string>
         {
@@ -106,20 +101,19 @@ namespace WpfInvestigate.Controls
         {
             if (Keyboard.Modifiers == ModifierKeys.None)
             {
-                if (_digitKeys.ContainsKey(e.Key))
+                if (_keys.ContainsKey(e.Key))
                 {
-                    ExecuteDigit(_digitKeys[e.Key]);
-                    e.Handled = true;
-                }
-                else if (_operatorKeys.ContainsKey(e.Key))
-                {
-                    ExecuteOperator(_operatorKeys[e.Key]);
+                    var content = _keys[e.Key];
+                    var button = Tips.GetVisualChildren(this).OfType<ButtonBase>().FirstOrDefault(b => Equals(b.Content, content) || Equals(b.Tag, content));
+                    button?.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
                     e.Handled = true;
                 }
             }
             else if (Keyboard.Modifiers == ModifierKeys.Shift && _shiftKeys.ContainsKey(e.Key))
             {
-                ExecuteOperator(_shiftKeys[e.Key]);
+                var content = _shiftKeys[e.Key];
+                var button = Tips.GetVisualChildren(this).OfType<ButtonBase>().FirstOrDefault(b => Equals(b.Tag, content));
+                button?.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
                 e.Handled = true;
             }
 
@@ -149,7 +143,7 @@ namespace WpfInvestigate.Controls
         {
             var textBox = (TextBox)sender;
             // Adjust font size
-            var maxFontSize = textBox.Name == "Indicator" ? 20.0 : 14.0;
+            var maxFontSize = textBox.Name == "PART_Indicator" ? 20.0 : 14.0;
             if (textBox.Text.Length > 5)
             {
                 textBox.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
@@ -163,7 +157,7 @@ namespace WpfInvestigate.Controls
         // ============================
         private void ActivateIndicator()
         {
-            var indicator = GetTemplateChild("Indicator") as FrameworkElement;
+            var indicator = GetTemplateChild("PART_Indicator") as FrameworkElement;
             indicator?.Focus();
         }
 
@@ -370,7 +364,7 @@ namespace WpfInvestigate.Controls
 
         private void Indicator_OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            var indicator = GetTemplateChild("Indicator") as FrameworkElement;
+            var indicator = GetTemplateChild("PART_Indicator") as FrameworkElement;
             if (indicator.IsFocused)
                 ExecuteOperator(e.Delta > 0 ? "++" : "--");
         }
