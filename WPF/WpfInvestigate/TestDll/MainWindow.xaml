@@ -65,7 +65,8 @@
 
                 </WrapPanel>
                 <WrapPanel>
-                    <controls:Calculator Style="{StaticResource LightCalculatorStyle}"/>
+                    <controls:Calculator Margin="10"/>
+                    <controls:Calculator Margin="10" Style="{StaticResource LightCalculatorStyle}"/>
                 </WrapPanel>
             </StackPanel>
 

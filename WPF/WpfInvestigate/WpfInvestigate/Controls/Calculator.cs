@@ -384,28 +384,6 @@ namespace WpfInvestigate.Controls
             get => (decimal?)GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
         }
-
-        public static readonly DependencyProperty DigitButtonStyleProperty = DependencyProperty.Register("DigitButtonStyle", typeof(Style),
-            typeof(Calculator), new PropertyMetadata(null));
-        public Style DigitButtonStyle
-        {
-            get => (Style)GetValue(DigitButtonStyleProperty);
-            set => SetValue(DigitButtonStyleProperty, value);
-        }
-        public static readonly DependencyProperty OperatorButtonStyleProperty = DependencyProperty.Register("OperatorButtonStyle", typeof(Style),
-            typeof(Calculator), new PropertyMetadata(null));
-        public Style OperatorButtonStyle
-        {
-            get => (Style)GetValue(OperatorButtonStyleProperty);
-            set => SetValue(OperatorButtonStyleProperty, value);
-        }
-        public static readonly DependencyProperty EqualButtonStyleProperty = DependencyProperty.Register("EqualButtonStyle", typeof(Style),
-            typeof(Calculator), new PropertyMetadata(null));
-        public Style EqualButtonStyle
-        {
-            get => (Style)GetValue(EqualButtonStyleProperty);
-            set => SetValue(EqualButtonStyleProperty, value);
-        }
         #endregion
     }
 }
