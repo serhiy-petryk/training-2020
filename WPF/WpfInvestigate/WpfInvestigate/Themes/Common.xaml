@@ -73,29 +73,27 @@
     <!-- ========= -->
     <!-- Animation -->
     <!-- ========= -->
-    <x:Static x:Key="AnimationDuration" Member="common:AnimationHelper.AnimationDuration"/>
-
     <Storyboard x:Key="FadeInAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="{StaticResource AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
         </DoubleAnimation>
     </Storyboard>
     <Storyboard x:Key="FadeOutAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0" Duration="{StaticResource AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
         </DoubleAnimation>
     </Storyboard>
     <Storyboard x:Key="ZoomInAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="0" To="1.0" Duration="{StaticResource AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
         </DoubleAnimation>
-        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="0" To="1.0" Duration="{StaticResource AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="0" To="1.0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
@@ -104,12 +102,12 @@
         <!--<PointAnimation Storyboard.TargetProperty="RenderTransformOrigin" To="0,0" Duration="00:00:00" />-->
     </Storyboard>
     <Storyboard x:Key="ZoomOutAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="1.0" To="0" Duration="{StaticResource AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="1.0" To="0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
         </DoubleAnimation>
-        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="1.0" To="0" Duration="{StaticResource AnimationDuration}">
+        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="1.0" To="0" Duration="{x:Static common:AnimationHelper.AnimationDuration}">
             <DoubleAnimation.EasingFunction>
                 <CubicEase EasingMode="EaseInOut" />
             </DoubleAnimation.EasingFunction>
@@ -137,12 +135,12 @@
                                     <VisualState x:Name="Pressed" Storyboard="{StaticResource PressedState}"/>-->
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Duration="{StaticResource AnimationDuration}" />
+                                        <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation To="0.5" Storyboard.TargetProperty="Opacity" Duration="{StaticResource AnimationDuration}" />
+                                        <DoubleAnimation To="0.5" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
