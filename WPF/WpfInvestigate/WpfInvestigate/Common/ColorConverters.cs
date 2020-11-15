@@ -127,16 +127,16 @@ namespace WpfInvestigate.Common
             {
                 string[] ss = null;
                 if (value is string)
-                    ss = ((string)value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    ss = ((string)value).Split(',');
                 else if ((value as BindingProxy)?.Value is string)
-                    ss = ((string)((BindingProxy)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    ss = ((string)((BindingProxy)value).Value).Split(',');
                 else if ((value as DynamicBinding)?.Value is string)
-                    ss = ((string)((DynamicBinding)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    ss = ((string)((DynamicBinding)value).Value).Split(',');
 
                 HSL hsl = null;
                 if (ss != null && ss.Length == 2)
-                    hsl = new HSL(double.Parse(ss[0], Tips.InvariantCulture) / 360,
-                        double.Parse(ss[1], Tips.InvariantCulture) / 100, newL / 100.0);
+                    hsl = new HSL(double.Parse(ss[0].Trim(), Tips.InvariantCulture) / 360,
+                        double.Parse(ss[1].Trim(), Tips.InvariantCulture) / 100, newL / 100.0);
                 else if (value is Brush brush)
                     hsl = new HSL(new RGB(Tips.GetColorFromBrush(brush)));
                 else if (value is DependencyObject d)
@@ -164,6 +164,14 @@ namespace WpfInvestigate.Common
 
         private bool _noSplit = false;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter">Set of transformations HSL divided by '/'. Every transformation is in format: /lightness changes/ or /saturation changes[; or ,]lightness changes/</param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             HSL hsl = null;
@@ -171,15 +179,15 @@ namespace WpfInvestigate.Common
             Color? oldColor = null;
 
             if (value is string)
-                ss = ((string)value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                ss = ((string)value).Split(',');
             else if ((value as BindingProxy)?.Value is string)
-                ss = ((string)((BindingProxy)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                ss = ((string)((BindingProxy)value).Value).Split(',');
             else if ((value as DynamicBinding)?.Value is string)
-                ss = ((string)((DynamicBinding)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                ss = ((string)((DynamicBinding)value).Value).Split(',');
 
             if (ss != null && ss.Length == 2)
-                hsl = new HSL(double.Parse(ss[0], Tips.InvariantCulture) / 360,
-                    double.Parse(ss[1], Tips.InvariantCulture) / 100, 0);
+                hsl = new HSL(double.Parse(ss[0].Trim(), Tips.InvariantCulture) / 360,
+                    double.Parse(ss[1].Trim(), Tips.InvariantCulture) / 100, 0);
             else if (value is Brush brush)
                 oldColor = Tips.GetColorFromBrush(brush);
             else if (value is Color color)
@@ -196,8 +204,12 @@ namespace WpfInvestigate.Common
                     foreach (var p in parameter.ToString().Split('/'))
                     {
                         var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
-                        var newL = ColorConverterHelper.ConvertValue(hsl.L, p, !_noSplit ? isDarkColor : (bool?)null);
-                        hsl = new HSL(hsl.H, hsl.S, newL);
+                        var pp = p.Split(new[] { ",", ";" }, StringSplitOptions.None);
+                        var newS = hsl.S;
+                        if (pp.Length>1)
+                            newS = ColorConverterHelper.ConvertValue(hsl.S, pp[0], !_noSplit ? isDarkColor : (bool?)null);
+                        var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[pp.Length - 1], !_noSplit ? isDarkColor : (bool?) null);
+                        hsl = new HSL(hsl.H, newS, newL);
                     }
 
                 if (Tips.GetNotNullableType(targetType) == typeof(Color))
@@ -226,12 +238,12 @@ namespace WpfInvestigate.Common
             string[] ss = null;
 
             if (value is string)
-                ss = ((string)value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                ss = ((string)value).Split(',');
             else if ((value as BindingProxy)?.Value is string)
-                ss = ((string)((BindingProxy)value).Value).Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                ss = ((string)((BindingProxy)value).Value).Split(',');
 
             if (ss != null && ss.Length == 2)
-                lab = new LAB(double.Parse(ss[0], Tips.InvariantCulture), double.Parse(ss[1], Tips.InvariantCulture), 0);
+                lab = new LAB(double.Parse(ss[0].Trim(), Tips.InvariantCulture), double.Parse(ss[1].Trim(), Tips.InvariantCulture), 0);
             else if (value is Brush brush)
                 lab = new LAB(new RGB(Tips.GetColorFromBrush(brush)));
             else if (value is DependencyObject d)
@@ -289,24 +301,32 @@ namespace WpfInvestigate.Common
     public class GradientMonochromeBrush : IValueConverter
     {
         public static GradientMonochromeBrush Instance = new GradientMonochromeBrush();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter">GradientStops divided by '/'. Every element is in format: \lightness(double),offset(double)\</param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string && parameter is string)
             {
-                var ss = ((string) value).Split(new[] {",", " "}, StringSplitOptions.RemoveEmptyEntries);
+                var ss = ((string) value).Split(',');
                 if (ss.Length >= 2)
                 {
-                    var hue = double.Parse(ss[0], Tips.InvariantCulture) / 360;
-                    var saturation = double.Parse(ss[1], Tips.InvariantCulture) / 100;
-                    var lightness = ss.Length > 2 ? double.Parse(ss[2], Tips.InvariantCulture) / 100 : 0.0;
+                    var hue = double.Parse(ss[0].Trim(), Tips.InvariantCulture) / 360;
+                    var saturation = double.Parse(ss[1].Trim(), Tips.InvariantCulture) / 100;
+                    var lightness = ss.Length > 2 ? double.Parse(ss[2].Trim(), Tips.InvariantCulture) / 100 : 0.0;
 
                     var gradientStops = new GradientStopCollection( );
                     foreach (var p in parameter.ToString().Split('/'))
                     {
-                        var pp = p.Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                        var pp = p.Split(',');
                         if (pp.Length == 2)
                         {
-                            var newL = ColorConverterHelper.ConvertValue(lightness, pp[0]);
+                            var newL = ColorConverterHelper.ConvertValue(lightness, pp[0].Trim());
                             var hsl = new HSL(hue, saturation, newL);
                             var offset = double.Parse(pp[1].Trim(), Tips.InvariantCulture);
                             gradientStops.Add(new GradientStop(hsl.RGB.Color, offset));

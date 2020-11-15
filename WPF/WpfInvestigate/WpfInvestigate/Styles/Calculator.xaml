@@ -22,11 +22,11 @@
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Focusable" Value="False"/>
-        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="1"/>
+        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
         <Setter Property="effects:ClickEffect.ShiftOffsetOnClick" Value="1"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=50}"/>
+                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100,50'}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -36,12 +36,11 @@
         <Style.Resources>
             <SolidColorBrush x:Key="IndicatorColor" Color="{x:Static SystemColors.InfoColor}"/>
             <!-- Dark theme -->
-            <sys:String x:Key="BackgroundHsl">0,0</sys:String>
-            <sys:String x:Key="DigitButtonHsl">0,0</sys:String>
+            <sys:String x:Key="DigitButtonHsl">250,5</sys:String>
             <sys:String x:Key="OperatorButtonHsl">180,50</sys:String>
             <sys:String x:Key="EqualButtonHsl">120,50</sys:String>
 
-            <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource BackgroundHsl}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}"/>
+            <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=15}"/>
             <Style x:Key="DigitButtonStyle" TargetType="Button" BasedOn="{StaticResource CalculatorButtonBaseStyle}">
                 <Setter Property="Background" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='40,0.0/20,0.3/13,0.85/40,1.0'}"/>
                 <Setter Property="Foreground" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
@@ -65,6 +64,7 @@
         <Setter Property="Focusable" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Background" Value="{DynamicResource ControlBackColor}"/>
+        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:Calculator}">
@@ -172,12 +172,11 @@
 
     <Style x:Key="LightCalculatorStyle" TargetType="controls:Calculator" BasedOn="{StaticResource DarkCalculatorStyle}">
         <Style.Resources>
-            <sys:String x:Key="BackgroundHsl">210,100</sys:String>
             <sys:String x:Key="DigitButtonHsl">210,100</sys:String>
             <sys:String x:Key="OperatorButtonHsl">240,100</sys:String>
             <sys:String x:Key="EqualButtonHsl">270,100</sys:String>
 
-            <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource BackgroundHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=73}"/>
+            <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=73}"/>
             <Style x:Key="DigitButtonStyle" TargetType="Button" BasedOn="{StaticResource CalculatorButtonBaseStyle}">
                 <Setter Property="Background" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='100,0.0/80,0.3/73,0.85/100,1.0'}"/>
                 <Setter Property="Foreground" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=35}"/>
