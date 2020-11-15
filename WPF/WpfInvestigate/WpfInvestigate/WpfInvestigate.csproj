@@ -74,9 +74,7 @@
     <Compile Include="Common\INotifyPropertyChangedAbstract.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Controls\AdornerControl.cs" />
-    <Compile Include="Controls\Calculator.xaml.cs">
-      <DependentUpon>Calculator.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\Calculator.cs" />
     <Compile Include="Controls\ColorControl.xaml.cs">
       <DependentUpon>ColorControl.xaml</DependentUpon>
     </Compile>
@@ -123,9 +121,6 @@
     </Compile>
     <Compile Include="Effects\WatermarkEffect.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
-    <Compile Include="Styles\Calculator.xaml.cs">
-      <DependentUpon>Calculator.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Temp\OriginalVirtualKeyboard.xaml.cs">
       <DependentUpon>OriginalVirtualKeyboard.xaml</DependentUpon>
     </Compile>
@@ -218,10 +213,6 @@
       <DependentUpon>Common.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\ButtonStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Calculator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

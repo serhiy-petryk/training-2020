@@ -11,10 +11,7 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    /// <summary>
-    /// Interaction logic for Calculator.xaml
-    /// </summary>
-    public partial class Calculator : INotifyPropertyChanged
+    public class Calculator : UserControl, INotifyPropertyChanged
     {
         private const int IntervalCountWhenChange = 100;
         private const int IntervalStepChange = 10;
@@ -32,7 +29,7 @@ namespace WpfInvestigate.Controls
 
         public Calculator()
         {
-            InitializeComponent();
+            PreviewMouseLeftButtonDown += Calculator_OnPreviewMouseLeftButtonDown;
             Culture = Tips.CurrentCulture;
         }
 
