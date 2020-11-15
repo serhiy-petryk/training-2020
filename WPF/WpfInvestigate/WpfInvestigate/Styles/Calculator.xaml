@@ -5,8 +5,13 @@
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
-    <Style TargetType="ButtonBase" x:Key="CalculatorButtonBaseStyle">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/ButtonStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="ButtonBase" x:Key="CalculatorButtonBaseStyle" BasedOn="{StaticResource DefaultButtonBaseStyle}">
         <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="MinHeight" Value="16"/>
         <Setter Property="MaxHeight" Value="48"/>
@@ -17,28 +22,13 @@
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Focusable" Value="False"/>
-        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ButtonBase">
-                    <Border x:Name="Border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
-                        <ContentPresenter x:Name="Content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="Blue"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Content" Property="RenderTransform">
-                                <Setter.Value>
-                                    <TranslateTransform Y="0.5" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="1"/>
+        <Setter Property="effects:ClickEffect.ShiftOffsetOnClick" Value="1"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=50}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="DarkCalculatorStyle" TargetType="controls:Calculator">

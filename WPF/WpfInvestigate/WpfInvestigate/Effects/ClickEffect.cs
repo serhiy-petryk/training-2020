@@ -22,11 +22,11 @@ namespace WpfInvestigate.Effects
     /// </summary>
     public class ClickEffect
     {
-        public static readonly DependencyProperty ShiftOnClickOffsetProperty = DependencyProperty.RegisterAttached("ShiftOnClickOffset",
+        public static readonly DependencyProperty ShiftOffsetOnClickProperty = DependencyProperty.RegisterAttached("ShiftOffsetOnClick",
             typeof(double), typeof(ClickEffect), new UIPropertyMetadata(0.0, OnPropertiesChanged));
-        public static double GetShiftOnOffsetClick(DependencyObject obj) => (double)obj.GetValue(ShiftOnClickOffsetProperty);
+        public static double GetShiftOffsetOnClick(DependencyObject obj) => (double)obj.GetValue(ShiftOffsetOnClickProperty);
         /// <summary>The number of pixels by which the element will move down when the mouse button is pressed. Recommended value is 1.0 or 1.5</summary>
-        public static void SetShiftOnOffsetClick(DependencyObject obj, double value) => obj.SetValue(ShiftOnClickOffsetProperty, value);
+        public static void SetShiftOffsetOnClick(DependencyObject obj, double value) => obj.SetValue(ShiftOffsetOnClickProperty, value);
 
         public static readonly DependencyProperty RippleColorProperty = DependencyProperty.RegisterAttached("RippleColor",
             typeof(Color?), typeof(ClickEffect), new UIPropertyMetadata(null, OnPropertiesChanged));
@@ -67,10 +67,10 @@ namespace WpfInvestigate.Effects
             fe.PreviewMouseLeftButtonUp -= OnElementPreviewMouseLeftButtonUp;
         }
 
-
         private static void OnElementPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (sender is FrameworkElement element && element.RenderTransform is TranslateTransform transform)
+            var content = Tips.GetVisualChildren(sender as FrameworkElement).OfType<ContentPresenter>().FirstOrDefault() ?? sender as FrameworkElement;
+            if (content != null && content.RenderTransform is TranslateTransform transform)
                 transform.Y = 0.0;
         }
 
@@ -83,14 +83,15 @@ namespace WpfInvestigate.Effects
             if (rippleColor.HasValue)
                 Animate(element, e.GetPosition(element), rippleColor.Value);
 
-            var shiftOnClickOffset = GetShiftOnOffsetClick(element);
-            if (!Tips.AreEqual(0.0, shiftOnClickOffset))
+            var shiftOffsetOnClick = GetShiftOffsetOnClick(element);
+            if (!Tips.AreEqual(0.0, shiftOffsetOnClick))
             {
-                if (!(element.RenderTransform is TranslateTransform))
-                    element.RenderTransform = new TranslateTransform();
+                var content = Tips.GetVisualChildren(element).OfType<ContentPresenter>().FirstOrDefault() ?? element;
+                if (!(content.RenderTransform is TranslateTransform))
+                    content.RenderTransform = new TranslateTransform();
 
-                element.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
-                    new Action(() => ((TranslateTransform) element.RenderTransform).Y = shiftOnClickOffset));
+                content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
+                    new Action(() => ((TranslateTransform) content.RenderTransform).Y = shiftOffsetOnClick));
             }
         }
 
