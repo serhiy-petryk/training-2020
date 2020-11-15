@@ -5,88 +5,88 @@
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
-    <SolidColorBrush x:Key="IndicatorColor" Color="{x:Static SystemColors.InfoColor}"/>
-
-    <Style TargetType="ButtonBase" x:Key="CommonStyle">
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="MinHeight" Value="16"/>
-        <Setter Property="MaxHeight" Value="48"/>
-        <Setter Property="MinWidth" Value="16"/>
-        <Setter Property="MaxWidth" Value="68"/>
-        <Setter Property="Margin" Value="2"/>
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="Focusable" Value="False"/>
-        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ButtonBase">
-                    <Border x:Name="Border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
-                        <ContentPresenter x:Name="Content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="Blue"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Content" Property="RenderTransform">
-                                <Setter.Value>
-                                    <TranslateTransform Y="0.5" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Light theme -->
-    <system:String x:Key="LightBackgroundHsl">210,100</system:String>
-    <system:String x:Key="LightDigitButtonHsl">210,100</system:String>
-    <system:String x:Key="LightOperatorButtonHsl">240,100</system:String>
-    <system:String x:Key="LightEqualButtonHsl">270,100</system:String>
-
-    <SolidColorBrush x:Key="LightControlBackColor" Color="{Binding Source={StaticResource LightBackgroundHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=73}"/>
-    <Style x:Key="LightDigitButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
-        <Setter Property="Background" Value="{Binding Source={StaticResource LightDigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='100,0.0/80,0.3/73,0.85/100,1.0'}"/>
-        <Setter Property="Foreground" Value="{Binding Source={StaticResource LightDigitButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=35}"/>
-    </Style>
-    <Style x:Key="LightOperatorButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource CommonStyle}">
-        <Setter Property="Background" Value="{Binding Source={StaticResource LightOperatorButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='100,0.0/80,0.3/73,0.85/100,1.0'}"/>
-        <Setter Property="Foreground" Value="{Binding Source={StaticResource LightOperatorButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=35}"/>
-    </Style>
-    <Style x:Key="LightEqualButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
-        <Setter Property="Background" Value="{Binding Source={StaticResource LightEqualButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='100,0.0/80,0.3/73,0.85/100,1.0'}"/>
-        <Setter Property="Foreground" Value="{Binding Source={StaticResource LightEqualButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=35}"/>
-    </Style>
-
-    <!-- Dark theme -->
-    <system:String x:Key="DarkBackgroundHsl">0,0</system:String>
-    <system:String x:Key="DarkDigitButtonHsl">0,0</system:String>
-    <system:String x:Key="DarkOperatorButtonHsl">180,50</system:String>
-    <system:String x:Key="DarkEqualButtonHsl">120,50</system:String>
-
-    <SolidColorBrush x:Key="DarkControlBackColor" Color="{Binding Source={StaticResource DarkBackgroundHsl}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}"/>
-    <Style x:Key="DarkDigitButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
-        <Setter Property="Background" Value="{Binding Source={StaticResource DarkDigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='40,0.0/20,0.3/13,0.85/40,1.0'}"/>
-        <Setter Property="Foreground" Value="{Binding Source={StaticResource DarkDigitButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
-    </Style>
-    <Style x:Key="DarkOperatorButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource CommonStyle}">
-        <Setter Property="Background" Value="{Binding Source={StaticResource DarkOperatorButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='40,0.0/20,0.3/13,0.85/40,1.0'}"/>
-        <Setter Property="Foreground" Value="{Binding Source={StaticResource DarkOperatorButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
-    </Style>
-    <Style x:Key="DarkEqualButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
-        <Setter Property="Background" Value="{Binding Source={StaticResource DarkEqualButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='40,0.0/20,0.3/13,0.85/40,1.0'}"/>
-        <Setter Property="Foreground" Value="{Binding Source={StaticResource DarkEqualButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
-    </Style>
-
-    <!-- ========== -->
-    <!-- Calculator -->
-    <!-- ========== -->
     <Style x:Key="DarkCalculatorStyle" TargetType="controls:Calculator">
+        <!-- Resources -->
+        <Style.Resources>
+            <SolidColorBrush x:Key="IndicatorColor" Color="{x:Static SystemColors.InfoColor}"/>
+            <Style TargetType="ButtonBase" x:Key="CommonStyle">
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="MinHeight" Value="16"/>
+                <Setter Property="MaxHeight" Value="48"/>
+                <Setter Property="MinWidth" Value="16"/>
+                <Setter Property="MaxWidth" Value="68"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ButtonBase">
+                            <Border x:Name="Border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                                <ContentPresenter x:Name="Content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="Content" Property="RenderTransform">
+                                        <Setter.Value>
+                                            <TranslateTransform Y="0.5" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Light theme -->
+            <system:String x:Key="LightBackgroundHsl">210,100</system:String>
+            <system:String x:Key="LightDigitButtonHsl">210,100</system:String>
+            <system:String x:Key="LightOperatorButtonHsl">240,100</system:String>
+            <system:String x:Key="LightEqualButtonHsl">270,100</system:String>
+
+            <SolidColorBrush x:Key="LightControlBackColor" Color="{Binding Source={StaticResource LightBackgroundHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=73}"/>
+            <Style x:Key="LightDigitButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
+                <Setter Property="Background" Value="{Binding Source={StaticResource LightDigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='100,0.0/80,0.3/73,0.85/100,1.0'}"/>
+                <Setter Property="Foreground" Value="{Binding Source={StaticResource LightDigitButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=35}"/>
+            </Style>
+            <Style x:Key="LightOperatorButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource CommonStyle}">
+                <Setter Property="Background" Value="{Binding Source={StaticResource LightOperatorButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='100,0.0/80,0.3/73,0.85/100,1.0'}"/>
+                <Setter Property="Foreground" Value="{Binding Source={StaticResource LightOperatorButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=35}"/>
+            </Style>
+            <Style x:Key="LightEqualButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
+                <Setter Property="Background" Value="{Binding Source={StaticResource LightEqualButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='100,0.0/80,0.3/73,0.85/100,1.0'}"/>
+                <Setter Property="Foreground" Value="{Binding Source={StaticResource LightEqualButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=35}"/>
+            </Style>
+
+            <!-- Dark theme -->
+            <system:String x:Key="DarkBackgroundHsl">0,0</system:String>
+            <system:String x:Key="DarkDigitButtonHsl">0,0</system:String>
+            <system:String x:Key="DarkOperatorButtonHsl">180,50</system:String>
+            <system:String x:Key="DarkEqualButtonHsl">120,50</system:String>
+
+            <SolidColorBrush x:Key="DarkControlBackColor" Color="{Binding Source={StaticResource DarkBackgroundHsl}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}"/>
+            <Style x:Key="DarkDigitButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
+                <Setter Property="Background" Value="{Binding Source={StaticResource DarkDigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='40,0.0/20,0.3/13,0.85/40,1.0'}"/>
+                <Setter Property="Foreground" Value="{Binding Source={StaticResource DarkDigitButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
+            </Style>
+            <Style x:Key="DarkOperatorButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource CommonStyle}">
+                <Setter Property="Background" Value="{Binding Source={StaticResource DarkOperatorButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='40,0.0/20,0.3/13,0.85/40,1.0'}"/>
+                <Setter Property="Foreground" Value="{Binding Source={StaticResource DarkOperatorButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
+            </Style>
+            <Style x:Key="DarkEqualButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonStyle}">
+                <Setter Property="Background" Value="{Binding Source={StaticResource DarkEqualButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='40,0.0/20,0.3/13,0.85/40,1.0'}"/>
+                <Setter Property="Foreground" Value="{Binding Source={StaticResource DarkEqualButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
+            </Style>
+        </Style.Resources>
+
+        <!-- Setters -->
         <Setter Property="Width" Value="170"/>
         <Setter Property="Height" Value="220"/>
         <Setter Property="BorderBrush" Value="LightSkyBlue"/>
@@ -209,5 +209,6 @@
         <Setter Property="OperatorButtonStyle" Value="{StaticResource LightOperatorButtonStyle}"/>
         <Setter Property="EqualButtonStyle" Value="{StaticResource LightEqualButtonStyle}"/>
     </Style>
+
     <Style TargetType="controls:Calculator" BasedOn="{StaticResource DarkCalculatorStyle}"/>
 </ResourceDictionary>
