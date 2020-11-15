@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
@@ -46,10 +46,10 @@
         <Style.Resources>
             <SolidColorBrush x:Key="IndicatorColor" Color="{x:Static SystemColors.InfoColor}"/>
             <!-- Dark theme -->
-            <system:String x:Key="BackgroundHsl">0,0</system:String>
-            <system:String x:Key="DigitButtonHsl">0,0</system:String>
-            <system:String x:Key="OperatorButtonHsl">180,50</system:String>
-            <system:String x:Key="EqualButtonHsl">120,50</system:String>
+            <sys:String x:Key="BackgroundHsl">0,0</sys:String>
+            <sys:String x:Key="DigitButtonHsl">0,0</sys:String>
+            <sys:String x:Key="OperatorButtonHsl">180,50</sys:String>
+            <sys:String x:Key="EqualButtonHsl">120,50</sys:String>
 
             <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource BackgroundHsl}, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=13}"/>
             <Style x:Key="DigitButtonStyle" TargetType="Button" BasedOn="{StaticResource CalculatorButtonBaseStyle}">
@@ -182,10 +182,10 @@
 
     <Style x:Key="LightCalculatorStyle" TargetType="controls:Calculator" BasedOn="{StaticResource DarkCalculatorStyle}">
         <Style.Resources>
-            <system:String x:Key="BackgroundHsl">210,100</system:String>
-            <system:String x:Key="DigitButtonHsl">210,100</system:String>
-            <system:String x:Key="OperatorButtonHsl">240,100</system:String>
-            <system:String x:Key="EqualButtonHsl">270,100</system:String>
+            <sys:String x:Key="BackgroundHsl">210,100</sys:String>
+            <sys:String x:Key="DigitButtonHsl">210,100</sys:String>
+            <sys:String x:Key="OperatorButtonHsl">240,100</sys:String>
+            <sys:String x:Key="EqualButtonHsl">270,100</sys:String>
 
             <SolidColorBrush x:Key="ControlBackColor" Color="{Binding Source={StaticResource BackgroundHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=73}"/>
             <Style x:Key="DigitButtonStyle" TargetType="Button" BasedOn="{StaticResource CalculatorButtonBaseStyle}">
