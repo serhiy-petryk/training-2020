@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -50,40 +51,30 @@ namespace WpfInvestigate.Controls
 
         public string DecimalSeparator => Culture.NumberFormat.NumberDecimalSeparator;
 
-        #region ===========  DependencyProperty  =================
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(decimal?),
-            typeof(Calculator), new PropertyMetadata(null, (d, e) => ((Calculator)d).OnValueChanged(e.NewValue as decimal?)));
-
-        public decimal? Value
-        {
-            get => (decimal?)GetValue(ValueProperty);
-            set => SetValue(ValueProperty, value);
-        }
-
-        public static readonly DependencyProperty DigitButtonStyleProperty = DependencyProperty.Register("DigitButtonStyle", typeof(Style),
-            typeof(Calculator), new PropertyMetadata(null));
-        public Style DigitButtonStyle
-        {
-            get => (Style)GetValue(DigitButtonStyleProperty);
-            set => SetValue(DigitButtonStyleProperty, value);
-        }
-        public static readonly DependencyProperty OperatorButtonStyleProperty = DependencyProperty.Register("OperatorButtonStyle", typeof(Style),
-            typeof(Calculator), new PropertyMetadata(null));
-        public Style OperatorButtonStyle
-        {
-            get => (Style)GetValue(OperatorButtonStyleProperty);
-            set => SetValue(OperatorButtonStyleProperty, value);
-        }
-        public static readonly DependencyProperty EqualButtonStyleProperty = DependencyProperty.Register("EqualButtonStyle", typeof(Style),
-            typeof(Calculator), new PropertyMetadata(null));
-        public Style EqualButtonStyle
-        {
-            get => (Style)GetValue(EqualButtonStyleProperty);
-            set => SetValue(EqualButtonStyleProperty, value);
-        }
-        #endregion
-
         #region ========  Override && events =================
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            // _calendar = GetTemplateChild(ElementCalendar) as Calendar;
+            var aa1 = Tips.GetVisualChildren(this).OfType<ButtonBase>().ToArray();
+
+            foreach (var button in Tips.GetVisualChildren(this).OfType<ButtonBase>().ToArray())
+            {
+                if (button.Tag is string)
+                    button.Click += OperatorButton_OnClick;
+                else
+                    button.Click += DigitButton_OnClick;
+            }
+
+            var indicator = GetTemplateChild("PART_Indicator") as TextBox;
+            if (indicator != null)
+            {
+                indicator.PreviewKeyDown += Indicator_OnPreviewKeyDown;
+                indicator.PreviewKeyUp += Indicator_OnPreviewKeyUp;
+                indicator.PreviewMouseWheel += Indicator_OnPreviewMouseWheel;
+                indicator.TextChanged += Indicator_OnTextChanged;
+            }
+        }
         protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
@@ -152,12 +143,12 @@ namespace WpfInvestigate.Controls
             ExecuteDigit(digit);
         }
 
-        private void Operator_OnButtonClick(object sender, RoutedEventArgs e)
+        private void OperatorButton_OnClick(object sender, RoutedEventArgs e)
         {
             ExecuteOperator((sender as ButtonBase).Tag as string);
         }
 
-        private void TextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        private void Indicator_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = (TextBox)sender;
             // Adjust font size
@@ -369,7 +360,6 @@ namespace WpfInvestigate.Controls
             OnPropertiesChanged(new[] { nameof(IndicatorText), nameof(StatusText), nameof(ErrorText), nameof(DecimalSeparator) });
         }
 
-        //===========  INotifyPropertyChanged  =======================
         #region ===========  INotifyPropertyChanged  ===============
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -387,5 +377,38 @@ namespace WpfInvestigate.Controls
             if (indicator.IsFocused)
                 ExecuteOperator(e.Delta > 0 ? "++" : "--");
         }
+
+        #region ===========  DependencyProperty  =================
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(decimal?),
+            typeof(Calculator), new PropertyMetadata(null, (d, e) => ((Calculator)d).OnValueChanged(e.NewValue as decimal?)));
+
+        public decimal? Value
+        {
+            get => (decimal?)GetValue(ValueProperty);
+            set => SetValue(ValueProperty, value);
+        }
+
+        public static readonly DependencyProperty DigitButtonStyleProperty = DependencyProperty.Register("DigitButtonStyle", typeof(Style),
+            typeof(Calculator), new PropertyMetadata(null));
+        public Style DigitButtonStyle
+        {
+            get => (Style)GetValue(DigitButtonStyleProperty);
+            set => SetValue(DigitButtonStyleProperty, value);
+        }
+        public static readonly DependencyProperty OperatorButtonStyleProperty = DependencyProperty.Register("OperatorButtonStyle", typeof(Style),
+            typeof(Calculator), new PropertyMetadata(null));
+        public Style OperatorButtonStyle
+        {
+            get => (Style)GetValue(OperatorButtonStyleProperty);
+            set => SetValue(OperatorButtonStyleProperty, value);
+        }
+        public static readonly DependencyProperty EqualButtonStyleProperty = DependencyProperty.Register("EqualButtonStyle", typeof(Style),
+            typeof(Calculator), new PropertyMetadata(null));
+        public Style EqualButtonStyle
+        {
+            get => (Style)GetValue(EqualButtonStyleProperty);
+            set => SetValue(EqualButtonStyleProperty, value);
+        }
+        #endregion
     }
 }

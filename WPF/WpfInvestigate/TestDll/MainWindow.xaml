@@ -64,6 +64,9 @@
                     <controls:TimePicker Width="100" Height="30" Background="Yellow" Foreground="Blue" Margin="0 0 5 0" SelectedTimeFormat="Long"/>
 
                 </WrapPanel>
+                <WrapPanel>
+                    <controls:Calculator Style="{StaticResource LightCalculatorStyle}"/>
+                </WrapPanel>
             </StackPanel>
 
         </Grid>
