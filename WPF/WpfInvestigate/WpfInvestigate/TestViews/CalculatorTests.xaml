@@ -33,6 +33,10 @@
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -47,13 +51,14 @@
 
             <Button Grid.Row="0" Click="OnSetValueButtonClick">Set new Value</Button>
 
-            <controls:Calculator x:Name="Calc" Grid.Row="2"/>
+            <controls:Calculator x:Name="Calc" Grid.Row="2" Grid.Column="0" Style="{StaticResource DarkCalculatorStyle}"/>
+            <controls:Calculator Grid.Row="2" Grid.Column="1" Style="{StaticResource LightCalculatorStyle}"/>
 
             <Label Grid.Row="3" Content="{Binding ElementName=Calc, Path=Value}" Background="Yellow"/>
 
             <StackPanel Grid.Row="6" Orientation="Horizontal">
                 <Viewbox Width="120" UseLayoutRounding="False" SnapsToDevicePixels="False">
-                    <controls:Calculator UseLayoutRounding="False" SnapsToDevicePixels="False"/>
+                    <controls:Calculator UseLayoutRounding="False" SnapsToDevicePixels="False" Style="{StaticResource LightCalculatorStyle}"/>
                 </Viewbox>
                 <Viewbox Width="100" UseLayoutRounding="True" SnapsToDevicePixels="True">
                     <controls:Calculator UseLayoutRounding="True" SnapsToDevicePixels="True"/>
