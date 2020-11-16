@@ -71,7 +71,7 @@ namespace WpfInvestigate.Effects
                 viewbox.RenderTransform = new ScaleTransform(scale.Width, scale.Height);
             }
         }
-        private static void SetPathInControl(ContentControl control)
+        private static void SetPathInControl(ContentControl control, bool iconBeforeContent = true)
         {
             var path = GetPath(control);
             var scale = GetScale(control);
@@ -93,10 +93,10 @@ namespace WpfInvestigate.Effects
             control.Resources["AddedPath"] = true;
 
             // var path = new Path { Stretch = Stretch.Uniform, Margin = new Thickness(), Data = icon };
-            path.SetBinding(Shape.FillProperty, new Binding("Foreground")
+            /*path.SetBinding(Shape.FillProperty, new Binding("Foreground")
             {
                 RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Control), 1)
-            });
+            });*/
             var viewbox = new Viewbox
             {
                 Child = path,
@@ -107,7 +107,7 @@ namespace WpfInvestigate.Effects
 
             if (control.HasContent)
             {
-                /*var grid = new Grid { ClipToBounds = true, Margin = new Thickness(), SnapsToDevicePixels = true };
+                var grid = new Grid { ClipToBounds = true, Margin = new Thickness(), SnapsToDevicePixels = true };
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = iconBeforeContent ? GridLength.Auto : new GridLength(1, GridUnitType.Star) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = !iconBeforeContent ? GridLength.Auto : new GridLength(1, GridUnitType.Star) });
 
@@ -128,7 +128,7 @@ namespace WpfInvestigate.Effects
                 grid.Children.Add(contentControl);
                 Grid.SetColumn(contentControl, iconBeforeContent ? 1 : 0);
 
-                control.Content = grid;*/
+                control.Content = grid;
             }
             else
                 control.Content = viewbox;
