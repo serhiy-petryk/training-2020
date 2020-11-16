@@ -24,7 +24,7 @@
                 <Setter Property="MaxWidth" Value="68"/>
                 <Setter Property="Margin" Value="2"/>
                 <Setter Property="Padding" Value="0"/>
-                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=%44}"/>
                 <Setter Property="FontFamily" Value="Segoe UI"/>
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
@@ -181,7 +181,7 @@
                 <Setter Property="MaxWidth" Value="68"/>
                 <Setter Property="Margin" Value="2"/>
                 <Setter Property="Padding" Value="0"/>
-                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=%44}"/>
                 <Setter Property="FontFamily" Value="Segoe UI"/>
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
