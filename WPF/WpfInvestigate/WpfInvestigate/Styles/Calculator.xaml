@@ -37,7 +37,7 @@
             </Style>
 
             <!-- Dark theme -->
-            <sys:String x:Key="DigitButtonHsl">250,5</sys:String>
+            <sys:String x:Key="DigitButtonHsl">240,5</sys:String>
             <sys:String x:Key="OperatorButtonHsl">180,50</sys:String>
             <sys:String x:Key="EqualButtonHsl">120,50</sys:String>
 
@@ -173,8 +173,7 @@
     <Style x:Key="LightCalculatorStyle" TargetType="controls:Calculator" BasedOn="{StaticResource DarkCalculatorStyle}">
         <Setter Property="Background" Value="White"/>
         <Style.Resources>
-            <Style x:Key="LightButtonBaseStyle" TargetType="ButtonBase" BasedOn="{StaticResource DefaultButtonBaseStyle}">
-                <Setter Property="BorderThickness" Value="2"/>
+            <Style x:Key="LightButtonBaseStyle" TargetType="ButtonBase" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
                 <Setter Property="MinHeight" Value="16"/>
                 <Setter Property="MaxHeight" Value="48"/>
                 <Setter Property="MinWidth" Value="16"/>
@@ -185,8 +184,7 @@
                 <Setter Property="FontFamily" Value="Segoe UI"/>
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
-                <Setter Property="effects:ClickEffect.ShiftOffsetOnClick" Value="1"/>
-                </Style>
+            </Style>
 
             <Style x:Key="DigitButtonStyle" TargetType="Button" BasedOn="{StaticResource LightButtonBaseStyle}">
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SecondaryColor}"/>
