@@ -92,7 +92,8 @@ namespace WpfInvestigate.Effects
                 if (clock.CurrentState == ClockState.Filling)
                 {
                     viewbox.Child = newPath;
-                    ((ScaleTransform) viewbox.RenderTransform).ScaleX = 0.0;
+                    ((ScaleTransform)viewbox.RenderTransform).ScaleX = 0.0;
+                    ((ScaleTransform)viewbox.RenderTransform).ScaleY = newScale.Height;
                 }
             }
         }
