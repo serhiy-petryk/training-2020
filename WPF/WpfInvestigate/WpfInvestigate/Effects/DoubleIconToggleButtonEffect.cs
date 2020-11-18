@@ -65,7 +65,7 @@ namespace WpfInvestigate.Effects
             {
                 Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
                 {
-                    if ((!(tb.Content is FrameworkElement element) || !(GetViewbox(tb) is Viewbox)) && GetGeometryOn(tb) != Geometry.Empty && GetGeometryOff(tb) != Geometry.Empty)
+                    if ((!(tb.Content is FrameworkElement) || GetViewbox(tb) == null) && GetGeometryOn(tb) != Geometry.Empty && GetGeometryOff(tb) != Geometry.Empty)
                     {
                         Init(tb);
                         tb.Checked -= OnToggleButtonCheckChanged;

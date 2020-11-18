@@ -212,9 +212,11 @@
                     <Button Style="{StaticResource KeyButton}" Content="X" Width="60" Height="60"/>
                 </WrapPanel>
                 <WrapPanel Margin="5">
-                    <Button Width="48" Height="48" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen"
-                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                    <Button Width="48" Height="48" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
                         <Path Stretch="None" Fill="Blue" Data="M0 0Z M24 24Z M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                    </Button>
+                    <Button Width="48" Height="48" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Width="30" Stretch="Uniform" Fill="Blue" Data="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
                     </Button>
                 </WrapPanel>
             </StackPanel>

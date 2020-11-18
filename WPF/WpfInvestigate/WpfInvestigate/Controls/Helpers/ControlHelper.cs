@@ -24,6 +24,7 @@ namespace WpfInvestigate.Controls.Helpers
 
             return new Size(formattedText.Width, formattedText.Height);
         }
+
         public static void AddIconToControl(ContentControl control, bool iconBeforeContent, Geometry icon, Thickness iconMargin, double iconWidth = double.NaN)
         {
             if (control.Resources["AddIcon"] is bool)
@@ -42,70 +43,6 @@ namespace WpfInvestigate.Controls.Helpers
             control.Resources["AddIcon"] = true;
 
             var path = new Path { Stretch = Stretch.Uniform, Margin = new Thickness(), Data = icon };
-            path.SetBinding(Shape.FillProperty, new Binding("Foreground")
-            {
-                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Control), 1)
-            });
-            var viewbox = new Viewbox
-            {
-                Child = path,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                Margin = iconMargin,
-                Width = iconWidth,
-                Resources = { ["IconViewBox"] = true }
-            };
-
-            if (control.HasContent)
-            {
-                var grid = new Grid { ClipToBounds = true, Margin = new Thickness(), SnapsToDevicePixels = true };
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = iconBeforeContent ? GridLength.Auto : new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = !iconBeforeContent ? GridLength.Auto : new GridLength(1, GridUnitType.Star) });
-
-                grid.Children.Add(viewbox);
-                Grid.SetColumn(viewbox, iconBeforeContent ? 0 : 1);
-
-                var contentControl = new ContentPresenter
-                {
-                    Content = control.Content,
-                    Margin = control.Padding,
-                    VerticalAlignment = control.VerticalContentAlignment,
-                    HorizontalAlignment = control.HorizontalContentAlignment
-                };
-                control.Content = null;
-                control.Padding = new Thickness();
-                // tb.VerticalContentAlignment = VerticalAlignment.Stretch;
-                control.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-                grid.Children.Add(contentControl);
-                Grid.SetColumn(contentControl, iconBeforeContent ? 1 : 0);
-
-                control.Content = grid;
-            }
-            else
-                control.Content = viewbox;
-        }
-
-        public static void XXAddIconToControl(ContentControl control, bool iconBeforeContent, Geometry icon, Thickness iconMargin, double iconWidth = double.NaN)
-        {
-            if (control.Resources["AddIcon"] is bool)
-            { // icon already exists
-                var oldViewBox = Tips.GetVisualChildren(control).OfType<Viewbox>().FirstOrDefault(vb => vb.Resources["IconViewBox"] is bool);
-                if (oldViewBox != null)
-                {
-                    // wrong Margin/Width, якщо повторно виконуємо метод => потрібно ускладнити обробку (??? чи це потрібно)
-                    // oldViewBox.Margin = iconMargin;
-                    // oldViewBox.Width = iconWidth;
-                    if (oldViewBox.Child is Path oldPath)
-                        oldPath.Data = icon;
-                }
-                return;
-            }
-            control.Resources["AddIcon"] = true;
-
-            var path = new Path { Stretch = Stretch.Uniform, Margin = new Thickness(), Data = icon };
-            path.SetBinding(Shape.FillProperty, new Binding("Foreground")
-            {
-                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Control), 1)
-            });
             var viewbox = new Viewbox
             {
                 Child = path,
