@@ -3953,8 +3953,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Slider}">
                     <Border Background="{TemplateBinding Control.Background}"
-                  BorderBrush="{TemplateBinding Control.BorderBrush}"
-                  BorderThickness="{TemplateBinding Control.BorderThickness}" SnapsToDevicePixels="true">
+                            BorderBrush="{TemplateBinding Control.BorderBrush}"
+                            BorderThickness="{TemplateBinding Control.BorderThickness}" SnapsToDevicePixels="true">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -3962,16 +3962,16 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TickBar x:Name="TopTick" Grid.Row="0" Visibility="Collapsed" Placement="Top"
-                       Fill="{TemplateBinding Control.Foreground}" Height="4"/>
+                                     Fill="{TemplateBinding Control.Foreground}" Height="4"/>
                             <TickBar x:Name="BottomTick" Grid.Row="2" Visibility="Collapsed" Placement="Bottom"
-                       Fill="{TemplateBinding Control.Foreground}" Height="4"/>
+                                     Fill="{TemplateBinding Control.Foreground}" Height="4"/>
                             <Border x:Name="TrackBackground" Grid.Row="1" Margin="5,0" VerticalAlignment="center"
-                      BorderBrush="{StaticResource Ő}" BorderThickness="1" CornerRadius="1"
-                      Background="{StaticResource ŏ}" Height="4.0">
+                                    BorderBrush="{StaticResource Ő}" BorderThickness="1" CornerRadius="1"
+                                    Background="{StaticResource ŏ}" Height="4.0">
                                 <Canvas Margin="-6,-1">
                                     <Rectangle x:Name="PART_SelectionRange" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
-                             Height="4.0" Visibility="Hidden" StrokeThickness="1.0"
-                             Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                                               Height="4.0" Visibility="Hidden" StrokeThickness="1.0"
+                                               Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
                                 </Canvas>
                             </Border>
                             <Track Name="PART_Track" Grid.Row="1">
