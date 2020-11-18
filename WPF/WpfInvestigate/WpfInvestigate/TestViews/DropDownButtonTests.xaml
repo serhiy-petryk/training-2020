@@ -14,8 +14,10 @@
                         ScaleX="{Binding ElementName=uiScaleSlider, Path=Value}"
                         ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}" />
 
-        <Geometry x:Key="Mwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
-        <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
+        <Geometry x:Key="Mwi.Container.MenuGeometry">M0 0 Z M24 24Z M4,6H20V8H4V6M4,11H20V13H4V11M4,16H20V18H4V16Z</Geometry>
+        <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M0 0 Z M24 24Z M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
+        <Geometry x:Key="XMwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
+        <Geometry x:Key="XMwi.Container.LeftArrowGeometry">M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
 
         <ResourceDictionary x:Key="PopupMenu" x:Shared="False">
             <ContextMenu x:Key="cm" StaysOpen="False" LayoutTransform="{StaticResource ScaleTransform}">
@@ -158,15 +160,14 @@
                 <ToolBar x:Name="CommandBar3" ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch"
                      Padding="0" Margin="0 10 0 0" Height="30" Background="#FFD6EAFF">
 
-                    <ToggleButton x:Name="T1" Margin="0 -1 0 -2" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" VerticalAlignment="Stretch"
+                    <ToggleButton x:Name="T1" Margin="0 -1 2 -2" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" VerticalAlignment="Stretch"
                               Foreground="#FF0069D6" Padding="0"
                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                               effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
-                              effects:DoubleIconToggleButtonEffect.MarginOff="4 7 5 7"
-                              effects:DoubleIconToggleButtonEffect.MarginOn="5">
+                              effects:DoubleIconToggleButtonEffect.Width="24">
                     </ToggleButton>
 
                     <CheckBox IsChecked="False" IsThreeState="False" Style="{StaticResource {x:Static ToolBar.CheckBoxStyleKey}}"

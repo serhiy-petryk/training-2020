@@ -9,8 +9,8 @@
         Title="Obsolete DualPathToggleButtonEffectTests" Height="450" Width="800">
 
     <Window.Resources>
-        <Geometry x:Key="Mwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
-        <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
+        <Geometry x:Key="Mwi.Container.MenuGeometry">M0 0 Z M24 24Z M4,6H20V8H4V6M4,11H20V13H4V11M4,16H20V18H4V16Z</Geometry>
+        <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M0 0 Z M24 24Z M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
 
         <!-- Double buttons -->
         <SolidColorBrush x:Key="Mwi.WindowBar.ForegroundBrush" Color="Black"/>
@@ -179,7 +179,7 @@
                               SnapsToDevicePixels="True"
                               effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                               effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
-                              effects:DoubleIconToggleButtonEffect.Width="18"/>
+                              effects:DoubleIconToggleButtonEffect.Width="24"/>
 
                 <ToggleButton Margin="2 0" Width="26" Height="26" BorderThickness="1" BorderBrush="Red" Padding="1"
                               effects:ChromeEffect.BichromeAnimatedBackground="Blue"
@@ -188,9 +188,7 @@
                               ToolTip="Open/Close Task panel"
                               SnapsToDevicePixels="True"
                               effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                              effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
-                              effects:DoubleIconToggleButtonEffect.MarginOff="1 5 1 5"
-                              effects:DoubleIconToggleButtonEffect.MarginOn="2"/>
+                              effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
 
                 <ToggleButton Margin="2 0" Height="26" Padding="1" BorderThickness="1" BorderBrush="Red"
                               effects:ChromeEffect.BichromeAnimatedBackground="Blue"
@@ -259,9 +257,7 @@
                                   ToolTip="Open/Close Task panel"
                                   UseLayoutRounding="False"
                                   effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                                  effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
-                                  effects:DoubleIconToggleButtonEffect.MarginOff="0 7"
-                                  effects:DoubleIconToggleButtonEffect.MarginOn="0 4"/>
+                                  effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
 
                     <ToggleButton Width="26" Height="26" Padding="0"
                                   Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
@@ -269,9 +265,7 @@
                                   ToolTip="Open/Close Task panel"
                                   SnapsToDevicePixels="False"
                                   effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                                  effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
-                                  effects:DoubleIconToggleButtonEffect.MarginOff="0 7"
-                                  effects:DoubleIconToggleButtonEffect.MarginOn="0 4"/>
+                                  effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
 
                     <ToggleButton Margin="2 0" Width="26" Height="26" Padding="0"
                                   Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
@@ -279,9 +273,7 @@
                                   ToolTip="SnapsToDevicePixels=False"
                                   SnapsToDevicePixels="False"
                                   effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                                  effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
-                                  effects:DoubleIconToggleButtonEffect.MarginOff="0 6"
-                                  effects:DoubleIconToggleButtonEffect.MarginOn="0 3"/>
+                                  effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
 
                     <ToggleButton Margin="2 0" Width="26" Height="26" Padding="0"
                                   Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
@@ -289,9 +281,7 @@
                                   ToolTip="UseLayoutRounding=True"
                                   UseLayoutRounding="True"
                                   effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
-                                  effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
-                                  effects:DoubleIconToggleButtonEffect.MarginOff="0 6"
-                                  effects:DoubleIconToggleButtonEffect.MarginOn="0 3"/>
+                                  effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
 
                     <ToggleButton Width="18" Height="26" Padding="0" Focusable="False" IsThreeState="False"
                                   Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
