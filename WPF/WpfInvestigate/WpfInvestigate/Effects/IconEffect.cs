@@ -18,19 +18,17 @@ namespace WpfInvestigate.Effects
         public static void SetGeometry(DependencyObject obj, Geometry value) => obj.SetValue(GeometryProperty, value);
 
         //==================
-        public static readonly DependencyProperty MarginIfHasContentProperty = DependencyProperty.RegisterAttached("MarginIfHasContent",
+        public static readonly DependencyProperty MarginProperty = DependencyProperty.RegisterAttached("Margin",
             typeof(Thickness), typeof(IconEffect), new UIPropertyMetadata(new Thickness(), OnPropertiesChanged));
-        public static Thickness GetMarginIfHasContent(DependencyObject obj) => (Thickness)obj.GetValue(MarginIfHasContentProperty);
-        public static void SetMarginIfHasContent(DependencyObject obj, Thickness value) => obj.SetValue(MarginIfHasContentProperty, value);
+        public static Thickness GetMargin(DependencyObject obj) => (Thickness)obj.GetValue(MarginProperty);
+        public static void SetMargin(DependencyObject obj, Thickness value) => obj.SetValue(MarginProperty, value);
         //==================
         private static void OnPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is ContentControl control) || !(e.NewValue is Geometry geometry)) return;
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
-            {
-                ControlHelper.AddIconToControl(control, true, geometry, control.HasContent ? GetMarginIfHasContent(control) : control.Padding);
-            }));
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => 
+                ControlHelper.AddIconToControl(control, true, geometry, GetMargin(control))));
         }
     }
 }

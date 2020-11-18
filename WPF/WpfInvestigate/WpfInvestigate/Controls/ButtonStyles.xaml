@@ -238,7 +238,8 @@
                                  Points="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.LeftUpPolygonPoints}}">
                         </Polygon>
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                          RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Margin="{TemplateBinding Padding}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -255,7 +256,8 @@
                                  Points="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.RightDownPolygonPoints}}">
                         </Polygon>
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                          RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Margin="{TemplateBinding Padding}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

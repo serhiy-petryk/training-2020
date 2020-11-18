@@ -9,7 +9,7 @@
         Title="ButtonStyleTests" Height="600" Width="1250">
 
     <Window.Resources>
-        <Geometry x:Key="DemoGeometry">M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z</Geometry>
+        <Geometry x:Key="DemoGeometry">M0 0Z M24 24Z M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z</Geometry>
         <Geometry x:Key="Mwi.Container.MenuGeometry">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</Geometry>
         <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
 
@@ -145,7 +145,7 @@
                                 effects:CornerRadiusEffect.CornerRadius="4"
                                 effects:FocusEffect.Brush="Aqua"
                                 effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                effects:IconEffect.MarginIfHasContent="4"/>
+                                effects:IconEffect.Margin="4"/>
 
                         <TextBlock Margin="10 0 5 0" VerticalAlignment="Center" Text="SnapsToDevicePixels:"/>
                         <Button Margin="0" Padding="0" Height="24"
@@ -228,7 +228,7 @@
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       effects:FocusEffect.Brush="Aqua"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                      effects:IconEffect.MarginIfHasContent="4"/>
+                                      effects:IconEffect.Margin="4"/>
                     </WrapPanel>
 
                     <WrapPanel>
@@ -300,7 +300,7 @@
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       effects:FocusEffect.Brush="Aqua"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                      effects:IconEffect.MarginIfHasContent="4"
+                                      effects:IconEffect.Margin="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                         <Button Content="Change content" Click="ChangeContent_OnClick"/>
@@ -345,7 +345,7 @@
                                 effects:ChromeEffect.MonochromeAnimated="{StaticResource BlueColor}"
                                 effects:CornerRadiusEffect.CornerRadius="4"
                                 effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                effects:IconEffect.MarginIfHasContent="4"/>
+                                effects:IconEffect.Margin="4"/>
                     </WrapPanel>
 
                     <WrapPanel Orientation="Horizontal">
@@ -391,7 +391,7 @@
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       effects:ChromeEffect.MonochromeAnimated="GreenYellow"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                      effects:IconEffect.MarginIfHasContent="3"
+                                      effects:IconEffect.Margin="3"
                                       effects:FocusEffect.Brush="Aqua"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
@@ -430,7 +430,7 @@
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       effects:ChromeEffect.MonochromeAnimated="GreenYellow"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                      effects:IconEffect.MarginIfHasContent="3"
+                                      effects:IconEffect.Margin="3"
                                       effects:FocusEffect.Brush="Aqua"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                     </WrapPanel>
@@ -496,7 +496,7 @@
                         <ToggleButton Margin="5" Height="30" Padding="4 0"  Background="GreenYellow" BorderBrush="Orange" Content="Icon"
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                      effects:IconEffect.MarginIfHasContent="3"
+                                      effects:IconEffect.Margin="3"
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       effects:FocusEffect.Brush="Aqua"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
@@ -689,7 +689,7 @@
                                     effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                     effects:CornerRadiusEffect.CornerRadius="2"
                                     effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                    effects:IconEffect.MarginIfHasContent="4"/>
+                                    effects:IconEffect.Margin="4"/>
 
                             <ToggleButton Margin="0 -1 0 -2" Content="Monochrome DropDown" Padding="8 0 2 0" BorderThickness="1"
                                           Style="{StaticResource MonochromeDropDownButtonStyle}"
@@ -704,7 +704,7 @@
                                           Style="{StaticResource MonochromeDropDownButtonStyle}"
                                           effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                          effects:IconEffect.MarginIfHasContent="4"
+                                          effects:IconEffect.Margin="4"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                             <ToggleButton Margin="0 -1 0 -2" Content="DropDown" Padding="8 0 2 0"
@@ -720,7 +720,7 @@
                                           Style="{StaticResource DropDownButtonStyle}"
                                           effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                          effects:IconEffect.MarginIfHasContent="4"
+                                          effects:IconEffect.Margin="4"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                             <ToggleButton Margin="0 -1 0 -2" Content="Split button" Padding="8 0" BorderThickness="1"
@@ -736,7 +736,7 @@
                                           Style="{StaticResource MonochromeSplitButtonStyle}" 
                                           effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                          effects:IconEffect.MarginIfHasContent="4"
+                                          effects:IconEffect.Margin="4"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                         </ToolBar>
