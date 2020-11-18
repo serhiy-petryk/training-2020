@@ -597,7 +597,13 @@
                                       effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                       effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                                       effects:DoubleIconToggleButtonEffect.MarginOff="1 7.5 1 7.5"
-                                      effects:DoubleIconToggleButtonEffect.MarginOn="1 5 1 5"/>
+                                      effects:DoubleIconToggleButtonEffect.MarginOn="1 5 1 5">
+                            <ToggleButton.Resources>
+                                <Style TargetType="{x:Type Path}">
+                                    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                                </Style>
+                            </ToggleButton.Resources>
+                        </ToggleButton>
 
                         <ToggleButton Margin="5" Height="26" Focusable="False" IsThreeState="False"
                                       ToolTip="SnapsToDevicePixels=True" SnapsToDevicePixels="True"

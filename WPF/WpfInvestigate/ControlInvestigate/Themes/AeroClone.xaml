@@ -5753,12 +5753,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="{TemplateBinding Control.Background}"
-                  BorderBrush="{TemplateBinding Control.BorderBrush}"
-                  BorderThickness="{TemplateBinding Control.BorderThickness}"
-                  Padding="{TemplateBinding Control.Padding}" SnapsToDevicePixels="true">
+                            BorderBrush="{TemplateBinding Control.BorderBrush}"
+                            BorderThickness="{TemplateBinding Control.BorderThickness}"
+                            Padding="{TemplateBinding Control.Padding}" SnapsToDevicePixels="true">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-                              SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                                          VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ToggleButton.IsChecked" Value="true">
