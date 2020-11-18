@@ -9,7 +9,7 @@
         Title="ColorControlTests" Height="600" Width="700">
 
     <Window.Resources>
-        <Geometry x:Key="TestGeometry">M0 0Z M24 24Z M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z</Geometry>
+        <Geometry x:Key="TestGeometry">M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z</Geometry>
     </Window.Resources>
 
     <Grid>
@@ -84,14 +84,14 @@
 
                     <Button BorderThickness="2" Margin="5" effects:ChromeEffect.Monochrome="{Binding ElementName=ColorControl, Path=Color}">
                         <StackPanel Orientation="Horizontal">
-                            <Path Data="{StaticResource TestGeometry}"/>
+                            <Path Stretch="Uniform" Data="{StaticResource TestGeometry}"/>
                             <TextBlock VerticalAlignment="Center" Margin="5 0" Text="Monochrome"/>
                         </StackPanel>
                     </Button>
 
                     <Button BorderThickness="2" Margin="5" effects:ChromeEffect.MonochromeAnimated="{Binding ElementName=ColorControl, Path=Color}">
                         <StackPanel Orientation="Horizontal">
-                            <Path Data="{StaticResource TestGeometry}"/>
+                            <Path Stretch="Uniform" Data="{StaticResource TestGeometry}"/>
                             <TextBlock VerticalAlignment="Center" Margin="5 0" Text="MonochromeAnimated"/>
                         </StackPanel>
                     </Button>
