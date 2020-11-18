@@ -73,7 +73,7 @@
                                             <!-- Left icon -->
                                             <Viewbox Grid.Column="0" Width="24" Margin="8 0 0 0"
                                                      Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
-                                                <Path Stretch="Fill" Data="{Binding Icon}" Fill="{Binding IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                                <Path Stretch="Uniform" Data="{Binding Icon}" Fill="{Binding IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                             </Viewbox>
                                             <!-- Message -->
                                             <TextBox Grid.Column="1" IsReadOnly="True" Padding="0" BorderThickness="0" Background="Transparent"
