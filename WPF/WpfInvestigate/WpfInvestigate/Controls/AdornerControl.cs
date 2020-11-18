@@ -40,7 +40,9 @@ namespace WpfInvestigate.Controls
         {
             var newSize = UseAdornedElementSize
                 ? AdornedElement.RenderSize
-                : new Size(constraint.Width, constraint.Height);
+                : double.IsNaN(_child.Width)
+                    ? new Size(constraint.Width, constraint.Height)
+                    : new Size(_child.Width, _child.Height);
 
             _child.Width = newSize.Width;
             _child.Height = newSize.Height;
