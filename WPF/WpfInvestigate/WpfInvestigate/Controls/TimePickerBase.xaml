@@ -11,9 +11,9 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <Geometry x:Key="ClockGeometry">M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z</Geometry>
-        <Geometry x:Key="CalendarClockGeometry">M15,13H16.5V15.82L18.94,17.23L18.19,18.53L15,16.69V13M19,8H5V19H9.67C9.24,18.09 9,17.07 9,16A7,7 0 0,1 16,9C17.07,9 18.09,9.24 19,9.67V8M5,21C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H6V1H8V3H16V1H18V3H19A2,2 0 0,1 21,5V11.1C22.24,12.36 23,14.09 23,16A7,7 0 0,1 16,23C14.09,23 12.36,22.24 11.1,21H5M16,11.15A4.85,4.85 0 0,0 11.15,16C11.15,18.68 13.32,20.85 16,20.85A4.85,4.85 0 0,0 20.85,16C20.85,13.32 18.68,11.15 16,11.15Z</Geometry>
-        <Geometry x:Key="CalendarGeometry">M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1</Geometry>
+        <Geometry x:Key="ClockGeometry">M0 0Z M24 24Z M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z</Geometry>
+        <Geometry x:Key="CalendarClockGeometry">M0 0Z M24 24Z M15,13H16.5V15.82L18.94,17.23L18.19,18.53L15,16.69V13M19,8H5V19H9.67C9.24,18.09 9,17.07 9,16A7,7 0 0,1 16,9C17.07,9 18.09,9.24 19,9.67V8M5,21C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H6V1H8V3H16V1H18V3H19A2,2 0 0,1 21,5V11.1C22.24,12.36 23,14.09 23,16A7,7 0 0,1 16,23C14.09,23 12.36,22.24 11.1,21H5M16,11.15A4.85,4.85 0 0,0 11.15,16C11.15,18.68 13.32,20.85 16,20.85A4.85,4.85 0 0,0 20.85,16C20.85,13.32 18.68,11.15 16,11.15Z</Geometry>
+        <Geometry x:Key="CalendarGeometry">M0 0Z M24 24Z M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1</Geometry>
 
         <SolidColorBrush x:Key="CalendarForegroundBrush" Color="#FF333333" x:Shared="False"/>
         <SolidColorBrush x:Key="CalendarBackgroundBrush" Color="#FFA8DAF2" x:Shared="False"/>
@@ -194,7 +194,7 @@
                                                   IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}"
                                                   effects:IconEffect.Geometry="{StaticResource CalendarClockGeometry}" />
 
-                                    <Button x:Name="PART_ClearButton" Grid.Column="3" Focusable="True" IsTabStop="False" Width="14" Padding="1" BorderThickness="0"
+                                    <Button x:Name="PART_ClearButton" Grid.Column="3" Focusable="True" IsTabStop="False" Width="14" Padding="2" BorderThickness="0"
                                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsClearButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                             Style="{StaticResource ClearBichromeAnimatedButtonStyle}" VerticalAlignment="Stretch"/>
 
