@@ -11,9 +11,10 @@
              GotFocus="OnNumericBoxGotFocus">
 
     <UserControl.Resources>
+        <Geometry x:Key="CalculatorGeometrySized">M0 0Z M24 24Z M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M7,4V8H17V4H7M7,10V12H9V10H7M11,10V12H13V10H11M15,10V12H17V10H15M7,14V16H9V14H7M11,14V16H13V14H11M15,14V16H17V14H15M7,18V20H9V18H7M11,18V20H13V18H11M15,18V20H17V18H15Z</Geometry>
         <Geometry x:Key="CalculatorGeometry">M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M7,4V8H17V4H7M7,10V12H9V10H7M11,10V12H13V10H11M15,10V12H17V10H15M7,14V16H9V14H7M11,14V16H13V14H11M15,14V16H17V14H15M7,18V20H9V18H7M11,18V20H13V18H11M15,18V20H17V18H15Z</Geometry>
-        <Geometry x:Key="PlusGeometry">F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z</Geometry>
-        <Geometry x:Key="MinusGeometry">F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z</Geometry>
+        <Geometry x:Key="PlusGeometry">M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z</Geometry>
+        <Geometry x:Key="MinusGeometry">M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z</Geometry>
 
         <system:Double x:Key="ButtonsWidth">14</system:Double>
 
@@ -68,7 +69,7 @@
                                 <ToggleButton Grid.Column="4" x:Name="PART_ToggleButton" IsTabStop="False" Focusable="False"
                                               effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                               effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                              Padding="1" IsThreeState="False" Width="{StaticResource ButtonsWidth}"
+                                              Padding="2" IsThreeState="False" Width="{StaticResource ButtonsWidth}"
                                               IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}"
                                               BorderThickness="0"
                                               Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCalculatorButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
@@ -90,7 +91,7 @@
                                               effects:IconEffect.Geometry="{StaticResource PlusGeometry}"/>
 
                                 <Button Grid.Column="7" x:Name="PART_ClearButton" IsTabStop="False" Focusable="False"
-                                        Width="{StaticResource ButtonsWidth}" Padding="1"
+                                        Width="{StaticResource ButtonsWidth}" Padding="2"
                                         BorderThickness="0"
                                         Style="{StaticResource ClearBichromeAnimatedButtonStyle}"
                                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
