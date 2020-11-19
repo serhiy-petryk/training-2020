@@ -214,7 +214,12 @@
                 </WrapPanel>
                 <WrapPanel Margin="5">
                     <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
-                        <Path Stretch="Uniform" Fill="Blue" Data="M437.5,386.6L306.9,256l130.6-130.6c14.1-14.1,14.1-36.8,0-50.9c-14.1-14.1-36.8-14.1-50.9,0L256,205.1L125.4,74.5  c-14.1-14.1-36.8-14.1-50.9,0c-14.1,14.1-14.1,36.8,0,50.9L205.1,256L74.5,386.6c-14.1,14.1-14.1,36.8,0,50.9  c14.1,14.1,36.8,14.1,50.9,0L256,306.9l130.6,130.6c14.1,14.1,36.8,14.1,50.9,0C451.5,423.4,451.5,400.6,437.5,386.6z"/>
+                        <Path Stretch="Uniform" Fill="Blue" Data="M12,2C8.14,2 5,5.14 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9C19,5.14 15.86,2 12,2M12.88,15.75H11.13V14H12.88M12.88,12.88H11.13C11.13,10.04 13.75,10.26 13.75,8.5A1.75,1.75 0 0,0 12,6.75A1.75,1.75 0 0,0 10.25,8.5H8.5A3.5,3.5 0 0,1 12,5A3.5,3.5 0 0,1 15.5,8.5C15.5,10.69 12.88,10.91 12.88,12.88Z"/>
+                    </Button>
+
+                    <Button Margin="2" BorderThickness="0" Width="16" Height="16" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen"
+                            HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                            <Path Stretch="None" Fill="Blue" Data="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                     </Button>
 
                     <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
