@@ -16,7 +16,7 @@
         <Geometry x:Key="PlusGeometry">M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z</Geometry>
         <Geometry x:Key="MinusGeometry">M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z</Geometry>
 
-        <system:Double x:Key="ButtonsWidth">14</system:Double>
+        <system:Double x:Key="ButtonsWidth">16</system:Double>
 
         <Style TargetType="local:NumericBox">
             <Setter Property="BorderBrush" Value="Black"/>
@@ -78,20 +78,20 @@
                                 <RepeatButton Grid.Column="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DownButtonColumn}" x:Name="PART_DownButton" IsTabStop="False" Focusable="False"
                                               effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                               effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                              Width="{StaticResource ButtonsWidth}" Delay="500" Interval="30" Padding="1"
+                                              Width="{StaticResource ButtonsWidth}" Delay="500" Interval="30" Padding="2"
                                               BorderThickness="0"
                                               Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDownButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                               effects:IconEffect.Geometry="{StaticResource MinusGeometry}"/>
                                 <RepeatButton Grid.Column="6" x:Name="PART_UpButton" IsTabStop="False" Focusable="False"
                                               effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                               effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                              Width="{StaticResource ButtonsWidth}" Delay="500" Interval="30" Padding="1"
+                                              Width="{StaticResource ButtonsWidth}" Delay="500" Interval="30" Padding="2"
                                               BorderThickness="0"
                                               Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsUpButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                               effects:IconEffect.Geometry="{StaticResource PlusGeometry}"/>
 
                                 <Button Grid.Column="7" x:Name="PART_ClearButton" IsTabStop="False" Focusable="False"
-                                        Width="{StaticResource ButtonsWidth}" Padding="2"
+                                        Width="{StaticResource ButtonsWidth}" Padding="3"
                                         BorderThickness="0"
                                         Style="{StaticResource ClearBichromeAnimatedButtonStyle}"
                                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
