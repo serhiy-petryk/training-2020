@@ -213,22 +213,72 @@
                     <Button Style="{StaticResource KeyButton}" Content="X" Width="60" Height="60"/>
                 </WrapPanel>
                 <WrapPanel Margin="5">
+                    <Button Margin="2" BorderThickness="0" Width="48" Height="48" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M0 0h48v48h-48zm0 0h48v48h-48z M8 22v4h16v-4h-16zm30 14h-4v-21.25l-6 2.05v-3.4l9.4-3.4h.6v26z"/>
+                    </Button>
+                    <Button Margin="2" BorderThickness="0" Width="48" Height="48" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Fill="Blue" Data="M0 0h48v48h-48zm0 0h48v48h-48z M8 22v4h16v-4h-16zm30 14h-4v-21.25l-6 2.05v-3.4l9.4-3.4h.6v26z"/>
+                    </Button>
                     <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
-                        <Path Stretch="Uniform" Fill="Blue" Data="M12,2C8.14,2 5,5.14 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9C19,5.14 15.86,2 12,2M12.88,15.75H11.13V14H12.88M12.88,12.88H11.13C11.13,10.04 13.75,10.26 13.75,8.5A1.75,1.75 0 0,0 12,6.75A1.75,1.75 0 0,0 10.25,8.5H8.5A3.5,3.5 0 0,1 12,5A3.5,3.5 0 0,1 15.5,8.5C15.5,10.69 12.88,10.91 12.88,12.88Z"/>
+                        <Path Stretch="Uniform" Fill="Blue" Data="M0 0h24v24H0zm0 0h24v24H0z M10 7H8v4H4v2h4v4h2v-4h4v-2h-4V7zm10 11h-2V7.38L15 8.4V6.7L19.7 5h.3v13z"/>
+                    </Button>
+                </WrapPanel>
+
+                <WrapPanel Margin="5">
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                            <Path Stretch="Uniform" Fill="Blue" Data="M0 0h24v24H0zm0 0h24v24H0z M10 7H8v4H4v2h4v4h2v-4h4v-2h-4V7zm10 11h-2V7.38L15 8.4V6.7L19.7 5h.3v13z"/>
                     </Button>
 
-                    <Button Margin="2" BorderThickness="0" Width="76" Height="76" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen"
-                            HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                        <Path Stretch="None" Fill="Blue" Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z"/>
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M10,8V12H14V14H10V18H8V14H4V12H8V8H10M14.5,6.08L19,5V18H17V7.4L14.5,7.9V6.08Z"/>
                     </Button>
 
-                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen"
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M13 7V9H15V17H17V7H13M11 13H9V15H7V13H5V11H7V9H9V11H11V13Z"/>
+                    </Button>
+
+                    <Button Margin="2" BorderThickness="0" Width="48" Height="48" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen"
                             HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                            <Path Stretch="None" Fill="Blue" Data=" M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M7,4V8H17V4H7M7,10V12H9V10H7M11,10V12H13V10H11M15,10V12H17V10H15M7,14V16H9V14H7M11,14V16H13V14H11M15,14V16H17V14H15M7,18V20H9V18H7M11,18V20H13V18H11M15,18V20H17V18H15Z"/>
+                        <Path Stretch="None" Fill="Blue" Data="M0 0h48v48h-48zm0 0h48v48h-48z M20 14h-4v8h-8v4h8v8h4v-8h8v-4h-8v-8zm20 22h-4v-21.25l-6 2.05v-3.4l9.4-3.4h.6v26z"/>
                     </Button>
 
                     <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
                         <Path Stretch="Uniform" Fill="Blue" Data="M0 0 L1 1 L2 0 Z"/>
+                    </Button>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M0 0ZM24 24ZM19,13H5V11H19V13M12,5A2,2 0 0,1 14,7A2,2 0 0,1 12,9A2,2 0 0,1 10,7A2,2 0 0,1 12,5M12,15A2,2 0 0,1 14,17A2,2 0 0,1 12,19A2,2 0 0,1 10,17A2,2 0 0,1 12,15Z"/>
+                    </Button>
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M0 0ZM24 24ZM19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+                    </Button>
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M0 0ZM24 24ZM19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
+                    </Button>
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M0 0ZM24 24ZM19,13H5V11H19V13Z"/>
+                    </Button>
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M0 0ZM24 24ZM19,10H5V8H19V10M19,16H5V14H19V16Z"/>
+                    </Button>
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M0 0ZM24 24ZM19,10H5V8H19V10M19,16H5V14H19V16Z"/>
+                    </Button>
+                </WrapPanel>
+                <WrapPanel>
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M0 0ZM24 24ZM20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/>
+                    </Button>
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M0 0ZM24 24ZM19,15.59L17.59,17L14,13.41L10.41,17L9,15.59L12.59,12L9,8.41L10.41,7L14,10.59L17.59,7L19,8.41L15.41,12L19,15.59M22,3A2,2 0 0,1 24,5V19A2,2 0 0,1 22,21H7C6.31,21 5.77,20.64 5.41,20.11L0,12L5.41,3.88C5.77,3.35 6.31,3 7,3H22M22,5H7L2.28,12L7,19H22V5Z"/>
+                    </Button>
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                        <Path Stretch="Uniform" Fill="Blue" Data="M-4 -4ZM28 28ZM19,15.59L17.59,17L14,13.41L10.41,17L9,15.59L12.59,12L9,8.41L10.41,7L14,10.59L17.59,7L19,8.41L15.41,12L19,15.59M22,3A2,2 0 0,1 24,5V19A2,2 0 0,1 22,21H7C6.31,21 5.77,20.64 5.41,20.11L0,12L5.41,3.88C5.77,3.35 6.31,3 7,3H22M22,5H7L2.28,12L7,19H22V5Z"/>
+                    </Button>
+                    <Button Margin="2" BorderThickness="0" Width="24" Height="24" Style="{StaticResource DefaultButtonBaseStyle}" Padding="0" Background="YellowGreen">
+                            <Path Stretch="Uniform" Fill="Blue" Data="M0 0ZM24 24ZM21,11H6.83L10.41,7.41L9,6L3,12L9,18L10.41,16.58L6.83,13H21V11Z"/>
                     </Button>
                 </WrapPanel>
             </StackPanel>

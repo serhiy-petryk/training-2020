@@ -29,11 +29,14 @@ namespace WpfInvestigate.Controls
 
         public Calculator()
         {
+            DataContext = this;
+            ClickCommand = new RelayCommand(ClickHandler);
             PreviewMouseLeftButtonDown += Calculator_OnPreviewMouseLeftButtonDown;
             Culture = Tips.CurrentCulture;
         }
 
         public readonly CultureInfo Culture;
+        public RelayCommand ClickCommand { get; }
         public string IndicatorText { get; private set; } = "0";
         public string ErrorText { get; private set; }
 
@@ -53,13 +56,13 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
 
-            foreach (var button in Tips.GetVisualChildren(this).OfType<ButtonBase>().ToArray())
+            /*foreach (var button in Tips.GetVisualChildren(this).OfType<ButtonBase>().ToArray())
             {
                 if (button.Tag is string)
                     button.Click += OperatorButton_OnClick;
                 else
                     button.Click += DigitButton_OnClick;
-            }
+            }*/
 
             var indicator = GetTemplateChild("PART_Indicator") as TextBox;
             if (indicator != null)
@@ -159,6 +162,11 @@ namespace WpfInvestigate.Controls
         {
             var indicator = GetTemplateChild("PART_Indicator") as FrameworkElement;
             indicator?.Focus();
+        }
+
+        private void ClickHandler(object p)
+        {
+
         }
 
         private void ExecuteDigit(string digit)
