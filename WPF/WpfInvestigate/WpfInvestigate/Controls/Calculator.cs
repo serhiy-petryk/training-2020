@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using WpfInvestigate.Common;
 
@@ -51,15 +49,6 @@ namespace WpfInvestigate.Controls
         public string DecimalSeparator => Culture.NumberFormat.NumberDecimalSeparator;
 
         #region ========  Override && events =================
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            var indicator = GetTemplateChild("PART_Indicator") as TextBox;
-            if (indicator != null)
-                indicator.TextChanged += Indicator_OnTextChanged;
-        }
-
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonDown(e);
@@ -111,20 +100,6 @@ namespace WpfInvestigate.Controls
         {
             {Key.D8, "*"}, {Key.OemPlus, "+"}
         };
-
-        private void Indicator_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            var textBox = (TextBox)sender;
-            // Adjust font size
-            var maxFontSize = textBox.Name == "PART_Indicator" ? 20.0 : 14.0;
-            if (textBox.Text.Length > 5)
-            {
-                textBox.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-                textBox.FontSize = Math.Min(maxFontSize, textBox.FontSize * textBox.ActualWidth / textBox.DesiredSize.Width);
-            }
-            else
-                textBox.FontSize = maxFontSize;
-        }
         #endregion
 
         // ============================
