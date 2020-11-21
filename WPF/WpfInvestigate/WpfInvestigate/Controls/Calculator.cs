@@ -30,7 +30,7 @@ namespace WpfInvestigate.Controls
         public Calculator()
         {
             DataContext = this;
-            ClickCommand = new RelayCommand(ClickHandler);
+            ClickCommand = new RelayCommand(ButtonClickHandler);
             PreviewMouseLeftButtonDown += Calculator_OnPreviewMouseLeftButtonDown;
             Culture = Tips.CurrentCulture;
         }
@@ -55,14 +55,6 @@ namespace WpfInvestigate.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            /*foreach (var button in Tips.GetVisualChildren(this).OfType<ButtonBase>().ToArray())
-            {
-                if (button.Tag is string)
-                    button.Click += OperatorButton_OnClick;
-                else
-                    button.Click += DigitButton_OnClick;
-            }*/
 
             var indicator = GetTemplateChild("PART_Indicator") as TextBox;
             if (indicator != null)
@@ -106,9 +98,7 @@ namespace WpfInvestigate.Controls
             {
                 if (_keys.ContainsKey(e.Key))
                 {
-                    var content = _keys[e.Key];
-                    var button = Tips.GetVisualChildren(this).OfType<ButtonBase>().FirstOrDefault(b => Equals(b.Content, content) || Equals(b.Tag, content));
-                    button?.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                    ButtonClickHandler(_keys[e.Key]);
                     e.Handled = true;
                 }
             }
@@ -126,20 +116,6 @@ namespace WpfInvestigate.Controls
         private void Indicator_OnPreviewKeyUp(object sender, KeyEventArgs e)
         {
             ResetInterval();
-        }
-
-        private void DigitButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(ErrorText))
-                Clear();
-
-            var digit = (sender as ContentControl).Content as string;
-            ExecuteDigit(digit);
-        }
-
-        private void OperatorButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            ExecuteOperator((sender as ButtonBase).Tag as string);
         }
 
         private void Indicator_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -164,13 +140,19 @@ namespace WpfInvestigate.Controls
             indicator?.Focus();
         }
 
-        private void ClickHandler(object p)
+        private void ButtonClickHandler(object p)
         {
-
+            if (char.IsDigit(((string)p)[0]))
+                ExecuteDigit((string)p);
+            else
+                ExecuteOperator((string)p);
         }
 
         private void ExecuteDigit(string digit)
         {
+            if (!string.IsNullOrEmpty(ErrorText))
+                Clear();
+
             CheckLastButtonIsDigit(true);
 
             if (IndicatorText == "0")

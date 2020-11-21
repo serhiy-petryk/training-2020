@@ -14,10 +14,10 @@
         <Style.Resources>
             <SolidColorBrush x:Key="IndicatorColor" Color="{x:Static SystemColors.InfoColor}"/>
 
-            <DataTemplate x:Key="StringDataTemplate">
+            <DataTemplate x:Key="ButtonContentTemplate">
                 <Viewbox RenderTransformOrigin="0.5 0.5">
                     <Viewbox.RenderTransform>
-                        <ScaleTransform ScaleX="0.85" ScaleY="0.85"/>
+                        <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
                     </Viewbox.RenderTransform>
                     <TextBlock Text="{Binding}"/>
                 </Viewbox>
@@ -27,8 +27,6 @@
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Foreground" Value="White"/>
-                <Setter Property="MinHeight" Value="16"/>
-                <Setter Property="MinWidth" Value="16"/>
                 <Setter Property="Margin" Value="2"/>
                 <Setter Property="Padding" Value="0"/>
                 <!--<Setter Property="FontSize" Value="14"/>
@@ -37,7 +35,7 @@
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
                 <Setter Property="effects:ClickEffect.ShiftOffsetOnClick" Value="1"/>
                 <Setter Property="Command" Value="{Binding ClickCommand}"/>
-                <Setter Property="ContentTemplate" Value="{StaticResource StringDataTemplate}"/>
+                <Setter Property="ContentTemplate" Value="{StaticResource ButtonContentTemplate}"/>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100,50'}"/>
@@ -51,7 +49,7 @@
             <sys:String x:Key="EqualButtonHsl">120,50</sys:String>
             <sys:String x:Key="ClearButtonHsl">0,50</sys:String>
 
-            <Style x:Key="DigitButtonStyle" TargetType="Button" BasedOn="{StaticResource DarkButtonBaseStyle}">
+            <Style x:Key="DigitButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource DarkButtonBaseStyle}">
                 <Setter Property="Background" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0.0005/19,0.2/12.5,0.9/38,1.0'}"/>
                 <Setter Property="Foreground" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
             </Style>
@@ -59,11 +57,11 @@
                 <Setter Property="Background" Value="{Binding Source={StaticResource OperatorButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0.0005/19,0.2/12.5,0.9/38,1.0'}"/>
                 <Setter Property="Foreground" Value="{Binding Source={StaticResource OperatorButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
             </Style>
-            <Style x:Key="EqualButtonStyle" TargetType="Button" BasedOn="{StaticResource DarkButtonBaseStyle}">
+            <Style x:Key="EqualButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource DarkButtonBaseStyle}">
                 <Setter Property="Background" Value="{Binding Source={StaticResource EqualButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0.0005/19,0.2/12.5,0.9/38,1.0'}"/>
                 <Setter Property="Foreground" Value="{Binding Source={StaticResource EqualButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
             </Style>
-            <Style x:Key="ClearButtonStyle" TargetType="Button" BasedOn="{StaticResource DarkButtonBaseStyle}">
+            <Style x:Key="ClearButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource DarkButtonBaseStyle}">
                 <Setter Property="Background" Value="{Binding Source={StaticResource ClearButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0.0005/19,0.2/12.5,0.9/38,1.0'}"/>
                 <Setter Property="Foreground" Value="{Binding Source={StaticResource ClearButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
             </Style>
@@ -84,7 +82,7 @@
                 <ControlTemplate TargetType="{x:Type controls:Calculator}">
                     <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
-                            Focusable="False" MinWidth="80" MinHeight="160"
+                            Focusable="False" MinWidth="100" MinHeight="160"
                             UseLayoutRounding="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -145,39 +143,36 @@
 
                             <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="0" HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Style="{DynamicResource ClearButtonStyle}" Content="Ｃ" Tag="Clear"/>
-                                <Button Grid.Column="1" Style="{DynamicResource ClearButtonStyle}" Content="←" Tag="Backspace"/>
-                                <!--<RepeatButton Grid.Column="2" Style="{DynamicResource OperatorButtonStyle}" Content="－１" Tag="-" Interval="30" Delay="500"/>
-                                <RepeatButton Grid.Column="3" Style="{DynamicResource OperatorButtonStyle}" Content="＋１" Tag="++" Interval="30" Delay="500"/>-->
-                                <RepeatButton Grid.Column="2" Style="{DynamicResource OperatorButtonStyle}" Content="↓" Tag="--" Interval="30" Delay="500"/>
-                                <RepeatButton Grid.Column="3" Style="{DynamicResource OperatorButtonStyle}" Content="↑" Tag="++" Interval="30" Delay="500"/>
+                                <Button Grid.Column="0" Style="{DynamicResource ClearButtonStyle}" Content="Ｃ" CommandParameter="Clear"/>
+                                <RepeatButton Grid.Column="1" Style="{DynamicResource ClearButtonStyle}" Content="←" CommandParameter="Backspace" Interval="30" Delay="500"/>
+                                <RepeatButton Grid.Column="2" Style="{DynamicResource OperatorButtonStyle}" Content="↓" CommandParameter="--" Interval="30" Delay="500"/>
+                                <RepeatButton Grid.Column="3" Style="{DynamicResource OperatorButtonStyle}" Content="↑" CommandParameter="++" Interval="30" Delay="500"/>
                             </Grid>
 
-                            <Button Grid.Column="3" Grid.Row="1" Style="{DynamicResource OperatorButtonStyle}" Content="÷" Tag="/"/>
-                            <Button Grid.Column="0" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="7"/>
-                            <Button Grid.Column="1" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="8" Tag="8"/>
-                            <Button Grid.Column="2" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="9" Tag="9"/>
-                            <Button Grid.Column="3" Grid.Row="2" Style="{DynamicResource OperatorButtonStyle}" Content="∗" Tag="*"/>
-                            <Button Grid.Column="0" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="4"/>
-                            <Button Grid.Column="1" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="5"/>
-                            <Button Grid.Column="2" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="6"/>
-                            <Button Grid.Column="3" Grid.Row="3" Style="{DynamicResource OperatorButtonStyle}" Content="-" Tag="-"/>
-                            <Button Grid.Column="0" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="1"/>
-                            <Button Grid.Column="1" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="2"/>
-                            <Button Grid.Column="2" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="3"/>
-                            <Button Grid.Column="3" Grid.Row="4" Style="{DynamicResource OperatorButtonStyle}" Content="+" Tag="+"/>
-                            <!--<Button Grid.Column="0" Grid.Row="5" Style="{DynamicResource OperatorButtonStyle}" Content="±" Tag="Sign"/>-->
-                            <Button Grid.Column="0" Grid.Row="5" Style="{DynamicResource OperatorButtonStyle}" Content="±"/>
+                            <Button Grid.Column="3" Grid.Row="1" Style="{DynamicResource OperatorButtonStyle}" Content="÷" CommandParameter="/"/>
+                            <Button Grid.Column="0" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="7" CommandParameter="7"/>
+                            <Button Grid.Column="1" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="8" CommandParameter="8"/>
+                            <Button Grid.Column="2" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="9" CommandParameter="9"/>
+                            <Button Grid.Column="3" Grid.Row="2" Style="{DynamicResource OperatorButtonStyle}" Content="∗" CommandParameter="*"/>
+                            <Button Grid.Column="0" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="4" CommandParameter="4"/>
+                            <Button Grid.Column="1" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="5" CommandParameter="5"/>
+                            <Button Grid.Column="2" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="6" CommandParameter="6"/>
+                            <Button Grid.Column="3" Grid.Row="3" Style="{DynamicResource OperatorButtonStyle}" Content="-" CommandParameter="-"/>
+                            <Button Grid.Column="0" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="1" CommandParameter="1"/>
+                            <Button Grid.Column="1" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="2" CommandParameter="2"/>
+                            <Button Grid.Column="2" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="3" CommandParameter="3"/>
+                            <Button Grid.Column="3" Grid.Row="4" Style="{DynamicResource OperatorButtonStyle}" Content="+" CommandParameter="+"/>
+                            <Button Grid.Column="0" Grid.Row="5" Style="{DynamicResource OperatorButtonStyle}" Content="±" CommandParameter="Sign"/>
 
-                            <Button Grid.Column="1" Grid.Row="5" Style="{DynamicResource DigitButtonStyle}" Content="0"/>
+                            <Button Grid.Column="1" Grid.Row="5" Style="{DynamicResource DigitButtonStyle}" Content="0" CommandParameter="0"/>
                             <Button Grid.Column="2" Grid.Row="5" Style="{DynamicResource OperatorButtonStyle}" 
-                                        Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalSeparator}" Tag="."/>
-                            <Button Grid.Column="3" Grid.Row="5" Style="{DynamicResource EqualButtonStyle}" Content="=" Tag="="/>
+                                        Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalSeparator}" CommandParameter="."/>
+                            <Button Grid.Column="3" Grid.Row="5" Style="{DynamicResource EqualButtonStyle}" Content="=" CommandParameter="="/>
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -188,15 +183,13 @@
     <Style x:Key="LightCalculatorStyle" TargetType="controls:Calculator" BasedOn="{StaticResource DarkCalculatorStyle}">
         <Setter Property="Background" Value="White"/>
         <Style.Resources>
-            <DataTemplate x:Key="StringDataTemplate">
+            <DataTemplate x:Key="ButtonContentTemplate">
                 <Viewbox>
                     <TextBlock Text="{Binding}"/>
                 </Viewbox>
             </DataTemplate>
 
             <Style x:Key="LightButtonBaseStyle" TargetType="ButtonBase" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
-                <Setter Property="MinHeight" Value="16"/>
-                <Setter Property="MinWidth" Value="16"/>
                 <Setter Property="Margin" Value="0 0 1 1"/>
                 <Setter Property="Padding" Value="0"/>
                 <!--<Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=%44}"/>
@@ -204,10 +197,10 @@
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="1"/>
                 <Setter Property="Command" Value="{Binding ClickCommand}"/>
-                <Setter Property="ContentTemplate" Value="{StaticResource StringDataTemplate}"/>
+                <Setter Property="ContentTemplate" Value="{StaticResource ButtonContentTemplate}"/>
             </Style>
 
-            <Style x:Key="DigitButtonStyle" TargetType="Button" BasedOn="{StaticResource LightButtonBaseStyle}">
+            <Style x:Key="DigitButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource LightButtonBaseStyle}">
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SecondaryColor}"/>
             </Style>
             <Style x:Key="OperatorButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource LightButtonBaseStyle}">
