@@ -81,10 +81,11 @@
                 <ControlTemplate TargetType="{x:Type controls:Calculator}">
                     <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
-                            Focusable="False" MinWidth="100" MinHeight="160"
+                            Focusable="False" MinWidth="120" MinHeight="160"
                             UseLayoutRounding="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -99,7 +100,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <Border Grid.ColumnSpan="4" Grid.Row="0" BorderThickness="1" CornerRadius="2" BorderBrush="Gray" Margin="4"
+                            <Border Grid.ColumnSpan="5" Grid.Row="0" BorderThickness="1" CornerRadius="2" BorderBrush="Gray" Margin="4"
                                     Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}">
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -139,38 +140,41 @@
                                 </Grid>
                             </Border>
 
-                            <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="0" HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Style="{DynamicResource ClearButtonStyle}" Content="Ｃ" CommandParameter="Clear"/>
-                                <RepeatButton Grid.Column="1" Style="{DynamicResource ClearButtonStyle}" Content="←" CommandParameter="Backspace" Interval="30" Delay="500"/>
-                                <RepeatButton Grid.Column="2" Style="{DynamicResource OperatorButtonStyle}" Content="↓" CommandParameter="--" Interval="30" Delay="500"/>
-                                <RepeatButton Grid.Column="3" Style="{DynamicResource OperatorButtonStyle}" Content="↑" CommandParameter="++" Interval="30" Delay="500"/>
+                            <Button Grid.Column="2" Grid.Row="1" Style="{DynamicResource OperatorButtonStyle}" Content="%" CommandParameter="%"/>
+                            <RepeatButton Grid.Column="3" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="←" CommandParameter="Backspace" Interval="30" Delay="500"/>
+                            <Button Grid.Column="4" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="Ｃ" CommandParameter="Clear"/>
+                            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="2">
+                                <Viewbox Stretch="Uniform">
+                                    <controls:NumericBox VisibleButtons="LeftDown,Up" IsNullable="False" Padding="2 6" Margin="0"
+                                                         Width="NaN" Height="NaN" BorderThickness="2"
+                                                         effects:ChromeEffect.MonochromeAnimated="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"
+                                                         effects:CornerRadiusEffect.CornerRadius="3"/>
+                                </Viewbox>
                             </Grid>
 
-                            <Button Grid.Column="3" Grid.Row="1" Style="{DynamicResource OperatorButtonStyle}" Content="÷" CommandParameter="/"/>
                             <Button Grid.Column="0" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="7" CommandParameter="7"/>
                             <Button Grid.Column="1" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="8" CommandParameter="8"/>
                             <Button Grid.Column="2" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="9" CommandParameter="9"/>
-                            <Button Grid.Column="3" Grid.Row="2" Style="{DynamicResource OperatorButtonStyle}" Content="∗" CommandParameter="*"/>
+                            <RepeatButton Grid.Column="3" Grid.Row="2" Style="{DynamicResource OperatorButtonStyle}" Content="－1" CommandParameter="--" Interval="30" Delay="500"/>
+                            <RepeatButton Grid.Column="4" Grid.Row="2" Style="{DynamicResource OperatorButtonStyle}" Content="＋1" CommandParameter="++" Interval="30" Delay="500"/>
+
                             <Button Grid.Column="0" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="4" CommandParameter="4"/>
                             <Button Grid.Column="1" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="5" CommandParameter="5"/>
                             <Button Grid.Column="2" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="6" CommandParameter="6"/>
-                            <Button Grid.Column="3" Grid.Row="3" Style="{DynamicResource OperatorButtonStyle}" Content="-" CommandParameter="-"/>
+                            <Button Grid.Column="3" Grid.Row="3" Style="{DynamicResource OperatorButtonStyle}" Content="÷" CommandParameter="/"/>
+                            <Button Grid.Column="4" Grid.Row="3" Style="{DynamicResource OperatorButtonStyle}" Content="∗" CommandParameter="*"/>
+                            
                             <Button Grid.Column="0" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="1" CommandParameter="1"/>
                             <Button Grid.Column="1" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="2" CommandParameter="2"/>
                             <Button Grid.Column="2" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="3" CommandParameter="3"/>
-                            <Button Grid.Column="3" Grid.Row="4" Style="{DynamicResource OperatorButtonStyle}" Content="+" CommandParameter="+"/>
+                            <Button Grid.Column="3" Grid.Row="4" Style="{DynamicResource OperatorButtonStyle}" Content="-" CommandParameter="-"/>
+                            <Button Grid.Column="4" Grid.Row="4" Style="{DynamicResource OperatorButtonStyle}" Content="+" CommandParameter="+"/>
+                            
                             <Button Grid.Column="0" Grid.Row="5" Style="{DynamicResource OperatorButtonStyle}" Content="±" CommandParameter="Sign"/>
-
                             <Button Grid.Column="1" Grid.Row="5" Style="{DynamicResource DigitButtonStyle}" Content="0" CommandParameter="0"/>
                             <Button Grid.Column="2" Grid.Row="5" Style="{DynamicResource OperatorButtonStyle}" 
                                         Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalSeparator}" CommandParameter="."/>
-                            <Button Grid.Column="3" Grid.Row="5" Style="{DynamicResource EqualButtonStyle}" Content="=" CommandParameter="="/>
+                            <Button Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="5" Style="{DynamicResource EqualButtonStyle}" Content="=" CommandParameter="="/>
                         </Grid>
                     </Border>
                 </ControlTemplate>
