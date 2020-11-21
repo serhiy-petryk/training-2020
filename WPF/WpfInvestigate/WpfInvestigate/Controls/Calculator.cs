@@ -31,7 +31,6 @@ namespace WpfInvestigate.Controls
         {
             DataContext = this;
             ClickCommand = new RelayCommand(ButtonClickHandler);
-            PreviewMouseLeftButtonDown += Calculator_OnPreviewMouseLeftButtonDown;
             Culture = Tips.CurrentCulture;
         }
 
@@ -58,23 +57,43 @@ namespace WpfInvestigate.Controls
 
             var indicator = GetTemplateChild("PART_Indicator") as TextBox;
             if (indicator != null)
-            {
-                indicator.PreviewKeyDown += Indicator_OnPreviewKeyDown;
-                indicator.PreviewKeyUp += Indicator_OnPreviewKeyUp;
-                indicator.PreviewMouseWheel += Indicator_OnPreviewMouseWheel;
                 indicator.TextChanged += Indicator_OnTextChanged;
-            }
-        }
-        protected override void OnGotFocus(RoutedEventArgs e)
-        {
-            base.OnGotFocus(e);
-            ActivateIndicator();
         }
 
-        private void Calculator_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            ActivateIndicator();
+            base.OnPreviewMouseLeftButtonDown(e);
+            Focus();
             ResetInterval();
+        }
+
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            base.OnPreviewKeyDown(e);
+            if (Keyboard.Modifiers == ModifierKeys.None && _keys.ContainsKey(e.Key))
+            {
+                ButtonClickHandler(_keys[e.Key]);
+                e.Handled = true;
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Shift && _shiftKeys.ContainsKey(e.Key))
+            {
+                ButtonClickHandler(_shiftKeys[e.Key]);
+                e.Handled = true;
+            }
+            else if (e.Key.ToString().Length == 1)
+                Tips.Beep();
+        }
+
+        protected override void OnPreviewKeyUp(KeyEventArgs e)
+        {
+            base.OnPreviewKeyUp(e);
+            ResetInterval();
+        }
+
+        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnPreviewMouseWheel(e);
+            ExecuteOperator(e.Delta > 0 ? "++" : "--");
         }
 
         private static Dictionary<Key, string> _keys = new Dictionary<Key, string>
@@ -92,31 +111,6 @@ namespace WpfInvestigate.Controls
         {
             {Key.D8, "*"}, {Key.OemPlus, "+"}
         };
-        private void Indicator_OnPreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (Keyboard.Modifiers == ModifierKeys.None)
-            {
-                if (_keys.ContainsKey(e.Key))
-                {
-                    ButtonClickHandler(_keys[e.Key]);
-                    e.Handled = true;
-                }
-            }
-            else if (Keyboard.Modifiers == ModifierKeys.Shift && _shiftKeys.ContainsKey(e.Key))
-            {
-                var content = _shiftKeys[e.Key];
-                var button = Tips.GetVisualChildren(this).OfType<ButtonBase>().FirstOrDefault(b => Equals(b.Tag, content));
-                button?.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-                e.Handled = true;
-            }
-
-            if (!e.Handled && e.Key.ToString().Length == 1)
-                Tips.Beep();
-        }
-        private void Indicator_OnPreviewKeyUp(object sender, KeyEventArgs e)
-        {
-            ResetInterval();
-        }
 
         private void Indicator_OnTextChanged(object sender, TextChangedEventArgs e)
         {
@@ -134,12 +128,6 @@ namespace WpfInvestigate.Controls
         #endregion
 
         // ============================
-        private void ActivateIndicator()
-        {
-            var indicator = GetTemplateChild("PART_Indicator") as FrameworkElement;
-            indicator?.Focus();
-        }
-
         private void ButtonClickHandler(object p)
         {
             if (char.IsDigit(((string)p)[0]))
@@ -331,10 +319,7 @@ namespace WpfInvestigate.Controls
             ErrorText = null;
         }
 
-        private void ResetInterval()
-        {
-            _numberOfIntervals = 0;
-        }
+        private void ResetInterval() => _numberOfIntervals = 0;
 
         private void RefrestUI()
         {
@@ -351,13 +336,6 @@ namespace WpfInvestigate.Controls
         }
 
         #endregion
-
-        private void Indicator_OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            var indicator = GetTemplateChild("PART_Indicator") as FrameworkElement;
-            if (indicator.IsFocused)
-                ExecuteOperator(e.Delta > 0 ? "++" : "--");
-        }
 
         #region ===========  DependencyProperty  =================
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(decimal?),

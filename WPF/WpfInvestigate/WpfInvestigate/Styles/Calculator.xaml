@@ -74,9 +74,11 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="2"/>
         <Setter Property="Focusable" Value="True"/>
+        <Setter Property="IsTabStop" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Background" Value="Black"/>
         <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
+        <Setter Property="effects:FocusEffect.Brush" Value="Aqua"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:Calculator}">
@@ -114,14 +116,14 @@
                                                  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=StatusText, Mode=OneWay}" />
 
                                     <TextBox x:Name="PART_Indicator" Grid.Row="1"
-                                                 IsReadOnly="True" Focusable="True" Margin="1 0" Padding="0"
+                                                 IsReadOnly="True" Focusable="False" Margin="1 0" Padding="0"
                                                  BorderThickness="0" Background="Transparent"
                                                  TextAlignment="Right" TextWrapping="WrapWithOverflow"
                                                  VerticalContentAlignment="Center"
                                                  FontSize="20" FontFamily="Consolas"
                                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
                                                  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndicatorText, Mode=OneWay}">
-                                        <TextBox.Style>
+                                        <!--<TextBox.Style>
                                             <Style TargetType="TextBox">
                                                 <Setter Property="Opacity" Value="0.7"/>
                                                 <Style.Triggers>
@@ -130,7 +132,7 @@
                                                     </Trigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </TextBox.Style>
+                                        </TextBox.Style>-->
                                     </TextBox>
 
                                     <TextBox Grid.Row="1" Margin="1" IsReadOnly="True" Focusable="False" Padding="0" BorderThickness="0"
