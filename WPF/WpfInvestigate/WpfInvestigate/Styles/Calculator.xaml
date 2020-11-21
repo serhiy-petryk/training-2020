@@ -143,15 +143,18 @@
                             <Button Grid.Column="2" Grid.Row="1" Style="{DynamicResource OperatorButtonStyle}" Content="%" CommandParameter="%"/>
                             <RepeatButton Grid.Column="3" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="←" CommandParameter="Backspace" Interval="30" Delay="500"/>
                             <Button Grid.Column="4" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="Ｃ" CommandParameter="Clear"/>
-                            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="2">
+                            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="0">
                                 <Viewbox Stretch="Uniform">
-                                    <controls:NumericBox VisibleButtons="LeftDown,Up" IsNullable="False" Padding="2 6" Margin="0"
-                                                         Width="NaN" Height="NaN" BorderThickness="2"
+                                    <controls:NumericBox VisibleButtons="LeftDown,Up" IsNullable="False" Padding="0" Margin="0"
+                                                         FontWeight="SemiBold" FontSize="14"
+                                                         Width="60" Height="28" BorderThickness="2"
+                                                         UseLayoutRounding="False" SnapsToDevicePixels="False"
                                                          MinValue="0" MaxValue="19" Focusable="False" IsTabStop="False"
                                                          Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalPlaces, Mode=TwoWay}"
                                                          ToolTip="Rounding decimal places of calculator result"
-                                                         effects:ChromeEffect.MonochromeAnimated="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"
-                                                         effects:CornerRadiusEffect.CornerRadius="3"/>
+                                                         effects:ChromeEffect.MonochromeAnimated="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15%}"
+                                                         effects:ChromeEffect.ChromeMatrix="+0%,+57%,+0%,40, +0%,+57%,+15%,100, +25%,+25%/+57%,+25%/+25%,100, +60%,+60%/+75%,+60%/+50%,100"
+                                                         effects:CornerRadiusEffect.CornerRadius="2"/>
                                 </Viewbox>
                             </Grid>
 
