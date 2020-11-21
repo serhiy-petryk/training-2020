@@ -52,8 +52,8 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Rectangle Grid.Column="1" Margin="0"
-                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}" Fill="{TemplateBinding BorderBrush}"
+                                <Rectangle Grid.Column="1" Margin="0" Fill="{TemplateBinding BorderBrush}"
+                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
                                            Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsTextBoxLeftBorderVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
                                 <TextBox Grid.Column="2" x:Name="PART_TextBox" BorderThickness="0" Margin="{TemplateBinding Padding}" Padding="0"
@@ -65,8 +65,8 @@
                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                          TabIndex="{TemplateBinding TabIndex}"/>
 
-                                <Rectangle Grid.Column="3" Margin="0"
-                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}" Fill="{TemplateBinding BorderBrush}"
+                                <Rectangle Grid.Column="3" Margin="0" Fill="{TemplateBinding BorderBrush}"
+                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}"
                                            Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsTextBoxRightBorderVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
                                 <ToggleButton Grid.Column="4" x:Name="PART_ToggleButton" IsTabStop="False" Focusable="False"
