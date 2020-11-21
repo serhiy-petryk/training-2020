@@ -133,7 +133,7 @@
                                     <Viewbox Grid.Row="1" HorizontalAlignment="Right">
                                         <TextBox Margin="1" IsReadOnly="True" Focusable="False" Padding="0" BorderThickness="0"
                                                  HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                                                 Background="Transparent" Foreground="Red" 
+                                                 Background="Transparent" Foreground="Red"
                                                  FontWeight="SemiBold"
                                                  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Mode=OneWay}" />
                                     </Viewbox>
@@ -149,6 +149,7 @@
                                                          Width="NaN" Height="NaN" BorderThickness="2"
                                                          MinValue="0" MaxValue="19" Focusable="False" IsTabStop="False"
                                                          Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalPlaces, Mode=TwoWay}"
+                                                         ToolTip="Rounding decimal places of calculator result"
                                                          effects:ChromeEffect.MonochromeAnimated="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"
                                                          effects:CornerRadiusEffect.CornerRadius="3"/>
                                 </Viewbox>
