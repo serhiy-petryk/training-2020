@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -56,6 +57,24 @@ namespace WpfInvestigate.Controls
             ResetInterval();
         }
 
+        private static string[] _keyTexts = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "-", "*", "/", "%", "C", ".", ",", "=", "\r", "\b" };
+        private static Dictionary<Key, string> _keys = new Dictionary<Key, string>
+        {
+            {Key.Up, "++"}, {Key.Down, "--"}, {Key.Delete, "Delete"}
+        };
+        protected override void OnPreviewTextInput(TextCompositionEventArgs e)
+        {
+            base.OnPreviewTextInput(e);
+
+            if (_keyTexts.Contains(e.Text.ToUpper()))
+            {
+                ButtonClickHandler(e.Text.ToUpper());
+                e.Handled = true;
+            }
+            else if (e.Text.Length == 1)
+                Tips.Beep();
+        }
+
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             base.OnPreviewKeyDown(e);
@@ -64,13 +83,6 @@ namespace WpfInvestigate.Controls
                 ButtonClickHandler(_keys[e.Key]);
                 e.Handled = true;
             }
-            else if (Keyboard.Modifiers == ModifierKeys.Shift && _shiftKeys.ContainsKey(e.Key))
-            {
-                ButtonClickHandler(_shiftKeys[e.Key]);
-                e.Handled = true;
-            }
-            else if (e.Key.ToString().Length == 1)
-                Tips.Beep();
         }
 
         protected override void OnPreviewKeyUp(KeyEventArgs e)
@@ -84,22 +96,6 @@ namespace WpfInvestigate.Controls
             base.OnPreviewMouseWheel(e);
             ExecuteOperator(e.Delta > 0 ? "++" : "--");
         }
-
-        private static Dictionary<Key, string> _keys = new Dictionary<Key, string>
-        {
-            {Key.D0, "0"}, {Key.D1, "1"}, {Key.D2, "2"}, {Key.D3, "3"}, {Key.D4, "4"}, {Key.D5, "5"}, {Key.D6, "6"},
-            {Key.D7, "7"}, {Key.D8, "8"}, {Key.D9, "9"}, {Key.NumPad0, "0"}, {Key.NumPad1, "1"}, {Key.NumPad2, "2"},
-            {Key.NumPad3, "3"}, {Key.NumPad4, "4"}, {Key.NumPad5, "5"}, {Key.NumPad6, "6"}, {Key.NumPad7, "7"},
-            {Key.NumPad8, "8"}, {Key.NumPad9, "9"}, {Key.Up, "++"}, {Key.Down, "--"}, {Key.C, "Clear"},
-            {Key.Back, "Backspace"}, {Key.Left, "Backspace"}, {Key.Divide, "/"}, {Key.Multiply, "*"},
-            {Key.Subtract, "-"}, {Key.OemMinus, "-"}, {Key.Add, "+"}, {Key.Return, "="}, {Key.OemPlus, "="},
-            {Key.Decimal, "."}, {Key.OemPeriod, "."}, {Key.OemComma, "."}, {Key.OemQuestion, "/"},
-            {Key.Delete, "Delete"}
-        };
-        private static Dictionary<Key, string> _shiftKeys = new Dictionary<Key, string>
-        {
-            {Key.D8, "*"}, {Key.OemPlus, "+"}
-        };
         #endregion
 
         // ============================
@@ -150,6 +146,7 @@ namespace WpfInvestigate.Controls
                     IndicatorText = (SecondOperand - multiplier1).ToString(Culture);
                     break;
 
+                case ",":
                 case ".":
                     CheckLastButtonIsDigit(true);
                     if (IndicatorText.Contains(DecimalSeparator))
@@ -157,7 +154,7 @@ namespace WpfInvestigate.Controls
                     IndicatorText += DecimalSeparator;
                     break;
 
-                case "Backspace":
+                case "\b":
                     CheckLastButtonIsDigit(false);
                     IndicatorText = IndicatorText.Substring(0, IndicatorText.Length - 1);
                     if (IndicatorText.Length == 0 || IndicatorText == "-")
@@ -175,10 +172,11 @@ namespace WpfInvestigate.Controls
                     }
                     break;
 
-                case "Clear":
+                case "C":
                     Clear();
                     break;
 
+                case "\r":
                 case "=":
                     if (string.IsNullOrEmpty(_operator) || !_firstOperand.HasValue)
                     {
@@ -232,21 +230,16 @@ namespace WpfInvestigate.Controls
             {
                 switch (_operator)
                 {
-                    case "+":
-                        _firstOperand += SecondOperand;
-                        break;
-                    case "-":
-                        _firstOperand -= SecondOperand;
-                        break;
-                    case "*":
-                        _firstOperand *= SecondOperand;
-                        break;
+                    case "+": _firstOperand += SecondOperand; break;
+                    case "-": _firstOperand -= SecondOperand; break;
+                    case "*": _firstOperand *= SecondOperand; break;
                     case "/":
                         if (SecondOperand == 0M)
                             ErrorText = "?? /0";
                         else
                             _firstOperand /= SecondOperand;
                         break;
+                    case "%": _firstOperand *= SecondOperand / 100M; break;
                 }
 
                 _operator = null;

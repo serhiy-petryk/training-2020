@@ -143,7 +143,7 @@
                             <Button Grid.Column="2" Grid.Row="1" Style="{DynamicResource OperatorButtonStyle}" Content="%" CommandParameter="%"/>
                             <RepeatButton Grid.Column="3" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="←" CommandParameter="Backspace" Interval="30" Delay="500"/>
                             <Button Grid.Column="4" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="Ｃ" CommandParameter="Clear"/>
-                            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="0">
+                            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="1">
                                 <Viewbox Stretch="Uniform">
                                     <controls:NumericBox VisibleButtons="LeftDown,Up" IsNullable="False" Padding="0" Margin="0"
                                                          FontWeight="SemiBold" FontSize="14"
