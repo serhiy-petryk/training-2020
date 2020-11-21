@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using WpfInvestigate.Common;
 using WpfInvestigate.Obsolete.TestViews;
 using WpfInvestigate.Temp;
 using WpfInvestigate.TestViews;
@@ -68,6 +70,31 @@ namespace WpfInvestigate
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
+            var aa1 = Tips.GetVisualChildren(TestTextBox).ToArray();
+            var aa11 = Tips.GetVisualChildren(TestTextBox).OfType<FrameworkElement>().ToArray();
+            var aa2 = Tips.GetVisualChildren(TestTextBox).OfType<FrameworkElement>().Select(a=> new Size(a.ActualWidth, a.ActualHeight)).ToArray();
+            var grid = Tips.GetVisualChildren(TestTextBox).OfType<Grid>().FirstOrDefault();
+            if (grid != null)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                var style = FindResource("ClearBichromeAnimatedButtonStyle") as Style;
+                var clearButton = new Button
+                {
+                    Name = "ClearButtonName",
+                    Style = style,
+                    Width = 12,
+                    // Margin = new Thickness(-2, 0, 1 - dp.Padding.Right, 0),
+                    Margin = new Thickness(1,0,0,0),
+                    Padding = new Thickness(0)
+                };
+
+                //if (dp.Background == null || dp.Background == Brushes.Transparent)
+                  //  dp.Background = Tips.GetActualBackgroundBrush(dp);
+
+                // clearButton.Click += ClearButton_Click;
+                grid.Children.Add(clearButton);
+                Grid.SetColumn(clearButton, grid.ColumnDefinitions.Count - 1);
+            }
         }
 
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
