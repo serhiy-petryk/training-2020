@@ -29,8 +29,6 @@
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Margin" Value="2"/>
                 <Setter Property="Padding" Value="0"/>
-                <!--<Setter Property="FontSize" Value="14"/>
-                <Setter Property="FontFamily" Value="Segoe UI"/>-->
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
                 <Setter Property="effects:ClickEffect.ShiftOffsetOnClick" Value="1"/>
@@ -78,7 +76,6 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Background" Value="Black"/>
         <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
-        <Setter Property="effects:FocusEffect.Brush" Value="Aqua"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:Calculator}">
@@ -102,7 +99,8 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <Border Grid.ColumnSpan="4" Grid.Row="0" BorderThickness="1" CornerRadius="2" BorderBrush="Gray" Margin="4" Background="{StaticResource IndicatorColor}">
+                            <Border Grid.ColumnSpan="4" Grid.Row="0" BorderThickness="1" CornerRadius="2" BorderBrush="Gray" Margin="4"
+                                    Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="2*"/>
@@ -113,27 +111,31 @@
                                                  IsReadOnly="True" Focusable="False" Margin="1 0" Padding="0"
                                                  BorderThickness="0" Background="Transparent" Opacity="0.7"
                                                  TextAlignment="Right" VerticalContentAlignment="Center"
-                                                 FontSize="12"
+                                                 Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%/+75%, Mode=OneWay}"
                                                  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=StatusText, Mode=OneWay}" />
                                     </Viewbox>
 
-                                    <Viewbox Grid.Row="1" HorizontalAlignment="Right">
+                                    <Viewbox Grid.Row="1" HorizontalAlignment="Right"
+                                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
                                         <TextBox x:Name="PART_Indicator"
-                                                 IsReadOnly="True" Focusable="False" Margin="1 0" Padding="0"
+                                                 Margin="1 0" Padding="0"
+                                                 IsReadOnly="True" IsTabStop="False" Focusable="True"
                                                  BorderThickness="0" Background="Transparent"
                                                  TextAlignment="Right" TextWrapping="WrapWithOverflow"
                                                  VerticalContentAlignment="Center"
-                                                 FontSize="20" FontFamily="Consolas"
-                                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                                                 Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%/+75%, Mode=OneWay}"
+                                                 FontFamily="Consolas"
                                                  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndicatorText, Mode=OneWay}">
                                         </TextBox>
                                     </Viewbox>
 
-                                    <TextBox Grid.Row="1" Margin="1" IsReadOnly="True" Focusable="False" Padding="0" BorderThickness="0"
+                                    <Viewbox Grid.Row="1" HorizontalAlignment="Right">
+                                        <TextBox Margin="1" IsReadOnly="True" Focusable="False" Padding="0" BorderThickness="0"
                                                  HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                                  Background="Transparent" Foreground="Red" 
-                                                 FontSize="20" FontWeight="SemiBold"
+                                                 FontWeight="SemiBold"
                                                  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Mode=OneWay}" />
+                                    </Viewbox>
                                 </Grid>
                             </Border>
 
@@ -186,12 +188,10 @@
             </DataTemplate>
 
             <Style x:Key="LightButtonBaseStyle" TargetType="ButtonBase" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
-                <Setter Property="Margin" Value="0 0 1 1"/>
+                <Setter Property="Margin" Value="1 1 0 0"/>
                 <Setter Property="Padding" Value="0"/>
-                <!--<Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=%44}"/>
-                <Setter Property="FontFamily" Value="Segoe UI"/>-->
                 <Setter Property="Focusable" Value="False"/>
-                <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="1"/>
+                <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="0"/>
                 <Setter Property="Command" Value="{Binding ClickCommand}"/>
                 <Setter Property="ContentTemplate" Value="{StaticResource ButtonContentTemplate}"/>
             </Style>
@@ -206,7 +206,7 @@
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SuccessColor}"/>
             </Style>
             <Style x:Key="ClearButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource LightButtonBaseStyle}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource DangerColor}"/>
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource OrangeColor}"/>
             </Style>
         </Style.Resources>
     </Style>
