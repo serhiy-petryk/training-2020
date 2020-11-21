@@ -147,6 +147,8 @@
                                 <Viewbox Stretch="Uniform">
                                     <controls:NumericBox VisibleButtons="LeftDown,Up" IsNullable="False" Padding="2 6" Margin="0"
                                                          Width="NaN" Height="NaN" BorderThickness="2"
+                                                         MinValue="0" MaxValue="19" Focusable="False" IsTabStop="False"
+                                                         Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalPlaces, Mode=TwoWay}"
                                                          effects:ChromeEffect.MonochromeAnimated="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"
                                                          effects:CornerRadiusEffect.CornerRadius="3"/>
                                 </Viewbox>

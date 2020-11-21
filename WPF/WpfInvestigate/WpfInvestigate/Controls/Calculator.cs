@@ -298,6 +298,7 @@ namespace WpfInvestigate.Controls
 
         private void RefrestUI()
         {
+            IndicatorText = Math.Round(SecondOperand, DecimalPlaces).ToString(Culture);
             OnPropertiesChanged(new[] { nameof(IndicatorText), nameof(StatusText), nameof(ErrorText), nameof(DecimalSeparator) });
         }
 
@@ -315,12 +316,35 @@ namespace WpfInvestigate.Controls
         #region ===========  DependencyProperty  =================
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(decimal?),
             typeof(Calculator), new PropertyMetadata(null, (d, e) => ((Calculator)d).OnValueChanged(e.NewValue as decimal?)));
-
         public decimal? Value
         {
             get => (decimal?)GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
         }
+        //=============
+        public static readonly DependencyProperty DecimalPlacesProperty = DependencyProperty.Register("DecimalPlaces",
+            typeof(int), typeof(Calculator), new FrameworkPropertyMetadata(8, OnDecimalPlacesChanged, CoerceDecimalPlaces));
+        /// <summary>
+        /// Rounding decimal places (from 0 to +19);
+        /// </summary>
+        public int DecimalPlaces
+        {
+            get => (int)GetValue(DecimalPlacesProperty);
+            set => SetValue(DecimalPlacesProperty, value);
+        }
+        private static void OnDecimalPlacesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var calculator = (Calculator)d;
+            calculator.RefrestUI();
+        }
+        private static object CoerceDecimalPlaces(DependencyObject d, object value)
+        {
+            var val = (int)value;
+            if (val < 0) return 0;
+            if (val > 19) return 19;
+            return val;
+        }
+
         #endregion
     }
 }
