@@ -42,28 +42,11 @@
 
             <StackPanel Orientation="Vertical">
                 <WrapPanel Margin="5">
-                    <Button Margin="5" Padding="0" Width="42" Height="32" Style="{StaticResource DefaultButtonBaseStyle}">
-                        <Viewbox>
-                            <Path Fill="Black" Stretch="Uniform" Data="{StaticResource TestGeometry}"/>
-                        </Viewbox>
-                    </Button>
-                    <Button Margin="5" Padding="0" Width="42" Height="32" Style="{StaticResource DefaultButtonBaseStyle}">
-                        <Path Fill="Black" Stretch="Uniform" Data="{StaticResource TestGeometry}"/>
-                    </Button>
-                    <Button Margin="5" Padding="0" Width="42" Height="32" Style="{StaticResource DefaultButtonBaseStyle}">
-                        <Viewbox>
-                            <Path Fill="Black" Stretch="Uniform" Data="{StaticResource TestGeometry1}"/>
-                        </Viewbox>
-                    </Button>
-                    <Button Margin="5" Padding="0" Width="42" Height="32" Style="{StaticResource DefaultButtonBaseStyle}">
-                        <Path Fill="Black" Stretch="Uniform" Data="{StaticResource TestGeometry1}"/>
-                    </Button>
-
-                    <Button Margin="5" Padding="4 0" Width="42" Height="32" Style="{StaticResource DefaultButtonBaseStyle}">
-                        <Viewbox>
-                            <Path Fill="Black" Stretch="Uniform" Data="{StaticResource TestGeometry1}"/>
-                        </Viewbox>
-                    </Button>
+                    <controls:NumericBox Margin="5 0" Width="70" Background="Yellow" Foreground="Blue"
+                                         Height="24" VisibleButtons="LeftDown,Up" IsNullable="True" Value="0" FontWeight="SemiBold" FontSize="13"
+                                         effects:CornerRadiusEffect.CornerRadius="2"
+                                         BorderThickness="1" BorderBrush="Gray" HorizontalContentAlignment="Center"/>
+                    <controls:Calculator Width="300" Height="300"></controls:Calculator>
                 </WrapPanel>
 
                 <WrapPanel>

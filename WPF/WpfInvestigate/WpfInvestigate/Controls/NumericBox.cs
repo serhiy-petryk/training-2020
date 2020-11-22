@@ -12,7 +12,7 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    public partial class NumericBox: INotifyPropertyChanged
+    public class NumericBox : UserControl, INotifyPropertyChanged
     {
         [Flags]
         public enum Buttons
@@ -30,7 +30,6 @@ namespace WpfInvestigate.Controls
         static NumericBox() => DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericBox), new FrameworkPropertyMetadata(typeof(NumericBox)));
         public NumericBox()
         {
-            InitializeComponent();
             Culture = Tips.CurrentCulture;
         }
 
@@ -46,7 +45,7 @@ namespace WpfInvestigate.Controls
         public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(decimal), typeof(NumericBox), new FrameworkPropertyMetadata(decimal.MinValue, OnMinValueChanged));
         public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(decimal), typeof(NumericBox), new FrameworkPropertyMetadata(decimal.MaxValue, OnMaxValueChanged, CoerceMaxValue));
         public static readonly DependencyProperty IntervalProperty = DependencyProperty.Register("Interval", typeof(decimal), typeof(NumericBox), new FrameworkPropertyMetadata(DefaultInterval, OnIntervalChanged));
-        public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons", typeof(Buttons), typeof(NumericBox), new FrameworkPropertyMetadata(Buttons.Close|Buttons.Calculator, OnVisibleButtonsChanged));
+        public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons", typeof(Buttons), typeof(NumericBox), new FrameworkPropertyMetadata(Buttons.Close | Buttons.Calculator, OnVisibleButtonsChanged));
 
         public readonly CultureInfo Culture;
         public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;
@@ -130,14 +129,14 @@ namespace WpfInvestigate.Controls
         /// <summary> 
         ///     Called when this element or any below gets focus.
         /// </summary>
-        private void OnNumericBoxGotFocus(object sender, RoutedEventArgs e)
+        protected override void OnGotFocus(RoutedEventArgs e)
         {
+            base.OnGotFocus(e);
             // When NumericBox gets logical focus, select the text inside us.
             // If we're an editable NumericBox, forward focus to the TextBox element
             if (!e.Handled)
             {
-                var numericBox = (NumericBox)sender;
-                if (!numericBox.IsReadOnly && numericBox.Focusable && e.OriginalSource == numericBox)
+                if (!IsReadOnly && Focusable)
                 {
                     // MoveFocus takes a TraversalRequest as its argument.
                     var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
@@ -147,7 +146,7 @@ namespace WpfInvestigate.Controls
                     if (elementWithFocus != null)
                         elementWithFocus.MoveFocus(request);
                     else
-                        numericBox.Focus();
+                        Focus();
 
                     e.Handled = true;
                 }
@@ -167,7 +166,7 @@ namespace WpfInvestigate.Controls
             _downButton = GetTemplateChild("PART_DownButton") as RepeatButton;
             _textBox = GetTemplateChild("PART_TextBox") as TextBox;
             _popup = GetTemplateChild("PART_Popup") as Popup;
-            _toggleButton=GetTemplateChild("PART_ToggleButton") as ToggleButton;
+            _toggleButton = GetTemplateChild("PART_ToggleButton") as ToggleButton;
 
             if (_clearButton == null || _upButton == null || _downButton == null || _textBox == null || _popup == null || _toggleButton == null)
                 throw new InvalidOperationException("Invalid control template");

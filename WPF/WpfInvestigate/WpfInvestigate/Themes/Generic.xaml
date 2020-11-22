@@ -1,23 +1,12 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-                    xmlns:examples="clr-namespace:WpfInvestigate.Examples">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/DialogItems.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/Calculator.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/ButtonStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/DropDownButtons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/NumericBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/DialogItems.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/Calculator.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
-    <Style TargetType="controls:NumericBox">
-        <Setter Property="Width" Value="400"/>
-        <Setter Property="Height" Value="40"/>
-    </Style>
-
-    <!--<Style TargetType="examples:ButtonWithTemplate">
-        <Setter Property="Width" Value="400"/>
-        <Setter Property="Height" Value="40"/>
-    </Style>-->
 
 </ResourceDictionary>

@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DialogItems.cs" />
+    <Compile Include="Controls\NumericBox.cs" />
     <Compile Include="Effects\ChromeEffect.cs" />
     <Compile Include="Effects\DatePickerEffect.cs" />
     <Compile Include="Effects\CornerRadiusEffect.cs" />
@@ -99,9 +100,6 @@
     <Compile Include="Obsolete\FlatButtonConverters\FlatButtonConverters.cs" />
     <Compile Include="Obsolete\MonochromeButton.xaml.cs">
       <DependentUpon>MonochromeButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\NumericBox.xaml.cs">
-      <DependentUpon>NumericBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Others\VirtualKeyboard.xaml.cs">
       <DependentUpon>VirtualKeyboard.xaml</DependentUpon>
@@ -236,10 +234,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\NumericBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\Others\VirtualKeyboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -284,6 +278,10 @@
     <Page Include="Styles\DialogItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\NumericBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Temp\OriginalVirtualKeyboard.xaml">
       <Generator>MSBuild:Compile</Generator>
