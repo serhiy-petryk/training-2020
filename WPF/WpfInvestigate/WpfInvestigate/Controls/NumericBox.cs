@@ -12,7 +12,7 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    public class NumericBox : UserControl, INotifyPropertyChanged
+    public class NumericBox : Control, INotifyPropertyChanged
     {
         [Flags]
         public enum Buttons
