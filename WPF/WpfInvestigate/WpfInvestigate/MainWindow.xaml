@@ -4,11 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
-        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-        xmlns:examples="clr-namespace:WpfInvestigate.Examples"
-        xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         mc:Ignorable="d"
-        Title="LIVE MainWindow" Height="600" Width="1000">
+        Title="LIVE MainWindow" Height="600" Width="1200">
 
     <Window.Resources>
 
@@ -177,11 +174,11 @@
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5">
@@ -202,7 +199,7 @@
                 <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
                 <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
 
-                <WrapPanel Orientation="Horizontal" Background="Black" HorizontalAlignment="Stretch" MaxWidth="230" Margin="10">
+                <WrapPanel Orientation="Horizontal" Background="Black" HorizontalAlignment="Stretch" Margin="10">
                     <Button Name="Cmdw" Style="{StaticResource InformButtonOriginal}" Focusable="False" VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
                             Width="60" Height="60" Content="X">
                         <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" >
