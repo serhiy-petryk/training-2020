@@ -50,9 +50,10 @@ namespace WpfInvestigate.Controls
         public string DecimalSeparator => Culture.NumberFormat.NumberDecimalSeparator;
 
         #region ========  Override && events =================
-        protected override void OnMouseUp(MouseButtonEventArgs e)
+
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            base.OnMouseUp(e);
+            base.OnPreviewMouseLeftButtonDown(e);
             ResetInterval();
             Keyboard.Focus(this);
         }
@@ -154,6 +155,7 @@ namespace WpfInvestigate.Controls
                     IndicatorText += DecimalSeparator;
                     break;
 
+                case "Backspace":
                 case "\b":
                     CheckLastButtonIsDigit(false);
                     IndicatorText = IndicatorText.Substring(0, IndicatorText.Length - 1);
@@ -172,6 +174,7 @@ namespace WpfInvestigate.Controls
                     }
                     break;
 
+                case "Clear":
                 case "C":
                     Clear();
                     break;
@@ -316,7 +319,7 @@ namespace WpfInvestigate.Controls
         }
         //=============
         public static readonly DependencyProperty DecimalPlacesProperty = DependencyProperty.Register("DecimalPlaces",
-            typeof(int), typeof(Calculator), new FrameworkPropertyMetadata(8, OnDecimalPlacesChanged, CoerceDecimalPlaces));
+            typeof(int), typeof(Calculator), new FrameworkPropertyMetadata(8, OnDecimalPlacesChanged));
         /// <summary>
         /// Rounding decimal places (from 0 to +19);
         /// </summary>
@@ -330,14 +333,6 @@ namespace WpfInvestigate.Controls
             var calculator = (Calculator)d;
             calculator.RefrestUI();
         }
-        private static object CoerceDecimalPlaces(DependencyObject d, object value)
-        {
-            var val = (int)value;
-            if (val < 0) return 0;
-            if (val > 19) return 19;
-            return val;
-        }
-
         #endregion
     }
 }
