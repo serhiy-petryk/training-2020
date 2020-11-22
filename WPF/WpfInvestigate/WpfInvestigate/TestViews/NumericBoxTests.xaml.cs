@@ -28,6 +28,7 @@ namespace WpfInvestigate.TestViews
         private void XButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             AA.Value = (AA.Value ?? 100M) + 10;
+            AA.ButtonsWidth += 2;
         }
     }
 }

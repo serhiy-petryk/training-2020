@@ -79,8 +79,8 @@ namespace WpfInvestigate.Common
                 if (s.StartsWith("-")) d -= double.Parse(s.Substring(1));
                 else if (s.StartsWith("+")) d += double.Parse(s.Substring(1));
                 else if (s.StartsWith("%")) d *= double.Parse(s.Substring(1)) / 100.0;
-                // else if (s.StartsWith("*")) d *= double.Parse(s.Substring(1));
-                // else if (s.StartsWith("/")) d /= double.Parse(s.Substring(1));
+                else if (s.StartsWith("*")) d *= double.Parse(s.Substring(1));
+                else if (s.StartsWith("/")) d /= double.Parse(s.Substring(1));
                 else
                     throw new Exception($"Undefined operator in MathConvertor: {parameter}");
 
