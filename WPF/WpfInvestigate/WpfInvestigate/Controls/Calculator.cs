@@ -50,11 +50,11 @@ namespace WpfInvestigate.Controls
         public string DecimalSeparator => Culture.NumberFormat.NumberDecimalSeparator;
 
         #region ========  Override && events =================
-        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnMouseUp(MouseButtonEventArgs e)
         {
-            base.OnPreviewMouseLeftButtonDown(e);
-            Focus();
+            base.OnMouseUp(e);
             ResetInterval();
+            Keyboard.Focus(this);
         }
 
         private static string[] _keyTexts = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "-", "*", "/", "%", "C", ".", ",", "=", "\r", "\b" };

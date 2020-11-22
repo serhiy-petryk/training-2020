@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="600" Width="1200">
 
@@ -218,6 +220,17 @@
                 </WrapPanel>
                 <WrapPanel Margin="5">
                     <TextBox Width="70" Background="Yellow" Foreground="Blue" TextWrapping="Wrap"/>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <Grid MaxHeight="300">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <controls:Calculator Grid.Column="0" Grid.ColumnSpan="2" Focusable="True" IsTabStop="True"
+                                             effects:FocusEffect.Brush="Aqua"/>
+                    </Grid>
                 </WrapPanel>
             </StackPanel>
 
