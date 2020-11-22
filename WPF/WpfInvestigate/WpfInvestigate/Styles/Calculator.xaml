@@ -158,7 +158,7 @@
                                                  VisibleButtons="LeftDown,Up" IsNullable="False" MinValue="0" MaxValue="19"
                                                  Style="{DynamicResource PrecisionButtonStyle}"
                                                  Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalPlaces, Mode=TwoWay}"
-                                                 ButtonsWidth="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=/4.5}"
+                                                 ButtonsWidth="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=/5}"
                                                  ToolTip="Rounding decimal places of calculator result">
                                 <controls:NumericBox.Resources>
                                     <Style TargetType="{x:Type TextBox}">
