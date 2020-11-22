@@ -51,9 +51,9 @@ namespace WpfInvestigate.Controls
 
         #region ========  Override && events =================
 
-        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            base.OnPreviewMouseLeftButtonDown(e);
+            base.OnPreviewMouseLeftButtonUp(e);
             ResetInterval();
             Keyboard.Focus(this);
         }
