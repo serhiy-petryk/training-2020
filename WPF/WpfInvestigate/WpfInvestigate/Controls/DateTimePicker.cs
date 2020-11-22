@@ -244,7 +244,7 @@ namespace WpfInvestigate.Controls
             if (dt == null)
                 return picker.IsNullable ? (DateTime?)null : picker._defaultDate;
 
-            if (!picker.DatePickerMode && picker._popup.IsOpen && dt.Value.TimeOfDay == TimeSpan.Zero) // Calendar is changing
+            if (!picker.DatePickerMode && picker._popup != null && picker._popup.IsOpen && dt.Value.TimeOfDay == TimeSpan.Zero) // Calendar is changing
                 dt = dt.Value + picker.SelectedTime;
             else if (picker.DatePickerMode) dt = dt.Value.Date; // OnlyDate mode
 

@@ -319,7 +319,7 @@ namespace WpfInvestigate.Controls
         }
         //=============
         public static readonly DependencyProperty DecimalPlacesProperty = DependencyProperty.Register("DecimalPlaces",
-            typeof(int), typeof(Calculator), new FrameworkPropertyMetadata(8, OnDecimalPlacesChanged));
+            typeof(int), typeof(Calculator), new FrameworkPropertyMetadata(8, (d, e) => ((Calculator)d).RefrestUI()));
         /// <summary>
         /// Rounding decimal places (from 0 to +19);
         /// </summary>
@@ -327,11 +327,6 @@ namespace WpfInvestigate.Controls
         {
             get => (int)GetValue(DecimalPlacesProperty);
             set => SetValue(DecimalPlacesProperty, value);
-        }
-        private static void OnDecimalPlacesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var calculator = (Calculator)d;
-            calculator.RefrestUI();
         }
         #endregion
     }
