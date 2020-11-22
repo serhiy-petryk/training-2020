@@ -85,22 +85,22 @@
                             UseLayoutRounding="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1.7*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
                             </Grid.RowDefinitions>
 
-                            <Border Grid.ColumnSpan="5" Grid.Row="0" BorderThickness="1" CornerRadius="2" BorderBrush="Gray" Margin="4"
+                            <Border Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" BorderThickness="1" CornerRadius="2" BorderBrush="Gray" Margin="4"
                                     Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}">
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -140,9 +140,6 @@
                                 </Grid>
                             </Border>
 
-                            <Button Grid.Column="2" Grid.Row="1" Style="{DynamicResource OperatorButtonStyle}" Content="%" CommandParameter="%"/>
-                            <RepeatButton Grid.Column="3" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="←" CommandParameter="Backspace" Interval="30" Delay="500"/>
-                            <Button Grid.Column="4" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="Ｃ" CommandParameter="Clear"/>
                             <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="1">
                                 <Viewbox Stretch="Uniform">
                                     <controls:NumericBox VisibleButtons="LeftDown,Up" IsNullable="False" Padding="0" Margin="0"
@@ -157,6 +154,9 @@
                                                          effects:CornerRadiusEffect.CornerRadius="2"/>
                                 </Viewbox>
                             </Grid>
+                            <Button Grid.Column="2" Grid.Row="1" Style="{DynamicResource OperatorButtonStyle}" Content="%" CommandParameter="%"/>
+                            <RepeatButton Grid.Column="3" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="←" CommandParameter="Backspace" Interval="30" Delay="500"/>
+                            <Button Grid.Column="4" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="Ｃ" CommandParameter="Clear"/>
 
                             <Button Grid.Column="0" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="7" CommandParameter="7"/>
                             <Button Grid.Column="1" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="8" CommandParameter="8"/>
