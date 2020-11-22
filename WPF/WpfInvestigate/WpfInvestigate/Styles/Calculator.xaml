@@ -46,6 +46,7 @@
             <sys:String x:Key="OperatorButtonHsl">180,50</sys:String>
             <sys:String x:Key="EqualButtonHsl">120,50</sys:String>
             <sys:String x:Key="ClearButtonHsl">0,50</sys:String>
+            <sys:String x:Key="PrecisionButtonHsl">300,50</sys:String>
 
             <Style x:Key="DigitButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource DarkButtonBaseStyle}">
                 <Setter Property="Background" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0.0005/19,0.2/12.5,0.9/38,1.0'}"/>
@@ -62,6 +63,27 @@
             <Style x:Key="ClearButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource DarkButtonBaseStyle}">
                 <Setter Property="Background" Value="{Binding Source={StaticResource ClearButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0.0005/19,0.2/12.5,0.9/38,1.0'}"/>
                 <Setter Property="Foreground" Value="{Binding Source={StaticResource ClearButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
+            </Style>
+
+            <Style x:Key="PrecisionButtonStyle" TargetType="{x:Type controls:NumericBox}">
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <!--<Setter Property="MinHeight" Value="16" />
+            <Setter Property="MinWidth" Value="60" />
+            <Setter Property="Width" Value="100" />-->
+                <Setter Property="Padding" Value="1" />
+                <Setter Property="Focusable" Value="True" />
+                <Setter Property="IsTabStop" Value="True" />
+                <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource UserInputControlChromeMatrix}"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="UseLayoutRounding" Value="True" />
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property="Background" Value="{Binding Source={StaticResource PrecisionButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0.0005/19,0.2/12.5,0.9/38,1.0'}"/>
+                <Setter Property="Foreground" Value="{Binding Source={StaticResource PrecisionButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
             </Style>
         </Style.Resources>
 
@@ -140,7 +162,7 @@
                                 </Grid>
                             </Border>
 
-                            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="1">
+                            <!--<Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="1">
                                 <Viewbox Stretch="Uniform">
                                     <controls:NumericBox VisibleButtons="LeftDown,Up" IsNullable="False" Padding="0" Margin="0"
                                                          FontWeight="SemiBold" FontSize="14"
@@ -153,7 +175,39 @@
                                                          effects:ChromeEffect.ChromeMatrix="+0%,+57%,+0%,40, +0%,+57%,+15%,100, +25%,+25%/+57%,+25%/+25%,100, +60%,+60%/+75%,+60%/+50%,100"
                                                          effects:CornerRadiusEffect.CornerRadius="2"/>
                                 </Viewbox>
-                            </Grid>
+                            </Grid>-->
+
+                            <controls:NumericBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" VisibleButtons="LeftDown,Up" IsNullable="False" Padding="0" Margin="2"
+                                                 MinValue="0" MaxValue="19" Focusable="False" IsTabStop="False"
+                                                 Background="{Binding Source={StaticResource PrecisionButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0.0005/19,0.2/12.5,0.9/38,1.0'}"
+                                                 Foreground="{Binding Source={StaticResource PrecisionButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"
+                                                 Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalPlaces, Mode=TwoWay}"
+                                                 ToolTip="Rounding decimal places of calculator result">
+                                <!--<controls:NumericBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" VisibleButtons="LeftDown,Up" IsNullable="False" Padding="0" Margin="2"
+                                                     MinValue="0" MaxValue="19" Focusable="False" IsTabStop="False"
+                                                     Background="{Binding Source={StaticResource PrecisionButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0.0005/19,0.2/12.5,0.9/38,1.0'}"
+                                                     Foreground="{Binding Source={StaticResource PrecisionButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"
+                                                     Style="{StaticResource PrecisionButtonStyle}"
+                                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalPlaces, Mode=TwoWay}"
+                                                     ToolTip="Rounding decimal places of calculator result">-->
+                                <controls:NumericBox.Resources>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type TextBox}">
+                                                    <Viewbox RenderTransformOrigin="0.5 0.5">
+                                                        <Viewbox.RenderTransform>
+                                                            <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+                                                        </Viewbox.RenderTransform>
+                                                        <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text}"/>
+                                                    </Viewbox>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </controls:NumericBox.Resources>
+                            </controls:NumericBox>
+
                             <Button Grid.Column="2" Grid.Row="1" Style="{DynamicResource OperatorButtonStyle}" Content="%" CommandParameter="%"/>
                             <RepeatButton Grid.Column="3" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="←" CommandParameter="Backspace" Interval="30" Delay="500"/>
                             <Button Grid.Column="4" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="Ｃ" CommandParameter="Clear"/>
@@ -216,6 +270,9 @@
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SuccessColor}"/>
             </Style>
             <Style x:Key="ClearButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource LightButtonBaseStyle}">
+                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource OrangeColor}"/>
+            </Style>
+            <Style x:Key="PrecisionButtonStyle" TargetType="{x:Type controls:NumericBox}">
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource OrangeColor}"/>
             </Style>
         </Style.Resources>

@@ -223,8 +223,16 @@
                 </WrapPanel>
 
                 <WrapPanel Background="Orange">
-                    <Grid MaxHeight="250" Background="Yellow" HorizontalAlignment="Stretch">
-                        <controls:Calculator effects:FocusEffect.Brush="Aqua" HorizontalAlignment="Stretch" Width="200"/>
+                    <Grid Background="Yellow" HorizontalAlignment="Stretch" Width="200">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Column="0" Grid.Row="0" Content="A % A" CommandParameter="%" Margin="2"/>
+                        <Button Grid.Column="1" Grid.Row="0" Content="A % A" CommandParameter="%" Margin="2"/>
                     </Grid>
                 </WrapPanel>
             </StackPanel>

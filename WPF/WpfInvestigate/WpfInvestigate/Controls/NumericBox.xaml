@@ -23,9 +23,9 @@
             <Setter Property="Background" Value="White"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="MinHeight" Value="16" />
+            <!--<Setter Property="MinHeight" Value="16" />
             <Setter Property="MinWidth" Value="60" />
-            <Setter Property="Width" Value="100" />
+            <Setter Property="Width" Value="100" />-->
             <Setter Property="Padding" Value="1" />
             <Setter Property="Focusable" Value="True" />
             <Setter Property="IsTabStop" Value="True" />
@@ -36,11 +36,12 @@
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="UseLayoutRounding" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type local:NumericBox}">
                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <Grid Background="{TemplateBinding Background}">
+                            <Grid Background="{TemplateBinding Background}" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
