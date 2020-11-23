@@ -205,9 +205,6 @@
     <Compile Include="TestViews\WiPTests.xaml.cs">
       <DependentUpon>WiPTests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Themes\Common.xaml.cs">
-      <DependentUpon>Common.xaml</DependentUpon>
-    </Compile>
     <Page Include="Controls\ButtonStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -393,13 +390,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Common.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="TestViews\TimePickerTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Common.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Themes\ControlExamples.xaml">
       <SubType>Designer</SubType>
