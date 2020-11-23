@@ -10,7 +10,7 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    public class ObjectEditor : UserControl, INotifyPropertyChanged
+    public class ObjectEditor : Control, INotifyPropertyChanged
     {
         static ObjectEditor()
         {
