@@ -30,7 +30,7 @@
             <Grid Background="{TemplateBinding Background}">
                 <CheckBox Padding="{TemplateBinding Padding}"
                           BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                          VerticalAlignment="Center"
                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                           Background="Transparent" Foreground="{TemplateBinding Foreground}"
@@ -62,7 +62,7 @@
 
         <ControlTemplate x:Key="DatePicker" TargetType="controls:ObjectEditor">
             <DatePicker BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        VerticalAlignment="Stretch"
                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                         Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"

@@ -6,6 +6,7 @@
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
+        xmlns:common="clr-namespace:WpfInvestigate.Common"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="600" Width="1200">
 
@@ -214,27 +215,21 @@
                 <WrapPanel Margin="5">
                 </WrapPanel>
 
-                <WrapPanel Margin="5">
-                    <TextBox x:Name="TestTextBox" Width="70" Background="Yellow" Foreground="Blue" TextWrapping="Wrap"/>
-                    <TextBox Width="70" Background="Yellow" Foreground="Blue"/>
+                <WrapPanel Margin="5" Background="Aqua" HorizontalAlignment="Stretch">
+                    <ComboBox x:Name="cbDataType" Margin="5" Height="20" />
+                    <controls:ObjectEditor x:Name="Editor" MinWidth="100" Height="24"
+                                           effects:WatermarkEffect.Watermark="TestWatermark"
+                                           effects:WatermarkEffect.Foreground="Red"
+                                           VerticalContentAlignment="Center" VerticalAlignment="Center"
+                                           ValueDataType="{Binding ElementName=cbDataType, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
+                                           IsNullable="False"/>
                 </WrapPanel>
                 <WrapPanel Margin="5">
-                    <TextBox Width="70" Background="Yellow" Foreground="Blue" TextWrapping="Wrap"/>
+                    <TextBox x:Name="TestTextBox" Width="70" Background="Yellow" Foreground="Blue" TextWrapping="Wrap" MaxHeight="30"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                 </WrapPanel>
 
-                <WrapPanel Background="Orange">
-                    <Grid Background="Yellow" HorizontalAlignment="Stretch" Width="200">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                        </Grid.RowDefinitions>
-                        <Button Grid.Column="0" Grid.Row="0" Content="A % A" CommandParameter="%" Margin="2"/>
-                        <Button Grid.Column="1" Grid.Row="0" Content="A % A" CommandParameter="%" Margin="2"/>
-                    </Grid>
-                </WrapPanel>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
