@@ -10,7 +10,7 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    public partial class ObjectEditor : INotifyPropertyChanged
+    public class ObjectEditor : UserControl, INotifyPropertyChanged
     {
         static ObjectEditor()
         {
@@ -19,7 +19,6 @@ namespace WpfInvestigate.Controls
         }
         public ObjectEditor()
         {
-            InitializeComponent();
             DataContext = this;
         }
 
@@ -99,12 +98,13 @@ namespace WpfInvestigate.Controls
         {
             var editor = (ObjectEditor)d;
             var metadata = DataTypeMetadata.MetadataList[(DataTypeMetadata.DataType)e.NewValue];
-            editor._isTemplateChanging = true;
-            editor.Template = editor.FindResource(metadata.Template.ToString()) as ControlTemplate;
-            editor.Value = Tips.GetDefaultOfType(metadata.Type);
             
-            editor.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+            editor.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
+                editor._isTemplateChanging = true;
+                editor.Template = editor.FindResource(metadata.Template.ToString()) as ControlTemplate;
+                editor.Value = Tips.GetDefaultOfType(metadata.Type);
+
                 foreach (var textBox in Tips.GetVisualChildren(editor).OfType<DatePickerTextBox>())
                     Helpers.ControlHelper.HideBorderOfDatePickerTextBox(textBox);
 

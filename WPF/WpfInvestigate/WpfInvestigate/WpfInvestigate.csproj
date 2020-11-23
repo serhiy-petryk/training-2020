@@ -81,6 +81,7 @@
     <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DialogItems.cs" />
     <Compile Include="Controls\NumericBox.cs" />
+    <Compile Include="Controls\ObjectEditor.cs" />
     <Compile Include="Effects\ChromeEffect.cs" />
     <Compile Include="Effects\DatePickerEffect.cs" />
     <Compile Include="Effects\CornerRadiusEffect.cs" />
@@ -178,9 +179,6 @@
     </Compile>
     <Compile Include="TestViews\ObjectEditorTests.xaml.cs">
       <DependentUpon>ObjectEditorTests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ObjectEditor.xaml.cs">
-      <DependentUpon>ObjectEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TimePicker.cs" />
     <Compile Include="Controls\TimePickerBase.xaml.cs">
@@ -283,6 +281,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\ObjectEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Temp\OriginalVirtualKeyboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -360,10 +362,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestViews\ObjectEditorTests.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ObjectEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

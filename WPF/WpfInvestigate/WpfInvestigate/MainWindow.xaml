@@ -222,7 +222,13 @@
                                            effects:WatermarkEffect.Foreground="Red"
                                            VerticalContentAlignment="Center" VerticalAlignment="Center"
                                            ValueDataType="{Binding ElementName=cbDataType, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
-                                           IsNullable="False"/>
+                                           IsNullable="True"/>
+                    <!--<controls:ObjectEditor MinWidth="100" Height="24"
+                                           effects:WatermarkEffect.Watermark="TestWatermark"
+                                           effects:WatermarkEffect.Foreground="Red"
+                                           VerticalContentAlignment="Center" VerticalAlignment="Center"
+                                           ValueDataType="Bool"
+                                           IsNullable="False"/>-->
                 </WrapPanel>
                 <WrapPanel Margin="5">
                     <TextBox x:Name="TestTextBox" Width="70" Background="Yellow" Foreground="Blue" TextWrapping="Wrap" MaxHeight="30"
