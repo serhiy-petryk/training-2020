@@ -296,7 +296,11 @@ namespace WpfInvestigate.Controls
         {
             if (_firstOperand.HasValue)
                 _firstOperand = Math.Round(_firstOperand.Value, DecimalPlaces);
+
+            var endWithDecimalSeparator = IndicatorText.EndsWith(DecimalSeparator);
             IndicatorText = Math.Round(SecondOperand, DecimalPlaces).ToString(Culture);
+            if (endWithDecimalSeparator && !IndicatorText.EndsWith(DecimalSeparator))
+                IndicatorText += DecimalSeparator;
 
             OnPropertiesChanged(new[] { nameof(IndicatorText), nameof(StatusText), nameof(ErrorText), nameof(DecimalSeparator) });
         }
