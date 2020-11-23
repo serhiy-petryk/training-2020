@@ -79,14 +79,18 @@
 
             <WrapPanel Margin="0 5 0 0">
                 <Label Content="TimePicker (nullable, Padding:6,8,10,12):" VerticalAlignment="Center"/>
-                <controls:TimePicker Width="100" Height="60" Background="Yellow"
+                <controls:TimePicker Width="180" Height="60" Background="Yellow"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" IsNullable="True"
-                                     Padding="6 8 10 12" BorderThickness="4" BorderBrush="YellowGreen" FontSize="24" />
+                                     Padding="6 8 10 12" BorderThickness="4" BorderBrush="YellowGreen" FontSize="20" />
 
-                <Label Content="TimePicker (nullable, Padding:6,8,0,12):" VerticalAlignment="Center"/>
-                <controls:TimePicker Width="100" Height="100"
+                <controls:TimePicker Width="180" Height="60" Background="Yellow"
                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" IsNullable="True"
-                                     Padding="6 8 0 12" BorderThickness="4" BorderBrush="YellowGreen" FontSize="24" />
+                                     Padding="0" BorderThickness="4" BorderBrush="YellowGreen" FontSize="20" />
+
+                <Label Content="TimePicker (nullable, Padding:10 10 0 20):" VerticalAlignment="Center"/>
+                <controls:TimePicker Width="200" Height="60"
+                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" IsNullable="True"
+                                     Padding="10 10 0 20" BorderThickness="4" BorderBrush="YellowGreen" FontSize="20" />
             </WrapPanel>
 
             <WrapPanel Margin="0 5 0 0">

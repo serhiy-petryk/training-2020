@@ -166,22 +166,23 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition x:Name="Separator" Width="Auto" />
                                         <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
                                         <ColumnDefinition x:Name="ClearButtonColumn" Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <DatePickerTextBox x:Name="PART_TextBox" Grid.Column="0"
-                                                       Margin="0" Padding="{TemplateBinding Padding}"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                       CaretBrush="{DynamicResource BlackBrush}"
-                                                       Focusable="{TemplateBinding Focusable}"
-                                                       FontFamily="{TemplateBinding FontFamily}"
-                                                       FontSize="{TemplateBinding FontSize}"
-                                                       Foreground="{TemplateBinding Foreground}"
-                                                       IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                                                       SelectionBrush="{DynamicResource HighlightBrush}">
-                                    </DatePickerTextBox>
+                                    <TextBox x:Name="PART_TextBox" Grid.Column="0"
+                                             BorderThickness="0" Background="Transparent"
+                                             Margin="{TemplateBinding Padding}" Padding="0"
+                                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                             CaretBrush="{DynamicResource BlackBrush}"
+                                             Focusable="{TemplateBinding Focusable}"
+                                             FontFamily="{TemplateBinding FontFamily}"
+                                             FontSize="{TemplateBinding FontSize}"
+                                             Foreground="{TemplateBinding Foreground}"
+                                             IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
+                                             SelectionBrush="{DynamicResource HighlightBrush}">
+                                    </TextBox>
 
                                     <Rectangle Grid.Column="1" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}" Fill="{TemplateBinding BorderBrush}"
                                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsTextBoxBorderVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>

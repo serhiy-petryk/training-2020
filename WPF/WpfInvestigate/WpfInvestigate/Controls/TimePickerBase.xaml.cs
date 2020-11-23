@@ -71,7 +71,7 @@ namespace WpfInvestigate.Controls
         private bool _isTextChanging;
         private bool _textInputChanged;
         protected Popup _popup;
-        protected DatePickerTextBox _textBox;
+        protected TextBox _textBox;
 
         static TimePickerBase()
         {
@@ -164,7 +164,7 @@ namespace WpfInvestigate.Controls
 
             _popup = GetTemplateChild("PART_Popup") as Popup;
             _clearButton = GetTemplateChild("PART_ClearButton") as Button;
-            _textBox = GetTemplateChild("PART_TextBox") as DatePickerTextBox;
+            _textBox = GetTemplateChild("PART_TextBox") as TextBox;
 
             _nightHourSelector = GetTemplateChild("PART_NightHourSelector") as DataGrid;
             _dayHourSelector = GetTemplateChild("PART_DayHourSelector") as DataGrid;
@@ -301,11 +301,11 @@ namespace WpfInvestigate.Controls
 
         protected virtual void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            var textBoxValue = ((DatePickerTextBox)sender).Text;
+            var textBoxValue = ((TextBox)sender).Text;
             TimeSpan? ts = null;
             if (!string.IsNullOrWhiteSpace(textBoxValue))
             {
-                var text = string.Intern($"{DateTime.MinValue.ToString(Culture.DateTimeFormat.ShortDatePattern)} {((DatePickerTextBox)sender).Text}");
+                var text = string.Intern($"{DateTime.MinValue.ToString(Culture.DateTimeFormat.ShortDatePattern)} {((TextBox)sender).Text}");
                 DateTime dt;
                 if (DateTime.TryParse(text, Culture, DateTimeStyles.None, out dt))
                     ts = dt.TimeOfDay;

@@ -192,7 +192,7 @@ namespace WpfInvestigate.Controls
 
         protected override void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            var textBoxValue = ((DatePickerTextBox)sender).Text;
+            var textBoxValue = ((TextBox)sender).Text;
             DateTime? dt = null;
             if (!string.IsNullOrWhiteSpace(textBoxValue))
             {
