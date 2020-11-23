@@ -37,7 +37,7 @@ namespace WpfInvestigate.Controls
         private const string ScientificNotationChar = "E";
         private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
 
-        public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<decimal?>), typeof(NumericBox));
+        public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Direct, typeof(RoutedPropertyChangedEventHandler<decimal?>), typeof(NumericBox));
 
         public static readonly DependencyProperty IsReadOnlyProperty = TextBoxBase.IsReadOnlyProperty.AddOwner(typeof(NumericBox), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits, OnIsReadOnlyPropertyChanged));
         public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register("StringFormat", typeof(string), typeof(NumericBox), new FrameworkPropertyMetadata(string.Empty, OnStringFormatChanged, CoerceStringFormat));

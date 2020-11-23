@@ -294,7 +294,10 @@ namespace WpfInvestigate.Controls
 
         private void RefrestUI()
         {
+            if (_firstOperand.HasValue)
+                _firstOperand = Math.Round(_firstOperand.Value, DecimalPlaces);
             IndicatorText = Math.Round(SecondOperand, DecimalPlaces).ToString(Culture);
+
             OnPropertiesChanged(new[] { nameof(IndicatorText), nameof(StatusText), nameof(ErrorText), nameof(DecimalSeparator) });
         }
 
