@@ -107,7 +107,7 @@ namespace WpfInvestigate.Effects
 
             var boxContent = ctrlBox is TextBox ? ((TextBox)ctrlBox).Text : ((PasswordBox)ctrlBox).Password;
 
-            if (string.IsNullOrWhiteSpace(boxContent) && !ctrlBox.IsFocused && !string.IsNullOrEmpty(watermark))
+            if (string.IsNullOrWhiteSpace(boxContent) && !string.IsNullOrEmpty(watermark))
                 ShowWatermark(ctrlBox, watermark, foregroundBrush);
             else
                 HideWatermark(ctrlBox);

@@ -234,8 +234,8 @@
                     <TextBox x:Name="TestTextBox" Width="70" Background="Yellow" Foreground="Blue" TextWrapping="Wrap" MaxHeight="30"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-                    <DatePicker x:Name="DatePickerTest" Background="Violet" Padding="4"
-                                effects:DatePickerEffect.HideInnerBorders="True"/>
+                    <!--<DatePicker x:Name="DatePickerTest" Background="Violet" Padding="4"
+                                effects:DatePickerEffect.HideInnerBorders="True"/>-->
                 </WrapPanel>
 
             </StackPanel>
