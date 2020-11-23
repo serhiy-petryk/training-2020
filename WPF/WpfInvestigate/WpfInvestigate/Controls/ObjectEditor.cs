@@ -1,9 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
@@ -104,9 +102,6 @@ namespace WpfInvestigate.Controls
                 editor._isTemplateChanging = true;
                 editor.Template = editor.FindResource(metadata.Template.ToString()) as ControlTemplate;
                 editor.Value = Tips.GetDefaultOfType(metadata.Type);
-
-                foreach (var textBox in Tips.GetVisualChildren(editor).OfType<DatePickerTextBox>())
-                    Helpers.ControlHelper.HideBorderOfDatePickerTextBox(textBox);
 
                 editor._isTemplateChanging = false;
                 

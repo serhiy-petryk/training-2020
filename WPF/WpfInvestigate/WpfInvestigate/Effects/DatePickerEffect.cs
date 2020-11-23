@@ -7,12 +7,14 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Controls.Helpers;
 
 namespace WpfInvestigate.Effects
 {
     /// <summary>
     /// DatePickerEffect.IsNullable property: supports IsNullable and DisplayDateStart/End (as Minimum/Maximum dates) for SelectedDate of DatePicker
     /// DatePickerEffect.ClearButton property: hide/show clear button for DatePicker
+    /// DatePickerEffect.HideInnerBorders property: hide/show borders of DatePickerTextBox which is child of any framework element
     /// Usage:  <DatePicker controls:DatePickerEffect.ClearButton="True" controls:DatePickerEffect.IsNullable="True" />
     /// </summary>
     public class DatePickerEffect
@@ -22,7 +24,6 @@ namespace WpfInvestigate.Effects
 
         public static readonly DependencyProperty ClearButtonProperty = DependencyProperty.RegisterAttached("ClearButton",
             typeof(bool), typeof(DatePickerEffect), new PropertyMetadata(false, propertyChangedCallback: OnClearButtonChanged));
-
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         public static void SetClearButton(DependencyObject d, bool value) => d.SetValue(ClearButtonProperty, value);
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
@@ -32,7 +33,8 @@ namespace WpfInvestigate.Effects
         {
             if (!(d is DatePicker dp))
             {
-                Debug.Print($"DatePickerEffect.ClearButton is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+                Debug.Print(
+                    $"DatePickerEffect.ClearButton is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
                 return;
             }
 
@@ -54,21 +56,21 @@ namespace WpfInvestigate.Effects
             dp.Unloaded -= OnUnloadedForClearButton;
             RemoveClearButton(dp);
         }
-
-
+        
         private static void AddClearButton(DatePicker dp)
         {
             var button = Tips.GetVisualChildren(dp).FirstOrDefault(btn => btn is Button && ((Button)btn).Name == ClearButtonName) as Button;
-            if (button !=null)
+            if (button != null)
                 return;
 
             button = dp.Template.FindName("PART_Button", dp) as Button;
             var grid = button.Parent as Grid;
-            grid.ColumnDefinitions.Add(new ColumnDefinition {Width = GridLength.Auto});
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             var style = dp.FindResource("ClearBichromeAnimatedButtonStyle") as Style;
             var clearButton = new Button
             {
-                Name = ClearButtonName, Style = style, Width = 18, Margin = new Thickness(-2, 0, 1 - dp.Padding.Right, 0),
+                Name = ClearButtonName, Style = style, Width = 18, 
+                Margin = new Thickness(-2, 0, 1 - dp.Padding.Right, 0),
                 Padding = new Thickness(3), Focusable = false, IsTabStop = false
             };
 
@@ -101,7 +103,7 @@ namespace WpfInvestigate.Effects
             {
                 var isNullable = GetIsNullable(current) ?? false;
                 ((DatePicker)current).SelectedDate = isNullable ? (DateTime?)null : DateTime.Today;
-                ((DatePicker) current).Focus();
+                ((DatePicker)current).Focus();
             }
         }
         #endregion
@@ -129,9 +131,11 @@ namespace WpfInvestigate.Effects
                 if (e.NewValue == null)
                     return;
 
-                var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
+                var dpdStart =
+                    DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
                 dpdStart.AddValueChanged(dp, OnChangeDateLimit);
-                var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
+                var dpdEnd =
+                    DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
                 dpdEnd.AddValueChanged(dp, OnChangeDateLimit);
 
                 dp.SelectedDateChanged += OnSelectedDateChanged;
@@ -146,7 +150,8 @@ namespace WpfInvestigate.Effects
             var dp = sender as DatePicker;
             dp.SelectedDateChanged -= OnSelectedDateChanged;
             dp.Unloaded -= OnUnloadedForIsNullable;
-            var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
+            var dpdStart =
+                DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
             dpdStart.RemoveValueChanged(dp, OnChangeDateLimit);
             var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
             dpdEnd.RemoveValueChanged(dp, OnChangeDateLimit);
@@ -156,6 +161,7 @@ namespace WpfInvestigate.Effects
         {
             CheckDatePicker(sender as DatePicker);
         }
+
         private static void OnChangeDateLimit(object sender, EventArgs e)
         {
             CheckDatePicker(sender as DatePicker);
@@ -175,6 +181,27 @@ namespace WpfInvestigate.Effects
 
             if (dp.SelectedDate != value)
                 dp.SelectedDate = value;
+        }
+        #endregion
+
+        #region ===============  Hide inner borders  ================
+        public static readonly DependencyProperty HideInnerBordersProperty = DependencyProperty.RegisterAttached("HideInnerBorders",
+            typeof(bool), typeof(DatePickerEffect), new PropertyMetadata(false, propertyChangedCallback: OnHideInnerBordersChanged));
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        public static void SetHideInnerBorders(DependencyObject d, bool value) => d.SetValue(HideInnerBordersProperty, value);
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        public static bool GetHideInnerBorders(DependencyObject d) => (bool)d.GetValue(HideInnerBordersProperty);
+
+        private static void OnHideInnerBordersChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is FrameworkElement fe))
+            {
+                Debug.Print($"DatePickerEffect.HideInnerBorders is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+                return;
+            }
+
+            if (e.NewValue is bool toHide)
+                ControlHelper.HideInnerBorderOfDatePickerTextBox(fe, toHide);
         }
         #endregion
     }

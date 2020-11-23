@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using WpfInvestigate.Common;
-using WpfInvestigate.Controls;
 using WpfInvestigate.Effects;
 using WpfInvestigate.Obsolete.TestViews;
 using WpfInvestigate.Temp;
@@ -76,6 +76,13 @@ namespace WpfInvestigate
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
+            var aa1 = Tips.GetVisualChildren(DatePickerTest).OfType<FrameworkElement>().ToArray();
+            var aa2 = Tips.GetVisualChildren(DatePickerTest).OfType<FrameworkElement>().Select(a => new Size(a.ActualWidth, a.ActualHeight)).ToArray();
+            var a3 = Tips.GetVisualChildren(DatePickerTest).OfType<DatePickerTextBox>().FirstOrDefault();
+
+            // ControlHelper.HideInnerBorderOfDatePickerTextBox(a3);
+            // ControlHelper.HideBorderOfDatePickerTextBox(DatePickerTest);
+
             Debug.Print($"Editor height: {Editor.ActualHeight}");
             return;
 

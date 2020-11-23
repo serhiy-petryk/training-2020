@@ -178,18 +178,9 @@
 
     <Style TargetType="DatePickerTextBox">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
-                    <ScrollViewer x:Name="PART_ContentHost" Margin="0" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <Style TargetType="DatePicker">
-        <Setter Property="Width" Value="115"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a date"></Setter>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource UserInputControlChromeMatrix}"/>

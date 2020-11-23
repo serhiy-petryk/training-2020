@@ -222,7 +222,7 @@
                                            effects:WatermarkEffect.Foreground="Red"
                                            VerticalContentAlignment="Center" VerticalAlignment="Center"
                                            ValueDataType="{Binding ElementName=cbDataType, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
-                                           IsNullable="True"/>
+                                           IsNullable="False"/>
                     <!--<controls:ObjectEditor MinWidth="100" Height="24"
                                            effects:WatermarkEffect.Watermark="TestWatermark"
                                            effects:WatermarkEffect.Foreground="Red"
@@ -234,6 +234,8 @@
                     <TextBox x:Name="TestTextBox" Width="70" Background="Yellow" Foreground="Blue" TextWrapping="Wrap" MaxHeight="30"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                    <DatePicker x:Name="DatePickerTest" Background="Violet" Padding="4"
+                                effects:DatePickerEffect.HideInnerBorders="True"/>
                 </WrapPanel>
 
             </StackPanel>

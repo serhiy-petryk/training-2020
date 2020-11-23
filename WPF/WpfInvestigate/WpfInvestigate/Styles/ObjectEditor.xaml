@@ -74,13 +74,9 @@
                             effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
                             effects:DatePickerEffect.ClearButton="True"
                             effects:DatePickerEffect.IsNullable="{TemplateBinding IsNullable}"
+                            effects:DatePickerEffect.HideInnerBorders="True"
                             SelectedDate="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}">
                     <!--SelectedDateChanged="DatePicker_OnValueChanged">-->
-                    <DatePicker.Resources>
-                        <Style TargetType="{x:Type DatePickerTextBox}">
-                            <Setter Property="Background" Value="Transparent" />
-                        </Style>
-                    </DatePicker.Resources>
                 </DatePicker>
             </ControlTemplate>
 

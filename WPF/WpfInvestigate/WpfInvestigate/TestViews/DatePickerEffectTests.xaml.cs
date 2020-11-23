@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WpfInvestigate.Controls.Helpers;
 using WpfInvestigate.Effects;
 
 namespace WpfInvestigate.TestViews
@@ -11,6 +12,7 @@ namespace WpfInvestigate.TestViews
         public DatePickerEffectTests()
         {
             InitializeComponent();
+            ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
         }
 
         private void Debug1_OnClick(object sender, RoutedEventArgs e)

@@ -9,6 +9,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls.Helpers
@@ -90,13 +91,19 @@ namespace WpfInvestigate.Controls.Helpers
         public static CornerRadius? GetCornerRadius(FrameworkElement element) =>
             GetMainBorders(element).FirstOrDefault(b => b.CornerRadius != new CornerRadius())?.CornerRadius;
 
-        public static void HideBorderOfDatePickerTextBox(DatePickerTextBox textBox)
+        public static void HideInnerBorderOfDatePickerTextBox(FrameworkElement fe, bool toHide)
         {
-            // Hide border of DatePicker textbox
-            const string name1 = "watermark_decorator", name2 = "ContentElement";
-            var borders = Tips.GetVisualChildren(textBox).OfType<Border>().Where(c => c.Name == name1 || c.Name == name2);
-            foreach (var x in borders)
-                x.BorderBrush = Brushes.Transparent;
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            {
+                foreach (var textBox in Tips.GetVisualChildren(fe).OfType<DatePickerTextBox>())
+                {
+                    const string name1 = "watermark_decorator", name2 = "ContentElement";
+                    var newBorderThickness = new Thickness(toHide ? 0 : 1);
+                    var borders = Tips.GetVisualChildren(textBox).OfType<Border>().Where(c => c.Name == name1 || c.Name == name2);
+                    foreach (var x in borders)
+                        x.BorderThickness = newBorderThickness;
+                }
+            }));
         }
 
         public static void SetBorderOfToolbarComboBoxes(ToolBar toolBar)
