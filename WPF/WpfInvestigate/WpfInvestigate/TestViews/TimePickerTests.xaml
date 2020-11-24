@@ -37,9 +37,30 @@
             <Label Margin="8 0 0 8" Padding="0">-space between second &amp; am/pm buttons</Label>
 
             <WrapPanel Margin="0 5 0 0">
+                <controls:TimePicker Padding="0" Margin="0 0 5 0"
+                                     IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Short" />
+                <controls:TimePicker Padding="0" Margin="0 0 5 0"
+                                     IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long" />
+                <controls:DateTimePicker Padding="0" Margin="0 0 5 0" IsDateOnlyMode="True"
+                                         IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                         IsReadOnly="False" SelectedTimeFormat="Short" />
+                <controls:DateTimePicker Padding="0" Margin="0 0 5 0" IsDateOnlyMode="True"
+                                         IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                         IsReadOnly="False" SelectedTimeFormat="Long" />
+                <controls:DateTimePicker Padding="0" Margin="0 0 5 0" IsDateOnlyMode="False"
+                                         IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                         IsReadOnly="False" SelectedTimeFormat="Short" />
+                <controls:DateTimePicker Padding="0" Margin="0 0 5 0" IsDateOnlyMode="False"
+                                         IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
+                                         IsReadOnly="False" SelectedTimeFormat="Long" />
+            </WrapPanel>
+
+            <WrapPanel Margin="0 5 0 0">
                 <TextBlock Margin="0 5"><Run Text="Time picker"/></TextBlock>
                 <Label Content="TimePicker (not nullable):" Margin="0 0 5 0"/>
-                <controls:TimePicker Width="100" Height="30" Padding="0" Margin="0 0 5 0"
+                <controls:TimePicker Padding="0" Margin="0 0 5 0"
                                      IsEnabled="{Binding ElementName=IsEnabled, Path=IsChecked}"
                                      IsReadOnly="False" SelectedTimeFormat="Long" />
                 <controls:TimePicker x:Name="NNN" Width="100" Height="30" Background="Yellow" Margin="0 0 5 0"
@@ -110,12 +131,12 @@
             </WrapPanel>
 
             <WrapPanel Margin="0 5 0 0">
-                <Label Content="DatePicker &amp; DateTimePicker: (not nullable, MinDate=2022/1/1)"/>
-                <controls:DateTimePicker x:Name="dtp" Width="250" Height="30" Background="Yellow"
+                <Label Content="DatePicker &amp; DateTimePicker: (not nullable, MinDate=2002/1/1)"/>
+                <controls:DateTimePicker x:Name="dtp" Background="Yellow"
                              IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
                              IsNullable="False"
                              IsDateOnlyMode="True"
-                             FontSize="24"
+                             FontSize="20"
                              DisplayDateStart="2002/1/1"
                              effects:WatermarkEffect.Watermark="Test"/>
                 <Button Click="ChangeDate_OnClick" Content="Change date"/>

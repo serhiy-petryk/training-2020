@@ -362,13 +362,16 @@ namespace WpfInvestigate.Controls
 
         private void OnSelectorPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender == _nightHourSelector)
+            if (Equals(sender, _nightHourSelector))
                 _dayHourSelector.SelectedCells.Clear();
-            else if (sender == _dayHourSelector)
+            else if (Equals(sender, _dayHourSelector))
                 _nightHourSelector.SelectedCells.Clear();
+            
             OnBaseValueChanged(sender, null);
-            if (sender == _secondSelector)
+
+            if (Equals(sender, _secondSelector) || (Equals(sender, _minuteSelector) && SelectedTimeFormat == DatePickerFormat.Short))
                 ClosePopup();
+
             e.Handled = true;
         }
 

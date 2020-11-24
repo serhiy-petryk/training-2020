@@ -350,7 +350,7 @@
             <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
         </Style>
 
-        <Style BasedOn="{StaticResource TimePartPickerBase}" TargetType="{x:Type controls:DateTimePicker}">
+        <Style TargetType="{x:Type controls:DateTimePicker}" BasedOn="{StaticResource TimePartPickerBase}">
             <Setter Property="IsTodayHighlighted" Value="True" />
             <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a date and time" />
             <Style.Triggers>
@@ -360,8 +360,7 @@
             </Style.Triggers>
         </Style>
 
-        <Style BasedOn="{StaticResource TimePartPickerBase}" TargetType="{x:Type controls:TimePicker}">
-            <Setter Property="Width" Value="90" />
+        <Style TargetType="{x:Type controls:TimePicker}" BasedOn="{StaticResource TimePartPickerBase}">
             <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a time" />
         </Style>
     </UserControl.Resources>
