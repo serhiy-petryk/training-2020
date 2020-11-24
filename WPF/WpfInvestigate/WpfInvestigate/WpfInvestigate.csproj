@@ -509,11 +509,13 @@
     <Resource Include="Comments\Bootstrap.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TestViews\Resources\1.jpg" />
+    <Resource Include="Resources\1.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Comments\ProjectStructure.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="TestViews\Resources\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

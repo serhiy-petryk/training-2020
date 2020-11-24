@@ -13,7 +13,7 @@ namespace WpfInvestigate.TestViews
     /// </summary>
     public partial class DialogTests
     {
-        private BitmapImage _testImage = new BitmapImage(new Uri("/TestViews/Resources/1.jpg", UriKind.RelativeOrAbsolute));
+        private BitmapImage _testImage = new BitmapImage(new Uri("/Resources/1.jpg", UriKind.RelativeOrAbsolute));
 
         public DialogTests()
         {
