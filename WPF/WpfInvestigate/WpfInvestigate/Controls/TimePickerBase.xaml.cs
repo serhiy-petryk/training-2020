@@ -30,7 +30,7 @@ namespace WpfInvestigate.Controls
             Clear = 2
         }
 
-        public static readonly RoutedEvent SelectedTimeChangedEvent = EventManager.RegisterRoutedEvent("SelectedTimeChanged", RoutingStrategy.Bubble,
+        public static readonly RoutedEvent SelectedTimeChangedEvent = EventManager.RegisterRoutedEvent("SelectedTimeChanged", RoutingStrategy.Direct,
             typeof(RoutedPropertyChangedEventHandler<TimeSpan?>), typeof(TimePickerBase));
 
         public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register("IsReadOnly", typeof(bool),

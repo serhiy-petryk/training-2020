@@ -21,14 +21,14 @@ namespace WpfInvestigate.TestViews
             x.IsNullable = !x.IsNullable;
         }
 
-        private void ChangeDate_OnClick(object sender, RoutedEventArgs e) => dtp.SelectedDate = DateTime.Now;
-        private void ChangeDate1_OnClick(object sender, RoutedEventArgs e) => dtp1.SelectedDate = DateTime.Now;
-        private void ChangeDate2_OnClick(object sender, RoutedEventArgs e) => dtp2.SelectedDate = DateTime.Now;
-        private void ChangeDate3_OnClick(object sender, RoutedEventArgs e) => dtp3.SelectedDate = DateTime.Now;
-        private void DatePickerMode_OnClick(object sender, RoutedEventArgs e) => dtp.DatePickerMode = !dtp.DatePickerMode;
-        private void DatePickerMode1_OnClick(object sender, RoutedEventArgs e) => dtp1.DatePickerMode = !dtp1.DatePickerMode;
-        private void DatePickerMode2_OnClick(object sender, RoutedEventArgs e) => dtp2.DatePickerMode = !dtp2.DatePickerMode;
-        private void DatePickerMode3_OnClick(object sender, RoutedEventArgs e) => dtp3.DatePickerMode = !dtp3.DatePickerMode;
+        private void ChangeDate_OnClick(object sender, RoutedEventArgs e) => dtp.SelectedDateTime = DateTime.Now;
+        private void ChangeDate1_OnClick(object sender, RoutedEventArgs e) => dtp1.SelectedDateTime = DateTime.Now;
+        private void ChangeDate2_OnClick(object sender, RoutedEventArgs e) => dtp2.SelectedDateTime = DateTime.Now;
+        private void ChangeDate3_OnClick(object sender, RoutedEventArgs e) => dtp3.SelectedDateTime = DateTime.Now;
+        private void DatePickerMode_OnClick(object sender, RoutedEventArgs e) => dtp.IsDateOnlyMode = !dtp.IsDateOnlyMode;
+        private void DatePickerMode1_OnClick(object sender, RoutedEventArgs e) => dtp1.IsDateOnlyMode = !dtp1.IsDateOnlyMode;
+        private void DatePickerMode2_OnClick(object sender, RoutedEventArgs e) => dtp2.IsDateOnlyMode = !dtp2.IsDateOnlyMode;
+        private void DatePickerMode3_OnClick(object sender, RoutedEventArgs e) => dtp3.IsDateOnlyMode = !dtp3.IsDateOnlyMode;
 
         private void TimeFormat_OnClick(object sender, RoutedEventArgs e)
         {

@@ -354,7 +354,7 @@
             <Setter Property="IsTodayHighlighted" Value="True" />
             <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a date and time" />
             <Style.Triggers>
-                <Trigger Property="DatePickerMode" Value="True">
+                <Trigger Property="IsDateOnlyMode" Value="True">
                     <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a date" />
                 </Trigger>
             </Style.Triggers>

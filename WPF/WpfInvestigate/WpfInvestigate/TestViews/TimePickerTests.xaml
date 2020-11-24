@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         mc:Ignorable="d"
-        Title="TimePickerTest" Height="600" Width="1000">
+        Title="TimePickerTest" Height="700" Width="1000">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -114,7 +114,7 @@
                 <controls:DateTimePicker x:Name="dtp" Width="250" Height="30" Background="Yellow"
                              IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
                              IsNullable="False"
-                             DatePickerMode="True"
+                             IsDateOnlyMode="True"
                              FontSize="24"
                              DisplayDateStart="2002/1/1"
                              effects:WatermarkEffect.Watermark="Test"/>
@@ -131,7 +131,7 @@
                 <controls:DateTimePicker x:Name="dtp1" Width="150" Height="30" Background="Yellow"
                                          IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
                                          IsNullable="False"
-                                         DatePickerMode="True"
+                                         IsDateOnlyMode="True"
                                          effects:WatermarkEffect.Watermark="test" effects:WatermarkEffect.Foreground="Gray"/>
                 <Button Click="ChangeDate1_OnClick" Content="Change date"/>
                 <Button Click="DatePickerMode1_OnClick" Content="Change DatePickerMode"/>
@@ -142,7 +142,7 @@
                 <controls:DateTimePicker x:Name="dtp2"
                                  IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
                                  IsNullable="True"
-                                 DatePickerMode="True"
+                                 IsDateOnlyMode="True"
                                  DisplayDateStart="2022/1/1"/>
                 <Button Click="ChangeDate2_OnClick" Content="Change date"/>
                 <Button Click="DatePickerMode2_OnClick" Content="Change DatePickerMode"/>
@@ -154,7 +154,7 @@
                                          BorderThickness="5" BorderBrush="Red"
                                  IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
                                  IsNullable="True"
-                                 DatePickerMode="True"
+                                 IsDateOnlyMode="True"
                                  effects:WatermarkEffect.Watermark="test" effects:WatermarkEffect.Foreground="Gray"/>
                 <Button Click="ChangeDate3_OnClick" Content="Change date"/>
                 <Button Click="DatePickerMode3_OnClick" Content="Change DatePickerMode"/>

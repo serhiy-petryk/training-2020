@@ -87,7 +87,7 @@
                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                          effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
                                          effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
-                                         SelectedDate="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}"/>
+                                         SelectedDateTime="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value, Mode=TwoWay}"/>
                 <!--SelectedDateChanged="DateTimePicker_OnValueChanged" />-->
             </ControlTemplate>
 

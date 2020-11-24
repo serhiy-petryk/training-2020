@@ -27,5 +27,17 @@ namespace WpfInvestigate.TestViews
             MessageBox.Show(a1);
             // Editor.Value = "123";
         }
+
+        private void ChangeValue_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (Editor.ValueDataType == DataTypeMetadata.DataType.Bool)
+                Editor.Value = !(bool)Editor.Value;
+            if (Editor.ValueDataType == DataTypeMetadata.DataType.Byte)
+                Editor.Value = (byte)Editor.Value + 1;
+            if (Editor.ValueDataType == DataTypeMetadata.DataType.String)
+                Editor.Value = (string)Editor.Value + "a";
+            if (Editor.ValueDataType == DataTypeMetadata.DataType.DateTime)
+                Editor.Value = ((DateTime)Editor.Value).AddHours(1);
+        }
     }
 }

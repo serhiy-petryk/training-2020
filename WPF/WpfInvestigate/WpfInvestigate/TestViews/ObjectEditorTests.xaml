@@ -86,6 +86,7 @@
                     <Label Content="Value:"/>
                     <TextBlock Text="{Binding Path=Value, ElementName=Editor}" Background="Yellow" VerticalAlignment="Center"/>
                     <Button Click="Test_OnClick">Test</Button>
+                    <Button Margin="5 0" Click="ChangeValue_OnClick">Change value</Button>
                 </WrapPanel>
 
             </StackPanel>
