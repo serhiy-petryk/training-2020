@@ -172,12 +172,7 @@ namespace WpfInvestigate.Controls
 
         #endregion
 
-        private void NumericBox_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal?> e) => Value = e.NewValue;
-        private void TextBox_OnValueChanged(object sender, TextChangedEventArgs e) => Value = ((TextBox)sender).Text;
-        private void CheckBox_OnValueChanged(object sender, RoutedEventArgs e) => Value = ((CheckBox)sender).IsChecked;
-        private void DatePicker_OnValueChanged(object sender, SelectionChangedEventArgs e) => Value = ((DatePicker)sender).SelectedDate;
         private void DateTimePicker_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e) => Value = e.NewValue;
-        private void TimePicker_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<TimeSpan?> e) => Value = e.NewValue;
 
         //================================
         private void ObjectEditor_OnLoaded(object sender, RoutedEventArgs e)

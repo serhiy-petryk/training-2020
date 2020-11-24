@@ -24,8 +24,7 @@
                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                          effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
                          effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
-                         Text="{TemplateBinding Value}"/>
-                <!--TextChanged="TextBox_OnValueChanged"/>-->
+                         Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
             </ControlTemplate>
 
             <ControlTemplate x:Key="CheckBox" TargetType="controls:ObjectEditor">
@@ -39,8 +38,7 @@
                               TabIndex="{TemplateBinding TabIndex}" IsTabStop="{TemplateBinding IsTabStop}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               IsThreeState="{TemplateBinding IsNullable}"
-                              IsChecked="{TemplateBinding Value}"/>
-                    <!--Checked="CheckBox_OnValueChanged" Unchecked="CheckBox_OnValueChanged" />-->
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}"/>
                 </Grid>
             </ControlTemplate>
 
@@ -59,7 +57,6 @@
                                      MaxValue="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=NumericMaxValue}"
                                      DecimalPlaces="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Metadata.DecimalPlaces}"
                                      Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value, Converter={x:Static common:ChangeTypeConverter.Instance}}"/>
-                <!--ValueChanged="NumericBox_OnValueChanged" />-->
             </ControlTemplate>
 
             <ControlTemplate x:Key="DatePicker" TargetType="controls:ObjectEditor">
@@ -76,7 +73,6 @@
                             effects:DatePickerEffect.IsNullable="{TemplateBinding IsNullable}"
                             effects:DatePickerEffect.HideInnerBorders="True"
                             SelectedDate="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}">
-                    <!--SelectedDateChanged="DatePicker_OnValueChanged">-->
                 </DatePicker>
             </ControlTemplate>
 
@@ -108,7 +104,6 @@
                                      effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
                                      effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
                                      SelectedTime="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}"/>
-                <!--SelectedTimeChanged="TimePicker_OnValueChanged" />-->
             </ControlTemplate>
 
         </Style.Resources>
