@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using WpfInvestigate.Controls.Helpers;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.TestViews
 {

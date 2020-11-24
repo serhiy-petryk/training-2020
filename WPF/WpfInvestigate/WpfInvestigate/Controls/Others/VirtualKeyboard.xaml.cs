@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using WpfInvestigate.Controls.Helpers;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {

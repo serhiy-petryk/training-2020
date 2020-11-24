@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
-namespace WpfInvestigate.Controls.Helpers
+namespace WpfInvestigate.Helpers
 {
     public static class ControlHelper
     {

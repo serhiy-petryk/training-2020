@@ -1,6 +1,6 @@
 ﻿using System.Windows;
-using WpfInvestigate.Controls.Helpers;
 using WpfInvestigate.Effects;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.TestViews
 {

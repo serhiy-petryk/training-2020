@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using WpfInvestigate.Common;
-using WpfInvestigate.Controls.Helpers;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.TestViews
 {

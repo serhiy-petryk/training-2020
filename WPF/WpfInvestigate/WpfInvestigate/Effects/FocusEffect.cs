@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Effects
 {
@@ -92,7 +93,7 @@ namespace WpfInvestigate.Effects
                 child.Width = element.ActualWidth + thickness.Left + thickness.Right;
                 child.Height = element.ActualHeight + thickness.Top + thickness.Bottom;
                 child.Margin = new Thickness(-thickness.Left, -thickness.Top, -thickness.Right, -thickness.Bottom);
-                var cornerRadius = Controls.Helpers.ControlHelper.GetCornerRadius(element);
+                var cornerRadius = ControlHelper.GetCornerRadius(element);
                 if (cornerRadius.HasValue)
                     child.CornerRadius = new CornerRadius(
                         cornerRadius.Value.TopLeft + Math.Max(thickness.Left, thickness.Top) / 2,

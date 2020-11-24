@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using WpfInvestigate.Controls.Helpers;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Effects
 {
