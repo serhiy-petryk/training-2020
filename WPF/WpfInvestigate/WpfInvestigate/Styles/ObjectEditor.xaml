@@ -6,7 +6,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/ButtonStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/NumericBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 

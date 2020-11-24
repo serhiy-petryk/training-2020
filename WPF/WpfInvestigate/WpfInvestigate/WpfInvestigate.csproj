@@ -204,7 +204,7 @@
     <Compile Include="TestViews\WiPTests.xaml.cs">
       <DependentUpon>WiPTests.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\ButtonStyles.xaml">
+    <Page Include="Styles\ButtonStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,7 +261,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DropDownButtons.xaml">
+    <Page Include="Styles\DropDownButtons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

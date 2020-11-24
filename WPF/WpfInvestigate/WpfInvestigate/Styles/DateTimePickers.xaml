@@ -9,7 +9,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/ButtonStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="TimePartPickerBase" TargetType="{x:Type controls:TimePickerBase}">
