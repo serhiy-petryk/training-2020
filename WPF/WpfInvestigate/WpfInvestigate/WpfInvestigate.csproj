@@ -82,6 +82,8 @@
     <Compile Include="Controls\DialogItems.cs" />
     <Compile Include="Controls\NumericBox.cs" />
     <Compile Include="Controls\ObjectEditor.cs" />
+    <Compile Include="Controls\TimePickerBase.cs" />
+    <Compile Include="Controls\TimePickerBaseHelper.cs" />
     <Compile Include="Effects\ChromeEffect.cs" />
     <Compile Include="Effects\DatePickerEffect.cs" />
     <Compile Include="Effects\CornerRadiusEffect.cs" />
@@ -181,9 +183,6 @@
       <DependentUpon>ObjectEditorTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TimePicker.cs" />
-    <Compile Include="Controls\TimePickerBase.xaml.cs">
-      <DependentUpon>TimePickerBase.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Obsolete\TestViews\RippleButtonTests.xaml.cs">
       <DependentUpon>RippleButtonTests.xaml</DependentUpon>
     </Compile>
@@ -267,6 +266,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Calculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\DateTimePickers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -359,10 +362,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestViews\ObjectEditorTests.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\TimePickerBase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

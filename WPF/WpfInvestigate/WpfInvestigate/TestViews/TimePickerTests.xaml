@@ -132,7 +132,7 @@
 
             <WrapPanel Margin="0 5 0 0">
                 <Label Content="DatePicker &amp; DateTimePicker: (not nullable, MinDate=2002/1/1)"/>
-                <controls:DateTimePicker x:Name="dtp" Background="Yellow"
+                <controls:DateTimePicker x:Name="dtp" Background="Yellow" Width="230"
                              IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
                              IsNullable="False"
                              IsDateOnlyMode="True"
