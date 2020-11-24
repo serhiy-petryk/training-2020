@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DialogItems.cs" />
+    <Compile Include="Controls\MessageBlock.cs" />
     <Compile Include="Controls\NumericBox.cs" />
     <Compile Include="Controls\ObjectEditor.cs" />
     <Compile Include="Controls\TimePickerBase.cs" />
@@ -160,9 +161,6 @@
     </Compile>
     <Compile Include="TestViews\DatePickerEffectTests.xaml.cs">
       <DependentUpon>DatePickerEffectTests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\MessageBlock.xaml.cs">
-      <DependentUpon>MessageBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\SampleDialog.xaml.cs">
       <DependentUpon>SampleDialog.xaml</DependentUpon>
@@ -277,6 +275,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\MessageBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\NumericBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -336,10 +338,6 @@
     <Page Include="TestViews\DatePickerEffectTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\MessageBlock.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\SampleDialog.xaml">
       <Generator>MSBuild:Compile</Generator>

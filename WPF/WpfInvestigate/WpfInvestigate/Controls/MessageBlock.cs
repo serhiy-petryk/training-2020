@@ -111,7 +111,6 @@ namespace WpfInvestigate.Controls
 
         private MessageBlock()
         {
-            InitializeComponent();
             DataContext = this;
             _cmdClickButton = new RelayCommand(OnButtonClick);
 
@@ -124,6 +123,16 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
             _buttonsArea = GetTemplateChild("PART_ButtonsArea") as Grid;
+
+            foreach (var thumb in Tips.GetVisualChildren(this).OfType<Thumb>())
+            {
+                thumb.DragStarted += Thumb_OnDragStarted;
+                if (thumb.Name == "PART_HeaderMover")
+                    thumb.DragDelta += MoveThumb_OnDragDelta;
+                else
+                    thumb.DragDelta += ResizeThumb_OnDragDelta;
+            }
+
             RefreshButtons();
         }
 
