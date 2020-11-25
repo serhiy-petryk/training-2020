@@ -237,7 +237,7 @@
                 </WrapPanel>
 
                 <WrapPanel Margin="5">
-                    <TextBox Width="70" Background="Yellow" Foreground="Blue" Text="AAAAAA"/>
+                    <TextBox Width="70" Background="Yellow" Foreground="Blue" Text="AAAAAA" Focusable="False"/>
                     <TextBox Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
                     <TextBox Width="70" Background="Yellow" Foreground="Blue" IsReadOnly="True" Text="AAAAAA"/>
                 </WrapPanel>

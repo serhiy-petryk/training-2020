@@ -49,7 +49,7 @@ namespace WpfInvestigate
             if (parent != null)
             {
                 var textBox = (TextBox)parent;
-                if (!textBox.IsKeyboardFocusWithin && !textBox.IsReadOnly)
+                if (!textBox.IsKeyboardFocusWithin && !textBox.IsReadOnly && textBox.Focusable)
                 {
                     // If the text box is not yet focused, give it the focus and
                     // stop further processing of this click event.
@@ -62,7 +62,7 @@ namespace WpfInvestigate
         private void SelectAllText(object sender, RoutedEventArgs e)
         {
             var textBox = e.OriginalSource as TextBox;
-            if (textBox != null && !textBox.IsReadOnly)
+            if (textBox != null && !textBox.IsReadOnly && textBox.Focusable)
                 textBox.SelectAll();
         }
     }
