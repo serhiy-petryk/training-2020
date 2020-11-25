@@ -237,9 +237,10 @@
                 </WrapPanel>
 
                 <WrapPanel Margin="5">
-                    <TextBox Width="70" Background="Yellow" Foreground="Blue" Text="AAAAAA" Focusable="False"/>
-                    <TextBox Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
-                    <TextBox Width="70" Background="Yellow" Foreground="Blue" IsReadOnly="True" Text="AAAAAA"/>
+                    <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Text="AAAAAA"
+                             effects:TextBoxEffects.Buttons="Keyboard,Clear"/>
+                        <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
+                        <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsReadOnly="True" Text="AAAAAA"/>
                 </WrapPanel>
 
             </StackPanel>
