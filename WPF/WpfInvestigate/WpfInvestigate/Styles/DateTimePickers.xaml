@@ -151,15 +151,9 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <!--<Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />-->
+        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding" Value="2" />
-        <Setter Property="Width" Value="Auto"/>
-        <Setter Property="Height" Value="Auto"/>
-        <Setter Property="MinWidth" Value="50"/>
-        <Setter Property="MinHeight" Value="50"/>
-        <Setter Property="MaxWidth" Value="1000"/>
-        <Setter Property="FontSize" Value="14" />
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource UserInputControlChromeMatrix}"/>
