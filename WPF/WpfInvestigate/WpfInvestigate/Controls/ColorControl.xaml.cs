@@ -70,21 +70,6 @@ namespace WpfInvestigate.Controls
         }
         #endregion
 
-        #region ================  SelectAll Event Handlers on Focus event  ===============
-        private void ValueEditor_OnGotFocus(object sender, RoutedEventArgs e) => ((TextBox)sender).SelectAll();
-
-        private void ValueEditor_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            // select all text on got focus: see BillBR comment in https://stackoverflow.com/questions/660554/how-to-automatically-select-all-text-on-focus-in-wpf-textbox
-            var textBox = (TextBox)sender;
-            if (!textBox.IsKeyboardFocusWithin)
-            {
-                e.Handled = true;
-                textBox.Focus();
-            }
-        }
-        #endregion
-
         #region ================  Event Handlers for Value Editor  ===============
         private void ValueEditor_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
