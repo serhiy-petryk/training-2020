@@ -99,6 +99,7 @@
     <Compile Include="Examples\UserControlExample.xaml.cs">
       <DependentUpon>UserControlExample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SelectAllOnFocusForTextBox.cs" />
     <Compile Include="Obsolete\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>
     </Compile>

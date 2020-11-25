@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate
 {
@@ -31,39 +32,9 @@ namespace WpfInvestigate
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
 
-            // Select the text in a TextBox when it receives focus.
-            EventManager.RegisterClassHandler(typeof(TextBox), UIElement.PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(SelectivelyIgnoreMouseButton));
-            EventManager.RegisterClassHandler(typeof(TextBox), UIElement.GotKeyboardFocusEvent, new RoutedEventHandler(SelectAllText));
-            EventManager.RegisterClassHandler(typeof(TextBox), Control.MouseDoubleClickEvent, new RoutedEventHandler(SelectAllText)); base.OnStartup(e);
+            SelectAllOnFocusForTextBox.ActivateGlobally();
 
             base.OnStartup(e);
-        }
-
-        private void SelectivelyIgnoreMouseButton(object sender, MouseButtonEventArgs e)
-        {
-            // Find the TextBox
-            DependencyObject parent = e.OriginalSource as UIElement;
-            while (parent != null && !(parent is TextBox))
-                parent = VisualTreeHelper.GetParent(parent);
-
-            if (parent != null)
-            {
-                var textBox = (TextBox)parent;
-                if (!textBox.IsKeyboardFocusWithin && !textBox.IsReadOnly && textBox.Focusable)
-                {
-                    // If the text box is not yet focused, give it the focus and
-                    // stop further processing of this click event.
-                    textBox.Focus();
-                    e.Handled = true;
-                }
-            }
-        }
-
-        private void SelectAllText(object sender, RoutedEventArgs e)
-        {
-            var textBox = e.OriginalSource as TextBox;
-            if (textBox != null && !textBox.IsReadOnly && textBox.Focusable)
-                textBox.SelectAll();
         }
     }
 }
