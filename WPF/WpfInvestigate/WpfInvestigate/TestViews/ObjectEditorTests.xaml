@@ -77,9 +77,8 @@
                     <CheckBox x:Name="cbEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
 
                     <Label Content="Flexible object editor:"/>
-                    <controls:ObjectEditor x:Name="Editor" MinWidth="100"
+                    <controls:ObjectEditor x:Name="Editor" MinWidth="100" Foreground="Red"
                                            effects:WatermarkEffect.Watermark="TestWatermark"
-                                           effects:WatermarkEffect.Foreground="Red"
                                            ValueDataType="{Binding ElementName=cbDataType, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
                                            IsNullable="{Binding ElementName=cbNullable, Path=IsChecked}"
                                            IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
