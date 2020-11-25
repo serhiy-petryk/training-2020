@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Threading;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
@@ -189,7 +188,6 @@ namespace WpfInvestigate.Controls
 
             if (IsReadOnly)
             {
-                _textBox.GotFocus -= OnTextBoxGotFocus;
                 _textBox.LostFocus -= OnTextBoxLostFocus;
                 _textBox.PreviewTextInput -= OnPreviewTextInput;
                 _textBox.PreviewKeyDown -= OnTextBoxKeyDown;
@@ -198,7 +196,6 @@ namespace WpfInvestigate.Controls
             }
             else
             {
-                _textBox.GotFocus += OnTextBoxGotFocus;
                 _textBox.LostFocus += OnTextBoxLostFocus;
                 _textBox.PreviewTextInput += OnPreviewTextInput;
                 _textBox.PreviewKeyDown += OnTextBoxKeyDown;
@@ -515,10 +512,9 @@ namespace WpfInvestigate.Controls
             if (HasDecimalPlaces && (e.Key == Key.Decimal || (_decimalSeparator == "." && e.Key == Key.OemPeriod) || (_decimalSeparator == "," && e.Key == Key.OemComma)))
             {
                 var textBox = sender as TextBox;
-
                 if (textBox.Text.Contains(Culture.NumberFormat.NumberDecimalSeparator) == false)
                 {
-                    //the control doesn't contai the decimal separator
+                    //the control doesn't contain the decimal separator
                     //so we get the current caret index to insert the current culture decimal separator
                     var caret = textBox.CaretIndex;
                     //update the control text
@@ -528,11 +524,6 @@ namespace WpfInvestigate.Controls
                 }
                 e.Handled = true;
             }
-        }
-
-        private void OnTextBoxGotFocus(object sender, RoutedEventArgs e)
-        {
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => _textBox?.SelectAll()));
         }
 
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
