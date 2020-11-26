@@ -51,6 +51,15 @@ namespace WpfInvestigate.Controls
 
         #region ========  Override && events =================
 
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            // Allow to select text in indicator
+            if (GetTemplateChild("PART_Indicator") is TextBox indicator)
+                indicator.LostFocus += (sender, args) => args.Handled = true;
+        }
+
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonUp(e);
