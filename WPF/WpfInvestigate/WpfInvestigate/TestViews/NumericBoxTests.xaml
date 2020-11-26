@@ -40,7 +40,7 @@
                 <CheckBox x:Name="cbEnabled2" Margin="0 0 5 0" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
 
                 <controls:NumericBox Margin="5 0" Width="70" effects:WatermarkEffect.Watermark="No value" Background="Yellow" Foreground="Blue"
-                                     Height="24" VisibleButtons="LeftDown,Up,LeftSeparator,RightSeparator" IsNullable="True" Value="0" FontWeight="SemiBold" FontSize="13"
+                                     Height="24" VisibleButtons="LeftDown,Up,Separator" IsNullable="True" Value="0" FontWeight="SemiBold" FontSize="13"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
                                      effects:CornerRadiusEffect.CornerRadius="2"
                                      BorderThickness="1" BorderBrush="Gray" HorizontalContentAlignment="Center"/>
@@ -52,29 +52,29 @@
                 <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
                                      effects:ChromeEffect.MonochromeAnimated="Aqua"
-                                     Height="28" VisibleButtons="Close,Calculator,RightDown,Up,RightSeparator1px" IsNullable="True" Value="23"/>
+                                     Height="28" VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
                                      effects:ChromeEffect.MonochromeAnimated="{StaticResource WhiteColor}"
-                                     Height="28" VisibleButtons="Close,Calculator,RightDown,Up,RightSeparator1px" IsNullable="True" Value="23"/>
+                                     Height="28" VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
                                      effects:ChromeEffect.MonochromeAnimated="{StaticResource DarkColor}"
-                                     Height="28" VisibleButtons="Close,Calculator,RightDown,Up,RightSeparator1px" IsNullable="True" Value="23"/>
+                                     Height="28" VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
                                      effects:ChromeEffect.Monochrome="#FFD6EAFF"
-                                     Height="28" VisibleButtons="Close,Calculator,RightDown,Up,RightSeparator1px" IsNullable="True" Value="23"/>
+                                     Height="28" VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True" Value="23"/>
             </WrapPanel>
 
             <WrapPanel Orientation="Horizontal" Margin="0 5">
                 <controls:NumericBox x:Name="AA" Width="200" effects:WatermarkEffect.Watermark="No value"
-                                     Height="64" VisibleButtons="Close,Calculator,RightDown,Up,RightSeparator1px" IsNullable="True" Value="23"/>
+                                     Height="64" VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" Width="70" effects:WatermarkEffect.Watermark="No value" Background="Yellow" Foreground="Blue"
-                                     Height="30" VisibleButtons="LeftDown,Up,LeftSeparator,RightSeparator" IsNullable="True" Value="0" FontWeight="SemiBold" FontSize="13"
+                                     Height="30" VisibleButtons="LeftDown,Up,Separator" IsNullable="True" Value="0" FontWeight="SemiBold" FontSize="13"
                                      effects:CornerRadiusEffect.CornerRadius="2" BorderThickness="2" BorderBrush="Gray" HorizontalContentAlignment="Center"/>
                 <controls:NumericBox Margin="5 0" Width="100" effects:WatermarkEffect.Watermark="No value" Background="Yellow" Foreground="Blue"
-                                     Height="28" VisibleButtons="Close,Calculator,RightDown,Up,RightSeparator" IsNullable="True" Value="23"/>
+                                     Height="28" VisibleButtons="Close,Calculator,RightDown,Up,Separator" IsNullable="True" Value="23"/>
                 <TextBlock Margin="5 0 0 0" Text="Value of first control:" VerticalAlignment="Center"/>
                 <Label Content="{Binding ElementName=AA, Path=Value}" Background="Yellow" Margin="8" Focusable="True" VerticalAlignment="Center"/>
                 <Button Click="XButtonBase_OnClick">Set new Value</Button>

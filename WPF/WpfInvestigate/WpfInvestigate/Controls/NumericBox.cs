@@ -21,10 +21,8 @@ namespace WpfInvestigate.Controls
             LeftDown = 4,
             RightDown = 8,
             Up = 16,
-            LeftSeparator1px = 32,
-            LeftSeparator = 64,
-            RightSeparator1px = 128,
-            RightSeparator = 256
+            Separator1px = 32,
+            Separator = 64
         }
 
         private int _numberOfIntervals = 0;
@@ -55,12 +53,12 @@ namespace WpfInvestigate.Controls
         public bool IsDownButtonsVisible => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown || (VisibleButtons & Buttons.RightDown) == Buttons.RightDown;
         public bool IsUpButtonsVisible => (VisibleButtons & Buttons.Up) == Buttons.Up;
 
-        public bool IsLeftSeparatorVisible => (VisibleButtons & Buttons.LeftSeparator) == Buttons.LeftSeparator ||
-                                              (VisibleButtons & Buttons.LeftSeparator1px) == Buttons.LeftSeparator1px;
-        public double LeftSeparatorWidth => (VisibleButtons & Buttons.LeftSeparator) == Buttons.LeftSeparator ? BorderThickness.Left: 1.0;
-        public bool IsRightSeparatorVisible => (VisibleButtons & Buttons.RightSeparator) == Buttons.RightSeparator ||
-                                               (VisibleButtons & Buttons.RightSeparator1px) == Buttons.RightSeparator1px;
-        public double RightSeparatorWidth => (VisibleButtons & Buttons.RightSeparator) == Buttons.RightSeparator ? BorderThickness.Right : 1.0;
+        public bool IsLeftSeparatorVisible => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown &&
+                                              ((VisibleButtons & Buttons.Separator) == Buttons.Separator ||
+                                              (VisibleButtons & Buttons.Separator1px) == Buttons.Separator1px);
+        public bool IsRightSeparatorVisible => (VisibleButtons & Buttons.Separator) == Buttons.Separator ||
+                                               (VisibleButtons & Buttons.Separator1px) == Buttons.Separator1px;
+        public double SeparatorWidth => (VisibleButtons & Buttons.Separator) == Buttons.Separator ? BorderThickness.Right: 1.0;
         public int DownButtonColumn => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown ? 0 : 5;
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
@@ -448,7 +446,7 @@ namespace WpfInvestigate.Controls
             {
                 nameof(IsCloseButtonVisible), nameof(IsCalculatorButtonVisible), nameof(IsUpButtonsVisible),
                 nameof(IsDownButtonsVisible), nameof(DownButtonColumn), nameof(IsLeftSeparatorVisible),
-                nameof(LeftSeparatorWidth), nameof(IsRightSeparatorVisible), nameof(RightSeparatorWidth)
+                nameof(IsRightSeparatorVisible), nameof(SeparatorWidth)
             });
         }
 

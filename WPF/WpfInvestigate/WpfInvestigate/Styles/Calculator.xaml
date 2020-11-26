@@ -155,7 +155,7 @@
 
                             <controls:NumericBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
                                                  Focusable="False" IsTabStop="False" Padding="0" 
-                                                 VisibleButtons="LeftDown,Up,RightSeparator,LeftSeparator" IsNullable="False" MinValue="0" MaxValue="19"
+                                                 VisibleButtons="LeftDown,Up,Separator" IsNullable="False" MinValue="0" MaxValue="19"
                                                  Style="{DynamicResource PrecisionButtonStyle}"
                                                  Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalPlaces, Mode=TwoWay}"
                                                  ButtonsWidth="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=/5}"
