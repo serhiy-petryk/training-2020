@@ -24,18 +24,19 @@ namespace WpfInvestigate.Effects
             Separator = 8
         }
 
-        private const string GridColumnPrefix = "TextBoxButtons";
+        private const string GridColumnPrefix = "TextBoxButtonsColumn";
+        private const string ElementPrefix = "TextBoxEffects";
 
         public static readonly DependencyProperty ButtonsProperty = DependencyProperty.RegisterAttached("Buttons",
             typeof(Buttons?), typeof(TextBoxEffects), new PropertyMetadata(null, propertyChangedCallback: OnButtonsChanged));
-        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
         public static void SetButtons(DependencyObject d, Buttons? value) => d.SetValue(ButtonsProperty, value);
-        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
         public static Buttons? GetButtons(DependencyObject d) => (Buttons?)d.GetValue(ButtonsProperty);
 
         private static void OnButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is TextBoxBase textBox))
+            if (!(d is TextBox textBox))
             {
                 Debug.Print($"TextBoxEffects.Buttons is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
                 return;
@@ -45,34 +46,30 @@ namespace WpfInvestigate.Effects
             {
                 OnUnloadedForButtons(textBox, null);
                 textBox.Unloaded += OnUnloadedForButtons;
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
-                    AddButtons(textBox)
-                ));
+                AddButtons(textBox);
             }));
 
         }
 
         private static void OnUnloadedForButtons(object sender, RoutedEventArgs e)
         {
-            var textBox = sender as TextBoxBase;
+            var textBox = sender as TextBox;
             textBox.Unloaded -= OnUnloadedForButtons;
             RemoveButtons(textBox);
         }
 
-        private static void RemoveButtons(TextBoxBase textBox)
+        private static void RemoveButtons(TextBox textBox)
         {
             var grid = Tips.GetVisualChildren(textBox).OfType<Grid>().FirstOrDefault();
             if (grid != null)
             {
-                var separator = Tips.GetVisualChildren(grid).OfType<Rectangle>().FirstOrDefault(a=> a.Name== "BorderSeparator");
-                if (separator != null)
-                    BindingOperations.ClearBinding(separator, FrameworkElement.WidthProperty);
-
+                foreach (var element in Tips.GetVisualChildren(grid).OfType<FrameworkElement>().Where(c => c.Name.StartsWith(ElementPrefix)).ToArray())
+                    grid.Children.Remove(element);
                 foreach (var cd in grid.ColumnDefinitions.Where(c => c.Name.StartsWith(GridColumnPrefix)).ToArray())
                     grid.ColumnDefinitions.Remove(cd);
             }
         }
-        private static void AddButtons(TextBoxBase textBox)
+        private static void AddButtons(TextBox textBox)
         {
             var buttons = GetButtons(textBox);
             if (!buttons.HasValue) return;
@@ -84,25 +81,21 @@ namespace WpfInvestigate.Effects
                 {
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto, Name = GridColumnPrefix + "Separator" });
 
-                    var separator = new Rectangle{Name= "BorderSeparator" };
+                    var separator = new Rectangle {Name = ElementPrefix + "Separator"};
                     if ((buttons.Value & Buttons.Separator1px) == Buttons.Separator1px)
                         separator.Width = 1;
                     else
-                    {
-                        var bindingBorderWidth = new Binding
+                        separator.SetBinding(FrameworkElement.WidthProperty, new Binding
                         {
                             Source = textBox,
                             Path = new PropertyPath("BorderThickness.Right"),
-                        };
-                        separator.SetBinding(FrameworkElement.WidthProperty, bindingBorderWidth);
-                    }
+                        });
 
-                    var bindingFillBorder = new Binding
+                    separator.SetBinding(Shape.FillProperty, new Binding
                     {
                         Source = textBox,
                         Path = new PropertyPath(Control.BorderBrushProperty),
-                    };
-                    separator.SetBinding(Shape.FillProperty, bindingFillBorder);
+                    });
 
                     grid.Children.Add(separator);
                     Grid.SetColumn(separator, grid.ColumnDefinitions.Count - 1);
@@ -113,26 +106,25 @@ namespace WpfInvestigate.Effects
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto, Name = GridColumnPrefix + "Keyboard" });
                     var keyboardButton = new Button
                     {
+                        Name = ElementPrefix + "Keyboard",
                         Width = 16,
+                        Focusable = false,
+                        IsTabStop = false,
                         Margin = new Thickness(0),
                         Padding = new Thickness(0)
                     };
-
-                    var bindingBackground = new Binding
+                    keyboardButton.SetBinding(ChromeEffect.BichromeAnimatedBackgroundProperty, new Binding
                     {
                         Source = textBox,
                         Path = new PropertyPath(Control.BackgroundProperty),
                         Converter = ColorHslBrush.Instance
-                    };
-                    keyboardButton.SetBinding(ChromeEffect.BichromeAnimatedBackgroundProperty, bindingBackground);
-
-                    var bindingForeground = new Binding
+                    });
+                    keyboardButton.SetBinding(ChromeEffect.BichromeAnimatedForegroundProperty, new Binding
                     {
                         Source = textBox,
                         Path = new PropertyPath(Control.ForegroundProperty),
                         Converter = ColorHslBrush.Instance
-                    };
-                    keyboardButton.SetBinding(ChromeEffect.BichromeAnimatedForegroundProperty, bindingForeground);
+                    });
 
                     IconEffect.SetGeometry(keyboardButton, Application.Current.FindResource("KeyboardGeometry") as Geometry);
                     grid.Children.Add(keyboardButton);
@@ -142,21 +134,42 @@ namespace WpfInvestigate.Effects
                 if ((buttons.Value & Buttons.Clear) == Buttons.Clear)
                 {
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto, Name = GridColumnPrefix + "Clear" });
-                    var style = Application.Current.FindResource("ClearBichromeAnimatedButtonStyle") as Style;
                     var clearButton = new Button
                     {
-                        Style = style,
+                        Name = ElementPrefix + "Clear",
+                        Style = Application.Current.FindResource("ClearBichromeAnimatedButtonStyle") as Style,
                         Width = 14,
+                        Focusable = false,
+                        IsTabStop = false,
                         Margin = new Thickness(0),
                         Padding = new Thickness(1)
                     };
 
-                    // clearButton.Click += ClearButton_Click;
+                    clearButton.PreviewMouseLeftButtonDown += ClearButton_Click;
+                    /*clearButton.PreviewMouseLeftButtonDown += (sender, args) =>
+                    {
+                        textBox.Text = string.Empty;
+                        textBox.Focus();
+                    };*/
                     grid.Children.Add(clearButton);
                     Grid.SetColumn(clearButton, grid.ColumnDefinitions.Count - 1);
                 }
             }
         }
+
+        private static void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            var current = (DependencyObject)sender;
+            while (current != null && !(current is TextBox))
+                current = VisualTreeHelper.GetParent(current) ?? (current as FrameworkElement)?.Parent;
+
+            if (current != null)
+            {
+                ((TextBox)current).Text = string.Empty;
+                ((TextBox)current).Focus();
+            }
+        }
+
         #endregion
     }
 }

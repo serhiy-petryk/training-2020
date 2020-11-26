@@ -240,7 +240,8 @@
                     <TextBox x:Name="TestTextBox" Margin="2" Width="100" Background="Yellow" Foreground="Blue" Text="AAAAAA" BorderThickness="2" Padding="4"
                              effects:TextBoxEffects.Buttons="Keyboard,Clear,Separator1px" BorderBrush="Blue"
                              ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.Buttons)}"
-                             effects:CornerRadiusEffect.CornerRadius="2"/>
+                             effects:CornerRadiusEffect.CornerRadius="2"
+                             effects:WatermarkEffect.Watermark="Watermark"/>
                     <Button Margin="2" Content="Change Background" Click="ChangeBackground_OnClick"/>
                     <Button Margin="2" Content="Change Foreground" Click="ChangeForeground_OnClick"/>
                     <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick"/>

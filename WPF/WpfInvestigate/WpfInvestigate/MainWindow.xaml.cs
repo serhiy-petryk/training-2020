@@ -150,6 +150,11 @@ namespace WpfInvestigate
             var a1 = (int)TextBoxEffects.GetButtons(TestTextBox);
             var a2 = (a1+1) % 16;
             TextBoxEffects.SetButtons(TestTextBox, (TextBoxEffects.Buttons)a2);
+
+            var grid = Tips.GetVisualChildren(TestTextBox).OfType<Grid>().FirstOrDefault();
+            if (grid !=null)
+                Debug.Print($"ColumnsAfter: {grid.ColumnDefinitions.Count}");
+
         }
     }
 }
