@@ -234,14 +234,14 @@
                     <TextBox x:Name="TestTextBox2" Width="70" Background="Yellow" Foreground="Blue" TextWrapping="Wrap" MaxHeight="30"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ScrollViewer.VerticalScrollBarVisibility="Auto"
-                             effects:TextBoxEffects.Buttons="Keyboard,Clear,Separator"/>
+                             effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="5">
                     <TextBox x:Name="TestTextBox" Margin="2" Padding="4" Width="100" Height="50" Background="Yellow" Foreground="Blue"
                              Text="AAAAAA" BorderThickness="2" BorderBrush="Blue" 
-                             effects:TextBoxEffects.Buttons="Keyboard,Clear,Separator1px"
-                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.Buttons)}"
+                             effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
+                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
                              effects:CornerRadiusEffect.CornerRadius="2"
                              effects:WatermarkEffect.Watermark="Watermark"/>
                     <Button Margin="2" Content="Change Background" Click="ChangeBackground_OnClick"/>

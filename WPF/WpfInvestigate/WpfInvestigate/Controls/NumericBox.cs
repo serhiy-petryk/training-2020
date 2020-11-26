@@ -16,12 +16,15 @@ namespace WpfInvestigate.Controls
         [Flags]
         public enum Buttons
         {
-            None = 0,
             Close = 1,
             Calculator = 2,
             LeftDown = 4,
             RightDown = 8,
-            Up = 16
+            Up = 16,
+            LeftSeparator1px = 32,
+            LeftSeparator = 64,
+            RightSeparator1px = 128,
+            RightSeparator = 256
         }
 
         private int _numberOfIntervals = 0;
@@ -44,15 +47,17 @@ namespace WpfInvestigate.Controls
         public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(decimal), typeof(NumericBox), new FrameworkPropertyMetadata(decimal.MinValue, OnMinValueChanged));
         public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(decimal), typeof(NumericBox), new FrameworkPropertyMetadata(decimal.MaxValue, OnMaxValueChanged, CoerceMaxValue));
         public static readonly DependencyProperty IntervalProperty = DependencyProperty.Register("Interval", typeof(decimal), typeof(NumericBox), new FrameworkPropertyMetadata(DefaultInterval, OnIntervalChanged));
-        public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons", typeof(Buttons), typeof(NumericBox), new FrameworkPropertyMetadata(Buttons.Close | Buttons.Calculator, OnVisibleButtonsChanged));
+        public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons", typeof(Buttons?), typeof(NumericBox), new FrameworkPropertyMetadata(null, OnVisibleButtonsChanged));
 
         public readonly CultureInfo Culture;
         public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;
         public bool IsCalculatorButtonVisible => (VisibleButtons & Buttons.Calculator) == Buttons.Calculator;
         public bool IsDownButtonsVisible => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown || (VisibleButtons & Buttons.RightDown) == Buttons.RightDown;
         public bool IsUpButtonsVisible => (VisibleButtons & Buttons.Up) == Buttons.Up;
-        public bool IsTextBoxLeftBorderVisible => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown;
-        public bool IsTextBoxRightBorderVisible => (VisibleButtons & Buttons.Calculator) == Buttons.Calculator || (VisibleButtons & Buttons.RightDown) == Buttons.RightDown || (VisibleButtons & Buttons.Up) == Buttons.Up || (VisibleButtons & Buttons.Close) == Buttons.Close;
+        public bool IsLeftSeparatorVisible => (VisibleButtons & Buttons.LeftSeparator) == Buttons.LeftSeparator;
+        public bool IsLeftSeparator1pxVisible => (VisibleButtons & Buttons.LeftSeparator1px) == Buttons.LeftSeparator1px;
+        public bool IsRightSeparatorVisible => (VisibleButtons & Buttons.RightSeparator) == Buttons.RightSeparator;
+        public bool IsRightSeparator1pxVisible => (VisibleButtons & Buttons.RightSeparator1px) == Buttons.RightSeparator1px;
         public int DownButtonColumn => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown ? 0 : 5;
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
@@ -119,9 +124,9 @@ namespace WpfInvestigate.Controls
             set => SetValue(ValueProperty, value);
         }
 
-        public Buttons VisibleButtons
+        public Buttons? VisibleButtons
         {
-            get => (Buttons)GetValue(VisibleButtonsProperty);
+            get => (Buttons?)GetValue(VisibleButtonsProperty);
             set => SetValue(VisibleButtonsProperty, value);
         }
 
@@ -436,7 +441,12 @@ namespace WpfInvestigate.Controls
 
         private static void OnVisibleButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((NumericBox)d).OnPropertiesChanged(new[] { nameof(IsCloseButtonVisible), nameof(IsCalculatorButtonVisible), nameof(IsUpButtonsVisible), nameof(IsDownButtonsVisible), nameof(DownButtonColumn), nameof(IsTextBoxLeftBorderVisible), nameof(IsTextBoxRightBorderVisible) });
+            ((NumericBox) d).OnPropertiesChanged(new[]
+            {
+                nameof(IsCloseButtonVisible), nameof(IsCalculatorButtonVisible), nameof(IsUpButtonsVisible),
+                nameof(IsDownButtonsVisible), nameof(DownButtonColumn), nameof(IsLeftSeparatorVisible),
+                nameof(IsLeftSeparator1pxVisible), nameof(IsRightSeparatorVisible), nameof(IsRightSeparator1pxVisible)
+            });
         }
 
         // ================================================

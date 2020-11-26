@@ -27,18 +27,18 @@ namespace WpfInvestigate.Effects
         private const string GridColumnPrefix = "TextBoxButtonsColumn";
         private const string ElementPrefix = "TextBoxEffects";
 
-        public static readonly DependencyProperty ButtonsProperty = DependencyProperty.RegisterAttached("Buttons",
+        public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.RegisterAttached("VisibleButtons",
             typeof(Buttons?), typeof(TextBoxEffects), new PropertyMetadata(null, propertyChangedCallback: OnButtonsChanged));
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
-        public static void SetButtons(DependencyObject d, Buttons? value) => d.SetValue(ButtonsProperty, value);
+        public static void SetVisibleButtons(DependencyObject d, Buttons? value) => d.SetValue(VisibleButtonsProperty, value);
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
-        public static Buttons? GetButtons(DependencyObject d) => (Buttons?)d.GetValue(ButtonsProperty);
+        public static Buttons? GetVisibleButtons(DependencyObject d) => (Buttons?)d.GetValue(VisibleButtonsProperty);
 
         private static void OnButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is TextBox textBox))
             {
-                Debug.Print($"TextBoxEffects.Buttons is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+                Debug.Print($"TextBoxEffects.VisibleButtons is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
                 return;
             }
 
@@ -79,7 +79,7 @@ namespace WpfInvestigate.Effects
         }
         private static void AddButtons(TextBox textBox)
         {
-            var buttons = GetButtons(textBox);
+            var buttons = GetVisibleButtons(textBox);
             if (!buttons.HasValue) return;
 
             var grid = Tips.GetVisualChildren(textBox).OfType<Grid>().FirstOrDefault();

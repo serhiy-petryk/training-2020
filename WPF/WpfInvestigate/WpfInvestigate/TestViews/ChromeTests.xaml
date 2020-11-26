@@ -39,7 +39,7 @@
                 <WrapPanel Margin="0 5">
                     <Label Content="Controls:"/>
                     <controls:NumericBox Margin="5 0" BorderThickness="0" Width="100" Background="Yellow" Foreground="Blue"
-                                         VisibleButtons="Close,Calculator,RightDown,Up" IsNullable="True" Value="23"
+                                         VisibleButtons="Close,Calculator,RightDown,Up,RightSeparator1px" IsNullable="True" Value="23"
                                          effects:WatermarkEffect.Watermark="No value"
                                          effects:FocusEffect.Brush="Aqua"/>
 

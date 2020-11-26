@@ -147,9 +147,9 @@ namespace WpfInvestigate
 
         private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var a1 = (int)TextBoxEffects.GetButtons(TestTextBox);
+            var a1 = (int)TextBoxEffects.GetVisibleButtons(TestTextBox);
             var a2 = (a1+1) % 16;
-            TextBoxEffects.SetButtons(TestTextBox, (TextBoxEffects.Buttons)a2);
+            TextBoxEffects.SetVisibleButtons(TestTextBox, (TextBoxEffects.Buttons)a2);
 
             var grid = Tips.GetVisualChildren(TestTextBox).OfType<Grid>().FirstOrDefault();
             if (grid !=null)
