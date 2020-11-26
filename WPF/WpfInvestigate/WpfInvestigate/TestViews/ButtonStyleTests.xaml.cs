@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.TestViews
@@ -18,6 +19,14 @@ namespace WpfInvestigate.TestViews
         private void ChangeContent_OnClick(object sender, RoutedEventArgs e)
         {
             TB1.Content = TB1.Content.ToString() + "X";
+        }
+
+        private void ChangeBorder_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (Tips.AreEqual(TestTB.BorderThickness.Right, 2))
+                TestTB.BorderThickness = new Thickness(4.0);
+            else
+                TestTB.BorderThickness = new Thickness(2.0);
         }
     }
 }

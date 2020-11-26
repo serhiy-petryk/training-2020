@@ -128,5 +128,28 @@ namespace WpfInvestigate
         private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
 
         private void DialogItemsTests_OnClick(object sender, RoutedEventArgs e) => new DialogTests().Show();
+
+        private void ChangeBackground_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (TestTextBox.Background == Brushes.Yellow)
+                TestTextBox.Background = Brushes.YellowGreen;
+            else
+                TestTextBox.Background = Brushes.Yellow;
+        }
+
+        private void ChangeForeground_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (TestTextBox.Foreground == Brushes.Blue)
+                TestTextBox.Foreground = Brushes.Violet;
+            else
+                TestTextBox.Foreground = Brushes.Blue;
+        }
+
+        private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var a1 = (int)TextBoxEffects.GetButtons(TestTextBox);
+            var a2 = (a1+1) % 16;
+            TextBoxEffects.SetButtons(TestTextBox, (TextBoxEffects.Buttons)a2);
+        }
     }
 }

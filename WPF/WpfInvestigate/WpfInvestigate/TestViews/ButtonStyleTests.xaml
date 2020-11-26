@@ -268,7 +268,8 @@
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                         </StackPanel>
 
-                        <ToggleButton Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                        <Button Content="Change border width" Click="ChangeBorder_OnClick"/>
+                        <ToggleButton x:Name="TestTB" Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
                                       Background="GreenYellow" Foreground="BlueViolet"
                                       VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
                                       BorderBrush="Orange" BorderThickness="4"
@@ -276,6 +277,20 @@
                                       effects:CornerRadiusEffect.CornerRadius="12"
                                       effects:FocusEffect.Brush="Aqua"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
+                        <ToggleButton Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                                      Background="GreenYellow" Foreground="BlueViolet"
+                                      VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
+                                      BorderBrush="Orange" BorderThickness="4 4 1 4"
+                                      Style="{StaticResource SplitButtonStyle}"
+                                      effects:CornerRadiusEffect.CornerRadius="12"
+                                      effects:FocusEffect.Brush="Aqua" Checked="OpenDropDownMenu">
+                            <ToggleButton.Resources>
+                                <Style TargetType="Rectangle">
+                                    <Setter Property="Width" Value="6"/>
+                                </Style>
+                            </ToggleButton.Resources>
+                        </ToggleButton>
 
                         <ToggleButton Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
                                       Background="Blue" Foreground="White"

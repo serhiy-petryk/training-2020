@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace WpfInvestigate.TestViews
 {
@@ -47,6 +48,22 @@ namespace WpfInvestigate.TestViews
         private void IsEnabled_OnClick(object sender, RoutedEventArgs e)
         {
             dtp.IsEnabled = !dtp.IsEnabled;
+        }
+
+        private void ChangeBackground_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (dtp.Background == Brushes.Yellow)
+                dtp.Background = Brushes.YellowGreen;
+            else
+                dtp.Background = Brushes.Yellow;
+        }
+
+        private void ChangeForeground_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (dtp.Foreground == Brushes.Blue)
+                dtp.Foreground = Brushes.Violet;
+            else
+                dtp.Foreground = Brushes.Blue;
         }
     }
 }

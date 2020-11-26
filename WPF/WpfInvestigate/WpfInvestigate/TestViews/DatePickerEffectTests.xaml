@@ -68,7 +68,9 @@
                     <Label>ClearButton: IsNullable</Label>
                     <DatePicker x:Name="dp1" effects:DatePickerEffect.ClearButton="True" effects:DatePickerEffect.IsNullable="True" Height="36"
                                 Background="GreenYellow" Foreground="Blue" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
-                    <Button Content="Toggle ClearButton property" Click="Debug1_OnClick" />
+                    <Button Content="Toggle ClearButton property" Click="ToggleButtonVisibility1_OnClick" />
+                    <Button Content="Toggle Background" Click="ChangeBackground1_OnClick" />
+                    <Button Content="Toggle Foreground" Click="ChangeForeground1_OnClick" />
                     <DatePicker Margin="5 0" Height="36" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
                                 effects:DatePickerEffect.ClearButton="True"
                                 effects:DatePickerEffect.IsNullable="True"
@@ -78,7 +80,7 @@
                 <WrapPanel Margin="0 5 0 0">
                     <Label>ClearButton: Is not sNullable</Label>
                     <DatePicker x:Name="dp2" effects:DatePickerEffect.ClearButton="True" effects:DatePickerEffect.IsNullable="False" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
-                    <Button Content="Toggle ClearButton property" Click="Debug2_OnClick" />
+                    <Button Content="Toggle ClearButton property" Click="ToggleButtonVisibility2_OnClick" />
                 </WrapPanel>
 
             </StackPanel>

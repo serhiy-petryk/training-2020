@@ -161,11 +161,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:TimePickerBase}">
                     <Grid>
-                        <Border x:Name="Base"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Border x:Name="Base" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
@@ -174,54 +172,51 @@
                                     <ColumnDefinition x:Name="ClearButtonColumn" Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <TextBox x:Name="PART_TextBox" Grid.Column="0"
-                                             BorderThickness="0" Background="Transparent"
-                                             Margin="{TemplateBinding Padding}" Padding="0"
-                                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                             CaretBrush="{DynamicResource BlackBrush}"
-                                             Focusable="{TemplateBinding Focusable}"
-                                             FontFamily="{TemplateBinding FontFamily}"
-                                             FontSize="{TemplateBinding FontSize}"
-                                             Foreground="{TemplateBinding Foreground}"
-                                             IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                                             SelectionBrush="{DynamicResource HighlightBrush}">
+                                         BorderThickness="0" Background="Transparent" Foreground="{TemplateBinding Foreground}"
+                                         Margin="{TemplateBinding Padding}" Padding="0"
+                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                         CaretBrush="{DynamicResource BlackBrush}"
+                                         Focusable="{TemplateBinding Focusable}"
+                                         FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}"
+                                         IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
+                                         SelectionBrush="{DynamicResource HighlightBrush}">
                                 </TextBox>
 
-                                <Rectangle Grid.Column="1" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}" Fill="{TemplateBinding BorderBrush}"
-                                               Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsTextBoxBorderVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                <Rectangle Grid.Column="1" Fill="{TemplateBinding BorderBrush}"
+                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}"
+                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsTextBoxBorderVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
                                 <ToggleButton x:Name="PART_ToggleButton" Grid.Column="2" Focusable="True" IsTabStop="False" Width="18" Padding="1"
-                                                  IsThreeState="False" VerticalContentAlignment="Center" BorderThickness="0"
-                                                  effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                                  effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                                  IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}"
-                                                  effects:IconEffect.Geometry="{StaticResource CalendarClockGeometry}" />
+                                              IsThreeState="False" VerticalContentAlignment="Center" BorderThickness="0"
+                                              effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                              effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                              Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                              IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}"
+                                              effects:IconEffect.Geometry="{StaticResource CalendarClockGeometry}" />
 
                                 <Button x:Name="PART_ClearButton" Grid.Column="3" Focusable="True" IsTabStop="False" Width="14" Padding="2" BorderThickness="0"
-                                            Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsClearButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                            Style="{StaticResource ClearBichromeAnimatedButtonStyle}" VerticalAlignment="Stretch"/>
+                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsClearButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                        Style="{StaticResource ClearBichromeAnimatedButtonStyle}" VerticalAlignment="Stretch"/>
 
                                 <Popup x:Name="PART_Popup" Grid.Column="0" Grid.ColumnSpan="2"
-                                           Focusable="False" SnapsToDevicePixels="True"
-                                           UseLayoutRounding="True"
-                                           AllowsTransparency="True"
-                                           Placement="Bottom" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                           PopupAnimation="Fade"
-                                           IsOpen="{Binding ElementName=PART_ToggleButton, Path=IsChecked}"
-                                           StaysOpen="False">
+                                       Focusable="False" SnapsToDevicePixels="True"
+                                       UseLayoutRounding="True"
+                                       AllowsTransparency="True"
+                                       Placement="Bottom" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                       PopupAnimation="Fade"
+                                       IsOpen="{Binding ElementName=PART_ToggleButton, Path=IsChecked}"
+                                       StaysOpen="False">
                                     <Border BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="2">
                                         <StackPanel Orientation="Vertical" Background="{DynamicResource ControlBackgroundBrush}">
                                             <StackPanel x:Name="StackPanel" Orientation="Horizontal"
-                                                            Background="{DynamicResource ControlBackgroundBrush}"
-                                                            HorizontalAlignment="Center">
-                                                <Calendar x:Name="PART_Calendar" Margin="2 0 -5 -14"
-                                                              BorderBrush="Transparent"
-                                                              FontFamily="{TemplateBinding FontFamily}"
-                                                              FontSize="{TemplateBinding FontSize}"
-                                                              SelectionMode="SingleDate"
-                                                              CalendarDayButtonStyle="{StaticResource CalendarDayButtonStyle}"
-                                                              Visibility="Collapsed" />
+                                                        Background="{DynamicResource ControlBackgroundBrush}"
+                                                        HorizontalAlignment="Center">
+                                                <Calendar x:Name="PART_Calendar" Margin="2 0 -5 -14" BorderBrush="Transparent"
+                                                          FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}"
+                                                          SelectionMode="SingleDate"
+                                                          CalendarDayButtonStyle="{StaticResource CalendarDayButtonStyle}"
+                                                          Visibility="Collapsed" />
 
                                                 <!-- ============= -->
                                                 <!--     Clock     -->
@@ -247,9 +242,8 @@
                                             <!-- Time selector -->
                                             <!-- ============= -->
                                             <Border x:Name="PART_Selectors" Margin="4 0 4 4"
-                                                        BorderBrush="{StaticResource CalendarBorderBrush}"
-                                                        BorderThickness="0 0 1 0" HorizontalAlignment="Left"
-                                                        Visibility="{Binding ElementName=PART_Clock, Path=Visibility}">
+                                                    BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="0 0 1 0"
+                                                    HorizontalAlignment="Left" Visibility="{Binding ElementName=PART_Clock, Path=Visibility}">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="Auto" />
@@ -265,55 +259,39 @@
                                                             <RowDefinition Height="Auto" />
                                                         </Grid.RowDefinitions>
                                                         <Border Grid.Row="0" BorderThickness="1 1 0 0"
-                                                                    BorderBrush="{StaticResource CalendarBorderBrush}"
-                                                                    Background="#FFECF0F4"
+                                                                    BorderBrush="{StaticResource CalendarBorderBrush}" Background="#FFECF0F4"
                                                                     Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
-                                                            <TextBlock
-                                                                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=AMText}"
-                                                                    HorizontalAlignment="Stretch"
-                                                                    TextAlignment="Center" FontSize="10"
-                                                                    FontWeight="SemiBold" />
+                                                            <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=AMText}"
+                                                                    HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold" />
                                                         </Border>
                                                         <Border Grid.Row="2" BorderThickness="1 0 0 1"
-                                                                    BorderBrush="{StaticResource CalendarBorderBrush}"
-                                                                    Background="#FFECF0F4"
-                                                                    Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
-                                                            <TextBlock
-                                                                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=PMText}"
-                                                                    HorizontalAlignment="Stretch"
-                                                                    TextAlignment="Center" FontSize="10"
-                                                                    FontWeight="SemiBold" />
+                                                                BorderBrush="{StaticResource CalendarBorderBrush}" Background="#FFECF0F4"
+                                                                Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                                            <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=PMText}"
+                                                                       HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold" />
                                                         </Border>
 
                                                         <DataGrid x:Name="PART_NightHourSelector" Grid.Row="1"
-                                                                      BorderBrush="{StaticResource CalendarBorderBrush}"
-                                                                      BorderThickness="1 1 0 1"
-                                                                      ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.NightHourRows}}"
-                                                                      FontFamily="{TemplateBinding FontFamily}"
-                                                                      Style="{StaticResource TimeSelectorStyle}" />
+                                                                  BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1 1 0 1"
+                                                                  ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.NightHourRows}}"
+                                                                  FontFamily="{TemplateBinding FontFamily}" Style="{StaticResource TimeSelectorStyle}" />
 
                                                         <DataGrid x:Name="PART_DayHourSelector" Grid.Row="3"
-                                                                      BorderBrush="{StaticResource CalendarBorderBrush}"
-                                                                      BorderThickness="1 0 0 1"
-                                                                      ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.DayHourRows}}"
-                                                                      FontFamily="{TemplateBinding FontFamily}"
-                                                                      Style="{StaticResource TimeSelectorStyle}"
-                                                                      Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}" />
+                                                                  BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1 0 0 1"
+                                                                  ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.DayHourRows}}"
+                                                                  FontFamily="{TemplateBinding FontFamily}" Style="{StaticResource TimeSelectorStyle}"
+                                                                  Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}" />
                                                     </Grid>
 
                                                     <DataGrid x:Name="PART_MinuteSelector" Grid.Column="1"
-                                                                  BorderBrush="{StaticResource CalendarBorderBrush}"
-                                                                  BorderThickness="1 1 0 1"
-                                                                  ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.MinuteRows}}"
-                                                                  FontFamily="{TemplateBinding FontFamily}"
-                                                                  Style="{StaticResource TimeSelectorStyle}" />
+                                                              BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1 1 0 1"
+                                                              ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.MinuteRows}}"
+                                                              FontFamily="{TemplateBinding FontFamily}" Style="{StaticResource TimeSelectorStyle}" />
 
                                                     <DataGrid x:Name="PART_SecondSelector" Grid.Column="2"
-                                                                  BorderBrush="{StaticResource CalendarBorderBrush}"
-                                                                  BorderThickness="1 1 0 1"
-                                                                  ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.MinuteRows}}"
-                                                                  FontFamily="{TemplateBinding FontFamily}"
-                                                                  Style="{StaticResource TimeSelectorStyle}" />
+                                                              BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1 1 0 1"
+                                                              ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.MinuteRows}}"
+                                                              FontFamily="{TemplateBinding FontFamily}" Style="{StaticResource TimeSelectorStyle}" />
                                                 </Grid>
                                             </Border>
                                         </StackPanel>
