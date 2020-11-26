@@ -13,7 +13,7 @@ using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
-    public partial class MessageBlock : UserControl
+    public class MessageBlock : Control
     {
         public enum MessageBlockIcon { Question, Stop, Error, Warning, Info, Success }
 

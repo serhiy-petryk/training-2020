@@ -20,7 +20,7 @@ namespace WpfInvestigate.Controls
     /// <summary>
     ///     Represents a base-class for time picking.
     /// </summary>
-    public class TimePickerBase : UserControl, INotifyPropertyChanged
+    public class TimePickerBase : Control, INotifyPropertyChanged
     {
         [Flags]
         public enum Buttons

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
@@ -38,7 +39,7 @@ namespace WpfInvestigate.Helpers
                     // see TextBoxEffects.Buttons attached property
                     foreach (var element in Tips.GetVisualParents(Mouse.DirectlyOver as DependencyObject).OfType<FrameworkElement>())
                     {
-                        if (element is Button)
+                        if (element is ButtonBase)
                             return;
                         if (element is TextBox || element.GetType().Name == "TextBoxView")
                             break;

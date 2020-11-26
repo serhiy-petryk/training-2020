@@ -10,7 +10,7 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    public class Calculator : UserControl, INotifyPropertyChanged
+    public class Calculator : Control, INotifyPropertyChanged
     {
         private const int IntervalCountWhenChange = 100;
         private const int IntervalStepChange = 10;
