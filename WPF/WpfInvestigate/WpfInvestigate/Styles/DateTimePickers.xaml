@@ -184,11 +184,9 @@
                                          SelectionBrush="{DynamicResource HighlightBrush}">
                                 </TextBox>
 
-                                <Rectangle Grid.Column="1" Fill="{TemplateBinding BorderBrush}"
-                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}"
+                                <Rectangle Grid.Column="1" Margin="0" Fill="{TemplateBinding BorderBrush}"
+                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SeparatorWidth}"
                                            Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSeparatorVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                                <Rectangle Grid.Column="1" Fill="{TemplateBinding BorderBrush}" Width="1"
-                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSeparator1pxVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
                                 <ToggleButton x:Name="PART_ToggleButton" Grid.Column="2" Focusable="True" IsTabStop="False" Width="18" Padding="1"
                                               IsThreeState="False" VerticalContentAlignment="Center" BorderThickness="0"

@@ -65,8 +65,9 @@ namespace WpfInvestigate.Controls
         public readonly CultureInfo Culture;
         public bool IsPopupButtonVisible => (VisibleButtons & Buttons.Popup) == Buttons.Popup;
         public bool IsClearButtonVisible => (VisibleButtons & Buttons.Clear) == Buttons.Clear;
-        public bool IsSeparator1pxVisible => (VisibleButtons & Buttons.Separator1px) == Buttons.Separator1px;
-        public bool IsSeparatorVisible => (VisibleButtons & Buttons.Separator) == Buttons.Separator;
+        public bool IsSeparatorVisible => (VisibleButtons & Buttons.Separator) == Buttons.Separator ||
+                                          (VisibleButtons & Buttons.Separator1px) == Buttons.Separator1px;
+        public double SeparatorWidth => (VisibleButtons & Buttons.Separator) == Buttons.Separator ? BorderThickness.Right : 1.0;
 
         private Button _clearButton;
         private bool _isTimeChanging;
@@ -506,8 +507,8 @@ namespace WpfInvestigate.Controls
         {
             ((TimePickerBase) d).OnPropertiesChanged(new[]
             {
-                nameof(IsPopupButtonVisible), nameof(IsClearButtonVisible), nameof(IsSeparator1pxVisible),
-                nameof(IsSeparatorVisible)
+                nameof(IsPopupButtonVisible), nameof(IsClearButtonVisible), nameof(IsSeparatorVisible),
+                nameof(SeparatorWidth)
             });
         }
 
