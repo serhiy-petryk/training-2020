@@ -131,6 +131,9 @@
     <Compile Include="Temp\TempControl.xaml.cs">
       <DependentUpon>TempControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\TextBoxTests.xaml.cs">
+      <DependentUpon>TextBoxTests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\ControlDemo.xaml.cs">
       <DependentUpon>ControlDemo.xaml</DependentUpon>
     </Compile>
@@ -296,6 +299,10 @@
     <Page Include="Temp\TempControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\TextBoxTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\ControlDemo.xaml">
       <Generator>MSBuild:Compile</Generator>

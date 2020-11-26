@@ -267,6 +267,7 @@
                 <Button x:Name="ColorControlTest" Width="200" Margin="0 5" Content="Ready: ColorControlTest" Click="ColorControlTest_OnClick"/>
                 <Button x:Name="ButtonStyleTest" Width="200" Margin="0 5" Content="Ready: ButtonStyleTests" Click="ButtonStyleTests_OnClick"/>
                 <Button x:Name="DialogItemsTest" Width="200" Margin="0 5" Content="Ready: DialogItemsTests" Click="DialogItemsTests_OnClick"/>
+                <Button x:Name="TextBoxTest" Width="200" Margin="0 5" Content="WiP: TextBoxTests" Click="TextBoxTests_OnClick"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
