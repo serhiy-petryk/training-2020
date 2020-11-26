@@ -3,8 +3,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -64,7 +64,15 @@ namespace WpfInvestigate.Effects
             if (grid != null)
             {
                 foreach (var element in Tips.GetVisualChildren(grid).OfType<FrameworkElement>().Where(c => c.Name.StartsWith(ElementPrefix)).ToArray())
+                {
+                    if (element.Name.Contains("Clear"))
+                        element.PreviewMouseLeftButtonDown -= ClearButton_Click;
+                    else if (element.Name.Contains("Keyboard"))
+                        element.PreviewMouseLeftButtonDown -= KeyboardButton_Click;
+
                     grid.Children.Remove(element);
+                }
+
                 foreach (var cd in grid.ColumnDefinitions.Where(c => c.Name.StartsWith(GridColumnPrefix)).ToArray())
                     grid.ColumnDefinitions.Remove(cd);
             }
@@ -107,11 +115,10 @@ namespace WpfInvestigate.Effects
                     var keyboardButton = new Button
                     {
                         Name = ElementPrefix + "Keyboard",
-                        Width = 16,
-                        Focusable = false,
-                        IsTabStop = false,
+                        Width = 16, Focusable = false, IsTabStop = false, 
                         Margin = new Thickness(0),
-                        Padding = new Thickness(0)
+                        Padding = new Thickness(0),
+                        VerticalAlignment = VerticalAlignment.Stretch
                     };
                     keyboardButton.SetBinding(ChromeEffect.BichromeAnimatedBackgroundProperty, new Binding
                     {
@@ -127,6 +134,7 @@ namespace WpfInvestigate.Effects
                     });
 
                     IconEffect.SetGeometry(keyboardButton, Application.Current.FindResource("KeyboardGeometry") as Geometry);
+                    keyboardButton.PreviewMouseLeftButtonDown += KeyboardButton_Click;
                     grid.Children.Add(keyboardButton);
                     Grid.SetColumn(keyboardButton, grid.ColumnDefinitions.Count - 1);
                 }
@@ -138,23 +146,21 @@ namespace WpfInvestigate.Effects
                     {
                         Name = ElementPrefix + "Clear",
                         Style = Application.Current.FindResource("ClearBichromeAnimatedButtonStyle") as Style,
-                        Width = 14,
-                        Focusable = false,
-                        IsTabStop = false,
+                        Width = 14, Focusable = false, IsTabStop = false,
                         Margin = new Thickness(0),
-                        Padding = new Thickness(1)
+                        Padding = new Thickness(1),
+                        VerticalAlignment = VerticalAlignment.Stretch
                     };
 
                     clearButton.PreviewMouseLeftButtonDown += ClearButton_Click;
-                    /*clearButton.PreviewMouseLeftButtonDown += (sender, args) =>
-                    {
-                        textBox.Text = string.Empty;
-                        textBox.Focus();
-                    };*/
                     grid.Children.Add(clearButton);
                     Grid.SetColumn(clearButton, grid.ColumnDefinitions.Count - 1);
                 }
             }
+        }
+
+        private static void KeyboardButton_Click(object sender, MouseButtonEventArgs e)
+        {
         }
 
         private static void ClearButton_Click(object sender, RoutedEventArgs e)
