@@ -279,6 +279,7 @@
             <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
                 <Label>Tests:</Label>
                 <Button x:Name="WiPTest" Margin="5" Content="WiP Tests" Click="WiPTest_OnClick"/>
+                <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323"/>
             </StackPanel>
 
             <StackPanel Grid.Column="4" Orientation="Vertical" Margin="5">

@@ -54,10 +54,13 @@ namespace WpfInvestigate.Controls
         public bool IsCalculatorButtonVisible => (VisibleButtons & Buttons.Calculator) == Buttons.Calculator;
         public bool IsDownButtonsVisible => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown || (VisibleButtons & Buttons.RightDown) == Buttons.RightDown;
         public bool IsUpButtonsVisible => (VisibleButtons & Buttons.Up) == Buttons.Up;
-        public bool IsLeftSeparatorVisible => (VisibleButtons & Buttons.LeftSeparator) == Buttons.LeftSeparator;
-        public bool IsLeftSeparator1pxVisible => (VisibleButtons & Buttons.LeftSeparator1px) == Buttons.LeftSeparator1px;
-        public bool IsRightSeparatorVisible => (VisibleButtons & Buttons.RightSeparator) == Buttons.RightSeparator;
-        public bool IsRightSeparator1pxVisible => (VisibleButtons & Buttons.RightSeparator1px) == Buttons.RightSeparator1px;
+
+        public bool IsLeftSeparatorVisible => (VisibleButtons & Buttons.LeftSeparator) == Buttons.LeftSeparator ||
+                                              (VisibleButtons & Buttons.LeftSeparator1px) == Buttons.LeftSeparator1px;
+        public double LeftSeparatorWidth => (VisibleButtons & Buttons.LeftSeparator) == Buttons.LeftSeparator ? BorderThickness.Left: 1.0;
+        public bool IsRightSeparatorVisible => (VisibleButtons & Buttons.RightSeparator) == Buttons.RightSeparator ||
+                                               (VisibleButtons & Buttons.RightSeparator1px) == Buttons.RightSeparator1px;
+        public double RightSeparatorWidth => (VisibleButtons & Buttons.RightSeparator) == Buttons.RightSeparator ? BorderThickness.Right : 1.0;
         public int DownButtonColumn => (VisibleButtons & Buttons.LeftDown) == Buttons.LeftDown ? 0 : 5;
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
@@ -445,7 +448,7 @@ namespace WpfInvestigate.Controls
             {
                 nameof(IsCloseButtonVisible), nameof(IsCalculatorButtonVisible), nameof(IsUpButtonsVisible),
                 nameof(IsDownButtonsVisible), nameof(DownButtonColumn), nameof(IsLeftSeparatorVisible),
-                nameof(IsLeftSeparator1pxVisible), nameof(IsRightSeparatorVisible), nameof(IsRightSeparator1pxVisible)
+                nameof(LeftSeparatorWidth), nameof(IsRightSeparatorVisible), nameof(RightSeparatorWidth)
             });
         }
 
