@@ -123,7 +123,7 @@
 
             <WrapPanel Margin="0 5 0 0">
                 <Label Content="TimePicker (nullable + no buttons):"/>
-                <controls:TimePicker x:Name="AAA" VisibleButtons="None" Width="100" Background="Yellow"
+                <controls:TimePicker x:Name="AAA" VisibleButtons="{x:Null}" Width="100" Background="Yellow"
                                  IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" IsNullable="True"
                                  BorderThickness="1" BorderBrush="YellowGreen" FontSize="16"
                                  effects:WatermarkEffect.Watermark="test" effects:WatermarkEffect.Foreground="Gray"/>

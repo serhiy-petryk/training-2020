@@ -25,9 +25,10 @@ namespace WpfInvestigate.Controls
         [Flags]
         public enum Buttons
         {
-            None = 0,
             Popup = 1,
-            Clear = 2
+            Clear = 2,
+            Separator1px = 4,
+            Separator = 8
         }
 
         public static readonly RoutedEvent SelectedTimeChangedEvent = EventManager.RegisterRoutedEvent("SelectedTimeChanged", RoutingStrategy.Direct,
@@ -43,7 +44,7 @@ namespace WpfInvestigate.Controls
             typeof(TimePickerBase), new PropertyMetadata(DatePickerFormat.Long, OnSelectedTimeFormatChanged));
 
         public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons",
-            typeof(Buttons), typeof(TimePickerBase), new FrameworkPropertyMetadata(Buttons.Popup | Buttons.Clear, OnVisibleButtonsChanged));
+            typeof(Buttons?), typeof(TimePickerBase), new FrameworkPropertyMetadata(null, OnVisibleButtonsChanged));
 
         #region Do not change order of fields inside this region
 
@@ -64,7 +65,8 @@ namespace WpfInvestigate.Controls
         public readonly CultureInfo Culture;
         public bool IsPopupButtonVisible => (VisibleButtons & Buttons.Popup) == Buttons.Popup;
         public bool IsClearButtonVisible => (VisibleButtons & Buttons.Clear) == Buttons.Clear;
-        public bool IsTextBoxBorderVisible => (VisibleButtons & Buttons.Popup) == Buttons.Popup || (VisibleButtons & Buttons.Clear) == Buttons.Clear;
+        public bool IsSeparator1pxVisible => (VisibleButtons & Buttons.Separator1px) == Buttons.Separator1px;
+        public bool IsSeparatorVisible => (VisibleButtons & Buttons.Separator) == Buttons.Separator;
 
         private Button _clearButton;
         private bool _isTimeChanging;
@@ -138,9 +140,9 @@ namespace WpfInvestigate.Controls
             set => SetValue(SelectedTimeFormatProperty, value);
         }
 
-        public Buttons VisibleButtons
+        public Buttons? VisibleButtons
         {
-            get => (Buttons)GetValue(VisibleButtonsProperty);
+            get => (Buttons?)GetValue(VisibleButtonsProperty);
             set => SetValue(VisibleButtonsProperty, value);
         }
 
@@ -502,7 +504,11 @@ namespace WpfInvestigate.Controls
 
         private static void OnVisibleButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePicker) d).OnPropertiesChanged(new[] {nameof(IsPopupButtonVisible), nameof(IsClearButtonVisible), nameof(IsTextBoxBorderVisible)});
+            ((TimePickerBase) d).OnPropertiesChanged(new[]
+            {
+                nameof(IsPopupButtonVisible), nameof(IsClearButtonVisible), nameof(IsSeparator1pxVisible),
+                nameof(IsSeparatorVisible)
+            });
         }
 
 
