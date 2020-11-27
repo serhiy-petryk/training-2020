@@ -181,7 +181,6 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5">
@@ -274,15 +273,11 @@
                 <Label>Others:</Label>
                 <Button x:Name="KeyboardTest" Margin="5" Content="Others: Keyboard" Click="KeyboardTest_OnClick"/>
                 <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="Others: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
-            </StackPanel>
-
-            <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
-                <Label>Tests:</Label>
                 <Button x:Name="WiPTest" Margin="5" Content="WiP Tests" Click="WiPTest_OnClick"/>
                 <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="4" Orientation="Vertical" Margin="5">
+            <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
                 <Label>Obsolete:</Label>
                 <Button x:Name="ObsoleteNumericUpDownTest" Width="200" Margin="0 5" Content="Obsolete: NumericUpDown" Click="ObsoleteNumericUpDownTest_OnClick"/>
                 <Button x:Name="ObsoleteRippleButtonTest" Width="250" Margin="0 5" Content="Obsolete (use RippleEffect): RippleButton" Click="ObsoleteRippleButtonTest_OnClick"/>
