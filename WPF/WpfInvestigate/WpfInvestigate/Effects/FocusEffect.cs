@@ -82,7 +82,7 @@ namespace WpfInvestigate.Effects
                     thicknessAnimation = new ThicknessAnimation { Duration = AnimationHelper.AnimationDuration };
                     adorner.Resources.Add("ThicknessAnimation", thicknessAnimation);
 
-                    adornerControl = new AdornerControl(element) { Child = adorner, UseAdornedElementSize = false };
+                    adornerControl = new AdornerControl(element) { Child = adorner, AdornerSize  = AdornerControl.AdornerSizeType.ChildElement};
                     layer.Add(adornerControl);
                 }
                 else

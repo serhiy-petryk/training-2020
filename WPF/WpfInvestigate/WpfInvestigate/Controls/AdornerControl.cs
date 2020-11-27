@@ -9,10 +9,12 @@ namespace WpfInvestigate.Controls
 {
     public class AdornerControl : Adorner
     {
-        public bool UseAdornedElementSize { get; set; }
+        public enum AdornerSizeType {AdornedElement, ChildElement, Container }
+        public AdornerSizeType AdornerSize { get; set; } = AdornerSizeType.AdornedElement;
+
         private FrameworkElement _child;
 
-        public AdornerControl(UIElement adornedElement) : base(adornedElement) => UseAdornedElementSize = true;
+        public AdornerControl(UIElement adornedElement) : base(adornedElement) {}
 
         protected override int VisualChildrenCount => 1;
 
@@ -38,11 +40,11 @@ namespace WpfInvestigate.Controls
 
         protected override Size MeasureOverride(Size constraint)
         {
-            var newSize = UseAdornedElementSize
+            var newSize = AdornerSize == AdornerSizeType.AdornedElement
                 ? AdornedElement.RenderSize
-                : double.IsNaN(_child.Width)
+                : (AdornerSize == AdornerSizeType.Container || double.IsNaN(_child.Width)
                     ? new Size(constraint.Width, constraint.Height)
-                    : new Size(_child.Width, _child.Height);
+                    : new Size(_child.Width, _child.Height));
 
             _child.Width = newSize.Width;
             _child.Height = newSize.Height;

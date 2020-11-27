@@ -145,7 +145,7 @@ namespace WpfInvestigate.Controls
                 var content = win.Content as FrameworkElement;
                 var margin = content.Margin;
                 adorner.Margin = new Thickness(-margin.Left, -margin.Top, margin.Right, margin.Bottom);
-                adorner.UseAdornedElementSize = false;
+                adorner.AdornerSize = AdornerControl.AdornerSizeType.Container;
             }
 
             // If the target is Enable when the dialog is displayed, disable it only while the dialog is displayed.
