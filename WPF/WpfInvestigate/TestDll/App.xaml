@@ -1,18 +1,10 @@
 ﻿<Application x:Class="TestDll.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:TestDll"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Generic.xaml" />
-                <!--<ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/ButtonStyles.xaml" />-->
-                <!--<ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/ControlExamples.xaml" />-->
-                <!--<ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/DropDownButtons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/DialogItems/DialogItemsCommon.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Controls/DialogItems/DialogItems.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
