@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="Common\Tips.cs" />
     <Compile Include="Controls\AdornerControl.cs" />
+    <Compile Include="Controls\ItemsPanel.cs" />
     <Compile Include="Controls\SampleDialogMovable.xaml.cs">
       <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
     </Compile>
@@ -75,10 +76,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MainWindowItemsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindowAdorner.xaml.cs">
       <DependentUpon>MainWindowAdorner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindowItemsControl.xaml.cs">
+      <DependentUpon>MainWindowItemsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

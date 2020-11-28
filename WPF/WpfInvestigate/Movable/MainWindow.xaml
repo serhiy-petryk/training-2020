@@ -77,7 +77,7 @@
 
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
                     <TextBlock Text="ItemsControl/Grid"/>
-                    <ItemsControl x:Name="ItemsControlGrid" Margin="5" Background="Yellow" Height="{StaticResource PanelHeight}">
+                    <ItemsControl x:Name="ItemsControlGrid" Margin="5" Background="Yellow"  Height="300" Width="250">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Grid HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -100,7 +100,8 @@
                 <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <TextBlock Text="ScrollViewer+Grid "/>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="300" Width="250">
-                        <Grid x:Name="ScrollViewerGrid" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <Grid x:Name="ScrollViewerGrid" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                              />
                     </ScrollViewer>
                 </StackPanel>
 
