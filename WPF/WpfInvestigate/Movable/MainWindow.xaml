@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Movable"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000">
+        Title="MainWindow" Height="800" Width="1100">
+
+    <Window.Resources>
+        <sys:Double x:Key="PanelHeight">330</sys:Double>
+    </Window.Resources>
 
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -37,17 +42,60 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="0" Margin="5" Orientation="Vertical">
-                    <WrapPanel>
+                <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Margin="5" Orientation="Vertical">
+                    <WrapPanel MaxWidth="200">
                         <Button Content="Add to canvas" Click="AddChildToCanvas_OnClick"/>
                         <Button Content="Add to grid" Click="AddChildToGrid_OnClick"/>
+                        <Button Content="Add to ItemsControl" Click="AddChildToItemsControl_OnClick"/>
+                        <Button Content="Add to ItemsControl/Grid" Click="AddChildToItemsControlGrid_OnClick"/>
+                        <Button Content="Add to ItemsControl/Canvas" Click="AddChildToItemsControlCanvas_OnClick"/>
                     </WrapPanel>
-
                 </StackPanel>
-                <Canvas Grid.Column="1" x:Name="Canvas" Margin="5" Background="Yellow" Height="400"/>
-                <Grid Grid.Column="2" x:Name="Grid" Margin="5" Background="Orange" Height="500"/>
+
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+                    <TextBlock Text="Canvas"/>
+                    <Canvas x:Name="Canvas" Margin="5" Background="Yellow" Height="{StaticResource PanelHeight}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
+                    <TextBlock Text="Grid"/>
+                    <Grid x:Name="Grid" Margin="5" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="{StaticResource PanelHeight}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical">
+                    <TextBlock Text="ItemsControl/Stack"/>
+                    <ItemsControl x:Name="ItemsControl" Margin="5" Background="Yellow" Height="{StaticResource PanelHeight}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                    <TextBlock Text="ItemsControl/Grid"/>
+                    <ItemsControl x:Name="ItemsControlGrid" Margin="5" Background="Yellow" Height="{StaticResource PanelHeight}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Grid HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
+                    <TextBlock Text="ItemsControl/Canvas"/>
+                    <ItemsControl x:Name="ItemsControlCanvas" Margin="5" Background="Yellow" Height="{StaticResource PanelHeight}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+
             </Grid>
         </ScrollViewer>
     </Grid>

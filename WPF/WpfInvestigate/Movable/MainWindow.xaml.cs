@@ -37,5 +37,23 @@ namespace Movable
             var a1 = new SampleDialogMovable();
             Grid.Children.Add(a1);
         }
+
+        private void AddChildToItemsControl_OnClick(object sender, RoutedEventArgs e)
+        {
+            var a1 = new SampleDialogMovable();
+            ItemsControl.Items.Add(a1);
+        }
+
+        private void AddChildToItemsControlGrid_OnClick(object sender, RoutedEventArgs e)
+        {
+            var a1 = new SampleDialogMovable();
+            ItemsControlGrid.Items.Add(a1);
+        }
+
+        private void AddChildToItemsControlCanvas_OnClick(object sender, RoutedEventArgs e)
+        {
+            var a1 = new SampleDialogMovable();
+            ItemsControlCanvas.Items.Add(a1);
+        }
     }
 }
