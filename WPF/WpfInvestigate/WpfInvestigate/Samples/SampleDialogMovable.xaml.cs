@@ -6,7 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 
-namespace WpfInvestigate.TestViews
+namespace WpfInvestigate.Samples
 {
     public partial class SampleDialogMovable : UserControl
     {

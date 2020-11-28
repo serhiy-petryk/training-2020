@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using WpfInvestigate.Controls;
+using WpfInvestigate.Samples;
 
 namespace WpfInvestigate.TestViews
 {
@@ -35,28 +36,28 @@ namespace WpfInvestigate.TestViews
         private void OnClickShowButtonPopup(object sender, RoutedEventArgs e)
         {
             var dialogItems = new DialogItems{CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value};
-            dialogItems.Show(new SampleDialog());
+            dialogItems.Show(new SampleDialogMovable());
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowDialogButtonPopup(object sender, RoutedEventArgs e)
         {
             var dialogItems = new DialogItems { CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
-            dialogItems.ShowDialog(new SampleDialog());
+            dialogItems.ShowDialog(new SampleDialogMovable());
             MessageBox.Show("dialog item already shown");
         }
 
         private async void OnClickShowAsyncButtonPopup(object sender, RoutedEventArgs e)
         {
             var dialogItems = new DialogItems { CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
-            await dialogItems.ShowAsync(new SampleDialog());
+            await dialogItems.ShowAsync(new SampleDialogMovable());
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowUserControlPopup(object sender, RoutedEventArgs e)
         {
             var dialogItems = new DialogItems { CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
-            dialogItems.Show(new SampleDialog(), this);
+            dialogItems.Show(new SampleDialogMovable(), this);
         }
         private void OnClickShowImagePopup(object sender, RoutedEventArgs e)
         {
@@ -77,13 +78,13 @@ namespace WpfInvestigate.TestViews
         private async void OnClickShowMultiplePopup(object sender, RoutedEventArgs e)
         {
             var dialogItems = new DialogItems { Style = Resources["MultipleDialogStyle"] as Style, CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
-            dialogItems.Show(new SampleDialog(), this);
+            dialogItems.Show(new SampleDialogMovable(), this);
 
             await Task.Delay(500);
-            dialogItems.Items.Add(new SampleDialog());
+            dialogItems.Items.Add(new SampleDialogMovable());
 
             await Task.Delay(500);
-            dialogItems.Items.Add(new SampleDialog());
+            dialogItems.Items.Add(new SampleDialogMovable());
         }
 
         private async void OnClickAddDialogMethodPopup(object sender, RoutedEventArgs e)
@@ -91,13 +92,13 @@ namespace WpfInvestigate.TestViews
             var dialogs = new DialogItems { Style = Resources["MultipleDialogStyle"] as Style, CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
             dialogs.Show(null, this);
 
-            dialogs.AddDialog(new SampleDialog());
+            dialogs.AddDialog(new SampleDialogMovable());
             await Task.Delay(500);
 
-            dialogs.AddDialog(new SampleDialog());
+            dialogs.AddDialog(new SampleDialogMovable());
             await Task.Delay(500);
 
-            dialogs.AddDialog(new SampleDialog());
+            dialogs.AddDialog(new SampleDialogMovable());
         }
 
         private void ShowBuiltinStyleWindowPopup(object sender, RoutedEventArgs e)

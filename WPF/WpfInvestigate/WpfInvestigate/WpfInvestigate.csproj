@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DialogItems.cs" />
+    <Compile Include="Controls\ResizableControl.cs" />
     <Compile Include="Controls\MessageBlock.cs" />
     <Compile Include="Controls\NumericBox.cs" />
     <Compile Include="Controls\ObjectEditor.cs" />
@@ -93,12 +94,6 @@
     <Compile Include="Helpers\ControlHelper.cs" />
     <Compile Include="Helpers\DropDownButtonHelper.cs" />
     <Compile Include="Effects\DoubleIconToggleButtonEffect.cs" />
-    <Compile Include="Examples\ButtonWithTemplate.xaml.cs">
-      <DependentUpon>ButtonWithTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Examples\UserControlExample.xaml.cs">
-      <DependentUpon>UserControlExample.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\SelectAllOnFocusForTextBox.cs" />
     <Compile Include="Obsolete\FlatButton.xaml.cs">
       <DependentUpon>FlatButton.xaml</DependentUpon>
@@ -167,10 +162,7 @@
     <Compile Include="TestViews\DatePickerEffectTests.xaml.cs">
       <DependentUpon>DatePickerEffectTests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\SampleDialog.xaml.cs">
-      <DependentUpon>SampleDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TestViews\SampleDialogMovable.xaml.cs">
+    <Compile Include="Samples\SampleDialogMovable.xaml.cs">
       <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\DialogTests.xaml.cs">
@@ -214,14 +206,6 @@
     <Page Include="Controls\ColorControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Examples\ButtonWithTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Examples\UserControlExample.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Obsolete\FlatButton.xaml">
       <SubType>Designer</SubType>
@@ -279,6 +263,10 @@
     <Page Include="Styles\DialogItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ResizableControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\MessageBlock.xaml">
       <SubType>Designer</SubType>
@@ -348,11 +336,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestViews\SampleDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TestViews\SampleDialogMovable.xaml">
+    <Page Include="Samples\SampleDialogMovable.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -403,10 +387,6 @@
     <Page Include="Themes\Common.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
-    <Page Include="Themes\ControlExamples.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Flags.xaml">
       <SubType>Designer</SubType>
