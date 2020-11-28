@@ -66,7 +66,7 @@
 
                 <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
                     <TextBlock Text="Grid"/>
-                    <Grid x:Name="Grid" Margin="5" Background="Orange" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    <Grid x:Name="Grid" Margin="5" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                           Height="{StaticResource PanelHeight}"/>
                 </StackPanel>
 
@@ -95,6 +95,14 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <TextBlock Text="Grid"/>
+                    <Grid x:Name="XGrid" Margin="5" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                          Height="{StaticResource PanelHeight}">
+                        <Rectangle Width="50" Height="50" Fill="Aqua" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    </Grid>
                 </StackPanel>
 
             </Grid>

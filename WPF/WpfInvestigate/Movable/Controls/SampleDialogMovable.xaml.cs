@@ -44,6 +44,30 @@ namespace WpfInvestigate.Samples
             }
         }
 
+        private void CanvasMoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            var canvas = HostPanel as Canvas;
+            if (canvas != null)
+            {
+                // var newX = Canvas.GetLeft(this) + e.HorizontalChange; // GetLeft/Top may be NaN
+                var p = TranslatePoint(new Point(0, 0), canvas);
+                var newX = p.X + e.HorizontalChange;
+                if (newX + ActualWidth > HostPanel.ActualWidth)
+                    newX = HostPanel.ActualWidth - ActualWidth;
+                if (newX < 0) newX = 0;
+
+                // var newY = Canvas.GetTop(this) + e.VerticalChange;
+                var newY = p.Y + e.VerticalChange;
+                if (newY + ActualHeight > HostPanel.ActualHeight)
+                    newY = HostPanel.ActualHeight - ActualHeight;
+                if (newY < 0) newY = 0;
+
+                Canvas.SetLeft(this, newX);
+                Canvas.SetTop(this, newY);
+                e.Handled = true;
+            }
+        }
+
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
             var aa1 = Tips.GetVisualParents(this).OfType<FrameworkElement>().ToArray();
@@ -68,6 +92,8 @@ namespace WpfInvestigate.Samples
             }
             else if (HostPanel is Grid)
                 GridMoveThumb_OnDragDelta(sender, e);
+            else if (HostPanel is Canvas)
+                CanvasMoveThumb_OnDragDelta(sender, e);
         }
 
         private void XXMoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
