@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Movable"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1100">
@@ -56,6 +55,7 @@
                         <Button Content="Add to ItemsControl" Click="AddChildToItemsControl_OnClick"/>
                         <Button Content="Add to ItemsControl/Grid" Click="AddChildToItemsControlGrid_OnClick"/>
                         <Button Content="Add to ItemsControl/Canvas" Click="AddChildToItemsControlCanvas_OnClick"/>
+                        <Button Content="Add to ScrollViewer/Grid" Click="AddChildToScrollViewerGrid_OnClick"/>
                     </WrapPanel>
                 </StackPanel>
 
@@ -98,11 +98,10 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <TextBlock Text="Grid"/>
-                    <Grid x:Name="XGrid" Margin="5" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                          Height="{StaticResource PanelHeight}">
-                        <Rectangle Width="50" Height="50" Fill="Aqua" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    </Grid>
+                    <TextBlock Text="ScrollViewer+Grid "/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="300" Width="250">
+                        <Grid x:Name="ScrollViewerGrid" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </ScrollViewer>
                 </StackPanel>
 
             </Grid>

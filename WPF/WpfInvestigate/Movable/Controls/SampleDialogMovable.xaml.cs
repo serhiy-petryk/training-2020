@@ -30,14 +30,14 @@ namespace WpfInvestigate.Samples
             if (grid != null)
             {
                 var newX = Margin.Left + e.HorizontalChange;
-                if (newX + ActualWidth > HostPanel.ActualWidth)
-                    newX = HostPanel.ActualWidth - ActualWidth;
-                if (newX < 0) newX = 0;
+                //if (newX + ActualWidth > HostPanel.ActualWidth)
+                  //  newX = HostPanel.ActualWidth - ActualWidth;
+                //if (newX < 0) newX = 0;
 
                 var newY = Margin.Top + e.VerticalChange;
-                if (newY + ActualHeight > HostPanel.ActualHeight)
-                    newY = HostPanel.ActualHeight - ActualHeight;
-                if (newY < 0) newY = 0;
+                //if (newY + ActualHeight > HostPanel.ActualHeight)
+                  //  newY = HostPanel.ActualHeight - ActualHeight;
+                // if (newY < 0) newY = 0;
 
                 Margin = new Thickness { Left = newX, Top = newY };
                 e.Handled = true;
@@ -73,7 +73,7 @@ namespace WpfInvestigate.Samples
             var aa1 = Tips.GetVisualParents(this).OfType<FrameworkElement>().ToArray();
             var aa2 = Tips.GetVisualParents(this).OfType<FrameworkElement>().Select(a => new Size(a.ActualWidth, a.ActualHeight)).ToArray();
 
-            var itemsPresenter = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
+            /*var itemsPresenter = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
             var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
             if (itemsPresenter != null && container != null)
             {
@@ -90,7 +90,7 @@ namespace WpfInvestigate.Samples
                 itemsPresenter.Margin = new Thickness { Left = newX, Top = newY };
                 e.Handled = true;
             }
-            else if (HostPanel is Grid)
+            else */if (HostPanel is Grid)
                 GridMoveThumb_OnDragDelta(sender, e);
             else if (HostPanel is Canvas)
                 CanvasMoveThumb_OnDragDelta(sender, e);

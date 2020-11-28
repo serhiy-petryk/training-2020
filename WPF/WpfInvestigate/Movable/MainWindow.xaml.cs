@@ -42,5 +42,11 @@ namespace Movable
             var a1 = new SampleDialogMovable();
             ItemsControlCanvas.Items.Add(a1);
         }
+
+        private void AddChildToScrollViewerGrid_OnClick(object sender, RoutedEventArgs e)
+        {
+            var a1 = new SampleDialogMovable();
+            ScrollViewerGrid.Children.Add(a1);
+        }
     }
 }
