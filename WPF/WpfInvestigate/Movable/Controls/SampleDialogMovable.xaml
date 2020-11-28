@@ -8,7 +8,7 @@
              HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
 
     <UserControl.Resources>
-        <DropShadowEffect x:Key="ShadowEffect" BlurRadius="10" ShadowDepth="2" />
+        <DropShadowEffect x:Key="ShadowEffect" BlurRadius="4" ShadowDepth="2" />
 
         <!-- Resize Thumbs -->
         <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -21,7 +21,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <Grid Effect="{StaticResource ShadowEffect}"/>
+        <Border BorderBrush="Black" BorderThickness="1" Effect="{StaticResource ShadowEffect}"/>
         <Border BorderBrush="YellowGreen" BorderThickness="7" Background="Orange">
             <Grid>
                 <Grid.RowDefinitions>
