@@ -63,6 +63,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\Tips.cs" />
+    <Compile Include="Controls\AdornerControl.cs" />
     <Compile Include="Controls\SampleDialogMovable.xaml.cs">
       <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
     </Compile>

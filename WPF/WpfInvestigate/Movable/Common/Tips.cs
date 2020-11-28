@@ -63,6 +63,7 @@ namespace Movable.Common
         #endregion =============================
 
         #region =============  Colors  =============
+        public static Color StringToColor(string hexStringOfColor) => (Color)ColorConverter.ConvertFromString(hexStringOfColor);
         public static Brush GetActualBackgroundBrush(DependencyObject d)
         {
             // valid only for SolidColorBrush
