@@ -5,11 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Movable"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:common="clr-namespace:Movable.Common"
+        xmlns:samples="clr-namespace:WpfInvestigate.Samples"
         mc:Ignorable="d"
-        Title="MainWindowItemsControl" Height="800" Width="1100">
+        Title="MainWindowItemsControl" Height="800" Width="1100"
+        x:Name="Root">
 
     <Window.Resources>
         <system:Double x:Key="PanelHeight">330</system:Double>
+
+        <Style TargetType="TabItem">
+            <Setter Property="Foreground" Value="{DynamicResource Mwi.WindowTab.ForegroundBrush}" />
+            <Setter Property="Background" Value="{DynamicResource Mwi.WindowTab.BackgroundBrush}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <TextBlock Text="{Binding Title}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
     </Window.Resources>
 
     <Grid Margin="10">
@@ -56,13 +71,35 @@
 
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
                     <TextBlock Text="ItemsControl/Canvas"/>
-                    <ItemsControl x:Name="ItemsControlCanvas" Margin="5" Background="Yellow" Height="{StaticResource PanelHeight}">
+                    <ItemsControl x:Name="ItemsControlCanvas" Margin="5" Background="Yellow" Height="{StaticResource PanelHeight}" ItemsSource="{Binding Data}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
+                    <TextBlock Text="Tabs"/>
+                    <TabControl x:Name="TabControl" ItemsSource="{Binding ElementName=Root, Path=Data}">
+                        <!--<TabControl.ItemContainerStyle>
+                            <Style TargetType="TabItem">
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Title}"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TabControl.ItemContainerStyle>-->
+                    </TabControl>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                    <TextBlock Text="Canvas"/>
+                    <Canvas x:Name="Canvas" Margin="5" Background="Yellow" Height="{StaticResource PanelHeight}"/>
                 </StackPanel>
 
             </Grid>

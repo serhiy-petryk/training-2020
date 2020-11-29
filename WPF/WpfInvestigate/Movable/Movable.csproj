@@ -62,6 +62,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\Tips.cs" />
     <Compile Include="Controls\AdornerControl.cs" />
     <Compile Include="Controls\ItemsPanel.cs" />

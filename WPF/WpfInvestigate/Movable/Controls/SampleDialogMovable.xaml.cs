@@ -10,11 +10,23 @@ namespace WpfInvestigate.Samples
 {
     public partial class SampleDialogMovable : UserControl
     {
+        private static int Unique = 0;
+        public string Title
+        {
+            get => (string)GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
+        }
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title",
+            typeof(string), typeof(SampleDialogMovable), new PropertyMetadata((Unique++).ToString()));
+
+
+        //========================
         private Panel HostPanel => VisualTreeHelper.GetParent(this) as Panel;
 
         public SampleDialogMovable()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         private void Thumb_OnDragStarted(object sender, DragStartedEventArgs e)
@@ -52,15 +64,15 @@ namespace WpfInvestigate.Samples
                 // var newX = Canvas.GetLeft(this) + e.HorizontalChange; // GetLeft/Top may be NaN
                 var p = TranslatePoint(new Point(0, 0), canvas);
                 var newX = p.X + e.HorizontalChange;
-                if (newX + ActualWidth > HostPanel.ActualWidth)
-                    newX = HostPanel.ActualWidth - ActualWidth;
-                if (newX < 0) newX = 0;
+                //if (newX + ActualWidth > HostPanel.ActualWidth)
+                  //  newX = HostPanel.ActualWidth - ActualWidth;
+                //if (newX < 0) newX = 0;
 
                 // var newY = Canvas.GetTop(this) + e.VerticalChange;
                 var newY = p.Y + e.VerticalChange;
-                if (newY + ActualHeight > HostPanel.ActualHeight)
-                    newY = HostPanel.ActualHeight - ActualHeight;
-                if (newY < 0) newY = 0;
+                //if (newY + ActualHeight > HostPanel.ActualHeight)
+                  //  newY = HostPanel.ActualHeight - ActualHeight;
+                //if (newY < 0) newY = 0;
 
                 Canvas.SetLeft(this, newX);
                 Canvas.SetTop(this, newY);
