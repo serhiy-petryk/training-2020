@@ -104,10 +104,15 @@
                                    PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                    PopupAnimation="Fade"
                                    StaysOpen="False">
-                                <Grid>
+                                <controls:PopupResizeShell>
+                                    <controls:Calculator effects:CornerRadiusEffect.CornerRadius="3" Focusable="True" Margin="0"
+                                                         Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
+
+                                    <!--<Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Aqua">
                                     <Border Margin="0 0 10 10" Effect="{StaticResource ShadowEffect}" BorderThickness="0" Background="White"/>
                                     <controls:Calculator effects:CornerRadiusEffect.CornerRadius="3" Focusable="True" Margin="0,0,10,10" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
-                                </Grid>
+                                </Grid>-->
+                                </controls:PopupResizeShell>
                             </Popup>
                         </Grid>
                     </Border>
