@@ -1,9 +1,5 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Media;
-using WpfInvestigate.Common;
 using WpfInvestigate.Effects;
 
 namespace WpfInvestigate.TestViews

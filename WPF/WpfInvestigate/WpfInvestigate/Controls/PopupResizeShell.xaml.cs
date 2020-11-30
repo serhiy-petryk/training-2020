@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,7 +16,6 @@ namespace WpfInvestigate.Controls
         private const int MaxSize = 1000;
         private const int MinSize = 50;
 
-        private Popup _popup;
         private Thumb _resizeThumb;
 
         public PopupResizeShell()
@@ -31,36 +29,30 @@ namespace WpfInvestigate.Controls
 
             _resizeThumb = GetTemplateChild("PART_ResizeThumb") as Thumb;
             if (_resizeThumb != null)
-            {
                 _resizeThumb.DragDelta += ThumbDragDelta;
-            }
-
         }
+
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var t = sender as Thumb;
+            var thumb = sender as Thumb;
             var popup = Tips.GetVisualParents(this).OfType<Popup>().FirstOrDefault();
             if (popup == null) return;
 
-            if (t.Cursor == Cursors.SizeWE || t.Cursor == Cursors.SizeNWSE)
+            if (double.IsNaN(popup.Width)) popup.Width = ActualWidth;
+            if (double.IsNaN(popup.Height)) popup.Height = ActualHeight;
+            if (!double.IsNaN(Width)) Width = double.NaN;
+            if (!double.IsNaN(Height)) Height = double.NaN;
+            if (Content is FrameworkElement content)
+            {
+                if (!double.IsNaN(content.Width)) content.Width = double.NaN;
+                if (!double.IsNaN(content.Height)) content.Height = double.NaN;
+            }
+
+            if (thumb.Cursor == Cursors.SizeWE || thumb.Cursor == Cursors.SizeNWSE)
                 popup.Width = Math.Min(MaxSize, Math.Max(popup.Width + e.HorizontalChange, MinSize));
 
-            if (t.Cursor == Cursors.SizeNS || t.Cursor == Cursors.SizeNWSE)
+            if (thumb.Cursor == Cursors.SizeNS || thumb.Cursor == Cursors.SizeNWSE)
                 popup.Height = Math.Min(MaxSize, Math.Max(popup.Height + e.VerticalChange, MinSize));
-            Debug.Print($"Resize: {e.HorizontalChange}, {e.VerticalChange}");
-            Debug.Print($"Popup: {popup.Width}, {popup.Height}");
-        }
-
-        private void ThumbDragStarted(object sender, DragStartedEventArgs e)
-        {
-            //This is called when the user
-            //starts dragging the thumb
-        }
-
-        private void ThumbDragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            //This is called when the user
-            //finishes dragging the thumb
         }
     }
 }

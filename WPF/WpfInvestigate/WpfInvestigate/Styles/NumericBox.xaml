@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls"
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects"
-                    xmlns:common="clr-namespace:WpfInvestigate.Common">
+                    xmlns:common="clr-namespace:WpfInvestigate.Common"
+                    xmlns:temp="clr-namespace:WpfInvestigate.Temp">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
@@ -96,7 +97,7 @@
                                     Style="{StaticResource ClearBichromeAnimatedButtonStyle}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
-                            <Popup x:Name="PART_Popup" Width="200" Height="245"
+                            <Popup x:Name="PART_Popup" Width="250" Height="250"
                                    IsOpen="{Binding ElementName=PART_ToggleButton, Path=IsChecked}"
                                    AllowsTransparency="True"
                                    Focusable="False"
@@ -105,8 +106,10 @@
                                    PopupAnimation="Fade"
                                    StaysOpen="False">
                                 <controls:PopupResizeShell>
-                                    <controls:Calculator effects:CornerRadiusEffect.CornerRadius="3" Focusable="True" Margin="0"
+                                        <controls:Calculator Focusable="True" Margin="0"
                                                          Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
+                                    <!--<temp:OriginalVirtualKeyboard/>-->
+                                    <!--<controls:VirtualKeyboard Width="1000" Height="500"/>-->
 
                                     <!--<Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Aqua">
                                     <Border Margin="0 0 10 10" Effect="{StaticResource ShadowEffect}" BorderThickness="0" Background="White"/>

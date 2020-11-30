@@ -1,0 +1,5 @@
+﻿
+1. Elastic layout (size of elements is changed if size of parent control is changing)
+is better than (fixed size layout + scaletransform).
+Checked on virtual keyboard. 1 pixel line  is very bad in case of (fixed size layout + scaletransform).
+2. Не пробував: Viewbox + control можливо рівноцінне (fixed size layout + scaletransform), але його можливо значне простіше використовувати.
