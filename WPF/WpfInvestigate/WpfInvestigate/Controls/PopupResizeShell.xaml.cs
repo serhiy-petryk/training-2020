@@ -17,11 +17,25 @@ namespace WpfInvestigate.Controls
         private const int MaxSize = 1000;
         private const int MinSize = 50;
 
+        private Popup _popup;
+        private Thumb _resizeThumb;
+
         public PopupResizeShell()
         {
             InitializeComponent();
         }
 
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            _resizeThumb = GetTemplateChild("PART_ResizeThumb") as Thumb;
+            if (_resizeThumb != null)
+            {
+                _resizeThumb.DragDelta += ThumbDragDelta;
+            }
+
+        }
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
             var t = sender as Thumb;
@@ -33,6 +47,7 @@ namespace WpfInvestigate.Controls
 
             if (t.Cursor == Cursors.SizeNS || t.Cursor == Cursors.SizeNWSE)
                 popup.Height = Math.Min(MaxSize, Math.Max(popup.Height + e.VerticalChange, MinSize));
+            Debug.Print($"Resize: {e.HorizontalChange}, {e.VerticalChange}");
         }
 
         private void ThumbDragStarted(object sender, DragStartedEventArgs e)

@@ -96,7 +96,7 @@
                                     Style="{StaticResource ClearBichromeAnimatedButtonStyle}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
-                            <Popup x:Name="PART_Popup" Width="180" Height="245"
+                            <Popup x:Name="PART_Popup" Width="200" Height="245"
                                    IsOpen="{Binding ElementName=PART_ToggleButton, Path=IsChecked}"
                                    AllowsTransparency="True"
                                    Focusable="False"
