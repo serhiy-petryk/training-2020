@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
 
@@ -27,6 +28,11 @@ namespace WpfInvestigate.TestViews
                 TestTB.BorderThickness = new Thickness(4.0);
             else
                 TestTB.BorderThickness = new Thickness(2.0);
+        }
+
+        private void UIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Click");
         }
     }
 }

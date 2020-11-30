@@ -656,6 +656,11 @@
                                           Padding="24 24 8 4"
                                           ToolTip="Scroll window tabs to right"/>
                         </Grid>
+
+                        <Grid Height="40" Width="40" Background="Yellow">
+                            <Polygon Points="0,25,25,25,25,0" Fill="Aqua" PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"
+                                     VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                        </Grid>
                     </WrapPanel>
 
                     <WrapPanel>

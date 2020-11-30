@@ -48,6 +48,7 @@ namespace WpfInvestigate.Controls
             if (t.Cursor == Cursors.SizeNS || t.Cursor == Cursors.SizeNWSE)
                 popup.Height = Math.Min(MaxSize, Math.Max(popup.Height + e.VerticalChange, MinSize));
             Debug.Print($"Resize: {e.HorizontalChange}, {e.VerticalChange}");
+            Debug.Print($"Popup: {popup.Width}, {popup.Height}");
         }
 
         private void ThumbDragStarted(object sender, DragStartedEventArgs e)

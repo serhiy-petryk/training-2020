@@ -81,12 +81,33 @@
                         <Border BorderThickness="0">
                             <Grid Background="Gainsboro">
                                 <ContentPresenter Margin="0"/>
+                                <Thumb x:Name="PART_ResizeThumb" Cursor="SizeNWSE" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                    <Thumb.Style>
+                                        <Style TargetType="Thumb">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                                        <Grid SnapsToDevicePixels="True" UseLayoutRounding="True" ClipToBounds="True">
+                                                            <Polygon Points="0,25,25,25,25,0" Fill="Aqua" Opacity="0.5"
+                                                                     VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                              RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                                              Margin="{TemplateBinding Padding}"/>
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Thumb.Style>
+                                </Thumb>
+                                <!--<Polygon Points="0,25,25,25,25,0" Fill="Aqua" Opacity="0.5"
+                                         VerticalAlignment="Bottom" HorizontalAlignment="Right"/>-->
 <!--                                <Thumb Grid.Row="0" Grid.Column="1" Cursor="SizeWE" Style="{StaticResource PopupThumb}"/>
                                 <Thumb Grid.Row="1" Grid.Column="0" Cursor="SizeNS" Style="{StaticResource PopupThumb}"/>
                                 <Thumb Grid.Row="1" Grid.Column="1" Cursor="SizeNWSE" Style="{StaticResource PopupThumb2}"/>-->
 <!--                                <Thumb Width="24" Height="24" Cursor="SizeNWSE" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                        Background="White"/>-->
-                                <Thumb x:Name="PART_ResizeThumb" Width="36" Height="36" Margin="0" Padding="0" Cursor="SizeNWSE" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                <!--<Thumb x:Name="PART_ResizeThumb" Width="36" Height="36" Margin="0" Padding="0" Cursor="SizeNWSE" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                        Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
                                        RenderTransformOrigin="0.5 0.5" BorderThickness="0" Opacity="0.7">
                                     <Thumb.Style>
@@ -120,7 +141,7 @@
                                             </Setter>
                                         </Style>
                                     </Thumb.Style>
-                                </Thumb>
+                                </Thumb>-->
                             </Grid>
                         </Border>
                     </ControlTemplate>
