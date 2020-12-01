@@ -620,22 +620,22 @@ namespace WpfInvestigate.Controls
         }
 
         //=========================
-        public static readonly DependencyProperty ButtonsWidthProperty = DependencyProperty.Register("ButtonsWidth", typeof(int), typeof(NumericBox), new FrameworkPropertyMetadata(16, null, CoerceButtonsWidth));
+        public static readonly DependencyProperty ButtonsWidthProperty = DependencyProperty.Register("ButtonsWidth", typeof(double), typeof(NumericBox), new FrameworkPropertyMetadata(16.0, null, CoerceButtonsWidth));
         /// <summary>
         /// Buttons Width (default - 16, Minimum - 10, Maximum - 250
         /// </summary>
-        public int ButtonsWidth
+        public double ButtonsWidth
         {
-            get => (int)GetValue(ButtonsWidthProperty);
+            get => (double)GetValue(ButtonsWidthProperty);
             set => SetValue(ButtonsWidthProperty, value);
         }
         private static object CoerceButtonsWidth(DependencyObject d, object value)
         {
-            var val = (int)value;
-            if (val < 10)
-                return 10;
-            if (val  > 250)
-                return 250;
+            var val = (double)value;
+            if (val < 10.0)
+                return 10.0;
+            if (val  > 250.0)
+                return 250.0;
             return val;
         }
 

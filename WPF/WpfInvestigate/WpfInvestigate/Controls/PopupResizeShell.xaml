@@ -33,7 +33,7 @@
                                 <ContentPresenter effects:CornerRadiusEffect.CornerRadius="4"/>
 
                                 <Thumb x:Name="PART_ResizeGrip" Cursor="SizeNWSE" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                                       Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=%12}"
+                                       Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=12%}"
                                        Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}">
                                     <Thumb.Style>
                                         <Style TargetType="Thumb">
@@ -60,10 +60,10 @@
                             <Thumb x:Name="PART_ResizeRight" Width="8" HorizontalAlignment="Right" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
                             <Thumb x:Name="PART_ResizeBottom" Height="8" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
                             <Thumb x:Name="PART_ResizeCornerBottom" Height="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=%12+8}">
+                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=12%8+}">
                             </Thumb>
                             <Thumb x:Name="PART_ResizeCornerRight" Width="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                                   Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=%12+8}">
+                                   Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=12%8+}">
                             </Thumb>
 
                         </Grid>

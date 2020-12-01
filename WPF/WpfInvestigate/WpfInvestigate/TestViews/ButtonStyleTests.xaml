@@ -765,7 +765,7 @@
                                       effects:DoubleIconToggleButtonEffect.MarginOn="0 4"/>
 
                             <Grid Margin="5 -1 5 -2" Tag="1"
-                                  Height="{Binding Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=-2}"
+                                  Height="{Binding Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2-}"
                                   Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
                                   Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}}">
                                 <RepeatButton Focusable="False" Interval="15" Style="{StaticResource LeftUpDoubleButtonStyle}"

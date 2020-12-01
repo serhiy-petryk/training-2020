@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -71,74 +72,87 @@ namespace WpfInvestigate.Common
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Math converter. Support polish notation (https://en.wikipedia.org/wiki/Polish_notation). Math expressions are stored in ConverterParameter.
+    /// Supported operators: '+,-,*,/,%' for double, '!' for boolean. Supported types of return value: double, bool, Thickness, GridLength.
+    /// </summary>
     public class MathConverter : IValueConverter
     {
+        /// <summary>
+        /// Instance of Math converter. Support polish notation (https://en.wikipedia.org/wiki/Polish_notation). Math expressions are stored in ConverterParameter.
+        /// Supported operators: '+,-,*,/,%' for double, '!' for boolean. Supported types of return value: double, bool, Thickness, GridLength.
+        /// </summary>
         public static MathConverter Instance = new MathConverter();
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double d)
+            var operand = "";
+            var operands = new List<object> {value};
+
+            var s = (parameter as string ?? "").Trim();
+
+            foreach (var c in s)
             {
-
-                var s = (parameter as string ?? "").Trim();
-                var d1 = d;
-                char? _operator = null;
-                var operand2 = "";
-                foreach (var c in s)
+                if (c == '.' || char.IsDigit(c))
                 {
-                    if (c == '.' || char.IsDigit(c))
-                    {
-                        operand2 += c;
-                        continue;
-                    }
-
-                    if (!_operator.HasValue) { }
-                    else Calculate();
-                    _operator = c;
+                    operand += c;
+                    continue;
                 }
-                Calculate();
 
-                /*if (s.StartsWith("-")) d -= double.Parse(s.Substring(1));
-                else if (s.StartsWith("+")) d += double.Parse(s.Substring(1));
-                else if (s.StartsWith("%")) d *= double.Parse(s.Substring(1)) / 100.0;
-                else if (s.StartsWith("*")) d *= double.Parse(s.Substring(1));
-                else if (s.StartsWith("/")) d /= double.Parse(s.Substring(1));
-                else
-                    throw new Exception($"Undefined operator in MathConvertor: {parameter}");*/
+                if (!string.IsNullOrEmpty(operand))
+                    operands.Add(operand);
+                operand = "";
 
-                if (!Tips.AreEqual(d1, d))
-                {
-
-                }
-                if (targetType == typeof(Thickness))
-                    return new Thickness(d1);
-                return d1;
-
-                void Calculate()
-                {
-                    if (_operator.Value == '+')
-                        d1 += double.Parse(operand2);
-                    else if (_operator.Value == '-')
-                        d1 -= double.Parse(operand2);
-                    else if (_operator.Value == '*')
-                        d1 *= double.Parse(operand2);
-                    else if (_operator.Value == '/')
-                        d1 /= double.Parse(operand2);
-                    else if (_operator.Value == '%')
-                        d1 *= double.Parse(operand2) / 100;
-                    else
-                        throw new Exception($"Undefined operator in MathConvertor: {_operator.Value.ToString()}");
-                    operand2 = "";
-                }
+                if (c != ' ') Calculate(c);
             }
 
-            if (value is bool b)
+            if (operands.Count !=1)
+                throw new Exception($"MathConverter error. Invalid number of operands at the end of calculation. Should be 1, but is {operands.Count}");
+
+            if (targetType == typeof(Thickness))
+                return new Thickness(GetDouble(operands[0]));
+            if (targetType == typeof(GridLength))
+                return new GridLength(GetDouble(operands[0]));
+            if (targetType == typeof(double))
+                return GetDouble(operands[0]);
+            if (targetType == typeof(bool))
+                return GetBool(operands[0]);
+            throw new Exception($"MathConverter error. Unsupported target type of return value: {targetType.Name}");
+
+            void Calculate(char _operator)
             {
-                var s = (parameter as string ?? "").Trim();
-                if (s == "!") return !b;
+                if (_operator == '+' && operands.Count >= 2)
+                    operands[operands.Count - 2] = GetDouble(operands[operands.Count - 2]) + GetDouble(operands[operands.Count - 1]);
+                else if (_operator == '-' && operands.Count >= 2)
+                    operands[operands.Count - 2] = GetDouble(operands[operands.Count - 2]) - GetDouble(operands[operands.Count - 1]);
+                else if (_operator == '*' && operands.Count >= 2)
+                    operands[operands.Count - 2] = GetDouble(operands[operands.Count - 2]) * GetDouble(operands[operands.Count - 1]);
+                else if (_operator == '/' && operands.Count >= 2)
+                    operands[operands.Count - 2] = GetDouble(operands[operands.Count - 2]) / GetDouble(operands[operands.Count - 1]);
+                else if (_operator == '%' && operands.Count >= 2)
+                    operands[operands.Count - 2] = GetDouble(operands[operands.Count - 2]) * (GetDouble(operands[operands.Count - 1]) / 100.0);
+                else if (_operator == '!' && operands.Count >= 1)
+                    operands[operands.Count - 1] = !GetBool(operands[operands.Count - 1]);
                 else
-                    throw new Exception($"Undefined operator in MathConvertor: {parameter}");
+                {
+                    if (operands.Count < 1 && _operator == '!')
+                        throw new Exception($"MathConverter error. There are no operand for '{_operator}' operator");
+                    if (operands.Count < 2)
+                        throw new Exception($"MathConverter error. Not enough operands '{_operator}' operator. Should be 2, but are {operands.Count}");
+                    throw new Exception($"MathConverter error. Undefined operator: {_operator}");
+                }
+
+                if (_operator != '!')
+                    operands.RemoveAt(operands.Count - 1);
             }
-            return value;
+
+            double GetDouble(object o)
+            {
+                if (o is double d) return d;
+                if (o is string s1) return double.Parse(s1);
+                throw new Exception($"MathConverter error. Can't convert {o} to double data type");
+            }
+
+            bool GetBool(object o) => o is bool b ? b : o != null && !Equals(o, false) && !Equals(o, 0) && !Equals(o, "");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
