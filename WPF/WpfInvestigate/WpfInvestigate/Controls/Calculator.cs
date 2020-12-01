@@ -200,6 +200,7 @@ namespace WpfInvestigate.Controls
                         Calculate();
                         if (string.IsNullOrEmpty(ErrorText))
                         {
+                            IndicatorText = _firstOperand.Value.ToString(Culture); 
                             Value = _firstOperand;
                             _firstOperand = null;
                             _lastButtonIsDigit = false;

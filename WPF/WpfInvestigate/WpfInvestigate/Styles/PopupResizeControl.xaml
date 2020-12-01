@@ -27,7 +27,7 @@
 
                         <Border Margin="0 0 8 8" Effect="{StaticResource ShadowEffect}" BorderThickness="0" BorderBrush="White" Background="White"/>
 
-                        <Border BorderThickness="0" Background="Transparent"  Margin="0 0 8 8">
+                        <Border BorderThickness="0" Background="Transparent" Margin="0 0 8 8">
                             <Grid Background="Transparent" ClipToBounds="True">
 
                                 <ContentPresenter Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DoesContentSupportElasticLayout, Converter={x:Static common:VisibilityConverter.Instance}}"/>
