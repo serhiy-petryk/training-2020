@@ -30,6 +30,7 @@
                 <Setter Property="Margin" Value="2"/>
                 <Setter Property="Padding" Value="0"/>
                 <Setter Property="Focusable" Value="False"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
                 <Setter Property="effects:ClickEffect.ShiftOffsetOnClick" Value="1"/>
                 <Setter Property="Command" Value="{Binding ClickCommand}"/>
@@ -190,20 +191,20 @@
                             <Button Grid.Column="0" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="4" CommandParameter="4"/>
                             <Button Grid.Column="1" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="5" CommandParameter="5"/>
                             <Button Grid.Column="2" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="6" CommandParameter="6"/>
-                            <Button Grid.Column="3" Grid.Row="3" Style="{DynamicResource OperatorButtonStyle}" Content="÷" CommandParameter="/"/>
-                            <Button Grid.Column="4" Grid.Row="3" Style="{DynamicResource OperatorButtonStyle}" Content="∗" CommandParameter="*"/>
+                            <Button Grid.Column="3" Grid.Row="3" Style="{DynamicResource OperatorButtonStyle}" FontWeight="ExtraBlack" Content="÷" CommandParameter="/"/>
+                            <Button Grid.Column="4" Grid.Row="3" Style="{DynamicResource OperatorButtonStyle}" Content="＊" CommandParameter="*"/>
                             
                             <Button Grid.Column="0" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="1" CommandParameter="1"/>
                             <Button Grid.Column="1" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="2" CommandParameter="2"/>
                             <Button Grid.Column="2" Grid.Row="4" Style="{DynamicResource DigitButtonStyle}" Content="3" CommandParameter="3"/>
-                            <Button Grid.Column="3" Grid.Row="4" Style="{DynamicResource OperatorButtonStyle}" Content="-" CommandParameter="-"/>
-                            <Button Grid.Column="4" Grid.Row="4" Style="{DynamicResource OperatorButtonStyle}" Content="+" CommandParameter="+"/>
-                            
-                            <Button Grid.Column="0" Grid.Row="5" Style="{DynamicResource OperatorButtonStyle}" Content="±" CommandParameter="Sign"/>
+                            <Button Grid.Column="3" Grid.Row="4" Style="{DynamicResource OperatorButtonStyle}" Content="－" CommandParameter="-"/>
+                            <Button Grid.Column="4" Grid.Row="4" Style="{DynamicResource OperatorButtonStyle}" Content="＋" CommandParameter="+"/>
+
+                            <Button Grid.Column="0" Grid.Row="5" Style="{DynamicResource OperatorButtonStyle}" FontWeight="ExtraBlack" Content="±" CommandParameter="Sign"/>
                             <Button Grid.Column="1" Grid.Row="5" Style="{DynamicResource DigitButtonStyle}" Content="0" CommandParameter="0"/>
                             <Button Grid.Column="2" Grid.Row="5" Style="{DynamicResource OperatorButtonStyle}" 
-                                        Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalSeparator}" CommandParameter="."/>
-                            <Button Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="5" Style="{DynamicResource EqualButtonStyle}" Content="=" CommandParameter="="/>
+                                        Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DecimalSeparator}" CommandParameter="．"/>
+                            <Button Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="5" Style="{DynamicResource EqualButtonStyle}" Content="＝" CommandParameter="="/>
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -224,7 +225,7 @@
                 <Setter Property="Margin" Value="1 1 0 0"/>
                 <Setter Property="Padding" Value="0"/>
                 <Setter Property="Focusable" Value="False"/>
-                <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="0"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
                 <Setter Property="Command" Value="{Binding ClickCommand}"/>
                 <Setter Property="ContentTemplate" Value="{StaticResource ButtonContentTemplate}"/>
             </Style>
