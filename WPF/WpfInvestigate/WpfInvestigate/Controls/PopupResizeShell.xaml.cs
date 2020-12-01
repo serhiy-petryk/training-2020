@@ -29,23 +29,11 @@ namespace WpfInvestigate.Controls
 
             _resizeThumb = GetTemplateChild("PART_ResizeGrip") as Thumb;
             if (_resizeThumb != null)
-            {
                 _resizeThumb.DragDelta += ThumbDragDelta;
-                _resizeThumb.DragStarted += ThumbDragStarted;
-            }
 
             var root = GetTemplateChild("PART_Root") as Grid;
-            foreach (var thumb in root.Children.OfType<Thumb>())
-            {
+            foreach(var thumb in root.Children.OfType<Thumb>())
                 thumb.DragDelta += ThumbDragDelta;
-                thumb.DragStarted += ThumbDragStarted;
-            }
-        }
-
-        private Point _mousePosition;
-        private void ThumbDragStarted(object sender, DragStartedEventArgs e)
-        {
-            _mousePosition = Mouse.GetPosition(Application.Current.MainWindow);
         }
 
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
@@ -64,16 +52,11 @@ namespace WpfInvestigate.Controls
                 if (!double.IsNaN(content.Height)) content.Height = double.NaN;
             }
 
-            var newMousePosition = Mouse.GetPosition(Application.Current.MainWindow);
-            var deltaX = newMousePosition.X - _mousePosition.X;
-            var deltaY = newMousePosition.Y - _mousePosition.Y;
-            _mousePosition = newMousePosition;
-
             if (thumb.Cursor == Cursors.SizeWE || thumb.Cursor == Cursors.SizeNWSE)
-                popup.Width = Math.Min(MaxSize, Math.Max(popup.Width + deltaX, MinSize));
+                popup.Width = Math.Min(MaxSize, Math.Max(popup.Width + e.HorizontalChange, MinSize));
 
             if (thumb.Cursor == Cursors.SizeNS || thumb.Cursor == Cursors.SizeNWSE)
-                popup.Height = Math.Min(MaxSize, Math.Max(popup.Height + deltaY, MinSize));
+                popup.Height = Math.Min(MaxSize, Math.Max(popup.Height + e.VerticalChange, MinSize));
         }
     }
 }

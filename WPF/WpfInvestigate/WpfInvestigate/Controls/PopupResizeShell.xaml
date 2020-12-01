@@ -13,8 +13,6 @@
             <Setter Property="Opacity" Value="0.01"/>
             <Setter Property="Focusable" Value="False"/>
             <Setter Property="IsTabStop" Value="False"/>
-            <!--<EventSetter Event="DragStarted" Handler="Thumb_OnDragStarted"/>
-            <EventSetter Event="DragDelta" Handler="ResizeThumb_OnDragDelta"/>-->
         </Style>
 
         <Style TargetType="{x:Type local:PopupResizeShell}">
@@ -33,21 +31,21 @@
                             <Grid Background="Transparent" Margin="0 0 8 8">
                                 <ContentPresenter effects:CornerRadiusEffect.CornerRadius="4"/>
 
-                                <Thumb x:Name="PART_ResizeGrip" Cursor="SizeNWSE" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                                    <Thumb.RenderTransform>
-                                        <RotateTransform Angle="135" CenterX="0" CenterY="0"/>
-                                    </Thumb.RenderTransform>
+                                <Thumb x:Name="PART_ResizeGrip" Cursor="SizeNWSE" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                                       Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}">
                                     <Thumb.Style>
                                         <Style TargetType="Thumb">
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Thumb}">
-                                                        <Grid SnapsToDevicePixels="True" UseLayoutRounding="True" ClipToBounds="True">
-                                                            <Polygon Points="0,24,24,24,24,0" Fill="Aqua" Opacity="0.5"
-                                                                     VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                                              RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                                              Margin="{TemplateBinding Padding}"/>
+                                                        <Grid Opacity="0.5">
+                                                            <Viewbox Width="32" Height="32">
+                                                                <Canvas Width="20" Height="20">
+                                                                    <Polygon Points="0,20,20,20,20,0" Fill="{TemplateBinding Background}" Opacity="0.5"/>
+                                                                    <Path Stretch="Uniform" Fill="{TemplateBinding Foreground}" Margin="3 3 0 0"
+                                                                          Data="M8 8 M22,22H20V20H22V22M22,18H20V16H22V18M18,22H16V20H18V22M18,18H16V16H18V18M14,22H12V20H14V22M22,14H20V12H22V14Z" />
+                                                                </Canvas>
+                                                            </Viewbox>
                                                         </Grid>
                                                     </ControlTemplate>
                                                 </Setter.Value>
