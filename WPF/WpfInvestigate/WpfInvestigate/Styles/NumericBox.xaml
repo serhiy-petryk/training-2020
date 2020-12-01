@@ -97,7 +97,7 @@
                                     Style="{StaticResource ClearBichromeAnimatedButtonStyle}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
-                            <Popup x:Name="PART_Popup" Width="250" Height="250"
+                            <Popup x:Name="PART_Popup" Width="225" Height="250"
                                    IsOpen="{Binding ElementName=PART_ToggleButton, Path=IsChecked}"
                                    AllowsTransparency="True"
                                    Focusable="False"
@@ -105,16 +105,8 @@
                                    PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                    PopupAnimation="Fade"
                                    StaysOpen="False">
-                                <controls:PopupResizeShell DoesContentSupportElasticLayout="True">
-                                        <controls:Calculator Focusable="True" Margin="0"
-                                                         Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
-                                    <!--<temp:OriginalVirtualKeyboard/>-->
-                                    <!--<controls:VirtualKeyboard Width="1000" Height="500"/>-->
-
-                                    <!--<Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Aqua">
-                                    <Border Margin="0 0 10 10" Effect="{StaticResource ShadowEffect}" BorderThickness="0" Background="White"/>
-                                    <controls:Calculator effects:CornerRadiusEffect.CornerRadius="3" Focusable="True" Margin="0,0,10,10" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
-                                </Grid>-->
+                                <controls:PopupResizeShell DoesContentSupportElasticLayout="True" effects:CornerRadiusEffect.CornerRadius="3">
+                                    <controls:Calculator Focusable="True" Margin="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
                                 </controls:PopupResizeShell>
                             </Popup>
                         </Grid>
