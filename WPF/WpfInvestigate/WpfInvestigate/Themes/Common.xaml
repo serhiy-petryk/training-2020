@@ -5,7 +5,7 @@
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects">
 
-    <DropShadowEffect x:Key="ShadowEffect" BlurRadius="10" ShadowDepth="2" po:Freeze="True" />
+    <DropShadowEffect x:Key="ShadowEffect" BlurRadius="5" ShadowDepth="2" Direction="315" po:Freeze="True" />
 
     <!-- ========== -->
     <!-- Geometries -->

@@ -27,9 +27,13 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
 
-            _resizeThumb = GetTemplateChild("PART_ResizeThumb") as Thumb;
+            _resizeThumb = GetTemplateChild("PART_ResizeGrip") as Thumb;
             if (_resizeThumb != null)
                 _resizeThumb.DragDelta += ThumbDragDelta;
+
+            var root = GetTemplateChild("PART_Root") as Grid;
+            foreach(var thumb in root.Children.OfType<Thumb>())
+                thumb.DragDelta += ThumbDragDelta;
         }
 
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)

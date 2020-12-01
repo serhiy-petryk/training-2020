@@ -9,6 +9,14 @@
                 d:DesignHeight="450" d:DesignWidth="800">
 
     <ContentControl.Resources>
+        <Style x:Key="ResizeThumb" TargetType="Thumb">
+            <Setter Property="Opacity" Value="0.01"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <!--<EventSetter Event="DragStarted" Handler="Thumb_OnDragStarted"/>
+            <EventSetter Event="DragDelta" Handler="ResizeThumb_OnDragDelta"/>-->
+        </Style>
+
         <Style TargetType="{x:Type local:PopupResizeShell}">
             <Setter Property="Margin" Value="0"/>
             <Setter Property="Padding" Value="0"/>
@@ -18,21 +26,21 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type local:PopupResizeShell}">
-                        <Grid Background="Transparent">
+                        <Grid x:Name="PART_Root" Background="Transparent">
 
-                            <Border Margin="0 0 10 10" Effect="{StaticResource ShadowEffect}" BorderThickness="0" CornerRadius="2" BorderBrush="Black" Background="Black"/>
+                            <Border Margin="0 0 8 8" Effect="{StaticResource ShadowEffect}" BorderThickness="0" CornerRadius="2" BorderBrush="White" Background="White"/>
 
-                            <Grid Background="Transparent" Margin="0 0 10 10">
+                            <Grid Background="Transparent" Margin="0 0 8 8">
                                 <ContentPresenter effects:CornerRadiusEffect.CornerRadius="4"/>
 
-                                <Thumb x:Name="PART_ResizeThumb" Cursor="SizeNWSE" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                <Thumb x:Name="PART_ResizeGrip" Cursor="SizeNWSE" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                                     <Thumb.Style>
                                         <Style TargetType="Thumb">
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Thumb}">
                                                         <Grid SnapsToDevicePixels="True" UseLayoutRounding="True" ClipToBounds="True">
-                                                            <Polygon Points="0,25,25,25,25,0" Fill="Aqua" Opacity="0.5"
+                                                            <Polygon Points="0,24,24,24,24,0" Fill="Aqua" Opacity="0.5"
                                                                      VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
                                                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                                               RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -45,6 +53,12 @@
                                     </Thumb.Style>
                                 </Thumb>
                             </Grid>
+
+                            <Thumb x:Name="PART_ResizeRight" Width="8" HorizontalAlignment="Right" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="PART_ResizeBottom" Height="8" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="PART_ResizeCornerBottom" Width="32" Height="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="PART_ResizeCornerRight" Width="8" Height="32" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
