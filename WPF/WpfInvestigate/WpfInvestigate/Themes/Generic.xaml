@@ -10,6 +10,7 @@
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MessageBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/Calculator.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ObjectEditor.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/PopupResizeControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

@@ -80,9 +80,7 @@
     </Compile>
     <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DialogItems.cs" />
-    <Compile Include="Controls\PopupResizeShell.xaml.cs">
-      <DependentUpon>PopupResizeShell.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\PopupResizeControl.cs" />
     <Compile Include="Controls\ResizableControl.cs" />
     <Compile Include="Controls\MessageBlock.cs" />
     <Compile Include="Controls\NumericBox.cs" />
@@ -202,10 +200,6 @@
     <Compile Include="TestViews\WiPTests.xaml.cs">
       <DependentUpon>WiPTests.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\PopupResizeShell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Styles\ButtonStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -268,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\DialogItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\PopupResizeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

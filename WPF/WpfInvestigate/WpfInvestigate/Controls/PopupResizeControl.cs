@@ -11,14 +11,13 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for PopupResizeShell.xaml
     /// </summary>
-    public partial class PopupResizeShell : ContentControl
+    public class PopupResizeControl : ContentControl
     {
         private const int MaxSize = 1000;
         private const int MinSize = 50;
 
-        public PopupResizeShell()
+        public PopupResizeControl()
         {
-            InitializeComponent();
         }
 
         public override void OnApplyTemplate()
@@ -58,7 +57,7 @@ namespace WpfInvestigate.Controls
         }
 
         #region ===========  Properties  ==============
-        public static readonly DependencyProperty DoesContentSupportElasticLayoutProperty = DependencyProperty.Register("DoesContentSupportElasticLayout", typeof(bool), typeof(PopupResizeShell), new FrameworkPropertyMetadata(false));
+        public static readonly DependencyProperty DoesContentSupportElasticLayoutProperty = DependencyProperty.Register("DoesContentSupportElasticLayout", typeof(bool), typeof(PopupResizeControl), new FrameworkPropertyMetadata(false));
         public bool DoesContentSupportElasticLayout
         {
             get => (bool)GetValue(DoesContentSupportElasticLayoutProperty);

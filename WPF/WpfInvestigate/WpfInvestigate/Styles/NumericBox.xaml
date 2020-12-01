@@ -8,6 +8,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/PopupResizeControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type controls:NumericBox}">
@@ -97,7 +98,7 @@
                                     Style="{StaticResource ClearBichromeAnimatedButtonStyle}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
-                            <Popup x:Name="PART_Popup" Width="225" Height="250"
+                            <Popup x:Name="PART_Popup" Width="170" Height="200"
                                    IsOpen="{Binding ElementName=PART_ToggleButton, Path=IsChecked}"
                                    AllowsTransparency="True"
                                    Focusable="False"
@@ -105,9 +106,9 @@
                                    PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                    PopupAnimation="Fade"
                                    StaysOpen="False">
-                                <controls:PopupResizeShell DoesContentSupportElasticLayout="True" effects:CornerRadiusEffect.CornerRadius="3">
+                                <controls:PopupResizeControl DoesContentSupportElasticLayout="True" effects:CornerRadiusEffect.CornerRadius="3">
                                     <controls:Calculator Focusable="True" Margin="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
-                                </controls:PopupResizeShell>
+                                </controls:PopupResizeControl>
                             </Popup>
                         </Grid>
                     </Border>
