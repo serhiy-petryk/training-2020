@@ -192,6 +192,7 @@ namespace WpfInvestigate.Controls
                 case "=":
                     if (string.IsNullOrEmpty(_operator) || !_firstOperand.HasValue)
                     {
+                        IndicatorText = NormalizeDecimalString(IndicatorText);
                         Value = SecondOperand;
                         _lastButtonIsDigit = true;
                     }
@@ -223,7 +224,7 @@ namespace WpfInvestigate.Controls
                         _operator = cmd;
                     else if (!_firstOperand.HasValue && string.IsNullOrEmpty(_operator))
                     { // add operand
-                        _firstOperand = SecondOperand;
+                        _firstOperand = NormalizeDecimal(SecondOperand);
                         _operator = cmd;
                         _lastButtonIsDigit = false;
                         IndicatorText = "0";
@@ -235,6 +236,21 @@ namespace WpfInvestigate.Controls
             }
 
             RefrestUI();
+        }
+
+        private decimal NormalizeDecimal(decimal d) => decimal.Parse(NormalizeDecimalString(d.ToString(Culture)), Culture);
+
+        private string NormalizeDecimalString(string decimalString)
+        {
+            while (decimalString.Contains(DecimalSeparator))
+            {
+                if (decimalString.EndsWith(DecimalSeparator) || decimalString.EndsWith("0"))
+                    decimalString = decimalString.Substring(0, decimalString.Length - 1);
+                else
+                    break;
+            }
+
+            return decimalString;
         }
 
         private void Calculate()
@@ -270,6 +286,9 @@ namespace WpfInvestigate.Controls
                 _firstOperand = null;
                 _operator = null;
             }
+
+            if (_firstOperand.HasValue)
+                _firstOperand = NormalizeDecimal(_firstOperand.Value);
 
             _lastButtonIsDigit = false;
         }
