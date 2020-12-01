@@ -66,10 +66,10 @@
                             <Thumb x:Name="PART_ResizeRight" Width="8" HorizontalAlignment="Right" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
                             <Thumb x:Name="PART_ResizeBottom" Height="8" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
                             <Thumb x:Name="PART_ResizeCornerBottom" Height="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                                   Width="{Binding ElementName=PART_ResizeGrip, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=4+}">
+                                   Width="{Binding ElementName=PART_ResizeGrip, Path=ActualWidth}">
                             </Thumb>
                             <Thumb x:Name="PART_ResizeCornerRight" Width="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                                   Height="{Binding ElementName=PART_ResizeGrip, Path=ActualHeight, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=4+}">
+                                   Height="{Binding ElementName=PART_ResizeGrip, Path=ActualHeight}">
                             </Thumb>
 
                         </Grid>
