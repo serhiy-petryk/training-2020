@@ -3,7 +3,6 @@
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls"
                     xmlns:common="clr-namespace:WpfInvestigate.Common">
 
-
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
     </ResourceDictionary.MergedDictionaries>
@@ -36,8 +35,9 @@
                                     <ContentPresenter/>
                                 </Viewbox>
 
-                                <Thumb x:Name="PART_ResizeGrip" Cursor="SizeNWSE" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                                           Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}">
+                                <Thumb x:Name="PART_ResizeGrip" Cursor="SizeNWSE" Opacity="0.5"
+                                       VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                                       Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}">
                                     <Thumb.Width>
                                         <MultiBinding Converter="{x:Static common:MathConverter.Instance}" ConverterParameter="+2/10%8+">
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth" />
@@ -50,12 +50,12 @@
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Thumb}">
-                                                        <Grid Opacity="0.5">
+                                                        <Grid>
                                                             <Viewbox>
                                                                 <Canvas Width="20" Height="20">
-                                                                    <Polygon Points="0,20,20,20,20,0" Fill="{TemplateBinding Background}" Opacity="0.5"/>
+                                                                    <Polygon Points="0,20,20,20,20,0" Fill="{TemplateBinding Background}"/>
                                                                     <Path Stretch="Uniform" Fill="{TemplateBinding Foreground}" Margin="3 3 0 0"
-                                                                              Data="M8 8 M22,22H20V20H22V22M22,18H20V16H22V18M18,22H16V20H18V22M18,18H16V16H18V18M14,22H12V20H14V22M22,14H20V12H22V14Z" />
+                                                                          Data="M8 8 M22,22H20V20H22V22M22,18H20V16H22V18M18,22H16V20H18V22M18,18H16V16H18V18M14,22H12V20H14V22M22,14H20V12H22V14Z" />
                                                                 </Canvas>
                                                             </Viewbox>
                                                         </Grid>
@@ -71,10 +71,10 @@
                         <Thumb x:Name="PART_ResizeRight" Width="8" HorizontalAlignment="Right" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
                         <Thumb x:Name="PART_ResizeBottom" Height="8" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
                         <Thumb x:Name="PART_ResizeCornerBottom" Height="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                                   Width="{Binding ElementName=PART_ResizeGrip, Path=ActualWidth}">
+                               Width="{Binding ElementName=PART_ResizeGrip, Path=ActualWidth}">
                         </Thumb>
                         <Thumb x:Name="PART_ResizeCornerRight" Width="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                                   Height="{Binding ElementName=PART_ResizeGrip, Path=ActualHeight}">
+                               Height="{Binding ElementName=PART_ResizeGrip, Path=ActualHeight}">
                         </Thumb>
 
                     </Grid>
