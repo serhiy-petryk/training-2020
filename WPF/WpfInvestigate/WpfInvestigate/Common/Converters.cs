@@ -78,18 +78,57 @@ namespace WpfInvestigate.Common
         {
             if (value is double d)
             {
+
                 var s = (parameter as string ?? "").Trim();
-                if (s.StartsWith("-")) d -= double.Parse(s.Substring(1));
+                var d1 = d;
+                char? _operator = null;
+                var operand2 = "";
+                foreach (var c in s)
+                {
+                    if (c == '.' || char.IsDigit(c))
+                    {
+                        operand2 += c;
+                        continue;
+                    }
+
+                    if (!_operator.HasValue) { }
+                    else Calculate();
+                    _operator = c;
+                }
+                Calculate();
+
+                /*if (s.StartsWith("-")) d -= double.Parse(s.Substring(1));
                 else if (s.StartsWith("+")) d += double.Parse(s.Substring(1));
                 else if (s.StartsWith("%")) d *= double.Parse(s.Substring(1)) / 100.0;
                 else if (s.StartsWith("*")) d *= double.Parse(s.Substring(1));
                 else if (s.StartsWith("/")) d /= double.Parse(s.Substring(1));
                 else
-                    throw new Exception($"Undefined operator in MathConvertor: {parameter}");
+                    throw new Exception($"Undefined operator in MathConvertor: {parameter}");*/
 
+                if (!Tips.AreEqual(d1, d))
+                {
+
+                }
                 if (targetType == typeof(Thickness))
-                    return new Thickness(d);
-                return d;
+                    return new Thickness(d1);
+                return d1;
+
+                void Calculate()
+                {
+                    if (_operator.Value == '+')
+                        d1 += double.Parse(operand2);
+                    else if (_operator.Value == '-')
+                        d1 -= double.Parse(operand2);
+                    else if (_operator.Value == '*')
+                        d1 *= double.Parse(operand2);
+                    else if (_operator.Value == '/')
+                        d1 /= double.Parse(operand2);
+                    else if (_operator.Value == '%')
+                        d1 *= double.Parse(operand2) / 100;
+                    else
+                        throw new Exception($"Undefined operator in MathConvertor: {_operator.Value.ToString()}");
+                    operand2 = "";
+                }
             }
 
             if (value is bool b)
