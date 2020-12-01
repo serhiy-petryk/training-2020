@@ -16,8 +16,6 @@ namespace WpfInvestigate.Controls
         private const int MaxSize = 1000;
         private const int MinSize = 50;
 
-        private Thumb _resizeThumb;
-
         public PopupResizeShell()
         {
             InitializeComponent();
@@ -27,9 +25,9 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
 
-            _resizeThumb = GetTemplateChild("PART_ResizeGrip") as Thumb;
-            if (_resizeThumb != null)
-                _resizeThumb.DragDelta += ThumbDragDelta;
+            var resizeThumb = GetTemplateChild("PART_ResizeGrip") as Thumb;
+            if (resizeThumb != null)
+                resizeThumb.DragDelta += ThumbDragDelta;
 
             var root = GetTemplateChild("PART_Root") as Grid;
             foreach(var thumb in root.Children.OfType<Thumb>())
