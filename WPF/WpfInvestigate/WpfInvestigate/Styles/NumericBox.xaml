@@ -105,7 +105,7 @@
                                    PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                    PopupAnimation="Fade"
                                    StaysOpen="False">
-                                <controls:PopupResizeShell>
+                                <controls:PopupResizeShell DoesContentSupportElasticLayout="True">
                                         <controls:Calculator Focusable="True" Margin="0"
                                                          Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
                                     <!--<temp:OriginalVirtualKeyboard/>-->

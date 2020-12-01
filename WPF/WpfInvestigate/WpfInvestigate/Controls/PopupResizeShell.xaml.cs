@@ -56,5 +56,15 @@ namespace WpfInvestigate.Controls
             if (thumb.Cursor == Cursors.SizeNS || thumb.Cursor == Cursors.SizeNWSE)
                 popup.Height = Math.Min(MaxSize, Math.Max(popup.Height + e.VerticalChange, MinSize));
         }
+
+        #region ===========  Properties  ==============
+        public static readonly DependencyProperty DoesContentSupportElasticLayoutProperty = DependencyProperty.Register("DoesContentSupportElasticLayout", typeof(bool), typeof(PopupResizeShell), new FrameworkPropertyMetadata(false));
+        public bool DoesContentSupportElasticLayout
+        {
+            get => (bool)GetValue(DoesContentSupportElasticLayoutProperty);
+            set => SetValue(DoesContentSupportElasticLayoutProperty, value);
+        }
+
+        #endregion
     }
 }

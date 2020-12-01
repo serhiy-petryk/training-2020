@@ -29,8 +29,13 @@
 
                             <Border Margin="0 0 8 8" Effect="{StaticResource ShadowEffect}" BorderThickness="0" CornerRadius="2" BorderBrush="White" Background="White"/>
 
-                            <Grid Background="Transparent" Margin="0 0 8 8">
-                                <ContentPresenter effects:CornerRadiusEffect.CornerRadius="4"/>
+                            <Grid Background="Transparent" Margin="0 0 8 8" effects:CornerRadiusEffect.CornerRadius="4">
+
+                                <ContentPresenter Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DoesContentSupportElasticLayout, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                <Viewbox Stretch="Fill"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DoesContentSupportElasticLayout, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
+                                    <ContentPresenter/>
+                                </Viewbox>
 
                                 <Thumb x:Name="PART_ResizeGrip" Cursor="SizeNWSE" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                                        Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}">
