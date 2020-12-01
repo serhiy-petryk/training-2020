@@ -34,6 +34,9 @@
                                 <ContentPresenter effects:CornerRadiusEffect.CornerRadius="4"/>
 
                                 <Thumb x:Name="PART_ResizeGrip" Cursor="SizeNWSE" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                    <Thumb.RenderTransform>
+                                        <RotateTransform Angle="135" CenterX="0" CenterY="0"/>
+                                    </Thumb.RenderTransform>
                                     <Thumb.Style>
                                         <Style TargetType="Thumb">
                                             <Setter Property="Template">
