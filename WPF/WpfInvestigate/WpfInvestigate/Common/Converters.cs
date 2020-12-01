@@ -73,20 +73,46 @@ namespace WpfInvestigate.Common
     }
 
     /// <summary>
-    /// Math converter. Support polish notation (https://en.wikipedia.org/wiki/Polish_notation). Math expressions are stored in ConverterParameter.
+    /// Math converter. Support single and multiple input values (IValueConverter, IMultiValueConverter)
+    /// Support polish notation (https://en.wikipedia.org/wiki/Polish_notation). Math expressions are stored in ConverterParameter.
     /// Supported operators: '+,-,*,/,%' for double, '!' for boolean. Supported types of return value: double, bool, Thickness, GridLength.
+    /// Usage example (single input value):
+    ///             Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=12%8+}">
+    /// Usage example (multiple input values) (OutputValue = (ActualWidth + ActualHeight)/2 * 10 /100 + 8 => 10% of average of ActualWidth and ActualHeight, and plus 8):
+    ///             <Thumb.Width>
+    ///                 <MultiBinding Converter="{x:Static common:MathConverter.Instance}" ConverterParameter="+2/10%8+">
+    ///                     <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth" />
+    ///                     <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualHeight" />
+    ///                 </MultiBinding>
+    ///             </Thumb.Width>
     /// </summary>
-    public class MathConverter : IValueConverter
+    public class MathConverter : IValueConverter, IMultiValueConverter
     {
         /// <summary>
-        /// Instance of Math converter. Support polish notation (https://en.wikipedia.org/wiki/Polish_notation). Math expressions are stored in ConverterParameter.
+        /// Math converter. Support single and multiple input values (IValueConverter, IMultiValueConverter)
+        /// Support polish notation (https://en.wikipedia.org/wiki/Polish_notation). Math expressions are stored in ConverterParameter.
         /// Supported operators: '+,-,*,/,%' for double, '!' for boolean. Supported types of return value: double, bool, Thickness, GridLength.
+        /// Usage example (single input value):
+        ///             Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=12%8+}">
+        /// Usage example (multiple input values) (OutputValue = (ActualWidth + ActualHeight)/2 * 10 /100 + 8 => 10% of average of ActualWidth and ActualHeight, and plus 8):
+        ///             <Thumb.Width>
+        ///                 <MultiBinding Converter="{x:Static common:MathConverter.Instance}" ConverterParameter="+2/10%8+">
+        ///                     <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth" />
+        ///                     <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualHeight" />
+        ///                 </MultiBinding>
+        ///             </Thumb.Width>
         /// </summary>
         public static MathConverter Instance = new MathConverter();
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            return Convert(new[] {value}, targetType, parameter, culture);
+        }
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
             var operand = "";
-            var operands = new List<object> {value};
+            var operands = new List<object>(values);
 
             var s = (parameter as string ?? "").Trim();
 
@@ -105,7 +131,7 @@ namespace WpfInvestigate.Common
                 if (c != ' ') Calculate(c);
             }
 
-            if (operands.Count !=1)
+            if (operands.Count != 1)
                 throw new Exception($"MathConverter error. Invalid number of operands at the end of calculation. Should be 1, but is {operands.Count}");
 
             if (targetType == typeof(Thickness))
@@ -155,6 +181,7 @@ namespace WpfInvestigate.Common
             bool GetBool(object o) => o is bool b ? b : o != null && !Equals(o, false) && !Equals(o, 0) && !Equals(o, "");
         }
 
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => throw new NotImplementedException();
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
