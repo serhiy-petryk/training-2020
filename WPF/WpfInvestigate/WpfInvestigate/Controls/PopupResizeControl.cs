@@ -31,6 +31,20 @@ namespace WpfInvestigate.Controls
             var root = GetTemplateChild("PART_Root") as Grid;
             foreach(var thumb in root.Children.OfType<Thumb>())
                 thumb.DragDelta += ThumbDragDelta;
+
+            var popup = Tips.GetVisualParents(this).OfType<Popup>().FirstOrDefault();
+            if (popup != null)
+            {
+                if (double.IsNaN(popup.Width)) popup.Width = ActualWidth;
+                if (double.IsNaN(popup.Height)) popup.Height = ActualHeight;
+                if (!double.IsNaN(Width)) Width = double.NaN;
+                if (!double.IsNaN(Height)) Height = double.NaN;
+                if (Content is FrameworkElement content)
+                {
+                    if (!double.IsNaN(content.Width)) content.Width = double.NaN;
+                    if (!double.IsNaN(content.Height)) content.Height = double.NaN;
+                }
+            }
         }
 
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
@@ -39,19 +53,8 @@ namespace WpfInvestigate.Controls
             var popup = Tips.GetVisualParents(this).OfType<Popup>().FirstOrDefault();
             if (popup == null) return;
 
-            if (double.IsNaN(popup.Width)) popup.Width = ActualWidth;
-            if (double.IsNaN(popup.Height)) popup.Height = ActualHeight;
-            if (!double.IsNaN(Width)) Width = double.NaN;
-            if (!double.IsNaN(Height)) Height = double.NaN;
-            if (Content is FrameworkElement content)
-            {
-                if (!double.IsNaN(content.Width)) content.Width = double.NaN;
-                if (!double.IsNaN(content.Height)) content.Height = double.NaN;
-            }
-
             if (thumb.Cursor == Cursors.SizeWE || thumb.Cursor == Cursors.SizeNWSE)
                 popup.Width = Math.Min(MaxSize, Math.Max(popup.Width + e.HorizontalChange, MinSize));
-
             if (thumb.Cursor == Cursors.SizeNS || thumb.Cursor == Cursors.SizeNWSE)
                 popup.Height = Math.Min(MaxSize, Math.Max(popup.Height + e.VerticalChange, MinSize));
         }

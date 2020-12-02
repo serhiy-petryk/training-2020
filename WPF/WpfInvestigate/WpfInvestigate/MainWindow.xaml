@@ -97,6 +97,7 @@
                         <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick"/>
                         <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
                         <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsReadOnly="True" Text="AAAAAA"/>
+                        <controls:NumericBox Margin="5 0" Width="120" Height="24" effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323"/>
                     </WrapPanel>
 
                 </StackPanel>
