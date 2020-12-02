@@ -39,7 +39,7 @@
                                        VerticalAlignment="Bottom" HorizontalAlignment="Right"
                                        Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}">
                                     <Thumb.Width>
-                                        <MultiBinding Converter="{x:Static common:MathConverter.Instance}" ConverterParameter="+2/10%8+">
+                                        <MultiBinding Converter="{x:Static common:MathConverter.Instance}" ConverterParameter="+2/10%4+">
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth" />
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualHeight" />
                                         </MultiBinding>
