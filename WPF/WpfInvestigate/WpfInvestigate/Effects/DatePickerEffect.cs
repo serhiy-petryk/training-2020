@@ -116,35 +116,21 @@ namespace WpfInvestigate.Effects
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
-                OnUnloadedForIsNullable(dp, null);
-                SetIsNullable(d, (bool?)e.NewValue);
+                dp.SelectedDateChanged -= OnSelectedDateChanged;
+                var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
+                dpdStart.RemoveValueChanged(dp, OnChangeDateLimit);
+                var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
+                dpdEnd.RemoveValueChanged(dp, OnChangeDateLimit);
+
                 if (e.NewValue == null)
                     return;
 
-                var dpdStart =
-                    DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
-                dpdStart.AddValueChanged(dp, OnChangeDateLimit);
-                var dpdEnd =
-                    DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
-                dpdEnd.AddValueChanged(dp, OnChangeDateLimit);
-
                 dp.SelectedDateChanged += OnSelectedDateChanged;
-                dp.Unloaded += OnUnloadedForIsNullable;
+                dpdStart.AddValueChanged(dp, OnChangeDateLimit);
+                dpdEnd.AddValueChanged(dp, OnChangeDateLimit);
 
                 CheckDatePicker(dp);
             }));
-        }
-
-        private static void OnUnloadedForIsNullable(object sender, RoutedEventArgs e)
-        {
-            var dp = sender as DatePicker;
-            dp.SelectedDateChanged -= OnSelectedDateChanged;
-            dp.Unloaded -= OnUnloadedForIsNullable;
-            var dpdStart =
-                DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
-            dpdStart.RemoveValueChanged(dp, OnChangeDateLimit);
-            var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
-            dpdEnd.RemoveValueChanged(dp, OnChangeDateLimit);
         }
 
         private static void OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
