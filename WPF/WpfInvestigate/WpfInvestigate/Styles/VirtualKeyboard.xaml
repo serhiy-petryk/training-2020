@@ -34,9 +34,9 @@
             </Style>
 
             <Style TargetType="MenuItem" x:Key="LanguageItemMenuStyle">
-                <!--<EventSetter Event="Click" Handler="OnMenuItemClick"/>-->
                 <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
                 <Setter Property="IsChecked" Value="{Binding IsSelected}"/>
+                <Setter Property="Command" Value="{Binding LanguageSelectCommand}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="MenuItem">
@@ -69,9 +69,9 @@
                 <Setter Property="Margin" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.15%}"/>
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="FontFamily" Value="Verdana"/>
-                <Setter Property="FontSize" Value="18"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="UseLayoutRounding" Value="True"/>
+                <Setter Property="Command" Value="{Binding OnClickCommand}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -178,7 +178,6 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-                <!--<EventSetter Event="Click" Handler="OnKeyClick"/>-->
             </Style>
         </Style.Resources>
 
@@ -391,8 +390,8 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Border.Style>
-                                        <!-- ToDo:  Checked="OpenDropDownMenu" -->
-                                        <ToggleButton IsThreeState="False" IsChecked="False" Focusable="False" BorderThickness="0"
+
+                                        <ToggleButton x:Name="PART_LanguageSelector" IsThreeState="False" IsChecked="False" Focusable="False" BorderThickness="0"
                                                       Background="Transparent" Foreground="White"
                                                       Margin="4 0 2 0"
                                                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"

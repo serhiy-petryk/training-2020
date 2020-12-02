@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
@@ -18,10 +21,13 @@ namespace WpfInvestigate.Controls
         public VirtualKeyboard()
         {
             DataContext = this;
+
             AvailableKeyboardLayouts = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures)
                 .Where(a => KeyModel.KeyDefinition.LanguageDefinitions.Keys.Contains(a.IetfLanguageTag.ToUpper())).OrderBy(a => a.DisplayName)
                 .Select(a => new LanguageModel(a.IetfLanguageTag)).ToArray();
             PrepareKeyboardSet();
+            foreach (var language in AvailableKeyboardLayouts)
+                language.OnSelect += Language_OnSelect;
         }
 
         public LanguageModel[] AvailableKeyboardLayouts { get; }
@@ -32,11 +38,21 @@ namespace WpfInvestigate.Controls
         public bool IsShifted { get; private set; }
         public bool IsExtra { get; private set; }
 
-        private void OpenDropDownMenu(object sender, RoutedEventArgs e) => DropDownButtonHelper.OpenDropDownMenu(sender);
-
-        private void OnKeyClick(object sender, RoutedEventArgs e)
+        public override void OnApplyTemplate()
         {
-            var model = ((FrameworkElement)sender).DataContext as KeyModel;
+            base.OnApplyTemplate();
+
+            if (GetTemplateChild("PART_LanguageSelector") is ToggleButton languageSelector)
+                languageSelector.Checked += (sender, args) => DropDownButtonHelper.OpenDropDownMenu(sender);
+
+            foreach(var key in Tips.GetVisualChildren(this).OfType<FrameworkElement>().Where(a=> a.DataContext is KeyModel))
+                ((KeyModel)key.DataContext).OnClick += Key_OnClick;
+
+        }
+
+        private void Key_OnClick(object sender, EventArgs e)
+        {
+            var model = (KeyModel)sender;
             if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_CAPITAL)
             {
                 IsCapsLock = !IsCapsLock;
@@ -54,10 +70,9 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private void OnMenuItemClick(object sender, RoutedEventArgs e)
+        private void Language_OnSelect(object sender, EventArgs e)
         {
-            var selected = (LanguageModel)((MenuItem)sender).DataContext;
-            PrepareKeyboardSet(selected.Id);
+            PrepareKeyboardSet(((LanguageModel)sender).Id);
         }
 
         private void PrepareKeyboardSet(string language = DefaultLanguage)

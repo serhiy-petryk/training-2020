@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
@@ -15,6 +17,9 @@ namespace WpfInvestigate.Controls
             public string Label { get; }
             public bool IsSelected { get; set; }
             public object Icon { get; }
+            public RelayCommand LanguageSelectCommand { get; }
+
+            public event EventHandler OnSelect;
 
             public LanguageModel(string id)
             {
@@ -27,7 +32,9 @@ namespace WpfInvestigate.Controls
                     if (canvas != null)
                         Icon = new Viewbox { Child = canvas };
                 }
+                LanguageSelectCommand = new RelayCommand(LanguageSelectHandler);
             }
+            private void LanguageSelectHandler(object p) => OnSelect?.Invoke( this, EventArgs.Empty);
         }
 
         //======================================
@@ -68,6 +75,8 @@ namespace WpfInvestigate.Controls
             public string BeforeText { get; }
             public string AfterText { get; }
             public Visibility VisibilityCommand => _isCommand ? Visibility.Visible : Visibility.Collapsed;
+            public RelayCommand OnClickCommand { get; }
+            public event EventHandler OnClick;
             private bool _isCommand => Label != null;
 
             public KeyModel(KeyDefinition keyDefinition)
@@ -80,6 +89,7 @@ namespace WpfInvestigate.Controls
                 Label = keyDefinition.Label;
                 BeforeText = keyDefinition.BeforeText;
                 AfterText = keyDefinition.AfterText;
+                OnClickCommand = new RelayCommand(OnClickHandler);
             }
 
             public string GetKeyText(bool isCapsLock, bool isShifted, bool isExtra)
@@ -90,6 +100,9 @@ namespace WpfInvestigate.Controls
                     return isShifted ? ShiftedText : Text;
                 return isShifted? ShiftedCapsText: CapsText;
             }
+
+            private void OnClickHandler(object p) => OnClick?.Invoke(this, EventArgs.Empty);
+
         }
     }
 }
