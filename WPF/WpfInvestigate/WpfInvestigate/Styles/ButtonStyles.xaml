@@ -126,6 +126,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Resources>
+            <Style TargetType="{x:Type Path}">
+                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+            </Style>
+        </Style.Resources>
     </Style>
 
     <!-- Monochrome styles -->
@@ -198,6 +203,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Resources>
+            <Style TargetType="{x:Type Path}">
+                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+            </Style>
+        </Style.Resources>
     </Style>
 
     <!-- Need ??? -->
