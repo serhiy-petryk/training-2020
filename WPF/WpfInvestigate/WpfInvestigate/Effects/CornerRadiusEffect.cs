@@ -19,40 +19,29 @@ namespace WpfInvestigate.Effects
         {
             if (!(d is FrameworkElement element)) return;
 
-            OnObjectUnloaded(element, null);
-
-            element.Unloaded += OnObjectUnloaded;
-            element.SizeChanged += UpdateBorders;
+            element.SizeChanged -= UpdateBorders;
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
+            dpd.RemoveValueChanged(element, UpdateBorders);
+
+            element.SizeChanged += UpdateBorders;
             dpd.AddValueChanged(element, UpdateBorders);
 
             // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
             element.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => UpdateBorders(element, null)));
         }
-        private static void OnObjectUnloaded(object sender, RoutedEventArgs e)
-        {
-            var element = (FrameworkElement)sender;
-            element.Unloaded -= OnObjectUnloaded;
-            element.SizeChanged -= UpdateBorders;
-            var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
-            dpd.RemoveValueChanged(element, UpdateBorders);
-        }
 
         private static void UpdateBorders(object sender, EventArgs e)
         {
             if (!(sender is FrameworkElement element)) return;
-            if (!element.IsLoaded)
+            element.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
-                element.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => UpdateBorders(sender, e)));
-                return;
-            }
-
-            var newCornerRadius = GetCornerRadius(element);
-            foreach (var border in ControlHelper.GetMainBorders(element))
-            {
-                border.CornerRadius = newCornerRadius;
-                ControlHelper.ClipToBoundBorder(border);
-            }
+                var newCornerRadius = GetCornerRadius(element);
+                foreach (var border in ControlHelper.GetMainBorders(element))
+                {
+                    border.CornerRadius = newCornerRadius;
+                    ControlHelper.ClipToBoundBorder(border);
+                }
+            }));
         }
     }
 }

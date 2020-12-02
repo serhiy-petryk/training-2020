@@ -64,19 +64,22 @@ namespace WpfInvestigate.Effects
         {
             if (!(d is Control control)) return;
 
-            OnChromeUnloaded(control, null);
+            control.PreviewMouseLeftButtonDown -= ChromeUpdate;
+            control.PreviewMouseLeftButtonUp -= ChromeUpdate;
+            var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpdIsMouseOver.RemoveValueChanged(control, ChromeUpdate);
+            var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
+            dpdIsEnabled.RemoveValueChanged(control, ChromeUpdate);
+
 
             var state = GetState(control);
             if (!(state.Item1.HasValue || state.Item2.HasValue || (state.Item3.HasValue && state.Item4.HasValue) || (state.Item5.HasValue && state.Item6.HasValue)))
                 return;
 
-            control.Unloaded += OnChromeUnloaded;
             control.PreviewMouseLeftButtonDown += ChromeUpdate;
             control.PreviewMouseLeftButtonUp += ChromeUpdate;
-            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-            dpd.AddValueChanged(control, ChromeUpdate);
-            dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-            dpd.AddValueChanged(control, ChromeUpdate);
+            dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
+            dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
@@ -88,18 +91,6 @@ namespace WpfInvestigate.Effects
                 }
                 ChromeUpdate(control, null);
             }));
-        }
-
-        private static void OnChromeUnloaded(object sender, RoutedEventArgs e)
-        {
-            var control = (Control)sender;
-            control.Unloaded -= OnChromeUnloaded;
-            control.PreviewMouseLeftButtonDown -= ChromeUpdate;
-            control.PreviewMouseLeftButtonUp -= ChromeUpdate;
-            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(control, ChromeUpdate);
-            dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(control, ChromeUpdate);
         }
 
         private static Tuple<Color?, Color?, Color?, Color?, Color?, Color?, Tuple<bool, bool, bool>> GetState(Control control)

@@ -40,7 +40,9 @@ namespace WpfInvestigate.Effects
             {
                 Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
                 {
-                    fe.Unloaded += OnElementUnloaded;
+                    fe.PreviewMouseLeftButtonDown -= OnElementPreviewMouseLeftButtonDown;
+                    fe.PreviewMouseLeftButtonUp -= OnElementPreviewMouseLeftButtonUp;
+
                     fe.PreviewMouseLeftButtonDown += OnElementPreviewMouseLeftButtonDown;
                     fe.PreviewMouseLeftButtonUp += OnElementPreviewMouseLeftButtonUp;
 
@@ -58,13 +60,6 @@ namespace WpfInvestigate.Effects
                     }
                 }));
             }
-        }
-        private static void OnElementUnloaded(object sender, RoutedEventArgs e)
-        {
-            var fe = (FrameworkElement)sender;
-            fe.Unloaded -= OnElementUnloaded;
-            fe.PreviewMouseLeftButtonDown -= OnElementPreviewMouseLeftButtonDown;
-            fe.PreviewMouseLeftButtonUp -= OnElementPreviewMouseLeftButtonUp;
         }
 
         private static void OnElementPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)

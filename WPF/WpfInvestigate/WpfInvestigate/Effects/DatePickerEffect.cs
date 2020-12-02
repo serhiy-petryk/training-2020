@@ -40,23 +40,13 @@ namespace WpfInvestigate.Effects
 
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
-                SetClearButton(d, (bool)e.NewValue);
-                OnUnloadedForClearButton(dp, null);
-
-                dp.Unloaded += OnUnloadedForClearButton;
+                RemoveClearButton(dp);
 
                 if ((bool)e.NewValue)
                     AddClearButton(dp);
             }));
         }
 
-        private static void OnUnloadedForClearButton(object sender, RoutedEventArgs e)
-        {
-            var dp = sender as DatePicker;
-            dp.Unloaded -= OnUnloadedForClearButton;
-            RemoveClearButton(dp);
-        }
-        
         private static void AddClearButton(DatePicker dp)
         {
             var button = Tips.GetVisualChildren(dp).FirstOrDefault(btn => btn is Button && ((Button)btn).Name == ClearButtonName) as Button;
