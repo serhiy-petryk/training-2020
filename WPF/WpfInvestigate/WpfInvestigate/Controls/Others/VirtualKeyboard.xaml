@@ -49,7 +49,8 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <ContentControl Grid.Column="0" Content="{Binding Icon}" Margin="3"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Label}" Margin="4 0 0 0" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Label}" Margin="4 0 0 0" VerticalAlignment="Center"
+                                           FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2.5%}"/>
                             </Grid>
                         </Border>
                     </ControlTemplate>
@@ -70,7 +71,7 @@
             <Setter Property="Margin" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.15%}"/>
             <Setter Property="Focusable" Value="False"/>
             <Setter Property="FontFamily" Value="Verdana"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontSize" Value="18"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="UseLayoutRounding" Value="True"/>
             <Setter Property="Template">
