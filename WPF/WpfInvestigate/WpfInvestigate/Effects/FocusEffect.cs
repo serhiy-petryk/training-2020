@@ -32,31 +32,22 @@ namespace WpfInvestigate.Effects
         {
             if (d is FrameworkElement element)
             {
-                Element_Unloaded(element, null);
+                element.SizeChanged += Element_ChangeFocus;
+                var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+                dpd.RemoveValueChanged(element, OnElementFocusChanged);
 
                 if (e.NewValue is Brush newBrush && newBrush != Brushes.Transparent)
                 {
                     Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
                     {
                         element.SizeChanged += Element_ChangeFocus;
-                        var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
                         dpd.AddValueChanged(element, OnElementFocusChanged );
-                        element.Unloaded += Element_Unloaded;
                     }));
                 }
             }
         }
 
         private static void OnElementFocusChanged(object sender, EventArgs e) => Element_ChangeFocus(sender, null);
-        private static void Element_Unloaded(object sender, RoutedEventArgs e)
-        {
-            var element = (FrameworkElement)sender;
-            element.SizeChanged += Element_ChangeFocus;
-            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(element, OnElementFocusChanged);
-            element.Unloaded -= Element_Unloaded;
-        }
-
         private static void Element_ChangeFocus(object sender, RoutedEventArgs e)
         {
             var element = (FrameworkElement) sender;

@@ -42,20 +42,12 @@ namespace WpfInvestigate.Effects
                 return;
             }
 
+            RemoveButtons(textBox);
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
             {
-                OnUnloadedForButtons(textBox, null);
-                textBox.Unloaded += OnUnloadedForButtons;
                 AddButtons(textBox);
             }));
 
-        }
-
-        private static void OnUnloadedForButtons(object sender, RoutedEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            textBox.Unloaded -= OnUnloadedForButtons;
-            RemoveButtons(textBox);
         }
 
         private static void RemoveButtons(TextBox textBox)

@@ -40,11 +40,13 @@ namespace WpfInvestigate.Effects
                     if (txtBox != null)
                     {
                         txtBox.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None))));
-                        TxtBox_Unloaded(txtBox, null);
+                        txtBox.TextChanged -= TxtBox_TextChanged;
+                        txtBox.GotFocus -= ControlBox_ChangeFocus;
+                        txtBox.LostFocus -= ControlBox_ChangeFocus;
+
                         txtBox.TextChanged += TxtBox_TextChanged;
                         txtBox.GotFocus += ControlBox_ChangeFocus;
                         txtBox.LostFocus += ControlBox_ChangeFocus;
-                        txtBox.Unloaded += TxtBox_Unloaded;
                         return;
                     }
 
@@ -52,35 +54,19 @@ namespace WpfInvestigate.Effects
                     if (pswBox != null)
                     {
                         pswBox.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => ControlBox_ChangeFocus(pswBox, new RoutedEventArgs())));
-                        PswBox_Unloaded(pswBox, null);
+                        pswBox.PasswordChanged -= ControlBox_ChangeFocus;
+                        pswBox.GotFocus -= ControlBox_ChangeFocus;
+                        pswBox.LostFocus -= ControlBox_ChangeFocus;
+
                         pswBox.PasswordChanged += ControlBox_ChangeFocus;
                         pswBox.GotFocus += ControlBox_ChangeFocus;
                         pswBox.LostFocus += ControlBox_ChangeFocus;
-                        pswBox.Unloaded += PswBox_Unloaded;
                         return;
                     }
 
                     Debug.Print($"WatermarkEffect.Watermark is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
                 }));
             }
-        }
-
-        private static void TxtBox_Unloaded(object sender, RoutedEventArgs e)
-        {
-            var txtBox = (TextBox)sender;
-            txtBox.TextChanged -= TxtBox_TextChanged;
-            txtBox.GotFocus -= ControlBox_ChangeFocus;
-            txtBox.LostFocus -= ControlBox_ChangeFocus;
-            txtBox.Unloaded -= TxtBox_Unloaded;
-        }
-
-        private static void PswBox_Unloaded(object sender, RoutedEventArgs e)
-        {
-            var pswBox = (PasswordBox)sender;
-            pswBox.PasswordChanged -= ControlBox_ChangeFocus;
-            pswBox.GotFocus -= ControlBox_ChangeFocus;
-            pswBox.LostFocus -= ControlBox_ChangeFocus;
-            pswBox.Unloaded -= PswBox_Unloaded;
         }
 
         private static void ControlBox_ChangeFocus(object sender, RoutedEventArgs e)
