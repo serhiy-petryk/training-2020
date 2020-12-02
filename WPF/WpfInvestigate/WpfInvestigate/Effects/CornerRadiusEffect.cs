@@ -27,21 +27,20 @@ namespace WpfInvestigate.Effects
             dpd.AddValueChanged(element, UpdateBorders);
 
             // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
-            element.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => UpdateBorders(element, null)));
+            // element.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => UpdateBorders(element, null)));
+            element.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => UpdateBorders(element, null)));
+
         }
 
         private static void UpdateBorders(object sender, EventArgs e)
         {
             if (!(sender is FrameworkElement element)) return;
-            element.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            var newCornerRadius = GetCornerRadius(element);
+            foreach (var border in ControlHelper.GetMainBorders(element))
             {
-                var newCornerRadius = GetCornerRadius(element);
-                foreach (var border in ControlHelper.GetMainBorders(element))
-                {
-                    border.CornerRadius = newCornerRadius;
-                    ControlHelper.ClipToBoundBorder(border);
-                }
-            }));
+                border.CornerRadius = newCornerRadius;
+                ControlHelper.ClipToBoundBorder(border);
+            }
         }
     }
 }
