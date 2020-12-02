@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DialogItems.cs" />
+    <Compile Include="Controls\Others\VirtualKeyboard.cs" />
     <Compile Include="Controls\PopupResizeControl.cs" />
     <Compile Include="Controls\ResizableControl.cs" />
     <Compile Include="Controls\MessageBlock.cs" />
@@ -102,9 +103,6 @@
     <Compile Include="Obsolete\FlatButtonConverters\FlatButtonConverters.cs" />
     <Compile Include="Obsolete\MonochromeButton.xaml.cs">
       <DependentUpon>MonochromeButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Others\VirtualKeyboard.xaml.cs">
-      <DependentUpon>VirtualKeyboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Others\VirtualKeyboard.Models.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.KeyDefinition.cs" />
@@ -216,10 +214,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Others\VirtualKeyboard.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Obsolete\TestViews\ControlLibrary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -282,6 +276,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\ObjectEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\VirtualKeyboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

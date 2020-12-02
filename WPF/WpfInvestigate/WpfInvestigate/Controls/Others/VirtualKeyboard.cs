@@ -11,13 +11,12 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for VirtualKeyboard.xaml
     /// </summary>
-    public partial class VirtualKeyboard : INotifyPropertyChanged
+    public partial class VirtualKeyboard : UserControl, INotifyPropertyChanged
     {
         private const string DefaultLanguage = "EN";
 
         public VirtualKeyboard()
         {
-            InitializeComponent();
             DataContext = this;
             AvailableKeyboardLayouts = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures)
                 .Where(a => KeyModel.KeyDefinition.LanguageDefinitions.Keys.Contains(a.IetfLanguageTag.ToUpper())).OrderBy(a => a.DisplayName)

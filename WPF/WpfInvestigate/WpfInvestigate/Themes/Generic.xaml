@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Flags.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/DropDownButtons.xaml" />
@@ -10,6 +9,7 @@
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/DialogItems.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MessageBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/Calculator.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/VirtualKeyboard.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ObjectEditor.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/PopupResizeControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
