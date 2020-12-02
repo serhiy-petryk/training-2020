@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfInvestigate.Controls"
-             xmlns:commonn="clr-namespace:WpfInvestigate.Common"
+             xmlns:common="clr-namespace:WpfInvestigate.Common"
              UseLayoutRounding="True"
-             Height="{Binding ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=34.5%}"
+             Height="{Binding ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=34.5%}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -45,7 +45,7 @@
                         <Border BorderThickness="0" Background="{TemplateBinding Background}" Padding="4 0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition MinWidth="30" Width="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=3%}"/>
+                                    <ColumnDefinition MinWidth="30" Width="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=3%}"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <ContentControl Grid.Column="0" Content="{Binding Icon}" Margin="3"/>
@@ -67,7 +67,7 @@
 
         <Style x:Key="KeyButton" TargetType="{x:Type Button}">
             <Setter Property="OverridesDefaultStyle" Value="True"/>
-            <Setter Property="Margin" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=0.15%}"/>
+            <Setter Property="Margin" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.15%}"/>
             <Setter Property="Focusable" Value="False"/>
             <Setter Property="FontFamily" Value="Verdana"/>
             <Setter Property="FontSize" Value="14"/>
@@ -81,17 +81,17 @@
                                 <!-- Command -->
                                 <StackPanel Visibility="{Binding VisibilityCommand}" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <TextBlock Margin="0 0 2 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding BeforeText}"
-                                               Visibility="{Binding BeforeText, Converter={x:Static commonn:VisibilityConverter.Instance}}"
-                                               FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=2.6%}">
+                                               Visibility="{Binding BeforeText, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                               FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2.6%}">
                                         <TextBlock.RenderTransform>
                                             <TranslateTransform Y="-1.5" />
                                         </TextBlock.RenderTransform>
                                     </TextBlock>
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Label}"
-                                               FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=1.6%}"/>
+                                               FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.6%}"/>
                                     <TextBlock Margin="5 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding AfterText}"
-                                               Visibility="{Binding AfterText, Converter={x:Static commonn:VisibilityConverter.Instance}}"
-                                               FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=2.6%}">
+                                               Visibility="{Binding AfterText, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                               FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2.6%}">
                                         <TextBlock.RenderTransform>
                                             <TranslateTransform Y="-1.5" />
                                         </TextBlock.RenderTransform>
@@ -100,65 +100,65 @@
 
                                 <!-- Extra mode -->
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ExtraText}"
-                                           Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static commonn:VisibilityConverter.Instance}}"
-                                           FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=2.5%}"/>
+                                           Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                           FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2.5%}"/>
 
                                 <!-- Common mode -->
-                                <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static commonn:VisibilityConverter.InverseInstance}}">
+                                <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
                                     <!-- Left-top: Extra key -->
                                     <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ExtraText}" Foreground="DarkGray"
-                                               FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=1.8%}"
-                                               Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=0.5%}"/>
+                                               FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.8%}"
+                                               Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.5%}"/>
 
                                     <!-- Caps lock == off -->
-                                    <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static commonn:VisibilityConverter.InverseInstance}}">
+                                    <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
                                         <!-- Caps lock = off, Shift == off, Right-top -->
                                         <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedText}" Foreground="DarkGray"
-                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static commonn:VisibilityConverter.InverseInstance}}"
-                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=1.8%}"
-                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=0.5%}"/>
+                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.8%}"
+                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.5%}"/>
 
                                         <!-- Caps lock = off, Shift == on, Right-top -->
                                         <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Text}" Foreground="DarkGray"
-                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static commonn:VisibilityConverter.Instance}}"
-                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=1.8%}"
-                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=0.5%}"/>
+                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.8%}"
+                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.5%}"/>
 
                                         <!-- Caps lock = off, Shift == off, center-bottom -->
                                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Text}" Foreground="White"
-                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static commonn:VisibilityConverter.InverseInstance}}"
-                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=2.5%}"
-                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=0.5%}"/>
+                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2.5%}"
+                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.5%}"/>
 
                                         <!-- Caps lock = off, Shift == on, center-bottom -->
                                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding ShiftedText}" Foreground="White"
-                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static commonn:VisibilityConverter.Instance}}"
-                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=2.5%}"
-                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=0.5%}"/>
+                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2.5%}"
+                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.5%}"/>
                                     </Grid>
 
                                     <!-- Caps lock == on -->
-                                    <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static commonn:VisibilityConverter.Instance}}">
+                                    <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static common:VisibilityConverter.Instance}}">
                                         <!-- Caps lock = on, Shift == off, Right-top -->
                                         <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedCapsText}" Foreground="DarkGray"
-                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static commonn:VisibilityConverter.InverseInstance}}"
-                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=1.8%}"
-                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=0.5%}"/>
+                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.8%}"
+                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.5%}"/>
                                         <!-- Caps lock = on, Shift == on, Right-top -->
                                         <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding CapsText}" Foreground="DarkGray"
-                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static commonn:VisibilityConverter.Instance}}"
-                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=1.8%}"
-                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=0.5%}"/>
+                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.8%}"
+                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.5%}"/>
                                         <!-- Caps lock = on, Shift == off, center-bottom -->
                                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding CapsText}" Foreground="White"
-                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static commonn:VisibilityConverter.InverseInstance}}"
-                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=2.5%}"
-                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=0.5%}"/>
+                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2.5%}"
+                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.5%}"/>
                                         <!-- Caps lock = on, Shift = on, center-bottom -->
                                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding ShiftedCapsText}" Foreground="White"
-                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static commonn:VisibilityConverter.Instance}}"
-                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=2.5%}"
-                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=0.5%}"/>
+                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2.5%}"
+                                                   Padding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.5%}"/>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -375,7 +375,7 @@
                     </Button>
                     <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_SPACE]}" Style="{StaticResource KeyButton}"/>
                     <Border Grid.Column="2" BorderThickness="1" Background="{StaticResource KeyBackBrush}"
-                            Margin="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=0.25%}"
+                            Margin="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.25%}"
                             CornerRadius="3">
                         <Border.Style>
                             <Style TargetType="Border">
@@ -394,12 +394,12 @@
                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                   Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
-                                  FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=1.8%}">
+                                  FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.8%0.1+}">
                             <ToggleButton.Content>
                                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static commonn:MathConverter.Instance}, ConverterParameter=2%}"/>
+                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2%}"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=SelectedKeyboardLayout.Label}"/>
                                     <Viewbox Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 4 0">

@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:temp="clr-namespace:WpfInvestigate.Temp"
         mc:Ignorable="d"
-        Title="VirtualKeyboardTests" Height="900" Width="1000">
+        Title="VirtualKeyboardTests" Height="800" Width="1000">
 
     <!-- Design from https://github.com/simple0812/keyboard (no license) -->
 
