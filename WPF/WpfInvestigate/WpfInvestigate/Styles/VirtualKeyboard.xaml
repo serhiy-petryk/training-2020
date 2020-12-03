@@ -48,7 +48,7 @@
                                     </Grid.ColumnDefinitions>
                                     <ContentControl Grid.Column="0" Content="{Binding Icon}" Margin="3"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Label}" Margin="4 0 0 0" VerticalAlignment="Center"
-                                               FontSize="{Binding ConverterParameter=2.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+                                               FontSize="{Binding ConverterParameter=2.2%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                                 </Grid>
                             </Border>
                         </ControlTemplate>
