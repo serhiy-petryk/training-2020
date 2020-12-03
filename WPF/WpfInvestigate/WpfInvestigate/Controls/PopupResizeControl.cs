@@ -13,7 +13,7 @@ namespace WpfInvestigate.Controls
     /// </summary>
     public class PopupResizeControl : ContentControl
     {
-        private const int MaxSize = 1000;
+        private const int MaxSize = 1200;
         private const int MinSize = 50;
 
         public PopupResizeControl()
