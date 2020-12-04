@@ -11,26 +11,18 @@
     <Style TargetType="{x:Type local:VirtualKeyboard}">
         <Style.Resources>
 
-            <colorSpaces:HSL x:Key="DigitButtonHsl" Hue="240" Saturation="5"/>
+            <colorSpaces:HSL x:Key="DigitButtonHsl" Hue="240" Saturation="50" Lightness="5"/>
 
             <SolidColorBrush x:Key="MouseOverBorderBrush" Color="DodgerBlue"/>
-            <SolidColorBrush x:Key="BackgroundBrush" Color="#FF303030"/>
             <SolidColorBrush x:Key="HighlightBrush" Color="Magenta"/>
             
-            <LinearGradientBrush x:Key="KeyBackBrush" EndPoint="0,1" StartPoint="0,0">
-                <GradientStop Color="#FF606060" Offset="0"/>
-                <GradientStop Color="#FF303030" Offset="0.2" />
-                <GradientStop Color="#FF202020" Offset="0.9" />
-                <GradientStop Color="#FF606060" Offset="1" />
-            </LinearGradientBrush>
-
             <Style TargetType="{x:Type ContextMenu}" x:Key="LanguageContextMenuStyle">
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ContextMenu}">
-                            <Border x:Name="Border" Background="{StaticResource BackgroundBrush}" BorderThickness="1" BorderBrush="{StaticResource MouseOverBorderBrush}" CornerRadius="3">
+                            <Border x:Name="Border" Background="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=Background}" BorderThickness="1" BorderBrush="{StaticResource MouseOverBorderBrush}" CornerRadius="3">
                                 <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                             </Border>
                         </ControlTemplate>
@@ -39,7 +31,7 @@
             </Style>
 
             <Style TargetType="MenuItem" x:Key="LanguageItemMenuStyle">
-                <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=Background}" />
                 <Setter Property="IsChecked" Value="{Binding IsSelected}"/>
                 <Setter Property="Command" Value="{Binding LanguageSelectCommand}"/>
                 <Setter Property="Template">
@@ -74,7 +66,7 @@
                 <Setter Property="Margin" Value="{Binding ConverterParameter=0.15%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="FontFamily" Value="Verdana"/>
-                <Setter Property="Background" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0/19,0.2/12.5,0.9/38,1.0'}"/>
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=Background, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0/19,0.2/12.5,0.9/38,1.0'}"/>
                 <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=Foreground}"/>
                 <Setter Property="UseLayoutRounding" Value="True"/>
                 <Setter Property="Command" Value="{Binding OnClickCommand}"/>
@@ -196,8 +188,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:VirtualKeyboard}">
                     <Grid>
-                        <Border BorderThickness="0" CornerRadius="5" Padding="5"
-                                Background="Black">
+                        <Border BorderThickness="0" CornerRadius="5" Padding="5" Background="{TemplateBinding Background}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="1*"/>
