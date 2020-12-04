@@ -251,24 +251,33 @@ namespace WpfInvestigate.Common
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is HSL && parameter is string)
+            if (parameter is string)
             {
-                var hsl = (HSL)value;
-                var gradientStops = new GradientStopCollection();
-                foreach (var p in parameter.ToString().Split('/'))
-                {
-                    var pp = p.Split(',');
-                    if (pp.Length == 2)
-                    {
-                        var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[0].Trim());
-                        var newHsl = new HSL(hsl.H, hsl.S, newL);
-                        var offset = double.Parse(pp[1].Trim(), Tips.InvariantCulture);
-                        gradientStops.Add(new GradientStop(newHsl.RGB.Color, offset));
-                    }
-                }
+                HSL hsl = null;
+                if (value is HSL)
+                    hsl = (HSL) value;
+                else if (value is Brush brush)
+                    hsl = new HSL(new RGB(Tips.GetColorFromBrush(brush)));
 
-                return new LinearGradientBrush(gradientStops, new Point(0, 0), new Point(0, 1));
+                if (hsl != null)
+                {
+                    var gradientStops = new GradientStopCollection();
+                    foreach (var p in parameter.ToString().Split('/'))
+                    {
+                        var pp = p.Split(',');
+                        if (pp.Length == 2)
+                        {
+                            var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[0].Trim());
+                            var newHsl = new HSL(hsl.H, hsl.S, newL);
+                            var offset = double.Parse(pp[1].Trim(), Tips.InvariantCulture);
+                            gradientStops.Add(new GradientStop(newHsl.RGB.Color, offset));
+                        }
+                    }
+
+                    return new LinearGradientBrush(gradientStops, new Point(0, 0), new Point(0, 1));
+                }
             }
+
             return Brushes.Transparent;
         }
 

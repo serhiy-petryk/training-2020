@@ -387,7 +387,8 @@
                                         </Button.Style>
                                     </Button>
                                     <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_SPACE]}" Style="{StaticResource KeyButton}"/>
-                                    <Border Grid.Column="2" BorderThickness="1" Background="{StaticResource KeyBackBrush}"
+                                    <Border Grid.Column="2" BorderThickness="1"
+                                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0/19,0.2/12.5,0.9/38,1.0'}"
                                             Margin="{Binding ConverterParameter=0.25%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"
                                             CornerRadius="3">
                                         <Border.Style>
