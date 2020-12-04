@@ -43,7 +43,7 @@
             </Style>
 
             <!-- Dark theme -->
-            <colorSpaces:HSL x:Key="DigitButtonHsl" Hue="240" Saturation="5"/>
+            <colorSpaces:HSL x:Key="DigitButtonHsl">240,5</colorSpaces:HSL>
             <colorSpaces:HSL x:Key="OperatorButtonHsl" Hue="180" Saturation="50"/>
             <colorSpaces:HSL x:Key="EqualButtonHsl" Hue="120" Saturation="50"/>
             <colorSpaces:HSL x:Key="ClearButtonHsl" Hue="0" Saturation="50"/>

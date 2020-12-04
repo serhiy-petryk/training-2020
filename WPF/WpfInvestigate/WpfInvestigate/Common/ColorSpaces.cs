@@ -20,6 +20,8 @@ yCbCR (BT601, BT709, BT2020 standards): the YCbCr/YPbCb/YPrCr representation:
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Media;
 
@@ -127,6 +129,7 @@ namespace WpfInvestigate.Common.ColorSpaces
     /// <summary>
     /// HSL (hue, saturation, lightness) color spaces (see https://en.wikipedia.org/wiki/HSL_and_HSV)
     /// </summary>
+    [TypeConverter(typeof(HslTypeConverter))]
     public class HSL
     {
         /// <summary>
@@ -156,6 +159,26 @@ namespace WpfInvestigate.Common.ColorSpaces
         public double H, S, L;
 
         public HSL(){}
+        public HSL(string s, CultureInfo culture)
+        {
+            culture = culture ?? Tips.InvariantCulture;
+            var ss = (s ?? "").Split(',');
+            double d;
+            if (double.TryParse(ss[0], NumberStyles.Any, culture, out d))
+            {
+                Hue = d;
+                if (ss.Length > 1 && double.TryParse(ss[1], NumberStyles.Any, culture, out d))
+                    Saturation = d;
+                if (ss.Length > 2 && double.TryParse(ss[2], NumberStyles.Any, culture, out d))
+                    Lightness = d;
+            }
+            else
+            {
+                var color = ColorUtils.StringToColor(s);
+                var hsl = new HSL(new RGB(color));
+                H = hsl.H; S = hsl.S; L = hsl.L;
+            }
+        }
         public HSL(double h, double s, double l)
         {
             H = h; S = s; L = l;
@@ -209,6 +232,29 @@ namespace WpfInvestigate.Common.ColorSpaces
         }
         public override string ToString() => $"H: {H}, S: {S}, L: {L}";
     }
+
+    public class HslTypeConverter : TypeConverter
+    {
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) => sourceType == typeof(string);
+
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) => destinationType == typeof(string);
+
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        {
+            if (value != null && value.GetType() != typeof(string))
+                throw new Exception("HslTypeConverter. Bad value type.");
+            return new HSL((value ?? "") as string, culture);
+        }
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        {
+            if (value == null || destinationType != typeof(string)) return null;
+            if (value is HSL hsl)
+                return hsl.Hue.ToString(culture) + "," + hsl.Saturation.ToString(culture) + "," + hsl.Lightness.ToString(culture);
+            return null;
+        }
+    }
+
+
     #endregion
 
     #region  ===========  HSV  ============
