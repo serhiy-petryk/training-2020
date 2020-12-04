@@ -124,10 +124,38 @@ namespace WpfInvestigate.Common.ColorSpaces
     #endregion
 
     #region  ===========  HSL  ============
+    /// <summary>
+    /// HSL (hue, saturation, lightness) color spaces (see https://en.wikipedia.org/wiki/HSL_and_HSV)
+    /// </summary>
     public class HSL
     {
+        /// <summary>
+        /// Hue in range 0-360
+        /// </summary>
+        public double Hue
+        {
+            get => H * 360.0;
+            set => H = value / 360.0;
+        }
+        /// <summary>
+        /// Saturation in range 0-100
+        /// </summary>
+        public double Saturation
+        {
+            get => S * 100.0;
+            set => S = value / 100.0;
+        }
+        /// <summary>
+        /// Lightness in range 0-100
+        /// </summary>
+        public double Lightness
+        {
+            get => L * 100.0;
+            set => L = value / 100.0;
+        }
         public double H, S, L;
 
+        public HSL(){}
         public HSL(double h, double s, double l)
         {
             H = h; S = s; L = l;

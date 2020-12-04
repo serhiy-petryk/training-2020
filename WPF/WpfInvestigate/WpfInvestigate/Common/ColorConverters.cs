@@ -110,53 +110,6 @@ namespace WpfInvestigate.Common
         }
     }
 
-    public class HueAndSaturationBrush : IValueConverter
-    {
-        // Usage:
-        // Definitions in global resources:
-        // <system:String x:Key="HueAndSaturation">0,100</system:String>
-        // <common:BindingProxy x:Key="HueAndSaturationProxy" Value="{DynamicResource HueAndSaturation}"/>
-        // Set the control property:
-        // <StackPanel Background="{Binding Source={StaticResource HueAndSaturation}, Converter={x:Static converters:HueAndSaturationBrush.Instance}, ConverterParameter=70}">
-        // or setter of control property:
-        // <Setter Property="Foreground" Value="{Binding Source={StaticResource HueAndSaturationProxy}, Converter={x:Static converters:HueAndSaturationBrush.Instance}, ConverterParameter=35}"/>
-        public static HueAndSaturationBrush Instance = new HueAndSaturationBrush();
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (parameter is string && double.TryParse((string)parameter, NumberStyles.Any, Tips.InvariantCulture, out var newL))
-            {
-                string[] ss = null;
-                if (value is string)
-                    ss = ((string)value).Split(',');
-                else if ((value as BindingProxy)?.Value is string)
-                    ss = ((string)((BindingProxy)value).Value).Split(',');
-                else if ((value as DynamicBinding)?.Value is string)
-                    ss = ((string)((DynamicBinding)value).Value).Split(',');
-
-                HSL hsl = null;
-                if (ss != null && ss.Length == 2)
-                    hsl = new HSL(double.Parse(ss[0].Trim(), Tips.InvariantCulture) / 360,
-                        double.Parse(ss[1].Trim(), Tips.InvariantCulture) / 100, newL / 100.0);
-                else if (value is Brush brush)
-                    hsl = new HSL(new RGB(Tips.GetColorFromBrush(brush)));
-                else if (value is DependencyObject d)
-                    hsl = new HSL(new RGB(Tips.GetActualBackgroundColor(d)));
-
-                if (hsl != null)
-                {
-                    if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                        return new HSL(hsl.H, hsl.S, newL / 100.0).RGB.Color;
-                    return new SolidColorBrush(new HSL(hsl.H, hsl.S, newL / 100.0).RGB.Color);
-                }
-            }
-
-            if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                return Colors.Transparent;
-            return Brushes.Transparent;
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
-
     public class ColorHslBrush : IValueConverter
     {
         public static ColorHslBrush Instance = new ColorHslBrush();
@@ -174,20 +127,13 @@ namespace WpfInvestigate.Common
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            HSL hsl = null;
-            string[] ss = null;
-            Color? oldColor = null;
-
             if (value is string)
-                ss = ((string)value).Split(',');
-            else if ((value as BindingProxy)?.Value is string)
-                ss = ((string)((BindingProxy)value).Value).Split(',');
-            else if ((value as DynamicBinding)?.Value is string)
-                ss = ((string)((DynamicBinding)value).Value).Split(',');
+                throw new Exception("Lovushka");
 
-            if (ss != null && ss.Length == 2)
-                hsl = new HSL(double.Parse(ss[0].Trim(), Tips.InvariantCulture) / 360,
-                    double.Parse(ss[1].Trim(), Tips.InvariantCulture) / 100, 0);
+            HSL hsl = null;
+            Color? oldColor = null;
+            if (value is HSL)
+                hsl = (HSL)value;
             else if (value is Brush brush)
                 oldColor = Tips.GetColorFromBrush(brush);
             else if (value is Color color)
@@ -206,14 +152,14 @@ namespace WpfInvestigate.Common
                         var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
                         var pp = p.Split(new[] { ",", ";" }, StringSplitOptions.None);
                         var newS = hsl.S;
-                        if (pp.Length>1)
+                        if (pp.Length > 1)
                             newS = ColorConverterHelper.ConvertValue(hsl.S, pp[0], !_noSplit ? isDarkColor : (bool?)null);
-                        var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[pp.Length - 1], !_noSplit ? isDarkColor : (bool?) null);
+                        var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[pp.Length - 1], !_noSplit ? isDarkColor : (bool?)null);
                         hsl = new HSL(hsl.H, newS, newL);
                     }
 
                 if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                    return hsl.RGB.GetColor(oldColor?.A/255.0 ?? 1.0);
+                    return hsl.RGB.GetColor(oldColor?.A / 255.0 ?? 1.0);
                 return new SolidColorBrush(hsl.RGB.GetColor(oldColor?.A / 255.0 ?? 1.0));
             }
 
@@ -234,17 +180,11 @@ namespace WpfInvestigate.Common
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            LAB lab = null;
-            string[] ss = null;
-
             if (value is string)
-                ss = ((string)value).Split(',');
-            else if ((value as BindingProxy)?.Value is string)
-                ss = ((string)((BindingProxy)value).Value).Split(',');
+                throw new Exception("Lovushka");
 
-            if (ss != null && ss.Length == 2)
-                lab = new LAB(double.Parse(ss[0].Trim(), Tips.InvariantCulture), double.Parse(ss[1].Trim(), Tips.InvariantCulture), 0);
-            else if (value is Brush brush)
+            LAB lab = null;
+            if (value is Brush brush)
                 lab = new LAB(new RGB(Tips.GetColorFromBrush(brush)));
             else if (value is DependencyObject d)
                 lab = new LAB(new RGB(Tips.GetActualBackgroundColor(d)));
@@ -311,32 +251,25 @@ namespace WpfInvestigate.Common
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string && parameter is string)
+            if (value is HSL && parameter is string)
             {
-                var ss = ((string) value).Split(',');
-                if (ss.Length >= 2)
+                var hsl = (HSL)value;
+                var gradientStops = new GradientStopCollection();
+                foreach (var p in parameter.ToString().Split('/'))
                 {
-                    var hue = double.Parse(ss[0].Trim(), Tips.InvariantCulture) / 360;
-                    var saturation = double.Parse(ss[1].Trim(), Tips.InvariantCulture) / 100;
-                    var lightness = ss.Length > 2 ? double.Parse(ss[2].Trim(), Tips.InvariantCulture) / 100 : 0.0;
-
-                    var gradientStops = new GradientStopCollection( );
-                    foreach (var p in parameter.ToString().Split('/'))
+                    var pp = p.Split(',');
+                    if (pp.Length == 2)
                     {
-                        var pp = p.Split(',');
-                        if (pp.Length == 2)
-                        {
-                            var newL = ColorConverterHelper.ConvertValue(lightness, pp[0].Trim());
-                            var hsl = new HSL(hue, saturation, newL);
-                            var offset = double.Parse(pp[1].Trim(), Tips.InvariantCulture);
-                            gradientStops.Add(new GradientStop(hsl.RGB.Color, offset));
-                        }
+                        var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[0].Trim());
+                        var newHsl = new HSL(hsl.H, hsl.S, newL);
+                        var offset = double.Parse(pp[1].Trim(), Tips.InvariantCulture);
+                        gradientStops.Add(new GradientStop(newHsl.RGB.Color, offset));
                     }
-
-                    return new LinearGradientBrush(gradientStops, new Point(0, 0), new Point(0, 1));
                 }
+
+                return new LinearGradientBrush(gradientStops, new Point(0, 0), new Point(0, 1));
             }
-            return Brushes.Transparent; 
+            return Brushes.Transparent;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
