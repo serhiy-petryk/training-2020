@@ -174,7 +174,7 @@ namespace WpfInvestigate.Common
             double GetDouble(object o)
             {
                 if (o is double d) return d;
-                if (o is string s1) return double.Parse(s1);
+                if (o is string s1) return double.Parse(s1, Tips.InvariantCulture);
                 throw new Exception($"MathConverter error. Can't convert {o} to double data type");
             }
 
