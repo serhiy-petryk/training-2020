@@ -11,5 +11,12 @@ namespace WpfInvestigate.TestViews
         {
             InitializeComponent();
         }
+
+        private void ChangeHsl_OnClick(object sender, RoutedEventArgs e)
+        {
+            var hsl = Keyboard.BaseHsl;
+            var a = (hsl.Hue + 30.0) % 360;
+            hsl.Hue = a;
+        }
     }
 }

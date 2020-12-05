@@ -17,8 +17,8 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ContextMenu}">
                             <Border x:Name="Border" BorderThickness="2" CornerRadius="3"
-                                    BorderBrush="{Binding ConverterParameter=-30:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                    Background="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}">
+                                    BorderBrush="{Binding ConverterParameter=-30:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                    Background="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}">
                                 <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                             </Border>
                         </ControlTemplate>
@@ -27,8 +27,8 @@
             </Style>
 
             <Style x:Key="LanguageItemMenuStyle" TargetType="{x:Type MenuItem}">
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}" />
-                <Setter Property="Foreground" Value="{Binding ConverterParameter=+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}" />
+                <Setter Property="Foreground" Value="{Binding ConverterParameter=+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="IsChecked" Value="{Binding IsSelected}"/>
                 <Setter Property="Command" Value="{Binding LanguageSelectCommand}"/>
                 <Setter Property="Template">
@@ -50,10 +50,10 @@
                 </Setter>
                 <Style.Triggers>
                     <Trigger Property="IsChecked" Value="True">
-                        <Setter Property="Background" Value="{Binding ConverterParameter=+40%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                        <Setter Property="Background" Value="{Binding ConverterParameter=+40%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                     </Trigger>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="{Binding ConverterParameter=+20%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                        <Setter Property="Background" Value="{Binding ConverterParameter=+20%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                     </Trigger>
                 </Style.Triggers>
             </Style>
@@ -63,8 +63,8 @@
                 <Setter Property="Margin" Value="{Binding ConverterParameter=0.15%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="FontFamily" Value="Verdana"/>
-                <Setter Property="Background" Value="{Binding ConverterParameter='38,0/19,0.2/12.5,0.9/38,1.0', RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:GradientMonochromeBrush.Instance}}"/>
-                <Setter Property="Foreground" Value="{Binding ConverterParameter=19/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                <Setter Property="Background" Value="{Binding ConverterParameter='38,0/19,0.2/12.5,0.9/38,1.0', RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:GradientMonochromeBrush.Instance}}"/>
+                <Setter Property="Foreground" Value="{Binding ConverterParameter=19/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="UseLayoutRounding" Value="True"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -101,7 +101,7 @@
                                     <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
                                         <!-- Left-top: Extra key -->
                                         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ExtraText}"
-                                                   Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                   Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                    FontSize="{Binding ConverterParameter=1.8%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"
                                                    Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
 
@@ -109,14 +109,14 @@
                                         <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
                                             <!-- Caps lock = off, Shift == off, Right-top -->
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedText}"
-                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
                                                        FontSize="{Binding ConverterParameter=1.8%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
 
                                             <!-- Caps lock = off, Shift == on, Right-top -->
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Text}"
-                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                        FontSize="{Binding ConverterParameter=1.8%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
@@ -138,13 +138,13 @@
                                         <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static common:VisibilityConverter.Instance}}">
                                             <!-- Caps lock = on, Shift == off, Right-top -->
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedCapsText}"
-                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
                                                        FontSize="{Binding ConverterParameter=1.8%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                                             <!-- Caps lock = on, Shift == on, Right-top -->
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding CapsText}"
-                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                        FontSize="{Binding ConverterParameter=1.8%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
@@ -164,7 +164,7 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ConverterParameter=-30:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ConverterParameter=-30:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
                                     <Setter TargetName="ContentElement" Property="RenderTransform">
@@ -184,7 +184,7 @@
             <Style x:Key="CommandButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource KeyButtonBaseStyle}">
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Foreground" Value="{Binding ConverterParameter=-30:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}" />
+                        <Setter Property="Foreground" Value="{Binding ConverterParameter=-30:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
@@ -200,7 +200,7 @@
                 <ControlTemplate TargetType="{x:Type local:VirtualKeyboard}">
                     <Grid>
                         <Border BorderThickness="0" CornerRadius="5" Padding="5"
-                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}">
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="1*"/>
@@ -228,20 +228,20 @@
                                         <ColumnDefinition Width="5*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_OEM_3]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_1]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_2]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_3]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_4]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_5]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_6]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_7]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_8]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_9]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_0]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_MINUS]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_OEM_PLUS]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="13" DataContext="{Binding KeyboardSet[VK_BACK]}" Style="{StaticResource CommandButtonStyle}"/>
+                                    <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_OEM_3]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_1]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_2]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_3]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_4]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_5]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_6]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_7]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_8]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_9]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_0]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_MINUS]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_OEM_PLUS]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="13" DataContext="{Binding KeyboardSet[VK_BACK]}" Style="{DynamicResource CommandButtonStyle}"/>
                                 </Grid>
 
                                 <Grid Grid.Row="1">
@@ -300,7 +300,7 @@
                                             <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock}" Value="True">
-                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -342,7 +342,7 @@
                                             <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted}" Value="True">
-                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -363,7 +363,7 @@
                                             <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted}" Value="True">
-                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -383,7 +383,7 @@
                                             <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra}" Value="True">
-                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -393,7 +393,7 @@
                                     <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_SPACE]}" Style="{StaticResource KeyButtonStyle}"/>
                                     <!-- Language selector -->
                                     <Border Grid.Column="2" BorderThickness="1"
-                                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseHsl, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0/19,0.2/12.5,0.9/38,1.0'}"
+                                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseHsl.Self, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0/19,0.2/12.5,0.9/38,1.0'}"
                                             Margin="{Binding ConverterParameter=0.25%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"
                                             CornerRadius="3">
                                         <Border.Style>
@@ -401,7 +401,7 @@
                                                 <Setter Property="BorderBrush" Value="Transparent"/>
                                                 <Style.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="BorderBrush" Value="{Binding ConverterParameter=-30:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                                        <Setter Property="BorderBrush" Value="{Binding ConverterParameter=-30:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                                     </Trigger>
                                                 </Style.Triggers>
                                             </Style>

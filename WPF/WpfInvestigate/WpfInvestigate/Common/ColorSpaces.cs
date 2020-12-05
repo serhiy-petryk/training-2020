@@ -130,23 +130,37 @@ namespace WpfInvestigate.Common.ColorSpaces
     /// HSL (hue, saturation, lightness) color spaces (see https://en.wikipedia.org/wiki/HSL_and_HSV)
     /// </summary>
     [TypeConverter(typeof(HslTypeConverter))]
-    public class HSL
+    public class HSL: INotifyPropertyChanged
     {
+        /// <summary>
+        /// For dynamic binding
+        /// </summary>
+        public HSL Self => this;
+
         /// <summary>
         /// Hue in range 0-360
         /// </summary>
         public double Hue
         {
             get => H * 360.0;
-            set => H = value / 360.0;
+            set
+            {
+                H = value / 360.0;
+                OnPropertiesChanged(nameof(Hue), nameof(Self));
+            }
         }
+
         /// <summary>
         /// Saturation in range 0-100
         /// </summary>
         public double Saturation
         {
             get => S * 100.0;
-            set => S = value / 100.0;
+            set
+            {
+                S = value / 100.0;
+                OnPropertiesChanged(nameof(Saturation), nameof(Self));
+            }
         }
         /// <summary>
         /// Lightness in range 0-100
@@ -154,9 +168,15 @@ namespace WpfInvestigate.Common.ColorSpaces
         public double Lightness
         {
             get => L * 100.0;
-            set => L = value / 100.0;
+            set
+            {
+                L = value / 100.0;
+                OnPropertiesChanged(nameof(Lightness), nameof(Self));
+            }
         }
-        public double H, S, L;
+        internal double H { get; private set; }
+        internal double S { get; private set; }
+        internal double L { get; private set; }
 
         public HSL(){}
         public HSL(string s, CultureInfo culture)
@@ -230,7 +250,17 @@ namespace WpfInvestigate.Common.ColorSpaces
             if (t < ColorUtils.TwoThirds) return p + (q - p) * (ColorUtils.TwoThirds - t) * 6.0;
             return p;
         }
-        public override string ToString() => $"H: {H}, S: {S}, L: {L}";
+        public override string ToString() => $"H: {Hue}, S: {Saturation}, L: {Lightness}";
+
+        #region ===========  INotifyPropertyChanged  ===============
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 
     public class HslTypeConverter : TypeConverter

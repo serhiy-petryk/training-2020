@@ -16,19 +16,70 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Slider Grid.Column="0"
-                x:Name="uiScaleSlider"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
-                Height="100"
-                Value="1" Minimum="0.5" Maximum="4"
-                Orientation="Vertical"
-                Ticks="1"
-                IsSnapToTickEnabled="False"
-                TickPlacement="BottomRight"
-                AutoToolTipPlacement="BottomRight"
-                AutoToolTipPrecision="2"/>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Slider Grid.Row="0"
+                    x:Name="uiScaleSlider"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.5" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
+
+            <TextBlock Grid.Row="1" Text="HSL:"></TextBlock>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <Slider Grid.Column="0"
+                        x:Name="H"
+                        HorizontalAlignment="Center" VerticalAlignment="Top"
+                        Height="100"
+                        Minimum="0" Maximum="360"
+                        Orientation="Vertical"
+                        Ticks="1" IsSnapToTickEnabled="False" TickPlacement="BottomRight"
+                        AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"
+                        Value="{Binding ElementName=Keyboard, Path=BaseHsl.Hue, Mode=TwoWay}"/>
+
+                <Slider Grid.Column="1"
+                        x:Name="S"
+                        HorizontalAlignment="Center" VerticalAlignment="Top"
+                        Height="100" 
+                        Minimum="0" Maximum="100"
+                        Orientation="Vertical"
+                        Ticks="1" IsSnapToTickEnabled="False" TickPlacement="BottomRight"
+                        AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"
+                        Value="{Binding ElementName=Keyboard, Path=BaseHsl.Saturation, Mode=TwoWay}"/>
+
+                <Slider Grid.Column="2"
+                        x:Name="L"
+                        HorizontalAlignment="Center" VerticalAlignment="Top"
+                        Height="100" 
+                        Minimum="0" Maximum="100"
+                        Orientation="Vertical"
+                        Ticks="1" IsSnapToTickEnabled="False" TickPlacement="BottomRight"
+                        AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"
+                        Value="{Binding ElementName=Keyboard, Path=BaseHsl.Lightness, Mode=TwoWay}"/>
+            </Grid>
+            <Grid Row="4">
+                <Button Content="X" Click="ChangeHsl_OnClick"></Button>
+            </Grid>
+        </Grid>
 
         <Grid Grid.Column="1">
             <Grid.LayoutTransform>
