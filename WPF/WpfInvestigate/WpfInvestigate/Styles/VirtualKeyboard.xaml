@@ -69,7 +69,6 @@
                 <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=Background, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0/19,0.2/12.5,0.9/38,1.0'}"/>
                 <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=Foreground}"/>
                 <Setter Property="UseLayoutRounding" Value="True"/>
-                <Setter Property="Command" Value="{Binding OnClickCommand}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">

@@ -74,9 +74,9 @@ namespace WpfInvestigate.Controls
             public string Label { get; }
             public string BeforeText { get; }
             public string AfterText { get; }
-            public Visibility VisibilityCommand => _isCommand ? Visibility.Visible : Visibility.Collapsed;
+            public Visibility VisibilityCommand => IsCommand ? Visibility.Visible : Visibility.Collapsed;
             public event EventHandler OnClick;
-            private bool _isCommand => Label != null;
+            public bool IsCommand => Label != null;
 
             public KeyModel(KeyDefinition keyDefinition)
             {
@@ -88,6 +88,14 @@ namespace WpfInvestigate.Controls
                 Label = keyDefinition.Label;
                 BeforeText = keyDefinition.BeforeText;
                 AfterText = keyDefinition.AfterText;
+            }
+            public string GetKeyText(bool isCapsLock, bool isShifted, bool isExtra)
+            {
+                if (IsCommand) return null;
+                if (isExtra) return ExtraText;
+                if (!isCapsLock)
+                    return isShifted ? ShiftedText : Text;
+                return isShifted ? ShiftedCapsText : CapsText;
             }
         }
     }

@@ -68,6 +68,8 @@ namespace WpfInvestigate.Controls
                 IsExtra = !IsExtra;
                 OnPropertiesChanged(nameof(IsExtra));
             }
+            else if (!model.IsCommand)
+                Text += model.GetKeyText(IsCapsLock, IsShifted, IsExtra);
         }
 
         private void Language_OnSelect(object sender, EventArgs e)
@@ -91,6 +93,21 @@ namespace WpfInvestigate.Controls
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
+
+        #region ============== Properties/Events  ===================
+        public static readonly RoutedEvent TextChangedEvent = EventManager.RegisterRoutedEvent("TextChanged", RoutingStrategy.Direct, typeof(RoutedPropertyChangedEventHandler<string>), typeof(VirtualKeyboard));
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTextChanged));
+
+        public string Text
+        {
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
+        }
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
         }
 
         #endregion

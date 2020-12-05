@@ -38,14 +38,16 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <controls:VirtualKeyboard x:Name="Keyboard" Grid.Row="0" Grid.Column="0" Margin="5"/>
-            <Label Grid.Row="1" Margin="0 10 0 0" Content="Original design from https://github.com/simple0812/keyboard (no license):"/>
-            <temp:OriginalVirtualKeyboard x:Name="OriginalKeyboard" Grid.Row="2" Grid.Column="0" Margin="5"/>
+            <TextBox Grid.Row="1" Text="{Binding ElementName=Keyboard, Path=Text}"/>
+            <Label Grid.Row="2" Margin="0 10 0 0" Content="Original design from https://github.com/simple0812/keyboard (no license):"/>
+            <temp:OriginalVirtualKeyboard x:Name="OriginalKeyboard" Grid.Row="3" Grid.Column="0" Margin="5"/>
         </Grid>
     </Grid>
 </Window>
