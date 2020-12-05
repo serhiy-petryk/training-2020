@@ -9,7 +9,7 @@ namespace WpfInvestigate.Common
 {
     internal static class ColorConverterHelper
     {
-        internal static double ConvertValue(double value, object parameter, double multiplier, bool? isUp = null)
+        internal static double ConvertValue(double value, object parameter, bool? isUp = null, double multiplier = 100.0)
         {
             /* Process parameter of ColorHslBrush/ColorLabBrush/ColorGrayScaleBrush
              value is double in range [0-1.0]
@@ -154,10 +154,10 @@ namespace WpfInvestigate.Common
                         var newS = hsl.S;
                         var newH = hsl.H;
                         if (pp.Length > 2)
-                            newH = ColorConverterHelper.ConvertValue(hsl.H, pp[pp.Length-3], 360, !_noSplit ? isDarkColor : (bool?)null);
+                            newH = ColorConverterHelper.ConvertValue(hsl.H, pp[pp.Length-3], !_noSplit ? isDarkColor : (bool?)null, 360);
                         if (pp.Length > 1)
-                            newS = ColorConverterHelper.ConvertValue(hsl.S, pp[pp.Length-2], 100, !_noSplit ? isDarkColor : (bool?)null);
-                        var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[pp.Length - 1], 100, !_noSplit ? isDarkColor : (bool?)null);
+                            newS = ColorConverterHelper.ConvertValue(hsl.S, pp[pp.Length-2], !_noSplit ? isDarkColor : (bool?)null);
+                        var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[pp.Length - 1], !_noSplit ? isDarkColor : (bool?)null);
                         hsl = new HSL(newH, newS, newL);
                     }
 
@@ -196,7 +196,7 @@ namespace WpfInvestigate.Common
             {
                 var color = lab.RGB.Color;
                 var isDarkColor = ColorUtils.IsDarkColor(color);
-                var newL = ColorConverterHelper.ConvertValue(lab.L / 100.0, parameter, 100, !_noSplit ? isDarkColor : (bool?)null);
+                var newL = ColorConverterHelper.ConvertValue(lab.L / 100.0, parameter, !_noSplit ? isDarkColor : (bool?)null);
                 if (Tips.GetNotNullableType(targetType) == typeof(Color))
                     return new LAB(newL * 100.0, lab.A, lab.B).RGB.Color;
                 return new SolidColorBrush(new LAB(newL * 100.0, lab.A, lab.B).RGB.Color);
@@ -230,7 +230,7 @@ namespace WpfInvestigate.Common
             {
                 var oldGrayLevel = ColorUtils.GetGrayLevel(new RGB(color.Value)) / 255.0;
                 var isDarkColor = ColorUtils.IsDarkColor(color.Value);
-                var newGrayLevel = ColorConverterHelper.ConvertValue(oldGrayLevel, parameter, 100, !_noSplit ? isDarkColor : (bool?)null);
+                var newGrayLevel = ColorConverterHelper.ConvertValue(oldGrayLevel, parameter, !_noSplit ? isDarkColor : (bool?)null);
                 var newGrayValue = System.Convert.ToByte(newGrayLevel * 255.0);
                 return new SolidColorBrush(Color.FromRgb(newGrayValue, newGrayValue, newGrayValue));
             }
@@ -270,7 +270,7 @@ namespace WpfInvestigate.Common
                         var pp = p.Split(',');
                         if (pp.Length == 2)
                         {
-                            var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[0].Trim(), 100);
+                            var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[0].Trim());
                             var newHsl = new HSL(hsl.H, hsl.S, newL);
                             var offset = double.Parse(pp[1].Trim(), Tips.InvariantCulture);
                             gradientStops.Add(new GradientStop(newHsl.RGB.Color, offset));
