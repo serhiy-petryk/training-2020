@@ -122,7 +122,7 @@ namespace WpfInvestigate.Common
         /// </summary>
         /// <param name="value"></param>
         /// <param name="targetType"></param>
-        /// <param name="parameter">Set of transformations HSL divided by '/'. Every transformation is in format: /lightness changes/ or /saturation changes[; or ,]lightness changes/</param>
+        /// <param name="parameter">Set of transformations HSL divided by '/'. Transformation syntax: 'H:S:L' or 'S:L' or 'L' where H/S/L mean changes of HSL components. See format of changes in comments of ColorConverterHelper.ConvertValue method</param>
         /// <param name="culture"></param>
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
