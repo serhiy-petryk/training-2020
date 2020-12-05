@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using WpfInvestigate.Common;
+using WpfInvestigate.Common.ColorSpaces;
 using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
@@ -99,8 +100,9 @@ namespace WpfInvestigate.Controls
 
         #region ============== Properties/Events  ===================
         public static readonly RoutedEvent TextChangedEvent = EventManager.RegisterRoutedEvent("TextChanged", RoutingStrategy.Direct, typeof(RoutedPropertyChangedEventHandler<string>), typeof(VirtualKeyboard));
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTextChanged));
 
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text",
+            typeof(string), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTextChanged));
         public string Text
         {
             get => (string)GetValue(TextProperty);
@@ -110,6 +112,13 @@ namespace WpfInvestigate.Controls
         {
         }
 
+        public static readonly DependencyProperty BaseHslProperty = DependencyProperty.Register("BaseHsl",
+            typeof(HSL), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null));
+        public HSL BaseHsl
+        {
+            get => (HSL)GetValue(BaseHslProperty);
+            set => SetValue(BaseHslProperty, value);
+        }
         #endregion
     }
 }
