@@ -75,7 +75,6 @@ namespace WpfInvestigate.Controls
             public string BeforeText { get; }
             public string AfterText { get; }
             public Visibility VisibilityCommand => _isCommand ? Visibility.Visible : Visibility.Collapsed;
-            public RelayCommand OnClickCommand { get; }
             public event EventHandler OnClick;
             private bool _isCommand => Label != null;
 
@@ -89,20 +88,7 @@ namespace WpfInvestigate.Controls
                 Label = keyDefinition.Label;
                 BeforeText = keyDefinition.BeforeText;
                 AfterText = keyDefinition.AfterText;
-                OnClickCommand = new RelayCommand(OnClickHandler);
             }
-
-            public string GetKeyText(bool isCapsLock, bool isShifted, bool isExtra)
-            {
-                if (_isCommand) return null;
-                if (isExtra) return ExtraText;
-                if (!isCapsLock)
-                    return isShifted ? ShiftedText : Text;
-                return isShifted? ShiftedCapsText: CapsText;
-            }
-
-            private void OnClickHandler(object p) => OnClick?.Invoke(this, EventArgs.Empty);
-
         }
     }
 }

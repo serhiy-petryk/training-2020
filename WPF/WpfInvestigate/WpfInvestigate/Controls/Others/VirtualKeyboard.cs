@@ -45,14 +45,14 @@ namespace WpfInvestigate.Controls
             if (GetTemplateChild("PART_LanguageSelector") is ToggleButton languageSelector)
                 languageSelector.Checked += (sender, args) => DropDownButtonHelper.OpenDropDownMenu(sender);
 
-            foreach(var key in Tips.GetVisualChildren(this).OfType<FrameworkElement>().Where(a=> a.DataContext is KeyModel))
-                ((KeyModel)key.DataContext).OnClick += Key_OnClick;
+            foreach(var button in Tips.GetVisualChildren(this).OfType<ButtonBase>().Where(a=> a.DataContext is KeyModel))
+                button.Click += Key_OnClick;
 
         }
 
         private void Key_OnClick(object sender, EventArgs e)
         {
-            var model = (KeyModel)sender;
+            var model = (KeyModel)((FrameworkElement)sender).DataContext;
             if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_CAPITAL)
             {
                 IsCapsLock = !IsCapsLock;
