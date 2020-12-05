@@ -9,7 +9,7 @@ namespace WpfInvestigate.Common
 {
     internal static class ColorConverterHelper
     {
-        internal static double ConvertValue(double value, object parameter, bool? isUp = null)
+        internal static double ConvertValue(double value, object parameter, bool? isUp = null, double multiplier = 100.0)
         {
             /* Process parameter of ColorHslBrush/ColorLabBrush/ColorGrayScaleBrush
              value is double in range [0-1.0]
@@ -69,7 +69,7 @@ namespace WpfInvestigate.Common
                 if (double.TryParse(sParameter, NumberStyles.Any, Tips.InvariantCulture, out temp))
                 {
                     double result;
-                    var dParameter = temp / 100.0;
+                    var dParameter = temp / multiplier;
 
                     if (isEqual)
                         return dParameter;
@@ -154,7 +154,7 @@ namespace WpfInvestigate.Common
                         var newS = hsl.S;
                         var newH = hsl.H;
                         if (pp.Length > 2)
-                            newH = ColorConverterHelper.ConvertValue(hsl.H, pp[pp.Length-3], !_noSplit ? isDarkColor : (bool?)null);
+                            newH = ColorConverterHelper.ConvertValue(hsl.H, pp[pp.Length-3], !_noSplit ? isDarkColor : (bool?)null, 360);
                         if (pp.Length > 1)
                             newS = ColorConverterHelper.ConvertValue(hsl.S, pp[pp.Length-2], !_noSplit ? isDarkColor : (bool?)null);
                         var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[pp.Length - 1], !_noSplit ? isDarkColor : (bool?)null);
