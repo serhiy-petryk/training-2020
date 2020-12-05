@@ -37,7 +37,7 @@
                 <Setter Property="ContentTemplate" Value="{StaticResource ButtonContentTemplate}"/>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100,50'}"/>
+                        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100:50'}"/>
                     </Trigger>
                 </Style.Triggers>
             </Style>
@@ -75,7 +75,7 @@
                 <Setter Property="Foreground" Value="{Binding Source={StaticResource PrecisionButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100,50'}"/>
+                        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100:50'}"/>
                     </Trigger>
                 </Style.Triggers>
             </Style>

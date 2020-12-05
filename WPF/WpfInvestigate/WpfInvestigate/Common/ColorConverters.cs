@@ -150,7 +150,8 @@ namespace WpfInvestigate.Common
                     foreach (var p in parameter.ToString().Split('/'))
                     {
                         var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
-                        var pp = p.Split(new[] { ",", ";" }, StringSplitOptions.None);
+                        // var pp = p.Split(new[] { ",", ";" }, StringSplitOptions.None);
+                        var pp = p.Split(':');
                         var newS = hsl.S;
                         var newH = hsl.H;
                         if (pp.Length > 2)

@@ -13,8 +13,8 @@
 
             <colorSpaces:HSL x:Key="BackgroundHsl" Hue="240" Saturation="5" Lightness="5"/>
 
-            <SolidColorBrush x:Key="MouseOverBorderBrush" Color="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='-30,100,50', FallbackValue=Red}"/>
-            <SolidColorBrush x:Key="HighlightBrush" Color="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+60,100,50', FallbackValue=Red}"/>
+            <SolidColorBrush x:Key="MouseOverBorderBrush" Color="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='-30:100:50', FallbackValue=Red}"/>
+            <SolidColorBrush x:Key="HighlightBrush" Color="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+60:100:50', FallbackValue=Red}"/>
 
             <Style x:Key="LanguageContextMenuStyle" TargetType="{x:Type ContextMenu}">
                 <Setter Property="SnapsToDevicePixels" Value="True" />
