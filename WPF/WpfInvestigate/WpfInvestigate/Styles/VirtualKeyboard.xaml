@@ -15,8 +15,8 @@
 
             <SolidColorBrush x:Key="MouseOverBorderBrush" Color="DodgerBlue"/>
             <SolidColorBrush x:Key="HighlightBrush" Color="Magenta"/>
-            
-            <Style TargetType="{x:Type ContextMenu}" x:Key="LanguageContextMenuStyle">
+
+            <Style x:Key="LanguageContextMenuStyle" TargetType="{x:Type ContextMenu}">
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Template">
@@ -30,7 +30,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="MenuItem" x:Key="LanguageItemMenuStyle">
+            <Style x:Key="LanguageItemMenuStyle" TargetType="{x:Type MenuItem}">
                 <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=Background}" />
                 <Setter Property="IsChecked" Value="{Binding IsSelected}"/>
                 <Setter Property="Command" Value="{Binding LanguageSelectCommand}"/>
@@ -61,7 +61,7 @@
                 </Style.Triggers>
             </Style>
 
-            <Style x:Key="KeyButton" TargetType="{x:Type Button}">
+            <Style x:Key="KeyButtonBaseStyle" TargetType="{x:Type ButtonBase}">
                 <Setter Property="OverridesDefaultStyle" Value="True"/>
                 <Setter Property="Margin" Value="{Binding ConverterParameter=0.15%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                 <Setter Property="Focusable" Value="False"/>
@@ -164,7 +164,6 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource MouseOverBorderBrush}"/>
-                                    <Setter Property="Foreground" Value="{StaticResource MouseOverBorderBrush}" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
                                     <Setter TargetName="ContentElement" Property="RenderTransform">
@@ -178,6 +177,17 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <Style x:Key="KeyButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource KeyButtonBaseStyle}"/>
+
+            <Style x:Key="CommandButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource KeyButtonBaseStyle}">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource MouseOverBorderBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
         </Style.Resources>
 
         <Setter Property="UseLayoutRounding" Value="True"/>
@@ -216,20 +226,20 @@
                                         <ColumnDefinition Width="5*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_OEM_3]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_1]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_2]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_3]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_4]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_5]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_6]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_7]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_8]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_9]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_0]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_MINUS]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_OEM_PLUS]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="13" DataContext="{Binding KeyboardSet[VK_BACK]}" Style="{StaticResource KeyButton}"/>
+                                    <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_OEM_3]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_1]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_2]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_3]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_4]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_5]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_6]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_7]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_8]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_9]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_0]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_MINUS]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_OEM_PLUS]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="13" DataContext="{Binding KeyboardSet[VK_BACK]}" Style="{StaticResource CommandButtonStyle}"/>
                                 </Grid>
 
                                 <Grid Grid.Row="1">
@@ -250,20 +260,20 @@
                                         <ColumnDefinition Width="4*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_TAB]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_Q]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_W]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_E]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_R]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_T]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_Y]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_U]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_I]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_O]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_P]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_4]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_OEM_6]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="13" DataContext="{Binding KeyboardSet[VK_OEM_5]}" Style="{StaticResource KeyButton}"/>
+                                    <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_TAB]}" Style="{StaticResource CommandButtonStyle}"/>
+                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_Q]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_W]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_E]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_R]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_T]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_Y]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_U]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_I]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_O]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_P]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_4]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_OEM_6]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="13" DataContext="{Binding KeyboardSet[VK_OEM_5]}" Style="{StaticResource KeyButtonStyle}"/>
                                 </Grid>
 
                                 <Grid Grid.Row="2">
@@ -285,7 +295,7 @@
 
                                     <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_CAPITAL]}">
                                         <Button.Style>
-                                            <Style TargetType="Button" BasedOn="{StaticResource KeyButton}">
+                                            <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock}" Value="True">
                                                         <Setter Property="Foreground" Value="{StaticResource HighlightBrush}"/>
@@ -294,18 +304,18 @@
                                             </Style>
                                         </Button.Style>
                                     </Button>
-                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_A]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_S]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_D]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_F]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_G]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_H]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_J]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_K]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_L]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_OEM_1]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_7]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_RETURN]}" Style="{StaticResource KeyButton}"/>
+                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_A]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_S]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_D]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_F]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_G]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_H]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_J]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_K]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_L]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_OEM_1]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_7]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_RETURN]}" Style="{StaticResource CommandButtonStyle}"/>
                                 </Grid>
 
                                 <Grid Grid.Row="3">
@@ -327,7 +337,7 @@
 
                                     <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_LSHIFT]}">
                                         <Button.Style>
-                                            <Style TargetType="Button" BasedOn="{StaticResource KeyButton}">
+                                            <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted}" Value="True">
                                                         <Setter Property="Foreground" Value="{StaticResource HighlightBrush}"/>
@@ -336,19 +346,19 @@
                                             </Style>
                                         </Button.Style>
                                     </Button>
-                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_Z]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_X]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_C]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_V]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_B]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_N]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_M]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_OEM_COMMA]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_OEM_PERIOD]}" Style="{StaticResource KeyButton}"/>
-                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_OEM_2]}" Style="{StaticResource KeyButton}"/>
+                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_Z]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_X]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_C]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_V]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_B]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_N]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_M]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_OEM_COMMA]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_OEM_PERIOD]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_OEM_2]}" Style="{StaticResource KeyButtonStyle}"/>
                                     <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_RSHIFT]}">
                                         <Button.Style>
-                                            <Style TargetType="Button" BasedOn="{StaticResource KeyButton}">
+                                            <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted}" Value="True">
                                                         <Setter Property="Foreground" Value="{StaticResource HighlightBrush}"/>
@@ -357,7 +367,7 @@
                                             </Style>
                                         </Button.Style>
                                     </Button>
-                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_DELETE]}" Style="{StaticResource KeyButton}"/>
+                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_DELETE]}" Style="{StaticResource CommandButtonStyle}"/>
                                 </Grid>
 
                                 <Grid Grid.Row="4">
@@ -368,7 +378,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_EXTRA]}">
                                         <Button.Style>
-                                            <Style TargetType="Button" BasedOn="{StaticResource KeyButton}">
+                                            <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra}" Value="True">
                                                         <Setter Property="Foreground" Value="{StaticResource HighlightBrush}"/>
@@ -377,7 +387,9 @@
                                             </Style>
                                         </Button.Style>
                                     </Button>
-                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_SPACE]}" Style="{StaticResource KeyButton}"/>
+
+                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_SPACE]}" Style="{StaticResource KeyButtonStyle}"/>
+                                    <!-- Language selector -->
                                     <Border Grid.Column="2" BorderThickness="1"
                                             Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0/19,0.2/12.5,0.9/38,1.0'}"
                                             Margin="{Binding ConverterParameter=0.25%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"

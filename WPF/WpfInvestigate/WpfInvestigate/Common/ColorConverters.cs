@@ -152,10 +152,13 @@ namespace WpfInvestigate.Common
                         var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
                         var pp = p.Split(new[] { ",", ";" }, StringSplitOptions.None);
                         var newS = hsl.S;
+                        var newH = hsl.H;
+                        if (pp.Length > 2)
+                            newH = ColorConverterHelper.ConvertValue(hsl.H, pp[pp.Length-3], !_noSplit ? isDarkColor : (bool?)null);
                         if (pp.Length > 1)
-                            newS = ColorConverterHelper.ConvertValue(hsl.S, pp[0], !_noSplit ? isDarkColor : (bool?)null);
+                            newS = ColorConverterHelper.ConvertValue(hsl.S, pp[pp.Length-2], !_noSplit ? isDarkColor : (bool?)null);
                         var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[pp.Length - 1], !_noSplit ? isDarkColor : (bool?)null);
-                        hsl = new HSL(hsl.H, newS, newL);
+                        hsl = new HSL(newH, newS, newL);
                     }
 
                 if (Tips.GetNotNullableType(targetType) == typeof(Color))
