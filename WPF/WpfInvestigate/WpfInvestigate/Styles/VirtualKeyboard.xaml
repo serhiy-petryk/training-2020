@@ -11,7 +11,7 @@
     <Style TargetType="{x:Type local:VirtualKeyboard}">
         <Style.Resources>
 
-            <colorSpaces:HSL x:Key="DigitButtonHsl" Hue="240" Saturation="50" Lightness="5"/>
+            <colorSpaces:HSL x:Key="BackgroundHsl" Hue="240" Saturation="5" Lightness="5"/>
 
             <SolidColorBrush x:Key="MouseOverBorderBrush" Color="DodgerBlue"/>
             <SolidColorBrush x:Key="HighlightBrush" Color="Magenta"/>
@@ -191,7 +191,7 @@
         </Style.Resources>
 
         <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="Background" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="Background" Value="{Binding Source={StaticResource BackgroundHsl}, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Height" Value="{Binding ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=34.5%}"/>
         <Setter Property="Template">
