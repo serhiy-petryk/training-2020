@@ -40,22 +40,22 @@
         </Setter>
         <Style.Resources>
             <Style TargetType="{x:Type Path}">
-                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground}"/>
             </Style>
         </Style.Resources>
     </Style>
 
     <!-- Base colors are taken from parent control -->
     <Style x:Key="ClearBichromeAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
-        <Setter Property="effects:ChromeEffect.BichromeAnimatedBackground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-        <Setter Property="effects:ChromeEffect.BichromeAnimatedForeground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.BichromeAnimatedBackground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.BichromeAnimatedForeground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:IconEffect.Geometry" Value="{StaticResource CloseGeometry}"/>
     </Style>
 
     <!-- Base color is background of parent panel -->
     <Style x:Key="ClearMonochromeAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
         <Setter Property="Width" Value="20"/>
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100,100"/>
         <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
         <Setter Property="effects:IconEffect.Geometry" Value="{StaticResource CloseGeometry}"/>
@@ -128,7 +128,7 @@
         </Setter>
         <Style.Resources>
             <Style TargetType="{x:Type Path}">
-                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground}"/>
             </Style>
         </Style.Resources>
     </Style>
@@ -205,7 +205,7 @@
         </Setter>
         <Style.Resources>
             <Style TargetType="{x:Type Path}">
-                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground}"/>
             </Style>
         </Style.Resources>
     </Style>
@@ -221,11 +221,11 @@
     <!-- LeftRightDoubleButton -->
     <!-- =============== -->
     <Style x:Key="DoubleBaseButtonStyle" TargetType="{x:Type ButtonBase}">
-        <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=ActualHeight}"/>
-        <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=ActualWidth}"/>
+        <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}}, Path=ActualHeight}"/>
+        <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}}, Path=ActualWidth}"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+70%,+0%,100, +25%,+25%/+75%,+25%/+50%,100, +60%,+60%/+75%,+60%/+20%,100"/>
         <Setter Property="Panel.ZIndex" Value="1"/>
         <Setter Property="UseLayoutRounding" Value="False"/>
@@ -237,7 +237,7 @@
         </Style.Triggers>
         <Style.Resources>
             <Style TargetType="{x:Type Path}">
-                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground}"/>
             </Style>
         </Style.Resources>
     </Style>
@@ -249,8 +249,8 @@
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid SnapsToDevicePixels="True" UseLayoutRounding="True" ClipToBounds="True">
                         <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.BorderWidth}}"
-                                 Points="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.LeftUpPolygonPoints}}">
+                                 StrokeThickness="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.BorderWidth}}"
+                                 Points="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.LeftUpPolygonPoints}}">
                         </Polygon>
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -267,8 +267,8 @@
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid SnapsToDevicePixels="True" UseLayoutRounding="True" ClipToBounds="True">
                         <Polygon Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.BorderWidth}}"
-                                 Points="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.RightDownPolygonPoints}}">
+                                 StrokeThickness="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.BorderWidth}}"
+                                 Points="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}, AncestorLevel=2}, Converter={x:Static common:LeftRightButtonConverter.RightDownPolygonPoints}}">
                         </Polygon>
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"

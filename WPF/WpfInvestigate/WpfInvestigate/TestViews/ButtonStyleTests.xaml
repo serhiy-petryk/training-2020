@@ -206,7 +206,7 @@
                             <ToggleButton.Content>
                                 <Viewbox>
                                     <Path Stretch="Uniform" Data="{StaticResource DemoGeometry}"
-                                          Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
+                                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}"/>
                                 </Viewbox>
                             </ToggleButton.Content>
                         </ToggleButton>
@@ -385,7 +385,7 @@
                             <ToggleButton.Content>
                                 <Viewbox>
                                     <Path Stretch="Uniform" Data="{StaticResource DemoGeometry}"
-                                          Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
+                                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}"/>
                                 </Viewbox>
                             </ToggleButton.Content>
                         </ToggleButton>
@@ -425,7 +425,7 @@
                             <ToggleButton.Content>
                                 <Viewbox>
                                     <Path Stretch="Uniform" Data="{StaticResource DemoGeometry}"
-                                          Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
+                                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}"/>
                                 </Viewbox>
                             </ToggleButton.Content>
                         </ToggleButton>
@@ -492,7 +492,7 @@
                             <ToggleButton.Content>
                                 <Viewbox>
                                     <Path Stretch="Uniform" Data="{StaticResource DemoGeometry}"
-                                          Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}}"/>
+                                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}"/>
                                 </Viewbox>
                             </ToggleButton.Content>
                         </ToggleButton>
@@ -615,7 +615,7 @@
                                       effects:DoubleIconToggleButtonEffect.MarginOn="1 5 1 5">
                             <ToggleButton.Resources>
                                 <Style TargetType="{x:Type Path}">
-                                    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}"/>
+                                    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground}"/>
                                 </Style>
                             </ToggleButton.Resources>
                         </ToggleButton>
@@ -668,70 +668,70 @@
                         <ToolBar x:Name="ToolBar" Background="#FFD6EAFF" Height="32" Margin="0" Padding="0" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch">
                             <Button Margin="0 -1 0 -2" Content="Default" Padding="8 0" VerticalAlignment="Stretch" BorderThickness="1"
                                     Style="{StaticResource MonochromeButtonBaseStyle}"
-                                    effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                    effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"/>
 
                             <Button Margin="0 -1 0 -2" Width="100" Content="BottomRight" Padding="4 0" BorderThickness="1"
                                     Style="{StaticResource MonochromeButtonBaseStyle}"
                                     HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"
-                                    effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                    effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"/>
 
                             <Button Margin="0 -1 0 -2" BorderThickness="1"
                                     Style="{StaticResource MonochromeButtonBaseStyle}"
-                                    effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                    effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                     effects:CornerRadiusEffect.CornerRadius="2"
                                     effects:IconEffect.Geometry="{StaticResource DemoGeometry}"/>
 
                             <Button Margin="0 -1 0 -2" Content="Icon" Padding="2 0 4 0" VerticalAlignment="Stretch" BorderThickness="1"
                                     Style="{StaticResource MonochromeButtonBaseStyle}"
-                                    effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                    effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                     effects:CornerRadiusEffect.CornerRadius="2"
                                     effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                     effects:IconEffect.Margin="4"/>
 
                             <ToggleButton Margin="0 -1 0 -2" Content="Monochrome DropDown" Padding="8 0 2 0" BorderThickness="1"
                                           Style="{StaticResource MonochromeDropDownButtonStyle}"
-                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                             <ToggleButton Margin="0 -1 0 -2" Padding="2" BorderThickness="1"
                                           Style="{StaticResource MonochromeDropDownButtonStyle}"
-                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                             <ToggleButton Margin="0 -1 0 -2" Content="Icon DropDown" Padding="2" BorderThickness="1"
                                           Style="{StaticResource MonochromeDropDownButtonStyle}"
-                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                           effects:IconEffect.Margin="4"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                             <ToggleButton Margin="0 -1 0 -2" Content="DropDown" Padding="8 0 2 0"
                                           Style="{StaticResource DropDownButtonStyle}"
-                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                             <ToggleButton Margin="0 -1 0 -2" Padding="2" BorderThickness="1"
                                           Style="{StaticResource DropDownButtonStyle}"
-                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                             <ToggleButton Margin="0 -1 0 -2" Content="Icon DropDown" Padding="2" BorderThickness="1"
                                           Style="{StaticResource DropDownButtonStyle}"
-                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                           effects:IconEffect.Margin="4"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                             <ToggleButton Margin="0 -1 0 -2" Content="Split button" Padding="8 0" BorderThickness="1"
                                           Style="{StaticResource MonochromeSplitButtonStyle}" 
-                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                             <ToggleButton Margin="0 -1 0 -2" BorderThickness="1"
                                           Style="{StaticResource MonochromeSplitButtonStyle}" 
-                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                             <ToggleButton Margin="0 -1 0 -2" Padding="2 0" BorderThickness="1" Content="Icon"
                                           Style="{StaticResource MonochromeSplitButtonStyle}" 
-                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                          effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                           effects:IconEffect.Margin="4"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
@@ -741,14 +741,14 @@
                         <ToolBar x:Name="ToolBar2" Background="#FFD6EAFF" Height="32" Margin="0 5" Padding="0" ToolBar.OverflowMode="Never" HorizontalAlignment="Stretch">
                             <Button Margin="0 -1 0 -2" Content="Default" Padding="8 0" VerticalAlignment="Stretch" BorderThickness="1"
                                     Style="{StaticResource MonochromeButtonBaseStyle}"
-                                    effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                    effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"/>
 
                             <ToggleButton Margin="0 -1 0 -2" Padding="2"
                                       Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
                                       Focusable="False" IsThreeState="False"
                                       ToolTip="Padding=2"
                                       UseLayoutRounding="False"
-                                      effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                      effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                       effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
                                       effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                                       effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
@@ -758,16 +758,16 @@
                                       Focusable="False" IsThreeState="False"
                                       ToolTip="Padding=1"
                                       UseLayoutRounding="False"
-                                      effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                      effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                       effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
                                       effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                                       effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"
                                       effects:DoubleIconToggleButtonEffect.MarginOn="0 4"/>
 
                             <Grid Margin="5 -1 5 -2" Tag="1"
-                                  Height="{Binding Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2-}"
+                                  Height="{Binding Height, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2-}"
                                   Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
-                                  Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBar}}}">
+                                  Background="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}}">
                                 <RepeatButton Focusable="False" Interval="15" Style="{StaticResource LeftUpDoubleButtonStyle}"
                                               Padding="5 4 19 15"
                                               ToolTip="Scroll window tabs to left"/>

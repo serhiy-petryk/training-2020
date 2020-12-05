@@ -68,8 +68,8 @@
             <Setter.Value>
                 <Viewbox UseLayoutRounding="False">
                     <Grid Width="10" Height="10">
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="0" Y2="10" Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}" />
-                        <Line StrokeThickness="2" X1="0" X2="10" Y1="10" Y2="0" Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Control}}, Path=Foreground}" />
+                        <Line StrokeThickness="2" X1="0" X2="10" Y1="0" Y2="10" Stroke="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground}" />
+                        <Line StrokeThickness="2" X1="0" X2="10" Y1="10" Y2="0" Stroke="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground}" />
                     </Grid>
                 </Viewbox>
             </Setter.Value>
