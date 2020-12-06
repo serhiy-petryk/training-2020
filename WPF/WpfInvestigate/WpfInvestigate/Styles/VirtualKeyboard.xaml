@@ -61,9 +61,9 @@
             <Style x:Key="KeyButtonBaseStyle" TargetType="{x:Type ButtonBase}">
                 <Setter Property="OverridesDefaultStyle" Value="True"/>
                 <Setter Property="Margin" Value="{Binding ConverterParameter=0.15%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BorderThickness}"/>
                 <Setter Property="Focusable" Value="False"/>
-                <Setter Property="FontFamily" Value="Verdana"/>
+                <Setter Property="FontFamily" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=FontFamily}"/>
                 <Setter Property="Background" Value="{Binding ConverterParameter='+38%,0/+19%,0.2/+12.5%,0.9/+38%,1.0', RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:GradientMonochromeBrush.Instance}}"/>
                 <Setter Property="Foreground" Value="{Binding ConverterParameter=+19%/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="UseLayoutRounding" Value="True"/>
@@ -200,8 +200,9 @@
 
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="BaseHsl" Value="240,0,0"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Height" Value="{Binding ConverterParameter=34.5%, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+        <Setter Property="FontFamily" Value="Verdana"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:VirtualKeyboard}">
