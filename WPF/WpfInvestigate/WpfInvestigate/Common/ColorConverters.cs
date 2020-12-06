@@ -271,7 +271,8 @@ namespace WpfInvestigate.Common
                         var pp = p.Split(',');
                         if (pp.Length == 2)
                         {
-                            var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[0].Trim());
+                            var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
+                            var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[0].Trim(), isDarkColor);
                             var newHsl = new HSL(hsl.H, hsl.S, newL);
                             var offset = double.Parse(pp[1].Trim(), Tips.InvariantCulture);
                             gradientStops.Add(new GradientStop(newHsl.RGB.Color, offset));

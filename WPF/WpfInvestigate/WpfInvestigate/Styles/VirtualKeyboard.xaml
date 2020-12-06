@@ -63,8 +63,8 @@
                 <Setter Property="Margin" Value="{Binding ConverterParameter=0.15%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="FontFamily" Value="Verdana"/>
-                <Setter Property="Background" Value="{Binding ConverterParameter='38,0/19,0.2/12.5,0.9/38,1.0', RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:GradientMonochromeBrush.Instance}}"/>
-                <Setter Property="Foreground" Value="{Binding ConverterParameter=19/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                <Setter Property="Background" Value="{Binding ConverterParameter='+38%,0/+19%,0.2/+12.5%,0.9/+38%,1.0', RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:GradientMonochromeBrush.Instance}}"/>
+                <Setter Property="Foreground" Value="{Binding ConverterParameter=+19%/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="UseLayoutRounding" Value="True"/>
                 <Setter Property="FontSize">
                     <Setter.Value>
@@ -110,20 +110,20 @@
                                     <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
                                         <!-- Left-top: Extra key -->
                                         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ExtraText}"
-                                                   Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                   Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                    Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
 
                                         <!-- Caps lock == off -->
                                         <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
                                             <!-- Caps lock = off, Shift == off, Right-top -->
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedText}"
-                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
 
                                             <!-- Caps lock = off, Shift == on, Right-top -->
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Text}"
-                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
 
@@ -144,12 +144,12 @@
                                         <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static common:VisibilityConverter.Instance}}">
                                             <!-- Caps lock = on, Shift == off, Right-top -->
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedCapsText}"
-                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                                             <!-- Caps lock = on, Shift == on, Right-top -->
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding CapsText}"
-                                                       Foreground="{Binding ConverterParameter=19/+75%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                                             <!-- Caps lock = on, Shift == off, center-bottom -->
