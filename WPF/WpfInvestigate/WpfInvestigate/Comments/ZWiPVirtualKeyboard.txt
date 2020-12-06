@@ -28,7 +28,7 @@ Urls:
 1. https://github.com/maximcus/WPFTabTip ??? Не зрозуміло, що це
 
 2. https://github.com/snmslavk/WPF-Keyboard-Control
-    - no multilanguage, text position; +: rus
+    - no multilanguage, text position (only end of text); +: rus
 3. https://github.com/mesta1/WPF-on-screen-keyboard-and-keypad
     -+ no cursor/position, inline textbox,
 4. https://github.com/pauldotknopf/WPFKeyboard ???

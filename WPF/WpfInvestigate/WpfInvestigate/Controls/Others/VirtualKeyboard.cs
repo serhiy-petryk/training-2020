@@ -111,7 +111,15 @@ namespace WpfInvestigate.Controls
         private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
         }
-
+        //==================
+        public static readonly DependencyProperty LinkedTextBoxProperty = DependencyProperty.Register("LinkedTextBox",
+            typeof(TextBox), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null));
+        public TextBox LinkedTextBox
+        {
+            get => (TextBox)GetValue(LinkedTextBoxProperty);
+            set => SetValue(LinkedTextBoxProperty, value);
+        }
+        //=======================
         public static readonly DependencyProperty BaseHslProperty = DependencyProperty.Register("BaseHsl",
             typeof(HSL), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null));
         public HSL BaseHsl
