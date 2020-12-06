@@ -27,21 +27,23 @@
             </Style>
 
             <Style x:Key="LanguageItemMenuStyle" TargetType="{x:Type MenuItem}">
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}" />
-                <Setter Property="Foreground" Value="{Binding ConverterParameter=+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                <Setter Property="Background" Value="{Binding ConverterParameter=+19%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}" />
+                <Setter Property="Foreground" Value="{Binding ConverterParameter=+19%/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="IsChecked" Value="{Binding IsSelected}"/>
                 <Setter Property="Command" Value="{Binding LanguageSelectCommand}"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="{Binding ConverterParameter=0.15%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="MenuItem">
-                            <Border BorderThickness="0" Background="{TemplateBinding Background}" Padding="4 0">
+                            <Border BorderThickness="0" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition MinWidth="30" Width="{Binding ConverterParameter=3%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+                                        <ColumnDefinition MinWidth="24" MaxWidth="48" Width="{Binding ConverterParameter=4%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <ContentControl Grid.Column="0" Content="{Binding Icon}" Margin="3"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding Label}" Margin="4 0 0 0" VerticalAlignment="Center"
+                                    <TextBlock Grid.Column="1" Text="{Binding Label}" Margin="4 0 8 0" VerticalAlignment="Center"
                                                FontSize="{Binding ConverterParameter=1*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"/>
                                 </Grid>
                             </Border>
@@ -50,10 +52,10 @@
                 </Setter>
                 <Style.Triggers>
                     <Trigger Property="IsChecked" Value="True">
-                        <Setter Property="Background" Value="{Binding ConverterParameter=+40%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                        <Setter Property="Background" Value="{Binding ConverterParameter=+19%/+40%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                     </Trigger>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="{Binding ConverterParameter=+20%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                        <Setter Property="Background" Value="{Binding ConverterParameter=+19%/+20%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                     </Trigger>
                 </Style.Triggers>
             </Style>
@@ -201,7 +203,6 @@
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="BaseHsl" Value="240,0,0"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Height" Value="{Binding ConverterParameter=34.5%, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
         <Setter Property="FontFamily" Value="Verdana"/>
         <Setter Property="Template">
             <Setter.Value>
