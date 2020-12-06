@@ -10,6 +10,8 @@
     <Style TargetType="{x:Type local:VirtualKeyboard}">
         <Style.Resources>
 
+            <common:MathConverter x:Key="MathConverter" />
+
             <Style x:Key="LanguageContextMenuStyle" TargetType="{x:Type ContextMenu}">
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -63,7 +65,8 @@
             <Style x:Key="KeyButtonBaseStyle" TargetType="{x:Type ButtonBase}">
                 <Setter Property="OverridesDefaultStyle" Value="True"/>
                 <Setter Property="Margin" Value="{Binding ConverterParameter=0.15%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                <Setter Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BorderThickness}"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="FontFamily" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=FontFamily}"/>
                 <Setter Property="Background" Value="{Binding ConverterParameter='+38%,0/+19%,0.2/+12.5%,0.9/+38%,1.0', RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:GradientMonochromeBrush.Instance}}"/>
@@ -71,7 +74,7 @@
                 <Setter Property="UseLayoutRounding" Value="True"/>
                 <Setter Property="FontSize">
                     <Setter.Value>
-                        <MultiBinding Converter="{x:Static common:MathConverter.Instance}" ConverterParameter="+*900/">
+                        <MultiBinding Converter="{StaticResource MathConverter}" ConverterParameter="+*900/">
                             <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="FontSize" />
                             <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualWidth" />
                             <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualHeight" />
@@ -202,13 +205,14 @@
 
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="BaseHsl" Value="240,0,0"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="5"/>
         <Setter Property="FontFamily" Value="Verdana"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:VirtualKeyboard}">
                     <Grid>
-                        <Border BorderThickness="0" CornerRadius="5" Padding="5"
+                        <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}"
                                 Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -405,7 +409,7 @@
                                     <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="2" IsThreeState="False" IsChecked="False" Style="{StaticResource CommandButtonStyle}">
                                         <ToggleButton.Template>
                                             <ControlTemplate TargetType="ButtonBase">
-                                                <Border x:Name="Border" Padding="4 0 8 0" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
+                                                <Border x:Name="Border" Padding="4 0 8 0" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}"
                                                         Background="{TemplateBinding Background}" CornerRadius="3" UseLayoutRounding="True">
                                                     <Grid x:Name="ContentElement">
                                                         <Grid.ColumnDefinitions>
