@@ -23,6 +23,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Slider Grid.Row="0"
                     x:Name="uiScaleSlider"
@@ -38,7 +40,7 @@
                     AutoToolTipPlacement="BottomRight"
                     AutoToolTipPrecision="2"/>
 
-            <TextBlock Grid.Row="1" Text="HSL:"></TextBlock>
+            <TextBlock Grid.Row="1" Text="HSL:" Margin="0 5 0 0"/>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -77,8 +79,18 @@
                         Value="{Binding ElementName=Keyboard, Path=BaseHsl.Lightness, Mode=TwoWay}"/>
             </Grid>
             <Grid Row="4">
-                <Button Content="X" Click="ChangeHsl_OnClick"></Button>
+                <Button Content="Change hue" Click="ChangeHsl_OnClick"></Button>
             </Grid>
+
+            <TextBlock Grid.Row="5" Text="Font size:" Margin="0 5 0 0"/>
+            <Slider Grid.Row="6"
+                    HorizontalAlignment="Center" VerticalAlignment="Top"
+                    Height="100" 
+                    Minimum="4" Maximum="40"
+                    Orientation="Vertical"
+                    Ticks="1" IsSnapToTickEnabled="False" TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"
+                    Value="{Binding ElementName=Keyboard, Path=FontSize, Mode=TwoWay}"/>
         </Grid>
 
         <Grid Grid.Column="1">
