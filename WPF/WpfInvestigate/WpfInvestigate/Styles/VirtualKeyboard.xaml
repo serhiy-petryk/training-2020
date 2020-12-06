@@ -45,7 +45,7 @@
                                     </Grid.ColumnDefinitions>
                                     <ContentControl Grid.Column="0" Content="{Binding Icon}" Margin="3"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Label}" Margin="4 0 8 0" VerticalAlignment="Center"
-                                               FontSize="{Binding ConverterParameter=1*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"/>
+                                               FontSize="{Binding ConverterParameter=0.7*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"/>
                                 </Grid>
                             </Border>
                         </ControlTemplate>
@@ -70,10 +70,11 @@
                 <Setter Property="FontFamily" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=FontFamily}"/>
                 <Setter Property="Background" Value="{Binding ConverterParameter='+38%,0/+19%,0.2/+12.5%,0.9/+38%,1.0', RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:GradientMonochromeBrush.Instance}}"/>
                 <Setter Property="Foreground" Value="{Binding ConverterParameter=+19%/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="UseLayoutRounding" Value="True"/>
                 <Setter Property="FontSize">
                     <Setter.Value>
-                        <MultiBinding Converter="{StaticResource MathConverter}" ConverterParameter="+*900/">
+                        <MultiBinding Converter="{StaticResource MathConverter}" ConverterParameter="+*650/">
                             <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="FontSize" />
                             <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualWidth" />
                             <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualHeight" />
@@ -83,23 +84,24 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ButtonBase}">
-                            <Border x:Name="Border" UseLayoutRounding="True" BorderThickness="{TemplateBinding BorderThickness}" Padding="0" BorderBrush="{TemplateBinding BorderBrush}"
+                            <Border x:Name="Border" UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" Padding="0" BorderBrush="{TemplateBinding BorderBrush}"
                                     Background="{TemplateBinding Background}" CornerRadius="3">
                                 <Grid x:Name="ContentElement">
                                     <!-- Command -->
                                     <StackPanel Visibility="{Binding VisibilityCommand}" Orientation="Horizontal" HorizontalAlignment="Center">
                                         <TextBlock Margin="0 0 2 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding BeforeText}"
                                                    Visibility="{Binding BeforeText, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                                   FontSize="{Binding ConverterParameter=1.45*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}">
+                                                   FontSize="{Binding ConverterParameter=1.05*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}">
                                             <TextBlock.RenderTransform>
                                                 <TranslateTransform Y="-1.5" />
                                             </TextBlock.RenderTransform>
                                         </TextBlock>
                                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Label}"
-                                                   FontSize="{Binding ConverterParameter=0.85*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"/>
+                                                   FontSize="{Binding ConverterParameter=0.6*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"/>
                                         <TextBlock Margin="5 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding AfterText}"
                                                    Visibility="{Binding AfterText, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                                   FontSize="{Binding ConverterParameter=1.45*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}">
+                                                   FontSize="{Binding ConverterParameter=1.05*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}">
                                             <TextBlock.RenderTransform>
                                                 <TranslateTransform Y="-1.5" />
                                             </TextBlock.RenderTransform>
@@ -108,14 +110,14 @@
 
                                     <!-- Extra mode -->
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ExtraText}"
-                                               Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                               FontSize="{Binding ConverterParameter=1.4*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"/>
+                                               Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
                                     <!-- Common mode -->
                                     <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
                                         <!-- Left-top: Extra key -->
                                         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ExtraText}"
                                                    Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                   FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
                                                    Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
 
                                         <!-- Caps lock == off -->
@@ -124,24 +126,24 @@
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedText}"
                                                        Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                                                       FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
 
                                             <!-- Caps lock = off, Shift == on, Right-top -->
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Text}"
                                                        Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                       FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
 
                                             <!-- Caps lock = off, Shift == off, center-bottom -->
                                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Text}" Foreground="{TemplateBinding Foreground}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
-                                                       FontSize="{Binding ConverterParameter=1.4*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
 
                                             <!-- Caps lock = off, Shift == on, center-bottom -->
                                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding ShiftedText}" Foreground="{TemplateBinding Foreground}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                                       FontSize="{Binding ConverterParameter=1.4*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                                         </Grid>
 
@@ -151,21 +153,21 @@
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedCapsText}"
                                                        Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                                                       FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                                             <!-- Caps lock = on, Shift == on, Right-top -->
                                             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding CapsText}"
                                                        Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                       FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                                             <!-- Caps lock = on, Shift == off, center-bottom -->
                                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding CapsText}" Foreground="{TemplateBinding Foreground}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
-                                                       FontSize="{Binding ConverterParameter=1.4*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                                             <!-- Caps lock = on, Shift = on, center-bottom -->
                                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding ShiftedCapsText}" Foreground="{TemplateBinding Foreground}"
                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                                       FontSize="{Binding ConverterParameter=1.4*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
                                                        Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                                         </Grid>
                                     </Grid>
@@ -202,236 +204,237 @@
 
         </Style.Resources>
 
-        <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="BaseHsl" Value="240,0,0"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="FontFamily" Value="Verdana"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:VirtualKeyboard}">
-                    <Grid>
-                        <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}"
-                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                </Grid.RowDefinitions>
+                    <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}"
+                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
 
-                                <Grid Grid.Row="0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="5*"/>
-                                    </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="5*"/>
+                                </Grid.ColumnDefinitions>
 
-                                    <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_OEM_3]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_1]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_2]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_3]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_4]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_5]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_6]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_7]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_8]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_9]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_0]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_MINUS]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_OEM_PLUS]}" Style="{DynamicResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="13" DataContext="{Binding KeyboardSet[VK_BACK]}" Style="{DynamicResource CommandButtonStyle}"/>
-                                </Grid>
-
-                                <Grid Grid.Row="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="4*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="4*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_TAB]}" Style="{StaticResource CommandButtonStyle}"/>
-                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_Q]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_W]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_E]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_R]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_T]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_Y]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_U]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_I]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_O]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_P]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_4]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_OEM_6]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="13" DataContext="{Binding KeyboardSet[VK_OEM_5]}" Style="{StaticResource KeyButtonStyle}"/>
-                                </Grid>
-
-                                <Grid Grid.Row="2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="5.5*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="5.5*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_CAPITAL]}">
-                                        <Button.Style>
-                                            <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock}" Value="True">
-                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
-                                    </Button>
-                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_A]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_S]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_D]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_F]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_G]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_H]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_J]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_K]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_L]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_OEM_1]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_7]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_RETURN]}" Style="{StaticResource CommandButtonStyle}"/>
-                                </Grid>
-
-                                <Grid Grid.Row="3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="7*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="4*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_LSHIFT]}">
-                                        <Button.Style>
-                                            <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted}" Value="True">
-                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
-                                    </Button>
-                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_Z]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_X]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_C]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_V]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_B]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_N]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_M]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_OEM_COMMA]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_OEM_PERIOD]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_OEM_2]}" Style="{StaticResource KeyButtonStyle}"/>
-                                    <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_RSHIFT]}">
-                                        <Button.Style>
-                                            <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted}" Value="True">
-                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
-                                    </Button>
-                                    <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_DELETE]}" Style="{StaticResource CommandButtonStyle}"/>
-                                </Grid>
-
-                                <Grid Grid.Row="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="9*"/>
-                                        <ColumnDefinition Width="23*"/>
-                                        <ColumnDefinition Width="12*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_EXTRA]}">
-                                        <Button.Style>
-                                            <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra}" Value="True">
-                                                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
-                                    </Button>
-
-                                    <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_SPACE]}" Style="{StaticResource KeyButtonStyle}"/>
-
-                                    <!-- Language selector -->
-                                    <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="2" IsThreeState="False" IsChecked="False" Style="{StaticResource CommandButtonStyle}">
-                                        <ToggleButton.Template>
-                                            <ControlTemplate TargetType="ButtonBase">
-                                                <Border x:Name="Border" Padding="4 0 8 0" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}"
-                                                        Background="{TemplateBinding Background}" CornerRadius="3" UseLayoutRounding="True">
-                                                    <Grid x:Name="ContentElement">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="{Binding ConverterParameter=2%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=SelectedKeyboardLayout.Label}"/>
-                                                        <Viewbox Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12">
-                                                            <Path Fill="{TemplateBinding Foreground}" Data="M0 0 L1 1 L2 0 Z"/>
-                                                        </Viewbox>
-                                                    </Grid>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </ToggleButton.Template>
-                                        <ToggleButton.Resources>
-                                            <ContextMenu x:Key="cm" StaysOpen="False" ItemsSource="{Binding AvailableKeyboardLayouts}" Style="{StaticResource LanguageContextMenuStyle}" ItemContainerStyle="{StaticResource LanguageItemMenuStyle}"/>
-                                        </ToggleButton.Resources>
-                                    </ToggleButton>
-
-                                </Grid>
+                                <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_OEM_3]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_1]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_2]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_3]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_4]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_5]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_6]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_7]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_8]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_9]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_0]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_MINUS]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_OEM_PLUS]}" Style="{DynamicResource KeyButtonStyle}"/>
+                                <Button Grid.Column="13" DataContext="{Binding KeyboardSet[VK_BACK]}" Style="{DynamicResource CommandButtonStyle}"/>
                             </Grid>
-                        </Border>
-                    </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="4*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_TAB]}" Style="{StaticResource CommandButtonStyle}"/>
+                                <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_Q]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_W]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_E]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_R]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_T]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_Y]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_U]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_I]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_O]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_P]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_4]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_OEM_6]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="13" DataContext="{Binding KeyboardSet[VK_OEM_5]}" Style="{StaticResource KeyButtonStyle}"/>
+                            </Grid>
+
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5.5*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="5.5*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_CAPITAL]}">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock}" Value="True">
+                                                    <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_A]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_S]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_D]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_F]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_G]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_H]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_J]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_K]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_L]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_OEM_1]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_OEM_7]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_RETURN]}" Style="{StaticResource CommandButtonStyle}"/>
+                            </Grid>
+
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="7*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_LSHIFT]}">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted}" Value="True">
+                                                    <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_Z]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_X]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_C]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="4" DataContext="{Binding KeyboardSet[VK_V]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="5" DataContext="{Binding KeyboardSet[VK_B]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="6" DataContext="{Binding KeyboardSet[VK_N]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="7" DataContext="{Binding KeyboardSet[VK_M]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_OEM_COMMA]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_OEM_PERIOD]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_OEM_2]}" Style="{StaticResource KeyButtonStyle}"/>
+                                <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_RSHIFT]}">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted}" Value="True">
+                                                    <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_DELETE]}" Style="{StaticResource CommandButtonStyle}"/>
+                            </Grid>
+
+                            <Grid Grid.Row="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="9*"/>
+                                    <ColumnDefinition Width="23*"/>
+                                    <ColumnDefinition Width="12*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_EXTRA]}">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra}" Value="True">
+                                                    <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_SPACE]}" Style="{StaticResource KeyButtonStyle}"/>
+
+                                <!-- Language selector -->
+                                <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="2" IsThreeState="False" IsChecked="False" Style="{StaticResource CommandButtonStyle}">
+                                    <ToggleButton.Template>
+                                        <ControlTemplate TargetType="ButtonBase">
+                                            <Border x:Name="Border" Padding="4 0 8 0" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}"
+                                                    Background="{TemplateBinding Background}" CornerRadius="3">
+                                                <Grid x:Name="ContentElement">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="{Binding ConverterParameter=2%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                               FontSize="{Binding ConverterParameter=0.7*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
+                                                               Text="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=SelectedKeyboardLayout.Label}"/>
+                                                    <Viewbox Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12">
+                                                        <Path Fill="{TemplateBinding Foreground}" Data="M0 0 L1 1 L2 0 Z"/>
+                                                    </Viewbox>
+                                                </Grid>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                    <ToggleButton.Resources>
+                                        <ContextMenu x:Key="cm" StaysOpen="False" ItemsSource="{Binding AvailableKeyboardLayouts}" Style="{StaticResource LanguageContextMenuStyle}" ItemContainerStyle="{StaticResource LanguageItemMenuStyle}"/>
+                                    </ToggleButton.Resources>
+                                </ToggleButton>
+                            </Grid>
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
