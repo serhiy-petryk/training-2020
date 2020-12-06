@@ -108,6 +108,33 @@ namespace WpfInvestigate.Common
             }
             return value;
         }
+
+        /// <summary>
+        /// Return HSL which is modified according to the parameter
+        /// </summary>
+        /// <param name="hsl"></param>
+        /// <param name="parameter">See parameter format in comment of internal ColorConverterHelper.ConvertValue method</param>
+        /// <param name="noSplit"></param>
+        /// <returns></returns>
+        internal static HSL ModifyHsl(HSL hsl, string parameter, bool noSplit)
+        {
+            foreach (var p in parameter.Split('/'))
+            {
+                var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
+                var pp = p.Split(':');
+                var newS = hsl.S;
+                var newH = hsl.H;
+                if (pp.Length > 2)
+                    newH = ConvertValue(hsl.H, pp[pp.Length - 3], !noSplit ? isDarkColor : (bool?) null, 360);
+                if (pp.Length > 1)
+                    newS = ConvertValue(hsl.S, pp[pp.Length - 2], !noSplit ? isDarkColor : (bool?) null);
+                var newL = ConvertValue(hsl.L, pp[pp.Length - 1], !noSplit ? isDarkColor : (bool?) null);
+                hsl = new HSL(newH, newS, newL);
+            }
+
+            return hsl;
+        }
+
     }
 
     public class ColorHslBrush : IValueConverter
@@ -146,21 +173,8 @@ namespace WpfInvestigate.Common
 
             if (hsl != null)
             {
-                if (parameter is string)
-                    foreach (var p in parameter.ToString().Split('/'))
-                    {
-                        var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
-                        // var pp = p.Split(new[] { ",", ";" }, StringSplitOptions.None);
-                        var pp = p.Split(':');
-                        var newS = hsl.S;
-                        var newH = hsl.H;
-                        if (pp.Length > 2)
-                            newH = ColorConverterHelper.ConvertValue(hsl.H, pp[pp.Length-3], !_noSplit ? isDarkColor : (bool?)null, 360);
-                        if (pp.Length > 1)
-                            newS = ColorConverterHelper.ConvertValue(hsl.S, pp[pp.Length-2], !_noSplit ? isDarkColor : (bool?)null);
-                        var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[pp.Length - 1], !_noSplit ? isDarkColor : (bool?)null);
-                        hsl = new HSL(newH, newS, newL);
-                    }
+                if (parameter is string p)
+                    hsl = ColorConverterHelper.ModifyHsl(hsl, p, _noSplit);
 
                 if (Tips.GetNotNullableType(targetType) == typeof(Color))
                     return hsl.RGB.GetColor(oldColor?.A / 255.0 ?? 1.0);
@@ -271,9 +285,7 @@ namespace WpfInvestigate.Common
                         var pp = p.Split(',');
                         if (pp.Length == 2)
                         {
-                            var isDarkColor = ColorUtils.IsDarkColor(hsl.RGB.Color);
-                            var newL = ColorConverterHelper.ConvertValue(hsl.L, pp[0].Trim(), isDarkColor);
-                            var newHsl = new HSL(hsl.H, hsl.S, newL);
+                            var newHsl = ColorConverterHelper.ModifyHsl(hsl, pp[0], true);
                             var offset = double.Parse(pp[1].Trim(), Tips.InvariantCulture);
                             gradientStops.Add(new GradientStop(newHsl.RGB.Color, offset));
                         }
