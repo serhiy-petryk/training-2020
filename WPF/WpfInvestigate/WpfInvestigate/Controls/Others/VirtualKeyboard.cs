@@ -70,6 +70,8 @@ namespace WpfInvestigate.Controls
                 OnPropertiesChanged(nameof(IsExtra));
             }
 
+            // ToDo: Tab(+Shift), Enter
+
             EditTextBox(model);
         }
 
