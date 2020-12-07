@@ -92,7 +92,8 @@
                                     Background="{TemplateBinding Background}" CornerRadius="3">
                                 <Grid x:Name="ContentElement">
                                     <!-- Command -->
-                                    <StackPanel Visibility="{Binding VisibilityCommand}" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                                Visibility="{Binding IsCommand, Converter={x:Static common:VisibilityConverter.Instance}}">
                                         <TextBlock Margin="0 0 2 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding BeforeText}"
                                                    Visibility="{Binding BeforeText, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                    FontSize="{Binding ConverterParameter=1.05*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}">

@@ -285,7 +285,7 @@ namespace WpfInvestigate.Common
                         var pp = p.Split(',');
                         if (pp.Length == 2)
                         {
-                            var newHsl = ColorConverterHelper.ModifyHsl(hsl, pp[0], true);
+                            var newHsl = ColorConverterHelper.ModifyHsl(hsl, pp[0], false);
                             var offset = double.Parse(pp[1].Trim(), Tips.InvariantCulture);
                             gradientStops.Add(new GradientStop(newHsl.RGB.Color, offset));
                         }
