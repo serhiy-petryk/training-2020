@@ -127,7 +127,7 @@ namespace WpfInvestigate.Controls
                 // Focused textbox & set selection
                 if (!LinkedTextBox.IsFocused)
                     LinkedTextBox.Focus();
-                LinkedTextBox.SelectionStart = cursorPosition + newText.Length;
+                LinkedTextBox.SelectionStart = cursorPosition + (newText ?? "").Length;
             }
         }
 

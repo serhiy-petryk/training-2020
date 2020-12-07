@@ -95,7 +95,7 @@ namespace WpfInvestigate.Controls
                     new KeyDefinition(KeyCode.VK_DELETE, "Del", null),
                     // <!-- -->
                     new KeyDefinition(KeyCode.VK_EXTRA, "Extra", null ), //0x2A01),
-                    new KeyDefinition(KeyCode.VK_SPACE, null, null),
+                    new KeyDefinition(KeyCode.VK_SPACE, ' ', ' ', false),
                     new KeyDefinition(KeyCode.VK_LEFT, "←", null),
                     new KeyDefinition(KeyCode.VK_RIGHT, "→", null)
                 };
