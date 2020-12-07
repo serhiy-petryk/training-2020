@@ -667,22 +667,22 @@
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
                     <themes:SystemDropShadowChrome Name="Shdw" Color="Transparent" SnapsToDevicePixels="true">
                         <Border Name="ContextMenuBorder" Background="{TemplateBinding Control.Background}"
-                    BorderBrush="{TemplateBinding Control.BorderBrush}"
-                    BorderThickness="{TemplateBinding Control.BorderThickness}">
+                                BorderBrush="{TemplateBinding Control.BorderBrush}"
+                                BorderThickness="{TemplateBinding Control.BorderThickness}">
                             <ScrollViewer Name="ContextMenuScrollViewer" Grid.ColumnSpan="2" Margin="1,0"
-                            Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
+                                          Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
                                 <Grid RenderOptions.ClearTypeHint="Enabled">
                                     <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
                                         <Rectangle Name="OpaqueRect" Height="{Binding ElementName=ContextMenuBorder, Path=ActualHeight}"
-                               Width="{Binding ElementName=ContextMenuBorder, Path=ActualWidth}"
-                               Fill="{Binding ElementName=ContextMenuBorder, Path=Background}"/>
+                                                   Width="{Binding ElementName=ContextMenuBorder, Path=ActualWidth}"
+                                                   Fill="{Binding ElementName=ContextMenuBorder, Path=Background}"/>
                                     </Canvas>
                                     <Rectangle Fill="#F1F1F1" HorizontalAlignment="Left" Width="28" Margin="1,2" RadiusX="2" RadiusY="2"/>
                                     <Rectangle HorizontalAlignment="Left" Width="1" Margin="29,2,0,2" Fill="#E2E3E3"/>
                                     <Rectangle HorizontalAlignment="Left" Width="1" Margin="30,2,0,2" Fill="White"/>
                                     <ItemsPresenter Name="ItemsPresenter" Margin="{TemplateBinding Control.Padding}"
-                                  KeyboardNavigation.DirectionalNavigation="Cycle"
-                                  SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                                                    KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                    SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
                                 </Grid>
                             </ScrollViewer>
                         </Border>
