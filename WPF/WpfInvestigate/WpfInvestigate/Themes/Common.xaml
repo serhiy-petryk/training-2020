@@ -175,6 +175,11 @@
         </Setter>
     </Style>
 
+    <Style TargetType="{x:Type RepeatButton}">
+        <Setter Property="Delay" Value="500"/>
+        <Setter Property="Interval" Value="30"/>
+    </Style>
+
     <Style TargetType="DatePickerTextBox">
         <Setter Property="Background" Value="Transparent"/>
     </Style>
