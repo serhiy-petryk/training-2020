@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfInvestigate.Controls"
-                    xmlns:common="clr-namespace:WpfInvestigate.Common"
-                    xmlns:effects="clr-namespace:WpfInvestigate.Effects">
+                    xmlns:common="clr-namespace:WpfInvestigate.Common">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Flags.xaml" />
@@ -85,129 +84,14 @@
                         </MultiBinding>
                     </Setter.Value>
                 </Setter>
-                <Setter Property="effects:ClickEffect.ShiftOffsetOnClick" Value="1.5"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ButtonBase}">
                             <Border x:Name="Border" UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                     BorderThickness="{TemplateBinding BorderThickness}" Padding="0" BorderBrush="{TemplateBinding BorderBrush}"
                                     Background="{TemplateBinding Background}" CornerRadius="3">
-
-                                <Border.Resources>
-                                    <Storyboard x:Key="NormalState">
-                                        <ColorAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="Transparent" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
-                                    </Storyboard>
-                                    <Storyboard x:Key="MouseOverState">
-                                        <ColorAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="{Binding ConverterParameter=100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
-                                    </Storyboard>
-                                </Border.Resources>
-
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal" Storyboard="{StaticResource NormalState}"/>
-                                        <VisualState x:Name="MouseOver" Storyboard="{StaticResource MouseOverState}"/>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-
-                                <ContentControl>
-                                    <Grid>
-                                        <!-- Extra mode -->
-                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ExtraText}"
-                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-
-                                        <!-- Common mode -->
-                                        <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
-                                            <!-- Left-top: Extra key -->
-                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ExtraText}"
-                                                       Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                                       FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
-                                                       Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-
-                                            <!-- Caps lock == off -->
-                                            <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
-                                                <!-- Caps lock = off, Shift == off, Right-top -->
-                                                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedText}"
-                                                           Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                                           Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
-                                                           FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
-                                                           Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                                                <!-- Caps lock = off, Shift == on, Right-top -->
-                                                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Text}"
-                                                           Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                                           Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                                           FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
-                                                           Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                                                <!-- Caps lock = off, Shift == off, center-bottom -->
-                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Text}" Foreground="{TemplateBinding Foreground}"
-                                                           Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
-                                                           Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                                                <!-- Caps lock = off, Shift == on, center-bottom -->
-                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding ShiftedText}" Foreground="{TemplateBinding Foreground}"
-                                                           Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                                           Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                                            </Grid>
-
-                                            <!-- Caps lock == on -->
-                                            <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static common:VisibilityConverter.Instance}}">
-                                                <!-- Caps lock = on, Shift == off, Right-top -->
-                                                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedCapsText}"
-                                                           Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                                           Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
-                                                           FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
-                                                           Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                                                <!-- Caps lock = on, Shift == on, Right-top -->
-                                                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding CapsText}"
-                                                           Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                                           Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                                           FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
-                                                           Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                                                <!-- Caps lock = on, Shift == off, center-bottom -->
-                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding CapsText}" Foreground="{TemplateBinding Foreground}"
-                                                           Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
-                                                           Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                                                <!-- Caps lock = on, Shift = on, center-bottom -->
-                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding ShiftedCapsText}" Foreground="{TemplateBinding Foreground}"
-                                                           Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                                           Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                </ContentControl>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <Style x:Key="KeyButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource KeyButtonBaseStyle}"/>
-
-            <Style x:Key="CommandButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource KeyButtonBaseStyle}">
-                <Setter Property="Background" Value="{Binding ConverterParameter='+30:+15%:+38%,0/+30:+15%:+19%,0.2/+30:+15%:+12.5%,0.9/+30:+15%:+38%,1.0', RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:GradientMonochromeBrush.Instance}}"/>
-                <Setter Property="Foreground" Value="{Binding ConverterParameter=+30:+15%:+19%/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type ButtonBase}">
-                            <Border x:Name="Border" UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    BorderThickness="{TemplateBinding BorderThickness}" Padding="0" BorderBrush="{TemplateBinding BorderBrush}"
-                                    Background="{TemplateBinding Background}" CornerRadius="3">
-
-                                <Border.Resources>
-                                    <Storyboard x:Key="NormalState">
-                                        <ColorAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="Transparent" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
-                                    </Storyboard>
-                                    <Storyboard x:Key="MouseOverState">
-                                        <ColorAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="{Binding ConverterParameter=+45:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}" Duration="{x:Static common:AnimationHelper.AnimationDurationSlow}" />
-                                    </Storyboard>
-                                </Border.Resources>
-
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal" Storyboard="{StaticResource NormalState}"/>
-                                        <VisualState x:Name="MouseOver" Storyboard="{StaticResource MouseOverState}"/>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-
-                                <ContentControl>
+                                <Grid x:Name="ContentElement">
+                                    <!-- Command -->
                                     <StackPanel Visibility="{Binding VisibilityCommand}" Orientation="Horizontal" HorizontalAlignment="Center">
                                         <TextBlock Margin="0 0 2 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding BeforeText}"
                                                    Visibility="{Binding BeforeText, Converter={x:Static common:VisibilityConverter.Instance}}"
@@ -227,11 +111,101 @@
                                             </TextBlock.RenderTransform>
                                         </TextBlock>
                                     </StackPanel>
-                                </ContentControl>
+
+                                    <!-- Extra mode -->
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ExtraText}"
+                                               Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+
+                                    <!-- Common mode -->
+                                    <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
+                                        <!-- Left-top: Extra key -->
+                                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ExtraText}"
+                                                   Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                   FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
+                                                   Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+
+                                        <!-- Caps lock == off -->
+                                        <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
+                                            <!-- Caps lock = off, Shift == off, Right-top -->
+                                            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedText}"
+                                                       Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                                                       FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
+                                                       Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+
+                                            <!-- Caps lock = off, Shift == on, Right-top -->
+                                            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Text}"
+                                                       Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                       FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
+                                                       Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+
+                                            <!-- Caps lock = off, Shift == off, center-bottom -->
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Text}" Foreground="{TemplateBinding Foreground}"
+                                                       Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                                                       Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+
+                                            <!-- Caps lock = off, Shift == on, center-bottom -->
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding ShiftedText}" Foreground="{TemplateBinding Foreground}"
+                                                       Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                       Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+                                        </Grid>
+
+                                        <!-- Caps lock == on -->
+                                        <Grid Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                            <!-- Caps lock = on, Shift == off, Right-top -->
+                                            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftedCapsText}"
+                                                       Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                                                       FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
+                                                       Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+                                            <!-- Caps lock = on, Shift == on, Right-top -->
+                                            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding CapsText}"
+                                                       Foreground="{Binding ConverterParameter=+19%/+65%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                       Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                       FontSize="{Binding ConverterParameter=0.75*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"
+                                                       Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+                                            <!-- Caps lock = on, Shift == off, center-bottom -->
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding CapsText}" Foreground="{TemplateBinding Foreground}"
+                                                       Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                                                       Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+                                            <!-- Caps lock = on, Shift = on, center-bottom -->
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding ShiftedCapsText}" Foreground="{TemplateBinding Foreground}"
+                                                       Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                       Padding="{Binding ConverterParameter=0.5%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
                             </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="ContentElement" Property="RenderTransform">
+                                        <Setter.Value>
+                                            <TranslateTransform Y="1.5" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="BorderBrush" Value="{Binding ConverterParameter=100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="KeyButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource KeyButtonBaseStyle}"/>
+
+            <Style x:Key="CommandButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource KeyButtonBaseStyle}">
+                <Setter Property="Background" Value="{Binding ConverterParameter='+30:+15%:+38%,0/+30:+15%:+19%,0.2/+30:+15%:+12.5%,0.9/+30:+15%:+38%,1.0', RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:GradientMonochromeBrush.Instance}}"/>
+                <Setter Property="Foreground" Value="{Binding ConverterParameter=+30:+15%:+19%/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="BorderBrush" Value="{Binding ConverterParameter=+45:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
             <Style x:Key="ArrowButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource CommandButtonStyle}">
@@ -458,8 +432,7 @@
                                 <RepeatButton Grid.Column="3" DataContext="{Binding KeyboardSet[VK_RIGHT]}" Style="{StaticResource ArrowButtonStyle}"/>
 
                                 <!-- Language selector -->
-                                <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="4" IsThreeState="False" IsChecked="False" Style="{StaticResource CommandButtonStyle}"
-                                              effects:ClickEffect.ShiftOffsetOnClick="0">
+                                <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="4" IsThreeState="False" IsChecked="False" Style="{StaticResource CommandButtonStyle}">
                                     <ToggleButton.Template>
                                         <ControlTemplate TargetType="ButtonBase">
                                             <Border x:Name="Border" Padding="4 0 8 0" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}"

@@ -75,7 +75,6 @@ namespace WpfInvestigate.Controls
             public string BeforeText { get; }
             public string AfterText { get; }
             public Visibility VisibilityCommand => IsCommand ? Visibility.Visible : Visibility.Collapsed;
-            public event EventHandler OnClick;
             public bool IsCommand => Label != null;
 
             public KeyModel(KeyDefinition keyDefinition)
