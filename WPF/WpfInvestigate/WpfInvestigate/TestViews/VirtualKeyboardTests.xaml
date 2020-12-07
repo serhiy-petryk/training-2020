@@ -87,7 +87,7 @@
             <Slider Grid.Row="6"
                     HorizontalAlignment="Center" VerticalAlignment="Top"
                     Height="100" 
-                    Minimum="4" Maximum="40"
+                    Minimum="7" Maximum="16"
                     Orientation="Vertical"
                     Ticks="1" IsSnapToTickEnabled="False" TickPlacement="BottomRight"
                     AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"
@@ -99,8 +99,8 @@
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -108,9 +108,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <controls:VirtualKeyboard x:Name="Keyboard" Grid.Row="0" Grid.Column="0" Margin="5" effects:CornerRadiusEffect.CornerRadius="8"
+            <TextBox x:Name="TestTextBox" Grid.Row="0" FontSize="16"/>
+            <controls:VirtualKeyboard x:Name="Keyboard" Grid.Row="1" Grid.Column="0" Margin="5" effects:CornerRadiusEffect.CornerRadius="8"
                                       BorderThickness="2" BorderBrush="Aqua" LinkedTextBox="{Binding ElementName=TestTextBox}"/>
-            <TextBox x:Name="TestTextBox" Grid.Row="1"/>
             <Label Grid.Row="2" Margin="0 10 0 0" Content="Original design from https://github.com/simple0812/keyboard (no license):"/>
             <temp:OriginalVirtualKeyboard x:Name="OriginalKeyboard" Grid.Row="3" Grid.Column="0" Margin="5"/>
         </Grid>

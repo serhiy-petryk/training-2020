@@ -15,7 +15,7 @@ namespace WpfInvestigate.Controls
                     VK_TAB, VK_Q, VK_W, VK_E, VK_R, VK_T, VK_Y, VK_U, VK_I, VK_O, VK_P, VK_OEM_4, VK_OEM_6, VK_OEM_5, // second row
                     VK_CAPITAL, VK_A, VK_S, VK_D, VK_F, VK_G, VK_H, VK_J, VK_K, VK_L, VK_OEM_1, VK_OEM_7, VK_RETURN,// thirs row
                     VK_LSHIFT, VK_Z, VK_X, VK_C, VK_V, VK_B, VK_N, VK_M, VK_OEM_COMMA, VK_OEM_PERIOD, VK_OEM_2, VK_RSHIFT, // forth row
-                    VK_SPACE, VK_DELETE, VK_EXTRA
+                    VK_SPACE, VK_LEFT, VK_RIGHT, VK_DELETE, VK_EXTRA 
                 }
 
                 public static Dictionary<string, Tuple<KeyDefinition[], Dictionary<KeyCode, int>>> LanguageDefinitions;
@@ -95,7 +95,9 @@ namespace WpfInvestigate.Controls
                     new KeyDefinition(KeyCode.VK_DELETE, "Del", null),
                     // <!-- -->
                     new KeyDefinition(KeyCode.VK_EXTRA, "Extra", null ), //0x2A01),
-                    new KeyDefinition(KeyCode.VK_SPACE, null, null)
+                    new KeyDefinition(KeyCode.VK_SPACE, null, null),
+                    new KeyDefinition(KeyCode.VK_LEFT, "←", null),
+                    new KeyDefinition(KeyCode.VK_RIGHT, "→", null)
                 };
 
                 private static KeyDefinition[] de = {

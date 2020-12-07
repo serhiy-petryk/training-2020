@@ -64,6 +64,7 @@
             <Style x:Key="KeyButtonBaseStyle" TargetType="{x:Type ButtonBase}">
                 <Setter Property="OverridesDefaultStyle" Value="True"/>
                 <Setter Property="Margin" Value="{Binding ConverterParameter=0.15%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
+                <Setter Property="Padding" Value="0"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Focusable" Value="False"/>
@@ -98,6 +99,7 @@
                                             </TextBlock.RenderTransform>
                                         </TextBlock>
                                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Label}"
+                                                   Padding="{TemplateBinding Padding}"
                                                    FontSize="{Binding ConverterParameter=0.6*, RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"/>
                                         <TextBlock Margin="5 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding AfterText}"
                                                    Visibility="{Binding AfterText, Converter={x:Static common:VisibilityConverter.Instance}}"
@@ -202,6 +204,19 @@
                         <Setter Property="BorderBrush" Value="{Binding ConverterParameter=+45:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                     </Trigger>
                 </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ArrowButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource CommandButtonStyle}">
+                <Setter Property="Padding" Value="0 0 0 4"/>
+                <Setter Property="FontSize">
+                    <Setter.Value>
+                        <MultiBinding Converter="{StaticResource MathConverter}" ConverterParameter="+*325/">
+                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="FontSize" />
+                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualWidth" />
+                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualHeight" />
+                        </MultiBinding>
+                    </Setter.Value>
+                </Setter>
             </Style>
 
         </Style.Resources>
@@ -391,9 +406,11 @@
 
                             <Grid Grid.Row="4">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="9*"/>
-                                    <ColumnDefinition Width="23*"/>
-                                    <ColumnDefinition Width="12*"/>
+                                    <ColumnDefinition Width="8.5*"/>
+                                    <ColumnDefinition Width="18.5*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="11*"/>
                                 </Grid.ColumnDefinitions>
                                 <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_EXTRA]}">
                                     <Button.Style>
@@ -409,8 +426,11 @@
 
                                 <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_SPACE]}" Style="{StaticResource KeyButtonStyle}"/>
 
+                                <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_LEFT]}" Style="{StaticResource ArrowButtonStyle}"/>
+                                <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_RIGHT]}" Style="{StaticResource ArrowButtonStyle}"/>
+
                                 <!-- Language selector -->
-                                <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="2" IsThreeState="False" IsChecked="False" Style="{StaticResource CommandButtonStyle}">
+                                <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="4" IsThreeState="False" IsChecked="False" Style="{StaticResource CommandButtonStyle}">
                                     <ToggleButton.Template>
                                         <ControlTemplate TargetType="ButtonBase">
                                             <Border x:Name="Border" Padding="4 0 8 0" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}"

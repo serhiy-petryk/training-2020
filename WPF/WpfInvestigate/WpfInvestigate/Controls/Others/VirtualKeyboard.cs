@@ -69,8 +69,64 @@ namespace WpfInvestigate.Controls
                 IsExtra = !IsExtra;
                 OnPropertiesChanged(nameof(IsExtra));
             }
-            else if (!model.IsCommand)
-                Text += model.GetKeyText(IsCapsLock, IsShifted, IsExtra);
+
+            EditTextBox(model);
+        }
+
+        private void EditTextBox(KeyModel keyModel)
+        {
+            if (LinkedTextBox != null && !LinkedTextBox.IsReadOnly && LinkedTextBox.IsEnabled)
+            {
+                var cursorPosition = LinkedTextBox.SelectionStart;
+                string newText = "";
+                if (!keyModel.IsCommand)
+                {
+                    newText = keyModel.GetKeyText(IsCapsLock, IsShifted, IsExtra);
+                    LinkedTextBox.Text = LinkedTextBox.Text.Substring(0, cursorPosition) + newText +
+                                         LinkedTextBox.Text.Substring(cursorPosition + LinkedTextBox.SelectionLength);
+
+                }
+                else if (keyModel.Id == KeyModel.KeyDefinition.KeyCode.VK_LEFT)
+                {
+                    if (cursorPosition > 0) cursorPosition--;
+                }
+                else if (keyModel.Id == KeyModel.KeyDefinition.KeyCode.VK_RIGHT)
+                {
+                    if (cursorPosition < LinkedTextBox.Text.Length) cursorPosition++;
+                }
+                else if (keyModel.Id == KeyModel.KeyDefinition.KeyCode.VK_BACK)
+                {
+                    if (LinkedTextBox.SelectionLength > 0)
+                    {
+                        LinkedTextBox.Text = LinkedTextBox.Text.Substring(0, cursorPosition) +
+                                             LinkedTextBox.Text.Substring(cursorPosition + LinkedTextBox.SelectionLength);
+                    }
+                    else if (cursorPosition > 0)
+                    {
+                        LinkedTextBox.Text = LinkedTextBox.Text.Substring(0, cursorPosition - 1) +
+                                             LinkedTextBox.Text.Substring(cursorPosition);
+                        cursorPosition--;
+                    }
+                }
+                else if (keyModel.Id == KeyModel.KeyDefinition.KeyCode.VK_DELETE)
+                {
+                    if (LinkedTextBox.SelectionLength > 0)
+                    {
+                        LinkedTextBox.Text = LinkedTextBox.Text.Substring(0, cursorPosition) +
+                                             LinkedTextBox.Text.Substring(cursorPosition + LinkedTextBox.SelectionLength);
+                    }
+                    else if (cursorPosition < LinkedTextBox.Text.Length)
+                    {
+                        LinkedTextBox.Text = LinkedTextBox.Text.Substring(0, cursorPosition) +
+                                             LinkedTextBox.Text.Substring(cursorPosition + 1);
+                    }
+                }
+
+                // Focused textbox & set selection
+                if (!LinkedTextBox.IsFocused)
+                    LinkedTextBox.Focus();
+                LinkedTextBox.SelectionStart = cursorPosition + newText.Length;
+            }
         }
 
         private void Language_OnSelect(object sender, EventArgs e)
