@@ -182,14 +182,14 @@
                             </controls:NumericBox>
 
                             <Button Grid.Column="2" Grid.Row="1" Style="{DynamicResource OperatorButtonStyle}" Content="%" CommandParameter="%"/>
-                            <RepeatButton Grid.Column="3" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="⌫" CommandParameter="Backspace" Interval="30" Delay="500"/>
+                            <RepeatButton Grid.Column="3" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="⌫" CommandParameter="Backspace"/>
                             <Button Grid.Column="4" Grid.Row="1" Style="{DynamicResource ClearButtonStyle}" Content="Ｃ" CommandParameter="Clear"/>
 
                             <Button Grid.Column="0" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="7" CommandParameter="7"/>
                             <Button Grid.Column="1" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="8" CommandParameter="8"/>
                             <Button Grid.Column="2" Grid.Row="2" Style="{DynamicResource DigitButtonStyle}" Content="9" CommandParameter="9"/>
-                            <RepeatButton Grid.Column="3" Grid.Row="2" Style="{DynamicResource OperatorButtonStyle}" Content="－1" CommandParameter="--" Interval="30" Delay="500"/>
-                            <RepeatButton Grid.Column="4" Grid.Row="2" Style="{DynamicResource OperatorButtonStyle}" Content="＋1" CommandParameter="++" Interval="30" Delay="500"/>
+                            <RepeatButton Grid.Column="3" Grid.Row="2" Style="{DynamicResource OperatorButtonStyle}" Content="－1" CommandParameter="--"/>
+                            <RepeatButton Grid.Column="4" Grid.Row="2" Style="{DynamicResource OperatorButtonStyle}" Content="＋1" CommandParameter="++"/>
 
                             <Button Grid.Column="0" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="4" CommandParameter="4"/>
                             <Button Grid.Column="1" Grid.Row="3" Style="{DynamicResource DigitButtonStyle}" Content="5" CommandParameter="5"/>
