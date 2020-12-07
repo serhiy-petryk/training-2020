@@ -222,6 +222,14 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource CommandButtonStyle}">
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
         </Style.Resources>
 
         <Setter Property="BaseHsl" Value="240,0,0"/>
@@ -330,17 +338,7 @@
                                     <ColumnDefinition Width="5.5*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_CAPITAL]}">
-                                    <Button.Style>
-                                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsCapsLock}" Value="True">
-                                                    <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
+                                <ToggleButton Grid.Column="0" DataContext="{Binding KeyboardSet[VK_CAPITAL]}" Style="{StaticResource ToggleButtonStyle}"/>
                                 <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_A]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_S]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_D]}" Style="{StaticResource KeyButtonStyle}"/>
@@ -372,17 +370,7 @@
                                     <ColumnDefinition Width="3*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_LSHIFT]}">
-                                    <Button.Style>
-                                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted}" Value="True">
-                                                    <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
+                                <ToggleButton Grid.Column="0" DataContext="{Binding KeyboardSet[VK_LSHIFT]}" Style="{StaticResource ToggleButtonStyle}"/>
                                 <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_Z]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_X]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_C]}" Style="{StaticResource KeyButtonStyle}"/>
@@ -393,17 +381,7 @@
                                 <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_OEM_COMMA]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_OEM_PERIOD]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_OEM_2]}" Style="{StaticResource KeyButtonStyle}"/>
-                                <Button Grid.Column="11" DataContext="{Binding KeyboardSet[VK_RSHIFT]}">
-                                    <Button.Style>
-                                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsShifted}" Value="True">
-                                                    <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
+                                <ToggleButton Grid.Column="11" DataContext="{Binding KeyboardSet[VK_RSHIFT]}" Style="{StaticResource ToggleButtonStyle}"/>
                                 <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_DELETE]}" Style="{StaticResource CommandButtonStyle}"/>
                             </Grid>
 
@@ -415,20 +393,9 @@
                                     <ColumnDefinition Width="3*"/>
                                     <ColumnDefinition Width="11*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" DataContext="{Binding KeyboardSet[VK_EXTRA]}">
-                                    <Button.Style>
-                                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=IsExtra}" Value="True">
-                                                    <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
 
+                                <ToggleButton Grid.Column="0" DataContext="{Binding KeyboardSet[VK_EXTRA]}" Style="{StaticResource ToggleButtonStyle}"/>
                                 <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_SPACE]}" Style="{StaticResource KeyButtonStyle}"/>
-
                                 <RepeatButton Grid.Column="2" DataContext="{Binding KeyboardSet[VK_LEFT]}" Style="{StaticResource ArrowButtonStyle}"/>
                                 <RepeatButton Grid.Column="3" DataContext="{Binding KeyboardSet[VK_RIGHT]}" Style="{StaticResource ArrowButtonStyle}"/>
 

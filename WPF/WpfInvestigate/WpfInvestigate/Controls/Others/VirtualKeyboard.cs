@@ -56,17 +56,17 @@ namespace WpfInvestigate.Controls
             var model = (KeyModel)((FrameworkElement)sender).DataContext;
             if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_CAPITAL)
             {
-                IsCapsLock = !IsCapsLock;
+                IsCapsLock = Equals(((ToggleButton)sender).IsChecked, true);
                 OnPropertiesChanged(nameof(IsCapsLock));
             }
             else if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_LSHIFT || model.Id == KeyModel.KeyDefinition.KeyCode.VK_RSHIFT)
             {
-                IsShifted = !IsShifted;
+                IsShifted = Equals(((ToggleButton)sender).IsChecked, true);
                 OnPropertiesChanged(nameof(IsShifted));
             }
             else if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_EXTRA)
             {
-                IsExtra = !IsExtra;
+                IsExtra = Equals(((ToggleButton)sender).IsChecked, true);
                 OnPropertiesChanged(nameof(IsExtra));
             }
 
