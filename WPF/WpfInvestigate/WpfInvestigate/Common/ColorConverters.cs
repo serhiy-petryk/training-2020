@@ -175,15 +175,14 @@ namespace WpfInvestigate.Common
             {
                 if (parameter is string p)
                     hsl = ColorConverterHelper.ModifyHsl(hsl, p, _noSplit);
-
-                if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                    return hsl.RGB.GetColor(oldColor?.A / 255.0 ?? 1.0);
-                return new SolidColorBrush(hsl.RGB.GetColor(oldColor?.A / 255.0 ?? 1.0));
+                if (targetType.IsAssignableFrom(typeof(SolidColorBrush)))
+                    return new SolidColorBrush(hsl.RGB.GetColor(oldColor?.A / 255.0 ?? 1.0));
+                return hsl.RGB.GetColor(oldColor?.A / 255.0 ?? 1.0);
             }
 
-            if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                return Colors.Transparent;
-            return Brushes.Transparent;
+            if (targetType.IsAssignableFrom(typeof(SolidColorBrush)))
+                return Brushes.Transparent;
+            return Colors.Transparent;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
@@ -212,15 +211,15 @@ namespace WpfInvestigate.Common
                 var color = lab.RGB.Color;
                 var isDarkColor = ColorUtils.IsDarkColor(color);
                 var newL = ColorConverterHelper.ConvertValue(lab.L / 100.0, parameter, !_noSplit ? isDarkColor : (bool?)null);
-                if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                    return new LAB(newL * 100.0, lab.A, lab.B).RGB.Color;
-                return new SolidColorBrush(new LAB(newL * 100.0, lab.A, lab.B).RGB.Color);
 
+                if (targetType.IsAssignableFrom(typeof(SolidColorBrush)))
+                    return new SolidColorBrush(new LAB(newL * 100.0, lab.A, lab.B).RGB.Color);
+                return new LAB(newL * 100.0, lab.A, lab.B).RGB.Color;
             }
 
-            if (Tips.GetNotNullableType(targetType) == typeof(Color))
-                return Colors.Transparent;
-            return Brushes.Transparent;
+            if (targetType.IsAssignableFrom(typeof(SolidColorBrush)))
+                return Brushes.Transparent;
+            return Colors.Transparent;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
