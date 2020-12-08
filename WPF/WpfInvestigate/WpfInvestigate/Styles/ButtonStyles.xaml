@@ -279,4 +279,9 @@
         </Setter>
     </Style>
 
+    <Style TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DefaultButtonBaseStyle}">
+        <Setter Property="Delay" Value="500"/>
+        <Setter Property="Interval" Value="30"/>
+    </Style>
+
 </ResourceDictionary>

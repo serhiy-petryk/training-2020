@@ -24,21 +24,6 @@
     <Geometry x:Key="WarningGeometry">M0 0Z M16 16Z M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 5zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z</Geometry>
     <Geometry x:Key="InfoGeometry">M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z</Geometry>
     <Geometry x:Key="SuccessGeometry">M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z</Geometry>
-    <!-- Calculator Geometries (from https://materialdesignicons.com/), size=24x24 -->
-    <Geometry x:Key="Numeric-0-Geometry">M11,7A2,2 0 0,0 9,9V15A2,2 0 0,0 11,17H13A2,2 0 0,0 15,15V9A2,2 0 0,0 13,7H11M11,9H13V15H11V9Z</Geometry>
-    <Geometry x:Key="Numeric-1-Geometry">M10,7V9H12V17H14V7H10Z</Geometry>
-    <Geometry x:Key="Numeric-2-Geometry">M9,7V9H13V11H11A2,2 0 0,0 9,13V17H11L15,17V15H11V13H13A2,2 0 0,0 15,11V9A2,2 0 0,0 13,7H9Z</Geometry>
-    <Geometry x:Key="Numeric-3-Geometry">M15,15V13.5A1.5,1.5 0 0,0 13.5,12A1.5,1.5 0 0,0 15,10.5V9C15,7.89 14.1,7 13,7H9V9H13V11H11V13H13V15H9V17H13A2,2 0 0,0 15,15</Geometry>
-    <Geometry x:Key="Numeric-4-Geometry">M9,7V13H13V17H15V7H13V11H11V7H9Z</Geometry>
-    <!--<Geometry x:Key="Numeric-5-Geometry"></Geometry>
-    <Geometry x:Key="Numeric-6-Geometry"></Geometry>
-    <Geometry x:Key="Numeric-7-Geometry"></Geometry>
-    <Geometry x:Key="Numeric-8-Geometry"></Geometry>
-    <Geometry x:Key="Numeric-9-Geometry"></Geometry>-->
-    <Geometry x:Key="Calculator-Decrease-Geometry">M13 7V9H15V17H17V7H13M11 13H5V11H11V13Z</Geometry>
-    <Geometry x:Key="Calculator-Increase-Geometry">M13 7V9H15V17H17V7H13M11 13H9V15H7V13H5V11H7V9H9V11H11V13Z</Geometry>
-    <Geometry x:Key="Calculator-Increase2-Geometry">F1 M4 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11A.5.5 0 0 1 4 2z M6.354 11.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L4 12.793l1.646-1.647a.5.5 0 0 1 .708 0z M9.598 5.82c.054.621.625 1.278 1.761 1.278 1.422 0 2.145-.98 2.145-2.848 0-2.05-.973-2.688-2.063-2.688-1.125 0-1.972.688-1.972 1.836 0 1.145.808 1.758 1.719 1.758.69 0 1.113-.351 1.261-.742h.059c.031 1.027-.309 1.856-1.133 1.856-.43 0-.715-.227-.773-.45H9.598zm2.757-2.43c0 .637-.43.973-.933.973-.516 0-.934-.34-.934-.98 0-.625.407-1 .926-1 .543 0 .941.375.941 1.008zM12.438 14V8.668H11.39l-1.262.906v.969l1.21-.86h.052V14h1.046z</Geometry>
-    <Geometry x:Key="Calculator-PlusMinus-Geometry"> M11,4V9H6V11H11V16H13V11H18V9H13V4H11M6,18V20H18V18H6Z</Geometry>
     <!-- TextBox button -->
     <Geometry x:Key="KeyboardGeometry">M0 0Z M24 24Z M19,10H17V8H19M19,13H17V11H19M16,10H14V8H16M16,13H14V11H16M16,17H8V15H16M7,10H5V8H7M7,13H5V11H7M8,11H10V13H8M8,8H10V10H8M11,11H13V13H11M11,8H13V10H11M20,5H4C2.89,5 2,5.89 2,7V17A2,2 0 0,0 4,19H20A2,2 0 0,0 22,17V7C22,5.89 21.1,5 20,5Z</Geometry>
 
@@ -173,11 +158,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type RepeatButton}">
-        <Setter Property="Delay" Value="500"/>
-        <Setter Property="Interval" Value="30"/>
     </Style>
 
     <Style TargetType="DatePickerTextBox">
