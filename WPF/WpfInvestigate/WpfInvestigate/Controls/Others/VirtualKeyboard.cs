@@ -172,6 +172,14 @@ namespace WpfInvestigate.Controls
             get => (HSL)GetValue(BaseHslProperty);
             set => SetValue(BaseHslProperty, value);
         }
+        //=======================
+        public static readonly DependencyProperty BaseFontSizeProperty = DependencyProperty.Register("BaseFontSize",
+            typeof(double), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(0.0));
+        public double BaseFontSize
+        {
+            get => (double)GetValue(BaseFontSizeProperty);
+            set => SetValue(BaseFontSizeProperty, value);
+        }
         #endregion
     }
 }

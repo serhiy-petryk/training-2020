@@ -76,15 +76,7 @@
                 <Setter Property="Foreground" Value="{Binding ConverterParameter=+19%/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="UseLayoutRounding" Value="True"/>
-                <Setter Property="FontSize">
-                    <Setter.Value>
-                        <MultiBinding Converter="{StaticResource MathConverter}" ConverterParameter="+*650/">
-                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="FontSize" />
-                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualWidth" />
-                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualHeight" />
-                        </MultiBinding>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseFontSize}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -220,15 +212,7 @@
 
             <Style x:Key="ArrowButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource CommandButtonStyle}">
                 <Setter Property="Padding" Value="0 0 0 4"/>
-                <Setter Property="FontSize">
-                    <Setter.Value>
-                        <MultiBinding Converter="{StaticResource MathConverter}" ConverterParameter="+*325/">
-                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="FontSize" />
-                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualWidth" />
-                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualHeight" />
-                        </MultiBinding>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="FontSize" Value="{Binding ConverterParameter=2*, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseFontSize, Converter={x:Static common:MathConverter.Instance}}"/>
             </Style>
 
             <Style x:Key="LanguageSelectorButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource DefaultButtonBaseStyle}">
@@ -242,15 +226,7 @@
                 <Setter Property="Background" Value="{Binding ConverterParameter='+30:+15%:+38%,0/+30:+15%:+19%,0.2/+30:+15%:+12.5%,0.9/+30:+15%:+38%,1.0', RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:GradientMonochromeBrush.Instance}}"/>
                 <Setter Property="Foreground" Value="{Binding ConverterParameter=+30:+15%:+19%/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="Margin" Value="{Binding ConverterParameter=0.15%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                <Setter Property="FontSize">
-                    <Setter.Value>
-                        <MultiBinding Converter="{StaticResource MathConverter}" ConverterParameter="+*1000/">
-                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="FontSize" />
-                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualWidth" />
-                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualHeight" />
-                        </MultiBinding>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="FontSize" Value="{Binding ConverterParameter=0.7*, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseFontSize, Converter={x:Static common:MathConverter.Instance}}"/>
                 <Setter Property="FontFamily" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=FontFamily}"/>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
@@ -262,6 +238,15 @@
         </Style.Resources>
 
         <Setter Property="BaseHsl" Value="240,0,0"/>
+        <Setter Property="BaseFontSize">
+            <Setter.Value>
+                <MultiBinding Converter="{StaticResource MathConverter}" ConverterParameter="+*650/">
+                    <Binding RelativeSource="{RelativeSource Self}" Path="FontSize" />
+                    <Binding RelativeSource="{RelativeSource Self}" Path="ActualWidth" />
+                    <Binding RelativeSource="{RelativeSource Self}" Path="ActualHeight" />
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="FontFamily" Value="Verdana"/>
