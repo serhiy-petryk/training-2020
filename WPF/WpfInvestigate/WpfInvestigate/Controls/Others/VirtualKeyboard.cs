@@ -46,7 +46,7 @@ namespace WpfInvestigate.Controls
             if (GetTemplateChild("PART_LanguageSelector") is ToggleButton languageSelector)
                 languageSelector.Checked += (sender, args) => DropDownButtonHelper.OpenDropDownMenu(sender);
 
-            foreach(var button in Tips.GetVisualChildren(this).OfType<ButtonBase>().Where(a=> a.DataContext is KeyModel))
+            foreach (var button in Tips.GetVisualChildren(this).OfType<ButtonBase>().Where(a => a.DataContext is KeyModel))
                 button.Click += Key_OnClick;
 
         }

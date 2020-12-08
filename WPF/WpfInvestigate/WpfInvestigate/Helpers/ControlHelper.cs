@@ -62,6 +62,7 @@ namespace WpfInvestigate.Helpers
                 grid.Children.Add(viewbox);
                 Grid.SetColumn(viewbox, iconBeforeContent ? 0 : 1);
 
+                var contentBinding = control.GetBindingExpression(ContentControl.ContentProperty);
                 var contentControl = new ContentPresenter
                 {
                     Content = control.Content,
@@ -69,6 +70,9 @@ namespace WpfInvestigate.Helpers
                     VerticalAlignment = control.VerticalContentAlignment,
                     HorizontalAlignment = control.HorizontalContentAlignment
                 };
+                if (contentBinding != null)
+                    contentControl.SetBinding(ContentControl.ContentProperty, contentBinding.ParentBinding);
+
                 control.Content = null;
                 control.Padding = new Thickness();
                 // tb.VerticalContentAlignment = VerticalAlignment.Stretch;
