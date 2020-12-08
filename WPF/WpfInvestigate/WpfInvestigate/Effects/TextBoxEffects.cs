@@ -3,12 +3,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Controls;
 
 namespace WpfInvestigate.Effects
 {
@@ -59,8 +60,6 @@ namespace WpfInvestigate.Effects
                 {
                     if (element.Name.Contains("Clear"))
                         element.PreviewMouseLeftButtonDown -= ClearButton_Click;
-                    else if (element.Name.Contains("Keyboard"))
-                        element.PreviewMouseLeftButtonDown -= KeyboardButton_Click;
 
                     grid.Children.Remove(element);
                 }
@@ -104,10 +103,12 @@ namespace WpfInvestigate.Effects
                 if ((buttons.Value & Buttons.Keyboard) == Buttons.Keyboard)
                 {
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto, Name = GridColumnPrefix + "Keyboard" });
-                    var keyboardButton = new Button
+                    // Add keyboard button
+                    var keyboardButton = new ToggleButton
                     {
                         Name = ElementPrefix + "Keyboard",
                         Width = 16, Focusable = false, IsTabStop = false, 
+                        IsThreeState = false,
                         Margin = new Thickness(0),
                         Padding = new Thickness(0),
                         VerticalAlignment = VerticalAlignment.Stretch
@@ -126,9 +127,43 @@ namespace WpfInvestigate.Effects
                     });
 
                     IconEffect.SetGeometry(keyboardButton, Application.Current.FindResource("KeyboardGeometry") as Geometry);
-                    keyboardButton.PreviewMouseLeftButtonDown += KeyboardButton_Click;
                     grid.Children.Add(keyboardButton);
                     Grid.SetColumn(keyboardButton, grid.ColumnDefinitions.Count - 1);
+
+                    // Add popup
+                    var keyboardControl = new VirtualKeyboard { LinkedTextBox = textBox };
+                    var shellControl = new PopupResizeControl { DoesContentSupportElasticLayout = true, Content = keyboardControl };
+                    CornerRadiusEffect.SetCornerRadius(shellControl, new CornerRadius(3));
+                    var popup = new Popup
+                    {
+                        Name = ElementPrefix + "Popup",
+                        Width = 700,
+                        Height = 250,
+                        AllowsTransparency = true,
+                        Focusable = false,
+                        Placement = PlacementMode.Bottom,
+                        PlacementTarget = textBox,
+                        PopupAnimation = PopupAnimation.Fade,
+                        StaysOpen = false,
+                        Child = shellControl
+                    };
+
+                    grid.Children.Add(popup);
+                    Grid.SetColumn(popup, grid.ColumnDefinitions.Count - 1);
+
+                    // Set bindings between button and popup
+                    popup.SetBinding(Popup.IsOpenProperty, new Binding
+                    {
+                        Source = keyboardButton,
+                        Path = new PropertyPath(ToggleButton.IsCheckedProperty)
+                    });
+
+                    keyboardButton.SetBinding(UIElement.IsHitTestVisibleProperty,
+                        new Binding
+                        {
+                            Source = popup, Path = new PropertyPath(Popup.IsOpenProperty),
+                            Converter = MathConverter.Instance, ConverterParameter = "!"
+                        });
                 }
 
                 if ((buttons.Value & Buttons.Clear) == Buttons.Clear)
@@ -149,10 +184,6 @@ namespace WpfInvestigate.Effects
                     Grid.SetColumn(clearButton, grid.ColumnDefinitions.Count - 1);
                 }
             }
-        }
-
-        private static void KeyboardButton_Click(object sender, MouseButtonEventArgs e)
-        {
         }
 
         private static void ClearButton_Click(object sender, RoutedEventArgs e)
