@@ -210,6 +210,14 @@
                 </Style.Triggers>
             </Style>
 
+            <Style x:Key="CommandToggleButtonStyle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource CommandButtonStyle}">
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
             <Style x:Key="ArrowButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource CommandButtonStyle}">
                 <Setter Property="Padding" Value="0 0 0 4"/>
                 <Setter Property="FontSize">
@@ -223,27 +231,26 @@
                 </Setter>
             </Style>
 
-            <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource CommandButtonStyle}">
-                <Style.Triggers>
-                    <Trigger Property="IsChecked" Value="True">
-                        <Setter Property="Foreground" Value="{Binding ConverterParameter=+60:100:50, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
             <Style x:Key="LanguageSelectorButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource DefaultButtonBaseStyle}">
                 <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="IsThreeState" Value="False"/>
                 <Setter Property="effects:DoubleIconToggleButtonEffect.GeometryOff" Value="{StaticResource DownArrowGeometry}"/>
                 <Setter Property="effects:DoubleIconToggleButtonEffect.GeometryOn" Value="{StaticResource CloseGeometry}"/>
-                <Setter Property="effects:DoubleIconToggleButtonEffect.Width" Value="{Binding ConverterParameter=0.5*, RelativeSource={RelativeSource AncestorType=ContentControl}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"/>
+                <Setter Property="effects:DoubleIconToggleButtonEffect.Width" Value="{Binding ConverterParameter=0.7*, RelativeSource={RelativeSource Self}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"/>
                 <Setter Property="effects:DoubleIconToggleButtonEffect.MarginOff" Value="0 0 8 0"/>
                 <Setter Property="effects:DoubleIconToggleButtonEffect.MarginOn" Value="0 0 8 0"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
                 <Setter Property="Background" Value="{Binding ConverterParameter='+30:+15%:+38%,0/+30:+15%:+19%,0.2/+30:+15%:+12.5%,0.9/+30:+15%:+38%,1.0', RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:GradientMonochromeBrush.Instance}}"/>
                 <Setter Property="Foreground" Value="{Binding ConverterParameter=+30:+15%:+19%/+90%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="Margin" Value="{Binding ConverterParameter=0.15%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
-                <Setter Property="FontSize" Value="{Binding ConverterParameter=0.7*, RelativeSource={RelativeSource AncestorType=ContentControl}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}}"/>
+                <Setter Property="FontSize">
+                    <Setter.Value>
+                        <MultiBinding Converter="{StaticResource MathConverter}" ConverterParameter="+*1000/">
+                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="FontSize" />
+                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualWidth" />
+                            <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualHeight" />
+                        </MultiBinding>
+                    </Setter.Value>
+                </Setter>
                 <Setter Property="FontFamily" Value="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=FontFamily}"/>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
@@ -266,16 +273,7 @@
                     <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}"
                             UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseHsl.Self, Converter={x:Static common:ColorHslBrush.Instance}}">
-                        <ContentControl>
-                            <ContentControl.FontSize>
-                                    <MultiBinding Converter="{StaticResource MathConverter}" ConverterParameter="+*650/">
-                                        <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="FontSize" />
-                                        <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualWidth" />
-                                        <Binding RelativeSource="{RelativeSource AncestorType=local:VirtualKeyboard}" Path="ActualHeight" />
-                                    </MultiBinding>
-                            </ContentControl.FontSize>
-
-                            <Grid>
+                        <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
@@ -369,7 +367,7 @@
                                     <ColumnDefinition Width="5.5*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <ToggleButton Grid.Column="0" DataContext="{Binding KeyboardSet[VK_CAPITAL]}" Style="{StaticResource ToggleButtonStyle}"/>
+                                <ToggleButton Grid.Column="0" DataContext="{Binding KeyboardSet[VK_CAPITAL]}" Style="{StaticResource CommandToggleButtonStyle}"/>
                                 <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_A]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_S]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_D]}" Style="{StaticResource KeyButtonStyle}"/>
@@ -401,7 +399,7 @@
                                     <ColumnDefinition Width="3*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <ToggleButton Grid.Column="0" DataContext="{Binding KeyboardSet[VK_LSHIFT]}" Style="{StaticResource ToggleButtonStyle}"/>
+                                <ToggleButton Grid.Column="0" DataContext="{Binding KeyboardSet[VK_LSHIFT]}" Style="{StaticResource CommandToggleButtonStyle}"/>
                                 <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_Z]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="2" DataContext="{Binding KeyboardSet[VK_X]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="3" DataContext="{Binding KeyboardSet[VK_C]}" Style="{StaticResource KeyButtonStyle}"/>
@@ -412,7 +410,7 @@
                                 <Button Grid.Column="8" DataContext="{Binding KeyboardSet[VK_OEM_COMMA]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="9" DataContext="{Binding KeyboardSet[VK_OEM_PERIOD]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <Button Grid.Column="10" DataContext="{Binding KeyboardSet[VK_OEM_2]}" Style="{StaticResource KeyButtonStyle}"/>
-                                <ToggleButton Grid.Column="11" DataContext="{Binding KeyboardSet[VK_RSHIFT]}" Style="{StaticResource ToggleButtonStyle}"/>
+                                <ToggleButton Grid.Column="11" DataContext="{Binding KeyboardSet[VK_RSHIFT]}" Style="{StaticResource CommandToggleButtonStyle}"/>
                                 <Button Grid.Column="12" DataContext="{Binding KeyboardSet[VK_DELETE]}" Style="{StaticResource CommandButtonStyle}"/>
                             </Grid>
 
@@ -425,13 +423,11 @@
                                     <ColumnDefinition Width="11*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <ToggleButton Grid.Column="0" DataContext="{Binding KeyboardSet[VK_EXTRA]}" Style="{StaticResource ToggleButtonStyle}"/>
+                                <ToggleButton Grid.Column="0" DataContext="{Binding KeyboardSet[VK_EXTRA]}" Style="{StaticResource CommandToggleButtonStyle}"/>
                                 <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_SPACE]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <RepeatButton Grid.Column="2" DataContext="{Binding KeyboardSet[VK_LEFT]}" Style="{StaticResource ArrowButtonStyle}"/>
                                 <RepeatButton Grid.Column="3" DataContext="{Binding KeyboardSet[VK_RIGHT]}" Style="{StaticResource ArrowButtonStyle}"/>
-
-                                <!-- Language selector -->
-                                    <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="4" Padding="4 0 2 0" HorizontalContentAlignment="Left"
+                                <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="4" IsThreeState="False" Padding="4 0 2 0" HorizontalContentAlignment="Left"
                                               Content="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=SelectedKeyboardLayout.Label}"
                                               Style="{StaticResource LanguageSelectorButtonStyle}">
                                     <ToggleButton.Resources>
@@ -439,10 +435,9 @@
                                                      Style="{StaticResource LanguageContextMenuStyle}" ItemContainerStyle="{StaticResource LanguageItemMenuStyle}"/>
                                     </ToggleButton.Resources>
                                 </ToggleButton>
-
                             </Grid>
+
                         </Grid>
-                            </ContentControl>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
