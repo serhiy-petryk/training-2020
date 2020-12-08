@@ -157,19 +157,6 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #region ============== Properties/Events  ===================
-        public static readonly RoutedEvent TextChangedEvent = EventManager.RegisterRoutedEvent("TextChanged", RoutingStrategy.Direct, typeof(RoutedPropertyChangedEventHandler<string>), typeof(VirtualKeyboard));
-
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text",
-            typeof(string), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTextChanged));
-        public string Text
-        {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
-        }
-        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-        }
-        //==================
         public static readonly DependencyProperty LinkedTextBoxProperty = DependencyProperty.Register("LinkedTextBox",
             typeof(TextBox), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null));
         public TextBox LinkedTextBox
