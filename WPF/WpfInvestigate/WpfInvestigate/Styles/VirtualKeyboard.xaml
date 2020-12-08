@@ -90,7 +90,7 @@
                             <Border x:Name="Border" UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                     BorderThickness="{TemplateBinding BorderThickness}" Padding="0" BorderBrush="{TemplateBinding BorderBrush}"
                                     Background="{TemplateBinding Background}" CornerRadius="3">
-                                <Grid x:Name="ContentElement">
+                                <Grid x:Name="PART_Content">
                                     <!-- Command -->
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                                                 Visibility="{Binding IsCommand, Converter={x:Static common:VisibilityConverter.Instance}}">
@@ -180,7 +180,7 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="ContentElement" Property="RenderTransform">
+                                    <Setter TargetName="PART_Content" Property="RenderTransform">
                                         <Setter.Value>
                                             <TranslateTransform Y="1.5" />
                                         </Setter.Value>
