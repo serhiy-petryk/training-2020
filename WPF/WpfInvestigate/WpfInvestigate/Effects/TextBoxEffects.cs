@@ -131,8 +131,8 @@ namespace WpfInvestigate.Effects
                     Grid.SetColumn(keyboardButton, grid.ColumnDefinitions.Count - 1);
 
                     // Add popup
-                    var keyboardControl = new VirtualKeyboard { LinkedTextBox = textBox, Focusable = false, IsTabStop = false };
-                    var shellControl = new PopupResizeControl { DoesContentSupportElasticLayout = true, Content = keyboardControl, Focusable = false, IsTabStop = false };
+                    var keyboardControl = new VirtualKeyboard {Focusable = false, IsTabStop = false};
+                    var shellControl = new PopupResizeControl {DoesContentSupportElasticLayout = true, Content = keyboardControl, Focusable = false, IsTabStop = false};
                     CornerRadiusEffect.SetCornerRadius(shellControl, new CornerRadius(3));
                     var popup = new Popup
                     {
