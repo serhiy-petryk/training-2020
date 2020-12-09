@@ -237,5 +237,23 @@ namespace WpfInvestigate.Helpers
         }
         #endregion
 
+        #region ======== OnGotFocus of Control (see disassembled DatePicker) ===========
+        public static void OnGotFocusOfControl(object sender, RoutedEventArgs e, TextBoxBase textBox)
+        {
+            if (!e.Handled && textBox != null)
+            {
+                if (Equals(e.OriginalSource, sender))
+                {
+                    textBox.Focus();
+                    e.Handled = true;
+                }
+                if (Equals(e.OriginalSource, textBox))
+                {
+                    textBox.SelectAll();
+                    e.Handled = true;
+                }
+            }
+        }
+        #endregion
     }
 }

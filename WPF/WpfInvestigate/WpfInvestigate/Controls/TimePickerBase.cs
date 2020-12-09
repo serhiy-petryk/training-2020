@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls.TimePickerHelper;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
@@ -78,8 +79,11 @@ namespace WpfInvestigate.Controls
 
         static TimePickerBase()
         {
-            EventManager.RegisterClassHandler(typeof(TimePickerBase), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(typeof(TimePickerBase)));
+            EventManager.RegisterClassHandler(typeof(NumericBox), GotFocusEvent,
+                new RoutedEventHandler((sender, args) => ControlHelper.OnGotFocusOfControl(sender, args, ((TimePickerBase)sender)._textBox)));
+            KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
+            KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(false));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
         }
 
@@ -399,33 +403,6 @@ namespace WpfInvestigate.Controls
             {
                 _textInputChanged = false;
                 OnTextBoxLostFocus(sender, e);
-            }
-        }
-
-        private static void OnGotFocus(object sender, RoutedEventArgs e)
-        {
-            var picker = (TimePickerBase)sender;
-            if (!e.Handled && picker.Focusable)
-            {
-                if (Equals(e.OriginalSource, picker))
-                {
-                    // MoveFocus takes a TraversalRequest as its argument.
-                    var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
-                    // Gets the element with keyboard focus.
-                    var elementWithFocus = Keyboard.FocusedElement as UIElement;
-                    // Change keyboard focus.
-                    if (elementWithFocus != null)
-                        elementWithFocus.MoveFocus(request);
-                    else
-                        picker.Focus();
-
-                    e.Handled = true;
-                }
-                else if (picker._textBox != null && Equals(e.OriginalSource, picker._textBox))
-                {
-                    picker._textBox.SelectAll();
-                    e.Handled = true;
-                }
             }
         }
 

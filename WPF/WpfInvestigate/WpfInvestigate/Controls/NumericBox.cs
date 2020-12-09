@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
@@ -27,7 +28,15 @@ namespace WpfInvestigate.Controls
 
         private int _numberOfIntervals = 0;
 
-        static NumericBox() => DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericBox), new FrameworkPropertyMetadata(typeof(NumericBox)));
+        static NumericBox()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericBox), new FrameworkPropertyMetadata(typeof(NumericBox)));
+            EventManager.RegisterClassHandler(typeof(NumericBox), GotFocusEvent, 
+                new RoutedEventHandler((sender, args) => ControlHelper.OnGotFocusOfControl(sender, args, ((NumericBox) sender)._textBox)));
+            KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(NumericBox), new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
+            KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(NumericBox), new FrameworkPropertyMetadata(false));
+        }
+
         public NumericBox()
         {
             Culture = Tips.CurrentCulture;
@@ -129,33 +138,6 @@ namespace WpfInvestigate.Controls
         {
             get => (Buttons?)GetValue(VisibleButtonsProperty);
             set => SetValue(VisibleButtonsProperty, value);
-        }
-
-        /// <summary> 
-        ///     Called when this element or any below gets focus.
-        /// </summary>
-        protected override void OnGotFocus(RoutedEventArgs e)
-        {
-            base.OnGotFocus(e);
-            // When NumericBox gets logical focus, select the text inside us.
-            // If we're an editable NumericBox, forward focus to the TextBox element
-            if (!e.Handled)
-            {
-                if (!IsReadOnly && Focusable)
-                {
-                    // MoveFocus takes a TraversalRequest as its argument.
-                    var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
-                    // Gets the element with keyboard focus.
-                    var elementWithFocus = Keyboard.FocusedElement as UIElement;
-                    // Change keyboard focus.
-                    if (elementWithFocus != null)
-                        elementWithFocus.MoveFocus(request);
-                    else
-                        Focus();
-
-                    e.Handled = true;
-                }
-            }
         }
 
         /// <summary>

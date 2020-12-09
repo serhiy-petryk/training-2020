@@ -76,8 +76,9 @@ namespace WpfInvestigate.Controls
             }
             else if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_TAB)
             {
-                if (element!=null) { 
-                    var request = new TraversalRequest(IsShifted ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next) {Wrapped = true};
+                if (element!=null) {
+                    // var request = new TraversalRequest(IsShifted ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next) { Wrapped = true };
+                    var request = new TraversalRequest(IsShifted ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
                     element.MoveFocus(request);
                 }
             }

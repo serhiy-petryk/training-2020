@@ -26,7 +26,6 @@
         <Setter Property="ButtonsWidth" Value="16"/>
         <Setter Property="Padding" Value="1" />
         <Setter Property="Focusable" Value="True" />
-        <Setter Property="IsTabStop" Value="True" />
         <Setter Property="VisibleButtons" Value="Separator1px,Calculator,Close" />
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource UserInputControlChromeMatrix}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -60,7 +59,7 @@
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                      Background="Transparent" Foreground="{TemplateBinding Foreground}"
-                                     IsTabStop="{TemplateBinding IsTabStop}"
+                                     Focusable="{TemplateBinding Focusable}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      TabIndex="{TemplateBinding TabIndex}"/>
 
@@ -68,7 +67,7 @@
                                        Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SeparatorWidth}"
                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsRightSeparatorVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
-                            <ToggleButton Grid.Column="4" x:Name="PART_ToggleButton" IsTabStop="False" Focusable="False"
+                            <ToggleButton Grid.Column="4" x:Name="PART_ToggleButton" Focusable="False"
                                           effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           Padding="2" IsThreeState="False" Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}"
@@ -77,14 +76,14 @@
                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCalculatorButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource CalculatorGeometry}"/>
 
-                            <RepeatButton Grid.Column="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DownButtonColumn}" x:Name="PART_DownButton" IsTabStop="False" Focusable="False"
+                            <RepeatButton Grid.Column="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DownButtonColumn}" x:Name="PART_DownButton" Focusable="False"
                                           effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}" Padding="2"
                                           BorderThickness="0"
                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDownButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource MinusGeometry}"/>
-                            <RepeatButton Grid.Column="6" x:Name="PART_UpButton" IsTabStop="False" Focusable="False"
+                            <RepeatButton Grid.Column="6" x:Name="PART_UpButton" Focusable="False"
                                           effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}" Padding="2"
@@ -92,7 +91,7 @@
                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsUpButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource PlusGeometry}"/>
 
-                            <Button Grid.Column="7" x:Name="PART_ClearButton" IsTabStop="False" Focusable="False"
+                            <Button Grid.Column="7" x:Name="PART_ClearButton" Focusable="False"
                                     Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}" Padding="3"
                                     BorderThickness="0"
                                     Style="{StaticResource ClearBichromeAnimatedButtonStyle}"

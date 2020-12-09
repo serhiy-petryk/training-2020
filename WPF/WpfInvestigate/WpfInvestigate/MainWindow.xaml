@@ -83,6 +83,9 @@
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                                  effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator"/>
+                        <controls:NumericBox Margin="5"/>
+                        <DatePicker Margin="5"/>
+                        <controls:TimePicker Margin="5"/>
                     </WrapPanel>
 
                     <WrapPanel Margin="5">
