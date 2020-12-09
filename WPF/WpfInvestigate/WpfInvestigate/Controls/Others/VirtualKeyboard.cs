@@ -55,6 +55,9 @@ namespace WpfInvestigate.Controls
 
         private void Key_OnClick(object sender, EventArgs e)
         {
+            var textBox = Keyboard.FocusedElement as TextBox;
+            var element = Keyboard.FocusedElement as FrameworkElement;
+
             var model = (KeyModel)((FrameworkElement)sender).DataContext;
             if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_CAPITAL)
             {
@@ -73,12 +76,10 @@ namespace WpfInvestigate.Controls
             }
             else if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_TAB)
             {
-                var request =
-                    new TraversalRequest(IsShifted ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next)
-                        {Wrapped = true};
-                LinkedTextBox.MoveFocus(request);
-                LinkedTextBox.SelectionLength = 0;
-                return;
+                if (element!=null) { 
+                    var request = new TraversalRequest(IsShifted ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next) {Wrapped = true};
+                    element.MoveFocus(request);
+                }
             }
             else if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_RETURN)
             {
@@ -86,23 +87,21 @@ namespace WpfInvestigate.Controls
             }
             else
                 EditTextBox(model);
-
-
-            if (LinkedTextBox != null)
-                LinkedTextBox.SelectionLength = 0;
         }
 
         private void EditTextBox(KeyModel keyModel)
         {
-            if (LinkedTextBox != null && !LinkedTextBox.IsReadOnly && LinkedTextBox.IsEnabled)
+            var textBox = Keyboard.FocusedElement as TextBox;
+
+            if (textBox != null && !textBox.IsReadOnly && textBox.IsEnabled)
             {
-                var cursorPosition = LinkedTextBox.SelectionStart;
+                var cursorPosition = textBox.SelectionStart;
                 string newText = "";
                 if (!keyModel.IsCommand)
                 {
                     newText = keyModel.GetKeyText(IsCapsLock, IsShifted, IsExtra);
-                    LinkedTextBox.Text = LinkedTextBox.Text.Substring(0, cursorPosition) + newText +
-                                         LinkedTextBox.Text.Substring(cursorPosition + LinkedTextBox.SelectionLength);
+                    textBox.Text = textBox.Text.Substring(0, cursorPosition) + newText +
+                                         textBox.Text.Substring(cursorPosition + textBox.SelectionLength);
 
                 }
                 else if (keyModel.Id == KeyModel.KeyDefinition.KeyCode.VK_LEFT)
@@ -111,40 +110,43 @@ namespace WpfInvestigate.Controls
                 }
                 else if (keyModel.Id == KeyModel.KeyDefinition.KeyCode.VK_RIGHT)
                 {
-                    if (cursorPosition < LinkedTextBox.Text.Length) cursorPosition++;
+                    if (textBox.SelectionLength > 0)
+                        cursorPosition = Math.Min(textBox.Text.Length, cursorPosition + textBox.SelectionLength);
+                    else if (cursorPosition < textBox.Text.Length) cursorPosition++;
                 }
                 else if (keyModel.Id == KeyModel.KeyDefinition.KeyCode.VK_BACK)
                 {
-                    if (LinkedTextBox.SelectionLength > 0)
+                    if (textBox.SelectionLength > 0)
                     {
-                        LinkedTextBox.Text = LinkedTextBox.Text.Substring(0, cursorPosition) +
-                                             LinkedTextBox.Text.Substring(cursorPosition + LinkedTextBox.SelectionLength);
+                        textBox.Text = textBox.Text.Substring(0, cursorPosition) +
+                                             textBox.Text.Substring(cursorPosition + textBox.SelectionLength);
                     }
                     else if (cursorPosition > 0)
                     {
-                        LinkedTextBox.Text = LinkedTextBox.Text.Substring(0, cursorPosition - 1) +
-                                             LinkedTextBox.Text.Substring(cursorPosition);
+                        textBox.Text = textBox.Text.Substring(0, cursorPosition - 1) +
+                                             textBox.Text.Substring(cursorPosition);
                         cursorPosition--;
                     }
                 }
                 else if (keyModel.Id == KeyModel.KeyDefinition.KeyCode.VK_DELETE)
                 {
-                    if (LinkedTextBox.SelectionLength > 0)
+                    if (textBox.SelectionLength > 0)
                     {
-                        LinkedTextBox.Text = LinkedTextBox.Text.Substring(0, cursorPosition) +
-                                             LinkedTextBox.Text.Substring(cursorPosition + LinkedTextBox.SelectionLength);
+                        textBox.Text = textBox.Text.Substring(0, cursorPosition) +
+                                             textBox.Text.Substring(cursorPosition + textBox.SelectionLength);
                     }
-                    else if (cursorPosition < LinkedTextBox.Text.Length)
+                    else if (cursorPosition < textBox.Text.Length)
                     {
-                        LinkedTextBox.Text = LinkedTextBox.Text.Substring(0, cursorPosition) +
-                                             LinkedTextBox.Text.Substring(cursorPosition + 1);
+                        textBox.Text = textBox.Text.Substring(0, cursorPosition) +
+                                             textBox.Text.Substring(cursorPosition + 1);
                     }
                 }
 
                 // Focused textbox & set selection
-                if (!LinkedTextBox.IsFocused)
-                    LinkedTextBox.Focus();
-                LinkedTextBox.SelectionStart = cursorPosition + (newText ?? "").Length;
+                if (!textBox.IsFocused)
+                    textBox.Focus();
+                textBox.SelectionStart = cursorPosition + (newText ?? "").Length;
+                textBox.SelectionLength = 0;
             }
         }
 
@@ -174,14 +176,6 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #region ============== Properties/Events  ===================
-        public static readonly DependencyProperty LinkedTextBoxProperty = DependencyProperty.Register("LinkedTextBox",
-            typeof(TextBox), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null));
-        public TextBox LinkedTextBox
-        {
-            get => (TextBox)GetValue(LinkedTextBoxProperty);
-            set => SetValue(LinkedTextBoxProperty, value);
-        }
-        //=======================
         public static readonly DependencyProperty BaseHslProperty = DependencyProperty.Register("BaseHsl",
             typeof(HSL), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null));
         public HSL BaseHsl
