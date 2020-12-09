@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using WpfInvestigate.Common;
 using WpfInvestigate.Common.ColorSpaces;
 using WpfInvestigate.Helpers;
@@ -31,6 +32,7 @@ namespace WpfInvestigate.Controls
                 language.OnSelect += Language_OnSelect;
         }
 
+        public event EventHandler OnReturnKeyClick;
         public LanguageModel[] AvailableKeyboardLayouts { get; }
         public LanguageModel SelectedKeyboardLayout => AvailableKeyboardLayouts.FirstOrDefault(a => a.IsSelected);// { get; set; }//  = _AvailableKeyboardLayouts.First(a => a.Item1.IetfLanguageTag == "en");
         public Dictionary<string, KeyModel> KeyboardSet { get; private set; }
@@ -69,10 +71,25 @@ namespace WpfInvestigate.Controls
                 IsExtra = Equals(((ToggleButton)sender).IsChecked, true);
                 OnPropertiesChanged(nameof(IsExtra));
             }
+            else if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_TAB)
+            {
+                var request =
+                    new TraversalRequest(IsShifted ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next)
+                        {Wrapped = true};
+                LinkedTextBox.MoveFocus(request);
+                LinkedTextBox.SelectionLength = 0;
+                return;
+            }
+            else if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_RETURN)
+            {
+                OnReturnKeyClick?.Invoke(this, EventArgs.Empty);
+            }
+            else
+                EditTextBox(model);
 
-            // ToDo: Tab(+Shift), Enter
 
-            EditTextBox(model);
+            if (LinkedTextBox != null)
+                LinkedTextBox.SelectionLength = 0;
         }
 
         private void EditTextBox(KeyModel keyModel)

@@ -107,7 +107,7 @@ namespace WpfInvestigate.Effects
                     var keyboardButton = new ToggleButton
                     {
                         Name = ElementPrefix + "Keyboard",
-                        Width = 16, Focusable = false, IsTabStop = false, 
+                        Width = 16, Focusable = false, IsTabStop = false,
                         IsThreeState = false,
                         Margin = new Thickness(0),
                         Padding = new Thickness(0),
@@ -131,21 +131,16 @@ namespace WpfInvestigate.Effects
                     Grid.SetColumn(keyboardButton, grid.ColumnDefinitions.Count - 1);
 
                     // Add popup
-                    var keyboardControl = new VirtualKeyboard { LinkedTextBox = textBox };
-                    var shellControl = new PopupResizeControl { DoesContentSupportElasticLayout = true, Content = keyboardControl };
+                    var keyboardControl = new VirtualKeyboard { LinkedTextBox = textBox, Focusable = false, IsTabStop = false };
+                    var shellControl = new PopupResizeControl { DoesContentSupportElasticLayout = true, Content = keyboardControl, Focusable = false, IsTabStop = false };
                     CornerRadiusEffect.SetCornerRadius(shellControl, new CornerRadius(3));
                     var popup = new Popup
                     {
                         Name = ElementPrefix + "Popup",
-                        Width = 700,
-                        Height = 250,
-                        AllowsTransparency = true,
-                        Focusable = false,
-                        Placement = PlacementMode.Bottom,
-                        PlacementTarget = textBox,
-                        PopupAnimation = PopupAnimation.Fade,
-                        StaysOpen = false,
-                        Child = shellControl
+                        Width = 700, Height = 250, Focusable = false,
+                        AllowsTransparency = true, StaysOpen = false,
+                        Placement = PlacementMode.Bottom, PlacementTarget = textBox,
+                        PopupAnimation = PopupAnimation.Fade, Child = shellControl
                     };
 
                     grid.Children.Add(popup);
