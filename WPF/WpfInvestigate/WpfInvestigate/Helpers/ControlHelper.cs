@@ -246,6 +246,7 @@ namespace WpfInvestigate.Helpers
                 {
                     textBox.Focus();
                     e.Handled = true;
+                    return;
                 }
                 if (Equals(e.OriginalSource, textBox))
                 {
