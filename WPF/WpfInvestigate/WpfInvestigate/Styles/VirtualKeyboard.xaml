@@ -251,6 +251,7 @@
         <Setter Property="Padding" Value="5"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontFamily" Value="Verdana"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>

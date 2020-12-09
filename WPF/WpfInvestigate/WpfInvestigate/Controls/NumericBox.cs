@@ -518,20 +518,17 @@ namespace WpfInvestigate.Controls
 
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (_manualChange)
+            var tb = (TextBox)sender;
+            _manualChange = false;
+
+            if (ValidateText(tb.Text, out var convertedValue))
             {
-                var tb = (TextBox)sender;
-                _manualChange = false;
+                if (convertedValue > MaxValue)
+                    convertedValue = MaxValue;
+                else if (convertedValue < MinValue)
+                    convertedValue = MinValue;
 
-                if (ValidateText(tb.Text, out var convertedValue))
-                {
-                    if (convertedValue > MaxValue)
-                        convertedValue = MaxValue;
-                    else if (convertedValue < MinValue)
-                        convertedValue = MinValue;
-
-                    SetCurrentValue(ValueProperty, convertedValue);
-                }
+                SetCurrentValue(ValueProperty, convertedValue);
             }
 
             OnValueChanged(Value, Value);

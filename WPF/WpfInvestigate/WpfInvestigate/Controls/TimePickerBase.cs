@@ -80,7 +80,7 @@ namespace WpfInvestigate.Controls
         static TimePickerBase()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(typeof(TimePickerBase)));
-            EventManager.RegisterClassHandler(typeof(NumericBox), GotFocusEvent,
+            EventManager.RegisterClassHandler(typeof(TimePickerBase), GotFocusEvent,
                 new RoutedEventHandler((sender, args) => ControlHelper.OnGotFocusOfControl(sender, args, ((TimePickerBase)sender)._textBox)));
             KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
             KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(false));
