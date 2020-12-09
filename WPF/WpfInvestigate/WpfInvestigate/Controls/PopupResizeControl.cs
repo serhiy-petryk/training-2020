@@ -16,10 +16,6 @@ namespace WpfInvestigate.Controls
         private const int MaxSize = 1200;
         private const int MinSize = 50;
 
-        public PopupResizeControl()
-        {
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();

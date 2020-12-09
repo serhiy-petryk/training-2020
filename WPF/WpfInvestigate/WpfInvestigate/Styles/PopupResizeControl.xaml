@@ -25,9 +25,9 @@
                 <ControlTemplate TargetType="{x:Type controls:PopupResizeControl}">
                     <Grid x:Name="PART_Root" Background="Transparent">
 
-                        <Border Margin="0 0 8 8" Effect="{StaticResource ShadowEffect}" BorderThickness="1" BorderBrush="Transparent" Background="White"/>
+                        <Border Margin="0 0 5 5" Effect="{StaticResource ShadowEffect}" BorderThickness="1" BorderBrush="Transparent" Background="White"/>
 
-                        <Border BorderThickness="0" Background="Transparent" Margin="0 0 8 8">
+                        <Border BorderThickness="0" Background="Transparent" Margin="0 0 5 5">
                             <Grid Background="Transparent" ClipToBounds="True">
 
                                 <ContentPresenter Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DoesContentSupportElasticLayout, Converter={x:Static common:VisibilityConverter.Instance}}"/>
@@ -39,7 +39,7 @@
                                        VerticalAlignment="Bottom" HorizontalAlignment="Right"
                                        Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}">
                                     <Thumb.Width>
-                                        <MultiBinding Converter="{x:Static common:MathConverter.Instance}" ConverterParameter="+2/10%4+">
+                                        <MultiBinding Converter="{x:Static common:MathConverter.Instance}" ConverterParameter="+2/8%4+">
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth" />
                                             <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualHeight" />
                                         </MultiBinding>
@@ -68,12 +68,12 @@
                             </Grid>
                         </Border>
 
-                        <Thumb x:Name="PART_ResizeRight" Width="8" HorizontalAlignment="Right" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="PART_ResizeBottom" Height="8" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="PART_ResizeCornerBottom" Height="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
+                        <Thumb x:Name="PART_ResizeRight" Width="5" HorizontalAlignment="Right" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="PART_ResizeBottom" Height="5" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="PART_ResizeCornerBottom" Height="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
                                Width="{Binding ElementName=PART_ResizeGrip, Path=ActualWidth}">
                         </Thumb>
-                        <Thumb x:Name="PART_ResizeCornerRight" Width="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
+                        <Thumb x:Name="PART_ResizeCornerRight" Width="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
                                Height="{Binding ElementName=PART_ResizeGrip, Path=ActualHeight}">
                         </Thumb>
 
