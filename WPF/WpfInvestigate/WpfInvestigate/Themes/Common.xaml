@@ -172,7 +172,7 @@
 
     <Style TargetType="DatePicker">
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a date"></Setter>
+        <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a date"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource UserInputControlChromeMatrix}"/>
     </Style>
 

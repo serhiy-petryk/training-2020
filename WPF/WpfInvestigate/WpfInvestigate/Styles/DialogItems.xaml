@@ -18,7 +18,7 @@
             </ItemsPanelTemplate>
         </Style.Resources>
 
-        <Setter Property="Background" Value="#77777777"></Setter>
+        <Setter Property="Background" Value="#77777777"/>
         <Setter Property="Template" Value="{StaticResource DefaultTemplate}" />
         <Setter Property="ItemsPanel" Value="{StaticResource DefaultPanel}"/>
         <Setter Property="ItemContainerStyle" Value="{x:Null}"/>

@@ -191,7 +191,7 @@
 
                 <Separator Margin="0 0 0 0"/>
 
-                <TextBlock Text="Splt button:" Margin="4 0" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="Splt button:" Margin="4 0" VerticalAlignment="Center"/>
                 <Button VerticalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center">
                     <Button.Content>
                         <Grid>
@@ -199,7 +199,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Button Content="AAA" Margin="0"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0 0 1 0"></Button>
+                            <Button Content="AAA" Margin="0"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0 0 1 0"/>
                             <obsolete:PathToggleButton Grid.Column="1" Foreground="Black" PathWidth="10" PathHeight="10" BorderThickness="1 0 0 0"
                                                        ToolTip="Open/Close Windows menu" Width="18" Padding="1 7" Margin="-1 1 0 1" 
                                                        VerticalAlignment="Stretch"
