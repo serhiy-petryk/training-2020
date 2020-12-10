@@ -178,7 +178,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- SaturationAndValueSlider -->
-                <Grid Grid.Column="0" Grid.Row="0" Margin="0,0,5,0">
+                <Grid Grid.Column="0" Grid.Row="0" Margin="0,0,5,0" Focusable="False">
                     <Rectangle Fill="{Binding HueBrush}"/>
                     <Rectangle Fill="{StaticResource SaturationAndValueSliderBaseBrush}"/>
                     <Canvas Background="Transparent" ClipToBounds="False" DataContext="{Binding SaturationAndValueSlider}"
@@ -191,16 +191,16 @@
                 </Grid>
 
                 <!-- HueSlider -->
-                <Grid Grid.Column="1" Grid.Row="0" Margin="3,0">
+                <Grid Grid.Column="1" Grid.Row="0" Margin="3,0" Focusable="False">
                     <Rectangle Fill="{StaticResource HueBackgroundBrush}" Margin="5,0"/>
-                    <ContentControl Content="{Binding HueSlider}"/>
+                    <ContentControl Content="{Binding HueSlider}" Focusable="False"/>
                 </Grid>
 
                 <!-- AlphaSlider -->
                 <Grid Grid.Column="2" Grid.Row="0" Margin="3,0">
                     <Rectangle Fill="{Binding HueBrush}" Margin="5,0"/>
                     <Rectangle Fill="{StaticResource AlphaBackgroundBrush}" OpacityMask="{StaticResource AlphaBarOpacityMask}" Margin="5,0"/>
-                    <ContentControl Content="{Binding AlphaSlider}"/>
+                    <ContentControl Content="{Binding AlphaSlider}" Focusable="False"/>
                 </Grid>
 
                 <!-- Color boxes -->
@@ -224,7 +224,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <TextBox Margin="0" Padding="4" BorderThickness="0"
-                                 IsReadOnly="True" IsTabStop="False" Focusable="True"
+                                 Style="{StaticResource ReadOnlyTextBoxStyle}"
                                  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"
                                  Background="{Binding ColorWithoutAlphaBrush}" Foreground="{Binding Color_ForegroundBrush}"
                                  Text="{Binding Color, Mode=OneWay}">
@@ -257,7 +257,7 @@
                             <DataTemplate>
                                 <Grid UseLayoutRounding="False" SnapsToDevicePixels="False">
                                     <TextBox Margin="0" Padding="0" BorderThickness="0"
-                                             IsReadOnly="True" Focusable="True" IsTabStop="False"
+                                             Style="{StaticResource ReadOnlyTextBoxStyle}"
                                              VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                                              Background="{Binding Background, Delay=500}" Foreground="{Binding Foreground, Delay=500}"
                                              Text="{Binding Background, Mode=OneWay, Delay=500}">
@@ -284,8 +284,9 @@
                                                     <Label x:Name="InfoHeader" Grid.Row="0" FontSize="12" FontWeight="SemiBold" Content="Color information"
                                                        Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}"
                                                        Foreground="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.Instance}, ConverterParameter=+85%}"/>
-                                                    <TextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" FontFamily="Courier New" Text="{Binding Info, Mode=OneWay}"
+                                                    <TextBox Grid.Row="1" Background="Transparent" FontFamily="Courier New" Text="{Binding Info, Mode=OneWay}"
                                                          Foreground="{Binding ElementName=ColorBoxBorder, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.Instance}, ConverterParameter=+85%}"
+                                                         Style="{StaticResource ReadOnlyTextBoxStyle}"
                                                          SelectionBrush="{Binding ElementName=ColorBoxBorder, Path=BorderBrush}"/>
                                                     <Button Grid.Row="2" BorderThickness="2" Margin="10" IsDefault="True"
                                                         Background="{Binding ElementName=InfoHeader, Path=Background}"

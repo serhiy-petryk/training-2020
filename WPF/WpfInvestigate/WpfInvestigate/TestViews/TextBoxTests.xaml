@@ -43,7 +43,7 @@
                 <Button Margin="2" Content="Change Foreground" Click="ChangeForeground_OnClick"/>
                 <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick"/>
                 <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
-                <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsReadOnly="True" Text="AAAAAA" Focusable="True" IsTabStop="False"/>
+                <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Style="{StaticResource ReadOnlyTextBoxStyle}"/>
             </WrapPanel>
 
         </Grid>

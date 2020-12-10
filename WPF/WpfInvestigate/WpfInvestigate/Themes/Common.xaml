@@ -160,7 +160,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ReadOnlyTextBox" TargetType="{x:Type TextBox}">
+    <Style x:Key="ReadOnlyTextBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="Focusable" Value="True"/>
         <Setter Property="IsTabStop" Value="False"/>

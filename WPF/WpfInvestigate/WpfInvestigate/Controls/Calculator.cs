@@ -55,9 +55,9 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
 
-            // Allow to select text in indicator
-            if (GetTemplateChild("PART_Indicator") is TextBox indicator)
-                indicator.LostFocus += (sender, args) => args.Handled = true;
+            // Allow to select text in indicators
+            foreach (var textBox in Tips.GetVisualChildren(this).OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
+              textBox.LostFocus += (sender, args) => args.Handled = true;
         }
 
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
