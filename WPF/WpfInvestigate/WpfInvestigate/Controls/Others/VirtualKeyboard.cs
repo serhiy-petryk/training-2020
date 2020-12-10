@@ -20,6 +20,11 @@ namespace WpfInvestigate.Controls
     {
         private const string DefaultLanguage = "EN";
 
+        static VirtualKeyboard()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(VirtualKeyboard), new FrameworkPropertyMetadata(typeof(VirtualKeyboard)));
+        }
+
         public VirtualKeyboard()
         {
             DataContext = this;
@@ -55,9 +60,7 @@ namespace WpfInvestigate.Controls
 
         private void Key_OnClick(object sender, EventArgs e)
         {
-            var textBox = Keyboard.FocusedElement as TextBox;
             var element = Keyboard.FocusedElement as FrameworkElement;
-
             var model = (KeyModel)((FrameworkElement)sender).DataContext;
             if (model.Id == KeyModel.KeyDefinition.KeyCode.VK_CAPITAL)
             {
@@ -93,7 +96,6 @@ namespace WpfInvestigate.Controls
         private void EditTextBox(KeyModel keyModel)
         {
             var textBox = Keyboard.FocusedElement as TextBox;
-
             if (textBox != null && !textBox.IsReadOnly && textBox.IsEnabled)
             {
                 var cursorPosition = textBox.SelectionStart;
