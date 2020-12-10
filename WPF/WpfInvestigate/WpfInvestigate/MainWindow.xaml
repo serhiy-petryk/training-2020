@@ -99,8 +99,10 @@
                         <Button Margin="2" Content="Change Foreground" Click="ChangeForeground_OnClick"/>
                         <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick"/>
                         <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
-                        <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Text="AAAAAA" Style="{StaticResource ReadOnlyTextBoxStyle}"/>
-                        <controls:NumericBox Margin="5 0" Width="120" Height="24" effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323"/>
+                        <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Text="AAAAAA" Style="{StaticResource ReadOnlyTextBoxStyle}"
+                                 effects:FocusEffect.Thickness="2"/>
+                        <controls:NumericBox Margin="5 0" Width="120" Height="24" effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323"
+                                             effects:FocusEffect.Thickness="2"/>
                     </WrapPanel>
 
                 </StackPanel>
