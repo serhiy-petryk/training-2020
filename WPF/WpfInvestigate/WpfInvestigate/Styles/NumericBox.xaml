@@ -97,7 +97,7 @@
                                     Style="{StaticResource ClearBichromeAnimatedButtonStyle}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
-                            <Popup x:Name="PART_Popup" Width="500" Height="200"
+                            <Popup x:Name="PART_Popup" Width="230" Height="250"
                                    IsOpen="{Binding ElementName=PART_ToggleButton, Path=IsChecked}"
                                    AllowsTransparency="True"
                                    Focusable="False"
@@ -106,9 +106,7 @@
                                    PopupAnimation="Fade"
                                    StaysOpen="False">
                                 <controls:PopupResizeControl DoesContentSupportElasticLayout="True" effects:CornerRadiusEffect.CornerRadius="3">
-                                    <!--<controls:Calculator Focusable="True" Margin="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>-->
-                                    <controls:VirtualKeyboard Focusable="False" Margin="0"/>
-                                    <!--<temp:OriginalVirtualKeyboard Focusable="True" Margin="0"/>-->
+                                    <controls:Calculator Focusable="True" Margin="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
                                 </controls:PopupResizeControl>
                             </Popup>
                         </Grid>
