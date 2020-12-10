@@ -16,7 +16,7 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for VirtualKeyboard.xaml
     /// </summary>
-    public partial class VirtualKeyboard : UserControl, INotifyPropertyChanged
+    public partial class VirtualKeyboard : Control, INotifyPropertyChanged
     {
         private const string DefaultLanguage = "EN";
 
