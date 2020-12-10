@@ -250,7 +250,6 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="Focusable" Value="False"/>
-        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontFamily" Value="Verdana"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -416,7 +415,7 @@
                                 <RepeatButton Grid.Column="2" DataContext="{Binding KeyboardSet[VK_LEFT]}" Style="{StaticResource ArrowButtonStyle}"/>
                                 <RepeatButton Grid.Column="3" DataContext="{Binding KeyboardSet[VK_RIGHT]}" Style="{StaticResource ArrowButtonStyle}"/>
                                 <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="4" IsThreeState="False" Padding="4 0 2 0" HorizontalContentAlignment="Left"
-                                              Focusable="False" IsTabStop="False"
+                                              Focusable="False"
                                               Content="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=SelectedKeyboardLayout.Label}"
                                               Style="{StaticResource LanguageSelectorButtonStyle}">
                                     <ToggleButton.Resources>

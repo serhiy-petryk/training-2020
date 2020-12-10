@@ -59,7 +59,9 @@ namespace WpfInvestigate.Effects
                 foreach (var element in Tips.GetVisualChildren(grid).OfType<FrameworkElement>().Where(c => c.Name.StartsWith(ElementPrefix)).ToArray())
                 {
                     if (element.Name.Contains("Clear"))
-                        element.PreviewMouseLeftButtonDown -= ClearButton_Click;
+                        element.PreviewMouseLeftButtonDown -= ClearButton_OnClick;
+                    else if (element.Name.Contains("Popup"))
+                        ((Popup)element).Opened -= Popup_OnOpened;
 
                     grid.Children.Remove(element);
                 }
@@ -107,8 +109,7 @@ namespace WpfInvestigate.Effects
                     var keyboardButton = new ToggleButton
                     {
                         Name = ElementPrefix + "Keyboard",
-                        Width = 16, Focusable = false, IsTabStop = false,
-                        IsThreeState = false,
+                        Width = 16, Focusable = false, IsThreeState = false,
                         Margin = new Thickness(0),
                         Padding = new Thickness(0),
                         VerticalAlignment = VerticalAlignment.Stretch
@@ -131,8 +132,8 @@ namespace WpfInvestigate.Effects
                     Grid.SetColumn(keyboardButton, grid.ColumnDefinitions.Count - 1);
 
                     // Add popup
-                    var keyboardControl = new VirtualKeyboard {Focusable = false, IsTabStop = false};
-                    var shellControl = new PopupResizeControl {DoesContentSupportElasticLayout = true, Content = keyboardControl, Focusable = false, IsTabStop = false};
+                    var keyboardControl = new VirtualKeyboard {Focusable = false};
+                    var shellControl = new PopupResizeControl {DoesContentSupportElasticLayout = true, Content = keyboardControl, Focusable = false};
                     CornerRadiusEffect.SetCornerRadius(shellControl, new CornerRadius(3));
                     var popup = new Popup
                     {
@@ -142,6 +143,7 @@ namespace WpfInvestigate.Effects
                         Placement = PlacementMode.Bottom, PlacementTarget = textBox,
                         PopupAnimation = PopupAnimation.Fade, Child = shellControl
                     };
+                    popup.Opened += Popup_OnOpened;
 
                     grid.Children.Add(popup);
                     Grid.SetColumn(popup, grid.ColumnDefinitions.Count - 1);
@@ -168,20 +170,20 @@ namespace WpfInvestigate.Effects
                     {
                         Name = ElementPrefix + "Clear",
                         Style = Application.Current.FindResource("ClearBichromeAnimatedButtonStyle") as Style,
-                        Width = 14, Focusable = false, IsTabStop = false,
+                        Width = 14, Focusable = false,
                         Margin = new Thickness(0),
                         Padding = new Thickness(1),
                         VerticalAlignment = VerticalAlignment.Stretch
                     };
 
-                    clearButton.PreviewMouseLeftButtonDown += ClearButton_Click;
+                    clearButton.PreviewMouseLeftButtonDown += ClearButton_OnClick;
                     grid.Children.Add(clearButton);
                     Grid.SetColumn(clearButton, grid.ColumnDefinitions.Count - 1);
                 }
             }
         }
 
-        private static void ClearButton_Click(object sender, RoutedEventArgs e)
+        private static void ClearButton_OnClick(object sender, RoutedEventArgs e)
         {
             var current = (DependencyObject)sender;
             while (current != null && !(current is TextBox))
@@ -193,6 +195,8 @@ namespace WpfInvestigate.Effects
                 ((TextBox)current).Focus();
             }
         }
+
+        private static void Popup_OnOpened(object sender, EventArgs e) => ((Popup) sender).PlacementTarget.Focus();
 
         #endregion
     }

@@ -12,7 +12,6 @@
             <Style x:Key="ResizeThumb" TargetType="Thumb">
                 <Setter Property="Opacity" Value="0.01"/>
                 <Setter Property="Focusable" Value="False"/>
-                <Setter Property="IsTabStop" Value="False"/>
             </Style>
         </Style.Resources>
 

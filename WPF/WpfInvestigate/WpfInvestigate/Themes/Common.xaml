@@ -160,6 +160,12 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ReadOnlyTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="IsTabStop" Value="False"/>
+    </Style>
+
     <Style TargetType="DatePickerTextBox">
         <Setter Property="Background" Value="Transparent"/>
     </Style>
