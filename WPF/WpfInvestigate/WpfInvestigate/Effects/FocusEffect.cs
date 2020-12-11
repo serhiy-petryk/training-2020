@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
@@ -32,7 +33,7 @@ namespace WpfInvestigate.Effects
         {
             if (d is FrameworkElement element)
             {
-                element.SizeChanged += Element_ChangeFocus;
+                element.SizeChanged -= Element_ChangeFocus;
                 var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
                 dpd.RemoveValueChanged(element, OnElementFocusChanged);
 
@@ -138,6 +139,11 @@ namespace WpfInvestigate.Effects
                     thicknessAnimation.SetFromToValues(border.BorderThickness, new Thickness());
                     border.BeginAnimation(Control.BorderThicknessProperty, thicknessAnimation);
                 }
+
+                // if isFocused=false не завжди спрацьовує фокус на новому елементі -> Activate focus on focused element
+                var focusedControl = Keyboard.FocusedElement as FrameworkElement;
+                if (focusedControl != null && focusedControl != element && GetBrush(focusedControl) != null)
+                    Element_ChangeFocus(focusedControl, new RoutedEventArgs());
             }
         }
     }

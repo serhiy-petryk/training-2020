@@ -17,7 +17,12 @@ namespace WpfInvestigate.Controls
     {
         public enum MessageBlockIcon { Question, Stop, Error, Warning, Info, Success }
 
-        // static MessageBlock() => DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageBlock), new FrameworkPropertyMetadata(typeof(MessageBlock)));
+        static MessageBlock()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageBlock), new FrameworkPropertyMetadata(typeof(MessageBlock)));
+            KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(MessageBlock), new FrameworkPropertyMetadata(false));
+            // FocusableProperty.OverrideMetadata(typeof(MessageBlock), new FrameworkPropertyMetadata(false));
+        }
 
         private static readonly Color _defaultBaseColor = ColorUtils.StringToColor("#FFE2EBF4");
 

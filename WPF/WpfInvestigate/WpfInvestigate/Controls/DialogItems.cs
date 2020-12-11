@@ -23,6 +23,7 @@ namespace WpfInvestigate.Controls
         static DialogItems()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogItems), new FrameworkPropertyMetadata(typeof(DialogItems)));
+            KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(DialogItems), new FrameworkPropertyMetadata(false));
         }
 
         public EventHandler AllDialogClosed;
