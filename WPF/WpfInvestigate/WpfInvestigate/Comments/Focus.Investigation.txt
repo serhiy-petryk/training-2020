@@ -22,3 +22,11 @@ Summary:
 Це все можна зробити глобально (завжди можна визначити сфокусований елемент і є events, які відслідковують зміну фокусу).
 Скоріш за все потрібно тестування в тестововій формі (IsTabStop, Focusable, keyboard navigation, internal controls, ..)
 effects:FocusEffect - скоріш за все не потрібний, або зміниться принцип його роботи.
+
+==============
+To investigate:
+==============
+1. Focusable, IsTabStop
+DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageBlock), new FrameworkPropertyMetadata(typeof(MessageBlock)));
+KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(MessageBlock), new FrameworkPropertyMetadata(false));
+FocusableProperty.OverrideMetadata(typeof(MessageBlock), new FrameworkPropertyMetadata(false));
