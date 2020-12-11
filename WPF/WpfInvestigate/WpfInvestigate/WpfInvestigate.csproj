@@ -507,6 +507,8 @@
   <ItemGroup>
     <Resource Include="Comments\ProjectStructure.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Comments\Focus.Investigation.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

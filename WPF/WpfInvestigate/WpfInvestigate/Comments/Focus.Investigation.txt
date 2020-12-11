@@ -1,0 +1,24 @@
+﻿
+1. Current focused element
+IInputElement focusedControl =  Keyboard.FocusedElement;
+
+2. Remove dotted border around focused item
+<Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+3. How Can I change the way that focus looks like in WPF?
+https://stackoverflow.com/questions/6996248/how-can-i-change-the-way-that-focus-looks-like-in-wpf
+
+4. Is it possible to detect Keyboard focus events globally?
+https://stackoverflow.com/questions/10299659/is-it-possible-to-detect-keyboard-focus-events-globally
+            EventManager.RegisterClassHandler(typeof(UIElement), Keyboard.PreviewGotKeyboardFocusEvent, (KeyboardFocusChangedEventHandler)OnPreviewGotKeyboardFocus);
+
+5. Achieving FocusVisualStyle with both Mouse and Keyboard Focus
+https://stackoverflow.com/questions/10299659/is-it-possible-to-detect-keyboard-focus-events-globally
+
+=======
+Summary:
+=======
+Потрібно переглянути фокусування і навігацію через клавіатуру.
+Це все можна зробити глобально (завжди можна визначити сфокусований елемент і є events, які відслідковують зміну фокусу).
+Скоріш за все потрібно тестування в тестововій формі (IsTabStop, Focusable, keyboard navigation, internal controls, ..)
+effects:FocusEffect - скоріш за все не потрібний, або зміниться принцип його роботи.
