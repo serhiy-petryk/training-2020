@@ -24,7 +24,8 @@
                 <ControlTemplate TargetType="{x:Type controls:PopupResizeControl}">
                     <Grid x:Name="PART_Root" Background="Transparent">
 
-                        <Border Margin="0 0 6 6" Effect="{StaticResource ShadowEffect}" BorderThickness="1" BorderBrush="Transparent" Background="White"/>
+                        <Border Margin="0 0 6 6" Effect="{StaticResource ShadowEffect}" BorderThickness="1" BorderBrush="Transparent"
+                                Background="{TemplateBinding Background}" Opacity="{TemplateBinding Opacity}"/>
 
                         <Border BorderThickness="0" Background="Transparent" Margin="0 0 6 6">
                             <Grid Background="Transparent" ClipToBounds="True">
