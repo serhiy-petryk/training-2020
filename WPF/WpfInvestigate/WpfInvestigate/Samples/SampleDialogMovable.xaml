@@ -17,7 +17,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <Grid Effect="{StaticResource ShadowEffect}"/>
+        <Grid Effect="{StaticResource ShadowEffect}" Background="White"/>
         <Border BorderBrush="YellowGreen" BorderThickness="7" Background="Orange">
             <Grid>
                 <Grid.RowDefinitions>
