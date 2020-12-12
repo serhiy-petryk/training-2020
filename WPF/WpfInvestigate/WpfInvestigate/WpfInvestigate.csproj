@@ -91,6 +91,7 @@
     <Compile Include="Effects\ChromeEffect.cs" />
     <Compile Include="Effects\DatePickerEffect.cs" />
     <Compile Include="Effects\CornerRadiusEffect.cs" />
+    <Compile Include="Effects\ShadowEffect.cs" />
     <Compile Include="Effects\IconEffect.cs" />
     <Compile Include="Effects\TextBoxEffects.cs" />
     <Compile Include="Helpers\ControlHelper.cs" />
@@ -122,8 +123,12 @@
     <Compile Include="Temp\OriginalVirtualKeyboard.xaml.cs">
       <DependentUpon>OriginalVirtualKeyboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Temp\SystemDropShadowChrome.cs" />
     <Compile Include="Temp\TempControl.xaml.cs">
       <DependentUpon>TempControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ShadowEffectTests.xaml.cs">
+      <DependentUpon>ShadowEffectTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\TextBoxTests.xaml.cs">
       <DependentUpon>TextBoxTests.xaml</DependentUpon>
@@ -288,6 +293,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Temp\TempControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\ShadowEffectTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -509,6 +518,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Comments\Focus.Investigation.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Comments\ShadowEffect.Investigation.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

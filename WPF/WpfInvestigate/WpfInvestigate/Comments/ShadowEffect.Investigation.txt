@@ -1,0 +1,16 @@
+﻿
+shadow effect like focus effect: -> not need to add additional border into template + easy implement control transparency
+
+====
+Aim:
+===
+1. Shadow effect should be attached property
+2. Internal control part should be transparent
+
+==========
+How to do:
+==========
+1. Use border with radial gradient: 
+	- bad: вид тіні не зовсім адекватний
+
+2. User border with shadow + clip internal part of border (for clip use exclude method: see https://metanit.com/sharp/wpf/17.2.php)
