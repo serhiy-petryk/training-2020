@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Effects
@@ -27,7 +28,6 @@ namespace WpfInvestigate.Effects
             dpd.AddValueChanged(element, UpdateBorders);
 
             // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
-            // element.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => UpdateBorders(element, null)));
             element.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => UpdateBorders(element, null)));
 
         }
@@ -35,12 +35,26 @@ namespace WpfInvestigate.Effects
         private static void UpdateBorders(object sender, EventArgs e)
         {
             if (!(sender is FrameworkElement element)) return;
-            var newCornerRadius = GetCornerRadius(element);
+            var newRadius = GetCornerRadius(element);
             foreach (var border in ControlHelper.GetMainBorders(element))
             {
-                border.CornerRadius = newCornerRadius;
+                var borderSize = border.BorderThickness;
+                var radius = new CornerRadius(
+                    GetCornerWidth(newRadius.TopLeft, borderSize.Top, borderSize.Left),
+                    GetCornerWidth(newRadius.TopRight, borderSize.Top, borderSize.Right),
+                    GetCornerWidth(newRadius.BottomLeft, borderSize.Bottom, borderSize.Right),
+                    GetCornerWidth(newRadius.BottomLeft, borderSize.Bottom, borderSize.Left));
+
+                border.CornerRadius = radius;
                 ControlHelper.ClipToBoundBorder(border);
             }
+        }
+
+        private static double GetCornerWidth(double requiredCornerWidth, double firstBorderWidth, double secondBorderWidth)
+        {
+            if (Tips.AreEqual(requiredCornerWidth, 0.0)) return 0.0;
+            var cornerWidth = requiredCornerWidth - (firstBorderWidth + secondBorderWidth) / 4;
+            return Math.Max(Tips.SCREEN_TOLERANCE, cornerWidth);
         }
     }
 }
