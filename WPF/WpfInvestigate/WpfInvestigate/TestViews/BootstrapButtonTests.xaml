@@ -158,12 +158,12 @@
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100"/>
-                    <Button Margin="4" Padding="4" Content="Test focus" FontSize="16" BorderThickness="0"
+                    <Button Margin="4" Padding="4" Content="Test focus" FontSize="16" BorderThickness="2"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:FocusEffect.Thickness="11"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+70,100, -7.5,100,+70,100, -10,100,-12.5,100"/>
                     <Button Margin="4" Padding="4" Content="Focus test" FontSize="16" BorderThickness="10 0 20 0"
                             effects:FocusEffect.Brush="Aquamarine"
                             effects:FocusEffect.Thickness="2"

@@ -92,8 +92,23 @@ namespace WpfInvestigate.Helpers
                 Math.Abs(b.ActualWidth + b.Margin.Left + b.Margin.Right - element.ActualWidth) < 1.1 &&
                 Math.Abs(b.ActualHeight + b.Margin.Top + b.Margin.Bottom - element.ActualHeight) < 1.1);
 
-        public static CornerRadius? GetCornerRadius(FrameworkElement element) =>
-            GetMainBorders(element).FirstOrDefault(b => b.CornerRadius != new CornerRadius())?.CornerRadius;
+        public static CornerRadius? GetCornerRadius(FrameworkElement element)
+        {
+            if (element is Border border)
+                return new CornerRadius(
+                    GetActualCornerValue(border.CornerRadius.TopLeft, border.BorderThickness.Top, border.BorderThickness.Left),
+                    GetActualCornerValue(border.CornerRadius.TopRight, border.BorderThickness.Top, border.BorderThickness.Right),
+                    GetActualCornerValue(border.CornerRadius.BottomRight, border.BorderThickness.Bottom, border.BorderThickness.Right),
+                    GetActualCornerValue(border.CornerRadius.BottomLeft, border.BorderThickness.Bottom, border.BorderThickness.Left));
+
+            return GetMainBorders(element).FirstOrDefault(b => b.CornerRadius != new CornerRadius())?.CornerRadius;
+        }
+
+        private static double GetActualCornerValue(double corner, double thickness1, double thickness2)
+        {
+            if (Tips.AreEqual(corner, 0.0)) return 0.0;
+            return corner + (thickness1 + thickness2) / 4;
+        }
 
         public static void HideInnerBorderOfDatePickerTextBox(FrameworkElement fe, bool toHide)
         {
