@@ -10,7 +10,7 @@ using System.Windows.Threading;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Helpers;
 
-namespace WpfInvestigate.Effects
+namespace WpfInvestigate.Obsolete
 {
     /// <summary>
     /// </summary>

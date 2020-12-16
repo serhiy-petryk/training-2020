@@ -91,7 +91,7 @@
     <Compile Include="Effects\ChromeEffect.cs" />
     <Compile Include="Effects\DatePickerEffect.cs" />
     <Compile Include="Effects\CornerRadiusEffect.cs" />
-    <Compile Include="Effects\ShadowEffect.cs" />
+    <Compile Include="Obsolete\ShadowEffect.cs" />
     <Compile Include="Effects\IconEffect.cs" />
     <Compile Include="Effects\TextBoxEffects.cs" />
     <Compile Include="Helpers\ControlHelper.cs" />
@@ -127,7 +127,7 @@
     <Compile Include="Temp\TempControl.xaml.cs">
       <DependentUpon>TempControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\ShadowEffectTests.xaml.cs">
+    <Compile Include="Obsolete\TestViews\ShadowEffectTests.xaml.cs">
       <DependentUpon>ShadowEffectTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\TextBoxTests.xaml.cs">
@@ -296,7 +296,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestViews\ShadowEffectTests.xaml">
+    <Page Include="Obsolete\TestViews\ShadowEffectTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

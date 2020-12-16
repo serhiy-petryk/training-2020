@@ -66,7 +66,6 @@ namespace WpfInvestigate
         private void ChromeTest_OnClick(object sender, RoutedEventArgs e) => new ChromeTests().Show();
         private void ButtonStyleTests_OnClick(object sender, RoutedEventArgs e) => new ButtonStyleTests().Show();
         private void TextBoxTests_OnClick(object sender, RoutedEventArgs e) => new TextBoxTests().Show();
-        private void ShadowEffectTest_OnClick(object sender, RoutedEventArgs e) => new ShadowEffectTests().Show();
 
         private void ObsoleteNumericUpDownTest_OnClick(object sender, RoutedEventArgs e) => new NumericUpDownTests().Show();
         private void ObsoleteRippleButtonTest_OnClick(object sender, RoutedEventArgs e) => new RippleButtonTests().Show();
@@ -74,6 +73,7 @@ namespace WpfInvestigate
         private void ObsoleteMonochromeButtonTest_OnClick(object sender, RoutedEventArgs e) => new MonochromeButtonTests().Show();
         private void ObsoleteDualPathToggleButtonEffectTest_OnClick(object sender, RoutedEventArgs e) => new DualPathToggleButtonEffectTests().Show();
         private void ObsoleteFlatButtonTest_OnClick(object sender, RoutedEventArgs e) => new FlatButtonTests().Show();
+        private void ObsoleteShadowEffectTest_OnClick(object sender, RoutedEventArgs e) => new ShadowEffectTests().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {

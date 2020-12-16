@@ -5,7 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using WpfInvestigate.Helpers;
 
-namespace WpfInvestigate.TestViews
+namespace WpfInvestigate.Obsolete.TestViews
 {
     /// <summary>
     /// Interaction logic for ShadowEffectTests.xaml

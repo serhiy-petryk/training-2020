@@ -180,7 +180,6 @@
                     <Label>Others:</Label>
                     <Button x:Name="KeyboardTest" Margin="5" Content="Others: Keyboard" Click="KeyboardTest_OnClick"/>
                     <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="Others: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
-                    <Button x:Name="ShadowEffectTest" Margin="5" Content="Very hard: ShadowEffectTest Tests" Click="ShadowEffectTest_OnClick"/>
                     <Button x:Name="WiPTest" Margin="5" Content="WiP Tests" Click="WiPTest_OnClick"/>
                     <controls:NumericBox Margin="5 0" Width="120" Height="24" effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323"/>
                 </StackPanel>
@@ -193,6 +192,7 @@
                     <Button x:Name="ObsoleteMonochromeButtonTest" Width="200" Margin="0 5" Content="Obsolete: MonochromeButton" Click="ObsoleteMonochromeButtonTest_OnClick"/>
                     <Button x:Name="ObsoleteDualPathToggleButtonEffectTest" Width="200" Margin="0 5" Content="Obsolete: DualPathToggleButtonEffect" Click="ObsoleteDualPathToggleButtonEffectTest_OnClick"/>
                     <Button x:Name="ObsoleteFlatButtonTest" Width="200" Margin="0 5" Content="Obsolete: FlatButton" Click="ObsoleteFlatButtonTest_OnClick"/>
+                    <Button x:Name="ObsoleteShadowEffectTest" Margin="5" Content="Obsolete: ShadowEffectTest Tests" Click="ObsoleteShadowEffectTest_OnClick"/>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
