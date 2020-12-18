@@ -43,3 +43,11 @@ Set focus in MaterialDesign:
                 if (!focusable.Focus()) return;
                 focusable.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
             }, DispatcherPriority.Background);
+
+================
+My Focus system:
+================
+1. Keyboard & mouse focus - standard
+  - для keyboard focus працює FocusVisualStyle
+2. CustomFocus - FocusEffect for mouse & keyboard - для виділення фокусу (див. MessageBlock)
+  - тут можливо потрібно встановлювати властивість FocusVisualStyle = {x:Null}

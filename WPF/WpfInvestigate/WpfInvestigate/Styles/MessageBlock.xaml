@@ -52,6 +52,9 @@
                                         <RowDefinition Height="15"/>
                                     </Grid.RowDefinitions>
 
+                                    <!-- Insert before header for focusing on the first button in ButtonsArea (not 'Close' button) -->
+                                    <Grid Grid.Row="2" x:Name="PART_ButtonsArea"/>
+
                                     <Grid Grid.Row="0" Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -93,9 +96,6 @@
                                                  Style="{StaticResource ReadOnlyTextBoxStyle}"
                                                  effects:FocusEffect.Brush="Aqua"/>
                                     </Grid>
-
-                                    <Grid Grid.Row="2" x:Name="PART_ButtonsArea"/>
-
                                 </Grid>
                             </Border>
                         </Border>
