@@ -11,15 +11,6 @@
         Title="LIVE MainWindow" Height="600" Width="1200">
 
     <Window.Resources>
-        <Style x:Key="MyFocusVisual">
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Rectangle Margin="-2" StrokeThickness="2" Stroke="Red"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Window.Resources>
 
     <Grid Margin="10">

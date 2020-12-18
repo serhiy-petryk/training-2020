@@ -7,6 +7,17 @@
 
     <DropShadowEffect x:Key="ShadowEffect" BlurRadius="5" ShadowDepth="2" Direction="315" po:Freeze="True" />
 
+    <Style x:Key="OriginalFocusVisualStyle">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="0" StrokeThickness="1" StrokeDashArray="1 2"
+                               Stroke="{Binding RelativeSource={RelativeSource AncestorType=Control}, Path=Foreground}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- ========== -->
     <!-- Geometries -->
     <!-- ========== -->
