@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
@@ -46,6 +47,7 @@ namespace WpfInvestigate.Controls
             await CreateAdornerAsync(host);
             if (content != null)
                 Items.Add(content);
+            ControlHelper.SetFocus(content);
         }
         public void ShowDialog(FrameworkElement content, UIElement host = null)
         {
@@ -55,6 +57,7 @@ namespace WpfInvestigate.Controls
             AllDialogClosed += (s, e) => frame.Continue = false;
             if (content != null)
                 Items.Add(content);
+            ControlHelper.SetFocus(content);
 
             Dispatcher.PushFrame(frame);
         }
@@ -63,7 +66,10 @@ namespace WpfInvestigate.Controls
             host = host ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             await CreateAdornerAsync(host);
             if (content != null)
+            {
+                ControlHelper.SetFocus(content);
                 await AddDialogAsync(content);
+            }
         }
 
         /// <summary>
@@ -79,7 +85,7 @@ namespace WpfInvestigate.Controls
 
         private Action<FrameworkElement> _closedDelegate;
 
-        protected override DependencyObject GetContainerForItemOverride() => new ContentControl();
+        protected override DependencyObject GetContainerForItemOverride() => new ContentControl {Focusable = false};
         protected override bool IsItemItsOwnContainerOverride(object item) => false;
 
         private Panel _itemsHostPanel;

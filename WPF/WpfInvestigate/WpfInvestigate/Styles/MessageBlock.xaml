@@ -16,6 +16,7 @@
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
+                <Setter Property="effects:FocusEffect.Brush" Value="Aqua"/>
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -65,8 +66,10 @@
                                         <Button Grid.Column="1" Margin="0 0 4 0" Width="20" Padding="2"
                                                 Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"
                                                 HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                Focusable="True"
                                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                                Command="ApplicationCommands.Close" CommandParameter="{Binding}" />
+                                                Command="ApplicationCommands.Close" CommandParameter="{Binding}"
+                                                effects:FocusEffect.Brush="Aqua"/>
 
                                         <!--<Thumb Grid.Column="0" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>-->
                                         <Thumb Grid.Column="0" x:Name="PART_HeaderMover" Opacity="0"/>
@@ -87,7 +90,8 @@
                                                  Margin="8" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"
                                                  Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
                                                  Text="{Binding MessageText, Mode=OneWay}"
-                                                 Style="{StaticResource ReadOnlyTextBoxStyle}"/>
+                                                 Style="{StaticResource ReadOnlyTextBoxStyle}"
+                                                 effects:FocusEffect.Brush="Aqua"/>
                                     </Grid>
 
                                     <Grid Grid.Row="2" x:Name="PART_ButtonsArea"/>

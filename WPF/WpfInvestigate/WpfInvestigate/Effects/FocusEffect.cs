@@ -39,7 +39,7 @@ namespace WpfInvestigate.Effects
 
                 if (e.NewValue is Brush newBrush && newBrush != Brushes.Transparent)
                 {
-                    Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+                    Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
                     {
                         element.SizeChanged += Element_ChangeFocus;
                         dpd.AddValueChanged(element, OnElementFocusChanged );

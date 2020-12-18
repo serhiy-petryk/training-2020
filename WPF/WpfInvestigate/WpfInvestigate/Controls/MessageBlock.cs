@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Common.ColorSpaces;
 using WpfInvestigate.Helpers;
@@ -269,13 +270,19 @@ namespace WpfInvestigate.Controls
             _buttonsArea.Children.Clear();
             _buttonsArea.ColumnDefinitions.Clear();
 
+            Button firstButton = null;
             foreach (var content in _buttons ?? new string[0])
             {
                 _buttonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                 var button = new Button { Content = content, Command = _cmdClickButton, CommandParameter = content };
                 Grid.SetColumn(button, _buttonsArea.ColumnDefinitions.Count - 1);
                 _buttonsArea.Children.Add(button);
+                if (firstButton == null)
+                    firstButton = button;
             }
+
+            if (firstButton != null)
+                Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => firstButton.Focus()));
         }
 
         private void UpdateUI()

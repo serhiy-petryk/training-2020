@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -269,6 +270,17 @@ namespace WpfInvestigate.Helpers
                     e.Handled = true;
                 }
             }
+        }
+
+        public static void SetFocus(UIElement element)
+        {
+            element?.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                new Action(() =>
+                {
+                    element.Focus();
+                    element.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(() => element.MoveFocus(new TraversalRequest(FocusNavigationDirection.First))));
+                }));
         }
         #endregion
     }

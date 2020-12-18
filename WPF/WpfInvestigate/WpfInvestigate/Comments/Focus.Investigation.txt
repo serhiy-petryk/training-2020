@@ -1,6 +1,9 @@
 ﻿
 1. Current focused element
-IInputElement focusedControl =  Keyboard.FocusedElement;
+IInputElement focusedControl =  Keyboard.FocusedElement; // FocusManager.FocusedElement
+
+2. Set focus:
+Keyboard.Focus(control); or control.Focus();
 
 2. Remove dotted border around focused item
 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -30,3 +33,13 @@ To investigate:
 DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageBlock), new FrameworkPropertyMetadata(typeof(MessageBlock)));
 KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(MessageBlock), new FrameworkPropertyMetadata(false));
 FocusableProperty.OverrideMetadata(typeof(MessageBlock), new FrameworkPropertyMetadata(false));
+
+===========================
+Set focus in MaterialDesign:
+===========================
+            var focusable = child.VisualDepthFirstTraversal().OfType<UIElement>().FirstOrDefault(ui => ui.Focusable && ui.IsVisible);
+            focusable?.Dispatcher.InvokeAsync(() =>
+            {
+                if (!focusable.Focus()) return;
+                focusable.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            }, DispatcherPriority.Background);
