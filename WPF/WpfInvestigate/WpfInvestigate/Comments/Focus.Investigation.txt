@@ -51,3 +51,12 @@ My Focus system:
   - для keyboard focus працює FocusVisualStyle
 2. CustomFocus - FocusEffect for mouse & keyboard - для виділення фокусу (див. MessageBlock)
   - тут можливо потрібно встановлювати властивість FocusVisualStyle = {x:Null}
+
+========
+Summary:
+========
+1. Sync mouse focus with keyboard (for FocusVisualState):
+            var f1 = typeof(KeyboardNavigation).GetField("_alwaysShowFocusVisual", BindingFlags.Static | BindingFlags.NonPublic);
+            f1.SetValue(null, true);
+2. Do not show keyboard standard focus: FocusVisualStyle = {x:Null}
+3. Show custom mouse & keyboard focus: use FocusEffect
