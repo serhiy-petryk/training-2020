@@ -91,6 +91,7 @@
     <Compile Include="Effects\ChromeEffect.cs" />
     <Compile Include="Effects\DatePickerEffect.cs" />
     <Compile Include="Effects\CornerRadiusEffect.cs" />
+    <Compile Include="Effects\FocusVisualEffect.cs" />
     <Compile Include="Obsolete\ShadowEffect.cs" />
     <Compile Include="Effects\IconEffect.cs" />
     <Compile Include="Effects\TextBoxEffects.cs" />

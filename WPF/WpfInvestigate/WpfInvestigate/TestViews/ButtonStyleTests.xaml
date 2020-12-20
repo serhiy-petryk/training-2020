@@ -55,7 +55,8 @@
                         <TextBlock Text="DefaultButtonBaseStyle:" VerticalAlignment="Center"/>
 
                         <Button Margin="5" Height="30" Content="Default" Padding="8 0"
-                                Style="{StaticResource DefaultButtonBaseStyle}"/>
+                                Style="{StaticResource DefaultButtonBaseStyle}"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"/>
 
                         <Button Margin="5" Height="30" Padding="0"
                                 Background="GreenYellow" Foreground="BlueViolet"
