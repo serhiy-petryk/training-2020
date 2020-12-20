@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects"
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
-                    xmlns:controls="clr-namespace:WpfInvestigate.Controls">
+                    xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+                    xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
@@ -16,7 +17,7 @@
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
-                <Setter Property="effects:FocusEffect.Brush" Value="Aqua"/>
+                <Setter Property="obsolete:FocusEffect.Brush" Value="Aqua"/>
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -72,7 +73,7 @@
                                                 Focusable="True"
                                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                 Command="ApplicationCommands.Close" CommandParameter="{Binding}"
-                                                effects:FocusEffect.Brush="Aqua"/>
+                                                obsolete:FocusEffect.Brush="Aqua"/>
 
                                         <!--<Thumb Grid.Column="0" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>-->
                                         <Thumb Grid.Column="0" x:Name="PART_HeaderMover" Opacity="0"/>
@@ -94,7 +95,7 @@
                                                  Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
                                                  Text="{Binding MessageText, Mode=OneWay}"
                                                  Style="{StaticResource ReadOnlyTextBoxStyle}"
-                                                 effects:FocusEffect.Brush="Aqua"/>
+                                                 obsolete:FocusEffect.Brush="Aqua"/>
                                     </Grid>
                                 </Grid>
                             </Border>

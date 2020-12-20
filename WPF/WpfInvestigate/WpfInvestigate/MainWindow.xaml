@@ -7,6 +7,7 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
+        xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="600" Width="1200">
 
@@ -82,11 +83,11 @@
                         <TextBox x:Name="TestTextBox2" Width="70" Background="Yellow" Foreground="Blue" TextWrapping="Wrap" MaxHeight="30"
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                 effects:FocusEffect.Brush="Aqua"
+                                 obsolete:FocusEffect.Brush="Aqua"
                                  effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator"/>
-                        <controls:NumericBox Margin="5" effects:FocusEffect.Brush="Aqua" Height="24"/>
-                        <DatePicker Margin="5" effects:FocusEffect.Brush="Aqua"/>
-                        <controls:TimePicker Margin="5" effects:FocusEffect.Brush="Aqua"/>
+                        <controls:NumericBox Margin="5" obsolete:FocusEffect.Brush="Aqua" Height="24"/>
+                        <DatePicker Margin="5" obsolete:FocusEffect.Brush="Aqua"/>
+                        <controls:TimePicker Margin="5" obsolete:FocusEffect.Brush="Aqua"/>
                     </WrapPanel>
 
                     <WrapPanel Margin="5">
@@ -95,12 +96,12 @@
                                  effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
                                  ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
                                  effects:WatermarkEffect.Watermark="Watermark"/>
-                        <Button Margin="2" Content="Change Background" Click="ChangeBackground_OnClick" effects:FocusEffect.Brush="Aqua"/>
-                        <Button Margin="2" Content="Change Foreground" Click="ChangeForeground_OnClick" effects:FocusEffect.Brush="Aqua"/>
-                        <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick" effects:FocusEffect.Brush="Aqua"/>
+                        <Button Margin="2" Content="Change Background" Click="ChangeBackground_OnClick" obsolete:FocusEffect.Brush="Aqua"/>
+                        <Button Margin="2" Content="Change Foreground" Click="ChangeForeground_OnClick" obsolete:FocusEffect.Brush="Aqua"/>
+                        <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick" obsolete:FocusEffect.Brush="Aqua"/>
                         <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
-                        <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Text="AAAAAA" Style="{StaticResource ReadOnlyTextBoxStyle}" effects:FocusEffect.Brush="Aqua"/>
-                        <controls:NumericBox Margin="5 0" Width="120" Height="24" effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323" effects:FocusEffect.Brush="Aqua"/>
+                        <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Text="AAAAAA" Style="{StaticResource ReadOnlyTextBoxStyle}" obsolete:FocusEffect.Brush="Aqua"/>
+                        <controls:NumericBox Margin="5 0" Width="120" Height="24" effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323" obsolete:FocusEffect.Brush="Aqua"/>
                     </WrapPanel>
 
                     <WrapPanel>

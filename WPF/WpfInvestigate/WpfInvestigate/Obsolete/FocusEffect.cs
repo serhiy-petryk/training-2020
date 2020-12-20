@@ -12,7 +12,7 @@ using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Helpers;
 
-namespace WpfInvestigate.Effects
+namespace WpfInvestigate.Obsolete
 {
     /// <summary>
     /// </summary>
@@ -69,9 +69,9 @@ namespace WpfInvestigate.Effects
                         UseLayoutRounding = false, SnapsToDevicePixels = false
                     };
 
-                    colorAnimation = new ColorAnimation {Duration = AnimationHelper.AnimationDuration};
+                    colorAnimation = new ColorAnimation {Duration = Common.AnimationHelper.AnimationDuration};
                     adorner.Resources.Add("ColorAnimation", colorAnimation);
-                    thicknessAnimation = new ThicknessAnimation { Duration = AnimationHelper.AnimationDuration };
+                    thicknessAnimation = new ThicknessAnimation { Duration = Common.AnimationHelper.AnimationDuration };
                     adorner.Resources.Add("ThicknessAnimation", thicknessAnimation);
 
                     adornerControl = new AdornerControl(element) { Child = adorner, AdornerSize  = AdornerControl.AdornerSizeType.ChildElement};

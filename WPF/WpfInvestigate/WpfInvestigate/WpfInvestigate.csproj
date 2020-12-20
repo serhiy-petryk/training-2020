@@ -107,7 +107,7 @@
     </Compile>
     <Compile Include="Controls\Others\VirtualKeyboard.Models.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.KeyDefinition.cs" />
-    <Compile Include="Effects\FocusEffect.cs" />
+    <Compile Include="Obsolete\FocusEffect.cs" />
     <Compile Include="Obsolete\AnimationHelper.cs" />
     <Compile Include="Obsolete\Events.cs" />
     <Compile Include="Obsolete\NumericUpDown.xaml.cs">

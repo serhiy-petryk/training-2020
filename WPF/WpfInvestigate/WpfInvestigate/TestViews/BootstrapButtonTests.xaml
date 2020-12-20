@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
+        xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
         mc:Ignorable="d"
         Title="BootstrapButtonTests" Height="600" Width="900">
 
@@ -14,8 +15,8 @@
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="Gray"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
-                <Setter Property="effects:FocusEffect.Thickness" Value="3"/>
-                <Setter Property="effects:FocusEffect.Brush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=72}"/>
+                <Setter Property="obsolete:FocusEffect.Thickness" Value="3"/>
+                <Setter Property="obsolete:FocusEffect.Brush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=72}"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Padding" Value="12 6"/>
                 <Setter Property="FontSize" Value="16"/>
@@ -154,26 +155,26 @@
 
                 <WrapPanel Orientation="Horizontal">
                     <Button Margin="4" Padding="4" Content="No chrome for click" FontSize="16" BorderThickness="0"
-                            effects:FocusEffect.Thickness="11"
+                            obsolete:FocusEffect.Thickness="11"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100"/>
                     <Button Margin="4" Padding="4" Content="Test focus" FontSize="16" BorderThickness="2"
-                            effects:FocusEffect.Brush="Aquamarine"
-                            effects:FocusEffect.Thickness="11"
+                            obsolete:FocusEffect.Brush="Aquamarine"
+                            obsolete:FocusEffect.Thickness="11"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+70,100, -7.5,100,+70,100, -10,100,-12.5,100"/>
                     <Button Margin="4" Padding="4" Content="Focus test" FontSize="16" BorderThickness="10 0 20 0"
-                            effects:FocusEffect.Brush="Aquamarine"
-                            effects:FocusEffect.Thickness="2"
+                            obsolete:FocusEffect.Brush="Aquamarine"
+                            obsolete:FocusEffect.Thickness="2"
                             effects:CornerRadiusEffect.CornerRadius="14 1 18 8"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
 
                     <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
-                            effects:FocusEffect.Brush="Aquamarine"
-                            effects:FocusEffect.Thickness="10 10 0 20"
+                            obsolete:FocusEffect.Brush="Aquamarine"
+                            obsolete:FocusEffect.Thickness="10 10 0 20"
                             effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100">
@@ -183,7 +184,7 @@
                     </Button>
 
                     <Button Margin="4" Padding="4" Content="Corner Test" FontSize="16" BorderThickness="4"
-                            effects:FocusEffect.Brush="Aquamarine"
+                            obsolete:FocusEffect.Brush="Aquamarine"
                             effects:CornerRadiusEffect.CornerRadius="4 1 8 2"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
@@ -192,14 +193,14 @@
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100">
-                        <effects:FocusEffect.Brush>
+                        <obsolete:FocusEffect.Brush>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                 <GradientStop Color="Yellow" Offset="0.0" />
                                 <GradientStop Color="Red" Offset="0.33" />
                                 <GradientStop Color="Blue" Offset="0.67" />
                                 <GradientStop Color="LimeGreen" Offset="1.0" />
                             </LinearGradientBrush>
-                        </effects:FocusEffect.Brush>
+                        </obsolete:FocusEffect.Brush>
                     </Button>
                 </WrapPanel>
 
