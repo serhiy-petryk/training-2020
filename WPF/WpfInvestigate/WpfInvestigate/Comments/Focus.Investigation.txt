@@ -60,3 +60,10 @@ Summary:
             f1.SetValue(null, true);
 2. Do not show keyboard standard focus: FocusVisualStyle = {x:Null}
 3. Show custom mouse & keyboard focus: use FocusEffect
+
+========================
+Default FocusVisualStyle:
+========================
+See https://stackoverflow.com/questions/29101942/how-to-redefine-focusvisualstyle-for-a-wpf-user-control 
+Can't define globally
+Need явно to define for every style/type
