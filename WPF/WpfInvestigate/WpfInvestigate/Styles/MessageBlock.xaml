@@ -13,11 +13,12 @@
     <Style TargetType="controls:MessageBlock">
         <Style.Resources>
             <Style TargetType="Button" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
                 <Setter Property="Padding" Value="0 1"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
-                <Setter Property="obsolete:FocusEffect.Brush" Value="Aqua"/>
+                <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -54,7 +55,7 @@
                                     </Grid.RowDefinitions>
 
                                     <!-- Insert before header for focusing on the first button in ButtonsArea (not 'Close' button) -->
-                                    <Grid Grid.Row="2" x:Name="PART_ButtonsArea"/>
+                                    <Grid Grid.Row="2" x:Name="PART_ButtonsArea" Margin="0 5 0 0"/>
 
                                     <Grid Grid.Row="0" Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
                                         <Grid.ColumnDefinitions>
