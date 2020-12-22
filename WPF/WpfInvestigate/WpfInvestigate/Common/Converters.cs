@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Common
 {
@@ -19,6 +20,22 @@ namespace WpfInvestigate.Common
         {
             return value;
         }
+    }
+
+    public class FocusRadiusConverter : DependencyObject, IValueConverter
+    {
+        public static FocusRadiusConverter Instance = new FocusRadiusConverter();
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is FrameworkElement e)
+            {
+                var corner = ControlHelper.GetCornerRadius(e);
+                if (corner.HasValue)
+                    return (corner.Value.TopLeft + corner.Value.TopRight + corner.Value.BottomRight + corner.Value.BottomLeft) / 4;
+            }
+            return 0;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
     public class ChangeTypeConverter : DependencyObject, IValueConverter

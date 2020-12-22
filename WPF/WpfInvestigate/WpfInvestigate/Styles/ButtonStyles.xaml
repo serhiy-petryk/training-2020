@@ -188,7 +188,8 @@
                                         effects:ClickEffect.RippleColor="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                        UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        FocusVisualStyle="{StaticResource InternalFocusVisualStyle}"/>
 
                                 <Rectangle Grid.Column="1" Margin="0" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Stretch"
                                            Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"/>
@@ -203,7 +204,8 @@
                                               effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
                                               effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                               effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
-                                              effects:DoubleIconToggleButtonEffect.Width="9"/>
+                                              effects:DoubleIconToggleButtonEffect.Width="9"
+                                              FocusVisualStyle="{StaticResource InternalFocusVisualStyle}"/>
                             </Grid>
                         </Border>
                     </Grid>

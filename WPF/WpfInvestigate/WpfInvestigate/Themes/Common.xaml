@@ -124,20 +124,40 @@
         <!--<PointAnimation Storyboard.TargetProperty="RenderTransformOrigin" To="0,0" Duration="00:00:00" />-->
     </Storyboard>
 
-    <!-- ========================== -->
-    <!-- Default style for controls -->
-    <!-- ========================== -->
-    <Style x:Key="DefaultFocusVisualStyle">
+    <!-- =================== -->
+    <!-- Focus Visual Styles -->
+    <!-- =================== -->
+    <Style x:Key="InternalFocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Margin="2" StrokeThickness="1" StrokeDashArray="1 2"
-                               Stroke="{Binding RelativeSource={RelativeSource AncestorType=Adorner}, Path=AdornedElement.Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%, FallbackValue=Black}"/>
+                    <Rectangle Margin="2" StrokeThickness="1" StrokeDashArray="2 2" UseLayoutRounding="True" SnapsToDevicePixels="True"
+                               Stroke="{Binding RelativeSource={RelativeSource AncestorType=Adorner}, Path=AdornedElement.Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%, FallbackValue=Black}"
+                               RadiusX="{Binding RelativeSource={RelativeSource AncestorType=Adorner}, Path=AdornedElement, Converter={x:Static common:FocusRadiusConverter.Instance}, FallbackValue=0}"
+                               RadiusY="{Binding RelativeSource={RelativeSource Self}, Path=RadiusX}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
+    <Style x:Key="OuterFocusVisualStyle">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="-2" StrokeThickness="1" StrokeDashArray="1 2" UseLayoutRounding="True" SnapsToDevicePixels="True"
+                               Stroke="{Binding RelativeSource={RelativeSource AncestorType=Adorner}, Path=AdornedElement.Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%, FallbackValue=Black}"
+                               RadiusX="{Binding RelativeSource={RelativeSource AncestorType=Adorner}, Path=AdornedElement, Converter={x:Static common:FocusRadiusConverter.Instance}, FallbackValue=0}"
+                               RadiusY="{Binding RelativeSource={RelativeSource Self}, Path=RadiusX}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DefaultFocusVisualStyle" BasedOn="{StaticResource InternalFocusVisualStyle}"/>
+
+    <!-- ========================== -->
+    <!-- Default style for controls -->
+    <!-- ========================== -->
     <Style TargetType="TextBox">
         <!--<Setter Property="Background" Value="White"/>
         <Setter Property="BorderBrush" Value="Black"/>-->

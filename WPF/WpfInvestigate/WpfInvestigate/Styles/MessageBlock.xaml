@@ -19,6 +19,7 @@
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
                 <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
+                <Setter Property="FocusVisualStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -74,7 +75,8 @@
                                                 Focusable="True"
                                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                 Command="ApplicationCommands.Close" CommandParameter="{Binding}"
-                                                obsolete:FocusEffect.Brush="Aqua"/>
+                                                FocusVisualStyle="{StaticResource OuterFocusVisualStyle}"
+                                                effects:FocusVisualEffect.AlwaysShowFocus="True"/>
 
                                         <!--<Thumb Grid.Column="0" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>-->
                                         <Thumb Grid.Column="0" x:Name="PART_HeaderMover" Opacity="0"/>
