@@ -43,7 +43,7 @@ namespace WpfInvestigate.Controls
         #region ==========  Public methods ===========
         public async void Show(FrameworkElement content, UIElement host = null)
         {
-            host = host ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            host = host ?? Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             await CreateAdornerAsync(host);
             if (content != null)
                 Items.Add(content);
@@ -51,7 +51,7 @@ namespace WpfInvestigate.Controls
         }
         public void ShowDialog(FrameworkElement content, UIElement host = null)
         {
-            host = host ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            host = host ?? Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             CreateAdornerModal(host);
             var frame = new DispatcherFrame();
             AllDialogClosed += (s, e) => frame.Continue = false;
@@ -63,7 +63,7 @@ namespace WpfInvestigate.Controls
         }
         public async Task ShowAsync(FrameworkElement content, UIElement host = null)
         {
-            host = host ?? Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            host = host ?? Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             await CreateAdornerAsync(host);
             if (content != null)
             {

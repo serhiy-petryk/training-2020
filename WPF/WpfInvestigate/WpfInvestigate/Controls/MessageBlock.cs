@@ -35,8 +35,8 @@ namespace WpfInvestigate.Controls
             var messageBlock = new MessageBlock { MessageText = messageText, Caption = caption, IsCloseButtonVisible = isCloseButtonVisible };
             if (icon != null)
             {
-                messageBlock.Icon = Application.Current.TryFindResource($"{icon.Value}Geometry") as Geometry;
-                messageBlock.BaseIconColor = Application.Current.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
+                messageBlock.Icon = Application.Current?.TryFindResource($"{icon.Value}Geometry") as Geometry;
+                messageBlock.BaseIconColor = Application.Current?.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
                 if (messageBlock.BaseIconColor.HasValue)
                     messageBlock.BaseColor = messageBlock.BaseIconColor.Value;
             }
@@ -120,7 +120,7 @@ namespace WpfInvestigate.Controls
             DataContext = this;
             _cmdClickButton = new RelayCommand(OnButtonClick);
 
-            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var currentWindow = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             if (currentWindow != null)
                 MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);
         }
@@ -282,7 +282,7 @@ namespace WpfInvestigate.Controls
         private void UpdateUI()
         {
 
-            /*var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            /*var currentWindow = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             if (currentWindow != null)
             {
                 var newMaxWidth = Math.Max(400, currentWindow.ActualWidth * 0.9);
