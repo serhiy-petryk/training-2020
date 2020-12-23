@@ -25,18 +25,19 @@
 
         <Grid ZIndex="1" Background="White">
             <Slider Grid.Column="0"
-                x:Name="uiScaleSlider"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
-                Height="100"
-                Value="1" Minimum="0.5" Maximum="4"
-                Orientation="Vertical"
-                Ticks="1"
-                IsSnapToTickEnabled="False"
-                TickPlacement="BottomRight"
-                AutoToolTipPlacement="BottomRight"
-                AutoToolTipPrecision="2"/>
+                    x:Name="uiScaleSlider"
+                    Focusable="False"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.5" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
         </Grid>
 
         <Grid Grid.Column="1">

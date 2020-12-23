@@ -164,20 +164,19 @@
         </StackPanel>
 
         <Grid Grid.Column="1" Background="AntiqueWhite">
-            <Slider
-            x:Name="uiScaleSlider"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
-            Height="100"
-            Value="1" Minimum="0.1" Maximum="4"
-            Orientation="Vertical"
-            Ticks="1"
-            IsSnapToTickEnabled="False"
-            TickPlacement="BottomRight"
-            AutoToolTipPlacement="BottomRight"
-            AutoToolTipPrecision="2"
-        />
+            <Slider x:Name="uiScaleSlider"
+                    Focusable="False"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.1" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
         </Grid>
     </Grid>
 </Window>

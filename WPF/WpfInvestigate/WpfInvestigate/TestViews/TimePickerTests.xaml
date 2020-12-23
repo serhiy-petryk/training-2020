@@ -15,7 +15,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Slider Grid.Column="0" x:Name="uiScaleSlider"
+        <Slider Grid.Column="0" x:Name="uiScaleSlider" Focusable="False"
                 HorizontalAlignment="Center" VerticalAlignment="Top"
                 ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
                 Height="100" Value="1" Minimum="0.5" Maximum="4" Orientation="Vertical" Ticks="1"
