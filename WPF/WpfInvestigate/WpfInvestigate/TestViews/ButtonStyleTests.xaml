@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
-        xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
         mc:Ignorable="d"
         Title="ButtonStyleTests" Height="700" Width="1150">
 
@@ -79,13 +78,15 @@
                                     Background="GreenYellow" Foreground="BlueViolet" BorderThickness="0"
                                     Style="{StaticResource DefaultButtonBaseStyle}"
                                     effects:CornerRadiusEffect.CornerRadius="8"
-                                    obsolete:FocusEffect.Brush="Aqua"/>
+                                    effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                    FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"/>
                             <Button Margin="5 0" Content="Simplest" Padding="8 0"
                                     Background="GreenYellow" Foreground="BlueViolet"
                                     BorderBrush="Blue" BorderThickness="1"
                                     Style="{StaticResource DefaultButtonBaseStyle}"
                                     effects:CornerRadiusEffect.CornerRadius="8"
-                                    obsolete:FocusEffect.Brush="Aqua"/>
+                                    effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                    FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"/>
                         </StackPanel>
 
                         <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
@@ -94,7 +95,8 @@
                                 BorderBrush="Orange" BorderThickness="4"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 effects:CornerRadiusEffect.CornerRadius="12"
-                                obsolete:FocusEffect.Brush="Aqua"/>
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"/>
 
                         <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
                                 Background="Blue" Foreground="White"
@@ -102,20 +104,23 @@
                                 BorderBrush="Blue" BorderThickness="4"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 effects:CornerRadiusEffect.CornerRadius="12"
-                                obsolete:FocusEffect.Brush="Aqua"/>
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"/>
 
                         <Button Margin="5 0" Width="30" Height="30"
                                 Background="Blue" Foreground="White"
                                 BorderBrush="Red" BorderThickness="1"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 effects:CornerRadiusEffect.CornerRadius="4"
-                                obsolete:FocusEffect.Brush="Aqua"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                 effects:IconEffect.Geometry="{StaticResource DemoGeometry}"/>
                         <Button Margin="5 0" Width="30" Height="30"
                                 Background="Blue" Foreground="White" BorderThickness="0"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 effects:CornerRadiusEffect.CornerRadius="4"
-                                obsolete:FocusEffect.Brush="Aqua"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                 effects:IconEffect.Geometry="{StaticResource DemoGeometry}"/>
                         <Button Margin="5" Height="30" Width="100" Content="#FFD6EAFF" Padding="8 0"
                                 Background="Blue" Foreground="White"
@@ -123,25 +128,29 @@
                                 BorderBrush="Blue" BorderThickness="1"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 effects:CornerRadiusEffect.CornerRadius="12"
-                                obsolete:FocusEffect.Brush="Aqua"/>
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"/>
 
                         <Button Margin="5 0" Height="30"
                                 Background="Blue" Foreground="White" BorderBrush="Red" BorderThickness="2"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 effects:CornerRadiusEffect.CornerRadius="4"
-                                obsolete:FocusEffect.Brush="Aqua"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                 effects:IconEffect.Geometry="{StaticResource DemoGeometry}"/>
                         <Button Margin="5 0" Height="30"
                                 Background="Blue" Foreground="Yellow" BorderBrush="Red" BorderThickness="2"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 effects:CornerRadiusEffect.CornerRadius="30"
-                                obsolete:FocusEffect.Brush="Aqua"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                 effects:IconEffect.Geometry="{StaticResource DemoGeometry}"/>
                         <Button Margin="5 0" Height="30" Content="With icon" Padding="2 0 6 0"
                                 Background="Blue" Foreground="Yellow" BorderBrush="Red" BorderThickness="2"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 effects:CornerRadiusEffect.CornerRadius="4"
-                                obsolete:FocusEffect.Brush="Aqua"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                 effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                 effects:IconEffect.Margin="4"/>
 
@@ -154,7 +163,7 @@
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 ToolTip="SnapsToDevicePixels/UseLayoutRounding = false"
                                 effects:CornerRadiusEffect.CornerRadius="8"
-                                obsolete:FocusEffect.Brush="Aqua">
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}">
                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
                         </Button>
                         <Button Margin="5 0" Padding="0" Height="24"
@@ -165,7 +174,7 @@
                                 ToolTip="SnapsToDevicePixels/UseLayoutRounding = true"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 effects:CornerRadiusEffect.CornerRadius="8"
-                                obsolete:FocusEffect.Brush="Aqua">
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}">
                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
                         </Button>
                         <Button Margin="5 0" Padding="0" Height="24"
@@ -175,7 +184,7 @@
                                 Style="{StaticResource DefaultButtonBaseStyle}"
                                 ToolTip="SnapsToDevicePixels/UseLayoutRounding = default(true)"
                                 effects:CornerRadiusEffect.CornerRadius="8"
-                                obsolete:FocusEffect.Brush="Aqua">
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}">
                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Width="50" Height="30" Background="Red"/>
                         </Button>
                     </WrapPanel>
@@ -201,7 +210,7 @@
                                       Style="{StaticResource DropDownButtonStyle}"
                                       ToolTip="Complex content"
                                       effects:CornerRadiusEffect.CornerRadius="4"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
                             <ToggleButton.Content>
                                 <Viewbox>
@@ -216,7 +225,7 @@
                                       Style="{StaticResource DropDownButtonStyle}"
                                       ToolTip="No content, but IconEffect.Geometry"
                                       effects:CornerRadiusEffect.CornerRadius="4"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
@@ -224,7 +233,7 @@
                                       Background="GreenYellow" Foreground="BlueViolet" BorderBrush="Orange"
                                       Style="{StaticResource DropDownButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                       effects:IconEffect.Margin="4"/>
                     </WrapPanel>
@@ -240,7 +249,7 @@
                                       BorderBrush="Blue" BorderThickness="1"
                                       Style="{StaticResource SplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="8"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                         <ToggleButton Margin="5" Height="30" Content="Ripple" Padding="8 0"
@@ -249,7 +258,7 @@
                                       Style="{StaticResource SplitButtonStyle}"
                                       effects:ClickEffect.RippleColor="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"
                                       effects:CornerRadiusEffect.CornerRadius="8"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                         <StackPanel Orientation="Horizontal" Background="LightPink">
@@ -257,14 +266,14 @@
                                           Background="GreenYellow" Foreground="BlueViolet" BorderThickness="0"
                                           Style="{StaticResource SplitButtonStyle}"
                                           effects:CornerRadiusEffect.CornerRadius="8"
-                                          obsolete:FocusEffect.Brush="Aqua"
+                                          FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                             <ToggleButton Margin="5 0" Content="Simplest" Padding="8 0"
                                           Background="GreenYellow" Foreground="BlueViolet"
                                           BorderBrush="Blue" BorderThickness="1"
                                           Style="{StaticResource SplitButtonStyle}"
                                           effects:CornerRadiusEffect.CornerRadius="8"
-                                          obsolete:FocusEffect.Brush="Aqua"
+                                          FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                           Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                         </StackPanel>
 
@@ -275,7 +284,7 @@
                                       BorderBrush="Orange" BorderThickness="4"
                                       Style="{StaticResource SplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="12"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                         <ToggleButton Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
@@ -284,7 +293,7 @@
                                       BorderBrush="Orange" BorderThickness="4 4 1 4"
                                       Style="{StaticResource SplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="12"
-                                      obsolete:FocusEffect.Brush="Aqua" Checked="OpenDropDownMenu">
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}" Checked="OpenDropDownMenu">
                             <ToggleButton.Resources>
                                 <Style TargetType="Rectangle">
                                     <Setter Property="Width" Value="6"/>
@@ -298,20 +307,20 @@
                                       BorderBrush="Blue" BorderThickness="4"
                                       Style="{StaticResource SplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="12"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                         <ToggleButton Margin="5 0" Height="30" Background="Blue" Foreground="White" BorderBrush="Red"
                                       Style="{StaticResource SplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                         <ToggleButton Margin="5 0" Height="30" Background="Blue" Foreground="White" BorderBrush="Red" Content="Icon"
                                       Style="{StaticResource SplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                       effects:IconEffect.Margin="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
@@ -380,7 +389,7 @@
                                       ToolTip="Complex content"
                                       effects:ChromeEffect.MonochromeAnimated="GreenYellow"
                                       effects:CornerRadiusEffect.CornerRadius="4"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
                             <ToggleButton.Content>
                                 <Viewbox>
@@ -396,7 +405,7 @@
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       effects:ChromeEffect.MonochromeAnimated="GreenYellow"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                         <ToggleButton Margin="5" Height="30" Padding="4 0" Content="Icon"
@@ -405,7 +414,7 @@
                                       effects:ChromeEffect.MonochromeAnimated="GreenYellow"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                       effects:IconEffect.Margin="3"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                         <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Text="DropDownButton:"/>
@@ -420,7 +429,7 @@
                                       ToolTip="Complex content"
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       effects:ChromeEffect.MonochromeAnimated="GreenYellow"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
                             <ToggleButton.Content>
                                 <Viewbox>
@@ -435,7 +444,7 @@
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       effects:ChromeEffect.MonochromeAnimated="GreenYellow"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                         <ToggleButton Margin="5" Height="30" BorderThickness="2" Padding="4 0" Content="Icon"
@@ -444,7 +453,7 @@
                                       effects:ChromeEffect.MonochromeAnimated="GreenYellow"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                       effects:IconEffect.Margin="3"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
                     </WrapPanel>
 
@@ -487,7 +496,7 @@
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       ToolTip="Complex content"
                                       effects:CornerRadiusEffect.CornerRadius="4"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
                             <ToggleButton.Content>
                                 <Viewbox>
@@ -502,7 +511,7 @@
                                       ToolTip="No content, but IconEffect.Geometry"
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                       effects:CornerRadiusEffect.CornerRadius="4"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
                         </ToggleButton>
 
@@ -511,7 +520,7 @@
                                       effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
                                       effects:IconEffect.Margin="3"
                                       effects:CornerRadiusEffect.CornerRadius="4"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu">
                         </ToggleButton>
 
@@ -520,7 +529,7 @@
                                       VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
                                       Style="{StaticResource MonochromeSplitButtonStyle}"
                                       effects:CornerRadiusEffect.CornerRadius="12"
-                                      obsolete:FocusEffect.Brush="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
                         <ToggleButton Margin="5" Height="30" Content="Bootstrap yellow" Padding="4 0" Background="{StaticResource YellowBrush}"
@@ -588,7 +597,7 @@
                                       ToolTip="Open/Close Task panel"
                                       UseLayoutRounding="False"
                                       effects:CornerRadiusEffect.CornerRadius="2"
-                                      effects:ChromeEffect.MonochromeAnimated="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
                                       effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                                       effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
@@ -623,7 +632,7 @@
                         <ToggleButton Margin="5" Height="26" Focusable="False" IsThreeState="False"
                                       ToolTip="SnapsToDevicePixels=True" SnapsToDevicePixels="True"
                                       Style="{StaticResource DefaultButtonBaseStyle}"
-                                      effects:ChromeEffect.MonochromeAnimated="Aqua"
+                                      FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
                                       effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
                                       effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                       effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
