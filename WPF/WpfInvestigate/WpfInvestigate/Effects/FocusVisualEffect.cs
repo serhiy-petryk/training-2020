@@ -35,6 +35,9 @@ namespace WpfInvestigate.Effects
 
                 if (e.NewValue is Style)
                 {
+                    if (element.FocusVisualStyle != null)
+                        element.FocusVisualStyle = null;
+
                     Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
                     {
                         element.SizeChanged += Element_ChangeFocus;
