@@ -2,8 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects"
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
-                    xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-                    xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete">
+                    xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
@@ -18,8 +17,8 @@
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
-                <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
-                <Setter Property="FocusVisualStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
+                <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageBlock}, Path=(effects:FocusVisualEffect.AlwaysShowFocus)}"/>
+                <Setter Property="FocusVisualStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageBlock}, Path=FocusVisualStyle}"/>
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -37,6 +36,8 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
+        <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MessageBlock">
@@ -75,8 +76,8 @@
                                                 Focusable="True"
                                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                 Command="ApplicationCommands.Close" CommandParameter="{Binding}"
-                                                FocusVisualStyle="{StaticResource OuterFocusVisualStyle}"
-                                                effects:FocusVisualEffect.AlwaysShowFocus="True"/>
+                                                FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                                                effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"/>
 
                                         <!--<Thumb Grid.Column="0" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>-->
                                         <Thumb Grid.Column="0" x:Name="PART_HeaderMover" Opacity="0"/>
@@ -97,8 +98,7 @@
                                                  Margin="8" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"
                                                  Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
                                                  Text="{Binding MessageText, Mode=OneWay}"
-                                                 Style="{StaticResource ReadOnlyTextBoxStyle}"
-                                                 obsolete:FocusEffect.Brush="Aqua"/>
+                                                 Style="{StaticResource ReadOnlyTextBoxStyle}"/>
                                     </Grid>
                                 </Grid>
                             </Border>

@@ -157,17 +157,17 @@
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Margin="-2" StrokeThickness="2" UseLayoutRounding="True" SnapsToDevicePixels="True"
-                               Stroke="Aqua"
-                               RadiusX="{Binding RelativeSource={RelativeSource AncestorType=Adorner}, Path=AdornedElement, Converter={x:Static common:FocusRadiusConverter.Instance}, FallbackValue=0}"
-                               RadiusY="{Binding RelativeSource={RelativeSource Self}, Path=RadiusX}"/>
+                    <Border Margin="-2" UseLayoutRounding="True" SnapsToDevicePixels="True"
+                            BorderThickness="2" BorderBrush="Aqua"
+                            Background="Transparent" IsHitTestVisible="False" Focusable="False"
+                            CornerRadius="{Binding ConverterParameter=2, RelativeSource={RelativeSource AncestorType=Adorner}, Path=AdornedElement, Converter={x:Static common:FocusRadiusConverter.Instance}, FallbackValue=0}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <!--<Style x:Key="DefaultFocusVisualStyle" BasedOn="{StaticResource InternalFocusVisualStyle}"/>-->
-    <Style x:Key="DefaultFocusVisualStyle" BasedOn="{StaticResource AquaFocusVisualStyle}"/>
+    <Style x:Key="DefaultFocusVisualStyle" BasedOn="{StaticResource OuterFocusVisualStyle}"/>
+    <!--<Style x:Key="DefaultFocusVisualStyle" BasedOn="{StaticResource AquaFocusVisualStyle}"/>-->
 
     <!-- ========================== -->
     <!-- Default style for controls -->

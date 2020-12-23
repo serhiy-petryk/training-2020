@@ -819,6 +819,42 @@
                                 <RotateTransform CenterX="10" CenterY="20" Angle="10" />
                             </Button.RenderTransform>
                         </Button>
+                        <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
+                                effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
+                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                                effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
+                                ToolTip="TestFocusVisualStyle">
+                            <Button.RenderTransform>
+                                <RotateTransform CenterX="10" CenterY="20" Angle="10" />
+                            </Button.RenderTransform>
+                        </Button>
+                        <Button Margin="4" Padding="4" Width="100" Height="40" Content="Focus Test" FontSize="16" BorderThickness="2"
+                                effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
+                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                                effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                ToolTip="AdjustedFocusVisualStyle">
+                            <Button.RenderTransform>
+                                <RotateTransform CenterX="10" CenterY="20" Angle="10" />
+                            </Button.RenderTransform>
+                            <Button.FocusVisualStyle>
+                                <Style>
+                                    <Setter Property="Control.Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Border Margin="-10 -10 0 -20" BorderBrush="Aqua" UseLayoutRounding="True" SnapsToDevicePixels="True"
+                                                        BorderThickness="10 10 0 20"
+                                                        Background="Transparent" IsHitTestVisible="False" Focusable="False"
+                                                        Width="110" Height="70"
+                                                        CornerRadius="19 5 18 18"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.FocusVisualStyle>
+                        </Button>
                     </WrapPanel>
 
                 </StackPanel>

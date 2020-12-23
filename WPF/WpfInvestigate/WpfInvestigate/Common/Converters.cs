@@ -29,11 +29,36 @@ namespace WpfInvestigate.Common
         {
             if (value is FrameworkElement e)
             {
-                var corner = ControlHelper.GetCornerRadius(e);
-                if (corner.HasValue)
-                    return (corner.Value.TopLeft + corner.Value.TopRight + corner.Value.BottomRight + corner.Value.BottomLeft) / 4;
+                var radius = ControlHelper.GetCornerRadius(e);
+                var focusThickness = new Thickness();
+                if (parameter is string p)
+                    focusThickness = (Thickness)(new ThicknessConverter()).ConvertFrom(null, null, p);
+
+                if (targetType == typeof(CornerRadius))
+                {
+                    if (radius.HasValue)
+                    {
+                        var newRadius = new CornerRadius(
+                            radius.Value.TopLeft + Math.Max(focusThickness.Left, focusThickness.Top) / 2,
+                            radius.Value.TopRight + Math.Max(focusThickness.Top, focusThickness.Right) / 2,
+                            radius.Value.BottomRight + Math.Max(focusThickness.Right, focusThickness.Bottom) / 2,
+                            radius.Value.BottomLeft + Math.Max(focusThickness.Bottom, focusThickness.Left) / 2);
+                        return newRadius;
+
+                    }
+                    return new CornerRadius();
+                }
+                // target type = typeof(double)
+                var averageThicknessWidth = (focusThickness.Left + focusThickness.Top + focusThickness.Right + focusThickness.Bottom) / 4;
+                if (radius.HasValue)
+                    return averageThicknessWidth + (radius.Value.TopLeft + radius.Value.TopRight + radius.Value.BottomRight + radius.Value.BottomLeft) / 4;
+
+                return averageThicknessWidth;
             }
-            return 0;
+
+            if (targetType == typeof(CornerRadius))
+                return new CornerRadius();
+            return 0.0;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
