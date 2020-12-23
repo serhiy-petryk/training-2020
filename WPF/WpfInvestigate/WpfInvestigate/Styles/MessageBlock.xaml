@@ -17,8 +17,9 @@
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageBlock}, Path=(effects:FocusVisualEffect.AlwaysShowFocus)}"/>
-                <Setter Property="FocusVisualStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageBlock}, Path=FocusVisualStyle}"/>
+                <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageBlock}, Path=(effects:FocusVisualEffect.FocusControlStyle)}"/>
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -36,8 +37,9 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="FocusVisualStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
+        <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MessageBlock">
@@ -77,7 +79,8 @@
                                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                 Command="ApplicationCommands.Close" CommandParameter="{Binding}"
                                                 FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                                                effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"/>
+                                                effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"
+                                                effects:FocusVisualEffect.FocusControlStyle="{TemplateBinding effects:FocusVisualEffect.FocusControlStyle}"/>
 
                                         <!--<Thumb Grid.Column="0" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>-->
                                         <Thumb Grid.Column="0" x:Name="PART_HeaderMover" Opacity="0"/>

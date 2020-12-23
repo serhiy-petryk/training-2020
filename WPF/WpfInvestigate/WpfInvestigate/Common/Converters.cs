@@ -22,13 +22,23 @@ namespace WpfInvestigate.Common
         }
     }
 
-    public class FocusRadiusConverter : DependencyObject, IValueConverter
+    public class FocusVisualConverter : DependencyObject, IValueConverter
     {
-        public static FocusRadiusConverter Instance = new FocusRadiusConverter();
+        public static FocusVisualConverter CornerRadius = new FocusVisualConverter();
+        public static FocusVisualConverter Brush = new FocusVisualConverter { _brush = true };
+        private bool _brush;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is FrameworkElement e)
             {
+                if (_brush)
+                {
+                    var color = Tips.GetActualBackgroundColor(e);
+                    var focusBrush = (Brush)ColorHslBrush.Instance.Convert(color, typeof(Brush), parameter, null);
+                    return focusBrush;
+                }
+
+                // CornerRadius
                 var radius = ControlHelper.GetCornerRadius(e);
                 var focusThickness = new Thickness();
                 if (parameter is string p)
@@ -58,6 +68,8 @@ namespace WpfInvestigate.Common
 
             if (targetType == typeof(CornerRadius))
                 return new CornerRadius();
+            if (targetType == typeof(Brush))
+                return Brushes.Transparent;
             return 0.0;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();

@@ -20,7 +20,8 @@
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FocusVisualStyle" Value="{StaticResource DefaultFocusVisualStyle}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -85,7 +86,8 @@
         <Setter Property="IsThreeState" Value="False"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="FocusVisualStyle" Value="{StaticResource DefaultFocusVisualStyle}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -110,7 +112,9 @@
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                         UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                        FocusVisualStyle="{StaticResource InternalFocusVisualStyle}"/>
+                                        FocusVisualStyle="{x:Null}"
+                                        effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
+                                        effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"/>
 
                                 <Rectangle Grid.Column="1" Margin="0" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Stretch"
                                            Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}"/>
@@ -125,7 +129,9 @@
                                               effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                               effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                                               effects:DoubleIconToggleButtonEffect.Width="9"
-                                              FocusVisualStyle="{StaticResource InternalFocusVisualStyle}"/>
+                                              FocusVisualStyle="{x:Null}"
+                                              effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
+                                              effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"/>
                             </Grid>
                         </Border>
                     </Grid>
@@ -164,7 +170,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="IsThreeState" Value="False"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="FocusVisualStyle" Value="{StaticResource DefaultFocusVisualStyle}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -191,7 +198,9 @@
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                         UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                        FocusVisualStyle="{StaticResource InternalFocusVisualStyle}"/>
+                                        FocusVisualStyle="{x:Null}"
+                                        effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
+                                        effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"/>
 
                                 <Rectangle Grid.Column="1" Margin="0" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Stretch"
                                            Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"/>
@@ -207,7 +216,9 @@
                                               effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                               effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                                               effects:DoubleIconToggleButtonEffect.Width="9"
-                                              FocusVisualStyle="{StaticResource InternalFocusVisualStyle}"/>
+                                              FocusVisualStyle="{x:Null}"
+                                              effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
+                                              effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"/>
                             </Grid>
                         </Border>
                     </Grid>

@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Common.ColorSpaces;
 using WpfInvestigate.Helpers;
