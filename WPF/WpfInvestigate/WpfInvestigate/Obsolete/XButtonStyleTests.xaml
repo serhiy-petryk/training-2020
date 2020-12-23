@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfInvestigate.TestViews.ButtonStyleTests"
+﻿<Window x:Class="WpfInvestigate.Obsolete.XButtonStyleTests"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
         mc:Ignorable="d"
-        Title="ButtonStyleTests" Height="700" Width="1150">
+        Title="Old ButtonStyleTests" Height="600" Width="1250">
 
     <Window.Resources>
         <Geometry x:Key="DemoGeometry">M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z</Geometry>
@@ -55,14 +55,14 @@
                         <TextBlock Text="DefaultButtonBaseStyle:" VerticalAlignment="Center"/>
 
                         <Button Margin="5" Height="30" Content="Default" Padding="8 0"
-                                Style="{StaticResource DefaultButtonBaseStyle}"
-                                effects:FocusVisualEffect.AlwaysShowFocus="True"/>
+                                Style="{StaticResource DefaultButtonBaseStyle}"/>
 
                         <Button Margin="5" Height="30" Padding="0"
                                 Background="GreenYellow" Foreground="BlueViolet"
                                 BorderBrush="Blue" BorderThickness="1"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
-                                effects:CornerRadiusEffect.CornerRadius="8">
+                                effects:CornerRadiusEffect.CornerRadius="8"
+                                obsolete:FocusEffect.Brush="Aqua">
                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                 <TextBlock Text="Content" FontSize="24" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                             </Grid>
@@ -72,7 +72,8 @@
                                 Background="GreenYellow" Foreground="BlueViolet"
                                 BorderBrush="Blue" BorderThickness="1"
                                 Style="{StaticResource DefaultButtonBaseStyle}"
-                                effects:CornerRadiusEffect.CornerRadius="8"/>
+                                effects:CornerRadiusEffect.CornerRadius="8"
+                                obsolete:FocusEffect.Brush="Aqua"/>
 
                         <StackPanel Orientation="Horizontal" Background="LightPink">
                             <Button Margin="5 0" Content="Simplest" Padding="8 0"
@@ -783,42 +784,6 @@
                         <Grid Background="Violet" Width="24" Height="24" >
                             <Path Stretch="Uniform" Data="{StaticResource CloseGeometry}"/>
                         </Grid>
-                    </WrapPanel>
-
-                    <WrapPanel Margin="0 2 0 15" Background="DarkGray">
-                        <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
-                                effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
-                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                                effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
-                                effects:FocusVisualEffect.AlwaysShowFocus="True"
-                                FocusVisualStyle="{StaticResource OuterFocusVisualStyle}"
-                                ToolTip="OuterFocusVisualStyle">
-                            <Button.RenderTransform>
-                                <RotateTransform CenterX="10" CenterY="20" Angle="10" />
-                            </Button.RenderTransform>
-                        </Button>
-                        <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
-                                effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
-                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                                effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
-                                effects:FocusVisualEffect.AlwaysShowFocus="True"
-                                FocusVisualStyle="{StaticResource InternalFocusVisualStyle}"
-                                ToolTip="InternalFocusVisualStyle">
-                            <Button.RenderTransform>
-                                <RotateTransform CenterX="10" CenterY="20" Angle="10" />
-                            </Button.RenderTransform>
-                        </Button>
-                        <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
-                                effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
-                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                                effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
-                                effects:FocusVisualEffect.AlwaysShowFocus="True"
-                                FocusVisualStyle="{StaticResource AquaFocusVisualStyle}"
-                                ToolTip="AquaFocusVisualStyle">
-                            <Button.RenderTransform>
-                                <RotateTransform CenterX="10" CenterY="20" Angle="10" />
-                            </Button.RenderTransform>
-                        </Button>
                     </WrapPanel>
 
                 </StackPanel>

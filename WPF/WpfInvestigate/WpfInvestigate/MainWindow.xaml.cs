@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Effects;
+using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
 using WpfInvestigate.Temp;
 using WpfInvestigate.TestViews;
@@ -74,6 +75,7 @@ namespace WpfInvestigate
         private void ObsoleteDualPathToggleButtonEffectTest_OnClick(object sender, RoutedEventArgs e) => new DualPathToggleButtonEffectTests().Show();
         private void ObsoleteFlatButtonTest_OnClick(object sender, RoutedEventArgs e) => new FlatButtonTests().Show();
         private void ObsoleteShadowEffectTest_OnClick(object sender, RoutedEventArgs e) => new ShadowEffectTests().Show();
+        private void OldButtonStyleTest_OnClick(object sender, RoutedEventArgs e) => new XButtonStyleTests().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
@@ -157,5 +159,6 @@ namespace WpfInvestigate
                 Debug.Print($"ColumnsAfter: {grid.ColumnDefinitions.Count}");
 
         }
+
     }
 }

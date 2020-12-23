@@ -184,7 +184,8 @@
                     <Button x:Name="ObsoleteMonochromeButtonTest" Width="200" Margin="0 5" Content="Obsolete: MonochromeButton" Click="ObsoleteMonochromeButtonTest_OnClick"/>
                     <Button x:Name="ObsoleteDualPathToggleButtonEffectTest" Width="200" Margin="0 5" Content="Obsolete: DualPathToggleButtonEffect" Click="ObsoleteDualPathToggleButtonEffectTest_OnClick"/>
                     <Button x:Name="ObsoleteFlatButtonTest" Width="200" Margin="0 5" Content="Obsolete: FlatButton" Click="ObsoleteFlatButtonTest_OnClick"/>
-                    <Button x:Name="ObsoleteShadowEffectTest" Margin="5" Content="Obsolete: ShadowEffectTest Tests" Click="ObsoleteShadowEffectTest_OnClick"/>
+                    <Button x:Name="ObsoleteShadowEffectTest" Margin="5" Content="Obsolete: ShadowEffect Tests" Click="ObsoleteShadowEffectTest_OnClick"/>
+                    <Button x:Name="OldButtonStyleTest" Margin="5" Content="Old: ButtonStyle Tests" Click="OldButtonStyleTest_OnClick"/>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
