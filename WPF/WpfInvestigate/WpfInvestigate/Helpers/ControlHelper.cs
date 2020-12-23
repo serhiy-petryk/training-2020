@@ -88,8 +88,8 @@ namespace WpfInvestigate.Helpers
         }
 
         #region  ==========  Control Border  =============
-        public static IEnumerable<Border> GetMainBorders(FrameworkElement element) =>
-            Tips.GetVisualChildren(element).OfType<Border>().Where(b =>
+        public static IEnumerable<T> GetMainElements<T>(FrameworkElement element) where T: FrameworkElement =>
+            Tips.GetVisualChildren(element).OfType<T>().Where(b =>
                 Math.Abs(b.ActualWidth + b.Margin.Left + b.Margin.Right - element.ActualWidth) < 1.1 &&
                 Math.Abs(b.ActualHeight + b.Margin.Top + b.Margin.Bottom - element.ActualHeight) < 1.1);
 
@@ -102,7 +102,13 @@ namespace WpfInvestigate.Helpers
                     GetActualCornerValue(border.CornerRadius.BottomRight, border.BorderThickness.Bottom, border.BorderThickness.Right),
                     GetActualCornerValue(border.CornerRadius.BottomLeft, border.BorderThickness.Bottom, border.BorderThickness.Left));
 
-            return GetMainBorders(element).FirstOrDefault(b => b.CornerRadius != new CornerRadius())?.CornerRadius;
+            var mainBorder =  GetMainElements<Border>(element).FirstOrDefault(b => b.CornerRadius != new CornerRadius());
+            if (mainBorder != null) return mainBorder.CornerRadius;
+
+            var buttonChrome = GetMainElements<Decorator>(element).FirstOrDefault(d=> d.GetType().Name == "ButtonChrome");
+            if (buttonChrome != null) return new CornerRadius(3.0);
+
+            return null;
         }
 
         private static double GetActualCornerValue(double corner, double thickness1, double thickness2)

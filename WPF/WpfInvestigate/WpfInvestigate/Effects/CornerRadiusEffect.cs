@@ -36,7 +36,7 @@ namespace WpfInvestigate.Effects
         {
             if (!(sender is FrameworkElement element)) return;
             var newRadius = GetCornerRadius(element);
-            foreach (var border in ControlHelper.GetMainBorders(element))
+            foreach (var border in ControlHelper.GetMainElements<Border>(element))
             {
                 var borderSize = border.BorderThickness;
                 var radius = new CornerRadius(

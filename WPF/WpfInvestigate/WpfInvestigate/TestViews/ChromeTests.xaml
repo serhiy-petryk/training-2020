@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
-        xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
         mc:Ignorable="d"
         Title="ChromeTests" Height="450" Width="800">
 
@@ -42,22 +41,23 @@
                     <controls:NumericBox Margin="5 0" BorderThickness="0" Width="100" Background="Yellow" Foreground="Blue"
                                          VisibleButtons="Close,Calculator,RightDown,Up" IsNullable="True" Value="23"
                                          effects:WatermarkEffect.Watermark="No value"
-                                         obsolete:FocusEffect.Brush="Aqua"/>
+                                         effects:FocusVisualEffect.FocusControlStyle="{StaticResource AquaFocusVisualStyle}"/>
 
                     <controls:TimePicker Margin="5 0" Background="Yellow" SelectedTimeFormat="Long" IsNullable="True" BorderThickness="0"
-                                         obsolete:FocusEffect.Brush="Aqua"/>
+                                         effects:FocusVisualEffect.FocusControlStyle="{StaticResource AquaFocusVisualStyle}"/>
 
                     <controls:DateTimePicker Margin="5 0" Background="Yellow" SelectedTimeFormat="Long" IsNullable="True" BorderThickness="0"
-                                             obsolete:FocusEffect.Brush="Aqua"/>
+                                             effects:FocusVisualEffect.FocusControlStyle="{StaticResource AquaFocusVisualStyle}"/>
 
                     <DatePicker Margin="5 0" Background="GreenYellow" Foreground="Blue"
                                 effects:DatePickerEffect.ClearButton="True" 
                                 effects:DatePickerEffect.IsNullable="True"
-                                obsolete:FocusEffect.Brush="Aqua"/>
+                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource AquaFocusVisualStyle}"/>
                 </WrapPanel>
 
                 <WrapPanel>
-                    <Button Content="Test button" Click="TestButton_OnClick"/>
+                    <Button Content="Test button" Click="TestButton_OnClick"
+                            effects:FocusVisualEffect.FocusControlStyle="{StaticResource AquaFocusVisualStyle}"/>
                 </WrapPanel>
 
             </StackPanel>
