@@ -83,7 +83,7 @@
                         <TextBox x:Name="TestTextBox2" Width="70" Background="Yellow" Foreground="Blue" TextWrapping="Wrap" MaxHeight="30"
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                 obsolete:FocusEffect.Brush="Aqua"
+                                 effects:FocusVisualEffect.AlwaysShowFocus="True"
                                  effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator"/>
                         <controls:NumericBox Margin="5" obsolete:FocusEffect.Brush="Aqua" Height="24"/>
                         <DatePicker Margin="5" obsolete:FocusEffect.Brush="Aqua"/>
@@ -102,51 +102,6 @@
                         <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
                         <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Text="AAAAAA" Style="{StaticResource ReadOnlyTextBoxStyle}" obsolete:FocusEffect.Brush="Aqua"/>
                         <controls:NumericBox Margin="5 0" Width="120" Height="24" effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323" obsolete:FocusEffect.Brush="Aqua"/>
-                    </WrapPanel>
-
-                    <WrapPanel>
-                        <Border Margin="0" Height="60" Width="100" Padding="8 0"
-                                Background="Blue" BorderBrush="Red" BorderThickness="16" CornerRadius="12"/>
-
-                        <Button Margin="10 0 0 0" Opacity="1" Height="60" Width="100" Content="#FFD6EAFF" Padding="0"
-                                Background="Blue" Foreground="White" FontSize="8"
-                                VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
-                                BorderBrush="Yellow" BorderThickness="16 0 0 0"
-                                Style="{StaticResource DefaultButtonBaseStyle}"
-                                effects:CornerRadiusEffect.CornerRadius="12">
-                        </Button>
-
-                        <Grid Margin="5" Width="100" Height="60">
-                            <Border Margin="0" Padding="0" BorderThickness="16 0 0 0" Background="Blue"
-                                    BorderBrush="YellowGreen"
-                                    SnapsToDevicePixels="True" UseLayoutRounding="True" CornerRadius="12"/>
-                            <!--<Border Margin="0" Padding="0" BorderThickness="16 0 0 0" Background="Blue" Opacity="0.3"
-                                    BorderBrush="Red"
-                                    SnapsToDevicePixels="True" UseLayoutRounding="True" CornerRadius="12 12 12 12"/>-->
-                        </Grid>
-
-                        <Grid Margin="5" Width="100" Height="100">
-                            <Border Margin="0" Padding="0" BorderThickness="0" Background="Blue"
-                                    BorderBrush="YellowGreen"
-                                    SnapsToDevicePixels="True" UseLayoutRounding="True" CornerRadius="12"/>
-                            <Border Margin="0" Padding="0" BorderThickness="24" Background="Blue" Opacity="0.3"
-                                    BorderBrush="Red"
-                                    SnapsToDevicePixels="True" UseLayoutRounding="True" CornerRadius="0.000000000001"/>
-                        </Grid>
-
-                        <Border Margin="5" Width="100" Height="100" Padding="0" BorderThickness="24" Background="Blue" Opacity="0.3"
-                                BorderBrush="Red"
-                                SnapsToDevicePixels="True" UseLayoutRounding="True" CornerRadius="0.000000000001"/>
-
-                        <!--<Button Margin="5 0" Opacity="0.3" Height="60" Width="100" Content="#FFD6EAFF" Padding="8 0"
-                                Background="Blue" Foreground="White" FontSize="8"
-                                VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
-                                BorderBrush="Yellow" BorderThickness="16"
-                                Style="{StaticResource DefaultButtonBaseStyle}"
-                                effects:CornerRadiusEffect.CornerRadius="12"
-                                effects:FocusEffect.Brush="Black"
-                                effects:FocusEffect.Thickness="5">
-                            </Button>-->
                     </WrapPanel>
 
                 </StackPanel>
