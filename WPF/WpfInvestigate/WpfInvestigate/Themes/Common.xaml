@@ -213,6 +213,7 @@
 
     <Style TargetType="DatePickerTextBox">
         <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     </Style>
 
     <Style TargetType="DatePicker">
