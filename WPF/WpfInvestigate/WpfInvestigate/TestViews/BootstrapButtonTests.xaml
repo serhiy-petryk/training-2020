@@ -174,34 +174,46 @@
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
 
                     <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
-                            obsolete:FocusEffect.Brush="Aquamarine"
-                            obsolete:FocusEffect.Thickness="10 10 0 20"
                             effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100">
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
+                            effects:FocusVisualEffect.AlwaysShowFocus="True">
                         <Button.RenderTransform>
                             <RotateTransform CenterX="10" CenterY="20" Angle="10" />
                         </Button.RenderTransform>
+                        <effects:FocusVisualEffect.FocusControlStyle>
+                            <Style TargetType="{x:Type Control}" BasedOn="{StaticResource SolidFocusVisualStyle}">
+                                <Setter Property="BorderThickness" Value="10 10 0 20"/>
+                            </Style>
+                        </effects:FocusVisualEffect.FocusControlStyle>
                     </Button>
 
-                    <Button Margin="4" Padding="4" Content="Corner Test" FontSize="16" BorderThickness="4"
-                            obsolete:FocusEffect.Brush="Aquamarine"
+                    <Button Margin="4" Padding="4" Content="Corner Test" FontSize="16" BorderThickness="8"
                             effects:CornerRadiusEffect.CornerRadius="4 1 8 2"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"
+                            effects:FocusVisualEffect.AlwaysShowFocus="True"
+                            effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
 
                     <Button Margin="4" Padding="4" Content="Gradient Focus test" FontSize="16" BorderThickness="4"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100">
-                        <obsolete:FocusEffect.Brush>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Color="Yellow" Offset="0.0" />
-                                <GradientStop Color="Red" Offset="0.33" />
-                                <GradientStop Color="Blue" Offset="0.67" />
-                                <GradientStop Color="LimeGreen" Offset="1.0" />
-                            </LinearGradientBrush>
-                        </obsolete:FocusEffect.Brush>
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"
+                            effects:FocusVisualEffect.AlwaysShowFocus="True">
+                        <effects:FocusVisualEffect.FocusControlStyle>
+                            <Style TargetType="{x:Type Control}" BasedOn="{StaticResource SolidFocusVisualStyle}">
+                                <Setter Property="BorderBrush">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="Yellow" Offset="0.0" />
+                                            <GradientStop Color="Red" Offset="0.33" />
+                                            <GradientStop Color="Blue" Offset="0.67" />
+                                            <GradientStop Color="LimeGreen" Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </effects:FocusVisualEffect.FocusControlStyle>
                     </Button>
                 </WrapPanel>
 

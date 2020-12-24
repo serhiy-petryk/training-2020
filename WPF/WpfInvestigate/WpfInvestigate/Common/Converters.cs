@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using WpfInvestigate.Controls;
 using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Common
@@ -26,24 +27,28 @@ namespace WpfInvestigate.Common
     {
         public static FocusVisualConverter CornerRadius = new FocusVisualConverter();
         public static FocusVisualConverter Brush = new FocusVisualConverter { _brush = true };
+        public static FocusVisualConverter Margin = new FocusVisualConverter { _margin = true };
+        private bool _margin;
         private bool _brush;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is FrameworkElement e)
+            if (value is AdornerControl adorner && adorner.AdornedElement is FrameworkElement element)
             {
+                // Focus brush
                 if (_brush)
                 {
-                    var color = Tips.GetActualBackgroundColor(e);
+                    var color = Tips.GetActualBackgroundColor(element);
                     var focusBrush = (Brush)ColorHslBrush.Instance.Convert(color, typeof(Brush), parameter, null);
                     return focusBrush;
                 }
 
-                // CornerRadius
-                var radius = ControlHelper.GetCornerRadius(e);
-                var focusThickness = new Thickness();
-                if (parameter is string p)
-                    focusThickness = (Thickness)(new ThicknessConverter()).ConvertFrom(null, null, p);
+                // Margin
+                var focusThickness = ((Control)adorner.Child).BorderThickness;
+                if (_margin)
+                    return new Thickness(-focusThickness.Left, -focusThickness.Top, -focusThickness.Right, -focusThickness.Bottom);
 
+                // CornerRadius
+                var radius = ControlHelper.GetCornerRadius(element);
                 if (targetType == typeof(CornerRadius))
                 {
                     if (radius.HasValue)

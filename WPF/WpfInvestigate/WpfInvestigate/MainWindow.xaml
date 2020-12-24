@@ -93,7 +93,7 @@
                                     effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"
                                     effects:FocusVisualEffect.AlwaysShowFocus="True"/>
                         <DatePicker Margin="5" Focusable="True"
-                                    effects:FocusVisualEffect.FocusControlStyle="{StaticResource AquaFocusVisualStyle}"
+                                    effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
                                     effects:FocusVisualEffect.AlwaysShowFocus="True"
                                     effects:CornerRadiusEffect.CornerRadius="2"/>
                         <DatePicker Margin="5" Focusable="True">
