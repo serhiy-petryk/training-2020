@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Effects;
+using WpfInvestigate.Helpers;
 using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
 using WpfInvestigate.Temp;
@@ -30,6 +31,8 @@ namespace WpfInvestigate
 
             cbDataType.ItemsSource = Enum.GetValues(typeof(DataTypeMetadata.DataType)).Cast<DataTypeMetadata.DataType>();
             cbDataType.SelectedValue = DataTypeMetadata.DataType.Date;
+
+            ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
         }
 
         private static string[] _cultures = { "", "sq-AL", "uk-UA", "en-US", "km-KH", "yo-NG" };
