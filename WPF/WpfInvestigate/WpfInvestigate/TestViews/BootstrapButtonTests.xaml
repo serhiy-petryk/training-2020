@@ -195,6 +195,13 @@
                             effects:FocusVisualEffect.AlwaysShowFocus="True"
                             effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
 
+                    <Button Margin="4" Padding="4" Content="Corner Test" FontSize="16" BorderThickness="8"
+                            effects:CornerRadiusEffect.CornerRadius="16 1 32 8"
+                            effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+50%,100, -7.5,100,-10,100, -10,100,-12.5,100"
+                            effects:FocusVisualEffect.AlwaysShowFocus="True"
+                            effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
+
                     <Button Margin="4" Padding="4" Content="Gradient Focus test" FontSize="16" BorderThickness="4"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"

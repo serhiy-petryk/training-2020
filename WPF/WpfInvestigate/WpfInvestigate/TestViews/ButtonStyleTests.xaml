@@ -795,7 +795,7 @@
                         </Grid>
                     </WrapPanel>
 
-                    <WrapPanel Margin="0 2 0 15" Background="DarkGray">
+                    <WrapPanel Margin="0 2 0 35" Background="DarkGray">
                         <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
                                 effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                                 effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
