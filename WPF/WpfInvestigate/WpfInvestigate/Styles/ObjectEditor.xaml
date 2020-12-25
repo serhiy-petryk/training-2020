@@ -16,6 +16,7 @@
                 <TextBox Padding="{TemplateBinding Padding}"
                          BorderBrush="{TemplateBinding BorderBrush}"
                          BorderThickness="{TemplateBinding BorderThickness}"
+                         Focusable="{TemplateBinding Focusable}"
                          VerticalAlignment="Stretch"
                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -31,6 +32,7 @@
                 <Grid Background="{TemplateBinding Background}">
                     <CheckBox Padding="{TemplateBinding Padding}"
                               BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                              Focusable="{TemplateBinding Focusable}"
                               VerticalAlignment="Center"
                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -44,6 +46,7 @@
 
             <ControlTemplate x:Key="NumericBox" TargetType="controls:ObjectEditor">
                 <controls:NumericBox BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                     Focusable="{TemplateBinding Focusable}"
                                      VerticalAlignment="Stretch" Width="{TemplateBinding Width}"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -61,6 +64,7 @@
 
             <ControlTemplate x:Key="DatePicker" TargetType="controls:ObjectEditor">
                 <DatePicker BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            Focusable="{TemplateBinding Focusable}"
                             VerticalAlignment="Stretch"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -78,6 +82,7 @@
 
             <ControlTemplate x:Key="DateTimePicker" TargetType="controls:ObjectEditor">
                 <controls:DateTimePicker BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                         Focusable="{TemplateBinding Focusable}"
                                          VerticalAlignment="Stretch" Width="{TemplateBinding Width}"
                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -93,6 +98,7 @@
 
             <ControlTemplate x:Key="TimePicker" TargetType="controls:ObjectEditor">
                 <controls:TimePicker BorderBrush="{TemplateBinding BorderBrush}"
+                                     Focusable="{TemplateBinding Focusable}"
                                      BorderThickness="{TemplateBinding BorderThickness}"
                                      VerticalAlignment="Stretch" Width="{TemplateBinding Width}"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
