@@ -144,7 +144,7 @@
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Margin="-2" StrokeThickness="1" StrokeDashArray="1 2" UseLayoutRounding="True" SnapsToDevicePixels="True"
+                    <Rectangle Margin="-2" StrokeThickness="1" StrokeDashArray="2 2" UseLayoutRounding="True" SnapsToDevicePixels="True"
                                Stroke="{Binding RelativeSource={RelativeSource AncestorType=Adorner}, Converter={x:Static common:FocusVisualConverter.Brush}, ConverterParameter=+100%, FallbackValue=Black}"
                                RadiusX="{Binding RelativeSource={RelativeSource AncestorType=Adorner}, Converter={x:Static common:FocusVisualConverter.CornerRadius}, FallbackValue=0}"
                                RadiusY="{Binding RelativeSource={RelativeSource Self}, Path=RadiusX}"/>

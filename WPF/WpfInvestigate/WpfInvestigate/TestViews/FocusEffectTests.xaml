@@ -41,6 +41,12 @@
             <StackPanel Orientation="Vertical" Margin="0 10 0 0">
                 <WrapPanel Margin="5">
                     <TextBlock Text="Only keyboard navigation:" VerticalAlignment="Center"/>
+                    <TextBox Margin="2" Padding="4" Width="70" Background="Yellow" Foreground="Blue"
+                             Text="AAAAAA" BorderThickness="2" BorderBrush="Blue" 
+                             effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
+                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
+                             effects:WatermarkEffect.Watermark="Watermark"
+                             effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>
                     <DatePicker Margin="5" Focusable="True"
                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"/>
                     <DatePicker Margin="5" Focusable="True"
@@ -62,11 +68,17 @@
                             </Style>
                         </effects:FocusVisualEffect.FocusControlStyle>
                     </DatePicker>
-
                 </WrapPanel>
 
                 <WrapPanel Margin="5">
                     <TextBlock Text="Always:" VerticalAlignment="Center"/>
+                    <TextBox Margin="2" Padding="4" Width="70" Background="Yellow" Foreground="Blue"
+                             Text="AAAAAA" BorderThickness="2" BorderBrush="Blue" 
+                             effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
+                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
+                             effects:WatermarkEffect.Watermark="Watermark"
+                             effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"
+                             effects:FocusVisualEffect.AlwaysShowFocus="True"/>
                     <DatePicker Margin="5" Focusable="True"
                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
                                 effects:FocusVisualEffect.AlwaysShowFocus="True"/>
@@ -91,7 +103,67 @@
                             </Style>
                         </effects:FocusVisualEffect.FocusControlStyle>
                     </DatePicker>
+                </WrapPanel>
 
+                <WrapPanel Margin="5" Background="Gray" Height="90">
+                    <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
+                                effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
+                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                                effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"
+                                ToolTip="OuterFocusVisualStyle">
+                        <Button.RenderTransform>
+                            <RotateTransform CenterX="10" CenterY="20" Angle="10" />
+                        </Button.RenderTransform>
+                    </Button>
+                    <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
+                                effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
+                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                                effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
+                                ToolTip="InternalFocusVisualStyle">
+                        <Button.RenderTransform>
+                            <RotateTransform CenterX="10" CenterY="20" Angle="10" />
+                        </Button.RenderTransform>
+                    </Button>
+                    <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
+                                effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
+                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                                effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
+                                ToolTip="AquaFocusVisualStyle">
+                        <Button.RenderTransform>
+                            <RotateTransform CenterX="10" CenterY="20" Angle="10" />
+                        </Button.RenderTransform>
+                    </Button>
+                    <Button Margin="4" Padding="4" Width="100" Height="40" Content="Focus Test" FontSize="16" BorderThickness="2"
+                                effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
+                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                                effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                ToolTip="AdjustedFocusVisualStyle">
+                        <Button.RenderTransform>
+                            <RotateTransform CenterX="10" CenterY="20" Angle="10" />
+                        </Button.RenderTransform>
+                        <effects:FocusVisualEffect.FocusControlStyle>
+                            <Style>
+                                <Setter Property="Control.Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Border Margin="-10 -10 0 -20" BorderBrush="Aqua" UseLayoutRounding="True" SnapsToDevicePixels="True"
+                                                        BorderThickness="10 10 0 20"
+                                                        Background="Transparent" IsHitTestVisible="False" Focusable="False"
+                                                        Width="110" Height="70"
+                                                        CornerRadius="19 5 18 18"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </effects:FocusVisualEffect.FocusControlStyle>
+                    </Button>
                 </WrapPanel>
 
             </StackPanel>
