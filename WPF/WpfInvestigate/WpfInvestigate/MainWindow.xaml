@@ -65,9 +65,9 @@
                     <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
 
                     <WrapPanel Margin="5" Background="Aqua" HorizontalAlignment="Stretch">
+                        <TextBox Width="70" Background="AntiqueWhite" Focusable="True"/>
                         <ComboBox x:Name="cbDataType" Margin="5" Height="20" />
                         <controls:ObjectEditor x:Name="Editor" MinWidth="100" Height="24"
-                                               Focusable="True"
                                                effects:WatermarkEffect.Watermark="TestWatermark"
                                                effects:WatermarkEffect.Foreground="Red"
                                                VerticalContentAlignment="Center" VerticalAlignment="Center"
