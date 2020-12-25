@@ -86,31 +86,6 @@
                                  effects:FocusVisualEffect.AlwaysShowFocus="True"
                                  effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator"/>
                         <controls:NumericBox Margin="5" Height="24"/>
-                        <DatePicker Margin="5" Focusable="True"
-                                    effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
-                                    effects:FocusVisualEffect.AlwaysShowFocus="True"/>
-                        <DatePicker Margin="5" Focusable="True"
-                                    effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"
-                                    effects:FocusVisualEffect.AlwaysShowFocus="True"/>
-                        <DatePicker Margin="5" Focusable="True"
-                                    effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
-                                    effects:FocusVisualEffect.AlwaysShowFocus="True"
-                                    effects:CornerRadiusEffect.CornerRadius="2"/>
-                        <DatePicker Margin="5" Focusable="True">
-                            <effects:FocusVisualEffect.FocusControlStyle>
-                                <Style>
-                                    <Setter Property="Control.Template">
-                                        <Setter.Value>
-                                            <ControlTemplate>
-                                                <Border Margin="2" UseLayoutRounding="True" SnapsToDevicePixels="True" BorderThickness="2" BorderBrush="Red"
-                                                        Background="Transparent" IsHitTestVisible="False" Focusable="False" CornerRadius="4"/>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </effects:FocusVisualEffect.FocusControlStyle>
-                        </DatePicker>
-
                         <controls:TimePicker Margin="5" />
                     </WrapPanel>
 
@@ -144,6 +119,7 @@
                     <Button x:Name="ColorControlTest" Width="200" Margin="0 5" Content="Ready: ColorControlTest" Click="ColorControlTest_OnClick"/>
                     <Button x:Name="ButtonStyleTest" Width="200" Margin="0 5" Content="Ready: ButtonStyleTests" Click="ButtonStyleTests_OnClick"/>
                     <Button x:Name="DialogItemsTest" Width="200" Margin="0 5" Content="Ready: DialogItemsTests" Click="DialogItemsTests_OnClick"/>
+                    <Button x:Name="FocusEffectTest" Width="200" Margin="0 5" Content="Ready: FocusEffectTests" Click="FocusEffectTests_OnClick"/>
                     <Button x:Name="TextBoxTest" Width="200" Margin="0 5" Content="WiP: TextBoxTests" Click="TextBoxTests_OnClick"/>
                 </StackPanel>
 

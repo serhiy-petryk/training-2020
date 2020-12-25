@@ -134,6 +134,9 @@
     <Compile Include="Obsolete\XButtonStyleTests.xaml.cs">
       <DependentUpon>XButtonStyleTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\FocusEffectTests.xaml.cs">
+      <DependentUpon>FocusEffectTests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\TextBoxTests.xaml.cs">
       <DependentUpon>TextBoxTests.xaml</DependentUpon>
     </Compile>
@@ -305,6 +308,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Obsolete\XButtonStyleTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\FocusEffectTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
