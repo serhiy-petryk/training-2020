@@ -71,7 +71,9 @@
                                                effects:WatermarkEffect.Watermark="TestWatermark"
                                                effects:WatermarkEffect.Foreground="Red"
                                                VerticalContentAlignment="Center" VerticalAlignment="Center"
-                                               ValueDataType="{Binding ElementName=cbDataType, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
+                                               ValueDataType="{Binding ElementName=cbDataType, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String}}"
+                                               effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                               effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
                                                IsNullable="False"/>
                         <controls:ObjectEditor x:Name="Editor2" MinWidth="100" Height="24"
                                                Focusable="False"

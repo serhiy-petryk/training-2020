@@ -21,10 +21,11 @@
                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                          Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
-                         TabIndex="{TemplateBinding TabIndex}" IsTabStop="{TemplateBinding IsTabStop}"
+                         TabIndex="{TemplateBinding TabIndex}" IsTabStop="True"
                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                          effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
                          effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
+                         effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
                          Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
             </ControlTemplate>
 
@@ -33,11 +34,13 @@
                     <CheckBox Padding="{TemplateBinding Padding}"
                               BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                               Focusable="{TemplateBinding Focusable}"
+                              FocusVisualStyle="{x:Null}"
+                              Content="{TemplateBinding effects:WatermarkEffect.Watermark}"
                               VerticalAlignment="Center"
                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                               Background="Transparent" Foreground="{TemplateBinding Foreground}"
-                              TabIndex="{TemplateBinding TabIndex}" IsTabStop="{TemplateBinding IsTabStop}"
+                              TabIndex="{TemplateBinding TabIndex}" IsTabStop="True"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               IsThreeState="{TemplateBinding IsNullable}"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}"/>
@@ -116,6 +119,7 @@
 
         <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="0"/>
         <Setter Property="Focusable" Value="True" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -123,6 +127,8 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="False"/>
+        <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
     </Style>
 
 </ResourceDictionary>

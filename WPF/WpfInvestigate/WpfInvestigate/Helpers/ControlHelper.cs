@@ -260,7 +260,7 @@ namespace WpfInvestigate.Helpers
         #endregion
 
         #region ======== OnGotFocus of Control (see disassembled DatePicker) ===========
-        public static void OnGotFocusOfControl(object sender, RoutedEventArgs e, TextBoxBase textBox)
+        public static void OnGotFocusOfControl(object sender, RoutedEventArgs e, Control textBox)
         {
             if (!e.Handled && textBox != null)
             {
@@ -272,7 +272,7 @@ namespace WpfInvestigate.Helpers
                 }
                 if (Equals(e.OriginalSource, textBox))
                 {
-                    textBox.SelectAll();
+                    // textBox.SelectAll();
                     e.Handled = true;
                 }
             }

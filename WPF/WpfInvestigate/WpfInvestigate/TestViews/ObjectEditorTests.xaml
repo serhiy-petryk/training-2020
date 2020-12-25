@@ -69,6 +69,7 @@
                 </WrapPanel>
 
                 <WrapPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBox Background="Yellow" Margin="5 0" Width="70"/>
                     <ComboBox x:Name="cbDataType"/>
 
                     <Label Content="Nullable:" Margin="5 0 0 0"/>
@@ -89,9 +90,30 @@
                     <Button Margin="5 0" Click="ChangeValue_OnClick">Change value</Button>
                 </WrapPanel>
 
+                <WrapPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBox Background="Yellow" Margin="5 0" Width="70"/>
+                    <ComboBox x:Name="cbDataType2"/>
+
+                    <Label Content="Nullable:" Margin="5 0 0 0"/>
+                    <CheckBox x:Name="cbNullable2" IsThreeState="False" IsChecked="False" VerticalAlignment="Center" />
+
+                    <Label Content="IsEnabled:" Margin="5 0 0 0"/>
+                    <CheckBox x:Name="cbEnabled2" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
+
+                    <Label Content="Flexible object editor:"/>
+                    <controls:ObjectEditor x:Name="Editor2" MinWidth="100" Foreground="Red"
+                                           effects:WatermarkEffect.Watermark="TestWatermark"
+                                           effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                           ValueDataType="{Binding ElementName=cbDataType2, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
+                                           IsNullable="{Binding ElementName=cbNullable2, Path=IsChecked}"
+                                           IsEnabled="{Binding ElementName=cbEnabled2, Path=IsChecked}"/>
+                    <Label Content="Value:"/>
+                    <TextBlock Text="{Binding Path=Value, ElementName=Editor2}" Background="Yellow" VerticalAlignment="Center"/>
+                    <Button Click="Test_OnClick">Test</Button>
+                    <Button Margin="5 0" Click="ChangeValue2_OnClick">Change value</Button>
+                </WrapPanel>
+
             </StackPanel>
-
-
         </Grid>
     </Grid>
 </Window>

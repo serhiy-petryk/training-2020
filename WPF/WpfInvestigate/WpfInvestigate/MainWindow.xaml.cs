@@ -30,7 +30,8 @@ namespace WpfInvestigate
             cbCulture.SelectedValue = Thread.CurrentThread.CurrentUICulture;
 
             cbDataType.ItemsSource = Enum.GetValues(typeof(DataTypeMetadata.DataType)).Cast<DataTypeMetadata.DataType>();
-            cbDataType.SelectedValue = DataTypeMetadata.DataType.Date;
+            // cbDataType.SelectedValue = DataTypeMetadata.DataType.Date;
+            cbDataType.SelectedValue = DataTypeMetadata.DataType.String;
 
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
         }

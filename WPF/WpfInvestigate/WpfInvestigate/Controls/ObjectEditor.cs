@@ -3,8 +3,10 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
@@ -13,11 +15,15 @@ namespace WpfInvestigate.Controls
         static ObjectEditor()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ObjectEditor), new FrameworkPropertyMetadata(typeof(ObjectEditor)));
-            EventManager.RegisterClassHandler(typeof(ObjectEditor), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
+            EventManager.RegisterClassHandler(typeof(ObjectEditor), GotFocusEvent, new RoutedEventHandler((sender, args) => ControlHelper.OnGotFocusOfControl(sender, args, ((ObjectEditor)sender).GetEditControl())));
+            KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(ObjectEditor), new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
+            KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(ObjectEditor), new FrameworkPropertyMetadata(false));
         }
         public ObjectEditor()
         {
             DataContext = this;
+            if (Equals(ValueDataType, ValueDataTypeProperty.DefaultMetadata.DefaultValue))
+                OnValueDataTypeChanged(this, new DependencyPropertyChangedEventArgs(ValueDataTypeProperty, ValueDataType, ValueDataType));
         }
 
         public decimal NumericMinValue => Metadata.Template == DataTypeMetadata.DataTemplate.NumericBox ? Convert.ToDecimal(Metadata.MinValue) : decimal.MinValue;
@@ -62,36 +68,8 @@ namespace WpfInvestigate.Controls
             get => (bool)GetValue(IsNullableProperty);
             set => SetValue(IsNullableProperty, value);
         }
+
         //=================================
-        private static void OnGotFocus(object sender, RoutedEventArgs e)
-        {
-            var editor = (ObjectEditor)sender;
-            if (!e.Handled && editor.Focusable)
-            {
-                if (Equals(e.OriginalSource, editor))
-                {
-                    // MoveFocus takes a TraversalRequest as its argument.
-                    var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
-                    // Gets the element with keyboard focus.
-                    var elementWithFocus = Keyboard.FocusedElement as UIElement;
-                    // Change keyboard focus.
-                    if (elementWithFocus != null)
-                        elementWithFocus.MoveFocus(request);
-                    else
-                        editor.Focus();
-
-                    e.Handled = true;
-                }
-                else if (e.OriginalSource is TextBox)
-                {
-                    ((TextBox)e.OriginalSource).SelectAll();
-                    e.Handled = true;
-                }
-                else if (e.OriginalSource is CheckBox)
-                    e.Handled = true;
-            }
-        }
-
         private static void OnValueDataTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var editor = (ObjectEditor)d;
@@ -183,6 +161,12 @@ namespace WpfInvestigate.Controls
         private void RefreshUI()
         {
             OnPropertiesChanged(nameof(Metadata));
+        }
+
+        private Control GetEditControl()
+        {
+            var child = VisualTreeHelper.GetChild(this, 0);
+            return child as Control ?? (Control) VisualTreeHelper.GetChild(child, 0);
         }
     }
 }

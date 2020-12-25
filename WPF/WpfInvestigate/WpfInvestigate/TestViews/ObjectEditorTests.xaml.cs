@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using WpfInvestigate.Common;
+using WpfInvestigate.Controls;
 
 namespace WpfInvestigate.TestViews
 {
@@ -17,6 +18,9 @@ namespace WpfInvestigate.TestViews
             DataContext = this;
             cbDataType.ItemsSource = Enum.GetValues(typeof(DataTypeMetadata.DataType)).Cast<DataTypeMetadata.DataType>();
             cbDataType.SelectedValue = DataTypeMetadata.DataType.Date;
+
+            cbDataType2.ItemsSource = cbDataType.ItemsSource;
+            cbDataType2.SelectedValue = DataTypeMetadata.DataType.String;
         }
 
         public IEnumerable<string> DataTypes => Enum.GetNames(typeof(DataTypeMetadata.DataType)).Select(a=> a.ToString());
@@ -30,14 +34,26 @@ namespace WpfInvestigate.TestViews
 
         private void ChangeValue_OnClick(object sender, RoutedEventArgs e)
         {
-            if (Editor.ValueDataType == DataTypeMetadata.DataType.Bool)
-                Editor.Value = !(bool)Editor.Value;
-            if (Editor.ValueDataType == DataTypeMetadata.DataType.Byte)
-                Editor.Value = (byte)Editor.Value + 1;
-            if (Editor.ValueDataType == DataTypeMetadata.DataType.String)
-                Editor.Value = (string)Editor.Value + "a";
-            if (Editor.ValueDataType == DataTypeMetadata.DataType.DateTime)
-                Editor.Value = ((DateTime)Editor.Value).AddHours(1);
+            ChangeValue(Editor);
         }
+
+        private void ChangeValue2_OnClick(object sender, RoutedEventArgs e)
+        {
+            ChangeValue(Editor2);
+        }
+
+        private void ChangeValue(ObjectEditor editor)
+        {
+            if (editor.ValueDataType == DataTypeMetadata.DataType.Bool)
+                editor.Value = !(bool)editor.Value;
+            if (editor.ValueDataType == DataTypeMetadata.DataType.Byte)
+                editor.Value = (byte)editor.Value + 1;
+            if (editor.ValueDataType == DataTypeMetadata.DataType.String)
+                editor.Value = (string)editor.Value + "a";
+            if (editor.ValueDataType == DataTypeMetadata.DataType.DateTime)
+                editor.Value = ((DateTime)editor.Value).AddHours(1);
+        }
+
+
     }
 }
