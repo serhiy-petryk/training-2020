@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -56,8 +57,15 @@ namespace WpfInvestigate.Effects
 
             if (isFocused)
             {
-                if (!GetAlwaysShowFocus(element) && !IsKeyboardMostRecentInputDevice())
-                    return;
+                if (!GetAlwaysShowFocus(element))
+                {
+                    var a1 = element.Resources["FocusEffect_FocusTrack"] as bool?;
+                    var isKeyboardMostRecentInputDevice = a1 ?? IsKeyboardMostRecentInputDevice();
+                    if (a1 == null)
+                        element.Resources.Add("FocusEffect_FocusTrack", isKeyboardMostRecentInputDevice);
+                    if (!isKeyboardMostRecentInputDevice)
+                        return;
+                }
 
                 var layer = AdornerLayer.GetAdornerLayer(element);
                 var adornerControl = layer.GetAdorners(element)?.OfType<AdornerControl>().FirstOrDefault(a => a.Child.Name == "FocusControl");
@@ -83,6 +91,8 @@ namespace WpfInvestigate.Effects
             }
             else
             {
+                if (!GetAlwaysShowFocus(element))
+                    element.Resources.Remove("FocusEffect_FocusTrack");
                 var layer = AdornerLayer.GetAdornerLayer(element);
                 var adorners = layer?.GetAdorners(element) ?? new Adorner[0];
                 foreach (var adorner in adorners.OfType<AdornerControl>().Where(a => a.Child.Name == "FocusControl"))
@@ -91,6 +101,11 @@ namespace WpfInvestigate.Effects
                     opacityAnimation.SetFromToValues(adorner.Opacity, 0.0);
                     adorner.BeginAnimation(UIElement.OpacityProperty, opacityAnimation);
                 }
+
+                // if isFocused=false не завжди спрацьовує фокус на новому елементі -> Activate focus on focused element
+                var focusedControl = Keyboard.FocusedElement as FrameworkElement;
+                if (focusedControl != null && focusedControl != element && GetFocusControlStyle(focusedControl) != null)
+                    Element_ChangeFocus(focusedControl, null);
             }
         }
 
