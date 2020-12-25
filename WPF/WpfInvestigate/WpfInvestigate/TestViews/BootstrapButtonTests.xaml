@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
-        xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
         mc:Ignorable="d"
         Title="BootstrapButtonTests" Height="600" Width="900">
 
@@ -15,8 +14,14 @@
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="Gray"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
-                <Setter Property="obsolete:FocusEffect.Thickness" Value="3"/>
-                <Setter Property="obsolete:FocusEffect.Brush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=72}"/>
+                <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
+                <Setter Property="effects:FocusVisualEffect.FocusControlStyle">
+                    <Setter.Value>
+                        <Style TargetType="{x:Type Control}" BasedOn="{StaticResource SolidFocusVisualStyle}">
+                            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource AncestorType=Adorner}, Path=AdornedElement.Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=72}"/>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Padding" Value="12 6"/>
                 <Setter Property="FontSize" Value="16"/>
@@ -156,19 +161,23 @@
 
                 <WrapPanel Orientation="Horizontal">
                     <Button Margin="4" Padding="4" Content="No chrome for click" FontSize="16" BorderThickness="0"
-                            obsolete:FocusEffect.Thickness="11"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100"/>
                     <Button Margin="4" Padding="4" Content="Test focus" FontSize="16" BorderThickness="2"
-                            obsolete:FocusEffect.Brush="Aquamarine"
-                            obsolete:FocusEffect.Thickness="11"
                             effects:CornerRadiusEffect.CornerRadius="4"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
-                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+70,100, -7.5,100,+70,100, -10,100,-12.5,100"/>
+                            effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+70,100, -7.5,100,+70,100, -10,100,-12.5,100"
+                            effects:FocusVisualEffect.AlwaysShowFocus="True">
+                        <effects:FocusVisualEffect.FocusControlStyle>
+                            <Style TargetType="{x:Type Control}" BasedOn="{StaticResource SolidFocusVisualStyle}">
+                                <Setter Property="BorderThickness" Value="11"/>
+                            </Style>
+                        </effects:FocusVisualEffect.FocusControlStyle>
+                    </Button>
                     <Button Margin="4" Padding="4" Content="Focus test" FontSize="16" BorderThickness="10 0 20 0"
-                            obsolete:FocusEffect.Brush="Aquamarine"
-                            obsolete:FocusEffect.Thickness="2"
+                            effects:FocusVisualEffect.AlwaysShowFocus="True"
+                            effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
                             effects:CornerRadiusEffect.CornerRadius="14 1 18 8"
                             effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>

@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
-        xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
         mc:Ignorable="d"
         Title="CalculatorTests" Height="325" Width="400">
 
@@ -53,10 +52,12 @@
 
             <controls:Calculator x:Name="DarkCalc" Margin="5" Grid.Row="2" Grid.Column="0" Style="{StaticResource DarkCalculatorStyle}"
                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                 obsolete:FocusEffect.Brush="Aqua"/>
+                                 effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
             <controls:Calculator x:Name="LightCalc" Margin="5" Grid.Row="2" Grid.Column="1" Style="{StaticResource LightCalculatorStyle}"
                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                 obsolete:FocusEffect.Brush="Aqua"/>
+                                 effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
 
             <Label Grid.Row="3" Margin="5" Grid.Column="0" Content="{Binding ElementName=DarkCalc, Path=Value}" Background="Yellow"/>
             <Label Grid.Row="3" Margin="5" Grid.Column="1" Content="{Binding ElementName=LightCalc, Path=Value}" Background="Yellow"/>
