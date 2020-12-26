@@ -102,6 +102,11 @@
                 <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="No value" IsEnabled="False"
                                      VerticalAlignment="Center" IsNullable="True" Value="323"/>
             </WrapPanel>
+
+            <WrapPanel Margin="5">
+                <controls:NumericBox Margin="5 0" Width="120" effects:WatermarkEffect.Watermark="Not focusable"
+                                     VerticalAlignment="Center" FontSize="9" Focusable="False" IsNullable="True"/>
+            </WrapPanel>
         </StackPanel>
     </Grid>
 </Window>

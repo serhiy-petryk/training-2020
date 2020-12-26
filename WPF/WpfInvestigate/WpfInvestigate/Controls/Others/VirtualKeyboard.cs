@@ -104,8 +104,7 @@ namespace WpfInvestigate.Controls
                 {
                     newText = keyModel.GetKeyText(IsCapsLock, IsShifted, IsExtra);
                     textBox.Text = textBox.Text.Substring(0, cursorPosition) + newText +
-                                         textBox.Text.Substring(cursorPosition + textBox.SelectionLength);
-
+                                   textBox.Text.Substring(cursorPosition + textBox.SelectionLength);
                 }
                 else if (keyModel.Id == KeyModel.KeyDefinition.KeyCode.VK_LEFT)
                 {

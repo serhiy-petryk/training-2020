@@ -33,20 +33,37 @@
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
 
-            <WrapPanel Margin="5">
-                <TextBox x:Name="TestTextBox" Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
-                         Text="AAAAAA" BorderThickness="2" BorderBrush="Blue" 
-                         effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
-                         ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
-                         effects:CornerRadiusEffect.CornerRadius="2"
-                         effects:WatermarkEffect.Watermark="Watermark"/>
-                <Button Margin="2" Content="Change Background" Click="ChangeBackground_OnClick"/>
-                <Button Margin="2" Content="Change Foreground" Click="ChangeForeground_OnClick"/>
-                <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick"/>
-                <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
-                <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Style="{StaticResource ReadOnlyTextBoxStyle}"/>
-            </WrapPanel>
+            <StackPanel Orientation="Vertical">
+                <WrapPanel Margin="5">
+                    <TextBox x:Name="TestTextBox" Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
+                             Text="AAAAAA" BorderThickness="2" BorderBrush="Blue" 
+                             effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
+                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
+                             effects:CornerRadiusEffect.CornerRadius="2"
+                             effects:WatermarkEffect.Watermark="Watermark"/>
+                    <Button Margin="2" Content="Change Background" Click="ChangeBackground_OnClick"/>
+                    <Button Margin="2" Content="Change Foreground" Click="ChangeForeground_OnClick"/>
+                    <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick"/>
+                    <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
+                    <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Style="{StaticResource ReadOnlyTextBoxStyle}"/>
+                </WrapPanel>
 
+                <WrapPanel Margin="5">
+                    <TextBlock Margin="5 0" Text="Not focusable:" VerticalAlignment="Center"/>
+                    <TextBox Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
+                             BorderThickness="1" BorderBrush="Blue" 
+                             Focusable="False"
+                             effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
+                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
+                             effects:CornerRadiusEffect.CornerRadius="4"
+                             effects:WatermarkEffect.Watermark="Watermark"/>
+                    <TextBox Margin="2" Padding="4" Width="50" Background="Yellow" Foreground="Blue"
+                             BorderThickness="1" BorderBrush="Blue" 
+                             Focusable="False"
+                             effects:CornerRadiusEffect.CornerRadius="4"
+                             effects:WatermarkEffect.Watermark="Watermark"/>
+                </WrapPanel>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>
