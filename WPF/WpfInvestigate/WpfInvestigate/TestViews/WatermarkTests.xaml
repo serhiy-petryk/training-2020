@@ -134,7 +134,7 @@
         </DatePicker>
 
         <TextBlock Text="PasswordBox:"/>
-        <PasswordBox effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80"/>
+        <PasswordBox effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80" BorderThickness="1" BorderBrush="Black" Padding="0"/>
 
         <TextBlock Text="Hidden PasswordBox:"/>
         <PasswordBox effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80" Visibility="Hidden"/>

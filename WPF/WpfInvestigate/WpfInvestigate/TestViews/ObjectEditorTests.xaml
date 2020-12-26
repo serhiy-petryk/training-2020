@@ -78,8 +78,9 @@
                     <Label Content="IsEnabled:" Margin="5 0 0 0"/>
                     <CheckBox x:Name="cbEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
 
-                    <Label Content="Flexible object editor:"/>
+                    <Label Content="Object editor (focusable=false):"/>
                     <controls:ObjectEditor x:Name="Editor" MinWidth="100" Foreground="Red"
+                                           Focusable="False"
                                            effects:WatermarkEffect.Watermark="TestWatermark"
                                            ValueDataType="{Binding ElementName=cbDataType, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
                                            IsNullable="{Binding ElementName=cbNullable, Path=IsChecked}"
@@ -100,8 +101,8 @@
                     <Label Content="IsEnabled:" Margin="5 0 0 0"/>
                     <CheckBox x:Name="cbEnabled2" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
 
-                    <Label Content="Flexible object editor:"/>
-                    <controls:ObjectEditor x:Name="Editor2" MinWidth="100" Foreground="Red"
+                    <Label Content="Object editor:"/>
+                    <controls:ObjectEditor x:Name="Editor2" Foreground="Red" MinWidth="70"
                                            effects:WatermarkEffect.Watermark="TestWatermark"
                                            effects:FocusVisualEffect.AlwaysShowFocus="True"
                                            ValueDataType="{Binding ElementName=cbDataType2, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"

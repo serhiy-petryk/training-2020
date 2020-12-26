@@ -118,10 +118,11 @@ namespace WpfInvestigate.Effects
             var partWatermark = ctrlBox?.Template.FindName("PART_Watermark", ctrlBox) as ContentControl;
             if (partWatermark == null)
             {
-                var layer = AdornerLayer.GetAdornerLayer(ctrlBox);
+                var ctrlBoxView = Tips.GetVisualChildren(ctrlBox).FirstOrDefault(a => a.GetType().Name == "TextBoxView") as FrameworkElement;
+                var layer = AdornerLayer.GetAdornerLayer(ctrlBoxView);
                 if (layer == null) return;
 
-                var adornerControl = layer.GetAdorners(ctrlBox)?.OfType<AdornerControl>().FirstOrDefault(a => a.Child.Name == "Watermark");
+                var adornerControl = layer.GetAdorners(ctrlBoxView)?.OfType<AdornerControl>().FirstOrDefault(a => a.Child.Name == "Watermark");
 
                 if (adornerControl == null)
                 {
@@ -131,23 +132,25 @@ namespace WpfInvestigate.Effects
                         IsReadOnly = true,
                         Focusable = false,
                         IsHitTestVisible = false,
-                        Margin = new Thickness(),
+                        Padding = new Thickness(),
                         Background = Brushes.Transparent,
-                        BorderBrush = Brushes.Transparent
+                        BorderThickness = new Thickness()
                     };
-                    adornerControl = new AdornerControl(ctrlBox) {Child = adorner};
+                    adornerControl = new AdornerControl(ctrlBoxView) {Child = adorner, Margin = new Thickness()};
                     layer.Add(adornerControl);
                 }
                 else
                     adornerControl.Visibility = Visibility.Visible;
 
+                var marginLeft = ctrlBox.HorizontalContentAlignment == HorizontalAlignment.Left ? -ctrlBoxView.Margin.Left : ctrlBoxView.Margin.Left;
+                var marginTop = ctrlBox.VerticalContentAlignment == VerticalAlignment.Top ? -ctrlBoxView.Margin.Top : ctrlBoxView.Margin.Top;
+                var marginRight = ctrlBox.HorizontalContentAlignment == HorizontalAlignment.Right ? -ctrlBoxView.Margin.Right : ctrlBoxView.Margin.Right;
+                var marginBottom = ctrlBox.VerticalContentAlignment == VerticalAlignment.Bottom ? -ctrlBoxView.Margin.Bottom : ctrlBoxView.Margin.Bottom;
+
                 var child = adornerControl.Child as TextBox;
                 child.Text = watermark ?? "";
                 child.Foreground = foregroundBrush;
-                child.BorderThickness = ctrlBox.BorderThickness;
-                child.Padding = ctrlBox.Padding;
-                child.Width = ctrlBox.ActualWidth;
-                child.Height = ctrlBox.ActualHeight;
+                child.Margin = new Thickness(marginLeft, marginTop, marginRight, marginBottom);
                 child.FontSize = ctrlBox.FontSize;
                 child.VerticalAlignment = ctrlBox.VerticalAlignment;
                 child.VerticalContentAlignment = ctrlBox.VerticalContentAlignment;
@@ -167,8 +170,9 @@ namespace WpfInvestigate.Effects
             var partWatermark = ctrlBox?.Template.FindName("PART_Watermark", ctrlBox) as ContentControl;
             if (partWatermark == null)
             {
-                var layer = AdornerLayer.GetAdornerLayer(ctrlBox);
-                var adorners = layer?.GetAdorners(ctrlBox) ?? new Adorner[0];
+                var ctrlBoxView = Tips.GetVisualChildren(ctrlBox).FirstOrDefault(a => a.GetType().Name == "TextBoxView") as FrameworkElement;
+                var layer = AdornerLayer.GetAdornerLayer(ctrlBoxView);
+                var adorners = layer?.GetAdorners(ctrlBoxView) ?? new Adorner[0];
                 foreach (var adorner in adorners.OfType<AdornerControl>().Where(a => a.Child.Name == "Watermark"))
                     adorner.Visibility = Visibility.Collapsed;
             }
