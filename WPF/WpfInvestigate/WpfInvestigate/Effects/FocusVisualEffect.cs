@@ -77,13 +77,9 @@ namespace WpfInvestigate.Effects
                         Style =  GetFocusControlStyle(element)
                     };
 
-                    adornerControl = new AdornerControl(element) {Child = control, AdornerSize = AdornerControl.AdornerSizeType.ChildElement, Opacity = 0.0};
+                    adornerControl = new AdornerControl(element) {Child = control, AdornerSize = AdornerControl.AdornerSizeType.AdornedElement, Opacity = 0.0};
                     layer.Add(adornerControl);
                 }
-
-                var child = (Control)adornerControl.Child;
-                child.Width = element.ActualWidth; // + child.BorderThickness.Left + child.BorderThickness.Right;
-                child.Height = element.ActualHeight;// + child.BorderThickness.Top + child.BorderThickness.Bottom;
 
                 var opacityAnimation = new DoubleAnimation { Duration = AnimationHelper.AnimationDurationSlow };
                 opacityAnimation.SetFromToValues(adornerControl.Opacity, 1.0);

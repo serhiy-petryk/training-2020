@@ -141,17 +141,12 @@
             <SolidColorBrush x:Key="TextBrush" Color="{StaticResource BlackColor}" po:Freeze="True" />
             <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" po:Freeze="True" />
             <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" po:Freeze="True" />
-
-            <FontFamily x:Key="ContentFontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
-            <sys:Double x:Key="ContentFontSize">12</sys:Double>
         </Style.Resources>
 
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Focusable" Value="True" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding" Value="2" />
         <Setter Property="VisibleButtons" Value="Popup,Clear,Separator1px" />
@@ -260,10 +255,10 @@
                                                             <RowDefinition Height="Auto" />
                                                         </Grid.RowDefinitions>
                                                         <Border Grid.Row="0" BorderThickness="1 1 0 0"
-                                                                    BorderBrush="{StaticResource CalendarBorderBrush}" Background="#FFECF0F4"
-                                                                    Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                                                BorderBrush="{StaticResource CalendarBorderBrush}" Background="#FFECF0F4"
+                                                                Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
                                                             <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=AMText}"
-                                                                    HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold" />
+                                                                       HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold" />
                                                         </Border>
                                                         <Border Grid.Row="2" BorderThickness="1 0 0 1"
                                                                 BorderBrush="{StaticResource CalendarBorderBrush}" Background="#FFECF0F4"
