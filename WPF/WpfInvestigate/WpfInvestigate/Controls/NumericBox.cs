@@ -17,6 +17,7 @@ namespace WpfInvestigate.Controls
         [Flags]
         public enum Buttons
         {
+            None=0,
             Close = 1,
             Calculator = 2,
             LeftDown = 4,

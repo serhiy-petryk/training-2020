@@ -70,7 +70,7 @@
                             <ToggleButton Grid.Column="4" x:Name="PART_ToggleButton" Focusable="False"
                                           effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                          Padding="2" IsThreeState="False" Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Padding="2 0.5" IsThreeState="False" Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}"
                                           IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}"
                                           BorderThickness="0"
                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCalculatorButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
@@ -79,20 +79,20 @@
                             <RepeatButton Grid.Column="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DownButtonColumn}" x:Name="PART_DownButton" Focusable="False"
                                           effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                          Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}" Padding="2"
+                                          Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}" Padding="2 0"
                                           BorderThickness="0"
                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDownButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource MinusGeometry}"/>
                             <RepeatButton Grid.Column="6" x:Name="PART_UpButton" Focusable="False"
                                           effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                           effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                          Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}" Padding="2"
+                                          Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}" Padding="2 0"
                                           BorderThickness="0"
                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsUpButtonsVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                           effects:IconEffect.Geometry="{StaticResource PlusGeometry}"/>
 
                             <Button Grid.Column="7" x:Name="PART_ClearButton" Focusable="False"
-                                    Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}" Padding="3"
+                                    Width="{Binding ButtonsWidth, RelativeSource={RelativeSource TemplatedParent}}" Padding="3 0"
                                     BorderThickness="0"
                                     Style="{StaticResource ClearBichromeAnimatedButtonStyle}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>

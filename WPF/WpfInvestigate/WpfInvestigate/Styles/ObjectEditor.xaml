@@ -30,26 +30,33 @@
             </ControlTemplate>
 
             <ControlTemplate x:Key="CheckBox" TargetType="controls:ObjectEditor">
-                <Grid Background="{TemplateBinding Background}">
-                    <CheckBox Padding="{TemplateBinding Padding}"
-                              BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}" Margin="0">
+                    <CheckBox Padding="0"
                               Focusable="{TemplateBinding Focusable}"
                               FocusVisualStyle="{x:Null}"
-                              Content="{TemplateBinding effects:WatermarkEffect.Watermark}"
                               VerticalAlignment="Center"
                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              Background="Transparent" Foreground="{TemplateBinding Foreground}"
                               TabIndex="{TemplateBinding TabIndex}" IsTabStop="True"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               IsThreeState="{TemplateBinding IsNullable}"
-                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}"/>
-                </Grid>
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}">
+                        <TextBlock Margin="3 0 0 0"
+                                 Background="Transparent"
+                                 Foreground="{TemplateBinding Foreground}"
+                                 Text="{TemplateBinding effects:WatermarkEffect.Watermark}"/>
+                        <!--<TextBox IsReadOnly="True" Margin="{TemplateBinding Padding}"
+                                 BorderThickness="0" Background="Transparent"
+                                 Foreground="{TemplateBinding Foreground}"
+                                Text="{TemplateBinding effects:WatermarkEffect.Watermark}"/>-->
+                    </CheckBox>
+                </Border>
             </ControlTemplate>
 
             <ControlTemplate x:Key="NumericBox" TargetType="controls:ObjectEditor">
                 <controls:NumericBox BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                                     Focusable="{TemplateBinding Focusable}"
+                                     Focusable="{TemplateBinding Focusable}" Padding="{TemplateBinding Padding}"
                                      VerticalAlignment="Stretch" Width="{TemplateBinding Width}"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -67,7 +74,7 @@
 
             <ControlTemplate x:Key="DatePicker" TargetType="controls:ObjectEditor">
                 <DatePicker BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                            Focusable="{TemplateBinding Focusable}"
+                            Focusable="{TemplateBinding Focusable}" Padding="{TemplateBinding Padding}"
                             VerticalAlignment="Stretch"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -85,7 +92,7 @@
 
             <ControlTemplate x:Key="DateTimePicker" TargetType="controls:ObjectEditor">
                 <controls:DateTimePicker BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                                         Focusable="{TemplateBinding Focusable}"
+                                         Focusable="{TemplateBinding Focusable}" Padding="{TemplateBinding Padding}"
                                          VerticalAlignment="Stretch" Width="{TemplateBinding Width}"
                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -96,13 +103,11 @@
                                          effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
                                          effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
                                          SelectedDateTime="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value, Mode=TwoWay}"/>
-                <!--SelectedDateChanged="DateTimePicker_OnValueChanged" />-->
             </ControlTemplate>
 
             <ControlTemplate x:Key="TimePicker" TargetType="controls:ObjectEditor">
-                <controls:TimePicker BorderBrush="{TemplateBinding BorderBrush}"
-                                     Focusable="{TemplateBinding Focusable}"
-                                     BorderThickness="{TemplateBinding BorderThickness}"
+                <controls:TimePicker BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                     Focusable="{TemplateBinding Focusable}"  Padding="{TemplateBinding Padding}"
                                      VerticalAlignment="Stretch" Width="{TemplateBinding Width}"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -119,7 +124,7 @@
 
         <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Padding" Value="2"/>
         <Setter Property="Focusable" Value="True" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
