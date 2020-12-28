@@ -56,7 +56,7 @@
                                        Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SeparatorWidth}"
                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsLeftSeparatorVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
-                            <TextBox Grid.Column="2" x:Name="PART_TextBox" BorderThickness="0" Margin="{TemplateBinding Padding}" Padding="0"
+                            <TextBox Grid.Column="2" x:Name="PART_TextBox" BorderThickness="0" Margin="0" Padding="{TemplateBinding Padding}"
                                      VerticalAlignment="Stretch"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
