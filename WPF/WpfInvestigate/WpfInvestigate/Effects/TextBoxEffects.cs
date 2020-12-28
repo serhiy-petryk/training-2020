@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -62,6 +63,8 @@ namespace WpfInvestigate.Effects
                         element.PreviewMouseLeftButtonDown -= ClearButton_OnClick;
                     else if (element.Name.Contains("Popup"))
                         ((Popup)element).Opened -= Popup_OnOpened;
+                    else if (element.Name.Contains("KeyboardControl"))
+                        ((VirtualKeyboard)element).OnReturnKeyClick -= KeyboardControl_OnReturnKeyClick;
 
                     grid.Children.Remove(element);
                 }
@@ -82,7 +85,7 @@ namespace WpfInvestigate.Effects
                 {
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto, Name = GridColumnPrefix + "Separator" });
 
-                    var separator = new Rectangle {Name = ElementPrefix + "Separator"};
+                    var separator = new Rectangle { Name = ElementPrefix + "Separator" };
                     if ((buttons.Value & Buttons.Separator1px) == Buttons.Separator1px)
                         separator.Width = 1;
                     else
@@ -109,7 +112,9 @@ namespace WpfInvestigate.Effects
                     var keyboardButton = new ToggleButton
                     {
                         Name = ElementPrefix + "Keyboard",
-                        Width = 16, Focusable = false, IsThreeState = false,
+                        Width = 16,
+                        Focusable = false,
+                        IsThreeState = false,
                         Margin = new Thickness(0),
                         Padding = new Thickness(0),
                         VerticalAlignment = VerticalAlignment.Stretch
@@ -132,16 +137,22 @@ namespace WpfInvestigate.Effects
                     Grid.SetColumn(keyboardButton, grid.ColumnDefinitions.Count - 1);
 
                     // Add popup
-                    var keyboardControl = new VirtualKeyboard {Focusable = false};
-                    var shellControl = new PopupResizeControl {DoesContentSupportElasticLayout = true, Content = keyboardControl, Focusable = false};
+                    var keyboardControl = new VirtualKeyboard { Name = ElementPrefix + "KeyboardControl", Focusable = false };
+                    keyboardControl.OnReturnKeyClick += KeyboardControl_OnReturnKeyClick;
+                    var shellControl = new PopupResizeControl { DoesContentSupportElasticLayout = true, Content = keyboardControl, Focusable = false };
                     CornerRadiusEffect.SetCornerRadius(shellControl, new CornerRadius(3));
                     var popup = new Popup
                     {
                         Name = ElementPrefix + "Popup",
-                        Width = 700, Height = 250, Focusable = false,
-                        AllowsTransparency = true, StaysOpen = false,
-                        Placement = PlacementMode.Bottom, PlacementTarget = textBox,
-                        PopupAnimation = PopupAnimation.Fade, Child = shellControl
+                        Width = 700,
+                        Height = 250,
+                        Focusable = false,
+                        AllowsTransparency = true,
+                        StaysOpen = false,
+                        Placement = PlacementMode.Bottom,
+                        PlacementTarget = textBox,
+                        PopupAnimation = PopupAnimation.Fade,
+                        Child = shellControl
                     };
                     popup.Opened += Popup_OnOpened;
 
@@ -158,8 +169,10 @@ namespace WpfInvestigate.Effects
                     keyboardButton.SetBinding(UIElement.IsHitTestVisibleProperty,
                         new Binding
                         {
-                            Source = popup, Path = new PropertyPath(Popup.IsOpenProperty),
-                            Converter = MathConverter.Instance, ConverterParameter = "!"
+                            Source = popup,
+                            Path = new PropertyPath(Popup.IsOpenProperty),
+                            Converter = MathConverter.Instance,
+                            ConverterParameter = "!"
                         });
                 }
 
@@ -170,7 +183,8 @@ namespace WpfInvestigate.Effects
                     {
                         Name = ElementPrefix + "Clear",
                         Style = Application.Current.FindResource("ClearBichromeAnimatedButtonStyle") as Style,
-                        Width = 14, Focusable = false,
+                        Width = 14,
+                        Focusable = false,
                         Margin = new Thickness(0),
                         Padding = new Thickness(1),
                         VerticalAlignment = VerticalAlignment.Stretch
@@ -183,6 +197,18 @@ namespace WpfInvestigate.Effects
             }
         }
 
+        #region  ============  Event handlers  ============
+        private static void KeyboardControl_OnReturnKeyClick(object sender, EventArgs e)
+        {
+            var vk = (VirtualKeyboard)sender;
+
+            if (Tips.GetVisualParents(vk).OfType<Popup>().FirstOrDefault() is Popup popup)
+                popup.IsOpen = false;
+
+            if (Keyboard.FocusedElement is FrameworkElement element)
+                element.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+        }
+
         private static void ClearButton_OnClick(object sender, RoutedEventArgs e)
         {
             var current = (DependencyObject)sender;
@@ -193,8 +219,8 @@ namespace WpfInvestigate.Effects
                 ((TextBox)current).Text = string.Empty;
         }
 
-        private static void Popup_OnOpened(object sender, EventArgs e) => ((Popup) sender).PlacementTarget.Focus();
-
+        private static void Popup_OnOpened(object sender, EventArgs e) => ((Popup)sender).PlacementTarget.Focus();
+        #endregion
         #endregion
     }
 }
