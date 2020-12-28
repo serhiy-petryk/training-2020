@@ -258,13 +258,15 @@
                                                                 BorderBrush="{StaticResource CalendarBorderBrush}" Background="#FFECF0F4"
                                                                 Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
                                                             <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=AMText}"
-                                                                       HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold" />
+                                                                       HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold"
+                                                                       Foreground="{StaticResource CalendarForegroundBrush}"/>
                                                         </Border>
                                                         <Border Grid.Row="2" BorderThickness="1 0 0 1"
                                                                 BorderBrush="{StaticResource CalendarBorderBrush}" Background="#FFECF0F4"
                                                                 Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
                                                             <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=PMText}"
-                                                                       HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold" />
+                                                                       HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold"
+                                                                       Foreground="{StaticResource CalendarForegroundBrush}"/>
                                                         </Border>
 
                                                         <DataGrid x:Name="PART_NightHourSelector" Grid.Row="1"
