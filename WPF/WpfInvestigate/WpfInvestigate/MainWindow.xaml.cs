@@ -29,10 +29,6 @@ namespace WpfInvestigate
             cbCulture.ItemsSource = CultureInfos;
             cbCulture.SelectedValue = Thread.CurrentThread.CurrentUICulture;
 
-            cbDataType.ItemsSource = Enum.GetValues(typeof(DataTypeMetadata.DataType)).Cast<DataTypeMetadata.DataType>();
-            // cbDataType.SelectedValue = DataTypeMetadata.DataType.Date;
-            cbDataType.SelectedValue = DataTypeMetadata.DataType.String;
-
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
         }
 
@@ -82,88 +78,12 @@ namespace WpfInvestigate
         private void ObsoleteShadowEffectTest_OnClick(object sender, RoutedEventArgs e) => new ShadowEffectTests().Show();
         private void OldButtonStyleTest_OnClick(object sender, RoutedEventArgs e) => new XButtonStyleTests().Show();
 
-        private void OnTestButtonClick(object sender, RoutedEventArgs e)
-        {
-            var grid = Tips.GetVisualChildren(TestTextBox).OfType<Grid>().FirstOrDefault();
-            if (grid != null)
-            {
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                // var style = FindResource("ClearBichromeAnimatedButtonStyle") as Style;
-                var keyboardButton = new Button
-                {
-                    Name = "KeyboardButton",
-                    // Style = style,
-                    Width = 16,
-                    Margin = new Thickness(1,0,0,0),
-                    Padding = new Thickness(0)
-                };
-
-                ChromeEffect.SetBichromeAnimatedBackground(keyboardButton, Colors.Yellow);
-                ChromeEffect.SetBichromeAnimatedForeground(keyboardButton, Colors.Blue);
-                IconEffect.SetGeometry(keyboardButton, FindResource("KeyboardGeometry") as Geometry);
-
-                //if (dp.Background == null || dp.Background == Brushes.Transparent)
-                //  dp.Background = Tips.GetActualBackgroundBrush(dp);
-
-                // clearButton.Click += ClearButton_Click;
-                grid.Children.Add(keyboardButton);
-                Grid.SetColumn(keyboardButton, grid.ColumnDefinitions.Count - 1);
-
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                var style = FindResource("ClearBichromeAnimatedButtonStyle") as Style;
-                var clearButton = new Button
-                {
-                    Name = "ClearButtonName",
-                    Style = style,
-                    Width = 14,
-                    // Margin = new Thickness(-2, 0, 1 - dp.Padding.Right, 0),
-                    Margin = new Thickness(1, 0, 0, 0),
-                    Padding = new Thickness(1)
-                };
-
-                //if (dp.Background == null || dp.Background == Brushes.Transparent)
-                //  dp.Background = Tips.GetActualBackgroundBrush(dp);
-
-                // clearButton.Click += ClearButton_Click;
-                grid.Children.Add(clearButton);
-                Grid.SetColumn(clearButton, grid.ColumnDefinitions.Count - 1);
-
-            }
-        }
-
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
-
         private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
-
         private void DialogItemsTests_OnClick(object sender, RoutedEventArgs e) => new DialogTests().Show();
 
-        private void ChangeBackground_OnClick(object sender, RoutedEventArgs e)
+        private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
-            if (TestTextBox.Background == Brushes.Yellow)
-                TestTextBox.Background = Brushes.YellowGreen;
-            else
-                TestTextBox.Background = Brushes.Yellow;
         }
-
-        private void ChangeForeground_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (TestTextBox.Foreground == Brushes.Blue)
-                TestTextBox.Foreground = Brushes.Violet;
-            else
-                TestTextBox.Foreground = Brushes.Blue;
-        }
-
-        private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            var a1 = (int)TextBoxEffects.GetVisibleButtons(TestTextBox);
-            var a2 = (a1+1) % 16;
-            TextBoxEffects.SetVisibleButtons(TestTextBox, (TextBoxEffects.Buttons)a2);
-
-            var grid = Tips.GetVisualChildren(TestTextBox).OfType<Grid>().FirstOrDefault();
-            if (grid !=null)
-                Debug.Print($"ColumnsAfter: {grid.ColumnDefinitions.Count}");
-
-        }
-
     }
 }

@@ -121,10 +121,9 @@
                     <Button Margin="5 0" Click="ChangeValue2_OnClick">Change value</Button>
                 </WrapPanel>
 
-                <controls:ObjectEditor x:Name="Editor2" Foreground="Red" Width="300" Height="40"
+                <controls:ObjectEditor x:Name="Editor2" Foreground="Red"
                                        Padding="0" Margin="0 5" BorderThickness="1" BorderBrush="#FF777777"
                                        HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                                       FontSize="12"
                                        VerticalContentAlignment="Bottom"
                                        HorizontalContentAlignment="Right"
                                        effects:FocusVisualEffect.AlwaysShowFocus="True"
