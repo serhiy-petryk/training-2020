@@ -101,7 +101,9 @@
                                  effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator"/>
                         <controls:NumericBox Margin="5" Height="24"/>
                         <controls:TimePicker Margin="5" />
-                        <DatePicker Width="300"/>
+                        <DatePicker Width="300" VerticalAlignment="Top" VerticalContentAlignment="Bottom" Height="40"
+                                    Padding="0"
+                                    effects:DatePickerEffect.ClearButton="True"/>
                     </WrapPanel>
 
                     <WrapPanel Margin="5">
