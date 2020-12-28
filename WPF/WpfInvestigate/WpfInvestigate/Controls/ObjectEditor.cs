@@ -160,7 +160,7 @@ namespace WpfInvestigate.Controls
 
         private void RefreshUI()
         {
-            OnPropertiesChanged(nameof(Metadata));
+            OnPropertiesChanged(nameof(Metadata), nameof(NumericMinValue), nameof(NumericMaxValue));
         }
 
         private Control GetEditControl()
