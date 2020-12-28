@@ -57,7 +57,7 @@
             <ControlTemplate x:Key="NumericBox" TargetType="controls:ObjectEditor">
                 <controls:NumericBox BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                                      Focusable="{TemplateBinding Focusable}" Padding="{TemplateBinding Padding}"
-                                     VerticalAlignment="Stretch" Width="{TemplateBinding Width}"
+                                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                      Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
@@ -75,7 +75,7 @@
             <ControlTemplate x:Key="DatePicker" TargetType="controls:ObjectEditor">
                 <DatePicker BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                             Focusable="{TemplateBinding Focusable}" Padding="{TemplateBinding Padding}"
-                            VerticalAlignment="Stretch"
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                             Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
@@ -93,7 +93,7 @@
             <ControlTemplate x:Key="DateTimePicker" TargetType="controls:ObjectEditor">
                 <controls:DateTimePicker BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                                          Focusable="{TemplateBinding Focusable}" Padding="{TemplateBinding Padding}"
-                                         VerticalAlignment="Stretch" Width="{TemplateBinding Width}"
+                                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                          Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"
@@ -107,8 +107,8 @@
 
             <ControlTemplate x:Key="TimePicker" TargetType="controls:ObjectEditor">
                 <controls:TimePicker BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                                     Focusable="{TemplateBinding Focusable}"  Padding="{TemplateBinding Padding}"
-                                     VerticalAlignment="Stretch" Width="{TemplateBinding Width}"
+                                     Focusable="{TemplateBinding Focusable}" Padding="{TemplateBinding Padding}"
+                                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                      Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}"

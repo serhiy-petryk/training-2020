@@ -40,6 +40,7 @@ namespace WpfInvestigate.TestViews
         private void ChangeValue2_OnClick(object sender, RoutedEventArgs e)
         {
             ChangeValue(Editor2);
+            ChangeValue(Editor3);
         }
 
         private void ChangeValue(ObjectEditor editor)

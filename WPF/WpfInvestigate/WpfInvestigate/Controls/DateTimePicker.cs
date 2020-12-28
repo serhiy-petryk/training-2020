@@ -150,13 +150,6 @@ namespace WpfInvestigate.Controls
             picker?.WriteValueToTextBox();
         }
 
-        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
-        {
-            base.OnRenderSizeChanged(sizeInfo);
-            if (double.IsNaN(Width))
-                Width = IsDateOnlyMode ? 110 : 150;
-        }
-
         protected override void OnPopupOpened(object sender, EventArgs e)
         {
             SetDatePartValues();

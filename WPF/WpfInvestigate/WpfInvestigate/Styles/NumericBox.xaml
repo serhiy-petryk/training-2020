@@ -57,7 +57,7 @@
                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsLeftSeparatorVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
                             <TextBox Grid.Column="2" x:Name="PART_TextBox" BorderThickness="0" Margin="{TemplateBinding Padding}" Padding="0"
-                                     VerticalAlignment="Center"
+                                     VerticalAlignment="Stretch"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                      Background="Transparent" Foreground="{TemplateBinding Foreground}"

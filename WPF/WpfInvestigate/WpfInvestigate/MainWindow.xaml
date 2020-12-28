@@ -67,16 +67,19 @@
                     <WrapPanel Margin="5" Background="Aqua" HorizontalAlignment="Stretch">
                         <TextBox Width="70" Background="AntiqueWhite" Focusable="True"/>
                         <ComboBox x:Name="cbDataType" Margin="5" Height="20" />
-                        <controls:ObjectEditor x:Name="Editor" MinWidth="100" Height="24"
+                        <controls:ObjectEditor x:Name="Editor" MinWidth="100" Margin="0 0 0 0"
+                                               Padding="8 4"
+                                               Background="GreenYellow"
                                                effects:WatermarkEffect.Watermark="TestWatermark"
                                                effects:WatermarkEffect.Foreground="Red"
                                                VerticalContentAlignment="Center" VerticalAlignment="Center"
                                                ValueDataType="{Binding ElementName=cbDataType, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String}}"
                                                effects:FocusVisualEffect.AlwaysShowFocus="True"
-                                               effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
+                                               effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"
                                                IsNullable="False"/>
-                        <controls:ObjectEditor x:Name="Editor2" MinWidth="100" Height="24"
+                        <controls:ObjectEditor x:Name="Editor2" MinWidth="100" Height="24" Margin="0 0 0 0"
                                                Focusable="False"
+                                               Background="Violet"
                                                effects:WatermarkEffect.Watermark="TestWatermark"
                                                effects:WatermarkEffect.Foreground="Red"
                                                VerticalContentAlignment="Center" VerticalAlignment="Center"
@@ -90,6 +93,7 @@
                                            IsNullable="False"/>-->
                     </WrapPanel>
                     <WrapPanel Margin="5">
+                        <TextBox Width="40"/>
                         <TextBox x:Name="TestTextBox2" Width="70" Background="Yellow" Foreground="Blue" TextWrapping="Wrap" MaxHeight="30"
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -97,6 +101,7 @@
                                  effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator"/>
                         <controls:NumericBox Margin="5" Height="24"/>
                         <controls:TimePicker Margin="5" />
+                        <DatePicker Width="300"/>
                     </WrapPanel>
 
                     <WrapPanel Margin="5">
@@ -110,7 +115,19 @@
                         <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick"/>
                         <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
                         <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Text="AAAAAA" Style="{StaticResource ReadOnlyTextBoxStyle}"/>
-                        <controls:NumericBox Margin="5 0" Width="120" Height="24" effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323"/>
+                        <controls:NumericBox Margin="5 0" Width="120" Height="40"
+                                             VerticalContentAlignment="Center"
+                                             effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="5" Height="40" Background="Yellow">
+                        <Grid Background="Gainsboro" VerticalAlignment="Stretch" Height="40">
+                            <CheckBox Background="Red" Foreground="Blue" VerticalAlignment="Center"
+                                      Padding="4 8" Margin="5"
+                                      BorderBrush="GreenYellow" BorderThickness="2">
+                                <TextBlock Text="Content" Background="Aqua" VerticalAlignment="Center"/>
+                            </CheckBox>
+                        </Grid>
                     </WrapPanel>
 
                 </StackPanel>
