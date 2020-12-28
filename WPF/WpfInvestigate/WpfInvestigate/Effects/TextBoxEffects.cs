@@ -190,10 +190,7 @@ namespace WpfInvestigate.Effects
                 current = VisualTreeHelper.GetParent(current) ?? (current as FrameworkElement)?.Parent;
 
             if (current != null)
-            {
                 ((TextBox)current).Text = string.Empty;
-                ((TextBox)current).Focus();
-            }
         }
 
         private static void Popup_OnOpened(object sender, EventArgs e) => ((Popup) sender).PlacementTarget.Focus();
