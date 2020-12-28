@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Effects
 {
@@ -126,37 +127,33 @@ namespace WpfInvestigate.Effects
 
                 if (adornerControl == null)
                 {
-                    var adorner = new TextBox
+                    var adorner = new Border
                     {
                         Name = "Watermark",
-                        IsReadOnly = true,
-                        Focusable = false,
-                        IsHitTestVisible = false,
-                        Padding = new Thickness(),
-                        Background = Brushes.Transparent,
-                        BorderThickness = new Thickness()
+                        Focusable = false, IsHitTestVisible = false,
+                        Padding = new Thickness(), Margin = new Thickness(),
+                        BorderThickness = new Thickness(), Background = Brushes.Transparent,
+                        Child = new TextBlock
+                        {
+                            Background = Brushes.Transparent, Margin = new Thickness(), Padding=new Thickness(),
+                            Focusable = false, IsHitTestVisible = false
+                        }
                     };
-                    adornerControl = new AdornerControl(ctrlBoxView) {Child = adorner, Margin = new Thickness()};
+                    adornerControl = new AdornerControl(ctrlBoxView) {Child = adorner};
                     layer.Add(adornerControl);
                 }
                 else
-                    adornerControl.Visibility = Visibility.Visible;
+                    adornerControl.Visibility = ctrlBox.Visibility;
 
-                var marginLeft = ctrlBox.HorizontalContentAlignment == HorizontalAlignment.Left ? -ctrlBoxView.Margin.Left : ctrlBoxView.Margin.Left;
-                var marginTop = ctrlBox.VerticalContentAlignment == VerticalAlignment.Top ? -ctrlBoxView.Margin.Top : ctrlBoxView.Margin.Top;
-                var marginRight = ctrlBox.HorizontalContentAlignment == HorizontalAlignment.Right ? -ctrlBoxView.Margin.Right : ctrlBoxView.Margin.Right;
-                var marginBottom = ctrlBox.VerticalContentAlignment == VerticalAlignment.Bottom ? -ctrlBoxView.Margin.Bottom : ctrlBoxView.Margin.Bottom;
+                var textSize = ControlHelper.MeasureString(watermark, ctrlBox);
+                ctrlBoxView.MinWidth = textSize.Width;
 
-                var child = adornerControl.Child as TextBox;
-                child.Text = watermark ?? "";
-                child.Foreground = foregroundBrush;
-                child.Margin = new Thickness(marginLeft, marginTop, marginRight, marginBottom);
-                child.FontSize = ctrlBox.FontSize;
-                child.VerticalAlignment = ctrlBox.VerticalAlignment;
-                child.VerticalContentAlignment = ctrlBox.VerticalContentAlignment;
-                child.HorizontalAlignment = ctrlBox.HorizontalAlignment;
-                child.HorizontalContentAlignment = ctrlBox.HorizontalContentAlignment;
-                child.Visibility = ctrlBox.Visibility;
+                var textBlock = ((Border)adornerControl.Child).Child as TextBlock;
+                textBlock.Text = watermark;
+                textBlock.Foreground = foregroundBrush;
+                textBlock.FontSize = ctrlBox.FontSize;
+                textBlock.VerticalAlignment = ctrlBox.VerticalContentAlignment;
+                textBlock.HorizontalAlignment = ctrlBox.HorizontalContentAlignment;
             }
             else
             { // DatePickerTextBox

@@ -121,13 +121,14 @@
                     <Button Margin="5 0" Click="ChangeValue2_OnClick">Change value</Button>
                 </WrapPanel>
 
-                <controls:ObjectEditor x:Name="Editor2" Foreground="Red" MinWidth="70" MaxWidth="300"
-                                       Padding="12" Margin="0 5" BorderThickness="1" BorderBrush="#FF777777"
-                                       FontSize="16"
-                                       Height="80"
-                                       VerticalContentAlignment="Bottom"
+                <controls:ObjectEditor x:Name="Editor2" Foreground="Red"
+                                       Padding="2" Margin="0 5" BorderThickness="1" BorderBrush="#FF777777"
+                                       HorizontalAlignment="Left" VerticalAlignment="Center"
+                                       FontSize="18"
+                                       VerticalContentAlignment="Center"
                                        HorizontalContentAlignment="Right"
                                        effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                       effects:WatermarkEffect.Watermark="AAA"
                                        ValueDataType="{Binding ElementName=cbDataType2, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
                                        IsNullable="{Binding ElementName=cbNullable2, Path=IsChecked}"
                                        IsEnabled="{Binding ElementName=cbEnabled2, Path=IsChecked}"/>

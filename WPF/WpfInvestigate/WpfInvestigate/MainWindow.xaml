@@ -117,17 +117,45 @@
                         <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Text="AAAAAA" Style="{StaticResource ReadOnlyTextBoxStyle}"/>
                         <controls:NumericBox Margin="5 0" Width="120" Height="40"
                                              VerticalContentAlignment="Center"
-                                             effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323"/>
+                                             effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323"
+                                             effects:FocusVisualEffect.AlwaysShowFocus="True"/>
                     </WrapPanel>
 
                     <WrapPanel Margin="5" Height="40" Background="Yellow">
-                        <Grid Background="Gainsboro" VerticalAlignment="Stretch" Height="40">
-                            <CheckBox Background="Red" Foreground="Blue" VerticalAlignment="Center"
+                        <controls:ObjectEditor Foreground="Red" Background="Aqua"
+                                               Padding="0 0 0 0" Margin="0 5 12 0" BorderThickness="4" BorderBrush="#FF777777"
+                                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                                               VerticalContentAlignment="Center"
+                                               HorizontalContentAlignment="Left"
+                                               effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                               effects:WatermarkEffect.Watermark="111"
+                                               ValueDataType="Integer"
+                                               IsNullable="True"/>
+                        <Grid Background="Gainsboro" VerticalAlignment="Stretch" Height="40" Width="100">
+                            <CheckBox Background="Red" Foreground="Blue" VerticalAlignment="Bottom"
+                                      HorizontalAlignment="Right"
+                                      VerticalContentAlignment="Bottom"
                                       Padding="4 8" Margin="5"
                                       BorderBrush="GreenYellow" BorderThickness="2">
-                                <TextBlock Text="Content" Background="Aqua" VerticalAlignment="Center"/>
+                                <!--<TextBlock Text="Content" Background="Aqua" VerticalAlignment="Center"/>-->
                             </CheckBox>
                         </Grid>
+
+                        <CheckBox Background="Red" Foreground="Blue" VerticalAlignment="Bottom" Width="150" Height="50"
+                                  HorizontalAlignment="Right"
+                                  VerticalContentAlignment="Bottom"
+                                  Padding="4 8" Margin="5"
+                                  BorderBrush="GreenYellow" BorderThickness="2">
+                            <TextBlock Text="Content" Background="Aqua" VerticalAlignment="Center"/>
+                        </CheckBox>
+                        <DatePicker effects:FocusVisualEffect.AlwaysShowFocus="True" Height="40" Width="200"/>
+                        <DatePicker effects:FocusVisualEffect.AlwaysShowFocus="True" Padding="4" Background="Violet"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="5">
+                        <Border Width="100" Height="40">
+                            <TextBlock Text="AAA" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TextBlock>
+                        </Border>
                     </WrapPanel>
 
                 </StackPanel>
