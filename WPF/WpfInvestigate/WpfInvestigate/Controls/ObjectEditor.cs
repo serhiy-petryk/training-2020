@@ -77,10 +77,11 @@ namespace WpfInvestigate.Controls
             
             editor.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
+                editor.PreviewMouseLeftButtonDown -= EditorBoolean_PreviewMouseLeftButtonDown;
+
                 editor._isTemplateChanging = true;
                 editor.Template = editor.FindResource(metadata.Template.ToString()) as ControlTemplate;
                 editor.Value = Tips.GetDefaultOfType(metadata.Type);
-
                 editor._isTemplateChanging = false;
                 
                 var newValue = editor.IsNullable ? null : Tips.GetDefaultOfType(metadata.Type);
@@ -94,8 +95,27 @@ namespace WpfInvestigate.Controls
                 if ((DataTypeMetadata.DataType)e.NewValue == DataTypeMetadata.DataType.Date)
                     editor.Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
                         new Action(() => ControlHelper.HideInnerBorderOfDatePickerTextBox(editor, true)));
+                else if ((DataTypeMetadata.DataType) e.NewValue == DataTypeMetadata.DataType.Bool)
+                    editor.PreviewMouseLeftButtonDown += EditorBoolean_PreviewMouseLeftButtonDown;
             }));
 
+        }
+
+        private static void EditorBoolean_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var editor = (ObjectEditor)sender;
+            if (editor.ValueDataType == DataTypeMetadata.DataType.Bool)
+            {
+                if (Equals(editor.Value, false))
+                    editor.Value = true;
+                else if (Equals(editor.Value, null) || !editor.IsNullable)
+                    editor.Value = false;
+                else
+                    editor.Value = null;
+
+                Keyboard.Focus(editor);
+                e.Handled = true;
+            }
         }
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -151,21 +171,11 @@ namespace WpfInvestigate.Controls
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         #endregion
 
-        private void DateTimePicker_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e) => Value = e.NewValue;
-
         //================================
-        private void ObjectEditor_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            OnValueDataTypeChanged(this, new DependencyPropertyChangedEventArgs(ValueDataTypeProperty, null, ValueDataType));
-        }
-
-        private void RefreshUI()
-        {
+        private void RefreshUI() =>
             OnPropertiesChanged(nameof(Metadata), nameof(NumericMinValue), nameof(NumericMaxValue));
-        }
 
         private Control GetEditControl()
         {

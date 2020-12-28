@@ -30,21 +30,21 @@
             </ControlTemplate>
 
             <ControlTemplate x:Key="CheckBox" TargetType="controls:ObjectEditor">
-                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                <Border Background="#01FFFFFF" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                         Padding="{TemplateBinding Padding}" Margin="0">
                     <CheckBox Padding="0" Margin="0"
                               Focusable="{TemplateBinding Focusable}"
                               FocusVisualStyle="{x:Null}"
-                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                              HorizontalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               TabIndex="{TemplateBinding TabIndex}" IsTabStop="True"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               IsThreeState="{TemplateBinding IsNullable}"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ObjectEditor}, Path=Value}">
-                        <TextBlock Margin="3 -2 0 0" Background="Transparent" Foreground="{TemplateBinding Foreground}" Text="{TemplateBinding effects:WatermarkEffect.Watermark}"
-                                   Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(effects:WatermarkEffect.Watermark), Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                        <TextBox Margin="0 -1 0 0" Padding="3 0 0 0" IsReadOnly="True" BorderThickness="0"
+                                 Background="Transparent" Foreground="{TemplateBinding Foreground}"
+                                 Text="{TemplateBinding effects:WatermarkEffect.Watermark}"
+                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(effects:WatermarkEffect.Watermark), Converter={x:Static common:VisibilityConverter.Instance}}"/>
                     </CheckBox>
                 </Border>
             </ControlTemplate>
