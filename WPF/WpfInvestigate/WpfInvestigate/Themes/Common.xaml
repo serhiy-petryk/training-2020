@@ -210,17 +210,27 @@
         <Setter Property="IsTabStop" Value="False"/>
     </Style>
 
-    <Style TargetType="DatePickerTextBox">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-    </Style>
-
     <!-- To hide inner borders of date picker: call ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true); -->
     <Style TargetType="DatePicker">
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a date"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource UserInputControlChromeMatrix}"/>
         <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
+        <Style.Resources>
+            <Style TargetType="Rectangle">
+                <Setter Property="Opacity" Value="0"/>
+            </Style>
+            <Style TargetType="DatePickerTextBox">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            </Style>
+        </Style.Resources>
+        <Style.Triggers>
+            <!-- set background color of disabled DatePicker: https://social.msdn.microsoft.com/Forums/sqlserver/en-US/c48ae352-673b-478c-84c8-fc1374d06a47/how-to-set-a-dark-foreground-text-color-to-a-disabled-datepicker?forum=wpf -->
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.5"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="ToolBar">

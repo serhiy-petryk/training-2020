@@ -92,10 +92,7 @@ namespace WpfInvestigate.Controls
 
                 editor.RefreshUI();
 
-                if ((DataTypeMetadata.DataType)e.NewValue == DataTypeMetadata.DataType.Date)
-                    editor.Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
-                        new Action(() => ControlHelper.HideInnerBorderOfDatePickerTextBox(editor, true)));
-                else if ((DataTypeMetadata.DataType) e.NewValue == DataTypeMetadata.DataType.Bool)
+                if ((DataTypeMetadata.DataType) e.NewValue == DataTypeMetadata.DataType.Bool)
                     editor.PreviewMouseLeftButtonDown += EditorBoolean_PreviewMouseLeftButtonDown;
             }));
 
