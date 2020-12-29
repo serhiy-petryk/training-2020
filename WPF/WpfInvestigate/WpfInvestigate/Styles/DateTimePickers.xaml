@@ -305,7 +305,7 @@
                                 <Condition Property="IsEnabled" Value="False" />
                                 <Condition Property="effects:ChromeEffect.MonochromeAnimated" Value="{x:Null}"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Opacity" Value="0.4" />
+                            <Setter Property="Opacity" Value="0.5" />
                         </MultiTrigger>
                         <Trigger Property="IsReadOnly" Value="True">
                             <Setter TargetName="PART_Calendar" Property="IsHitTestVisible" Value="False" />
