@@ -63,6 +63,7 @@
                     <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
                     <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
                     <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
+                    <Button x:Name="ResizableControlTests" Width="200" Margin="0 5" Content="WiP: ResizableControlTests" Click="ResizableControlTests_OnClick"/>
 
                     <WrapPanel Margin="5" Background="Aqua" HorizontalAlignment="Stretch">
                     </WrapPanel>

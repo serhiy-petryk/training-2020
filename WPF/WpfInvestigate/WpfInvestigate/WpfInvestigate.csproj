@@ -137,6 +137,9 @@
     <Compile Include="TestViews\FocusEffectTests.xaml.cs">
       <DependentUpon>FocusEffectTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\ResizableControlTests.xaml.cs">
+      <DependentUpon>ResizableControlTests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\TextBoxTests.xaml.cs">
       <DependentUpon>TextBoxTests.xaml</DependentUpon>
     </Compile>
@@ -314,6 +317,10 @@
     <Page Include="TestViews\FocusEffectTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ResizableControlTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestViews\TextBoxTests.xaml">
       <Generator>MSBuild:Compile</Generator>
