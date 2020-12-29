@@ -104,7 +104,7 @@ namespace WpfInvestigate.Controls
         private static void EditorBoolean_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var editor = (ObjectEditor)sender;
-            if (editor.ValueDataType == DataTypeMetadata.DataType.Bool)
+            if (editor.IsEnabled && editor.ValueDataType == DataTypeMetadata.DataType.Bool)
             {
                 if (Equals(editor.Value, false))
                     editor.Value = true;
