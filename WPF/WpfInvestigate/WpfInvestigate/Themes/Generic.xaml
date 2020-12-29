@@ -12,6 +12,7 @@
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/VirtualKeyboard.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ObjectEditor.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/PopupResizeControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ResizableControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

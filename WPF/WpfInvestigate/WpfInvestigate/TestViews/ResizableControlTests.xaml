@@ -3,13 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         mc:Ignorable="d"
         Title="ResizableControl" Height="700" Width="1100">
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
         <Grid ZIndex="1" Background="White">
@@ -29,10 +31,20 @@
                     AutoToolTipPrecision="2"/>
         </Grid>
 
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Margin="5" Background="Gainsboro">
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
+
+            <controls:ResizableControl Content="AAA" Width="100" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </Grid>
+
+        <Canvas Grid.Column="2" Margin="5" Background="Gainsboro">
+            <Canvas.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Canvas.LayoutTransform>
+
+            <controls:ResizableControl Canvas.Left="100" Canvas.Top="100" Width="100" Height="100" Content="BBB" Background="Yellow"/>
+        </Canvas>
     </Grid>
 </Window>

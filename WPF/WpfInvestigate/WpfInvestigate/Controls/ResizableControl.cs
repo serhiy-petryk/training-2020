@@ -10,7 +10,7 @@ namespace WpfInvestigate.Controls
 {
     public class ResizableControl : ContentControl
     {
-        private ResizableControl()
+        public ResizableControl()
         {
             DataContext = this;
             var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
