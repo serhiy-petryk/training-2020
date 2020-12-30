@@ -17,7 +17,7 @@ namespace WpfInvestigate.Samples
 
         private void Thumb_OnDragStarted(object sender, DragStartedEventArgs e)
         {
-            if (!Focusable)
+            if (Focusable)
                 Focus();
             e.Handled = true;
         }

@@ -39,13 +39,13 @@ namespace WpfInvestigate.Samples
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonDown(e);
-            if (!IsFocused)
+            if (Focusable)
                 Focus();
         }
 
         private void Thumb_OnDragStarted(object sender, DragStartedEventArgs e)
         {
-            if (!IsFocused)
+            if (Focusable)
                 Focus();
             // e.Handled = true;
         }
