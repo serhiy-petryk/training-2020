@@ -10,7 +10,7 @@
     <Style TargetType="controls:ResizableControl">
         <Style.Resources>
             <Style x:Key="ResizeThumb" TargetType="Thumb">
-                <Setter Property="Opacity" Value="0.01"/>
+                <Setter Property="Opacity" Value="1"/>
                 <Setter Property="Focusable" Value="False"/>
             </Style>
         </Style.Resources>
@@ -27,11 +27,22 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ResizableControl">
                     <Grid>
-                        <!--<Border Margin="0" BorderThickness="2" CornerRadius="1" BorderBrush="Black" Effect="{StaticResource ShadowEffect}"/>-->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Height="18" Padding="5 0 0 0" Background="GreenYellow" Text="Header"/>
+                            <Thumb x:Name="PART_HeaderMover" Grid.Row="0" Opacity="{StaticResource TransparentOpacity}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+                            <ContentPresenter Grid.Row="1"/>
+                        </Grid>
+
+<!--<Border Margin="0" BorderThickness="2" CornerRadius="1" BorderBrush="Black" Effect="{StaticResource ShadowEffect}"/>-->
                         <!--<Border BorderThickness="2" CornerRadius="1" Padding="0"
                                     BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
                         </Border>-->
-                        <ContentPresenter/>
 
                         <Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
                         <Thumb x:Name="ResizeTop" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
