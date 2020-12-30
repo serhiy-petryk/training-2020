@@ -18,7 +18,7 @@
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
                 <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageBlock}, Path=(effects:FocusVisualEffect.AlwaysShowFocus)}"/>
-                <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageBlock}, Path=(effects:FocusVisualEffect.FocusControlStyle)}"/>
+                <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageBlock}, Path=FocusButtonStyle}"/>
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -37,7 +37,8 @@
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
-        <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
+        <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{x:Null}"/>
+        <Setter Property="FocusButtonStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
         <Setter Property="Effect" Value="{StaticResource StrongShadowEffect}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -77,7 +78,7 @@
                                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                 Command="ApplicationCommands.Close" CommandParameter="{Binding}"
                                                 effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"
-                                                effects:FocusVisualEffect.FocusControlStyle="{TemplateBinding effects:FocusVisualEffect.FocusControlStyle}"/>
+                                                effects:FocusVisualEffect.FocusControlStyle="{TemplateBinding FocusButtonStyle}"/>
 
                                         <!--<Thumb Grid.Column="0" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>-->
                                         <Thumb Grid.Column="0" x:Name="PART_HeaderMover" Opacity="0"/>

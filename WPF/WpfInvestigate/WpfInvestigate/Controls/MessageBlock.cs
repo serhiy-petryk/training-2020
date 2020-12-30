@@ -310,5 +310,13 @@ namespace WpfInvestigate.Controls
                     _buttonsArea.Margin = new Thickness(padding, 5, padding, 0);
             }
         }
+        #region ===========  Properties  ==============
+        public static readonly DependencyProperty FocusButtonStyleProperty = DependencyProperty.Register("FocusButtonStyle", typeof(Style), typeof(MessageBlock), new FrameworkPropertyMetadata(null));
+        public Style FocusButtonStyle
+        {
+            get => (Style)GetValue(FocusButtonStyleProperty);
+            set => SetValue(FocusButtonStyleProperty, value);
+        }
+        #endregion
     }
 }

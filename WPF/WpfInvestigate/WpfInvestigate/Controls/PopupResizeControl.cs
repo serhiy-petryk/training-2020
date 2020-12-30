@@ -62,7 +62,6 @@ namespace WpfInvestigate.Controls
             get => (bool)GetValue(DoesContentSupportElasticLayoutProperty);
             set => SetValue(DoesContentSupportElasticLayoutProperty, value);
         }
-
         #endregion
     }
 }
