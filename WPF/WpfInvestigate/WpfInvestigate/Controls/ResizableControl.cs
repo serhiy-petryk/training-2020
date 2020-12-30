@@ -63,34 +63,9 @@ namespace WpfInvestigate.Controls
 
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            /*var itemsPresenter = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
-            var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
-            if (itemsPresenter != null && container != null)
-            {
-                var newX = itemsPresenter.Margin.Left + e.HorizontalChange;
-                if (newX + ActualWidth > container.ActualWidth)
-                    newX = container.ActualWidth - ActualWidth;
-                if (newX < 0) newX = 0;
+            var oldPosition = TranslatePoint(new Point(0, 0), HostPanel);
+            var newX = oldPosition.X + e.HorizontalChange;
 
-                var newY = itemsPresenter.Margin.Top + e.VerticalChange;
-                if (newY + ActualHeight > container.ActualHeight)
-                    newY = container.ActualHeight - ActualHeight;
-                if (newY < 0) newY = 0;
-
-                itemsPresenter.Margin = new Thickness { Left = newX, Top = newY };
-                e.Handled = true;
-            }
-            else */
-            if (HostPanel is Grid grid)
-                GridMoveThumb_OnDragDelta(grid, e);
-            else if (HostPanel is Canvas canvas)
-                CanvasMoveThumb_OnDragDelta(canvas, e);
-        }
-
-
-        private void GridMoveThumb_OnDragDelta(Grid grid, DragDeltaEventArgs e)
-        {
-            var newX = Margin.Left + e.HorizontalChange;
             if (LimitPositionToPanelBounds)
             {
                 if (newX + ActualWidth > HostPanel.ActualWidth)
@@ -98,7 +73,7 @@ namespace WpfInvestigate.Controls
                 if (newX < 0) newX = 0;
             }
 
-            var newY = Margin.Top + e.VerticalChange;
+            var newY = oldPosition.Y + e.VerticalChange;
             if (LimitPositionToPanelBounds)
             {
                 if (newY + ActualHeight > HostPanel.ActualHeight)
@@ -106,57 +81,17 @@ namespace WpfInvestigate.Controls
                 if (newY < 0) newY = 0;
             }
 
-            if (!Tips.AreEqual(Margin.Left, newX) || !Tips.AreEqual(Margin.Top, newY))
-                Margin = new Thickness { Left = newX, Top = newY };
-            e.Handled = true;
-        }
-
-        private void CanvasMoveThumb_OnDragDelta(Canvas canvas, DragDeltaEventArgs e)
-        {
-            // var newX = Canvas.GetLeft(this) + e.HorizontalChange; // GetLeft/Top may be NaN
-            var p = TranslatePoint(new Point(0, 0), canvas);
-            var newX = p.X + e.HorizontalChange;
-            if (LimitPositionToPanelBounds)
+            if (HostPanel is Grid)
             {
-                if (newX + ActualWidth > HostPanel.ActualWidth)
-                    newX = HostPanel.ActualWidth - ActualWidth;
-                if (newX < 0) newX = 0;
+                if (!Tips.AreEqual(oldPosition.X, newX) || !Tips.AreEqual(oldPosition.Y, newY))
+                    Margin = new Thickness {Left = newX, Top = newY};
+            }
+            else
+            {
+                if (!Tips.AreEqual(oldPosition.X, newX)) Canvas.SetLeft(this, newX);
+                if (!Tips.AreEqual(oldPosition.Y, newY)) Canvas.SetTop(this, newY);
             }
 
-            // var newY = Canvas.GetTop(this) + e.VerticalChange;
-            var newY = p.Y + e.VerticalChange;
-            if (LimitPositionToPanelBounds)
-            {
-                if (newY + ActualHeight > HostPanel.ActualHeight)
-                    newY = HostPanel.ActualHeight - ActualHeight;
-                if (newY < 0) newY = 0;
-            }
-
-            if (!Tips.AreEqual(p.X, newX)) Canvas.SetLeft(this, newX);
-            if (!Tips.AreEqual(p.Y, newY)) Canvas.SetTop(this, newY);
-            e.Handled = true;
-        }
-
-
-
-        private void xMoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
-        {
-            var itemsPresenter = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
-            var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
-            if (itemsPresenter != null && container != null)
-            {
-                var newX = itemsPresenter.Margin.Left + e.HorizontalChange;
-                if (newX + ActualWidth > container.ActualWidth)
-                    newX = container.ActualWidth - ActualWidth;
-                if (newX < 0) newX = 0;
-
-                var newY = itemsPresenter.Margin.Top + e.VerticalChange;
-                if (newY + ActualHeight > container.ActualHeight)
-                    newY = container.ActualHeight - ActualHeight;
-                if (newY < 0) newY = 0;
-
-                itemsPresenter.Margin = new Thickness { Left = newX, Top = newY };
-            }
             e.Handled = true;
         }
 
