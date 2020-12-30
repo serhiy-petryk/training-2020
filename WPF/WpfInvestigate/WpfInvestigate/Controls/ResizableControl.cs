@@ -14,6 +14,8 @@ namespace WpfInvestigate.Controls
         private static int Unique = 0;
         private Panel HostPanel => VisualTreeHelper.GetParent(this) as Panel;
 
+        public bool LimitPositionToPanelBounds { get; set; } = false;
+
         public ResizableControl()
         {
             DataContext = this;
@@ -49,8 +51,6 @@ namespace WpfInvestigate.Controls
             if (Focusable)
                 Focus();
         }
-
-
         #endregion
 
         #region ==========  Moving && resizing  =========
@@ -63,9 +63,6 @@ namespace WpfInvestigate.Controls
 
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var aa1 = Tips.GetVisualParents(this).OfType<FrameworkElement>().ToArray();
-            var aa2 = Tips.GetVisualParents(this).OfType<FrameworkElement>().Select(a => new Size(a.ActualWidth, a.ActualHeight)).ToArray();
-
             /*var itemsPresenter = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
             var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
             if (itemsPresenter != null && container != null)
@@ -93,18 +90,25 @@ namespace WpfInvestigate.Controls
 
         private void GridMoveThumb_OnDragDelta(Grid grid, DragDeltaEventArgs e)
         {
-                var newX = Margin.Left + e.HorizontalChange;
-                //if (newX + ActualWidth > HostPanel.ActualWidth)
-                //  newX = HostPanel.ActualWidth - ActualWidth;
-                //if (newX < 0) newX = 0;
+            var newX = Margin.Left + e.HorizontalChange;
+            if (LimitPositionToPanelBounds)
+            {
+                if (newX + ActualWidth > HostPanel.ActualWidth)
+                    newX = HostPanel.ActualWidth - ActualWidth;
+                if (newX < 0) newX = 0;
+            }
 
-                var newY = Margin.Top + e.VerticalChange;
-                //if (newY + ActualHeight > HostPanel.ActualHeight)
-                //  newY = HostPanel.ActualHeight - ActualHeight;
-                // if (newY < 0) newY = 0;
+            var newY = Margin.Top + e.VerticalChange;
+            if (LimitPositionToPanelBounds)
+            {
+                if (newY + ActualHeight > HostPanel.ActualHeight)
+                    newY = HostPanel.ActualHeight - ActualHeight;
+                if (newY < 0) newY = 0;
+            }
 
+            if (!Tips.AreEqual(Margin.Left, newX) || !Tips.AreEqual(Margin.Top, newY))
                 Margin = new Thickness { Left = newX, Top = newY };
-                e.Handled = true;
+            e.Handled = true;
         }
 
         private void CanvasMoveThumb_OnDragDelta(Canvas canvas, DragDeltaEventArgs e)
@@ -112,18 +116,24 @@ namespace WpfInvestigate.Controls
             // var newX = Canvas.GetLeft(this) + e.HorizontalChange; // GetLeft/Top may be NaN
             var p = TranslatePoint(new Point(0, 0), canvas);
             var newX = p.X + e.HorizontalChange;
-            //if (newX + ActualWidth > HostPanel.ActualWidth)
-            //  newX = HostPanel.ActualWidth - ActualWidth;
-            //if (newX < 0) newX = 0;
+            if (LimitPositionToPanelBounds)
+            {
+                if (newX + ActualWidth > HostPanel.ActualWidth)
+                    newX = HostPanel.ActualWidth - ActualWidth;
+                if (newX < 0) newX = 0;
+            }
 
             // var newY = Canvas.GetTop(this) + e.VerticalChange;
             var newY = p.Y + e.VerticalChange;
-            //if (newY + ActualHeight > HostPanel.ActualHeight)
-            //  newY = HostPanel.ActualHeight - ActualHeight;
-            //if (newY < 0) newY = 0;
+            if (LimitPositionToPanelBounds)
+            {
+                if (newY + ActualHeight > HostPanel.ActualHeight)
+                    newY = HostPanel.ActualHeight - ActualHeight;
+                if (newY < 0) newY = 0;
+            }
 
-            Canvas.SetLeft(this, newX);
-            Canvas.SetTop(this, newY);
+            if (!Tips.AreEqual(p.X, newX)) Canvas.SetLeft(this, newX);
+            if (!Tips.AreEqual(p.Y, newY)) Canvas.SetTop(this, newY);
             e.Handled = true;
         }
 

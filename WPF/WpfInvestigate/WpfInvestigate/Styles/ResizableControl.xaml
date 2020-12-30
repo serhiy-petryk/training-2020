@@ -21,6 +21,8 @@
         <Setter Property="MinHeight" Value="50"/>
         <Setter Property="MaxWidth" Value="1000"/>
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">

@@ -37,7 +37,8 @@
                     <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
                 </Grid.LayoutTransform>
                 <controls:ResizableControl Content="AAA" Width="100" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <controls:ResizableControl Content="AAA" Margin="0 300 0 0" Width="100" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <controls:ResizableControl Content="Limited" Margin="0 300 0 0" Width="100" Height="100" Background="Yellow"
+                                           LimitPositionToPanelBounds="True"/>
             </Grid>
         </ScrollViewer>
 
@@ -47,7 +48,8 @@
                     <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
                 </Canvas.LayoutTransform>
                 <controls:ResizableControl Canvas.Left="100" Canvas.Top="100" Width="100" Height="100" Content="BBB" Background="Yellow"/>
-                <controls:ResizableControl Canvas.Left="100" Canvas.Top="300" Width="100" Height="100" Content="BBB" Background="Yellow"/>
+                <controls:ResizableControl Canvas.Left="100" Canvas.Top="300" Width="100" Height="100" Content="Limited" Background="Yellow"
+                                           LimitPositionToPanelBounds="True"/>
             </Canvas>
         </ScrollViewer>
     </Grid>
