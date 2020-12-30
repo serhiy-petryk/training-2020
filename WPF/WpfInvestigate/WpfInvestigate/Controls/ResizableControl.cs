@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -63,6 +64,9 @@ namespace WpfInvestigate.Controls
 
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
+            var mousePosition = Mouse.GetPosition(HostPanel);
+            if (mousePosition.X < 0 || mousePosition.Y < 0) return;
+
             var oldPosition = TranslatePoint(new Point(0, 0), HostPanel);
             var newX = oldPosition.X + e.HorizontalChange;
 
@@ -94,6 +98,9 @@ namespace WpfInvestigate.Controls
 
         private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
+            var mousePosition = Mouse.GetPosition(HostPanel);
+            if (mousePosition.X < 0 || mousePosition.Y < 0) return;
+
             var thumb = (Thumb)sender;
             if (thumb.HorizontalAlignment == HorizontalAlignment.Left)
                 OnResizeLeft(e.HorizontalChange);

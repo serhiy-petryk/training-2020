@@ -29,6 +29,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ResizableControl">
                     <Grid>
+                        <!--<Border BorderBrush="Black" BorderThickness="2" Effect="{StaticResource ShadowEffect}"/>-->
+                        <Grid Effect="{StaticResource ShadowEffect}" Background="#FFFFFFFF"/>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -38,7 +40,7 @@
                             <TextBlock Grid.Row="0" Height="18" Padding="5 0 0 0" Background="GreenYellow" Text="Header"/>
                             <Thumb x:Name="PART_HeaderMover" Grid.Row="0" Opacity="{StaticResource TransparentOpacity}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
-                            <ContentPresenter Grid.Row="1"/>
+                            <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
 
 <!--<Border Margin="0" BorderThickness="2" CornerRadius="1" BorderBrush="Black" Effect="{StaticResource ShadowEffect}"/>-->
