@@ -36,15 +36,14 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
         <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
+        <Setter Property="Effect" Value="{StaticResource StrongShadowEffect}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MessageBlock">
                     <Grid>
-                        <!--<Border Margin="0" BorderThickness="2" CornerRadius="1" BorderBrush="Black" Effect="{StaticResource ShadowEffect}"/>-->
-                        <Border BorderThickness="2" CornerRadius="1" Padding="0"
+                        <Border BorderThickness="2" CornerRadius="2" Padding="0"
                                 BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
                             <Border BorderThickness="5 2 5 5"
                                     Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"

@@ -6,6 +6,7 @@
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects">
 
     <DropShadowEffect x:Key="ShadowEffect" BlurRadius="5" ShadowDepth="2" Direction="315" po:Freeze="True" />
+    <DropShadowEffect x:Key="StrongShadowEffect" BlurRadius="15" ShadowDepth="4" Direction="315" po:Freeze="True" />
     <sys:Double x:Key="TransparentOpacity" >0.001</sys:Double>
 
     <!-- ========== -->
