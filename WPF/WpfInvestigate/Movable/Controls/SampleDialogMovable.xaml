@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"
-             Width="120" Height="120" MinWidth="50" MinHeight="50"
+             Width="120" Height="120" MinWidth="50" MinHeight="50" Focusable="True"
              HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
 
     <UserControl.Resources>

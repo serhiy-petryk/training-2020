@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:samples="clr-namespace:WpfInvestigate.Samples"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1100">
 
@@ -69,7 +70,9 @@
                 <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
                     <TextBlock Text="Grid"/>
                     <Grid x:Name="Grid" Margin="5" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                          Height="{StaticResource PanelHeight}"/>
+                          Height="{StaticResource PanelHeight}">
+                        <samples:SampleDialogMovable/>
+                    </Grid>
                 </StackPanel>
 
                 <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical">
@@ -102,7 +105,9 @@
                 <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <TextBlock Text="ScrollViewer+Grid"/>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="200" Width="250">
-                        <Grid x:Name="ScrollViewerGrid" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <Grid x:Name="ScrollViewerGrid" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <samples:SampleDialogMovable/>
+                        </Grid>
                     </ScrollViewer>
                 </StackPanel>
 

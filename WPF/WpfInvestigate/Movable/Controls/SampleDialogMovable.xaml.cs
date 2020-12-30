@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using Movable.Common;
 
@@ -29,11 +30,24 @@ namespace WpfInvestigate.Samples
             DataContext = this;
         }
 
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            base.OnGotFocus(e);
+            Panel.SetZIndex(this, Unique++);
+        }
+
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseLeftButtonDown(e);
+            if (!IsFocused)
+                Focus();
+        }
+
         private void Thumb_OnDragStarted(object sender, DragStartedEventArgs e)
         {
-            if (!Focusable)
+            if (!IsFocused)
                 Focus();
-            e.Handled = true;
+            // e.Handled = true;
         }
 
         private void GridMoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
