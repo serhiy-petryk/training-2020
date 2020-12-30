@@ -82,10 +82,7 @@ namespace WpfInvestigate.Controls
             }
 
             if (HostPanel is Grid)
-            {
-                if (!Tips.AreEqual(oldPosition.X, newX) || !Tips.AreEqual(oldPosition.Y, newY))
-                    Margin = new Thickness {Left = newX, Top = newY};
-            }
+                Margin = new Thickness { Left = newX, Top = newY };
             else
             {
                 if (!Tips.AreEqual(oldPosition.X, newX)) Canvas.SetLeft(this, newX);
@@ -111,59 +108,62 @@ namespace WpfInvestigate.Controls
             e.Handled = true;
         }
 
-        private void xOnResizeLeft(double horizontalChange, FrameworkElement itemsPresenter)
-        {
-            if (itemsPresenter != null)
-            {
-                var change = Math.Min(horizontalChange, ActualWidth - MinWidth);
-                if (itemsPresenter.Margin.Left + change < 0)
-                    change = -itemsPresenter.Margin.Left;
-                if ((ActualWidth - change) > MaxWidth)
-                    change = ActualWidth - MaxWidth;
-
-                if (!Tips.AreEqual(0.0, change))
-                {
-                    Width = ActualWidth - change;
-                    itemsPresenter.Margin = new Thickness(itemsPresenter.Margin.Left + change, itemsPresenter.Margin.Top, 0, 0);
-                }
-            }
-        }
         private void OnResizeLeft(double horizontalChange)
         {
+            var oldPosition = TranslatePoint(new Point(0, 0), HostPanel);
             var change = Math.Min(horizontalChange, ActualWidth - MinWidth);
-            if (Margin.Left + change < 0)
-                change = -Margin.Left;
-            if ((ActualWidth - change) > MaxWidth)
-                change = ActualWidth - MaxWidth;
+
+            if (LimitPositionToPanelBounds)
+            {
+                if (oldPosition.X + change < 0)
+                    change = -oldPosition.X;
+                if ((ActualWidth - change) > MaxWidth)
+                    change = ActualWidth - MaxWidth;
+            }
 
             if (!Tips.AreEqual(0.0, change))
             {
                 Width = ActualWidth - change;
-                Margin = new Thickness(Margin.Left + change, Margin.Top, 0, 0);
+                if (HostPanel is Grid)
+                    Margin = new Thickness(oldPosition.X + change, oldPosition.Y, 0, 0);
+                else
+                    Canvas.SetLeft(this, oldPosition.X + change);
             }
         }
         private void OnResizeTop(double verticalChange)
         {
-                var change = Math.Min(verticalChange, ActualHeight - MinHeight);
-                if (Margin.Top + change < 0)
-                    change = -Margin.Top;
+            var oldPosition = TranslatePoint(new Point(0, 0), HostPanel);
+            var change = Math.Min(verticalChange, ActualHeight - MinHeight);
+            
+            if (LimitPositionToPanelBounds)
+            {
+                if (oldPosition.Y + change < 0)
+                    change = -oldPosition.Y;
                 if ((Height - change) > MaxHeight)
                     change = Height - MaxHeight;
+            }
 
-                if (!Tips.AreEqual(0.0, change))
-                {
-                    Height = ActualHeight - change;
-                    Margin = new Thickness(Margin.Left, Margin.Top + change, 0, 0);
-                }
+            if (!Tips.AreEqual(0.0, change))
+            {
+                Height = ActualHeight - change;
+                if (HostPanel is Grid)
+                    Margin = new Thickness(oldPosition.X, oldPosition.Y + change, 0, 0);
+                else
+                    Canvas.SetTop(this, oldPosition.Y + change);
+            }
         }
         private void OnResizeRight(double horizontalChange)
         {
             var change = Math.Min(-horizontalChange, ActualWidth - MinWidth);
 
-            if ((ActualWidth - change) > MaxWidth)
-                change = ActualWidth - MaxWidth;
-            if ((Margin.Left + ActualWidth - change) > HostPanel.ActualWidth)
-                change = Margin.Left + ActualWidth - HostPanel.ActualWidth;
+            if (LimitPositionToPanelBounds)
+            {
+                var oldPosition = TranslatePoint(new Point(0, 0), HostPanel);
+                if ((ActualWidth - change) > MaxWidth)
+                    change = ActualWidth - MaxWidth;
+                if ((oldPosition.X + ActualWidth - change) > HostPanel.ActualWidth)
+                    change = oldPosition.X + ActualWidth - HostPanel.ActualWidth;
+            }
 
             if (!Tips.AreEqual(0.0, change))
                 Width = ActualWidth - change;
@@ -172,10 +172,14 @@ namespace WpfInvestigate.Controls
         {
             var change = Math.Min(-verticalChange, ActualHeight - MinHeight);
 
-            if ((ActualHeight - change) > MaxHeight)
-                change = ActualHeight - MaxHeight;
-            if ((Margin.Top + ActualHeight - change) > HostPanel.ActualHeight)
-                change = Margin.Top + ActualHeight - HostPanel.ActualHeight;
+            if (LimitPositionToPanelBounds)
+            {
+                var oldPosition = TranslatePoint(new Point(0, 0), HostPanel);
+                if ((ActualHeight - change) > MaxHeight)
+                    change = ActualHeight - MaxHeight;
+                if ((oldPosition.Y + ActualHeight - change) > HostPanel.ActualHeight)
+                    change = oldPosition.Y + ActualHeight - HostPanel.ActualHeight;
+            }
 
             if (!Tips.AreEqual(0.0, change))
                 Height = ActualHeight - change;
