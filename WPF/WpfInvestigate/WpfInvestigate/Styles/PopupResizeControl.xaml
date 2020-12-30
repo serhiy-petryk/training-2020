@@ -10,7 +10,7 @@
     <Style TargetType="{x:Type controls:PopupResizeControl}">
         <Style.Resources>
             <Style x:Key="ResizeThumb" TargetType="Thumb">
-                <Setter Property="Opacity" Value="0.01"/>
+                <Setter Property="Opacity" Value="{StaticResource TransparentOpacity}"/>
                 <Setter Property="Focusable" Value="False"/>
             </Style>
         </Style.Resources>

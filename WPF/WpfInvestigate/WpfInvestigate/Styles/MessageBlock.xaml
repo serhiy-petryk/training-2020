@@ -22,7 +22,7 @@
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
-                <Setter Property="Opacity" Value="0.01"/>
+                <Setter Property="Opacity" Value="{StaticResource TransparentOpacity}"/>
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="IsTabStop" Value="False"/>
             </Style>
@@ -36,6 +36,7 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
         <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
         <Setter Property="Template">

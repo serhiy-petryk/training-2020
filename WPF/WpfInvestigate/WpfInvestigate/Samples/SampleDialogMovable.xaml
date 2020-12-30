@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <!-- Resize Thumbs -->
         <Style x:Key="ResizeThumb" TargetType="Thumb">
-            <Setter Property="Opacity" Value="0.01"/>
+            <Setter Property="Opacity" Value="{StaticResource TransparentOpacity}"/>
             <Setter Property="Focusable" Value="False"/>
             <EventSetter Event="DragStarted" Handler="Thumb_OnDragStarted"/>
             <EventSetter Event="DragDelta" Handler="ResizeThumb_OnDragDelta"/>
