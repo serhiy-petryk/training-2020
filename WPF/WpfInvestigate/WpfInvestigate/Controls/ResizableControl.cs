@@ -98,17 +98,15 @@ namespace WpfInvestigate.Controls
         private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
             var thumb = (Thumb)sender;
-            var itemsPresenter = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
-
             if (thumb.HorizontalAlignment == HorizontalAlignment.Left)
-                OnResizeLeft(e.HorizontalChange, itemsPresenter);
+                OnResizeLeft(e.HorizontalChange);
             else if (thumb.HorizontalAlignment == HorizontalAlignment.Right)
-                OnResizeRight(e.HorizontalChange, itemsPresenter);
+                OnResizeRight(e.HorizontalChange);
 
             if (thumb.VerticalAlignment == VerticalAlignment.Top)
-                OnResizeTop(e.VerticalChange, itemsPresenter);
+                OnResizeTop(e.VerticalChange);
             else if (thumb.VerticalAlignment == VerticalAlignment.Bottom)
-                OnResizeBottom(e.VerticalChange, itemsPresenter);
+                OnResizeBottom(e.VerticalChange);
 
             e.Handled = true;
         }
@@ -130,58 +128,54 @@ namespace WpfInvestigate.Controls
                 }
             }
         }
-        private void OnResizeLeft(double horizontalChange, FrameworkElement itemsPresenter)
+        private void OnResizeLeft(double horizontalChange)
         {
-            var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
             var change = Math.Min(horizontalChange, ActualWidth - MinWidth);
-
-            if ((ActualWidth - change) < 0)
+            if (Margin.Left + change < 0)
+                change = -Margin.Left;
+            if ((ActualWidth - change) > MaxWidth)
                 change = ActualWidth - MaxWidth;
-            if (container != null && (itemsPresenter.Margin.Left + ActualWidth - change) > container.ActualWidth)
-                change = itemsPresenter.Margin.Left + ActualWidth - container.ActualWidth;
 
             if (!Tips.AreEqual(0.0, change))
-                Width = ActualWidth - change;
-        }
-        private void OnResizeTop(double verticalChange, FrameworkElement itemsPresenter)
-        {
-            if (itemsPresenter != null)
             {
+                Width = ActualWidth - change;
+                Margin = new Thickness(Margin.Left + change, Margin.Top, 0, 0);
+            }
+        }
+        private void OnResizeTop(double verticalChange)
+        {
                 var change = Math.Min(verticalChange, ActualHeight - MinHeight);
-                if (itemsPresenter.Margin.Top + change < 0)
-                    change = -itemsPresenter.Margin.Top;
+                if (Margin.Top + change < 0)
+                    change = -Margin.Top;
                 if ((Height - change) > MaxHeight)
                     change = Height - MaxHeight;
 
                 if (!Tips.AreEqual(0.0, change))
                 {
                     Height = ActualHeight - change;
-                    itemsPresenter.Margin = new Thickness(itemsPresenter.Margin.Left, itemsPresenter.Margin.Top + change, 0, 0);
+                    Margin = new Thickness(Margin.Left, Margin.Top + change, 0, 0);
                 }
-            }
         }
-        private void OnResizeRight(double horizontalChange, FrameworkElement itemsPresenter)
+        private void OnResizeRight(double horizontalChange)
         {
-            var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
             var change = Math.Min(-horizontalChange, ActualWidth - MinWidth);
 
             if ((ActualWidth - change) > MaxWidth)
                 change = ActualWidth - MaxWidth;
-            if (container != null && (itemsPresenter.Margin.Left + ActualWidth - change) > container.ActualWidth)
-                change = itemsPresenter.Margin.Left + ActualWidth - container.ActualWidth;
+            if ((Margin.Left + ActualWidth - change) > HostPanel.ActualWidth)
+                change = Margin.Left + ActualWidth - HostPanel.ActualWidth;
 
             if (!Tips.AreEqual(0.0, change))
                 Width = ActualWidth - change;
         }
-        private void OnResizeBottom(double verticalChange, FrameworkElement itemsPresenter)
+        private void OnResizeBottom(double verticalChange)
         {
-            var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
             var change = Math.Min(-verticalChange, ActualHeight - MinHeight);
 
             if ((ActualHeight - change) > MaxHeight)
                 change = ActualHeight - MaxHeight;
-            if (container != null && (itemsPresenter.Margin.Top + ActualHeight - change) > container.ActualHeight)
-                change = itemsPresenter.Margin.Top + ActualHeight - container.ActualHeight;
+            if ((Margin.Top + ActualHeight - change) > HostPanel.ActualHeight)
+                change = Margin.Top + ActualHeight - HostPanel.ActualHeight;
 
             if (!Tips.AreEqual(0.0, change))
                 Height = ActualHeight - change;
