@@ -32,10 +32,38 @@ namespace WpfInvestigate.Controls
             {
                 thumb.DragStarted += Thumb_OnDragStarted;
                 if (thumb.Name == "PART_HeaderMover")
+                {
                     thumb.DragDelta += MoveThumb_OnDragDelta;
+                    thumb.PreviewMouseDoubleClick += ThumbOnPreviewMouseDoubleClick;
+                }
                 else
                     thumb.DragDelta += ResizeThumb_OnDragDelta;
             }
+
+            var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
+            if (sv != null) sv.ScrollChanged += ScrollViewer_OnScrollChanged;
+        }
+
+        private void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            var sv = (ScrollViewer)sender;
+            // If unnecessary scrollbars are visible -> remove them
+            if (sv.ScrollableWidth > 0 && sv.ExtentWidth <= sv.ActualWidth)
+            {
+                sv.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                sv.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            }
+            if (sv.ScrollableHeight > 0 && sv.ExtentHeight <= sv.ActualHeight)
+            {
+                sv.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                sv.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            }
+        }
+
+        private void ThumbOnPreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
+            // throw new NotImplementedException();
         }
 
         #region ==========  Focus  ============
@@ -93,7 +121,15 @@ namespace WpfInvestigate.Controls
             }
 
             e.Handled = true;
-            BringIntoView();
+            var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
+            if (sv != null)
+            {
+                // Smooth scrolling
+                if (Math.Abs(e.HorizontalChange) > Tips.SCREEN_TOLERANCE && (newX + ActualWidth) > sv.ActualWidth)
+                    sv.ScrollToHorizontalOffset(Math.Max(0, sv.HorizontalOffset + e.HorizontalChange * 0.5));
+                if (Math.Abs(e.VerticalChange) > Tips.SCREEN_TOLERANCE && (newY + ActualHeight) > sv.ActualHeight)
+                    sv.ScrollToVerticalOffset(Math.Max(0, sv.VerticalOffset + e.VerticalChange * 0.5));
+            }
         }
 
         private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
