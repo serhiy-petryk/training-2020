@@ -37,9 +37,8 @@
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
-        <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{x:Null}"/>
         <Setter Property="FocusButtonStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
-        <Setter Property="Effect" Value="{StaticResource StrongShadowEffect}"/>
+        <Setter Property="Effect" Value="{StaticResource ShadowEffect}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MessageBlock">
