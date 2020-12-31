@@ -93,6 +93,7 @@ namespace WpfInvestigate.Controls
             }
 
             e.Handled = true;
+            BringIntoView();
         }
 
         private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
@@ -112,6 +113,7 @@ namespace WpfInvestigate.Controls
                 OnResizeBottom(e.VerticalChange);
 
             e.Handled = true;
+            BringIntoView();
         }
 
         private void OnResizeLeft(double horizontalChange)
