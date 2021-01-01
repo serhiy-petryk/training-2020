@@ -25,6 +25,7 @@
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="DragThumb" Value="{Binding ElementName=PART_HeaderMover}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ResizableControl">
@@ -37,11 +38,12 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Height="18" Padding="5 0 0 0" Background="GreenYellow" Text="Header"/>
-                            <Thumb x:Name="PART_HeaderMover" Grid.Row="0" Opacity="{StaticResource TransparentOpacity}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                            <Thumb x:Name="PART_HeaderMover" Grid.Row="0" Opacity="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                            <TextBlock Grid.Row="0" Height="18" Padding="5 0 0 0" Background="GreenYellow" Text="Header" IsHitTestVisible="False"/>
 
                             <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
+                        <!--<ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>-->
 
 <!--<Border Margin="0" BorderThickness="2" CornerRadius="1" BorderBrush="Black" Effect="{StaticResource ShadowEffect}"/>-->
                         <!--<Border BorderThickness="2" CornerRadius="1" Padding="0"
