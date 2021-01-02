@@ -64,11 +64,14 @@
     </Compile>
     <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\Tips.cs" />
+    <Compile Include="Controls\ResizingAdorner.cs" />
     <Compile Include="Controls\AdornerControl.cs" />
     <Compile Include="Controls\ItemsPanel.cs" />
+    <Compile Include="Controls\ResizingAdornerControl.cs" />
     <Compile Include="Controls\SampleDialogMovable.xaml.cs">
       <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Effects\ResizeEffect.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -80,6 +83,14 @@
     <Page Include="MainWindowItemsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ResizingAdornerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

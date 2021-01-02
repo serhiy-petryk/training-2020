@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Input;
 using WpfInvestigate.Samples;
 
 namespace Movable
@@ -53,6 +55,12 @@ namespace Movable
         {
             var a1 = new SampleDialogMovable();
             ScrollViewerCanvas.Children.Add(a1);
+        }
+
+        private void UIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var a1 = sender as FrameworkElement;
+            var layer = AdornerLayer.GetAdornerLayer(a1);
         }
     }
 }
