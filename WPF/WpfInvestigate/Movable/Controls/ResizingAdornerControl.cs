@@ -12,17 +12,36 @@ namespace Movable.Controls
 {
     public class ResizingAdornerControl : UserControl
     {
+        public const string MovingThumbName = "MovingThumb";
+        public bool LimitPositionToPanelBounds => ResizeEffect.GetLimitPositionToPanelBounds(_adornedElement);
+
         private static int Unique = 1;
         private FrameworkElement _adornedElement;
         private FrameworkElement Host => VisualTreeHelper.GetParent(_adornedElement) as FrameworkElement;
         private Panel HostPanel => Tips.GetVisualParents(_adornedElement).OfType<Panel>().FirstOrDefault();
-        public bool LimitPositionToPanelBounds => ResizeEffect.GetLimitPositionToPanelBounds(_adornedElement);
 
         public ResizingAdornerControl(FrameworkElement adornedElement)
         {
             _adornedElement = adornedElement;
             DataContext = this;
 
+            //==================
+            var a1 = ResizeEffect.GetMovingThumb(_adornedElement);
+            //==================
+            if (_adornedElement.IsLoaded)
+                NewContent_OnLoaded(_adornedElement, null);
+            else
+                _adornedElement.Loaded += NewContent_OnLoaded;
+
+            void NewContent_OnLoaded(object sender, RoutedEventArgs args)
+            {
+                _adornedElement.Loaded -= NewContent_OnLoaded;
+                var thumb = Tips.GetVisualChildren(_adornedElement).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
+                if (thumb != null)
+                    thumb.DragDelta += MoveThumb_OnDragDelta;
+            }
+
+            //===================
             /*var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             if (currentWindow != null)
                 MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);*/

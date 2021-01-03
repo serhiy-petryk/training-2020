@@ -50,6 +50,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\SampleResizingContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\SampleDialogMovable.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,6 +72,9 @@
     <Compile Include="Controls\AdornerControl.cs" />
     <Compile Include="Controls\ItemsPanel.cs" />
     <Compile Include="Controls\ResizingAdornerControl.cs" />
+    <Compile Include="Controls\SampleResizingContent.xaml.cs">
+      <DependentUpon>SampleResizingContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SampleDialogMovable.xaml.cs">
       <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
     </Compile>

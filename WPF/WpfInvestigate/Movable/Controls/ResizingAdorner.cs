@@ -5,7 +5,6 @@ using System;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using WpfInvestigate.Samples;
 
 namespace Movable.Controls
 {

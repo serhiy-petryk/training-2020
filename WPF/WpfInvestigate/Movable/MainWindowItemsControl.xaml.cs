@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-using WpfInvestigate.Samples;
+using Movable.Controls;
 
 namespace Movable
 {

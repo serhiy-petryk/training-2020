@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:samples="clr-namespace:WpfInvestigate.Samples"
         xmlns:effects="clr-namespace:Movable.Effects"
+        xmlns:controls="clr-namespace:Movable.Controls"
+        xmlns:common="clr-namespace:Movable.Common"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1100">
 
@@ -61,6 +62,7 @@
                         <Button Content="Add to ItemsControl/Canvas" Click="AddChildToItemsControlCanvas_OnClick"/>
                         <Button Content="Add to ScrollViewer/Grid" Click="AddChildToScrollViewerGrid_OnClick"/>
                         <Button Content="Add to ScrollViewer/Canvas" Click="AddChildToScrollViewerCanvas_OnClick"/>
+                        <Button Content="Add to Scroll/Grid/adorner" Click="AddChildToScrollGridAdorner_OnClick"/>
                     </WrapPanel>
                 </StackPanel>
 
@@ -73,7 +75,7 @@
                     <TextBlock Text="Grid"/>
                     <Grid x:Name="Grid" Margin="5" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                           Height="{StaticResource PanelHeight}">
-                        <samples:SampleDialogMovable/>
+                        <controls:SampleDialogMovable/>
                     </Grid>
                 </StackPanel>
 
@@ -108,7 +110,7 @@
                     <TextBlock Text="ScrollViewer+Grid"/>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="200" Width="250">
                         <Grid x:Name="ScrollViewerGrid" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <samples:SampleDialogMovable/>
+                            <controls:SampleDialogMovable/>
                         </Grid>
                     </ScrollViewer>
                 </StackPanel>
@@ -116,14 +118,16 @@
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <TextBlock Text="ScrollViewer+Grid+Adorner"/>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="200" Width="250" Background="Orange">
-                        <Grid Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Rectangle Width="100" Height="100" Fill="GreenYellow" Margin="10 20 0 0"
+                        <Grid x:Name="ScrollGridAdornerPanel" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Thumb x:Name="MovingThumbName" Width="100" Height="100" Background="GreenYellow" BorderThickness="0" Margin="10 20 0 0"
                                        HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Focusable="True"
+                                       effects:ResizeEffect.MovingThumb="{Binding RelativeSource={RelativeSource Self}}"
                                        effects:ResizeEffect.EdgeThickness="6"
                                        effects:ResizeEffect.LimitPositionToPanelBounds="True"
                                        Effect="{StaticResource ShadowEffect}"
                                        PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+
                             <Rectangle Width="100" Height="100" Fill="Violet" Margin="60 70 0 0"
                                        HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Focusable="True"
@@ -141,8 +145,8 @@
                             <Rectangle Width="100" Height="100" Fill="GreenYellow"
                                        HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Focusable="True"
-                                       effects:ResizeEffect.LimitPositionToPanelBounds="True"
                                        effects:ResizeEffect.EdgeThickness="6"
+                                       effects:ResizeEffect.LimitPositionToPanelBounds="True"
                                        Effect="{StaticResource ShadowEffect}"
                                        PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
                             <Rectangle Width="100" Height="100" Fill="Violet" Margin="60 70 0 0"

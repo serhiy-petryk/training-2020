@@ -1,7 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
-using WpfInvestigate.Samples;
+using Movable.Controls;
+using Movable.Effects;
 
 namespace Movable
 {
@@ -61,6 +62,13 @@ namespace Movable
         {
             var a1 = sender as FrameworkElement;
             var layer = AdornerLayer.GetAdornerLayer(a1);
+        }
+
+        private void AddChildToScrollGridAdorner_OnClick(object sender, RoutedEventArgs e)
+        {
+            var a1 = new SampleResizingContent();
+            ScrollGridAdornerPanel.Children.Add(a1);
+            ResizeEffect.SetEdgeThickness(a1, new Thickness(6));
         }
     }
 }

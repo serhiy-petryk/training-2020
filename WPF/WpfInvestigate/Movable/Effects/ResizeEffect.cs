@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using Movable.Controls;
 
@@ -68,6 +69,22 @@ namespace Movable.Effects
                 layer.Add(adornerControl);
             }
 
+        }
+        // ==========================
+        public static readonly DependencyProperty MovingThumbProperty = DependencyProperty.RegisterAttached(
+            "MovingThumb", typeof(Thumb), typeof(ResizeEffect), new PropertyMetadata(null, OnMovingThumbChanged));
+        public static Thumb GetMovingThumb(DependencyObject obj) => (Thumb)obj.GetValue(MovingThumbProperty);
+        public static void SetMovingThumb(DependencyObject obj, Thumb value) => obj.SetValue(MovingThumbProperty, value);
+
+        private static void OnMovingThumbChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is FrameworkElement element)
+            {
+                /*if (e.OldValue is Thumb oldThumb)
+                    oldThumb.DragDelta -= control.MoveThumb_OnDragDelta;
+                if (e.NewValue is Thumb newThumb)
+                    newThumb.DragDelta += control.MoveThumb_OnDragDelta;*/
+            }
         }
 
     }

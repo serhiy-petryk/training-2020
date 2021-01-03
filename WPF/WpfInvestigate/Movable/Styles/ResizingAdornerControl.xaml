@@ -11,7 +11,7 @@
         <Style.Resources>
             <DropShadowEffect x:Key="ShadowEffect" BlurRadius="5" ShadowDepth="2" Direction="315" />
             <Style x:Key="ResizeThumb" TargetType="Thumb">
-                <Setter Property="Opacity" Value="0.3"/>
+                <Setter Property="Opacity" Value="0"/>
                 <Setter Property="Focusable" Value="False"/>
             </Style>
         </Style.Resources>
@@ -31,7 +31,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ResizingAdornerControl">
                     <Grid>
-                        <Thumb x:Name="PART_HeaderMover" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Bisque"/>
+                        <!--<Thumb x:Name="PART_HeaderMover" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Bisque"/>-->
                         <!--<AdornedElementPlaceholder>
                             <Border BorderBrush="Red" BorderThickness="1" />
                         </AdornedElementPlaceholder>-->

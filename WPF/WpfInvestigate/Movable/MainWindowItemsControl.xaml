@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:Movable"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:common="clr-namespace:Movable.Common"
-        xmlns:samples="clr-namespace:WpfInvestigate.Samples"
         mc:Ignorable="d"
         Title="MainWindowItemsControl" Height="800" Width="1100"
         x:Name="Root">
