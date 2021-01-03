@@ -64,22 +64,13 @@ namespace Movable.Controls
         }
 
         #region ==========  Focus  ============
-        /*protected override void OnGotFocus(RoutedEventArgs e)
-        {
-            base.OnGotFocus(e);
-            Debug.Print($"ZIndex: {Unique}");
-            Panel.SetZIndex(_adornedElement, Unique++);
-        }*/
-
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonDown(e);
             if (_adornedElement.Focusable)
             {
                 _adornedElement.Focus();
-                Panel.SetZIndex(_adornedElement, Unique++);
-                Panel.SetZIndex(_adornedElement.Parent as UIElement, Unique++);
-                Panel.SetZIndex(this, Unique++);
+                Panel.SetZIndex(Host is Panel ? _adornedElement : Host, Unique++);
             }
         }
         #endregion
