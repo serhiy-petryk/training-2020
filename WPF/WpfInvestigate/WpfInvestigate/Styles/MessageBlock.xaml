@@ -22,7 +22,7 @@
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
-                <Setter Property="Opacity" Value="{StaticResource TransparentOpacity}"/>
+                <Setter Property="Opacity" Value="0"/>
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="IsTabStop" Value="False"/>
             </Style>

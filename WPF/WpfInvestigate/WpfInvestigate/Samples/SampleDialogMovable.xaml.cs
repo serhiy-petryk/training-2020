@@ -41,7 +41,7 @@ namespace WpfInvestigate.Samples
 
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            /*var itemsPresenter = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
+            var itemsPresenter = Tips.GetVisualParents(this).OfType<ItemsPresenter>().FirstOrDefault();
             var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
             if (itemsPresenter != null && container != null)
             {
@@ -57,55 +57,7 @@ namespace WpfInvestigate.Samples
 
                 itemsPresenter.Margin = new Thickness {Left = newX, Top = newY};
             }
-            e.Handled = true;*/
-            if (HostPanel is Grid)
-                GridMoveThumb_OnDragDelta(sender, e);
-            else if (HostPanel is Canvas)
-                CanvasMoveThumb_OnDragDelta(sender, e);
-        }
-
-        private void GridMoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
-        {
-            var grid = HostPanel as Grid;
-            if (grid != null)
-            {
-                var newX = Margin.Left + e.HorizontalChange;
-                //if (newX + ActualWidth > HostPanel.ActualWidth)
-                //  newX = HostPanel.ActualWidth - ActualWidth;
-                //if (newX < 0) newX = 0;
-
-                var newY = Margin.Top + e.VerticalChange;
-                //if (newY + ActualHeight > HostPanel.ActualHeight)
-                //  newY = HostPanel.ActualHeight - ActualHeight;
-                // if (newY < 0) newY = 0;
-
-                Margin = new Thickness { Left = newX, Top = newY };
-                e.Handled = true;
-            }
-        }
-
-        private void CanvasMoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
-        {
-            var canvas = HostPanel as Canvas;
-            if (canvas != null)
-            {
-                // var newX = Canvas.GetLeft(this) + e.HorizontalChange; // GetLeft/Top may be NaN
-                var p = TranslatePoint(new Point(0, 0), canvas);
-                var newX = p.X + e.HorizontalChange;
-                //if (newX + ActualWidth > HostPanel.ActualWidth)
-                //  newX = HostPanel.ActualWidth - ActualWidth;
-                //if (newX < 0) newX = 0;
-
-                // var newY = Canvas.GetTop(this) + e.VerticalChange;
-                var newY = p.Y + e.VerticalChange;
-                //if (newY + ActualHeight > HostPanel.ActualHeight)
-                //  newY = HostPanel.ActualHeight - ActualHeight;
-                //if (newY < 0) newY = 0;
-
-                Canvas.SetLeft(this, newX);
-                Canvas.SetTop(this, newY);
-                e.Handled = true;
-            }
+            e.Handled = true;
         }
 
         private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
