@@ -116,7 +116,7 @@
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <TextBlock Text="ScrollViewer+Grid+Adorner"/>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="200" Width="250" Background="Orange">
-                        <Grid x:Name="xScrollViewerGrid" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Rectangle Width="100" Height="100" Fill="GreenYellow" Margin="10 20 0 0"
                                        HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Focusable="True"
@@ -130,6 +130,26 @@
                                        Effect="{StaticResource ShadowEffect}"
                                        PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
                         </Grid>
+                    </ScrollViewer>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <TextBlock Text="ScrollViewer+Canvas+Adorner"/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="200" Width="250" Background="Orange">
+                        <Canvas Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
+                            <Rectangle Width="100" Height="100" Fill="GreenYellow"
+                                       HorizontalAlignment="Left" VerticalAlignment="Top"
+                                       Focusable="True"
+                                       effects:ResizeEffect.EdgeThickness="6"
+                                       Effect="{StaticResource ShadowEffect}"
+                                       PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                            <Rectangle Width="100" Height="100" Fill="Violet" Margin="60 70 0 0"
+                                       HorizontalAlignment="Left" VerticalAlignment="Top"
+                                       Focusable="True"
+                                       effects:ResizeEffect.EdgeThickness="6"
+                                       Effect="{StaticResource ShadowEffect}"
+                                       PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                        </Canvas>
                     </ScrollViewer>
                 </StackPanel>
 

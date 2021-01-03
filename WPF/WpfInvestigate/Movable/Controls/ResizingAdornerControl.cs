@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using Movable.Common;
 
 namespace Movable.Controls
@@ -13,15 +14,8 @@ namespace Movable.Controls
     {
         private static int Unique = 1;
         private FrameworkElement _adornedElement;
-        // private Panel HostPanel => VisualTreeHelper.GetParent(_adornedElement) as Panel;
-        private Panel HostPanel => (_adornedElement.Parent as FrameworkElement)?.Parent as Panel;
+        private FrameworkElement Host => VisualTreeHelper.GetParent(_adornedElement) as FrameworkElement;
         public bool LimitPositionToPanelBounds { get; set; } = false;
-
-        /*public ResizingAdornerControl()
-        {
-            InitializeComponent();
-            DataContext = this;
-        }*/
 
         public ResizingAdornerControl(FrameworkElement adornedElement)
         {
@@ -49,7 +43,7 @@ namespace Movable.Controls
                     thumb.DragDelta += ResizeThumb_OnDragDelta;
             }
 
-            var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
+            var sv = Tips.GetVisualParents(Host).OfType<ScrollViewer>().FirstOrDefault();
             if (sv != null) sv.ScrollChanged += ScrollViewer_OnScrollChanged;
         }
 
@@ -70,12 +64,12 @@ namespace Movable.Controls
         }
 
         #region ==========  Focus  ============
-        protected override void OnGotFocus(RoutedEventArgs e)
+        /*protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
             Debug.Print($"ZIndex: {Unique}");
             Panel.SetZIndex(_adornedElement, Unique++);
-        }
+        }*/
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
@@ -100,37 +94,37 @@ namespace Movable.Controls
 
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var mousePosition = Mouse.GetPosition(HostPanel);
+            var mousePosition = Mouse.GetPosition(Host);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
-            var oldPosition = _adornedElement.TranslatePoint(new Point(0, 0), HostPanel);
+            var oldPosition = _adornedElement.TranslatePoint(new Point(0, 0), Host);
             var newX = oldPosition.X + e.HorizontalChange;
 
             if (LimitPositionToPanelBounds)
             {
-                if (newX + _adornedElement.ActualWidth > HostPanel.ActualWidth)
-                    newX = HostPanel.ActualWidth - _adornedElement.ActualWidth;
+                if (newX + _adornedElement.ActualWidth > Host.ActualWidth)
+                    newX = Host.ActualWidth - _adornedElement.ActualWidth;
                 if (newX < 0) newX = 0;
             }
 
             var newY = oldPosition.Y + e.VerticalChange;
             if (LimitPositionToPanelBounds)
             {
-                if (newY + _adornedElement.ActualHeight > HostPanel.ActualHeight)
-                    newY = HostPanel.ActualHeight - _adornedElement.ActualHeight;
+                if (newY + _adornedElement.ActualHeight > Host.ActualHeight)
+                    newY = Host.ActualHeight - _adornedElement.ActualHeight;
                 if (newY < 0) newY = 0;
             }
 
-            if (HostPanel is Grid)
-                _adornedElement.Margin = new Thickness { Left = newX, Top = newY };
-            else
+            if (Host is Canvas)
             {
                 if (!Tips.AreEqual(oldPosition.X, newX)) Canvas.SetLeft(_adornedElement, newX);
                 if (!Tips.AreEqual(oldPosition.Y, newY)) Canvas.SetTop(_adornedElement, newY);
             }
+            else
+                _adornedElement.Margin = new Thickness { Left = newX, Top = newY };
 
             e.Handled = true;
-            var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
+            var sv = Tips.GetVisualParents(Host).OfType<ScrollViewer>().FirstOrDefault();
             if (sv != null)
             {
                 // Smooth scrolling
@@ -143,7 +137,7 @@ namespace Movable.Controls
 
         private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var mousePosition = Mouse.GetPosition(HostPanel);
+            var mousePosition = Mouse.GetPosition(Host);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
             var thumb = (Thumb)sender;
@@ -163,7 +157,7 @@ namespace Movable.Controls
 
         private void OnResizeLeft(double horizontalChange)
         {
-            var oldPosition = _adornedElement.TranslatePoint(new Point(0, 0), HostPanel);
+            var oldPosition = _adornedElement.TranslatePoint(new Point(0, 0), Host);
             var change = Math.Min(horizontalChange, _adornedElement.ActualWidth - _adornedElement.MinWidth);
 
             if (LimitPositionToPanelBounds)
@@ -177,15 +171,15 @@ namespace Movable.Controls
             if (!Tips.AreEqual(0.0, change))
             {
                 _adornedElement.Width = _adornedElement.ActualWidth - change;
-                if (HostPanel is Grid)
-                    _adornedElement.Margin = new Thickness(oldPosition.X + change, oldPosition.Y, 0, 0);
-                else
+                if (Host is Canvas)
                     Canvas.SetLeft(_adornedElement, oldPosition.X + change);
+                else
+                    _adornedElement.Margin = new Thickness(oldPosition.X + change, oldPosition.Y, 0, 0);
             }
         }
         private void OnResizeTop(double verticalChange)
         {
-            var oldPosition = _adornedElement.TranslatePoint(new Point(0, 0), HostPanel);
+            var oldPosition = _adornedElement.TranslatePoint(new Point(0, 0), Host);
             var change = Math.Min(verticalChange, _adornedElement.ActualHeight - _adornedElement.MinHeight);
 
             if (LimitPositionToPanelBounds)
@@ -199,10 +193,10 @@ namespace Movable.Controls
             if (!Tips.AreEqual(0.0, change))
             {
                 _adornedElement.Height = _adornedElement.ActualHeight - change;
-                if (HostPanel is Grid)
-                    _adornedElement.Margin = new Thickness(oldPosition.X, oldPosition.Y + change, 0, 0);
-                else
+                if (Host is Canvas)
                     Canvas.SetTop(_adornedElement, oldPosition.Y + change);
+                else
+                    _adornedElement.Margin = new Thickness(oldPosition.X, oldPosition.Y + change, 0, 0);
             }
         }
         private void OnResizeRight(double horizontalChange)
@@ -211,11 +205,11 @@ namespace Movable.Controls
 
             if (LimitPositionToPanelBounds)
             {
-                var oldPosition = _adornedElement.TranslatePoint(new Point(0, 0), HostPanel);
+                var oldPosition = _adornedElement.TranslatePoint(new Point(0, 0), Host);
                 if ((_adornedElement.ActualWidth - change) > _adornedElement.MaxWidth)
                     change = _adornedElement.ActualWidth - _adornedElement.MaxWidth;
-                if ((oldPosition.X + _adornedElement.ActualWidth - change) > HostPanel.ActualWidth)
-                    change = oldPosition.X + _adornedElement.ActualWidth - HostPanel.ActualWidth;
+                if ((oldPosition.X + _adornedElement.ActualWidth - change) > Host.ActualWidth)
+                    change = oldPosition.X + _adornedElement.ActualWidth - Host.ActualWidth;
             }
 
             if (!Tips.AreEqual(0.0, change))
@@ -227,11 +221,11 @@ namespace Movable.Controls
 
             if (LimitPositionToPanelBounds)
             {
-                var oldPosition = _adornedElement.TranslatePoint(new Point(0, 0), HostPanel);
+                var oldPosition = _adornedElement.TranslatePoint(new Point(0, 0), Host);
                 if ((_adornedElement.ActualHeight - change) > _adornedElement.MaxHeight)
                     change = _adornedElement.ActualHeight - _adornedElement.MaxHeight;
-                if ((oldPosition.Y + _adornedElement.ActualHeight - change) > HostPanel.ActualHeight)
-                    change = oldPosition.Y + _adornedElement.ActualHeight - HostPanel.ActualHeight;
+                if ((oldPosition.Y + _adornedElement.ActualHeight - change) > Host.ActualHeight)
+                    change = oldPosition.Y + _adornedElement.ActualHeight - Host.ActualHeight;
             }
 
             if (!Tips.AreEqual(0.0, change))

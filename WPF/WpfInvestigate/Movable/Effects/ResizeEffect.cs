@@ -37,23 +37,24 @@ namespace Movable.Effects
             {
                 if (element.Parent is Grid grid)
                 {
+                    var row = Grid.GetRow(element);
+                    var column = Grid.GetColumn(element);
                     grid.Children.Remove(element);
-                    var decorator = new AdornerDecorator(){Child = element};
-                    // Grid.SetRow(decorator, 0);
-                    // Grid.SetColumn(decorator, 0);
+                    var decorator = new AdornerDecorator {Child = element};
+                    Grid.SetRow(decorator, row);
+                    Grid.SetColumn(decorator, column);
                     grid.Children.Add(decorator);
-                    element = decorator;
                     return;
                 }
 
-                else if (element.Parent is AdornerDecorator decorator)
+                if (element.Parent is Canvas canvas)
                 {
-                    // element = decorator;
+                    canvas.Children.Remove(element);
+                    var decorator = new AdornerDecorator { Child = element };
+                    canvas.Children.Add(decorator);
+                    return;
                 }
-                else
-                    {
-                    //return;
-                }
+
                 var control = new ResizingAdornerControl(element)
                 {
                     Name = "ResizeControl",
