@@ -6,7 +6,7 @@
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="controls:ResizableControl">
+    <Style TargetType="controls:ResizingControl">
         <Style.Resources>
             <Style x:Key="ResizeThumb" TargetType="Thumb">
                 <Setter Property="Opacity" Value="0"/>
@@ -25,7 +25,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="controls:ResizableControl">
+                <ControlTemplate TargetType="controls:ResizingControl">
                     <Grid>
                         <Grid Effect="{StaticResource ShadowEffect}" Background="#FFFFFFFF" Margin="7"/>
                         <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="7"/>

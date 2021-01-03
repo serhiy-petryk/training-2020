@@ -82,7 +82,7 @@
     <Compile Include="Controls\DialogItems.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.cs" />
     <Compile Include="Controls\PopupResizeControl.cs" />
-    <Compile Include="Controls\ResizableControl.cs" />
+    <Compile Include="Controls\ResizingControl.cs" />
     <Compile Include="Controls\MessageBlock.cs" />
     <Compile Include="Controls\NumericBox.cs" />
     <Compile Include="Controls\ObjectEditor.cs" />
@@ -146,8 +146,8 @@
     <Compile Include="TestViews\FocusEffectTests.xaml.cs">
       <DependentUpon>FocusEffectTests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\ResizableControlTests.xaml.cs">
-      <DependentUpon>ResizableControlTests.xaml</DependentUpon>
+    <Compile Include="TestViews\ResizingControlTests.xaml.cs">
+      <DependentUpon>ResizingControlTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\TextBoxTests.xaml.cs">
       <DependentUpon>TextBoxTests.xaml</DependentUpon>
@@ -299,7 +299,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\ResizableControl.xaml">
+    <Page Include="Styles\ResizingControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -339,7 +339,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestViews\ResizableControlTests.xaml">
+    <Page Include="TestViews\ResizingControlTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

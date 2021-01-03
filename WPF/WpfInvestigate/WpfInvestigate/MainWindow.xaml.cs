@@ -77,7 +77,7 @@ namespace WpfInvestigate
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
         private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
         private void DialogItemsTests_OnClick(object sender, RoutedEventArgs e) => new DialogTests().Show();
-        private void ResizableControlTests_OnClick(object sender, RoutedEventArgs e) => new ResizableControlTests().Show();
+        private void ResizingControlTests_OnClick(object sender, RoutedEventArgs e) => new ResizingControlTests().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {

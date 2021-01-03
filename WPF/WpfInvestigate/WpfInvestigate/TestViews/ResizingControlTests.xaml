@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfInvestigate.TestViews.ResizableControlTests"
+﻿<Window x:Class="WpfInvestigate.TestViews.ResizingControlTests"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:samples="clr-namespace:WpfInvestigate.Samples"
         mc:Ignorable="d"
-        Title="ResizableControl" Height="700" Width="1100">
+        Title="ResizingControl" Height="700" Width="1100">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,15 +38,15 @@
                     <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
                 </Grid.LayoutTransform>
 
-                <controls:ResizableControl Width="200" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <controls:ResizingControl Width="200" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <samples:ResizableContentSample/>
-                </controls:ResizableControl>
+                </controls:ResizingControl>
                 
-                <controls:ResizableControl Margin="0 300 0 0" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
+                <controls:ResizingControl Margin="0 300 0 0" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
                                            ToolTip="LimitPositionToPanelBounds=True"
                                            DragThumb="{Binding ElementName=Test2, Path=DragThumb}">
                     <samples:ResizableContentPropertySample x:Name="Test2"/>
-                </controls:ResizableControl>
+                </controls:ResizingControl>
             </Grid>
         </ScrollViewer>
 
@@ -55,8 +55,8 @@
                 <Canvas.LayoutTransform>
                     <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
                 </Canvas.LayoutTransform>
-                <controls:ResizableControl Canvas.Left="100" Canvas.Top="100" Width="100" Height="100" Content="BBB" Background="Yellow"/>
-                <controls:ResizableControl Canvas.Left="100" Canvas.Top="300" Width="100" Height="100" Content="Limited" Background="Yellow"
+                <controls:ResizingControl Canvas.Left="100" Canvas.Top="100" Width="100" Height="100" Content="BBB" Background="Yellow"/>
+                <controls:ResizingControl Canvas.Left="100" Canvas.Top="300" Width="100" Height="100" Content="Limited" Background="Yellow"
                                            LimitPositionToPanelBounds="True"/>
             </Canvas>
         </ScrollViewer>

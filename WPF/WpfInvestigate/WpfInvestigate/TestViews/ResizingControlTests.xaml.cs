@@ -5,17 +5,17 @@ using WpfInvestigate.Samples;
 namespace WpfInvestigate.TestViews
 {
     /// <summary>
-    /// Interaction logic for ResizableControl.xaml
+    /// Interaction logic for ResizingControl.xaml
     /// </summary>
-    public partial class ResizableControlTests : Window
+    public partial class ResizingControlTests : Window
     {
-        public ResizableControlTests()
+        public ResizingControlTests()
         {
             InitializeComponent();
 
-            var resizableControl = new ResizableControl
+            var resizingControl = new ResizingControl
                 {Content = new ResizableContentTemplateSample(), Margin = new Thickness(200, 100, 0, 0)};
-            GridPanel.Children.Add(resizableControl);
+            GridPanel.Children.Add(resizingControl);
         }
     }
 }

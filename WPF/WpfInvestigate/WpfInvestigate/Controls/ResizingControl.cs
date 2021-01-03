@@ -9,7 +9,7 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    public class ResizableControl : ContentControl
+    public class ResizingControl : ContentControl
     {
         public const string MovingThumbName = "MovingThumb";
         public bool LimitPositionToPanelBounds { get; set; } = false;
@@ -17,7 +17,7 @@ namespace WpfInvestigate.Controls
         private static int Unique = 1;
         private Panel HostPanel => VisualTreeHelper.GetParent(this) as Panel;
 
-        public ResizableControl()
+        public ResizingControl()
         {
             DataContext = this;
             var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -249,7 +249,7 @@ namespace WpfInvestigate.Controls
 
         #region ==========  Properties  ===============
         public static readonly DependencyProperty DragThumbProperty =
-            DependencyProperty.Register("DragThumb", typeof(Thumb), typeof(ResizableControl), new PropertyMetadata(null, OnDragThumbChanged));
+            DependencyProperty.Register("DragThumb", typeof(Thumb), typeof(ResizingControl), new PropertyMetadata(null, OnDragThumbChanged));
 
         public Thumb DragThumb
         {
@@ -259,7 +259,7 @@ namespace WpfInvestigate.Controls
 
         private static void OnDragThumbChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ResizableControl control)
+            if (d is ResizingControl control)
             {
                 if (e.OldValue is Thumb oldThumb)
                     oldThumb.DragDelta -= control.MoveThumb_OnDragDelta;
