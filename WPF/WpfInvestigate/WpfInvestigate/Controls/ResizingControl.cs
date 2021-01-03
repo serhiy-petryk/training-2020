@@ -250,7 +250,6 @@ namespace WpfInvestigate.Controls
         #region ==========  Properties  ===============
         public static readonly DependencyProperty DragThumbProperty =
             DependencyProperty.Register("DragThumb", typeof(Thumb), typeof(ResizingControl), new PropertyMetadata(null, OnDragThumbChanged));
-
         public Thumb DragThumb
         {
             get => (Thumb)GetValue(DragThumbProperty);
@@ -267,6 +266,20 @@ namespace WpfInvestigate.Controls
                     newThumb.DragDelta += control.MoveThumb_OnDragDelta;
             }
         }
+        //=========================
+        public static readonly DependencyProperty EdgeThicknessProperty =
+            DependencyProperty.Register("EdgeThickness", typeof(Thickness), typeof(ResizingControl), new PropertyMetadata(new Thickness(6), OnEdgeThicknessChanged));
+
+        public Thickness EdgeThickness
+        {
+            get => (Thickness)GetValue(EdgeThicknessProperty);
+            set => SetValue(EdgeThicknessProperty, value);
+        }
+        private static void OnEdgeThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            // throw new NotImplementedException();
+        }
+
         #endregion
 
     }
