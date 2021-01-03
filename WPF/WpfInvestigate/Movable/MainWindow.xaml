@@ -118,7 +118,17 @@
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <TextBlock Text="ScrollViewer+Grid+Adorner"/>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="200" Width="250" Background="Orange">
-                        <Grid x:Name="ScrollGridAdornerPanel" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid x:Name="ScrollGridAdornerPanel" Background="Orange" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Grid Width="100" Height="100" Background="Green" Margin="100 20 0 0"
+                                  Focusable="True"
+                                  effects:ResizeEffect.EdgeThickness="6"
+                                  effects:ResizeEffect.LimitPositionToPanelBounds="True">
+                                <Rectangle Fill="Yellow" Margin="7"
+                                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                           Effect="{StaticResource ShadowEffect}"
+                                           PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                            </Grid>
+
                             <Rectangle x:Name="MovingThumbName" Width="100" Height="100" Fill="GreenYellow" Margin="10 20 0 0"
                                        HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Focusable="True"
