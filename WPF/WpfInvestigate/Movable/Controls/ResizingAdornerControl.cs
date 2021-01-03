@@ -15,6 +15,7 @@ namespace Movable.Controls
         private static int Unique = 1;
         private FrameworkElement _adornedElement;
         private FrameworkElement Host => VisualTreeHelper.GetParent(_adornedElement) as FrameworkElement;
+        private Panel HostPanel => Tips.GetVisualParents(_adornedElement).OfType<Panel>().FirstOrDefault();
         public bool LimitPositionToPanelBounds => ResizeEffect.GetLimitPositionToPanelBounds(_adornedElement);
 
         public ResizingAdornerControl(FrameworkElement adornedElement)
@@ -93,16 +94,16 @@ namespace Movable.Controls
 
             if (LimitPositionToPanelBounds)
             {
-                if (newX + _adornedElement.ActualWidth > Host.ActualWidth)
-                    newX = Host.ActualWidth - _adornedElement.ActualWidth;
+                if (newX + _adornedElement.ActualWidth > HostPanel.ActualWidth)
+                    newX = HostPanel.ActualWidth - _adornedElement.ActualWidth;
                 if (newX < 0) newX = 0;
             }
 
             var newY = oldPosition.Y + e.VerticalChange;
             if (LimitPositionToPanelBounds)
             {
-                if (newY + _adornedElement.ActualHeight > Host.ActualHeight)
-                    newY = Host.ActualHeight - _adornedElement.ActualHeight;
+                if (newY + _adornedElement.ActualHeight > HostPanel.ActualHeight)
+                    newY = HostPanel.ActualHeight - _adornedElement.ActualHeight;
                 if (newY < 0) newY = 0;
             }
 
