@@ -128,7 +128,7 @@
     <!-- =================== -->
     <!-- Focus Visual Styles -->
     <!-- =================== -->
-    <Style x:Key="InternalFocusVisualStyle">
+    <Style x:Key="InnerFocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>

@@ -110,7 +110,7 @@
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                         UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                        effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
+                                        effects:FocusVisualEffect.FocusControlStyle="{StaticResource InnerFocusVisualStyle}"
                                         effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"/>
 
                                 <Rectangle Grid.Column="1" Margin="0" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Stretch"
@@ -126,7 +126,7 @@
                                               effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                               effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                                               effects:DoubleIconToggleButtonEffect.Width="9"
-                                              effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
+                                              effects:FocusVisualEffect.FocusControlStyle="{StaticResource InnerFocusVisualStyle}"
                                               effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"/>
                             </Grid>
                         </Border>
@@ -193,7 +193,7 @@
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="Stretch" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                         UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                        effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
+                                        effects:FocusVisualEffect.FocusControlStyle="{StaticResource InnerFocusVisualStyle}"
                                         effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"/>
 
                                 <Rectangle Grid.Column="1" Margin="0" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Stretch"
@@ -210,7 +210,7 @@
                                               effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                               effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                                               effects:DoubleIconToggleButtonEffect.Width="9"
-                                              effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
+                                              effects:FocusVisualEffect.FocusControlStyle="{StaticResource InnerFocusVisualStyle}"
                                               effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"/>
                             </Grid>
                         </Border>

@@ -48,7 +48,7 @@
                              effects:WatermarkEffect.Watermark="Watermark"
                              effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>
                     <DatePicker Margin="5" Focusable="True"
-                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"/>
+                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource InnerFocusVisualStyle}"/>
                     <DatePicker Margin="5" Focusable="True"
                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>
                     <DatePicker Margin="5" Focusable="True"
@@ -80,7 +80,7 @@
                              effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"
                              effects:FocusVisualEffect.AlwaysShowFocus="True"/>
                     <DatePicker Margin="5" Focusable="True"
-                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
+                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource InnerFocusVisualStyle}"
                                 effects:FocusVisualEffect.AlwaysShowFocus="True"/>
                     <DatePicker Margin="5" Focusable="True"
                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"
@@ -122,7 +122,7 @@
                                 effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
                                 effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
                                 effects:FocusVisualEffect.AlwaysShowFocus="True"
-                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource InternalFocusVisualStyle}"
+                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource InnerFocusVisualStyle}"
                                 ToolTip="InternalFocusVisualStyle">
                         <Button.RenderTransform>
                             <RotateTransform CenterX="10" CenterY="20" Angle="10" />

@@ -27,8 +27,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ResizableControl">
                     <Grid>
-                        <Grid Effect="{StaticResource ShadowEffect}" Background="#FFFFFFFF"/>
-                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <Grid Effect="{StaticResource ShadowEffect}" Background="#FFFFFFFF" Margin="7"/>
+                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="7"/>
 
                         <Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
                         <Thumb x:Name="ResizeTop" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
