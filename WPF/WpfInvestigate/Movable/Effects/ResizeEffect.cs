@@ -1,13 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using Movable.Controls;
-using WpfInvestigate.Samples;
 
 namespace Movable.Effects
 {
@@ -40,14 +35,25 @@ namespace Movable.Effects
             var adornerControl = layer.GetAdorners(element)?.OfType<AdornerControl>().FirstOrDefault(a => a.Child.Name == "ResizeControl");
             if (adornerControl == null)
             {
-                /*if (element.Parent is Grid grid)
+                if (element.Parent is Grid grid)
                 {
                     grid.Children.Remove(element);
                     var decorator = new AdornerDecorator(){Child = element};
-                    Grid.SetRow(decorator, 0);
-                    Grid.SetColumn(decorator, 0);
+                    // Grid.SetRow(decorator, 0);
+                    // Grid.SetColumn(decorator, 0);
                     grid.Children.Add(decorator);
-                }*/
+                    element = decorator;
+                    return;
+                }
+
+                else if (element.Parent is AdornerDecorator decorator)
+                {
+                    // element = decorator;
+                }
+                else
+                    {
+                    //return;
+                }
                 var control = new ResizingAdornerControl(element)
                 {
                     Name = "ResizeControl",

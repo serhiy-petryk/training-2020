@@ -5,16 +5,16 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
 using Movable.Common;
 
 namespace Movable.Controls
 {
-    public partial class ResizingAdornerControl : UserControl
+    public class ResizingAdornerControl : UserControl
     {
-        private static int Unique = 0;
+        private static int Unique = 1;
         private FrameworkElement _adornedElement;
-        private Panel HostPanel => VisualTreeHelper.GetParent(_adornedElement) as Panel;
+        // private Panel HostPanel => VisualTreeHelper.GetParent(_adornedElement) as Panel;
+        private Panel HostPanel => (_adornedElement.Parent as FrameworkElement)?.Parent as Panel;
         public bool LimitPositionToPanelBounds { get; set; } = false;
 
         /*public ResizingAdornerControl()
@@ -84,6 +84,8 @@ namespace Movable.Controls
             {
                 _adornedElement.Focus();
                 Panel.SetZIndex(_adornedElement, Unique++);
+                Panel.SetZIndex(_adornedElement.Parent as UIElement, Unique++);
+                Panel.SetZIndex(this, Unique++);
             }
         }
         #endregion
