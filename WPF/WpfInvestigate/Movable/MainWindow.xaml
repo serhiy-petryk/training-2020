@@ -119,10 +119,9 @@
                     <TextBlock Text="ScrollViewer+Grid+Adorner"/>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="200" Width="250" Background="Orange">
                         <Grid x:Name="ScrollGridAdornerPanel" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Thumb x:Name="MovingThumbName" Width="100" Height="100" Background="GreenYellow" BorderThickness="0" Margin="10 20 0 0"
+                            <Rectangle x:Name="MovingThumbName" Width="100" Height="100" Fill="GreenYellow" Margin="10 20 0 0"
                                        HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Focusable="True"
-                                       effects:ResizeEffect.MovingThumb="{Binding RelativeSource={RelativeSource Self}}"
                                        effects:ResizeEffect.EdgeThickness="6"
                                        effects:ResizeEffect.LimitPositionToPanelBounds="True"
                                        Effect="{StaticResource ShadowEffect}"
