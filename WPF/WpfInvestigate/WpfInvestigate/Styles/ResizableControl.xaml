@@ -4,13 +4,12 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="controls:ResizableControl">
         <Style.Resources>
             <Style x:Key="ResizeThumb" TargetType="Thumb">
-                <Setter Property="Opacity" Value="1"/>
+                <Setter Property="Opacity" Value="0"/>
                 <Setter Property="Focusable" Value="False"/>
             </Style>
         </Style.Resources>
@@ -19,36 +18,17 @@
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="MinWidth" Value="50"/>
         <Setter Property="MinHeight" Value="50"/>
-        <Setter Property="MaxWidth" Value="1000"/>
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MaxWidth" Value="3000"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="DragThumb" Value="{Binding ElementName=PART_HeaderMover}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ResizableControl">
                     <Grid>
-                        <!--<Border BorderBrush="Black" BorderThickness="2" Effect="{StaticResource ShadowEffect}"/>-->
                         <Grid Effect="{StaticResource ShadowEffect}" Background="#FFFFFFFF"/>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <Thumb x:Name="PART_HeaderMover" Grid.Row="0" Opacity="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                            <TextBlock Grid.Row="0" Height="18" Padding="5 0 0 0" Background="GreenYellow" Text="Header" IsHitTestVisible="False"/>
-
-                            <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                        </Grid>
-                        <!--<ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>-->
-
-<!--<Border Margin="0" BorderThickness="2" CornerRadius="1" BorderBrush="Black" Effect="{StaticResource ShadowEffect}"/>-->
-                        <!--<Border BorderThickness="2" CornerRadius="1" Padding="0"
-                                    BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
-                        </Border>-->
+                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
                         <Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
                         <Thumb x:Name="ResizeTop" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>

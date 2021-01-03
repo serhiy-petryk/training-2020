@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:samples="clr-namespace:WpfInvestigate.Samples"
         mc:Ignorable="d"
         Title="ResizableControl" Height="700" Width="1100">
 
@@ -32,13 +33,20 @@
         </Grid>
 
         <ScrollViewer Grid.Column="1" Margin="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <Grid Background="Gainsboro">
+            <Grid Background="Gainsboro" x:Name="GridPanel">
                 <Grid.LayoutTransform>
                     <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
                 </Grid.LayoutTransform>
-                <controls:ResizableControl Content="AAA" Width="100" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <controls:ResizableControl Content="Limited" Margin="0 300 0 0" Width="100" Height="100" Background="Yellow"
-                                           LimitPositionToPanelBounds="True"/>
+
+                <controls:ResizableControl Width="200" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <samples:ResizableContentSample/>
+                </controls:ResizableControl>
+                
+                <controls:ResizableControl Margin="0 300 0 0" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
+                                           ToolTip="LimitPositionToPanelBounds=True"
+                                           DragThumb="{Binding ElementName=Test2, Path=DragThumb}">
+                    <samples:ResizableContentPropertySample x:Name="Test2"/>
+                </controls:ResizableControl>
             </Grid>
         </ScrollViewer>
 

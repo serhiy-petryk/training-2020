@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using WpfInvestigate.Controls;
+using WpfInvestigate.Samples;
 
 namespace WpfInvestigate.TestViews
 {
@@ -10,6 +12,10 @@ namespace WpfInvestigate.TestViews
         public ResizableControlTests()
         {
             InitializeComponent();
+
+            var resizableControl = new ResizableControl
+                {Content = new ResizableContentTemplateSample(), Margin = new Thickness(200, 100, 0, 0)};
+            GridPanel.Children.Add(resizableControl);
         }
     }
 }

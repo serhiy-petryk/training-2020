@@ -11,10 +11,11 @@ namespace WpfInvestigate.Controls
 {
     public class ResizableControl : ContentControl
     {
-        private static int Unique = 0;
-        private Panel HostPanel => VisualTreeHelper.GetParent(this) as Panel;
-
+        public const string MovingThumbName = "MovingThumb";
         public bool LimitPositionToPanelBounds { get; set; } = false;
+
+        private static int Unique = 1;
+        private Panel HostPanel => VisualTreeHelper.GetParent(this) as Panel;
 
         public ResizableControl()
         {
@@ -24,6 +25,34 @@ namespace WpfInvestigate.Controls
                 MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);
         }
 
+        protected override void OnContentChanged(object oldContent, object newContent)
+        {
+            base.OnContentChanged(oldContent, newContent);
+
+            if (oldContent is FrameworkElement)
+            {
+                var thumb = Tips.GetVisualChildren((FrameworkElement)oldContent).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
+                if (thumb != null)
+                    thumb.DragDelta -= MoveThumb_OnDragDelta;
+            }
+
+            if (newContent is FrameworkElement content)
+            {
+                if (content.IsLoaded)
+                    NewContent_OnLoaded(content, null);
+                else
+                    content.Loaded += NewContent_OnLoaded;
+            }
+
+            void NewContent_OnLoaded(object sender, RoutedEventArgs args)
+            {
+                content.Loaded -= NewContent_OnLoaded;
+                var thumb = Tips.GetVisualChildren(content).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
+                if (thumb != null)
+                    thumb.DragDelta += MoveThumb_OnDragDelta;
+            }
+        }
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -31,13 +60,7 @@ namespace WpfInvestigate.Controls
             foreach (var thumb in Tips.GetVisualChildren(this).OfType<Thumb>())
             {
                 thumb.DragStarted += Thumb_OnDragStarted;
-                if (thumb.Name == "PART_HeaderMover")
-                {
-                    thumb.DragDelta += MoveThumb_OnDragDelta;
-                    thumb.PreviewMouseDoubleClick += ThumbOnPreviewMouseDoubleClick;
-                }
-                else
-                    thumb.DragDelta += ResizeThumb_OnDragDelta;
+                thumb.DragDelta += ResizeThumb_OnDragDelta;
             }
 
             var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
@@ -58,12 +81,6 @@ namespace WpfInvestigate.Controls
                 sv.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
                 sv.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
             }
-        }
-
-        private void ThumbOnPreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
-            // throw new NotImplementedException();
         }
 
         #region ==========  Focus  ============
@@ -227,6 +244,28 @@ namespace WpfInvestigate.Controls
 
             if (!Tips.AreEqual(0.0, change))
                 Height = ActualHeight - change;
+        }
+        #endregion
+
+        #region ==========  Properties  ===============
+        public static readonly DependencyProperty DragThumbProperty =
+            DependencyProperty.Register("DragThumb", typeof(Thumb), typeof(ResizableControl), new PropertyMetadata(null, OnDragThumbChanged));
+
+        public Thumb DragThumb
+        {
+            get => (Thumb)GetValue(DragThumbProperty);
+            set => SetValue(DragThumbProperty, value);
+        }
+
+        private static void OnDragThumbChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ResizableControl control)
+            {
+                if (e.OldValue is Thumb oldThumb)
+                    oldThumb.DragDelta -= control.MoveThumb_OnDragDelta;
+                if (e.NewValue is Thumb newThumb) 
+                    newThumb.DragDelta += control.MoveThumb_OnDragDelta;
+            }
         }
         #endregion
 

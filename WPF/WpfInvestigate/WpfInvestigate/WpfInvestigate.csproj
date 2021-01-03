@@ -121,6 +121,15 @@
     </Compile>
     <Compile Include="Effects\WatermarkEffect.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
+    <Compile Include="Samples\ResizableContentPropertySample.xaml.cs">
+      <DependentUpon>ResizableContentPropertySample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\ResizableContentTemplateSample.xaml.cs">
+      <DependentUpon>ResizableContentTemplateSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\ResizableContentSample.xaml.cs">
+      <DependentUpon>ResizableContentSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Temp\OriginalVirtualKeyboard.xaml.cs">
       <DependentUpon>OriginalVirtualKeyboard.xaml</DependentUpon>
     </Compile>
@@ -213,6 +222,18 @@
     <Compile Include="TestViews\WiPTests.xaml.cs">
       <DependentUpon>WiPTests.xaml</DependentUpon>
     </Compile>
+    <Page Include="Samples\ResizableContentPropertySample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\ResizableContentTemplateSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\ResizableContentSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\ButtonStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
