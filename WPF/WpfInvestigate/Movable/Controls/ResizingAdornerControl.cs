@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using Movable.Common;
+using Movable.Effects;
 
 namespace Movable.Controls
 {
@@ -15,7 +15,7 @@ namespace Movable.Controls
         private static int Unique = 1;
         private FrameworkElement _adornedElement;
         private FrameworkElement Host => VisualTreeHelper.GetParent(_adornedElement) as FrameworkElement;
-        public bool LimitPositionToPanelBounds { get; set; } = false;
+        public bool LimitPositionToPanelBounds => ResizeEffect.GetLimitPositionToPanelBounds(_adornedElement);
 
         public ResizingAdornerControl(FrameworkElement adornedElement)
         {

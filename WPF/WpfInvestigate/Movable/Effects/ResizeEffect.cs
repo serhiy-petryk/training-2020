@@ -11,10 +11,8 @@ namespace Movable.Effects
         #region ==============  Properties  ==============
         public static readonly DependencyProperty EdgeThicknessProperty = DependencyProperty.RegisterAttached(
             "EdgeThickness", typeof(Thickness), typeof(ResizeEffect), new UIPropertyMetadata(new Thickness(), OnEdgeThicknessChanged));
-
         public static Thickness GetEdgeThickness(DependencyObject obj) => (Thickness)obj.GetValue(EdgeThicknessProperty);
         public static void SetEdgeThickness(DependencyObject obj, Thickness value) => obj.SetValue(EdgeThicknessProperty, value);
-        //================
         private static void OnEdgeThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is FrameworkElement element)
@@ -25,6 +23,11 @@ namespace Movable.Effects
                     element.Loaded += (sender, args) => ApplyResizeEffect(element);
             }
         }
+        //================
+        public static readonly DependencyProperty LimitPositionToPanelBoundsProperty = DependencyProperty.RegisterAttached(
+            "LimitPositionToPanelBounds", typeof(bool), typeof(ResizeEffect), new UIPropertyMetadata(false));
+        public static bool GetLimitPositionToPanelBounds(DependencyObject obj) => (bool)obj.GetValue(LimitPositionToPanelBoundsProperty);
+        public static void SetLimitPositionToPanelBounds(DependencyObject obj, bool value) => obj.SetValue(LimitPositionToPanelBoundsProperty, value);
         #endregion
 
         private static void ApplyResizeEffect(FrameworkElement element)

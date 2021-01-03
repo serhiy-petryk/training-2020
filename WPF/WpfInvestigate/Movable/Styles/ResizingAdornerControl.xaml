@@ -31,6 +31,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ResizingAdornerControl">
                     <Grid>
+                        <Thumb x:Name="PART_HeaderMover" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Bisque"/>
                         <!--<AdornedElementPlaceholder>
                             <Border BorderBrush="Red" BorderThickness="1" />
                         </AdornedElementPlaceholder>-->

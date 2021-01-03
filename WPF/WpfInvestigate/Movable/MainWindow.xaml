@@ -121,6 +121,7 @@
                                        HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Focusable="True"
                                        effects:ResizeEffect.EdgeThickness="6"
+                                       effects:ResizeEffect.LimitPositionToPanelBounds="True"
                                        Effect="{StaticResource ShadowEffect}"
                                        PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
                             <Rectangle Width="100" Height="100" Fill="Violet" Margin="60 70 0 0"
@@ -140,6 +141,7 @@
                             <Rectangle Width="100" Height="100" Fill="GreenYellow"
                                        HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Focusable="True"
+                                       effects:ResizeEffect.LimitPositionToPanelBounds="True"
                                        effects:ResizeEffect.EdgeThickness="6"
                                        Effect="{StaticResource ShadowEffect}"
                                        PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>

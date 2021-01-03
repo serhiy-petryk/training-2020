@@ -268,18 +268,13 @@ namespace WpfInvestigate.Controls
         }
         //=========================
         public static readonly DependencyProperty EdgeThicknessProperty =
-            DependencyProperty.Register("EdgeThickness", typeof(Thickness), typeof(ResizingControl), new PropertyMetadata(new Thickness(6), OnEdgeThicknessChanged));
+            DependencyProperty.Register("EdgeThickness", typeof(Thickness), typeof(ResizingControl), new PropertyMetadata(new Thickness(6)));
 
         public Thickness EdgeThickness
         {
             get => (Thickness)GetValue(EdgeThicknessProperty);
             set => SetValue(EdgeThicknessProperty, value);
         }
-        private static void OnEdgeThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            // throw new NotImplementedException();
-        }
-
         #endregion
 
     }
