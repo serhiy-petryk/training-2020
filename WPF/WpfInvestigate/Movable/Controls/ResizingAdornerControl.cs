@@ -18,7 +18,7 @@ namespace Movable.Controls
         private static int Unique = 1;
         private FrameworkElement _adornedElement;
         private FrameworkElement Host => VisualTreeHelper.GetParent(_adornedElement) as FrameworkElement;
-        private Panel HostPanel => Tips.GetVisualParents(_adornedElement).OfType<Panel>().FirstOrDefault();
+        private Panel HostPanel => Tips.GetVisualParents(Host).OfType<Panel>().FirstOrDefault();
 
         public ResizingAdornerControl(FrameworkElement adornedElement)
         {
@@ -220,8 +220,8 @@ namespace Movable.Controls
                 var oldX = Host is Canvas ? Canvas.GetLeft(_adornedElement) : _adornedElement.Margin.Left;
                 if ((_adornedElement.ActualWidth - change) > _adornedElement.MaxWidth)
                     change = _adornedElement.ActualWidth - _adornedElement.MaxWidth;
-                if ((oldX + _adornedElement.ActualWidth - change) > Host.ActualWidth)
-                    change = oldX + _adornedElement.ActualWidth - Host.ActualWidth;
+                if ((oldX + _adornedElement.ActualWidth - change) > HostPanel.ActualWidth)
+                    change = oldX + _adornedElement.ActualWidth - HostPanel.ActualWidth;
             }
 
             if (!Tips.AreEqual(0.0, change))
@@ -236,8 +236,8 @@ namespace Movable.Controls
                 var oldY = Host is Canvas ? Canvas.GetTop(_adornedElement) : _adornedElement.Margin.Top;
                 if ((_adornedElement.ActualHeight - change) > _adornedElement.MaxHeight)
                     change = _adornedElement.ActualHeight - _adornedElement.MaxHeight;
-                if ((oldY + _adornedElement.ActualHeight - change) > Host.ActualHeight)
-                    change = oldY + _adornedElement.ActualHeight - Host.ActualHeight;
+                if ((oldY + _adornedElement.ActualHeight - change) > HostPanel.ActualHeight)
+                    change = oldY + _adornedElement.ActualHeight - HostPanel.ActualHeight;
             }
 
             if (!Tips.AreEqual(0.0, change))

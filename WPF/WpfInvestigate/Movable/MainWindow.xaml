@@ -117,9 +117,10 @@
 
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <TextBlock Text="ScrollViewer+Grid+Adorner"/>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="200" Width="250" Background="Orange">
-                        <Grid x:Name="ScrollGridAdornerPanel" Background="Orange" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="200" Width="250" Background="Yellow">
+                        <Grid x:Name="ScrollGridAdornerPanel" Background="Orange" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Grid Width="100" Height="100" Background="Green" Margin="100 20 0 0"
+                                  HorizontalAlignment="Left" VerticalAlignment="Top"
                                   Focusable="True"
                                   effects:ResizeEffect.EdgeThickness="6"
                                   effects:ResizeEffect.LimitPositionToPanelBounds="True">
