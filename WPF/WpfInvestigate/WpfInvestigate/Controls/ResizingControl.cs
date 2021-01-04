@@ -58,10 +58,7 @@ namespace WpfInvestigate.Controls
             base.OnApplyTemplate();
 
             foreach (var thumb in Tips.GetVisualChildren(this).OfType<Thumb>())
-            {
-                thumb.DragStarted += Thumb_OnDragStarted;
                 thumb.DragDelta += ResizeThumb_OnDragDelta;
-            }
 
             var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
             if (sv != null) sv.ScrollChanged += ScrollViewer_OnScrollChanged;
@@ -99,13 +96,6 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #region ==========  Moving && resizing  =========
-        private void Thumb_OnDragStarted(object sender, DragStartedEventArgs e)
-        {
-            if (Focusable)
-                Focus();
-            e.Handled = true;
-        }
-
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
             var mousePosition = Mouse.GetPosition(HostPanel);
