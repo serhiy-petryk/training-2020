@@ -36,7 +36,23 @@ namespace WpfInvestigate.TestViews
 
         private void AddPanel_OnClick(object sender, RoutedEventArgs e)
         {
-            CreateAdornerCore(this);
+            var adorner = CreateAdornerCore(this);
+            var resizingControl3 = new ResizingControl
+            {
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Margin = new Thickness(200, 200, 0, 0),
+                Width = 150,
+                Height = 150,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=150"
+            };
+            resizingControl3.MouseLeftButtonDown += (s, e1) => e1.Handled = true;
+
+            resizingControl3.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e1) =>
+            {
+                RemoveAdorner(this);
+            }));
+            ((Grid)adorner.Child).Children.Add(resizingControl3);
         }
 
         private static void RemoveAdorner(FrameworkElement host)
@@ -62,7 +78,7 @@ namespace WpfInvestigate.TestViews
                     VerticalAlignment = VerticalAlignment.Stretch
                 };
 
-                panel.PreviewMouseLeftButtonDown += (sender, args) => RemoveAdorner(host);
+                panel.MouseLeftButtonDown += (sender, args) => RemoveAdorner(host);
 
                 // Since there is no Adorner for the dialog, create a new one and set and return it.
                 var adorner = new AdornerControl(target);
