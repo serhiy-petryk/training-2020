@@ -8,6 +8,5 @@ namespace WpfInvestigate.Samples
         {
             InitializeComponent();
         }
-
     }
 }
