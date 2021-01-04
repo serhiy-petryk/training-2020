@@ -3,8 +3,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
@@ -46,10 +48,22 @@ namespace WpfInvestigate.Controls
 
             void NewContent_OnLoaded(object sender, RoutedEventArgs args)
             {
-                content.Loaded -= NewContent_OnLoaded;
-                var thumb = Tips.GetVisualChildren(content).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
+                var element = (FrameworkElement) sender;
+                element.Loaded -= NewContent_OnLoaded;
+                var thumb = Tips.GetVisualChildren(element).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
                 if (thumb != null)
                     thumb.DragDelta += MoveThumb_OnDragDelta;
+
+                if (!double.IsNaN(element.Width))
+                {
+                    var b = new Binding("ActualWidth") { Source = this };
+                    element.SetBinding(Control.WidthProperty, b);
+                }
+                if (!double.IsNaN(element.Height))
+                {
+                    var b = new Binding("ActualHeight") { Source = this };
+                    element.SetBinding(Control.HeightProperty, b);
+                }
             }
         }
 
@@ -158,6 +172,15 @@ namespace WpfInvestigate.Controls
                 OnResizeBottom(e.VerticalChange);
 
             e.Handled = true;
+
+            /*if (Content is FrameworkElement element)
+            {
+                element.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
+                {
+                    if (!double.IsNaN(element.Width)) element.Width = ActualWidth;
+                    if (!double.IsNaN(element.Height)) element.Height = ActualHeight;
+                }));
+            }*/
             BringIntoView();
         }
 
