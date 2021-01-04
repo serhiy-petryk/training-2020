@@ -18,7 +18,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Height="18" Padding="5 0 0 0" Background="LightBlue" Text="Header" IsHitTestVisible="False"/>
-                <Thumb x:Name="MovingThumb" Grid.Row="0" Opacity="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                <Thumb x:Name="MovingThumb" Grid.Row="0" Opacity="0" Cursor="SizeAll"/>
 
                 <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="ResizableContentTemplateSample"/>
             </Grid>

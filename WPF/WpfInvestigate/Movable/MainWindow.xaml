@@ -129,7 +129,7 @@
                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                            Effect="{StaticResource ShadowEffect}"/>
                                 <Thumb x:Name="MovingThumb" Width="50" Height="20" Margin="10 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                       Focusable="True">
+                                       Focusable="True" Cursor="SizeAll">
                                     <Thumb.Style>
                                         <Style TargetType="Thumb">
                                             <Setter Property="Background" Value="Aqua"/>

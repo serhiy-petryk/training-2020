@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Height="18" Padding="5 0 0 0" Background="Violet" Text="Header" IsHitTestVisible="False"/>
-        <Thumb x:Name="TestThumb" Grid.Row="0" Opacity="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <Thumb x:Name="TestThumb" Grid.Row="0" Opacity="0" Cursor="SizeAll"/>
 
         <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="ResizableContentPropertySample"/>
     </Grid>
