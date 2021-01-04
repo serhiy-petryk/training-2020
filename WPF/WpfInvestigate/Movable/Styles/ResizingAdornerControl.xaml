@@ -2,47 +2,29 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Movable.Controls">
 
-    <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
-    </ResourceDictionary.MergedDictionaries>-->
-
     <Style TargetType="controls:ResizingAdornerControl">
         <Style.Resources>
             <DropShadowEffect x:Key="ShadowEffect" BlurRadius="5" ShadowDepth="2" Direction="315" />
-            <Style x:Key="ResizeThumb" TargetType="Thumb">
-                <Setter Property="Opacity" Value="0"/>
-                <Setter Property="Focusable" Value="False"/>
-            </Style>
         </Style.Resources>
 
-        <Setter Property="Width" Value="Auto"/>
-        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="MinWidth" Value="50"/>
         <Setter Property="MinHeight" Value="50"/>
         <Setter Property="MaxWidth" Value="1000"/>
-        <Setter Property="FontSize" Value="14" />
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <!--<Setter Property="DragThumb" Value="{Binding ElementName=PART_HeaderMover}"/>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ResizingAdornerControl">
-                    <Grid>
-                        <!--<Thumb x:Name="PART_HeaderMover" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Bisque"/>-->
-                        <!--<AdornedElementPlaceholder>
-                            <Border BorderBrush="Red" BorderThickness="1" />
-                        </AdornedElementPlaceholder>-->
-                        <Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeTop" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeRight" Width="7" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeBottom" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeTopLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeTopRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeBottomLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeBottomRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                    <Grid Opacity="0">
+                        <Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE"/>
+                        <Thumb x:Name="ResizeTop" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS"/>
+                        <Thumb x:Name="ResizeRight" Width="7" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE"/>
+                        <Thumb x:Name="ResizeBottom" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS"/>
+                        <Thumb x:Name="ResizeTopLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE"/>
+                        <Thumb x:Name="ResizeTopRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW"/>
+                        <Thumb x:Name="ResizeBottomLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW"/>
+                        <Thumb x:Name="ResizeBottomRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

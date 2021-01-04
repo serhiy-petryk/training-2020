@@ -25,6 +25,8 @@ namespace Movable.Controls
             _adornedElement = adornedElement;
             DataContext = this;
 
+            _adornedElement.PreviewMouseLeftButtonDown += (sender, args) => { OnPreviewMouseLeftButtonDown(args); };
+
             //==================
             var a1 = ResizeEffect.GetMovingThumb(_adornedElement);
             //==================
@@ -88,10 +90,8 @@ namespace Movable.Controls
         {
             base.OnPreviewMouseLeftButtonDown(e);
             if (_adornedElement.Focusable)
-            {
                 _adornedElement.Focus();
-                Panel.SetZIndex(Host is Panel ? _adornedElement : Host, Unique++);
-            }
+            Panel.SetZIndex(Host is Panel ? _adornedElement : Host, Unique++);
         }
         #endregion
 
