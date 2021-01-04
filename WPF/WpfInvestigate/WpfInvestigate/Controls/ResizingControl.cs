@@ -236,15 +236,15 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #region ==========  Properties  ===============
-        public static readonly DependencyProperty DragThumbProperty =
-            DependencyProperty.Register("DragThumb", typeof(Thumb), typeof(ResizingControl), new PropertyMetadata(null, OnDragThumbChanged));
-        public Thumb DragThumb
+        public static readonly DependencyProperty MovingThumbProperty =
+            DependencyProperty.Register("MovingThumb", typeof(Thumb), typeof(ResizingControl), new PropertyMetadata(null, OnMovingThumbChanged));
+        public Thumb MovingThumb
         {
-            get => (Thumb)GetValue(DragThumbProperty);
-            set => SetValue(DragThumbProperty, value);
+            get => (Thumb)GetValue(MovingThumbProperty);
+            set => SetValue(MovingThumbProperty, value);
         }
 
-        private static void OnDragThumbChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnMovingThumbChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ResizingControl control)
             {

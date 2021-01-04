@@ -8,7 +8,7 @@ namespace WpfInvestigate.Samples
     /// </summary>
     public partial class ResizableContentPropertySample : UserControl
     {
-        public Thumb DragThumb => TestThumb;
+        public Thumb MovingThumb => TestThumb;
         public ResizableContentPropertySample()
         {
             InitializeComponent();

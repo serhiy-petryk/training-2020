@@ -44,7 +44,7 @@
                 
                 <controls:ResizingControl Margin="0 300 0 0" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
                                            ToolTip="LimitPositionToPanelBounds=True"
-                                           DragThumb="{Binding ElementName=Test2, Path=DragThumb}">
+                                           MovingThumb="{Binding ElementName=Test2, Path=MovingThumb}">
                     <samples:ResizableContentPropertySample x:Name="Test2"/>
                 </controls:ResizingControl>
 

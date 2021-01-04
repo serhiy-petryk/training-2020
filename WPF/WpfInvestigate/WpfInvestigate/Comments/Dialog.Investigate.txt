@@ -13,3 +13,12 @@ Review:
 3. https://github.com/augustoproiete/ookii-dialogs-wpf: based on Interop
 !!!+++ 4. https://github.com/sourcechord/Lighty: 20KB cs + 13.3KB xaml(5 files)
 5. https://github.com/schdck/SimpleDialogs: based on Mahapps.Metro
+
+===========
+My versions:
+===========
+I have 2 versions:
+1. ResizingControl (based on ContentControl, supports Grid/Canvas, WpfInvestigate project)
+2. ResizingAdornerControl (based on Adorner, supports Grid/Canvas, Movable project)
+
+The first version is a little simpler.
