@@ -127,8 +127,7 @@
                                   effects:ResizeEffect.MovingThumb="{Binding ElementName=MovingThumb}">
                                 <Rectangle Fill="Yellow" Margin="7"
                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                           Effect="{StaticResource ShadowEffect}"
-                                           PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                                           Effect="{StaticResource ShadowEffect}"/>
                                 <Thumb x:Name="MovingThumb" Width="50" Height="20" Margin="10 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Focusable="True">
                                     <Thumb.Style>
@@ -149,15 +148,13 @@
                                        Focusable="True"
                                        effects:ResizeEffect.EdgeThickness="6"
                                        effects:ResizeEffect.LimitPositionToPanelBounds="True"
-                                       Effect="{StaticResource ShadowEffect}"
-                                       PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                                       Effect="{StaticResource ShadowEffect}"/>
 
                             <Rectangle Width="100" Height="100" Fill="Violet" Margin="60 70 0 0"
                                        HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Focusable="True"
                                        effects:ResizeEffect.EdgeThickness="6"
-                                       Effect="{StaticResource ShadowEffect}"
-                                       PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                                       Effect="{StaticResource ShadowEffect}"/>
                         </Grid>
                     </ScrollViewer>
                 </StackPanel>
@@ -171,14 +168,12 @@
                                        Focusable="True"
                                        effects:ResizeEffect.EdgeThickness="6"
                                        effects:ResizeEffect.LimitPositionToPanelBounds="True"
-                                       Effect="{StaticResource ShadowEffect}"
-                                       PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                                       Effect="{StaticResource ShadowEffect}"/>
                             <Rectangle Width="100" Height="100" Fill="Violet" Margin="60 70 0 0"
                                        HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Focusable="True"
                                        effects:ResizeEffect.EdgeThickness="6"
-                                       Effect="{StaticResource ShadowEffect}"
-                                       PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                                       Effect="{StaticResource ShadowEffect}"/>
                         </Canvas>
                     </ScrollViewer>
                 </StackPanel>

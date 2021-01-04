@@ -47,6 +47,30 @@
                                            DragThumb="{Binding ElementName=Test2, Path=DragThumb}">
                     <samples:ResizableContentPropertySample x:Name="Test2"/>
                 </controls:ResizingControl>
+
+                <controls:ResizingControl Margin="100 100 0 0" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
+                                          ToolTip="LimitPositionToPanelBounds=True">
+                    <Grid Background="Green" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                          Focusable="False">
+                        <Rectangle Fill="Yellow" Margin="7"
+                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                   Effect="{StaticResource ShadowEffect}"/>
+                        <Thumb x:Name="MovingThumb" Width="50" Height="20" Margin="10 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                               Focusable="True">
+                            <Thumb.Style>
+                                <Style TargetType="Thumb">
+                                    <Setter Property="Background" Value="Aqua"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsFocused" Value="True">
+                                            <Setter Property="Background" Value="LightBlue"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Thumb.Style>
+                        </Thumb>
+                    </Grid>
+                </controls:ResizingControl>
+
             </Grid>
         </ScrollViewer>
 

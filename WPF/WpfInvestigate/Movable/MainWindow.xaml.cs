@@ -58,12 +58,6 @@ namespace Movable
             ScrollViewerCanvas.Children.Add(a1);
         }
 
-        private void UIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var a1 = sender as FrameworkElement;
-            var layer = AdornerLayer.GetAdornerLayer(a1);
-        }
-
         private void AddChildToScrollGridAdorner_OnClick(object sender, RoutedEventArgs e)
         {
             var a1 = new SampleResizingContent();
