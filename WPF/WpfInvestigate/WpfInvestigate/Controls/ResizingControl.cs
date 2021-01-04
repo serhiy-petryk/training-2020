@@ -20,9 +20,9 @@ namespace WpfInvestigate.Controls
         public ResizingControl()
         {
             DataContext = this;
-            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            /*var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             if (currentWindow != null)
-                MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);
+                MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);*/
         }
 
         protected override void OnContentChanged(object oldContent, object newContent)

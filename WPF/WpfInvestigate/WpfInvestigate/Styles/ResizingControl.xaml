@@ -15,11 +15,10 @@
             </Style>
         </Style.Resources>
 
-        <Setter Property="Width" Value="Auto"/>
-        <Setter Property="Height" Value="Auto"/>
         <Setter Property="MinWidth" Value="50"/>
         <Setter Property="MinHeight" Value="50"/>
         <Setter Property="MaxWidth" Value="3000"/>
+        <Setter Property="MaxHeight" Value="2000"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
