@@ -46,7 +46,12 @@
                 <controls:ResizingControl Width="200" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <samples:ResizableContentSample/>
                 </controls:ResizingControl>
-                
+
+                <controls:ResizingControl Width="200" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100 350 0 0"
+                                          EdgeThickness="{Binding BorderThickness, ElementName=Sample2}">
+                    <samples:ResizableSample x:Name="Sample2" ToolTip="No Width/Height, resizing control.Width=200, Height=100"/>
+                </controls:ResizingControl>
+
                 <controls:ResizingControl Margin="0 300 0 0" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
                                            ToolTip="LimitPositionToPanelBounds=True"
                                            MovingThumb="{Binding ElementName=Test2, Path=MovingThumb}">

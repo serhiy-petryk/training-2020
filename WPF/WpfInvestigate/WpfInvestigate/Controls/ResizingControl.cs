@@ -39,6 +39,11 @@ namespace WpfInvestigate.Controls
 
             if (newContent is FrameworkElement content)
             {
+                MinWidth = Math.Max(25, content.MinWidth);
+                MaxWidth = Math.Max(25, content.MaxWidth);
+                MinHeight = Math.Max(25, content.MinHeight);
+                MaxHeight = Math.Max(25, content.MaxHeight);
+
                 if (content.IsLoaded)
                     NewContent_OnLoaded(content, null);
                 else
