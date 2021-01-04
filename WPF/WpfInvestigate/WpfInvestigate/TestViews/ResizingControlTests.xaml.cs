@@ -39,49 +39,60 @@ namespace WpfInvestigate.TestViews
             CreateAdornerCore(this);
         }
 
-        private static AdornerControl CreateAdornerCore(UIElement host)
+        private static void RemoveAdorner(FrameworkElement host)
         {
-            var panel = new Grid
+            if (((host as Window)?.Content as FrameworkElement ?? host) is FrameworkElement target)
             {
-                Background = new SolidColorBrush(Common.ColorSpaces.ColorUtils.StringToColor("#77777777")),
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch
-            };
+                var layer = AdornerLayer.GetAdornerLayer(target);
+                if (layer == null) return;
 
-            // If it is a Window class, use the Content property.
-            var win = host as Window;
-            var target = win?.Content as UIElement ?? host;
-            if (target == null)
-                return null;
-
-            var layer = AdornerLayer.GetAdornerLayer(target);
-            if (layer == null)
-                return null;
-
-            // Since there is no Adorner for the dialog, create a new one and set and return it.
-            var adorner = new AdornerControl(target);
-            adorner.Child = panel;
-
-            // If Adorner is set for Window, set margin to cancel Margin of Content element.
-            if (win != null)
-            {
-                var content = win.Content as FrameworkElement;
-                var margin = content.Margin;
-                adorner.Margin = new Thickness(-margin.Left, -margin.Top, margin.Right, margin.Bottom);
-                adorner.AdornerSize = AdornerControl.AdornerSizeType.Container;
+                foreach (var a in layer.GetAdorners(target) ?? new Adorner[0])
+                    layer.Remove(a);
             }
-
-            // If the target is Enable when the dialog is displayed, disable it only while the dialog is displayed.
-            if (target.IsEnabled)
-            {
-                // target.IsEnabled = false;
-                // AllDialogClosed += (s, e) => target.IsEnabled = true;
-            }
-            // Added a process to remove Adorner when all dialogs are cleared
-            // AllDialogClosed += (s, e) => layer.Remove(adorner);
-            layer.Add(adorner);
-            return adorner;
         }
 
+        private static AdornerControl CreateAdornerCore(FrameworkElement host)
+        {
+            if (((host as Window)?.Content as FrameworkElement ?? host) is FrameworkElement target && AdornerLayer.GetAdornerLayer(target) is AdornerLayer layer)
+            {
+                var panel = new Grid
+                {
+                    Background = new SolidColorBrush(Common.ColorSpaces.ColorUtils.StringToColor("#77777777")),
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch
+                };
+
+                panel.PreviewMouseLeftButtonDown += (sender, args) => RemoveAdorner(host);
+
+                // Since there is no Adorner for the dialog, create a new one and set and return it.
+                var adorner = new AdornerControl(target);
+                adorner.Child = panel;
+
+                // If Adorner is set for Window, set margin to cancel Margin of Content element.
+                if (host is Window)
+                {
+                    adorner.Margin = new Thickness(-target.Margin.Left, -target.Margin.Top, target.Margin.Right, target.Margin.Bottom);
+                    adorner.AdornerSize = AdornerControl.AdornerSizeType.Container;
+                }
+
+                // If the target is Enable when the dialog is displayed, disable it only while the dialog is displayed.
+                /*if (target.IsEnabled)
+                {
+                    target.IsEnabled = false;
+                    // AllDialogClosed += (s, e) => target.IsEnabled = true;
+                }*/
+                // Added a process to remove Adorner when all dialogs are cleared
+                // AllDialogClosed += (s, e) => layer.Remove(adorner);
+                layer.Add(adorner);
+                return adorner;
+            }
+
+            return null;
+        }
+
+        private void RemovePanel_OnClick(object sender, RoutedEventArgs e)
+        {
+            RemoveAdorner(this);
+        }
     }
 }
