@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Samples;
@@ -42,7 +44,6 @@ namespace WpfInvestigate.TestViews
             var resizingControl3 = new ResizingControl
             {
                 Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
-                Margin = new Thickness(200, 200, 0, 0),
                 Width = 150,
                 Height = 150,
                 LimitPositionToPanelBounds = true,
@@ -55,6 +56,15 @@ namespace WpfInvestigate.TestViews
                 RemoveAdorner(this);
             }));
             ((Grid)adorner.Child).Children.Add(resizingControl3);
+
+            resizingControl3.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
+            {
+                resizingControl3.Margin = new Thickness
+                {
+                    Left = Math.Max(0, (adorner.Child.ActualWidth - resizingControl3.ActualWidth) / 2),
+                    Top = Math.Max(0, (adorner.Child.ActualHeight - resizingControl3.ActualHeight) / 2)
+                };
+            }));
         }
 
         private static void RemoveAdorner(FrameworkElement host)
