@@ -1,8 +1,10 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Samples;
 
@@ -46,8 +48,8 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=150"
             };
-            resizingControl3.MouseLeftButtonDown += (s, e1) => e1.Handled = true;
 
+            resizingControl3.MouseLeftButtonDown += (s, e1) => e1.Handled = true;
             resizingControl3.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e1) =>
             {
                 RemoveAdorner(this);
@@ -57,13 +59,19 @@ namespace WpfInvestigate.TestViews
 
         private static void RemoveAdorner(FrameworkElement host)
         {
-            if (((host as Window)?.Content as FrameworkElement ?? host) is FrameworkElement target)
+            if (((host as Window)?.Content as FrameworkElement ?? host) is FrameworkElement target &&
+                AdornerLayer.GetAdornerLayer(target) is AdornerLayer layer)
             {
-                var layer = AdornerLayer.GetAdornerLayer(target);
-                if (layer == null) return;
+                foreach (var a in (layer.GetAdorners(target) ?? new Adorner[0]).ToArray().OfType<AdornerControl>())
+                {
+                    if (a.Child is Grid panel)
+                    {
+                        panel.Children.RemoveRange(0, panel.Children.Count);
+                        panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
+                    }
 
-                foreach (var a in layer.GetAdorners(target) ?? new Adorner[0])
                     layer.Remove(a);
+                }
             }
         }
 
@@ -78,7 +86,7 @@ namespace WpfInvestigate.TestViews
                     VerticalAlignment = VerticalAlignment.Stretch
                 };
 
-                panel.MouseLeftButtonDown += (sender, args) => RemoveAdorner(host);
+                panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
 
                 // Since there is no Adorner for the dialog, create a new one and set and return it.
                 var adorner = new AdornerControl(target);
@@ -106,9 +114,11 @@ namespace WpfInvestigate.TestViews
             return null;
         }
 
-        private void RemovePanel_OnClick(object sender, RoutedEventArgs e)
+        private static void Panel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            RemoveAdorner(this);
+            if (Tips.GetVisualParents((FrameworkElement) sender).OfType<AdornerControl>().FirstOrDefault() is
+                    AdornerControl adorner && adorner.AdornedElement is FrameworkElement target)
+                RemoveAdorner(target);
         }
     }
 }
