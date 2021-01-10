@@ -11,7 +11,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
@@ -186,14 +185,6 @@ namespace WpfInvestigate.Controls
                 var container = ContainerFromElement(content) as FrameworkElement;
                 container.Focus();
                 container.MouseLeftButtonDown += (s, e) => e.Handled = true;
-
-                var transform = new TransformGroup();
-                transform.Children.Add(new ScaleTransform());
-                transform.Children.Add(new SkewTransform());
-                transform.Children.Add(new RotateTransform());
-                transform.Children.Add(new TranslateTransform());
-                container.RenderTransform = transform;
-                container.RenderTransformOrigin = new Point(0.5, 0.5);
 
                 // For the added dialog, set the handler for ApplicationCommands.Close command.
                 content.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(content)));
