@@ -36,21 +36,21 @@ namespace WpfInvestigate.TestViews
         private void OnClickShowButtonPopup(object sender, RoutedEventArgs e)
         {
             var dialogItems = new DialogItems{CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value};
-            dialogItems.Show(new SampleDialogMovable());
+            dialogItems.Show(new SampleDialogMovable(), Host);
             MessageBox.Show("dialog item already shown");
         }
 
         private void OnClickShowDialogButtonPopup(object sender, RoutedEventArgs e)
         {
             var dialogItems = new DialogItems { CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
-            dialogItems.ShowDialog(new SampleDialogMovable());
+            dialogItems.ShowDialog(new SampleDialogMovable(), Host);
             MessageBox.Show("dialog item already shown");
         }
 
         private async void OnClickShowAsyncButtonPopup(object sender, RoutedEventArgs e)
         {
             var dialogItems = new DialogItems { CloseOnClickBackground = CloseOnClickBackgroundCheckBox.IsChecked.Value };
-            await dialogItems.ShowAsync(new SampleDialogMovable());
+            await dialogItems.ShowAsync(new SampleDialogMovable(), Host);
             MessageBox.Show("dialog item already shown");
         }
 
