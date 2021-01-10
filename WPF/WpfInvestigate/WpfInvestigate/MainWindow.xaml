@@ -66,6 +66,13 @@
                     <Button x:Name="ResizingControlTests" Width="200" Margin="0 5" Content="WiP: ResizingControlTests" Click="ResizingControlTests_OnClick"/>
 
                     <WrapPanel Margin="5" Background="Aqua" HorizontalAlignment="Stretch">
+                        <Grid x:Name="MainGrid" Width="100" Height="100" Background="Gainsboro" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseLeftButtonDown="MainUIElement_OnPreviewMouseLeftButtonDown">
+                            <Button Content="AAA" Margin="5" Click="TestButton_OnClick" Width="40" Height="24" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                    PreviewMouseLeftButtonDown="TestButton_OnPreviewMouseLeftButtonDown"/>
+                            <TextBox Text="AAA" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5 35 0 0" Width="50"/>
+                            <Grid x:Name="Grid" Margin="0" Width="30" Height="80" Background="Yellow" PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"
+                                  HorizontalAlignment="Left" VerticalAlignment="Top"></Grid>
+                        </Grid>
                     </WrapPanel>
                 </StackPanel>
 

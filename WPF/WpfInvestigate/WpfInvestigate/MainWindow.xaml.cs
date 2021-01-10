@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Threading;
 using WpfInvestigate.Helpers;
 using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
@@ -83,5 +86,29 @@ namespace WpfInvestigate
         {
         }
 
+        private void TestButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Debug.Print($"TestButton_OnClick");
+            e.Handled = false;
+        }
+
+        private void UIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MainGrid.Children.Remove(Grid);
+            Debug.Print($"UIElement_OnPreviewMouseLeftButtonDown");
+            MainGrid.Dispatcher.Invoke(DispatcherPriority.Input, new Action(() => MainGrid.RaiseEvent(e)));
+        }
+
+        private void TestButton_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Debug.Print($"TestButton_OnPreviewMouseLeftButtonDown");
+            e.Handled = false;
+        }
+
+        private void MainUIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Debug.Print($"MainUIElement_OnPreviewMouseLeftButtonDown");
+            e.Handled = false;
+        }
     }
 }
