@@ -126,8 +126,8 @@ namespace WpfInvestigate.TestViews
 
         private static void Panel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (Tips.GetVisualParents((FrameworkElement) sender).OfType<AdornerControl>().FirstOrDefault() is
-                    AdornerControl adorner && adorner.AdornedElement is FrameworkElement target)
+            var adorner = Tips.GetVisualParents((FrameworkElement)sender).OfType<AdornerControl>().FirstOrDefault();
+            if (adorner?.AdornedElement is FrameworkElement target)
                 RemoveAdorner(target);
         }
     }
