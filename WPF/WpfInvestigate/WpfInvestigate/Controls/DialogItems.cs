@@ -40,7 +40,7 @@ namespace WpfInvestigate.Controls
         }
 
         #region ==========  Public methods ===========
-        public async void Show(FrameworkElement content, UIElement host = null)
+        public async void Show(FrameworkElement content, FrameworkElement host = null)
         {
             host = host ?? Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             await CreateAdornerAsync(host);
@@ -48,7 +48,7 @@ namespace WpfInvestigate.Controls
                 Items.Add(content);
             ControlHelper.SetFocus(content);
         }
-        public void ShowDialog(FrameworkElement content, UIElement host = null)
+        public void ShowDialog(FrameworkElement content, FrameworkElement host = null)
         {
             host = host ?? Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             CreateAdornerModal(host);
@@ -60,7 +60,7 @@ namespace WpfInvestigate.Controls
 
             Dispatcher.PushFrame(frame);
         }
-        public async Task ShowAsync(FrameworkElement content, UIElement host = null)
+        public async Task ShowAsync(FrameworkElement content, FrameworkElement host = null)
         {
             host = host ?? Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
             await CreateAdornerAsync(host);
@@ -102,7 +102,7 @@ namespace WpfInvestigate.Controls
 
         #region Dialog display related processing
 
-        private AdornerControl CreateAdornerModal(UIElement host)
+        private AdornerControl CreateAdornerModal(FrameworkElement host)
         {
             var adorner = CreateAdornerCore(host);
             if (!IsParallelInitialize)
@@ -113,7 +113,7 @@ namespace WpfInvestigate.Controls
             }
             return adorner;
         }
-        private Task<AdornerControl> CreateAdornerAsync(UIElement host)
+        private Task<AdornerControl> CreateAdornerAsync(FrameworkElement host)
         {
             var tcs = new TaskCompletionSource<AdornerControl>();
             var adorner = CreateAdornerCore(host);
@@ -129,11 +129,11 @@ namespace WpfInvestigate.Controls
             }));
             return tcs.Task;
         }
-        private AdornerControl CreateAdornerCore(UIElement host)
+        private AdornerControl CreateAdornerCore(FrameworkElement host)
         {
             // If it is a Window class, use the Content property.
             var win = host as Window;
-            var target = win?.Content as UIElement ?? host;
+            var target = win?.Content as FrameworkElement ?? host;
             if (target == null)
                 return null;
 

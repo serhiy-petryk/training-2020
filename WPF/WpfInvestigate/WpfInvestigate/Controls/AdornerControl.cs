@@ -14,7 +14,7 @@ namespace WpfInvestigate.Controls
 
         private FrameworkElement _child;
 
-        public AdornerControl(UIElement adornedElement) : base(adornedElement) {}
+        public AdornerControl(FrameworkElement adornedElement) : base(adornedElement) {}
 
         protected override int VisualChildrenCount => 1;
 

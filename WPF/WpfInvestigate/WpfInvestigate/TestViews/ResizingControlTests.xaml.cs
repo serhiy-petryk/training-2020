@@ -40,6 +40,20 @@ namespace WpfInvestigate.TestViews
 
         private void AddPanel_OnClick(object sender, RoutedEventArgs e)
         {
+            var content = new ResizingControl
+            {
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Width = 150,
+                Height = 150,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=150"
+            };
+            // var a1 = new DialogControl(content){CloseOnClickBackground = false};
+            var a1 = new DialogAdorner(content) {CloseOnClickBackground = false};
+        }
+
+        private void XAddPanel_OnClick(object sender, RoutedEventArgs e)
+        {
             var adorner = CreateAdornerCore(this);
             var resizingControl3 = new ResizingControl
             {
@@ -51,10 +65,8 @@ namespace WpfInvestigate.TestViews
             };
 
             resizingControl3.MouseLeftButtonDown += (s, e1) => e1.Handled = true;
-            resizingControl3.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e1) =>
-            {
-                RemoveAdorner(this);
-            }));
+            resizingControl3.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e1) => RemoveAdorner(this)));
+
             ((Grid)adorner.Child).Children.Add(resizingControl3);
 
             resizingControl3.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
