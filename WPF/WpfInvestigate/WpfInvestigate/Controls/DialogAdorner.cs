@@ -41,7 +41,7 @@ namespace WpfInvestigate.Controls
 
         private static CommandBinding _closeCommand = new CommandBinding(ApplicationCommands.Close, (s, e1) =>
         {
-            RemoveAdorner(Tips.GetVisualParents(s as UIElement).OfType<DialogAdorner>().FirstOrDefault()?._host);
+            RemoveAdorner(Tips.GetVisualParents(s as UIElement).OfType<DialogAdorner>().FirstOrDefault());
         });
 
         //===============================
@@ -72,8 +72,6 @@ namespace WpfInvestigate.Controls
                 throw new ArgumentNullException(nameof(content));
 
             _host = host ?? Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            RemoveAdorner(_host); // remove old adorner
-
             var layer = AdornerLayer.GetAdornerLayer(AdornedElement);
             if (layer == null)
                 throw new Exception("DialogAdorner constructor error! AdornerLevel of host can't be null");
@@ -110,8 +108,15 @@ namespace WpfInvestigate.Controls
                 {
                     var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0),
                         new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
-                    contentAnimation.Freeze();
+                    contentAnimation.FillBehavior = FillBehavior.Stop;
+                    contentAnimation.Completed += AnimationCompleted;
                     content.BeginAnimation(MarginProperty, contentAnimation);
+
+                    void AnimationCompleted(object sender, EventArgs args)
+                    {
+                        contentAnimation.Completed -= AnimationCompleted;
+                        content.Margin = new Thickness(left, top, 0, 0);
+                    }
                 }
                 else
                 {
@@ -138,31 +143,24 @@ namespace WpfInvestigate.Controls
                 }
 
                 // _closeCommand.Command.Execute(adorner.AdornedElement);
-                RemoveAdorner(adorner.AdornedElement);
+                RemoveAdorner(adorner);
             }
         }
 
-        private static async void RemoveAdorner(UIElement host)
+        private static async void RemoveAdorner(DialogAdorner adorner)
         {
-            if (((host as Window)?.Content as FrameworkElement ?? host) is FrameworkElement target &&
-                AdornerLayer.GetAdornerLayer(target) is AdornerLayer layer)
+            if (adorner?.Child is Grid panel)
             {
-                foreach (var adorner in (layer.GetAdorners(target) ?? new Adorner[0]).ToArray().OfType<DialogAdorner>())
+                panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
+                if (adorner.CloseContentAnimation != null)
                 {
-                    if (adorner.Child is Grid panel)
-                    {
-                        panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
-                        if (adorner.CloseContentAnimation != null)
-                        {
-                            foreach (var content in panel.Children.OfType<FrameworkElement>())
-                                await adorner.CloseContentAnimation?.BeginAsync(content);
-                        }
-                        panel.Children.RemoveRange(0, panel.Children.Count);
-                        if (adorner.ClosePanelAnimation != null) await adorner.ClosePanelAnimation?.BeginAsync(panel);
-                    }
-
-                    layer.Remove(adorner);
+                    foreach (var content in panel.Children.OfType<FrameworkElement>())
+                        await adorner.CloseContentAnimation?.BeginAsync(content);
                 }
+                panel.Children.RemoveRange(0, panel.Children.Count);
+                if (adorner.ClosePanelAnimation != null) await adorner.ClosePanelAnimation?.BeginAsync(panel);
+
+                AdornerLayer.GetAdornerLayer(adorner.AdornedElement)?.Remove(adorner);
             }
         }
     }
