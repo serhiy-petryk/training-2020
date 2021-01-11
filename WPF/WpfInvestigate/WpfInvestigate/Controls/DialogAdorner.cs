@@ -33,6 +33,18 @@ namespace WpfInvestigate.Controls
         //===============================
         public bool CloseOnClickBackground { get; set; } = true;
 
+        private Brush _background = new SolidColorBrush(Color.FromArgb(0x77, 0x77, 0x77, 0x77));
+        public Brush Background
+        {
+            get => _background;
+            set
+            {
+                _background = value;
+                if (Child is Panel panel)
+                    panel.Background = value;
+            }
+        }
+
         private FrameworkElement _host;
 
         public DialogAdorner(FrameworkElement content, FrameworkElement host = null) : base(GetAdornedElement(host))
@@ -50,7 +62,7 @@ namespace WpfInvestigate.Controls
 
             var panel = new Grid
             {
-                Background = new SolidColorBrush(Common.ColorSpaces.ColorUtils.StringToColor("#77777777")),
+                Background = _background,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch
             };
