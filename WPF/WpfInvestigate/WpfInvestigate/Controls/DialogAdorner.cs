@@ -61,7 +61,7 @@ namespace WpfInvestigate.Controls
 
         public Storyboard OpenPanelAnimation { get; set; } = Application.Current.FindResource("FadeInAnimation") as Storyboard;
         public Storyboard ClosePanelAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
-        public Storyboard OpenContentAnimation { get; set; } = Application.Current.FindResource("FadeInAnimation") as Storyboard;
+        public Storyboard OpenContentAnimation { get; set; }// = Application.Current.FindResource("FadeInAnimation") as Storyboard;
         public Storyboard CloseContentAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
 
         private FrameworkElement _host;
@@ -72,6 +72,7 @@ namespace WpfInvestigate.Controls
                 throw new ArgumentNullException(nameof(content));
 
             _host = host ?? Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            RemoveAdorner(_host); // remove old adorner
 
             var layer = AdornerLayer.GetAdornerLayer(AdornedElement);
             if (layer == null)
@@ -90,8 +91,6 @@ namespace WpfInvestigate.Controls
 
             Child = panel;
 
-            OpenPanelAnimation?.BeginAsync(panel);
-
             if (_host is Window)
             {
                 var hostMargin = (AdornedElement as FrameworkElement).Margin;
@@ -101,9 +100,29 @@ namespace WpfInvestigate.Controls
 
             //==========================
             content.CommandBindings.Add(_closeCommand);
+            content.Visibility = Visibility.Hidden;
             content.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
-                content.Margin = new Thickness(Math.Max(0, (panel.ActualWidth - content.ActualWidth) / 2),
-                    Math.Max(0, (panel.ActualHeight - content.ActualHeight) / 2), 0, 0)));
+            {
+                var left = Math.Max(0, (panel.ActualWidth - content.ActualWidth) / 2);
+                var top = Math.Max(0, (panel.ActualHeight - content.ActualHeight) / 2);
+
+                if (OpenContentAnimation == null)
+                {
+                    var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0),
+                        new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
+                    contentAnimation.Freeze();
+                    content.BeginAnimation(MarginProperty, contentAnimation);
+                }
+                else
+                {
+                    content.Margin = new Thickness(left, top, 0,0);
+                    OpenContentAnimation?.BeginAsync(content);
+                }
+
+                content.Visibility = Visibility.Visible;
+            }));
+
+            OpenPanelAnimation?.BeginAsync(panel);
         }
 
         private static void Panel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -111,7 +130,7 @@ namespace WpfInvestigate.Controls
             var adorner = Tips.GetVisualParents((FrameworkElement)sender).OfType<DialogAdorner>().FirstOrDefault();
             if (adorner != null && adorner.CloseOnClickBackground)
             {
-                foreach (var content in (adorner.Child as Grid).Children.OfType<FrameworkElement>())
+                foreach (var content in (adorner.Child as Grid).Children.OfType<FrameworkElement>().Where(c=>c.Visibility == Visibility.Visible))
                 {
                     var mousePoint = e.GetPosition(content);
                     var isUnderContent = new Rect(0, 0, content.ActualWidth, content.ActualHeight).Contains(mousePoint);
