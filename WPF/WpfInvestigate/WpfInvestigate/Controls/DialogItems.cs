@@ -181,7 +181,6 @@ namespace WpfInvestigate.Controls
                 }
 
                 var parent = content.Parent as FrameworkElement;
-                var animation = OpenStoryboard;
                 var container = ContainerFromElement(content) as FrameworkElement;
                 container.Focus();
                 container.MouseLeftButtonDown += (s, e) => e.Handled = true;
@@ -193,7 +192,7 @@ namespace WpfInvestigate.Controls
                 // (ItemsContainer In order to send it a Close command so that it can be closed.)
                 parent?.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, async (s, e) => await RemoveDialogAsync(e.Parameter as FrameworkElement)));
 
-                animation?.BeginAsync(container);
+                OpenStoryboard?.BeginAsync(container);
             };
         }
 

@@ -41,7 +41,7 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=150"
             };
-            var a1 = new DialogAdorner(content) {CloseOnClickBackground = true};
+            var a1 = new DialogAdorner(content, CanvasPanel) {CloseOnClickBackground = true};
         }
 
         private void OnClickDialogMessageBlock(object sender, RoutedEventArgs e)

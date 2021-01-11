@@ -5,14 +5,28 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
 
     public class DialogAdorner : AdornerControl
     {
+        public async void Show(FrameworkElement content, FrameworkElement host = null)
+        {
+            host = host ?? Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var adorner = new DialogAdorner(content, host);
+            //await CreateAdornerAsync(host);
+            //if (content != null)
+              //   Items.Add(content);
+            ControlHelper.SetFocus(content);
+        }
+
+        //===============================
+        //===============================
         //===============================
         private static FrameworkElement GetAdornedElement(FrameworkElement host)
         {
@@ -45,6 +59,11 @@ namespace WpfInvestigate.Controls
             }
         }
 
+        public Storyboard OpenPanelAnimation { get; set; } = Application.Current.FindResource("FadeInAnimation") as Storyboard;
+        public Storyboard ClosePanelAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
+        public Storyboard OpenContentAnimation { get; set; } = Application.Current.FindResource("FadeInAnimation") as Storyboard;
+        public Storyboard CloseContentAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
+
         private FrameworkElement _host;
 
         public DialogAdorner(FrameworkElement content, FrameworkElement host = null) : base(GetAdornedElement(host))
@@ -70,6 +89,8 @@ namespace WpfInvestigate.Controls
             panel.Children.Add(content);
 
             Child = panel;
+
+            OpenPanelAnimation?.BeginAsync(panel);
 
             if (_host is Window)
             {
@@ -102,20 +123,26 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private static void RemoveAdorner(UIElement host)
+        private static async void RemoveAdorner(UIElement host)
         {
             if (((host as Window)?.Content as FrameworkElement ?? host) is FrameworkElement target &&
                 AdornerLayer.GetAdornerLayer(target) is AdornerLayer layer)
             {
-                foreach (var a in (layer.GetAdorners(target) ?? new Adorner[0]).ToArray().OfType<DialogAdorner>())
+                foreach (var adorner in (layer.GetAdorners(target) ?? new Adorner[0]).ToArray().OfType<DialogAdorner>())
                 {
-                    if (a.Child is Grid panel)
+                    if (adorner.Child is Grid panel)
                     {
-                        panel.Children.RemoveRange(0, panel.Children.Count);
                         panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
+                        if (adorner.CloseContentAnimation != null)
+                        {
+                            foreach (var content in panel.Children.OfType<FrameworkElement>())
+                                await adorner.CloseContentAnimation?.BeginAsync(content);
+                        }
+                        panel.Children.RemoveRange(0, panel.Children.Count);
+                        if (adorner.ClosePanelAnimation != null) await adorner.ClosePanelAnimation?.BeginAsync(panel);
                     }
 
-                    layer.Remove(a);
+                    layer.Remove(adorner);
                 }
             }
         }

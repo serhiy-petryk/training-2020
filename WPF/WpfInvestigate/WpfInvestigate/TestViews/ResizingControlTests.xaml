@@ -86,7 +86,7 @@
         </ScrollViewer>
 
         <ScrollViewer Grid.Column="3" Margin="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <Canvas Background="Gainsboro">
+            <Canvas Background="Gainsboro" x:Name="CanvasPanel">
                 <Canvas.LayoutTransform>
                     <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
                 </Canvas.LayoutTransform>
