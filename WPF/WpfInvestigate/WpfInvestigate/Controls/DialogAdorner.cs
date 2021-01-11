@@ -79,9 +79,7 @@ namespace WpfInvestigate.Controls
             }
 
             //==========================
-            content.MouseLeftButtonDown += (s, e1) => e1.Handled = true;
             content.CommandBindings.Add(_closeCommand);
-
             content.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
                 content.Margin = new Thickness(Math.Max(0, (panel.ActualWidth - content.ActualWidth) / 2),
                     Math.Max(0, (panel.ActualHeight - content.ActualHeight) / 2), 0, 0)));
@@ -92,6 +90,13 @@ namespace WpfInvestigate.Controls
             var adorner = Tips.GetVisualParents((FrameworkElement)sender).OfType<DialogAdorner>().FirstOrDefault();
             if (adorner != null && adorner.CloseOnClickBackground)
             {
+                foreach (var content in (adorner.Child as Grid).Children.OfType<FrameworkElement>())
+                {
+                    var mousePoint = e.GetPosition(content);
+                    var isUnderContent = new Rect(0, 0, content.ActualWidth, content.ActualHeight).Contains(mousePoint);
+                    if (isUnderContent) return;
+                }
+
                 // _closeCommand.Command.Execute(adorner.AdornedElement);
                 RemoveAdorner(adorner.AdornedElement);
             }
