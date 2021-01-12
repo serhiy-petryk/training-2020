@@ -65,7 +65,8 @@ namespace WpfInvestigate.TestViews
 
         private void AddMessageContent_OnClick(object sender, RoutedEventArgs e)
         {
-            var message = MessageContent.CreateMessageContent("Test message", "Caption");
+            var message = MessageContent.CreateMessageContent("Test message", "Caption",
+                MessageContent.MessageContentIcon.Question, new[] {"OK", "Cancel", "Right", "Left"});
             var content = new ResizingControl
             {
                 Content = message,

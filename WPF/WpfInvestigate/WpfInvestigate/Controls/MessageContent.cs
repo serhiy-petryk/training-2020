@@ -141,7 +141,7 @@ namespace WpfInvestigate.Controls
         private void OnButtonClick(object parameter)
         {
             Result = parameter?.ToString();
-            ApplicationCommands.Close.Execute(null, ((DialogItems)Parent).Items[0] as FrameworkElement);
+            ApplicationCommands.Close.Execute(null, this);
         }
 
         private void RefreshButtons()
