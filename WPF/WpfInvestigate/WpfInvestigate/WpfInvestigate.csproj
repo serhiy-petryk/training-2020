@@ -81,6 +81,7 @@
     <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DialogAdorner.cs" />
     <Compile Include="Controls\DialogItems.cs" />
+    <Compile Include="Controls\MessageContent.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.cs" />
     <Compile Include="Controls\PopupResizeControl.cs" />
     <Compile Include="Controls\ResizingControl.cs" />
@@ -302,6 +303,10 @@
     <Page Include="Styles\DialogItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\MessageContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\PopupResizeControl.xaml">
       <SubType>Designer</SubType>

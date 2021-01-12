@@ -62,5 +62,17 @@ namespace WpfInvestigate.TestViews
             };
             var a1 = new DialogAdorner(content) { CloseOnClickBackground = true };
         }
+
+        private void AddMessageContent_OnClick(object sender, RoutedEventArgs e)
+        {
+            var message = MessageContent.CreateMessageContent("Test message", "Caption");
+            var content = new ResizingControl
+            {
+                Content = message,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=150"
+            };
+            var a1 = new DialogAdorner(content, CanvasPanel) { CloseOnClickBackground = true };
+        }
     }
 }

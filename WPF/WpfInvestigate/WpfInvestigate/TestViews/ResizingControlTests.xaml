@@ -37,6 +37,7 @@
             <Button Content="Add panel" Click="AddPanel_OnClick"/>
             <Button Content="Add wnd panel" Click="AddWindowPanel_OnClick"/>
             <Button Content="Add message" Click="OnClickDialogMessageBlock"/>
+            <Button Content="Add messContent" Click="AddMessageContent_OnClick"/>
         </StackPanel>
 
         <ScrollViewer Grid.Column="2" Margin="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
