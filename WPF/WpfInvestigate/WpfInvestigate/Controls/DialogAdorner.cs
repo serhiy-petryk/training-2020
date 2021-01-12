@@ -15,19 +15,6 @@ namespace WpfInvestigate.Controls
 
     public class DialogAdorner : AdornerControl
     {
-        public async void Show(FrameworkElement content, FrameworkElement host = null)
-        {
-            host = host ?? Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            var adorner = new DialogAdorner(content, host);
-            //await CreateAdornerAsync(host);
-            //if (content != null)
-              //   Items.Add(content);
-            ControlHelper.SetFocus(content);
-        }
-
-        //===============================
-        //===============================
-        //===============================
         private static FrameworkElement GetAdornedElement(FrameworkElement host)
         {
             if (host == null)
@@ -96,8 +83,11 @@ namespace WpfInvestigate.Controls
                 AdornerSize = AdornerSizeType.Container;
             }
 
-            //==========================
             content.CommandBindings.Add(_closeCommand);
+
+            //============  Animation  ==============
+            OpenPanelAnimation?.BeginAsync(panel);
+
             content.Visibility = Visibility.Hidden;
             content.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
             {
@@ -106,8 +96,7 @@ namespace WpfInvestigate.Controls
 
                 if (OpenContentAnimation == null)
                 {
-                    var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0),
-                        new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
+                    var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
                     contentAnimation.FillBehavior = FillBehavior.Stop;
                     contentAnimation.Completed += AnimationCompleted;
                     content.BeginAnimation(MarginProperty, contentAnimation);
@@ -120,14 +109,14 @@ namespace WpfInvestigate.Controls
                 }
                 else
                 {
-                    content.Margin = new Thickness(left, top, 0,0);
+                    content.Margin = new Thickness(left, top, 0, 0);
                     OpenContentAnimation?.BeginAsync(content);
                 }
 
                 content.Visibility = Visibility.Visible;
             }));
 
-            OpenPanelAnimation?.BeginAsync(panel);
+
         }
 
         private static void Panel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

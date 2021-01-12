@@ -50,5 +50,17 @@ namespace WpfInvestigate.TestViews
                 "Show Dialog", null, new[] { "OK", "Cancel", "Right", "Left" });
         }
 
+        private void AddWindowPanel_OnClick(object sender, RoutedEventArgs e)
+        {
+            var content = new ResizingControl
+            {
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Width = 150,
+                Height = 150,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=150"
+            };
+            var a1 = new DialogAdorner(content) { CloseOnClickBackground = true };
+        }
     }
 }
