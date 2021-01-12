@@ -140,7 +140,7 @@ namespace WpfInvestigate.Controls
                 panel.Children.RemoveRange(0, panel.Children.Count);
                 if (adorner.ClosePanelAnimation != null) await adorner.ClosePanelAnimation?.BeginAsync(panel);
 
-                AdornerLayer.GetAdornerLayer(adorner.AdornedElement)?.Remove(adorner);
+                adorner.AdornerLayer?.Remove(adorner);
             }
         }
     }

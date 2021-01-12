@@ -11,6 +11,7 @@ namespace WpfInvestigate.Controls
     {
         public enum AdornerSizeType {AdornedElement, ChildElement, Container }
         public AdornerSizeType AdornerSize { get; set; } = AdornerSizeType.AdornedElement;
+        public AdornerLayer AdornerLayer => AdornerLayer.GetAdornerLayer(AdornedElement);
 
         private FrameworkElement _child;
 
