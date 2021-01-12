@@ -150,7 +150,7 @@ namespace WpfInvestigate.Controls
             {
                 var content = win.Content as FrameworkElement;
                 var margin = content.Margin;
-                adorner.Margin = new Thickness(-margin.Left, -margin.Top, margin.Right, margin.Bottom);
+                adorner.Margin = new Thickness(-margin.Left, -margin.Top, margin.Left, margin.Top);
                 adorner.AdornerSize = AdornerControl.AdornerSizeType.Container;
             }
 
