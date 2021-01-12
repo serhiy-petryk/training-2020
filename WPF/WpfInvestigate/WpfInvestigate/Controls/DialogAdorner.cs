@@ -59,11 +59,10 @@ namespace WpfInvestigate.Controls
                 throw new ArgumentNullException(nameof(content));
 
             _host = host ?? Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            var layer = AdornerLayer.GetAdornerLayer(AdornedElement);
-            if (layer == null)
-                throw new Exception("DialogAdorner constructor error! AdornerLevel of host can't be null");
+            if (AdornerLayer == null)
+                throw new Exception("DialogAdorner constructor error! AdornerLevel can't be null");
 
-            layer.Add(this);
+            AdornerLayer.Add(this);
 
             var panel = new Grid
             {
