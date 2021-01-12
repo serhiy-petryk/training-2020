@@ -93,25 +93,16 @@ namespace WpfInvestigate.Controls
             {
                 var left = Math.Max(0, (panel.ActualWidth - content.ActualWidth) / 2);
                 var top = Math.Max(0, (panel.ActualHeight - content.ActualHeight) / 2);
+                content.Margin = new Thickness(left, top, 0, 0);
 
                 if (OpenContentAnimation == null)
                 {
                     var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
                     contentAnimation.FillBehavior = FillBehavior.Stop;
-                    contentAnimation.Completed += AnimationCompleted;
                     content.BeginAnimation(MarginProperty, contentAnimation);
-
-                    void AnimationCompleted(object sender, EventArgs args)
-                    {
-                        contentAnimation.Completed -= AnimationCompleted;
-                        content.Margin = new Thickness(left, top, 0, 0);
-                    }
                 }
                 else
-                {
-                    content.Margin = new Thickness(left, top, 0, 0);
-                    OpenContentAnimation?.BeginAsync(content);
-                }
+                    OpenContentAnimation.BeginAsync(content);
 
                 content.Visibility = Visibility.Visible;
             }));
