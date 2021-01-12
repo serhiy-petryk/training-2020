@@ -28,8 +28,6 @@
             </Style>
         </Style.Resources>
 
-        <Setter Property="Width" Value="Auto"/>
-        <Setter Property="Height" Value="Auto"/>
         <Setter Property="MinWidth" Value="50"/>
         <Setter Property="MinHeight" Value="50"/>
         <Setter Property="MaxWidth" Value="1000"/>
