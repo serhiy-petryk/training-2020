@@ -41,7 +41,7 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=150"
             };
-            var a1 = new DialogAdorner(content, CanvasPanel) {CloseOnClickBackground = true};
+            new DialogAdorner(CanvasPanel) {CloseOnClickBackground = true}.ShowContent(content);
         }
 
         private void OnClickDialogMessageBlock(object sender, RoutedEventArgs e)
@@ -50,7 +50,7 @@ namespace WpfInvestigate.TestViews
                 "Show Dialog", null, new[] { "OK", "Cancel", "Right", "Left" });
         }
 
-        private void AddWindowPanel_OnClick(object sender, RoutedEventArgs e)
+        private void AddWindowPanelSync_OnClick(object sender, RoutedEventArgs e)
         {
             var content = new ResizingControl
             {
@@ -74,6 +74,30 @@ namespace WpfInvestigate.TestViews
             a1.ShowContent(content2);
         }
 
+        private async void AddWindowPanelAsync_OnClick(object sender, RoutedEventArgs e)
+        {
+            var content = new ResizingControl
+            {
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Width = 250,
+                Height = 250,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=250"
+            };
+            var a1 = new DialogAdorner() { CloseOnClickBackground = true };
+            await a1.ShowContentAsync(content);
+
+            var content2 = new ResizingControl
+            {
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Width = 150,
+                Height = 150,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=150"
+            };
+            await a1.ShowContentAsync(content2);
+        }
+
         private void AddMessageContent_OnClick(object sender, RoutedEventArgs e)
         {
             var message = MessageContent.CreateMessageContent("Test message", "Caption",
@@ -84,7 +108,8 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=150"
             };
-            var a1 = new DialogAdorner(content, CanvasPanel) { CloseOnClickBackground = true };
+            new DialogAdorner(CanvasPanel) {CloseOnClickBackground = true}.ShowContent(content);
         }
+
     }
 }

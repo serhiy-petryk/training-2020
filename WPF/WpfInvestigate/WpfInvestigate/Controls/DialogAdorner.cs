@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -24,9 +26,18 @@ namespace WpfInvestigate.Controls
             return host;
         }
 
-        private static CommandBinding _closeCommand = new CommandBinding(ApplicationCommands.Close, (s, e1) =>
+        private static CommandBinding _closeCommand = new CommandBinding(ApplicationCommands.Close, async (s, e1) =>
         {
-            RemoveAdorner(Tips.GetVisualParents(s as UIElement).OfType<DialogAdorner>().FirstOrDefault());
+            var content = s as FrameworkElement;
+            var adorner = Tips.GetVisualParents(content).OfType<DialogAdorner>().FirstOrDefault();
+            if (adorner == null || content == null) return;
+
+            if (adorner.CloseContentAnimation != null)
+                await adorner.CloseContentAnimation?.BeginAsync(content);
+
+            adorner.Panel.Children.Remove(content);
+            if (adorner.Panel.Children.Count == 0)
+                RemoveAdorner(adorner);
         });
 
         //===============================
@@ -44,67 +55,14 @@ namespace WpfInvestigate.Controls
             }
         }
 
+        public Grid Panel => Child as Grid;
+
         public Storyboard OpenPanelAnimation { get; set; } = Application.Current.FindResource("FadeInAnimation") as Storyboard;
         public Storyboard ClosePanelAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
         public Storyboard OpenContentAnimation { get; set; }// = Application.Current.FindResource("FadeInAnimation") as Storyboard;
         public Storyboard CloseContentAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
 
         private FrameworkElement _host;
-
-        public DialogAdorner(FrameworkElement content, FrameworkElement host = null) : base(GetAdornedElement(host))
-        {
-            if (content == null)
-                throw new ArgumentNullException(nameof(content));
-
-            _host = host ?? Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            if (AdornerLayer == null)
-                throw new Exception("DialogAdorner constructor error! AdornerLevel can't be null");
-
-            AdornerLayer.Add(this);
-
-            var panel = new Grid
-            {
-                Background = _background,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch
-            };
-            panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
-            panel.Children.Add(content);
-
-            Child = panel;
-
-            if (_host is Window)
-            {
-                var hostMargin = (AdornedElement as FrameworkElement).Margin;
-                Margin = new Thickness(-hostMargin.Left, -hostMargin.Top, hostMargin.Left, hostMargin.Top);
-                AdornerSize = AdornerSizeType.Container;
-            }
-
-            content.CommandBindings.Add(_closeCommand);
-
-            //============  Animation  ==============
-            OpenPanelAnimation?.Begin(panel);
-
-            content.Visibility = Visibility.Hidden;
-            content.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
-            {
-                var left = Math.Max(0, (panel.ActualWidth - content.ActualWidth) / 2);
-                var top = Math.Max(0, (panel.ActualHeight - content.ActualHeight) / 2);
-                content.Margin = new Thickness(left, top, 0, 0);
-
-                if (OpenContentAnimation == null)
-                {
-                    var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
-                    contentAnimation.FillBehavior = FillBehavior.Stop;
-                    contentAnimation.Freeze();
-                    content.BeginAnimation(MarginProperty, contentAnimation);
-                }
-                else
-                    OpenContentAnimation.Begin(content);
-
-                content.Visibility = Visibility.Visible;
-            }));
-        }
 
         public DialogAdorner(FrameworkElement host = null) : base(GetAdornedElement(host))
         {
@@ -114,15 +72,6 @@ namespace WpfInvestigate.Controls
 
             AdornerLayer.Add(this);
 
-            var panel = new Grid
-            {
-                Background = _background,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch
-            };
-            panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
-            Child = panel;
-
             if (_host is Window)
             {
                 var hostMargin = (AdornedElement as FrameworkElement).Margin;
@@ -130,70 +79,105 @@ namespace WpfInvestigate.Controls
                 AdornerSize = AdornerSizeType.Container;
             }
 
-            OpenPanelAnimation?.Begin(panel);
+            Child = new Grid
+            {
+                Background = _background,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch
+            };
+            Panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
+            OpenPanelAnimation?.Begin(Panel);
         }
 
-        public void ShowContent(FrameworkElement content)
+        public async Task XShowContentAsync(FrameworkElement content)
         {
             if (content == null)
                 throw new ArgumentNullException(nameof(content));
 
-            ((Panel)Child).Children.Add(content);
+            Panel.Children.Add(content);
 
             content.CommandBindings.Add(_closeCommand);
             content.Visibility = Visibility.Hidden;
-            content.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
+
+            await content.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
+
+            var left = Math.Max(0, (Child.ActualWidth - content.ActualWidth) / 2);
+            var top = Math.Max(0, (Child.ActualHeight - content.ActualHeight) / 2);
+            content.Margin = new Thickness(left, top, 0, 0);
+            content.Visibility = Visibility.Visible;
+
+            if (OpenContentAnimation == null)
             {
-                var left = Math.Max(0, (Child.ActualWidth - content.ActualWidth) / 2);
-                var top = Math.Max(0, (Child.ActualHeight - content.ActualHeight) / 2);
-                content.Margin = new Thickness(left, top, 0, 0);
-
-                if (OpenContentAnimation == null)
-                {
-                    var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
-                    contentAnimation.FillBehavior = FillBehavior.Stop;
-                    contentAnimation.Freeze();
-                    content.BeginAnimation(MarginProperty, contentAnimation);
-                }
-                else
-                    OpenContentAnimation.Begin(content);
-
-                content.Visibility = Visibility.Visible;
-            }));
+                var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
+                contentAnimation.FillBehavior = FillBehavior.Stop;
+                contentAnimation.Freeze();
+                await content.BeginAnimationAsync(MarginProperty, contentAnimation);
+            }
+            else
+                OpenContentAnimation.Begin(content);
         }
+
+        public async Task ShowContentAsync(FrameworkElement content)
+        {
+            if (content == null)
+                throw new ArgumentNullException(nameof(content));
+
+            Panel.Children.Add(content);
+
+            content.CommandBindings.Add(_closeCommand);
+            content.Visibility = Visibility.Hidden;
+
+            await content.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
+
+            var left = Math.Max(0, (Child.ActualWidth - content.ActualWidth) / 2);
+            var top = Math.Max(0, (Child.ActualHeight - content.ActualHeight) / 2);
+            content.Margin = new Thickness(left, top, 0, 0);
+            content.Visibility = Visibility.Visible;
+
+            if (OpenContentAnimation == null)
+            {
+                var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
+                contentAnimation.FillBehavior = FillBehavior.Stop;
+                contentAnimation.Freeze();
+                await content.BeginAnimationAsync(MarginProperty, contentAnimation);
+            }
+            else
+                OpenContentAnimation.Begin(content);
+        }
+
+        public async void ShowContent(FrameworkElement content) => await ShowContentAsync(content);
 
         private static void Panel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var adorner = Tips.GetVisualParents((FrameworkElement)sender).OfType<DialogAdorner>().FirstOrDefault();
             if (adorner != null && adorner.CloseOnClickBackground)
             {
-                foreach (var content in (adorner.Child as Grid).Children.OfType<FrameworkElement>().Where(c=>c.Visibility == Visibility.Visible))
+                foreach (var content in adorner.Panel.Children.OfType<FrameworkElement>().Where(c=>c.Visibility == Visibility.Visible))
                 {
                     var mousePoint = e.GetPosition(content);
                     var isUnderContent = new Rect(0, 0, content.ActualWidth, content.ActualHeight).Contains(mousePoint);
                     if (isUnderContent) return;
                 }
 
-                // _closeCommand.Command.Execute(adorner.AdornedElement);
                 RemoveAdorner(adorner);
             }
         }
 
         private static async void RemoveAdorner(DialogAdorner adorner)
         {
-            if (adorner?.Child is Grid panel)
-            {
-                panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
-                if (adorner.CloseContentAnimation != null)
-                {
-                    foreach (var content in panel.Children.OfType<FrameworkElement>())
-                        await adorner.CloseContentAnimation?.BeginAsync(content);
-                }
-                panel.Children.RemoveRange(0, panel.Children.Count);
-                if (adorner.ClosePanelAnimation != null) await adorner.ClosePanelAnimation?.BeginAsync(panel);
+            adorner.Panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
 
-                adorner.AdornerLayer?.Remove(adorner);
-            }
+            var tasks = new List<Task>();
+            if (adorner.CloseContentAnimation != null)
+                foreach (var content in adorner.Panel.Children.OfType<FrameworkElement>())
+                    tasks.Add(adorner.CloseContentAnimation?.BeginAsync(content));
+            await Task.WhenAll(tasks.ToArray());
+
+            adorner.Panel.Children.RemoveRange(0, adorner.Panel.Children.Count);
+            if (adorner.ClosePanelAnimation != null)
+                await adorner.ClosePanelAnimation?.BeginAsync(adorner.Panel);
+
+            adorner.AdornerLayer?.Remove(adorner);
         }
     }
 }
