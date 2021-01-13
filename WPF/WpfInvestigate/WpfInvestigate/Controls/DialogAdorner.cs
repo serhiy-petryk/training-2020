@@ -85,7 +85,7 @@ namespace WpfInvestigate.Controls
             content.CommandBindings.Add(_closeCommand);
 
             //============  Animation  ==============
-            OpenPanelAnimation?.BeginAsync(panel);
+            OpenPanelAnimation?.Begin(panel);
 
             content.Visibility = Visibility.Hidden;
             content.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
@@ -101,7 +101,7 @@ namespace WpfInvestigate.Controls
                     content.BeginAnimation(MarginProperty, contentAnimation);
                 }
                 else
-                    OpenContentAnimation.BeginAsync(content);
+                    OpenContentAnimation.Begin(content);
 
                 content.Visibility = Visibility.Visible;
             }));
