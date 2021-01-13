@@ -106,8 +106,6 @@ namespace WpfInvestigate.Controls
 
                 content.Visibility = Visibility.Visible;
             }));
-
-
         }
 
         private static void Panel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
