@@ -98,6 +98,7 @@ namespace WpfInvestigate.Controls
                 {
                     var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
                     contentAnimation.FillBehavior = FillBehavior.Stop;
+                    contentAnimation.Freeze();
                     content.BeginAnimation(MarginProperty, contentAnimation);
                 }
                 else
