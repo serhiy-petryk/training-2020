@@ -60,7 +60,7 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=250"
             };
-            var a1 = new DialogAdorner() { CloseOnClickBackground = true };
+            var a1 = new DialogAdorner { CloseOnClickBackground = true };
             a1.ShowContent(content);
 
             var content2 = new ResizingControl
@@ -84,7 +84,7 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=250"
             };
-            var a1 = new DialogAdorner() { CloseOnClickBackground = true };
+            var a1 = new DialogAdorner { CloseOnClickBackground = true };
             await a1.ShowContentAsync(content);
 
             var content2 = new ResizingControl
