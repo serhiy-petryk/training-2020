@@ -2,13 +2,11 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
-using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
@@ -92,6 +90,62 @@ namespace WpfInvestigate.Controls
             {
                 var left = Math.Max(0, (panel.ActualWidth - content.ActualWidth) / 2);
                 var top = Math.Max(0, (panel.ActualHeight - content.ActualHeight) / 2);
+                content.Margin = new Thickness(left, top, 0, 0);
+
+                if (OpenContentAnimation == null)
+                {
+                    var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
+                    contentAnimation.FillBehavior = FillBehavior.Stop;
+                    contentAnimation.Freeze();
+                    content.BeginAnimation(MarginProperty, contentAnimation);
+                }
+                else
+                    OpenContentAnimation.Begin(content);
+
+                content.Visibility = Visibility.Visible;
+            }));
+        }
+
+        public DialogAdorner(FrameworkElement host = null) : base(GetAdornedElement(host))
+        {
+            _host = host ?? Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            if (AdornerLayer == null)
+                throw new Exception("DialogAdorner constructor error! AdornerLevel can't be null");
+
+            AdornerLayer.Add(this);
+
+            var panel = new Grid
+            {
+                Background = _background,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch
+            };
+            panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
+            Child = panel;
+
+            if (_host is Window)
+            {
+                var hostMargin = (AdornedElement as FrameworkElement).Margin;
+                Margin = new Thickness(-hostMargin.Left, -hostMargin.Top, hostMargin.Left, hostMargin.Top);
+                AdornerSize = AdornerSizeType.Container;
+            }
+
+            OpenPanelAnimation?.Begin(panel);
+        }
+
+        public void ShowContent(FrameworkElement content)
+        {
+            if (content == null)
+                throw new ArgumentNullException(nameof(content));
+
+            ((Panel)Child).Children.Add(content);
+
+            content.CommandBindings.Add(_closeCommand);
+            content.Visibility = Visibility.Hidden;
+            content.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
+            {
+                var left = Math.Max(0, (Child.ActualWidth - content.ActualWidth) / 2);
+                var top = Math.Max(0, (Child.ActualHeight - content.ActualHeight) / 2);
                 content.Margin = new Thickness(left, top, 0, 0);
 
                 if (OpenContentAnimation == null)

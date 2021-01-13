@@ -55,12 +55,23 @@ namespace WpfInvestigate.TestViews
             var content = new ResizingControl
             {
                 Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Width = 250,
+                Height = 250,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=250"
+            };
+            var a1 = new DialogAdorner() { CloseOnClickBackground = true };
+            a1.ShowContent(content);
+
+            var content2 = new ResizingControl
+            {
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
                 Width = 150,
                 Height = 150,
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=150"
             };
-            var a1 = new DialogAdorner(content) { CloseOnClickBackground = true };
+            a1.ShowContent(content2);
         }
 
         private void AddMessageContent_OnClick(object sender, RoutedEventArgs e)
