@@ -117,6 +117,8 @@ namespace WpfInvestigate.TestViews
             await a1.ShowContentAsync(content2);
 
             await a1.WaitUntilClosed();
+            await a1.WaitUntilClosed();
+            await a1.WaitUntilClosed();
 
             Debug.Print($"AddWindowPanelAsync_OnClick method finished");
         }

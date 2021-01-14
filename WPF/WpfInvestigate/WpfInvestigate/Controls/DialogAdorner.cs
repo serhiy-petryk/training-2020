@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -130,8 +131,19 @@ namespace WpfInvestigate.Controls
         public Task WaitUntilClosed()
         {
             var tcs = new TaskCompletionSource<bool>(new Action(() => { }));
-            Closed += (s, e) => tcs.SetResult(true);
+            if (Panel.Children.Count != 0)
+                Closed += OnClosed;
+            else
+                tcs.SetResult(false);
             return tcs.Task;
+
+            void OnClosed(object sender, EventArgs e)
+            {
+                Debug.Print($"OnClosed");
+                Closed -= OnClosed;
+                tcs.SetResult(true);
+            }
+
         }
         #endregion
 
