@@ -29,22 +29,6 @@ namespace WpfInvestigate.Controls
         private static readonly string[] _iconColors = {"Primary", "Danger", "Danger", "Warning", "Info", "Success"};
 
         #region ============  Public Static Methods  =============
-        public static MessageContent CreateMessageContent(string messageText, string caption, MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
-        {
-            var messageContent = new MessageContent { MessageText = messageText, Caption = caption, IsCloseButtonVisible = isCloseButtonVisible };
-            if (icon != null)
-            {
-                messageContent.Icon = Application.Current?.TryFindResource($"{icon.Value}Geometry") as Geometry;
-                messageContent.BaseIconColor = Application.Current?.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
-                if (messageContent.BaseIconColor.HasValue)
-                    messageContent.BaseColor = messageContent.BaseIconColor.Value;
-            }
-            if (buttons != null)
-                messageContent.Buttons = buttons;
-
-            return messageContent;
-        }
-
         public static string ShowDialog(string messageText, string caption, MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
             var messageContent = CreateMessageContent(messageText, caption, icon, buttons, isCloseButtonVisible);
@@ -83,6 +67,22 @@ namespace WpfInvestigate.Controls
             };
 
             new DialogAdorner().ShowContent(content);
+        }
+
+        private static MessageContent CreateMessageContent(string messageText, string caption, MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        {
+            var messageContent = new MessageContent { MessageText = messageText, Caption = caption, IsCloseButtonVisible = isCloseButtonVisible };
+            if (icon != null)
+            {
+                messageContent.Icon = Application.Current?.TryFindResource($"{icon.Value}Geometry") as Geometry;
+                messageContent.BaseIconColor = Application.Current?.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
+                if (messageContent.BaseIconColor.HasValue)
+                    messageContent.BaseColor = messageContent.BaseIconColor.Value;
+            }
+            if (buttons != null)
+                messageContent.Buttons = buttons;
+
+            return messageContent;
         }
         #endregion
 

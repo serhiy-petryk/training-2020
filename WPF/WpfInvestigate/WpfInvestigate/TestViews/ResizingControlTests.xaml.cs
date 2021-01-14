@@ -153,36 +153,6 @@ namespace WpfInvestigate.TestViews
             Debug.Print($"AddWindowPanelDialog_OnClick method finished");
         }
 
-        private async void AddMessageContent_OnClick(object sender, RoutedEventArgs e)
-        {
-            var message = MessageContent.CreateMessageContent("Test message", "Caption",
-                MessageContent.MessageContentIcon.Question, new[] {"OK", "Cancel", "Right", "Left"});
-            var content = new ResizingControl
-            {
-                Content = message,
-                LimitPositionToPanelBounds = true
-            };
-            var adorner = new DialogAdorner(CanvasPanel) {CloseOnClickBackground = true};
-            adorner.ShowContent(content);
-            await adorner.WaitUntilClosed();
-            Debug.Print($"Message: {message.Result}");
-        }
-
-        private static async Task<string> ShowMessageAsync(string messageText, string caption, MessageContent.MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
-        {
-            var messageContent = MessageContent.CreateMessageContent(messageText, caption, icon, buttons, isCloseButtonVisible);
-            var content = new ResizingControl
-            {
-                Content = messageContent,
-                LimitPositionToPanelBounds = true
-            };
-            var adorner = new DialogAdorner { CloseOnClickBackground = true };
-            adorner.ShowContent(content);
-            await adorner.WaitUntilClosed();
-
-            return messageContent.Result;
-        }
-
         private void MessageSync_OnClick(object sender, RoutedEventArgs e)
         {
             MessageContent.Show("Test message", "Caption",
