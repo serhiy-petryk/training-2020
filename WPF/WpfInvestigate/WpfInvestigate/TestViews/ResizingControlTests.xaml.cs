@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfInvestigate.Controls;
@@ -147,6 +148,31 @@ namespace WpfInvestigate.TestViews
             adorner.ShowContent(content);
             await adorner.WaitUntilClosed();
             Debug.Print($"Message: {message.Result}");
+        }
+
+        private static async Task<string> ShowMessageAsync(string messageText, string caption, MessageContent.MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        {
+            var messageContent = MessageContent.CreateMessageContent(messageText, caption, icon, buttons, isCloseButtonVisible);
+            var content = new ResizingControl
+            {
+                Content = messageContent,
+                LimitPositionToPanelBounds = true
+            };
+            var adorner = new DialogAdorner { CloseOnClickBackground = true };
+            adorner.ShowContent(content);
+            await adorner.WaitUntilClosed();
+
+            return messageContent.Result;
+        }
+
+        private async void MessageAsync_OnClick(object sender, RoutedEventArgs e)
+        {
+            var message = await ShowMessageAsync("Test message", "Caption", MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
+            Debug.Print($"MessageAsync: {message}");
+        }
+
+        private void MessageDialog_OnClick(object sender, RoutedEventArgs e)
+        {
         }
 
     }

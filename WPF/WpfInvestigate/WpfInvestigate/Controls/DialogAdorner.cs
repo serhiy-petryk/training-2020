@@ -45,7 +45,7 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #region =========  Property Section  ==============
-        public event EventHandler Closed;
+        public event EventHandler AllContentClosed;
         public event EventHandler<FrameworkElement> ContentClosed;
         public bool CloseOnClickBackground { get; set; } = true;
 
@@ -134,14 +134,14 @@ namespace WpfInvestigate.Controls
         {
             var tcs = new TaskCompletionSource<bool>(new Action(() => { }));
             if (Panel.Children.Count != 0)
-                Closed += OnClosed;
+                AllContentClosed += OnClosed;
             else
                 tcs.SetResult(false);
             return tcs.Task;
 
             void OnClosed(object sender, EventArgs e)
             {
-                Closed -= OnClosed;
+                AllContentClosed -= OnClosed;
                 tcs.SetResult(true);
             }
 
@@ -181,7 +181,7 @@ namespace WpfInvestigate.Controls
 
             adorner.AdornerLayer?.Remove(adorner);
             adorner.Panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
-            adorner.Closed?.Invoke(adorner, EventArgs.Empty);
+            adorner.AllContentClosed?.Invoke(adorner, EventArgs.Empty);
         }
     }
     #endregion

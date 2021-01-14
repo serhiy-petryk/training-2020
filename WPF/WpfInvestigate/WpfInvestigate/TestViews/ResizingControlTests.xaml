@@ -39,6 +39,8 @@
             <Button Content="Add Async" Click="AddWindowPanelAsync_OnClick"/>
             <Button Content="Add message" Click="OnClickDialogMessageBlock"/>
             <Button Content="Add messContent" Click="AddMessageContent_OnClick"/>
+            <Button Margin="0 10 0 0" Content="Message Async" Click="MessageAsync_OnClick"/>
+            <Button Content="Message Dialog" Click="MessageDialog_OnClick"/>
         </StackPanel>
 
         <ScrollViewer Grid.Column="2" Margin="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
