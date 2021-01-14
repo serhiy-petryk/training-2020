@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Samples;
 
@@ -173,6 +174,21 @@ namespace WpfInvestigate.TestViews
 
         private void MessageDialog_OnClick(object sender, RoutedEventArgs e)
         {
+            var message = MessageContent.CreateMessageContent("Test message", "Caption",
+                MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
+            var content = new ResizingControl
+            {
+                Content = message,
+                LimitPositionToPanelBounds = true
+            };
+            var adorner = new DialogAdorner(CanvasPanel) { CloseOnClickBackground = true };
+            adorner.ShowContent(content);
+
+            var frame = new DispatcherFrame();
+            adorner.AllContentClosed += (s2, e2) => frame.Continue = false;
+            Dispatcher.PushFrame(frame);
+
+            Debug.Print($"MessageDialog: {message.Result}");
         }
 
     }
