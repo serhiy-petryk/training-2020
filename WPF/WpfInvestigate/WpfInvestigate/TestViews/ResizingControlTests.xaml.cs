@@ -134,7 +134,7 @@ namespace WpfInvestigate.TestViews
             Debug.Print($"AddWindowPanelAsync_OnClick method finished");
         }
 
-        private void AddMessageContent_OnClick(object sender, RoutedEventArgs e)
+        private async void AddMessageContent_OnClick(object sender, RoutedEventArgs e)
         {
             var message = MessageContent.CreateMessageContent("Test message", "Caption",
                 MessageContent.MessageContentIcon.Question, new[] {"OK", "Cancel", "Right", "Left"});
@@ -144,7 +144,10 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=150"
             };
-            new DialogAdorner(CanvasPanel) {CloseOnClickBackground = true}.ShowContent(content);
+            var adorner = new DialogAdorner(CanvasPanel) {CloseOnClickBackground = true};
+            adorner.ShowContent(content);
+            await adorner.WaitUntilClosed();
+            Debug.Print($"Message: {message.Result}");
         }
 
     }
