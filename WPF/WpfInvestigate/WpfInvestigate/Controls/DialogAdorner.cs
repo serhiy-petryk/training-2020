@@ -89,34 +89,6 @@ namespace WpfInvestigate.Controls
             OpenPanelAnimation?.Begin(Panel);
         }
 
-        public async Task XShowContentAsync(FrameworkElement content)
-        {
-            if (content == null)
-                throw new ArgumentNullException(nameof(content));
-
-            Panel.Children.Add(content);
-
-            content.CommandBindings.Add(_closeCommand);
-            content.Visibility = Visibility.Hidden;
-
-            await content.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
-
-            var left = Math.Max(0, (Child.ActualWidth - content.ActualWidth) / 2);
-            var top = Math.Max(0, (Child.ActualHeight - content.ActualHeight) / 2);
-            content.Margin = new Thickness(left, top, 0, 0);
-            content.Visibility = Visibility.Visible;
-
-            if (OpenContentAnimation == null)
-            {
-                var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
-                contentAnimation.FillBehavior = FillBehavior.Stop;
-                contentAnimation.Freeze();
-                await content.BeginAnimationAsync(MarginProperty, contentAnimation);
-            }
-            else
-                OpenContentAnimation.Begin(content);
-        }
-
         public async Task ShowContentAsync(FrameworkElement content)
         {
             if (content == null)
