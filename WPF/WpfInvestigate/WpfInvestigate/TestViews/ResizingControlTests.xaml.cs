@@ -141,8 +141,7 @@ namespace WpfInvestigate.TestViews
             var content = new ResizingControl
             {
                 Content = message,
-                LimitPositionToPanelBounds = true,
-                ToolTip = "Width/Height=150"
+                LimitPositionToPanelBounds = true
             };
             var adorner = new DialogAdorner(CanvasPanel) {CloseOnClickBackground = true};
             adorner.ShowContent(content);
