@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Samples;
@@ -53,7 +54,7 @@ namespace WpfInvestigate.TestViews
         private void AddWindowPanelSync_OnClick(object sender, RoutedEventArgs e)
         {
             var a1 = new DialogAdorner { CloseOnClickBackground = true };
-            a1.OnContentClose += (o, element) =>
+            a1.ContentClosed += (o, element) =>
             {
                 if (element.Name == "Test")
                 {
@@ -68,6 +69,7 @@ namespace WpfInvestigate.TestViews
                     ((DialogAdorner)o).ShowContent(content3);
                 }
             };
+
             var content = new ResizingControl
             {
                 Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
@@ -92,6 +94,8 @@ namespace WpfInvestigate.TestViews
 
         private async void AddWindowPanelAsync_OnClick(object sender, RoutedEventArgs e)
         {
+            var a1 = new DialogAdorner { CloseOnClickBackground = true };
+
             var content = new ResizingControl
             {
                 Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
@@ -100,7 +104,6 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=250"
             };
-            var a1 = new DialogAdorner { CloseOnClickBackground = true };
             await a1.ShowContentAsync(content);
 
             var content2 = new ResizingControl
@@ -112,6 +115,10 @@ namespace WpfInvestigate.TestViews
                 ToolTip = "Width/Height=150"
             };
             await a1.ShowContentAsync(content2);
+
+            await a1.WaitUntilClosed();
+
+            Debug.Print($"AddWindowPanelAsync_OnClick method finished");
         }
 
         private void AddMessageContent_OnClick(object sender, RoutedEventArgs e)

@@ -15,6 +15,7 @@ namespace WpfInvestigate.Controls
 
     public class DialogAdorner : AdornerControl
     {
+        #region =========  Static Private Section  ==============
         private static FrameworkElement GetAdornedElement(FrameworkElement host)
         {
             if (host == null)
@@ -36,15 +37,16 @@ namespace WpfInvestigate.Controls
                 await adorner.CloseContentAnimation?.BeginAsync(content);
 
             adorner.Panel.Children.Remove(content);
-            adorner.OnContentClose?.Invoke(adorner, content);
+            adorner.ContentClosed?.Invoke(adorner, content);
 
             if (adorner.Panel.Children.Count == 0)
                 RemoveAdorner(adorner);
         });
+        #endregion
 
-        //===============================
-        public event EventHandler OnClose;
-        public event EventHandler<FrameworkElement> OnContentClose;
+        #region =========  Property Section  ==============
+        public event EventHandler Closed;
+        public event EventHandler<FrameworkElement> ContentClosed;
         public bool CloseOnClickBackground { get; set; } = true;
 
         private Brush _background = new SolidColorBrush(Color.FromArgb(0x77, 0x77, 0x77, 0x77));
@@ -67,6 +69,7 @@ namespace WpfInvestigate.Controls
         public Storyboard CloseContentAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
 
         private FrameworkElement _host;
+        #endregion
 
         public DialogAdorner(FrameworkElement host = null) : base(GetAdornedElement(host))
         {
@@ -93,6 +96,7 @@ namespace WpfInvestigate.Controls
             OpenPanelAnimation?.Begin(Panel);
         }
 
+        #region ============  Public Section  ===============
         public async Task ShowContentAsync(FrameworkElement content)
         {
             if (content == null)
@@ -123,12 +127,21 @@ namespace WpfInvestigate.Controls
 
         public async void ShowContent(FrameworkElement content) => await ShowContentAsync(content);
 
+        public Task WaitUntilClosed()
+        {
+            var tcs = new TaskCompletionSource<bool>(new Action(() => { }));
+            Closed += (s, e) => tcs.SetResult(true);
+            return tcs.Task;
+        }
+        #endregion
+
+        #region  ==============  Private Section  ==============
         private static void Panel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var adorner = Tips.GetVisualParents((FrameworkElement)sender).OfType<DialogAdorner>().FirstOrDefault();
             if (adorner != null && adorner.CloseOnClickBackground)
             {
-                foreach (var content in adorner.Panel.Children.OfType<FrameworkElement>().Where(c=>c.Visibility == Visibility.Visible))
+                foreach (var content in adorner.Panel.Children.OfType<FrameworkElement>().Where(c => c.Visibility == Visibility.Visible))
                 {
                     var mousePoint = e.GetPosition(content);
                     var isUnderContent = new Rect(0, 0, content.ActualWidth, content.ActualHeight).Contains(mousePoint);
@@ -154,7 +167,8 @@ namespace WpfInvestigate.Controls
                 await adorner.ClosePanelAnimation?.BeginAsync(adorner.Panel);
 
             adorner.AdornerLayer?.Remove(adorner);
-            adorner.OnClose?.Invoke(adorner, EventArgs.Empty);
+            adorner.Closed?.Invoke(adorner, EventArgs.Empty);
         }
     }
+    #endregion
 }
