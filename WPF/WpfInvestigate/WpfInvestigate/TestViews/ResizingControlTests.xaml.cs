@@ -52,6 +52,22 @@ namespace WpfInvestigate.TestViews
 
         private void AddWindowPanelSync_OnClick(object sender, RoutedEventArgs e)
         {
+            var a1 = new DialogAdorner { CloseOnClickBackground = true };
+            a1.OnContentClose += (o, element) =>
+            {
+                if (element.Name == "Test")
+                {
+                    var content3 = new ResizingControl
+                    {
+                        Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                        Width = 250,
+                        Height = 250,
+                        LimitPositionToPanelBounds = true,
+                        ToolTip = "Width/Height=250"
+                    };
+                    ((DialogAdorner)o).ShowContent(content3);
+                }
+            };
             var content = new ResizingControl
             {
                 Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
@@ -60,11 +76,11 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=250"
             };
-            var a1 = new DialogAdorner { CloseOnClickBackground = true };
             a1.ShowContent(content);
 
             var content2 = new ResizingControl
             {
+                Name = "Test",
                 Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
                 Width = 150,
                 Height = 150,

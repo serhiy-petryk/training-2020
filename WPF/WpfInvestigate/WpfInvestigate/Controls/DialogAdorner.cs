@@ -36,11 +36,15 @@ namespace WpfInvestigate.Controls
                 await adorner.CloseContentAnimation?.BeginAsync(content);
 
             adorner.Panel.Children.Remove(content);
+            adorner.OnContentClose?.Invoke(adorner, content);
+
             if (adorner.Panel.Children.Count == 0)
                 RemoveAdorner(adorner);
         });
 
         //===============================
+        public event EventHandler OnClose;
+        public event EventHandler<FrameworkElement> OnContentClose;
         public bool CloseOnClickBackground { get; set; } = true;
 
         private Brush _background = new SolidColorBrush(Color.FromArgb(0x77, 0x77, 0x77, 0x77));
@@ -150,6 +154,7 @@ namespace WpfInvestigate.Controls
                 await adorner.ClosePanelAnimation?.BeginAsync(adorner.Panel);
 
             adorner.AdornerLayer?.Remove(adorner);
+            adorner.OnClose?.Invoke(adorner, EventArgs.Empty);
         }
     }
 }
