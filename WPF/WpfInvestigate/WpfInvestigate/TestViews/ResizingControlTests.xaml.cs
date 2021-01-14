@@ -56,21 +56,6 @@ namespace WpfInvestigate.TestViews
         private void AddWindowPanelSync_OnClick(object sender, RoutedEventArgs e)
         {
             var a1 = new DialogAdorner { CloseOnClickBackground = true };
-            a1.ContentClosed += (o, element) =>
-            {
-                if (element.Name == "Test")
-                {
-                    var content3 = new ResizingControl
-                    {
-                        Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
-                        Width = 250,
-                        Height = 250,
-                        LimitPositionToPanelBounds = true,
-                        ToolTip = "Width/Height=250"
-                    };
-                    ((DialogAdorner)o).ShowContent(content3);
-                }
-            };
 
             var content = new ResizingControl
             {
@@ -162,8 +147,6 @@ namespace WpfInvestigate.TestViews
 
         private async void MessageAsync_OnClick(object sender, RoutedEventArgs e)
         {
-            //var message = await ShowMessageAsync("Test message", "Caption", MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
-            // Debug.Print($"MessageAsync: {message}");
             var result = await MessageContent.ShowAsync("Test message", "Caption",
                 MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
             Debug.Print($"MessageAsync: {result}");
@@ -171,20 +154,6 @@ namespace WpfInvestigate.TestViews
 
         private void MessageDialog_OnClick(object sender, RoutedEventArgs e)
         {
-            /*var message = MessageContent.CreateMessageContent("Test message", "Caption",
-                MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
-            var content = new ResizingControl
-            {
-                Content = message,
-                LimitPositionToPanelBounds = true
-            };
-            var adorner = new DialogAdorner(CanvasPanel) { CloseOnClickBackground = true };
-            adorner.ShowContent(content);
-
-            var frame = new DispatcherFrame();
-            adorner.AllContentClosed += (s2, e2) => frame.Continue = false;
-            Dispatcher.PushFrame(frame);*/
-
             var result = MessageContent.ShowDialog("Test message", "Caption",
                 MessageContent.MessageContentIcon.Question, new[] {"OK", "Cancel", "Right", "Left"});
             Debug.Print($"MessageDialog: {result}");
