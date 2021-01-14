@@ -39,10 +39,10 @@ namespace WpfInvestigate.Controls
 
             if (newContent is FrameworkElement content)
             {
-                MinWidth = Math.Max(25, content.MinWidth);
-                MaxWidth = Math.Max(25, content.MaxWidth);
-                MinHeight = Math.Max(25, content.MinHeight);
-                MaxHeight = Math.Max(25, content.MaxHeight);
+                SetBinding(MinWidthProperty, new Binding("MinWidth") { Source = content });
+                SetBinding(MaxWidthProperty, new Binding("MaxWidth") { Source = content });
+                SetBinding(MinHeightProperty, new Binding("MinHeight") { Source = content });
+                SetBinding(MaxHeightProperty, new Binding("MaxHeight") { Source = content });
 
                 if (content.IsLoaded)
                     NewContent_OnLoaded(content, null);
