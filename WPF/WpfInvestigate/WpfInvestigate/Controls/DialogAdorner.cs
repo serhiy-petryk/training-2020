@@ -66,7 +66,7 @@ namespace WpfInvestigate.Controls
 
         public Storyboard OpenPanelAnimation { get; set; } = Application.Current.FindResource("FadeInAnimation") as Storyboard;
         public Storyboard ClosePanelAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
-        public Storyboard OpenContentAnimation { get; set; }// = Application.Current.FindResource("FadeInAnimation") as Storyboard;
+        public Storyboard OpenContentAnimation { get; set; } //= Application.Current.FindResource("FadeInAnimation") as Storyboard;
         public Storyboard CloseContentAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
 
         private FrameworkElement _host;
@@ -77,8 +77,6 @@ namespace WpfInvestigate.Controls
             _host = host ?? Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
             if (AdornerLayer == null)
                 throw new Exception("DialogAdorner constructor error! AdornerLevel can't be null");
-
-            AdornerLayer.Add(this);
 
             if (_host is Window)
             {
@@ -93,8 +91,6 @@ namespace WpfInvestigate.Controls
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch
             };
-            Panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
-            OpenPanelAnimation?.Begin(Panel);
         }
 
         #region ============  Public Section  ===============
@@ -102,6 +98,13 @@ namespace WpfInvestigate.Controls
         {
             if (content == null)
                 throw new ArgumentNullException(nameof(content));
+
+            if (Panel.Children.Count == 0)
+            {
+                AdornerLayer.Add(this);
+                Panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
+                OpenPanelAnimation?.Begin(Panel);
+            }
 
             Panel.Children.Add(content);
 
@@ -179,6 +182,7 @@ namespace WpfInvestigate.Controls
                 await adorner.ClosePanelAnimation?.BeginAsync(adorner.Panel);
 
             adorner.AdornerLayer?.Remove(adorner);
+            adorner.Panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
             adorner.Closed?.Invoke(adorner, EventArgs.Empty);
         }
     }

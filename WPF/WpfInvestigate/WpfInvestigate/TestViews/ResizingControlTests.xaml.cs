@@ -96,7 +96,7 @@ namespace WpfInvestigate.TestViews
         {
             var a1 = new DialogAdorner { CloseOnClickBackground = true };
 
-            var content = new ResizingControl
+            var content1 = new ResizingControl
             {
                 Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
                 Width = 250,
@@ -104,7 +104,7 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=250"
             };
-            await a1.ShowContentAsync(content);
+            await a1.ShowContentAsync(content1);
 
             var content2 = new ResizingControl
             {
@@ -115,9 +115,20 @@ namespace WpfInvestigate.TestViews
                 ToolTip = "Width/Height=150"
             };
             await a1.ShowContentAsync(content2);
+            await a1.WaitUntilClosed();
 
-            await a1.WaitUntilClosed();
-            await a1.WaitUntilClosed();
+            var content3 = new ResizingControl
+            {
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Width = 200,
+                Height = 250,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=200/250"
+            };
+
+            a1.ShowContent(content1);
+            await a1.ShowContentAsync(content2);
+            await a1.ShowContentAsync(content3);
             await a1.WaitUntilClosed();
 
             Debug.Print($"AddWindowPanelAsync_OnClick method finished");
