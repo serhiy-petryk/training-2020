@@ -45,44 +45,44 @@ namespace WpfInvestigate.Controls
             return messageContent;
         }
 
-        public static string ShowDialog(MessageContent messageContent)
-        {
-            var dialogItems = new DialogItems();
-            dialogItems.ShowDialog(messageContent);
-            return messageContent.Result;
-        }
-        public static async Task<string> ShowAsync(MessageBlock messageContent)
-        {
-            var dialogItems = new DialogItems();
-            await dialogItems.ShowAsync(messageContent);
-            return messageContent.Result;
-        }
-        public static string Show(MessageContent messageContent)
-        {
-            var dialogItems = new DialogItems();
-            dialogItems.Show(messageContent);
-            return messageContent.Result;
-        }
-
         public static string ShowDialog(string messageText, string caption, MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
             var messageContent = CreateMessageContent(messageText, caption, icon, buttons, isCloseButtonVisible);
-            new DialogItems().ShowDialog(messageContent);
+            var content = new ResizingControl
+            {
+                Content = messageContent,
+                LimitPositionToPanelBounds = true
+            };
+
+            new DialogAdorner().ShowContentDialog(content);
             return messageContent.Result;
         }
 
         public static async Task<string> ShowAsync(string messageText, string caption, MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
             var messageContent = CreateMessageContent(messageText, caption, icon, buttons, isCloseButtonVisible);
-            await new DialogItems().ShowAsync(messageContent);
+            var content = new ResizingControl
+            {
+                Content = messageContent,
+                LimitPositionToPanelBounds = true
+            };
+
+            var adorner = new DialogAdorner();
+            adorner.ShowContent(content);
+            await adorner.WaitUntilClosed();
             return messageContent.Result;
         }
 
-        public static string Show(string messageText, string caption, MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        public static void Show(string messageText, string caption, MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
             var messageContent = CreateMessageContent(messageText, caption, icon, buttons, isCloseButtonVisible);
-            new DialogItems().Show(messageContent);
-            return messageContent.Result;
+            var content = new ResizingControl
+            {
+                Content = messageContent,
+                LimitPositionToPanelBounds = true
+            };
+
+            new DialogAdorner().ShowContent(content);
         }
         #endregion
 

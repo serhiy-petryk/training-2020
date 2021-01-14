@@ -129,6 +129,7 @@ namespace WpfInvestigate.Controls
         }
 
         public async void ShowContent(FrameworkElement content) => await ShowContentAsync(content);
+
         public void ShowContentDialog(FrameworkElement content)
         {
             ShowContent(content);

@@ -40,7 +40,8 @@
             <Button Margin="0 10 0 0" Content="Add Sync" Click="AddWindowPanelSync_OnClick"/>
             <Button Content="Add Async" Click="AddWindowPanelAsync_OnClick"/>
             <Button Content="Add Dialog" Click="AddWindowPanelDialog_OnClick"/>
-            <Button Margin="0 10 0 0" Content="Message Async" Click="MessageAsync_OnClick"/>
+            <Button Margin="0 10 0 0" Content="Message Sync" Click="MessageSync_OnClick"/>
+            <Button Content="Message Async" Click="MessageAsync_OnClick"/>
             <Button Content="Message Dialog" Click="MessageDialog_OnClick"/>
         </StackPanel>
 

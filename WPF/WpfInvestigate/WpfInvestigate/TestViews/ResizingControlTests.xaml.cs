@@ -105,7 +105,7 @@ namespace WpfInvestigate.TestViews
                 Width = 250,
                 Height = 250,
                 LimitPositionToPanelBounds = true,
-                ToolTip = "Width/Height=250"
+                ToolTip = "Content1 Width/Height=250"
             };
             await a1.ShowContentAsync(content1);
 
@@ -115,7 +115,7 @@ namespace WpfInvestigate.TestViews
                 Width = 150,
                 Height = 150,
                 LimitPositionToPanelBounds = true,
-                ToolTip = "Width/Height=150"
+                ToolTip = "Content2 Width/Height=150"
             };
             await a1.ShowContentAsync(content2);
             await a1.WaitUntilClosed();
@@ -126,12 +126,12 @@ namespace WpfInvestigate.TestViews
                 Width = 200,
                 Height = 250,
                 LimitPositionToPanelBounds = true,
-                ToolTip = "Width/Height=200/250"
+                ToolTip = "Content3 Width/Height=200/250"
             };
 
-            a1.ShowContent(content1);
-            await a1.ShowContentAsync(content2);
-            await a1.ShowContentAsync(content3);
+            await a1.ShowContentAsync(content1);
+            a1.ShowContent(content3);
+            a1.ShowContent(content2);
             await a1.WaitUntilClosed();
 
             Debug.Print($"AddWindowPanelAsync_OnClick method finished");
@@ -183,15 +183,25 @@ namespace WpfInvestigate.TestViews
             return messageContent.Result;
         }
 
+        private void MessageSync_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageContent.Show("Test message", "Caption",
+                MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
+            Debug.Print($"Message Sync");
+        }
+
         private async void MessageAsync_OnClick(object sender, RoutedEventArgs e)
         {
-            var message = await ShowMessageAsync("Test message", "Caption", MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
-            Debug.Print($"MessageAsync: {message}");
+            //var message = await ShowMessageAsync("Test message", "Caption", MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
+            // Debug.Print($"MessageAsync: {message}");
+            var result = await MessageContent.ShowAsync("Test message", "Caption",
+                MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
+            Debug.Print($"MessageAsync: {result}");
         }
 
         private void MessageDialog_OnClick(object sender, RoutedEventArgs e)
         {
-            var message = MessageContent.CreateMessageContent("Test message", "Caption",
+            /*var message = MessageContent.CreateMessageContent("Test message", "Caption",
                 MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
             var content = new ResizingControl
             {
@@ -203,9 +213,12 @@ namespace WpfInvestigate.TestViews
 
             var frame = new DispatcherFrame();
             adorner.AllContentClosed += (s2, e2) => frame.Continue = false;
-            Dispatcher.PushFrame(frame);
+            Dispatcher.PushFrame(frame);*/
 
-            Debug.Print($"MessageDialog: {message.Result}");
+            var result = MessageContent.ShowDialog("Test message", "Caption",
+                MessageContent.MessageContentIcon.Question, new[] {"OK", "Cancel", "Right", "Left"});
+            Debug.Print($"MessageDialog: {result}");
         }
+
     }
 }
