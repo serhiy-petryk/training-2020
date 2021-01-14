@@ -129,19 +129,33 @@ namespace WpfInvestigate.Controls
         }
 
         public async void ShowContent(FrameworkElement content) => await ShowContentAsync(content);
+        public void ShowContentDialog(FrameworkElement content)
+        {
+            ShowContent(content);
+
+            var frame = new DispatcherFrame();
+            AllContentClosed += OnAllContentClosed;
+            Dispatcher.PushFrame(frame);
+
+            void OnAllContentClosed(object sender, EventArgs e)
+            {
+                AllContentClosed -= OnAllContentClosed;
+                frame.Continue = false;
+            }
+        }
 
         public Task WaitUntilClosed()
         {
             var tcs = new TaskCompletionSource<bool>(new Action(() => { }));
             if (Panel.Children.Count != 0)
-                AllContentClosed += OnClosed;
+                AllContentClosed += OnAllContentClosed;
             else
                 tcs.SetResult(false);
             return tcs.Task;
 
-            void OnClosed(object sender, EventArgs e)
+            void OnAllContentClosed(object sender, EventArgs e)
             {
-                AllContentClosed -= OnClosed;
+                AllContentClosed -= OnAllContentClosed;
                 tcs.SetResult(true);
             }
 

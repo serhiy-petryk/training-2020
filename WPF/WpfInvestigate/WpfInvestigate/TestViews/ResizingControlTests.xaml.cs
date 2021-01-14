@@ -92,6 +92,7 @@ namespace WpfInvestigate.TestViews
                 ToolTip = "Width/Height=150"
             };
             a1.ShowContent(content2);
+            Debug.Print($"AddWindowPanelSync_OnClick method finished");
         }
 
         private async void AddWindowPanelAsync_OnClick(object sender, RoutedEventArgs e)
@@ -134,6 +135,22 @@ namespace WpfInvestigate.TestViews
             await a1.WaitUntilClosed();
 
             Debug.Print($"AddWindowPanelAsync_OnClick method finished");
+        }
+
+        private void AddWindowPanelDialog_OnClick(object sender, RoutedEventArgs e)
+        {
+            var a1 = new DialogAdorner { CloseOnClickBackground = true };
+
+            var content1 = new ResizingControl
+            {
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Width = 250,
+                Height = 250,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=250"
+            };
+            a1.ShowContentDialog(content1);
+            Debug.Print($"AddWindowPanelDialog_OnClick method finished");
         }
 
         private async void AddMessageContent_OnClick(object sender, RoutedEventArgs e)
@@ -190,6 +207,5 @@ namespace WpfInvestigate.TestViews
 
             Debug.Print($"MessageDialog: {message.Result}");
         }
-
     }
 }
