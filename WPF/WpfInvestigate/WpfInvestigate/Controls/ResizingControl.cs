@@ -39,10 +39,10 @@ namespace WpfInvestigate.Controls
 
             if (newContent is FrameworkElement content)
             {
-                SetBinding(MinWidthProperty, new Binding("MinWidth") { Source = content });
+                /*SetBinding(MinWidthProperty, new Binding("MinWidth") { Source = content });
                 SetBinding(MaxWidthProperty, new Binding("MaxWidth") { Source = content });
                 SetBinding(MinHeightProperty, new Binding("MinHeight") { Source = content });
-                SetBinding(MaxHeightProperty, new Binding("MaxHeight") { Source = content });
+                SetBinding(MaxHeightProperty, new Binding("MaxHeight") { Source = content });*/
 
                 if (content.IsLoaded)
                     NewContent_OnLoaded(content, null);
@@ -54,6 +54,11 @@ namespace WpfInvestigate.Controls
             {
                 var element = (FrameworkElement) sender;
                 element.Loaded -= NewContent_OnLoaded;
+
+                var resizingControl = Tips.GetVisualParents(element).OfType<ResizingControl>().FirstOrDefault();
+                resizingControl.Width = element.ActualWidth;
+                resizingControl.Height = element.ActualHeight;
+
                 var thumb = Tips.GetVisualChildren(element).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
                 if (thumb != null)
                     thumb.DragDelta += MoveThumb_OnDragDelta;
@@ -179,7 +184,7 @@ namespace WpfInvestigate.Controls
 
             /*if (Content is FrameworkElement element)
             {
-                element.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
+                element.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(() =>
                 {
                     if (!double.IsNaN(element.Width)) element.Width = ActualWidth;
                     if (!double.IsNaN(element.Height)) element.Height = ActualHeight;
