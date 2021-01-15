@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-                    xmlns:common="clr-namespace:WpfInvestigate.Common">
+                    xmlns:common="clr-namespace:WpfInvestigate.Common"
+                    xmlns:effects="clr-namespace:WpfInvestigate.Effects">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
@@ -23,12 +24,15 @@
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="8"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ResizingControl">
                     <Grid>
-                        <Grid Effect="{StaticResource ShadowEffect}" Background="#FFFFFFFF"/>
-                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <Border Effect="{StaticResource ShadowEffect}" Background="#FFFFFFFF"/>
+                        <Border BorderThickness="0" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        </Border>
 
                         <Thumb x:Name="ResizeLeft" Width="{Binding EdgeThickness.Left}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
                         <Thumb x:Name="ResizeTop" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
