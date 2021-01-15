@@ -30,15 +30,14 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
         <Setter Property="FocusButtonStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
-        <Setter Property="Effect" Value="{StaticResource ShadowEffect}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MessageContent">
                     <Border BorderThickness="2" CornerRadius="2" Padding="0"
-                                BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
+                            BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
                         <Border BorderThickness="5 2 5 5"
-                                    Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                    BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
+                                Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
                             <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -56,7 +55,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Header text -->
-                                    <TextBlock Grid.Column="0" Height="30" Padding="0 5" VerticalAlignment="Top"
+                                    <TextBlock Grid.Column="0" Padding="0 5" VerticalAlignment="Top"
                                                    Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
                                                    Text="{Binding Caption}"
                                                    TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
