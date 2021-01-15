@@ -119,9 +119,9 @@ namespace WpfInvestigate.Controls
             DataContext = this;
             _cmdClickButton = new RelayCommand(OnButtonClick);
 
-            var currentWindow = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            if (currentWindow != null)
-                MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);
+            //var currentWindow = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            //if (currentWindow != null)
+              //  MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);
         }
 
         public override void OnApplyTemplate()
