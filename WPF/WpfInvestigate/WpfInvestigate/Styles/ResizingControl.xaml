@@ -31,7 +31,8 @@
                     <Grid>
                         <Border Effect="{StaticResource ShadowEffect}" Background="#FFFFFFFF"/>
                         <Border BorderThickness="0" Background="Transparent">
-                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                              UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
 
                         <Thumb x:Name="ResizeLeft" Width="{Binding EdgeThickness.Left}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
