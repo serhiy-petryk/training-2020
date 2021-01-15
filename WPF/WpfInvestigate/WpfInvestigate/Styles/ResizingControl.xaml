@@ -24,7 +24,7 @@
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="8"/>
+        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ResizingControl">
