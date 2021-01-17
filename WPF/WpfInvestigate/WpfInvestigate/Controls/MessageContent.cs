@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -7,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Common.ColorSpaces;
 using WpfInvestigate.Helpers;
@@ -130,12 +132,22 @@ namespace WpfInvestigate.Controls
 
             _buttonsArea = GetTemplateChild("PART_ButtonsArea") as Grid;
             RefreshButtons();
+
+            var textBox = Tips.GetVisualChildren(this).OfType<TextBox>().FirstOrDefault();
+            textBox.PreviewMouseLeftButtonDown += (sender, args) =>
+            {
+                var aa1 = Tips.GetVisualParents(textBox).OfType<FrameworkElement>();
+                var aa2 = aa1.Select(a => a.Height);
+                // textBox.Width = textBox.ActualWidth + 10;
+                // textBox.Height = textBox.ActualHeight + 10;
+            };
         }
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
             base.OnRenderSizeChanged(sizeInfo);
             UpdateUI();
+            Debug.Print($"OnRenderSizeChanged: {DesiredSize}");
         }
 
         private void OnButtonClick(object parameter)
@@ -160,7 +172,9 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private void UpdateUI()
+        private bool _isFirst = true;
+        private bool _isUpdatingUI = false;
+        private async void UpdateUI()
         {
 
             /*var currentWindow = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -171,15 +185,24 @@ namespace WpfInvestigate.Controls
                     MaxWidth = newMaxWidth;
             }*/
 
-            if (_buttonsArea.Children.Count > 0)
+            if (_buttonsArea.Children.Count > 0 && !_isUpdatingUI)
             {
                 var maxWidth = _buttonsArea.Children.OfType<ContentControl>().Max(c => ControlHelper.MeasureString((string)c.Content, c).Width) + 4.0;
                 MinWidth = Math.Min(MaxWidth, (maxWidth + 2) * _buttonsArea.Children.Count);
 
                 // First measure
-                if (double.IsNaN(Width) && ActualWidth < (MaxWidth + MinWidth) / 2)
-                    Width = (MaxWidth + MinWidth) / 2;
+                if (_isFirst)
+                {
+                    _isFirst = false;
+                    if (ActualWidth < (MaxWidth + MinWidth) / 2)
+                    {
+                        Debug.Print($"IsFirst.Before: {ActualWidth}, {(MaxWidth + MinWidth) / 2}");
+                        Width = (MaxWidth + MinWidth) / 2;
+                        await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
+                    }
+                }
 
+                Debug.Print($"UpdateUI: {ActualWidth}, {Width}");
                 var space = ActualWidth - MinWidth;
                 var padding = Math.Min(20.0, space / (4 * _buttonsArea.Children.Count));
                 var buttonWidth = maxWidth + 2 * padding;
@@ -190,6 +213,13 @@ namespace WpfInvestigate.Controls
 
                 if (!Tips.AreEqual(padding, _buttonsArea.Margin.Left) || !Tips.AreEqual(padding, _buttonsArea.Margin.Right))
                     _buttonsArea.Margin = new Thickness(padding, 5, padding, 0);
+
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    Debug.Print($"UpdateUI.Dispatcher: {ActualWidth}, {Width}");
+                    _isUpdatingUI = false;
+                    // Width = double.NaN;
+                }, DispatcherPriority.ApplicationIdle);
             }
         }
         #region ===========  Properties  ==============
