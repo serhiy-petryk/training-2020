@@ -180,7 +180,7 @@ namespace WpfInvestigate.TestViews
         }
         private void OnClickInformationMessageBlock(object sender, RoutedEventArgs e)
         {
-            var aa = MessageBlock.ShowDialog("Message text Message text Message text Message text Message text Message text ",
+            var aa = MessageBlock.ShowDialog("Message text Message text Message text Message text Message text Message text",
                 "Caption of Message block", MessageBlock.MessageBlockIcon.Info, new[] { "OK" });
         }
         private void OnClickSuccessMessageBlock(object sender, RoutedEventArgs e)

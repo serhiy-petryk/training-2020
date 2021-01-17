@@ -164,5 +164,10 @@ namespace WpfInvestigate.TestViews
             Debug.Print($"MessageDialog: {result}");
         }
 
+        private async void LongMessage_OnClick(object sender, RoutedEventArgs e)
+        {
+            var result = await MessageContent.ShowAsync("Message text Message text Message text Message text Message text Message text",
+                "Caption", MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
+        }
     }
 }

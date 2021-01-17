@@ -56,18 +56,18 @@
                                     </Grid.ColumnDefinitions>
                                     <!-- Header text -->
                                     <TextBlock Grid.Column="0" Padding="0 5" VerticalAlignment="Top"
-                                                   Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
-                                                   Text="{Binding Caption}"
-                                                   TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                                               Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
+                                               Text="{Binding Caption}"
+                                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                                     <!-- Close button -->
                                     <Button Grid.Column="1" Margin="0 0 4 0" Width="20" Padding="2"
-                                                Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"
-                                                HorizontalAlignment="Right" VerticalAlignment="Center"
-                                                Focusable="True"
-                                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                                Command="ApplicationCommands.Close" CommandParameter="{Binding}"
-                                                effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"
-                                                effects:FocusVisualEffect.FocusControlStyle="{TemplateBinding FocusButtonStyle}"/>
+                                            Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"
+                                            HorizontalAlignment="Right" VerticalAlignment="Center"
+                                            Focusable="True"
+                                            Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                            Command="ApplicationCommands.Close" CommandParameter="{Binding}"
+                                            effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"
+                                            effects:FocusVisualEffect.FocusControlStyle="{TemplateBinding FocusButtonStyle}"/>
 
                                     <!--<Thumb Grid.Column="0" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>-->
                                     <Thumb Grid.Column="0" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"/>
@@ -80,15 +80,15 @@
                                     </Grid.ColumnDefinitions>
                                     <!-- Left icon -->
                                     <Viewbox Grid.Column="0" Width="24" Margin="8 0 0 0"
-                                                     Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                             Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
                                         <Path Stretch="Uniform" Data="{Binding Icon}" Fill="{Binding IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                     </Viewbox>
                                     <!-- Message -->
                                     <TextBox Grid.Column="1" Padding="0" BorderThickness="0" Background="Transparent"
-                                                 Margin="8" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                 Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
-                                                 Text="{Binding MessageText, Mode=OneWay}"
-                                                 Style="{StaticResource ReadOnlyTextBoxStyle}"/>
+                                             Margin="8" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                             Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
+                                             Text="{Binding MessageText, Mode=OneWay}"
+                                             Style="{StaticResource ReadOnlyTextBoxStyle}"/>
                                 </Grid>
                             </Grid>
                         </Border>
