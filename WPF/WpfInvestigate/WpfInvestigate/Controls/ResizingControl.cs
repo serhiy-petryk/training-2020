@@ -43,6 +43,7 @@ namespace WpfInvestigate.Controls
                     thumb.DragDelta -= MoveThumb_OnDragDelta;
 
                 dpdWidth.RemoveValueChanged(m_oldContent, OnWidthChanged);
+                dpdHeight.RemoveValueChanged(m_oldContent, OnHeightChanged);
             }
 
             if (newContent is FrameworkElement m_newContent)
@@ -58,6 +59,7 @@ namespace WpfInvestigate.Controls
                     m_newContent.Loaded += OnContentLoaded;
 
                 dpdWidth.AddValueChanged(m_newContent, OnWidthChanged);
+                dpdHeight.AddValueChanged(m_newContent, OnHeightChanged);
             }
 
             void OnWidthChanged(object sender, EventArgs e)
@@ -73,9 +75,23 @@ namespace WpfInvestigate.Controls
                         Debug.Print($"OnWidthChanged.Dispatcher: {content.Width}");
                         content.Width = double.NaN;
                     }, DispatcherPriority.Render);
-                    // content.Width = double.NaN;
                 }
+            }
 
+            void OnHeightChanged(object sender, EventArgs e)
+            {
+                var content = (FrameworkElement)sender;
+                var resizingControl = Tips.GetVisualParents(content).OfType<ResizingControl>().FirstOrDefault();
+                Debug.Print($"OnHeightChanged: {content.Height}");
+                if (!double.IsNaN(content.Height))
+                {
+                    resizingControl.Height = content.Height;
+                    content.Dispatcher.Invoke(() =>
+                    {
+                        Debug.Print($"OnHeightChanged.Dispatcher: {content.Height}");
+                        content.Height = double.NaN;
+                    }, DispatcherPriority.Render);
+                }
             }
 
             void OnContentLoaded(object sender, RoutedEventArgs args)
@@ -86,14 +102,14 @@ namespace WpfInvestigate.Controls
                 var resizingControl = Tips.GetVisualParents(content).OfType<ResizingControl>().FirstOrDefault();
                 // resizingControl.Width = content.ActualWidth;
                 Debug.Print($"OnContentLoaded");
-                resizingControl.Height = content.ActualHeight;
+                /*/ resizingControl.Height = content.ActualHeight;
                 resizingControl.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
                 {
                     Debug.Print($"OnContentLoaded.Dispatcher");
                     // resizingControl.Width = double.NaN;
                     resizingControl.Height = double.NaN;
                     // content2.Width = double.NaN;
-                }));
+                }));*/
 
                 var thumb = Tips.GetVisualChildren(content).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
                 if (thumb != null)
@@ -215,9 +231,6 @@ namespace WpfInvestigate.Controls
             var mousePosition = Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
-            //if (Content is FrameworkElement content && !double.IsNaN(content.Width))
-              //  content.Width = double.NaN;
-
             var thumb = (Thumb)sender;
             if (thumb.HorizontalAlignment == HorizontalAlignment.Left)
                 OnResizeLeft(e.HorizontalChange);
@@ -230,15 +243,6 @@ namespace WpfInvestigate.Controls
                 OnResizeBottom(e.VerticalChange);
 
             e.Handled = true;
-
-            /*if (Content is FrameworkElement element)
-            {
-                element.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(() =>
-                {
-                    if (!double.IsNaN(element.Width)) element.Width = ActualWidth;
-                    if (!double.IsNaN(element.Height)) element.Height = ActualHeight;
-                }));
-            }*/
             BringIntoView();
         }
 
