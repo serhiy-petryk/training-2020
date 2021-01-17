@@ -177,7 +177,7 @@ namespace WpfInvestigate.Controls
                     newY = container.ActualHeight - ActualHeight;
                 if (newY < 0) newY = 0;
 
-                itemsPresenter.Margin = new Thickness { Left = newX, Top = newY };
+                itemsPresenter.Margin = new Thickness (newX, newY, -1, -1);
             }
             e.Handled = true;
         }
@@ -213,7 +213,7 @@ namespace WpfInvestigate.Controls
                 if (!Tips.AreEqual(0.0, change))
                 {
                     Width = ActualWidth - change;
-                    itemsPresenter.Margin = new Thickness(itemsPresenter.Margin.Left + change, itemsPresenter.Margin.Top, 0, 0);
+                    itemsPresenter.Margin = new Thickness(itemsPresenter.Margin.Left + change, itemsPresenter.Margin.Top, -1, -1);
                 }
             }
         }
@@ -230,7 +230,7 @@ namespace WpfInvestigate.Controls
                 if (!Tips.AreEqual(0.0, change))
                 {
                     Height = ActualHeight - change;
-                    itemsPresenter.Margin = new Thickness(itemsPresenter.Margin.Left, itemsPresenter.Margin.Top + change, 0, 0);
+                    itemsPresenter.Margin = new Thickness(itemsPresenter.Margin.Left, itemsPresenter.Margin.Top + change, -1, -1);
                 }
             }
         }

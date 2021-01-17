@@ -190,5 +190,9 @@ namespace WpfInvestigate.TestViews
 
             MessageBlock.ShowDialog($"You pressed '{aa ?? "X" }' button", null, MessageBlock.MessageBlockIcon.Info, new[] { "OK" });
         }
+        private void OnClickShortMessageBlock(object sender, RoutedEventArgs e)
+        {
+            var aa = MessageBlock.ShowDialog("Test message 0 1 2 3 4", "Show Dialog", MessageBlock.MessageBlockIcon.Question);
+        }
     }
 }

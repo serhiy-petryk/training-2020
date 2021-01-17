@@ -23,7 +23,7 @@
                         <Thumb Grid.Row="0" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"/>
                         <Button Grid.Row="0" Content="X" HorizontalAlignment="Right" Command="ApplicationCommands.Close"/>
 
-                        <TextBlock Grid.Row="1" Margin="10 10 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Dialog contents" TextWrapping="NoWrap" />
+                        <TextBlock Grid.Row="1" Margin="10 10 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Dialog contents 0 1 2 3 4" TextWrapping="NoWrap" />
                         <Button Grid.Row="1" Width="75" Margin="10 0 0 10" Focusable="True" HorizontalAlignment="Center" VerticalAlignment="Bottom" Command="ApplicationCommands.Close" Content="Close"
                                 effects:FocusVisualEffect.AlwaysShowFocus="True"
                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>

@@ -52,27 +52,32 @@ namespace WpfInvestigate.Controls
 
             void NewContent_OnLoaded(object sender, RoutedEventArgs args)
             {
-                var element = (FrameworkElement) sender;
-                element.Loaded -= NewContent_OnLoaded;
+                var content2 = (FrameworkElement) sender;
+                content2.Loaded -= NewContent_OnLoaded;
 
-                var resizingControl = Tips.GetVisualParents(element).OfType<ResizingControl>().FirstOrDefault();
-                resizingControl.Width = element.ActualWidth;
-                resizingControl.Height = element.ActualHeight;
+                var resizingControl = Tips.GetVisualParents(content2).OfType<ResizingControl>().FirstOrDefault();
+                resizingControl.Width = content2.ActualWidth;
+                resizingControl.Height = content2.ActualHeight;
+                resizingControl.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(() =>
+                {
+                    resizingControl.Width = double.NaN;
+                    resizingControl.Height = double.NaN;
+                }));
 
-                var thumb = Tips.GetVisualChildren(element).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
+                var thumb = Tips.GetVisualChildren(content2).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
                 if (thumb != null)
                     thumb.DragDelta += MoveThumb_OnDragDelta;
 
-                if (!double.IsNaN(element.Width))
+                /*if (!double.IsNaN(content2.Width))
                 {
                     var b = new Binding("ActualWidth") { Source = this };
-                    element.SetBinding(Control.WidthProperty, b);
+                    content2.SetBinding(Control.WidthProperty, b);
                 }
-                if (!double.IsNaN(element.Height))
+                if (!double.IsNaN(content2.Height))
                 {
                     var b = new Binding("ActualHeight") { Source = this };
-                    element.SetBinding(Control.HeightProperty, b);
-                }
+                    content2.SetBinding(Control.HeightProperty, b);
+                }*/
             }
         }
 
@@ -149,7 +154,7 @@ namespace WpfInvestigate.Controls
                 if (!Tips.AreEqual(oldY, newY)) Canvas.SetTop(this, newY);
             }
             else
-                Margin = new Thickness { Left = newX, Top = newY };
+                Margin = new Thickness(newX, newY, -1, -1);
 
             e.Handled = true;
 
@@ -210,7 +215,7 @@ namespace WpfInvestigate.Controls
                 if (HostPanel is Canvas)
                     Canvas.SetLeft(this, oldX + change);
                 else
-                    Margin = new Thickness(oldX + change, Margin.Top, 0, 0);
+                    Margin = new Thickness(oldX + change, Margin.Top, -1, -1);
             }
         }
         private void OnResizeTop(double verticalChange)
@@ -230,7 +235,7 @@ namespace WpfInvestigate.Controls
                 if (HostPanel is Canvas)
                     Canvas.SetTop(this, oldY + change);
                 else
-                    Margin = new Thickness(Margin.Left, oldY + change, 0, 0);
+                    Margin = new Thickness(Margin.Left, oldY + change, -1, -1);
             }
         }
         private void OnResizeRight(double horizontalChange)
