@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -110,10 +111,12 @@ namespace WpfInvestigate.Controls
             content.CommandBindings.Add(_closeCommand);
             content.Visibility = Visibility.Hidden;
 
-            await content.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
+            Debug.Print($"ShowContentAsync");
+            await content.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Loaded).Task;
 
             var left = Math.Round(Math.Max(0, (Child.ActualWidth - content.ActualWidth) / 2));
             var top = Math.Round(Math.Max(0, (Child.ActualHeight - content.ActualHeight) / 2));
+            Debug.Print($"ShowContentAsync.After(left, top): {left}, {top}");
             content.Margin = new Thickness(left, top, 0, 0);
             content.Visibility = Visibility.Visible;
 

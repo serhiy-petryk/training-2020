@@ -219,7 +219,7 @@ namespace WpfInvestigate.Controls
                     Debug.Print($"UpdateUI.Dispatcher: {ActualWidth}, {Width}");
                     _isUpdatingUI = false;
                     // Width = double.NaN;
-                }, DispatcherPriority.ApplicationIdle);
+                }, DispatcherPriority.Render);
             }
         }
         #region ===========  Properties  ==============

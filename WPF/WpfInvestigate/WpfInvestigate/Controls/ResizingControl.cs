@@ -72,7 +72,7 @@ namespace WpfInvestigate.Controls
                     {
                         Debug.Print($"OnWidthChanged.Dispatcher: {content.Width}");
                         content.Width = double.NaN;
-                    }, DispatcherPriority.ContextIdle);
+                    }, DispatcherPriority.Render);
                     // content.Width = double.NaN;
                 }
 
