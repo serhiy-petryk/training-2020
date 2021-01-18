@@ -129,18 +129,8 @@ namespace WpfInvestigate.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
             _buttonsArea = GetTemplateChild("PART_ButtonsArea") as Grid;
             RefreshButtons();
-
-            var textBox = Tips.GetVisualChildren(this).OfType<TextBox>().FirstOrDefault();
-            textBox.PreviewMouseLeftButtonDown += (sender, args) =>
-            {
-                var aa1 = Tips.GetVisualParents(textBox).OfType<FrameworkElement>();
-                var aa2 = aa1.Select(a => a.Height);
-                // textBox.Width = textBox.ActualWidth + 10;
-                // textBox.Height = textBox.ActualHeight + 10;
-            };
         }
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)

@@ -169,5 +169,11 @@ namespace WpfInvestigate.TestViews
             var result = await MessageContent.ShowAsync("Message text Message text Message text Message text Message text Message text",
                 "Caption", MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
         }
+
+        private async void VeryLongMessage_OnClick(object sender, RoutedEventArgs e)
+        {
+            var result = await MessageContent.ShowAsync("Message text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message text",
+                "Caption", MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
+        }
     }
 }
