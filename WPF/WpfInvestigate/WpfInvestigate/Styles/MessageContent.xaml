@@ -22,9 +22,8 @@
             </Style>
         </Style.Resources>
 
-        <Setter Property="MinWidth" Value="50"/>
-        <Setter Property="MinHeight" Value="50"/>
-        <Setter Property="MaxWidth" Value="1000"/>
+        <Setter Property="MinWidth" Value="100"/>
+        <Setter Property="MinHeight" Value="85"/>
         <Setter Property="FontSize" Value="14" />
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -43,7 +42,7 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="15"/>
+                                    <RowDefinition Height="5"/>
                                 </Grid.RowDefinitions>
 
                                 <!-- Insert before header for focusing on the first button in ButtonsArea (not 'Close' button) -->
