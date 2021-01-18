@@ -89,7 +89,6 @@
                     <Button x:Name="ChromeTest" Width="200" Margin="0 5" Content="Ready: Chrome tests" Click="ChromeTest_OnClick"/>
                     <Button x:Name="ColorControlTest" Width="200" Margin="0 5" Content="Ready: ColorControlTest" Click="ColorControlTest_OnClick"/>
                     <Button x:Name="ButtonStyleTest" Width="200" Margin="0 5" Content="Ready: ButtonStyleTests" Click="ButtonStyleTests_OnClick"/>
-                    <Button x:Name="DialogItemsTest" Width="200" Margin="0 5" Content="Ready: DialogItemsTests" Click="DialogItemsTests_OnClick"/>
                     <Button x:Name="FocusEffectTest" Width="200" Margin="0 5" Content="Ready: FocusEffectTests" Click="FocusEffectTests_OnClick"/>
                     <Button x:Name="TextBoxTest" Width="200" Margin="0 5" Content="WiP: TextBoxTests" Click="TextBoxTests_OnClick"/>
                 </StackPanel>
@@ -111,6 +110,7 @@
                     <Button x:Name="ObsoleteDualPathToggleButtonEffectTest" Width="200" Margin="0 5" Content="Obsolete: DualPathToggleButtonEffect" Click="ObsoleteDualPathToggleButtonEffectTest_OnClick"/>
                     <Button x:Name="ObsoleteFlatButtonTest" Width="200" Margin="0 5" Content="Obsolete: FlatButton" Click="ObsoleteFlatButtonTest_OnClick"/>
                     <Button x:Name="ObsoleteShadowEffectTest" Margin="5" Content="Obsolete: ShadowEffect Tests" Click="ObsoleteShadowEffectTest_OnClick"/>
+                    <Button x:Name="ObsoleteDialogItemsTest" Width="200" Margin="0 5" Content="Obsolete: DialogItemsTests" Click="ObsoleteDialogItemsTests_OnClick"/>
                     <Button x:Name="OldButtonStyleTest" Margin="5" Content="Old: ButtonStyle Tests" Click="OldButtonStyleTest_OnClick"/>
                 </StackPanel>
             </Grid>

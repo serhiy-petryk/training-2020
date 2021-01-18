@@ -7,16 +7,16 @@ using System.Windows.Media.Imaging;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Samples;
 
-namespace WpfInvestigate.TestViews
+namespace WpfInvestigate.Obsolete.TestViews
 {
     /// <summary>
     /// DialogTests.xaml の相互作用ロジック
     /// </summary>
-    public partial class DialogTests
+    public partial class DialogItemsTests
     {
         private BitmapImage _testImage = new BitmapImage(new Uri("/Resources/1.jpg", UriKind.RelativeOrAbsolute));
 
-        public DialogTests()
+        public DialogItemsTests()
         {
             InitializeComponent();
             DataContext = this;
