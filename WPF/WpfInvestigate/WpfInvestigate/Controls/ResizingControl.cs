@@ -42,6 +42,11 @@ namespace WpfInvestigate.Controls
                 if (thumb != null)
                     thumb.DragDelta -= MoveThumb_OnDragDelta;
 
+                BindingOperations.ClearBinding(this, MinWidthProperty);
+                BindingOperations.ClearBinding(this, MaxWidthProperty);
+                BindingOperations.ClearBinding(this, MinHeightProperty);
+                BindingOperations.ClearBinding(this, MaxHeightProperty);
+
                 dpdWidth.RemoveValueChanged(m_oldContent, OnWidthChanged);
                 dpdHeight.RemoveValueChanged(m_oldContent, OnHeightChanged);
             }
