@@ -27,5 +27,16 @@
         <Setter Property="DisposeStoryboard" Value="{StaticResource FadeOutAnimation}" />
         <Setter Property="OpenStoryboard" Value="{StaticResource FadeInAnimation}" />
         <Setter Property="CloseStoryboard" Value="{StaticResource FadeOutAnimation}" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
     </Style>
 </ResourceDictionary>
