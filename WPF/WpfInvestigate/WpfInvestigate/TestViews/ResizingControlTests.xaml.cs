@@ -32,7 +32,7 @@ namespace WpfInvestigate.TestViews
             GridPanel.Children.Add(resizingControl3);
         }
 
-        private void AddPanel_OnClick(object sender, RoutedEventArgs e)
+        private void AddContent_OnClick(object sender, RoutedEventArgs e)
         {
             var content = new ResizingControl
             {
@@ -173,5 +173,61 @@ namespace WpfInvestigate.TestViews
             var result = await DialogMessage.ShowAsync("Message text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message text",
                 "Caption", DialogMessage.DialogMessageIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
         }
+
+        //===============================
+        private void OnClickSyncMessage(object sender, RoutedEventArgs e)
+        {
+            DialogMessage.Show("Message text Message text Message text Message text Message text Message text",
+                "Show Sync", null, new[] { "OK", "Cancel", "Right", "Left" });
+        }
+        private async void OnClickAsyncMessage(object sender, RoutedEventArgs e)
+        {
+            var a1 = await DialogMessage.ShowAsync("Message text Message text Message text Message text Message text Message text",
+                "Show Async", null, new[] { "OK", "Cancel", "Right", "Left" });
+        }
+        private void OnClickDialogMessage(object sender, RoutedEventArgs e)
+        {
+            var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text",
+                "Show Dialog", null, new[] { "OK", "Cancel", "Right", "Left" });
+        }
+        private void OnClickQuestionMessage(object sender, RoutedEventArgs e)
+        {
+            DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block", DialogMessage.DialogMessageIcon.Question);
+        }
+        private void OnClickStopMessage(object sender, RoutedEventArgs e)
+        {
+            var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block", DialogMessage.DialogMessageIcon.Stop);
+        }
+        private void OnClickErrorMessage(object sender, RoutedEventArgs e)
+        {
+            var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block", DialogMessage.DialogMessageIcon.Error);
+        }
+        private async void OnClickWarningMessage(object sender, RoutedEventArgs e)
+        {
+            var aa = await DialogMessage.ShowAsync("Message (Show Async)", "Caption of Message block",
+                DialogMessage.DialogMessageIcon.Warning, new[] { "OK", "Cancel", "Right", "Left" });
+
+            await DialogMessage.ShowAsync($"You pressed '{aa ?? "X"}' button", null, DialogMessage.DialogMessageIcon.Info, new[] { "OK" });
+        }
+        private void OnClickInformationMessage(object sender, RoutedEventArgs e)
+        {
+            var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text",
+                "Caption of Message block", DialogMessage.DialogMessageIcon.Info, new[] { "OK" });
+        }
+        private void OnClickSuccessMessage(object sender, RoutedEventArgs e)
+        {
+            var aa = DialogMessage.ShowDialog("Message (Show) ", "Caption of Message block",
+                DialogMessage.DialogMessageIcon.Success, new[] { "OK", "Cancel" }, false);
+
+            DialogMessage.ShowDialog($"You pressed '{aa ?? "X" }' button", null, DialogMessage.DialogMessageIcon.Info, new[] { "OK" });
+        }
+        private void OnClickShortMessage(object sender, RoutedEventArgs e)
+        {
+            var aa = DialogMessage.ShowDialog("Test message 0 1 2 3 4", "Show Dialog", DialogMessage.DialogMessageIcon.Question);
+        }
+
     }
 }
