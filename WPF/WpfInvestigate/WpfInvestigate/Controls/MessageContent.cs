@@ -22,7 +22,7 @@ namespace WpfInvestigate.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageContent), new FrameworkPropertyMetadata(typeof(MessageContent)));
             KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(MessageContent), new FrameworkPropertyMetadata(false));
-            // FocusableProperty.OverrideMetadata(typeof(MessageContent), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(MessageContent), new FrameworkPropertyMetadata(false));
         }
 
         private static readonly Color _defaultBaseColor = ColorUtils.StringToColor("#FFE2EBF4");

@@ -15,6 +15,13 @@ namespace WpfInvestigate.Controls
 
     public class DialogAdorner : AdornerControl
     {
+        static DialogAdorner()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogAdorner), new FrameworkPropertyMetadata(typeof(DialogAdorner)));
+            KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(DialogAdorner), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(DialogAdorner), new FrameworkPropertyMetadata(false));
+        }
+
         #region =========  Static Private Section  ==============
         private static FrameworkElement GetAdornedElement(FrameworkElement host)
         {
@@ -87,6 +94,7 @@ namespace WpfInvestigate.Controls
             Child = new Grid
             {
                 Background = _background,
+                Focusable = false,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch
             };

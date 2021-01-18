@@ -9,11 +9,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
     public class ResizingControl : ContentControl
     {
+        static ResizingControl()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(typeof(ResizingControl)));
+            KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(true));
+        }
+
         public const string MovingThumbName = "MovingThumb";
         public bool LimitPositionToPanelBounds { get; set; } = false;
 
@@ -50,6 +58,8 @@ namespace WpfInvestigate.Controls
                 SetBinding(MaxWidthProperty, new Binding("MaxWidth") { Source = m_newContent });
                 SetBinding(MinHeightProperty, new Binding("MinHeight") { Source = m_newContent });
                 SetBinding(MaxHeightProperty, new Binding("MaxHeight") { Source = m_newContent });
+
+                ControlHelper.SetFocus(m_newContent);
 
                 if (m_newContent.IsLoaded)
                     OnContentLoaded(m_newContent, null);
@@ -129,8 +139,13 @@ namespace WpfInvestigate.Controls
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonDown(e);
-            if (Focusable)
-                Focus();
+
+            // Is thumb of focused control pressed? => don't change focus & zindex
+            if (Tips.GetElementsUnderMouseClick(this, e).OfType<FrameworkElement>().Any(c => c.TemplatedParent is Thumb) &&
+                Tips.GetVisualParents(Keyboard.FocusedElement as DependencyObject).Any(c=> c == this))
+                return;
+
+            if (Focusable) Focus();
         }
         #endregion
 
