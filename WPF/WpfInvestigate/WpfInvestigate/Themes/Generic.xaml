@@ -8,7 +8,7 @@
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/DateTimePickers.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Obsolete/DialogItems.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Obsolete/MessageBlock.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MessageContent.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/DialogMessage.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/Calculator.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/VirtualKeyboard.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ObjectEditor.xaml" />

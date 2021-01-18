@@ -9,7 +9,7 @@
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="controls:MessageContent">
+    <Style TargetType="controls:DialogMessage">
         <Style.Resources>
             <Style TargetType="Button" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
                 <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -18,8 +18,8 @@
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
-                <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageContent}, Path=(effects:FocusVisualEffect.AlwaysShowFocus)}"/>
-                <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageContent}, Path=FocusButtonStyle}"/>
+                <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:DialogMessage}, Path=(effects:FocusVisualEffect.AlwaysShowFocus)}"/>
+                <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:DialogMessage}, Path=FocusButtonStyle}"/>
             </Style>
         </Style.Resources>
 
@@ -33,7 +33,7 @@
         <Setter Property="FocusButtonStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="controls:MessageContent">
+                <ControlTemplate TargetType="controls:DialogMessage">
                     <Border BorderThickness="2" CornerRadius="2" Padding="0"
                             BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
                         <Border BorderThickness="5 2 5 5"

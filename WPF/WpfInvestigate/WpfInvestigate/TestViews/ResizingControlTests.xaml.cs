@@ -142,36 +142,36 @@ namespace WpfInvestigate.TestViews
 
         private void MessageSync_OnClick(object sender, RoutedEventArgs e)
         {
-            //MessageContent.Show("Test message", "Caption",
-              //   MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
-            MessageContent.Show("Test message 0 1 2 3 4", "Caption", MessageContent.MessageContentIcon.Question);
+            //DialogMessage.Show("Test message", "Caption",
+            //   DialogMessage.DialogMessageIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
+            DialogMessage.Show("Test message 0 1 2 3 4", "Caption", DialogMessage.DialogMessageIcon.Question);
             Debug.Print($"Message Sync");
         }
 
         private async void MessageAsync_OnClick(object sender, RoutedEventArgs e)
         {
-            var result = await MessageContent.ShowAsync("Test message", "Caption",
-                MessageContent.MessageContentIcon.Question, new[] { "OK", "CancelX", "Right", "Left" });
+            var result = await DialogMessage.ShowAsync("Test message", "Caption",
+                DialogMessage.DialogMessageIcon.Question, new[] { "OK", "CancelX", "Right", "Left" });
             Debug.Print($"MessageAsync: {result}");
         }
 
         private void MessageDialog_OnClick(object sender, RoutedEventArgs e)
         {
-            var result = MessageContent.ShowDialog("Test message", "Caption",
-                MessageContent.MessageContentIcon.Question, new[] {"OK", "Cancel", "Right", "Left"});
+            var result = DialogMessage.ShowDialog("Test message", "Caption",
+                DialogMessage.DialogMessageIcon.Question, new[] {"OK", "Cancel", "Right", "Left"});
             Debug.Print($"MessageDialog: {result}");
         }
 
         private async void LongMessage_OnClick(object sender, RoutedEventArgs e)
         {
-            var result = await MessageContent.ShowAsync("Message text Message text Message text Message text Message text Message text",
-                "Caption", MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
+            var result = await DialogMessage.ShowAsync("Message text Message text Message text Message text Message text Message text",
+                "Caption", DialogMessage.DialogMessageIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
         }
 
         private async void VeryLongMessage_OnClick(object sender, RoutedEventArgs e)
         {
-            var result = await MessageContent.ShowAsync("Message text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message text",
-                "Caption", MessageContent.MessageContentIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
+            var result = await DialogMessage.ShowAsync("Message text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message textMessage text Message text Message text Message text Message text Message text",
+                "Caption", DialogMessage.DialogMessageIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
         }
     }
 }

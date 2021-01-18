@@ -14,15 +14,15 @@ using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
-    public class MessageContent : Control
+    public class DialogMessage : Control
     {
-        public enum MessageContentIcon { Question, Stop, Error, Warning, Info, Success }
+        public enum DialogMessageIcon { Question, Stop, Error, Warning, Info, Success }
 
-        static MessageContent()
+        static DialogMessage()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageContent), new FrameworkPropertyMetadata(typeof(MessageContent)));
-            KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(MessageContent), new FrameworkPropertyMetadata(false));
-            FocusableProperty.OverrideMetadata(typeof(MessageContent), new FrameworkPropertyMetadata(false));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogMessage), new FrameworkPropertyMetadata(typeof(DialogMessage)));
+            KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(DialogMessage), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(DialogMessage), new FrameworkPropertyMetadata(false));
         }
 
         private static readonly Color _defaultBaseColor = ColorUtils.StringToColor("#FFE2EBF4");
@@ -30,60 +30,60 @@ namespace WpfInvestigate.Controls
         private static readonly string[] _iconColors = {"Primary", "Danger", "Danger", "Warning", "Info", "Success"};
 
         #region ============  Public Static Methods  =============
-        public static string ShowDialog(string messageText, string caption, MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        public static string ShowDialog(string messageText, string caption, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
-            var messageContent = CreateMessageContent(messageText, caption, icon, buttons, isCloseButtonVisible);
+            var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
             var content = new ResizingControl
             {
-                Content = messageContent,
+                Content = dialogMessage,
                 LimitPositionToPanelBounds = true
             };
 
             new DialogAdorner().ShowContentDialog(content);
-            return messageContent.Result;
+            return dialogMessage.Result;
         }
 
-        public static async Task<string> ShowAsync(string messageText, string caption, MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        public static async Task<string> ShowAsync(string messageText, string caption, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
-            var messageContent = CreateMessageContent(messageText, caption, icon, buttons, isCloseButtonVisible);
+            var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
             var content = new ResizingControl
             {
-                Content = messageContent,
+                Content = dialogMessage,
                 LimitPositionToPanelBounds = true
             };
 
             var adorner = new DialogAdorner();
             adorner.ShowContent(content);
             await adorner.WaitUntilClosed();
-            return messageContent.Result;
+            return dialogMessage.Result;
         }
 
-        public static void Show(string messageText, string caption, MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        public static void Show(string messageText, string caption, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
-            var messageContent = CreateMessageContent(messageText, caption, icon, buttons, isCloseButtonVisible);
+            var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
             var content = new ResizingControl
             {
-                Content = messageContent,
+                Content = dialogMessage,
                 LimitPositionToPanelBounds = true
             };
 
             new DialogAdorner().ShowContent(content);
         }
 
-        private static MessageContent CreateMessageContent(string messageText, string caption, MessageContentIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        private static DialogMessage CreateDialogMessage(string messageText, string caption, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
-            var messageContent = new MessageContent { MessageText = messageText, Caption = caption, IsCloseButtonVisible = isCloseButtonVisible };
+            var dialogMessage = new DialogMessage { MessageText = messageText, Caption = caption, IsCloseButtonVisible = isCloseButtonVisible };
             if (icon != null)
             {
-                messageContent.Icon = Application.Current?.TryFindResource($"{icon.Value}Geometry") as Geometry;
-                messageContent.BaseIconColor = Application.Current?.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
-                if (messageContent.BaseIconColor.HasValue)
-                    messageContent.BaseColor = messageContent.BaseIconColor.Value;
+                dialogMessage.Icon = Application.Current?.TryFindResource($"{icon.Value}Geometry") as Geometry;
+                dialogMessage.BaseIconColor = Application.Current?.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
+                if (dialogMessage.BaseIconColor.HasValue)
+                    dialogMessage.BaseColor = dialogMessage.BaseIconColor.Value;
             }
             if (buttons != null)
-                messageContent.Buttons = buttons;
+                dialogMessage.Buttons = buttons;
 
-            return messageContent;
+            return dialogMessage;
         }
         #endregion
 
@@ -115,7 +115,7 @@ namespace WpfInvestigate.Controls
 
         private RelayCommand _cmdClickButton;
 
-        private MessageContent()
+        private DialogMessage()
         {
             DataContext = this;
             _cmdClickButton = new RelayCommand(OnButtonClick);
@@ -212,7 +212,7 @@ namespace WpfInvestigate.Controls
         }
 
         #region ===========  Properties  ==============
-        public static readonly DependencyProperty FocusButtonStyleProperty = DependencyProperty.Register("FocusButtonStyle", typeof(Style), typeof(MessageContent), new FrameworkPropertyMetadata(null));
+        public static readonly DependencyProperty FocusButtonStyleProperty = DependencyProperty.Register("FocusButtonStyle", typeof(Style), typeof(DialogMessage), new FrameworkPropertyMetadata(null));
         public Style FocusButtonStyle
         {
             get => (Style)GetValue(FocusButtonStyleProperty);
