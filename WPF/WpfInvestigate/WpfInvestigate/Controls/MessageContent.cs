@@ -207,6 +207,7 @@ namespace WpfInvestigate.Controls
                 }, DispatcherPriority.Render);
             }
         }
+
         #region ===========  Properties  ==============
         public static readonly DependencyProperty FocusButtonStyleProperty = DependencyProperty.Register("FocusButtonStyle", typeof(Style), typeof(MessageContent), new FrameworkPropertyMetadata(null));
         public Style FocusButtonStyle
