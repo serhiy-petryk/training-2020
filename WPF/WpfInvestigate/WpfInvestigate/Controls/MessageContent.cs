@@ -133,7 +133,6 @@ namespace WpfInvestigate.Controls
         {
             base.OnRenderSizeChanged(sizeInfo);
             UpdateUI();
-            Debug.Print($"OnRenderSizeChanged: {DesiredSize}");
         }
 
         private void OnButtonClick(object parameter)
@@ -193,13 +192,11 @@ namespace WpfInvestigate.Controls
                         if (a1 > startWidth) startWidth = Math.Min(MaxWidth/2, a1);
                     }
 
-                    Debug.Print($"IsFirst.Before: {ActualWidth}, {startWidth}");
                     Width = Math.Round(Math.Min(MaxWidth, startWidth));
                     await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
                 }
 
                 MinWidth = Math.Min(MaxWidth, (buttonBaseWidth + 2) * _buttonsArea.Children.Count);
-                Debug.Print($"UpdateUI: {ActualWidth}, {Width}");
                 var space = ActualWidth - MinWidth;
                 var padding = Math.Min(20.0, space / (4 * _buttonsArea.Children.Count));
                 var buttonWidth = buttonBaseWidth + 2 * padding;
@@ -211,12 +208,7 @@ namespace WpfInvestigate.Controls
                 if (!Tips.AreEqual(padding, _buttonsArea.Margin.Left) || !Tips.AreEqual(padding, _buttonsArea.Margin.Right))
                     _buttonsArea.Margin = new Thickness(padding, 5, padding, 10);
 
-                await Dispatcher.InvokeAsync(() =>
-                {
-                    Debug.Print($"UpdateUI.Dispatcher: {ActualWidth}, {Width}");
-                    _isUpdatingUI = false;
-                    // Width = double.NaN;
-                }, DispatcherPriority.Render);
+                await Dispatcher.InvokeAsync(() => _isUpdatingUI = false, DispatcherPriority.Render);
             }
         }
 

@@ -21,13 +21,7 @@ namespace WpfInvestigate.Controls
         private static int Unique = 1;
         private Panel HostPanel => VisualTreeHelper.GetParent(this) as Panel;
 
-        public ResizingControl()
-        {
-            DataContext = this;
-            /*var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-            if (currentWindow != null)
-                MaxWidth = Math.Max(400, currentWindow.ActualWidth / 2);*/
-        }
+        public ResizingControl() => DataContext = this;
 
         protected override void OnContentChanged(object oldContent, object newContent)
         {
@@ -70,32 +64,22 @@ namespace WpfInvestigate.Controls
             void OnWidthChanged(object sender, EventArgs e)
             {
                 var content = (FrameworkElement)sender;
-                var resizingControl = Tips.GetVisualParents(content).OfType<ResizingControl>().FirstOrDefault();
-                Debug.Print($"OnWidthChanged: {content.Width}");
                 if (!double.IsNaN(content.Width))
                 {
+                    var resizingControl = Tips.GetVisualParents(content).OfType<ResizingControl>().FirstOrDefault();
                     resizingControl.Width = content.Width;
-                    content.Dispatcher.Invoke(() =>
-                    {
-                        Debug.Print($"OnWidthChanged.Dispatcher: {content.Width}");
-                        content.Width = double.NaN;
-                    }, DispatcherPriority.Render);
+                    content.Dispatcher.Invoke(() => content.Width = double.NaN, DispatcherPriority.Render);
                 }
             }
 
             void OnHeightChanged(object sender, EventArgs e)
             {
                 var content = (FrameworkElement)sender;
-                var resizingControl = Tips.GetVisualParents(content).OfType<ResizingControl>().FirstOrDefault();
-                Debug.Print($"OnHeightChanged: {content.Height}");
                 if (!double.IsNaN(content.Height))
                 {
+                    var resizingControl = Tips.GetVisualParents(content).OfType<ResizingControl>().FirstOrDefault();
                     resizingControl.Height = content.Height;
-                    content.Dispatcher.Invoke(() =>
-                    {
-                        Debug.Print($"OnHeightChanged.Dispatcher: {content.Height}");
-                        content.Height = double.NaN;
-                    }, DispatcherPriority.Render);
+                    content.Dispatcher.Invoke(() => content.Height = double.NaN, DispatcherPriority.Render);
                 }
             }
 
@@ -103,33 +87,9 @@ namespace WpfInvestigate.Controls
             {
                 var content = (FrameworkElement) sender;
                 content.Loaded -= OnContentLoaded;
-
-                var resizingControl = Tips.GetVisualParents(content).OfType<ResizingControl>().FirstOrDefault();
-                // resizingControl.Width = content.ActualWidth;
-                Debug.Print($"OnContentLoaded");
-                /*/ resizingControl.Height = content.ActualHeight;
-                resizingControl.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
-                {
-                    Debug.Print($"OnContentLoaded.Dispatcher");
-                    // resizingControl.Width = double.NaN;
-                    resizingControl.Height = double.NaN;
-                    // content2.Width = double.NaN;
-                }));*/
-
                 var thumb = Tips.GetVisualChildren(content).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
                 if (thumb != null)
                     thumb.DragDelta += MoveThumb_OnDragDelta;
-
-                /*if (!double.IsNaN(content2.Width))
-                {
-                    var b = new Binding("ActualWidth") { Source = this };
-                    content2.SetBinding(Control.WidthProperty, b);
-                }
-                if (!double.IsNaN(content2.Height))
-                {
-                    var b = new Binding("ActualHeight") { Source = this };
-                    content2.SetBinding(Control.HeightProperty, b);
-                }*/
             }
         }
 
@@ -166,16 +126,6 @@ namespace WpfInvestigate.Controls
             base.OnGotFocus(e);
             Panel.SetZIndex(this, Unique++);
         }
-
-        /*protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
-        {
-            base.OnRenderSizeChanged(sizeInfo);
-            if (Content is FrameworkElement content)
-            {
-                if (!double.IsNaN(content.Width)) content.Width = double.NaN;
-                if (!double.IsNaN(content.Height)) content.Height = double.NaN;
-            }
-        }*/
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
