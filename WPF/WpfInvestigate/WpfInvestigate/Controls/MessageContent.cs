@@ -127,8 +127,6 @@ namespace WpfInvestigate.Controls
             base.OnApplyTemplate();
             _buttonsArea = GetTemplateChild("PART_ButtonsArea") as Grid;
             RefreshButtons();
-
-            var a1 = Tips.GetVisualParents(this);
         }
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
@@ -151,13 +149,20 @@ namespace WpfInvestigate.Controls
             _buttonsArea.Children.Clear();
             _buttonsArea.ColumnDefinitions.Clear();
 
-            foreach (var content in _buttons ?? new string[0])
+            if ((_buttons ?? new string[0]).Any())
             {
-                _buttonsArea.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                var button = new Button { Content = content, Command = _cmdClickButton, CommandParameter = content };
-                Grid.SetColumn(button, _buttonsArea.ColumnDefinitions.Count - 1);
-                _buttonsArea.Children.Add(button);
+                MinHeight = 120;
+                foreach (var content in _buttons)
+                {
+                    _buttonsArea.ColumnDefinitions.Add(new ColumnDefinition
+                        { Width = new GridLength(1, GridUnitType.Star) });
+                    var button = new Button { Content = content, Command = _cmdClickButton, CommandParameter = content };
+                    Grid.SetColumn(button, _buttonsArea.ColumnDefinitions.Count - 1);
+                    _buttonsArea.Children.Add(button);
+                }
             }
+            else
+                MinHeight = 85;
         }
 
         private bool _isFirst = true;

@@ -23,7 +23,6 @@
         </Style.Resources>
 
         <Setter Property="MinWidth" Value="100"/>
-        <Setter Property="MinHeight" Value="85"/>
         <Setter Property="FontSize" Value="14" />
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
