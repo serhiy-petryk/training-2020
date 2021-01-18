@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Samples;
 
