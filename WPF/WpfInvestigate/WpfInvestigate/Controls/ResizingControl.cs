@@ -110,7 +110,11 @@ namespace WpfInvestigate.Controls
                 thumb.DragDelta += ResizeThumb_OnDragDelta;
 
             var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
-            if (sv != null) sv.ScrollChanged += ScrollViewer_OnScrollChanged;
+            if (sv != null && !Equals(sv.Resources["State"], "Activated"))
+            {
+                sv.Resources["State"] = "Activated";
+                sv.ScrollChanged += ScrollViewer_OnScrollChanged;
+            }
         }
 
         private void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
