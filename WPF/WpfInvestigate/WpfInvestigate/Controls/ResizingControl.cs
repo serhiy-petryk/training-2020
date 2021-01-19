@@ -318,6 +318,5 @@ namespace WpfInvestigate.Controls
             set => SetValue(EdgeThicknessProperty, value);
         }
         #endregion
-
     }
 }
