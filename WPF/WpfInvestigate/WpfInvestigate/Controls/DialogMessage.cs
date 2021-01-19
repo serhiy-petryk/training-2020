@@ -167,49 +167,49 @@ namespace WpfInvestigate.Controls
         private bool _isUpdatingUI = false;
         private async void UpdateUI()
         {
-            if (!_isUpdatingUI)
+            if (_isUpdatingUI) return;
+            _isUpdatingUI = true;
+
+            var noButtons = _buttonsArea.Children.Count == 0;
+            var buttonBaseWidth = noButtons ? 0 : _buttonsArea.Children.OfType<ContentControl>().Max(c => ControlHelper.MeasureString((string)c.Content, c).Width) + 8.0;
+
+            // First measure
+            if (_isFirst)
             {
-                var noButtons = _buttonsArea.Children.Count == 0;
-                var buttonBaseWidth = noButtons ? 0 : _buttonsArea.Children.OfType<ContentControl>().Max(c => ControlHelper.MeasureString((string)c.Content, c).Width) + 8.0;
+                _isFirst = false;
 
-                // First measure
-                if (_isFirst)
+                var panel = Tips.GetVisualParents(this).OfType<Panel>().FirstOrDefault(p => p.ActualHeight > (ActualHeight + 0.5) || p.ActualWidth > (ActualWidth + 0.5));
+                if (panel != null)
                 {
-                    _isFirst = false;
-
-                    var panel = Tips.GetVisualParents(this).OfType<Panel>().FirstOrDefault(p => p.ActualHeight > (ActualHeight + 0.5) || p.ActualWidth > (ActualWidth + 0.5));
-                    if (panel != null)
-                    {
-                        MaxWidth = panel.ActualWidth;
-                        MaxHeight = panel.ActualHeight;
-                    }
-
-                    var startWidth = buttonBaseWidth * _buttonsArea.Children.Count * 2;
-                    var textBox = Tips.GetVisualChildren(this).OfType<TextBox>().FirstOrDefault();
-                    if (textBox != null)
-                    {
-                        var a1 = ControlHelper.MeasureString(MessageText, textBox).Width;
-                        if (a1 > startWidth) startWidth = Math.Min(MaxWidth/2, a1);
-                    }
-
-                    Width = Math.Round(Math.Min(MaxWidth, startWidth));
-                    await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
+                    MaxWidth = panel.ActualWidth;
+                    MaxHeight = panel.ActualHeight;
                 }
 
-                MinWidth = Math.Min(MaxWidth, (buttonBaseWidth + 2) * _buttonsArea.Children.Count);
-                var space = ActualWidth - MinWidth;
-                var padding = Math.Min(20.0, space / (4 * _buttonsArea.Children.Count));
-                var buttonWidth = buttonBaseWidth + 2 * padding;
+                var startWidth = buttonBaseWidth * _buttonsArea.Children.Count * 2;
+                var textBox = Tips.GetVisualChildren(this).OfType<TextBox>().FirstOrDefault();
+                if (textBox != null)
+                {
+                    var a1 = ControlHelper.MeasureString(MessageText, textBox).Width;
+                    if (a1 > startWidth) startWidth = Math.Min(MaxWidth / 2, a1);
+                }
 
-                foreach (ButtonBase button in _buttonsArea.Children)
-                    if (!Tips.AreEqual(button.Width, buttonWidth))
-                        button.Width = buttonWidth;
-
-                if (!Tips.AreEqual(padding, _buttonsArea.Margin.Left) || !Tips.AreEqual(padding, _buttonsArea.Margin.Right))
-                    _buttonsArea.Margin = new Thickness(padding, 5, padding, 10);
-
-                await Dispatcher.InvokeAsync(() => _isUpdatingUI = false, DispatcherPriority.Render);
+                Width = Math.Round(Math.Min(MaxWidth, startWidth));
+                await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
             }
+
+            MinWidth = Math.Min(MaxWidth, (buttonBaseWidth + 2) * _buttonsArea.Children.Count);
+            var space = ActualWidth - MinWidth;
+            var padding = Math.Min(20.0, space / (4 * _buttonsArea.Children.Count));
+            var buttonWidth = buttonBaseWidth + 2 * padding;
+
+            foreach (ButtonBase button in _buttonsArea.Children)
+                if (!Tips.AreEqual(button.Width, buttonWidth))
+                    button.Width = buttonWidth;
+
+            if (!Tips.AreEqual(padding, _buttonsArea.Margin.Left) || !Tips.AreEqual(padding, _buttonsArea.Margin.Right))
+                _buttonsArea.Margin = new Thickness(padding, 5, padding, 10);
+
+            await Dispatcher.InvokeAsync(() => _isUpdatingUI = false, DispatcherPriority.Render);
         }
 
         #region ===========  Properties  ==============
