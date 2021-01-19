@@ -167,9 +167,10 @@ namespace WpfInvestigate.Controls
         private bool _isUpdatingUI = false;
         private async void UpdateUI()
         {
-            if (_buttonsArea.Children.Count > 0 && !_isUpdatingUI)
+            if (!_isUpdatingUI)
             {
-                var buttonBaseWidth = _buttonsArea.Children.OfType<ContentControl>().Max(c => ControlHelper.MeasureString((string)c.Content, c).Width) + 8.0;
+                var noButtons = _buttonsArea.Children.Count == 0;
+                var buttonBaseWidth = noButtons ? 0 : _buttonsArea.Children.OfType<ContentControl>().Max(c => ControlHelper.MeasureString((string)c.Content, c).Width) + 8.0;
 
                 // First measure
                 if (_isFirst)
