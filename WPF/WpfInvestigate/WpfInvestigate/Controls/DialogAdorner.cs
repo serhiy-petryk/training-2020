@@ -43,10 +43,10 @@ namespace WpfInvestigate.Controls
             if (adorner.CloseContentAnimation != null)
                 await adorner.CloseContentAnimation?.BeginAsync(content);
 
-            adorner.Panel.Children.Remove(content);
+            adorner._panel.Children.Remove(content);
             adorner.ContentClosed?.Invoke(adorner, content);
 
-            if (adorner.Panel.Children.Count == 0)
+            if (adorner._panel.Children.Count == 0)
                 RemoveAdorner(adorner);
         });
         #endregion
@@ -68,13 +68,13 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        public Grid Panel => Child as Grid;
 
         public Storyboard OpenPanelAnimation { get; set; } = Application.Current.FindResource("FadeInAnimation") as Storyboard;
         public Storyboard ClosePanelAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
         public Storyboard OpenContentAnimation { get; set; } //= Application.Current.FindResource("FadeInAnimation") as Storyboard;
         public Storyboard CloseContentAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
 
+        private Grid _panel => Child as Grid;
         private FrameworkElement _host;
         #endregion
 
@@ -108,14 +108,14 @@ namespace WpfInvestigate.Controls
             if (content == null)
                 throw new ArgumentNullException(nameof(content));
 
-            if (Panel.Children.Count == 0)
+            if (_panel.Children.Count == 0)
             {
                 AdornerLayer.Add(this);
-                Panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
-                OpenPanelAnimation?.Begin(Panel);
+                _panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
+                OpenPanelAnimation?.Begin(_panel);
             }
 
-            Panel.Children.Add(content);
+            _panel.Children.Add(content);
 
             content.CommandBindings.Add(_closeCommand);
             content.Visibility = Visibility.Hidden;
@@ -158,7 +158,7 @@ namespace WpfInvestigate.Controls
         public Task WaitUntilClosed()
         {
             var tcs = new TaskCompletionSource<bool>(new Action(() => { }));
-            if (Panel.Children.Count != 0)
+            if (_panel.Children.Count != 0)
                 AllContentClosed += OnAllContentClosed;
             else
                 tcs.SetResult(false);
@@ -169,7 +169,6 @@ namespace WpfInvestigate.Controls
                 AllContentClosed -= OnAllContentClosed;
                 tcs.SetResult(true);
             }
-
         }
         #endregion
 
@@ -179,7 +178,7 @@ namespace WpfInvestigate.Controls
             var adorner = Tips.GetVisualParents((FrameworkElement)sender).OfType<DialogAdorner>().FirstOrDefault();
             if (adorner != null && adorner.CloseOnClickBackground)
             {
-                foreach (var content in adorner.Panel.Children.OfType<FrameworkElement>().Where(c => c.Visibility == Visibility.Visible))
+                foreach (var content in adorner._panel.Children.OfType<FrameworkElement>().Where(c => c.Visibility == Visibility.Visible))
                 {
                     var mousePoint = e.GetPosition(content);
                     var isUnderContent = new Rect(0, 0, content.ActualWidth, content.ActualHeight).Contains(mousePoint);
@@ -192,20 +191,20 @@ namespace WpfInvestigate.Controls
 
         private static async void RemoveAdorner(DialogAdorner adorner)
         {
-            adorner.Panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
+            adorner._panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
 
             var tasks = new List<Task>();
             if (adorner.CloseContentAnimation != null)
-                foreach (var content in adorner.Panel.Children.OfType<FrameworkElement>())
+                foreach (var content in adorner._panel.Children.OfType<FrameworkElement>())
                     tasks.Add(adorner.CloseContentAnimation?.BeginAsync(content));
             await Task.WhenAll(tasks.ToArray());
 
-            adorner.Panel.Children.RemoveRange(0, adorner.Panel.Children.Count);
+            adorner._panel.Children.RemoveRange(0, adorner._panel.Children.Count);
             if (adorner.ClosePanelAnimation != null)
-                await adorner.ClosePanelAnimation?.BeginAsync(adorner.Panel);
+                await adorner.ClosePanelAnimation?.BeginAsync(adorner._panel);
 
             adorner.AdornerLayer?.Remove(adorner);
-            adorner.Panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
+            adorner._panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
             adorner.AllContentClosed?.Invoke(adorner, EventArgs.Empty);
         }
     }
