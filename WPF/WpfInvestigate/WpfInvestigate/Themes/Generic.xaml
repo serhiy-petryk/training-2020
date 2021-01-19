@@ -6,8 +6,6 @@
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/DropDownButtons.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/NumericBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/DateTimePickers.xaml" />
-        <!--<ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Obsolete/DialogItems.xaml" />-->
-        <!--<ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Obsolete/MessageBlock.xaml" />-->
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/DialogMessage.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/Calculator.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/VirtualKeyboard.xaml" />
