@@ -140,7 +140,7 @@ namespace WpfInvestigate.Controls
         {
             base.OnPreviewMouseLeftButtonDown(e);
 
-            // Is thumb of focused control pressed? => don't change focus & zindex
+            // If thumb of focused control pressed => don't change focus & zindex
             if (Tips.GetElementsUnderMouseClick(this, e).OfType<FrameworkElement>().Any(c => c.TemplatedParent is Thumb) &&
                 Tips.GetVisualParents(Keyboard.FocusedElement as DependencyObject).Any(c=> c == this))
                 return;
