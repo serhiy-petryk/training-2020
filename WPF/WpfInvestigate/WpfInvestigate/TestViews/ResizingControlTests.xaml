@@ -9,6 +9,9 @@
         Title="ResizingControl" Height="700" Width="1100" Background="AntiqueWhite">
 
     <Grid Margin="10 40 20 30">
+        <Grid.LayoutTransform>
+            <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+        </Grid.LayoutTransform>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="120"/>
