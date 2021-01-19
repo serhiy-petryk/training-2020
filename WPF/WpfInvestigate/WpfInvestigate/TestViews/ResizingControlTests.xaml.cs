@@ -45,16 +45,6 @@ namespace WpfInvestigate.TestViews
             new DialogAdorner(CanvasPanel) {CloseOnClickBackground = true}.ShowContent(content);
         }
 
-        private void AddMessageBlock_OnClick(object sender, RoutedEventArgs e)
-        {
-            var aa = MessageBlock.ShowDialog("Message text Message text Message text Message text Message text Message text ",
-                "Show Dialog", null, new[] { "OK", "Cancel", "Right", "Left" });
-        }
-        private void AddShortMessageBlock_OnClick(object sender, RoutedEventArgs e)
-        {
-            var aa = MessageBlock.ShowDialog("Test message 0 1 2 3 4", "Show Dialog", MessageBlock.MessageBlockIcon.Question);
-        }
-
         private void AddWindowPanelSync_OnClick(object sender, RoutedEventArgs e)
         {
             var a1 = new DialogAdorner { CloseOnClickBackground = true };

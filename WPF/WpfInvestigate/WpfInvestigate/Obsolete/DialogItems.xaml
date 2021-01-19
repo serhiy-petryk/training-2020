@@ -1,12 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:WpfInvestigate.Controls">
+                    xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type controls:DialogItems}">
+    <Style TargetType="{x:Type obsolete:DialogItems}">
         <Style.Resources>
             <ControlTemplate x:Key="DefaultTemplate">
                 <Grid Background="{TemplateBinding Background}" UseLayoutRounding="True" SnapsToDevicePixels="True">

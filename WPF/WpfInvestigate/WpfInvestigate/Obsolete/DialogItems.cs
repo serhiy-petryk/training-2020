@@ -15,9 +15,10 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Controls;
 using WpfInvestigate.Helpers;
 
-namespace WpfInvestigate.Controls
+namespace WpfInvestigate.Obsolete
 {
     public class DialogItems : ItemsControl
     {

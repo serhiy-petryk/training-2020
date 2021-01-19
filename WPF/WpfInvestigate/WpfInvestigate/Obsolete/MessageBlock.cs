@@ -11,7 +11,7 @@ using WpfInvestigate.Common;
 using WpfInvestigate.Common.ColorSpaces;
 using WpfInvestigate.Helpers;
 
-namespace WpfInvestigate.Controls
+namespace WpfInvestigate.Obsolete
 {
     public class MessageBlock : Control
     {

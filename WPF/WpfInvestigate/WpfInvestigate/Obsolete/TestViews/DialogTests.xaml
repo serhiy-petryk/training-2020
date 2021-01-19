@@ -4,144 +4,151 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
         Title="MainWindow" Width="1000" Height="600" Background="Gainsboro">
 
     <Window.Resources>
-        <ItemsPanelTemplate x:Key="HorizontalPanel">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
-        </ItemsPanelTemplate>
-        <ItemsPanelTemplate x:Key="VerticalPanel">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
-        </ItemsPanelTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Obsolete/MessageBlock.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <ControlTemplate x:Key="LightGlassTemplate">
-            <Grid Background="White">
-                <Grid>
-                    <Grid.CacheMode>
-                        <BitmapCache RenderAtScale="0.2" />
-                    </Grid.CacheMode>
+            <ItemsPanelTemplate x:Key="HorizontalPanel">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
+            </ItemsPanelTemplate>
+            <ItemsPanelTemplate x:Key="VerticalPanel">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+            </ItemsPanelTemplate>
+
+            <ControlTemplate x:Key="LightGlassTemplate">
+                <Grid Background="White">
                     <Grid>
-                        <Grid.Background>
-                            <VisualBrush Visual="{Binding AdornedElement, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:AdornerControl}}}"
-                                         Stretch="None" AlignmentX="Left" AlignmentY="Top" ViewboxUnits="Absolute" />
-                        </Grid.Background>
-                        <Grid.Effect>
-                            <BlurEffect Radius="20"/>
-                        </Grid.Effect>
+                        <Grid.CacheMode>
+                            <BitmapCache RenderAtScale="0.2" />
+                        </Grid.CacheMode>
+                        <Grid>
+                            <Grid.Background>
+                                <VisualBrush Visual="{Binding AdornedElement, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:AdornerControl}}}"
+                                             Stretch="None" AlignmentX="Left" AlignmentY="Top" ViewboxUnits="Absolute" />
+                            </Grid.Background>
+                            <Grid.Effect>
+                                <BlurEffect Radius="20"/>
+                            </Grid.Effect>
+                        </Grid>
                     </Grid>
+                    <Grid Background="#44FFFFFF" />
+                    <ItemsPresenter />
                 </Grid>
-                <Grid Background="#44FFFFFF" />
-                <ItemsPresenter />
-            </Grid>
-        </ControlTemplate>
+            </ControlTemplate>
 
-        <ControlTemplate x:Key="DarkGlassTemplate">
-            <Grid Background="White">
-                <Grid>
-                    <Grid.CacheMode>
-                        <BitmapCache RenderAtScale="0.2" />
-                    </Grid.CacheMode>
+            <ControlTemplate x:Key="DarkGlassTemplate">
+                <Grid Background="White">
                     <Grid>
-                        <Grid.Background>
-                            <VisualBrush Visual="{Binding AdornedElement, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:AdornerControl}}}"
-                                         Stretch="None" AlignmentX="Left" AlignmentY="Top" ViewboxUnits="Absolute" />
-                        </Grid.Background>
-                        <Grid.Effect>
-                            <BlurEffect Radius="20"/>
-                        </Grid.Effect>
+                        <Grid.CacheMode>
+                            <BitmapCache RenderAtScale="0.2" />
+                        </Grid.CacheMode>
+                        <Grid>
+                            <Grid.Background>
+                                <VisualBrush Visual="{Binding AdornedElement, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:AdornerControl}}}"
+                                             Stretch="None" AlignmentX="Left" AlignmentY="Top" ViewboxUnits="Absolute" />
+                            </Grid.Background>
+                            <Grid.Effect>
+                                <BlurEffect Radius="20"/>
+                            </Grid.Effect>
+                        </Grid>
                     </Grid>
+                    <Grid Background="#44000000" />
+                    <ItemsPresenter />
                 </Grid>
-                <Grid Background="#44000000" />
-                <ItemsPresenter />
-            </Grid>
-        </ControlTemplate>
+            </ControlTemplate>
 
-        <Style x:Key="PhotoCardStyle" TargetType="{x:Type ContentControl}">
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <Grid Background="White" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Effect="{StaticResource ShadowEffect}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+            <Style x:Key="PhotoCardStyle" TargetType="{x:Type ContentControl}">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Grid Background="White" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Effect="{StaticResource ShadowEffect}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <ContentPresenter Content="{Binding}" Margin="10"/>
+                                <StackPanel Grid.Row="1" Margin="0,0,10,5" Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                    <TextBlock Text="Close" VerticalAlignment="Center" />
+                                    <Button Width="20" Margin="2" Padding="2"
+                                            DockPanel.Dock="Bottom" HorizontalAlignment="Right"
+                                            Command="ApplicationCommands.Close" CommandParameter="{Binding}"
+                                            Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ItemWithMarginContainerStyle" TargetType="{x:Type ContentControl}">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
                             <ContentPresenter Content="{Binding}" Margin="10"/>
-                            <StackPanel Grid.Row="1" Margin="0,0,10,5" Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
-                                <TextBlock Text="Close" VerticalAlignment="Center" />
-                                <Button Width="20" Margin="2" Padding="2"
-                                        DockPanel.Dock="Bottom" HorizontalAlignment="Right"
-                                        Command="ApplicationCommands.Close" CommandParameter="{Binding}"
-                                        Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"/>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
-        <Style x:Key="ItemWithMarginContainerStyle" TargetType="{x:Type ContentControl}">
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <ContentPresenter Content="{Binding}" Margin="10"/>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+            <Style x:Key="WithMarginStyle" TargetType="{x:Type obsolete:DialogItems}">
+                <Setter Property="ItemContainerStyle" Value="{StaticResource ItemWithMarginContainerStyle}"/>
+            </Style>
 
-        <Style x:Key="WithMarginStyle" TargetType="{x:Type controls:DialogItems}">
-            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemWithMarginContainerStyle}"/>
-        </Style>
+            <Style x:Key="MultipleDialogStyle" TargetType="{x:Type obsolete:DialogItems}">
+                <Setter Property="ItemContainerStyle" Value="{StaticResource ItemWithMarginContainerStyle}"/>
+                <Setter Property="ItemsPanel" Value="{StaticResource VerticalPanel}" />
+                <Setter Property="InitializeStoryboard" Value="{StaticResource ZoomInAnimation}" />
+                <Setter Property="DisposeStoryboard" Value="{StaticResource ZoomOutAnimation}" />
+                <Setter Property="OpenStoryboard" Value="{StaticResource ZoomInAnimation}" />
+                <Setter Property="CloseStoryboard" Value="{StaticResource ZoomOutAnimation}" />
+                <Setter Property="IsParallelInitialize" Value="False" />
+                <Setter Property="IsParallelDispose" Value="False" />
+            </Style>
 
-        <Style x:Key="MultipleDialogStyle" TargetType="{x:Type controls:DialogItems}">
-            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemWithMarginContainerStyle}"/>
-            <Setter Property="ItemsPanel" Value="{StaticResource VerticalPanel}" />
-            <Setter Property="InitializeStoryboard" Value="{StaticResource ZoomInAnimation}" />
-            <Setter Property="DisposeStoryboard" Value="{StaticResource ZoomOutAnimation}" />
-            <Setter Property="OpenStoryboard" Value="{StaticResource ZoomInAnimation}" />
-            <Setter Property="CloseStoryboard" Value="{StaticResource ZoomOutAnimation}" />
-            <Setter Property="IsParallelInitialize" Value="False" />
-            <Setter Property="IsParallelDispose" Value="False" />
-        </Style>
+            <Style x:Key="DialogBultinStyle" TargetType="{x:Type obsolete:DialogItems}">
+                <Setter Property="Template" Value="{StaticResource DarkGlassTemplate}" />
+                <Setter Property="ItemsPanel" Value="{StaticResource HorizontalPanel}" />
+                <Setter Property="ItemContainerStyle" Value="{StaticResource PhotoCardStyle}" />
+            </Style>
 
-        <Style x:Key="DialogBultinStyle" TargetType="{x:Type controls:DialogItems}">
-            <Setter Property="Template" Value="{StaticResource DarkGlassTemplate}" />
-            <Setter Property="ItemsPanel" Value="{StaticResource HorizontalPanel}" />
-            <Setter Property="ItemContainerStyle" Value="{StaticResource PhotoCardStyle}" />
-        </Style>
-
-        <Style x:Key="DialogCustomStyle" TargetType="{x:Type controls:DialogItems}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Grid Background="#88F5F5DC">
-                            <ItemsPresenter />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemContainerStyle">
-                <Setter.Value>
-                    <Style TargetType="{x:Type ContentControl}">
-                        <Setter Property="ContentTemplate">
-                            <Setter.Value>
-                                <DataTemplate>
-                                    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="3" Margin="10">
-                                        <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="White">
-                                            <Button Width="20" Margin="2" Padding="2"
-                                                    DockPanel.Dock="Bottom" HorizontalAlignment="Right"
-                                                    Command="ApplicationCommands.Close" CommandParameter="{Binding}"
-                                                    Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"/>
-                                            <ContentPresenter Content="{Binding}" />
-                                        </DockPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Setter.Value>
-            </Setter>
-        </Style>
+            <Style x:Key="DialogCustomStyle" TargetType="{x:Type obsolete:DialogItems}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid Background="#88F5F5DC">
+                                <ItemsPresenter />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="{x:Type ContentControl}">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="3" Margin="10">
+                                            <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="White">
+                                                <Button Width="20" Margin="2" Padding="2"
+                                                        DockPanel.Dock="Bottom" HorizontalAlignment="Right"
+                                                        Command="ApplicationCommands.Close" CommandParameter="{Binding}"
+                                                        Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"/>
+                                                <ContentPresenter Content="{Binding}" />
+                                            </DockPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </Window.Resources>
 
     <Grid>

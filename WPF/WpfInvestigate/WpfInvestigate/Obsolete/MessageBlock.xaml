@@ -2,14 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects"
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
-                    xmlns:controls="clr-namespace:WpfInvestigate.Controls">
+                    xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="controls:MessageBlock">
+    <Style TargetType="obsolete:MessageBlock">
         <Style.Resources>
             <Style TargetType="Button" BasedOn="{StaticResource MonochromeButtonBaseStyle}">
                 <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -17,8 +17,8 @@
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
-                <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageBlock}, Path=(effects:FocusVisualEffect.AlwaysShowFocus)}"/>
-                <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MessageBlock}, Path=FocusButtonStyle}"/>
+                <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="{Binding RelativeSource={RelativeSource AncestorType=obsolete:MessageBlock}, Path=(effects:FocusVisualEffect.AlwaysShowFocus)}"/>
+                <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=obsolete:MessageBlock}, Path=FocusButtonStyle}"/>
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -39,7 +39,7 @@
         <Setter Property="Effect" Value="{StaticResource ShadowEffect}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="controls:MessageBlock">
+                <ControlTemplate TargetType="obsolete:MessageBlock">
                     <Grid>
                         <Border BorderThickness="2" CornerRadius="2" Padding="0"
                                 BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
