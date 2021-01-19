@@ -182,17 +182,17 @@ namespace WpfInvestigate.TestViews
         }
         private void OnClickQuestionMessage(object sender, RoutedEventArgs e)
         {
-            DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text ",
+            DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text",
                 "Caption of Message block", DialogMessage.DialogMessageIcon.Question);
         }
         private void OnClickStopMessage(object sender, RoutedEventArgs e)
         {
-            var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text ",
+            var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text",
                 "Caption of Message block", DialogMessage.DialogMessageIcon.Stop);
         }
         private void OnClickErrorMessage(object sender, RoutedEventArgs e)
         {
-            var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text ",
+            var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message",
                 "Caption of Message block", DialogMessage.DialogMessageIcon.Error);
         }
         private async void OnClickWarningMessage(object sender, RoutedEventArgs e)
