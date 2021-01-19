@@ -98,6 +98,8 @@ namespace WpfInvestigate.Controls
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch
             };
+            KeyboardNavigation.SetTabNavigation(Child, KeyboardNavigationMode.Cycle);
+            KeyboardNavigation.SetDirectionalNavigation(Child, KeyboardNavigationMode.Cycle);
         }
 
         #region ============  Public Section  ===============
