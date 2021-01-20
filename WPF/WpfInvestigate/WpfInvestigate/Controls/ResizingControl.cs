@@ -109,8 +109,7 @@ namespace WpfInvestigate.Controls
             foreach (var thumb in Tips.GetVisualChildren(this).OfType<Thumb>())
                 thumb.DragDelta += ResizeThumb_OnDragDelta;
 
-            var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
-            if (sv != null && !Equals(sv.Resources["State"], "Activated"))
+            if (Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault() is ScrollViewer sv && !Equals(sv.Resources["State"], "Activated"))
             {
                 sv.Resources["State"] = "Activated";
                 sv.ScrollChanged += ScrollViewer_OnScrollChanged;
