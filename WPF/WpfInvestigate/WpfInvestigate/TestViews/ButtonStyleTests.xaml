@@ -588,7 +588,7 @@
                                       Focusable="False" IsThreeState="False"
                                       ToolTip="Open/Close Task panel"
                                       UseLayoutRounding="False"
-                                      effects:CornerRadiusEffect.CornerRadius="2"
+                                      effects:CornerRadiusEffect.CornerRadius="4"
                                       effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                                       effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
 
