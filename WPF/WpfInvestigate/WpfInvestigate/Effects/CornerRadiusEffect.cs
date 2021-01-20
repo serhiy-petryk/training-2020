@@ -28,7 +28,7 @@ namespace WpfInvestigate.Effects
             dpd.AddValueChanged(element, UpdateBorders);
 
             // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
-            element.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => UpdateBorders(element, null)));
+            element.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => UpdateBorders(element, null)));
 
         }
 
