@@ -50,7 +50,8 @@ namespace WpfInvestigate
             }
         }
 
-        private void TimepickerTest_OnClick(object sender, RoutedEventArgs e) => new TimePickerTests().Show();
+        private void ResizingControlTests_OnClick(object sender, RoutedEventArgs e) => new ResizingControlTests().Show();
+        private void TimePickerTest_OnClick(object sender, RoutedEventArgs e) => new TimePickerTests().Show();
         private void ObjectEditorTest_OnClick(object sender, RoutedEventArgs e) => new ObjectEditorTests().Show();
         private void WatermarkTest_OnClick(object sender, RoutedEventArgs e) => new WatermarkTests().Show();
         private void DatePickerEffectTest_OnClick(object sender, RoutedEventArgs e) => new DatePickerEffectTests().Show();
@@ -80,7 +81,7 @@ namespace WpfInvestigate
 
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
         private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
-        private void ResizingControlTests_OnClick(object sender, RoutedEventArgs e) => new ResizingControlTests().Show();
+        private void MwiTests_OnClick(object sender, RoutedEventArgs e) => new MwiTests().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {

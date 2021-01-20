@@ -80,6 +80,15 @@
     </Compile>
     <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DialogAdorner.cs" />
+    <Compile Include="Controls\MwiBar.xaml.cs">
+      <DependentUpon>MwiBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MwiChild.xaml.cs">
+      <DependentUpon>MwiChild.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MwiContainer.xaml.cs">
+      <DependentUpon>MwiContainer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Obsolete\DialogItems.cs" />
     <Compile Include="Controls\DialogMessage.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.cs" />
@@ -150,6 +159,9 @@
     </Compile>
     <Compile Include="TestViews\FocusEffectTests.xaml.cs">
       <DependentUpon>FocusEffectTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\MwiTests.xaml.cs">
+      <DependentUpon>MwiTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\ResizingControlTests.xaml.cs">
       <DependentUpon>ResizingControlTests.xaml</DependentUpon>
@@ -227,6 +239,18 @@
     <Compile Include="TestViews\WiPTests.xaml.cs">
       <DependentUpon>WiPTests.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\MwiBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MwiChild.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MwiContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Samples\ResizableContentPropertySample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -352,6 +376,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="TestViews\MwiTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TestViews\ResizingControlTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -455,6 +483,10 @@
     <Page Include="Themes\Common.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Themes\MwiColors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Flags.xaml">
       <SubType>Designer</SubType>

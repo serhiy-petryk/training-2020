@@ -63,6 +63,7 @@
                     <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
                     <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
                     <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
+                    <Button x:Name="MwiTests" Width="200" Margin="0 5" Content="WiP: Mwi" Click="MwiTests_OnClick"/>
 
                     <WrapPanel Margin="5" Background="Aqua" HorizontalAlignment="Stretch">
                         <Grid x:Name="MainGrid" Width="100" Height="100" Background="Gainsboro" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseLeftButtonDown="MainUIElement_OnPreviewMouseLeftButtonDown">
@@ -81,7 +82,7 @@
                     <Button x:Name="ObjectEditorTest" Margin="5" Content="Ready: ObjectEditor" Click="ObjectEditorTest_OnClick"/>
                     <Button x:Name="DropDownButtonTest" Width="200" Margin="0 5" Content="Ready: DropDownButton" Click="DropDownButtonTest_OnClick"/>
                     <Button x:Name="NumericBoxTest" Width="200" Margin="0 5" Content="Ready: NumericBox" Click="NumericBoxTest_OnClick"/>
-                    <Button x:Name="TimePickerTest" Width="200" Margin="0 5" Content="Ready: TimePicker" Click="TimepickerTest_OnClick"/>
+                    <Button x:Name="TimePickerTest" Width="200" Margin="0 5" Content="Ready: TimePicker" Click="TimePickerTest_OnClick"/>
                     <Button x:Name="DatePickerEffectTest" Width="200" Margin="0 5" Content="Ready: DatePickerEffect" Click="DatePickerEffectTest_OnClick"/>
                     <Button x:Name="CalculatorTest" Width="200" Margin="0 5" Content="Ready: Calculator" Click="CalculatorTest_OnClick"/>
                     <Button x:Name="WatermarkTest" Width="200" Margin="0 5" Content="Watermark Tests" Click="WatermarkTest_OnClick"/>
