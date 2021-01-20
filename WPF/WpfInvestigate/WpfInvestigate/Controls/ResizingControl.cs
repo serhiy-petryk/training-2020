@@ -26,7 +26,7 @@ namespace WpfInvestigate.Controls
         public bool LimitPositionToPanelBounds { get; set; } = false;
 
         private static int Unique = 1;
-        private Panel HostPanel => VisualTreeHelper.GetParent(this) as Panel;
+        private Grid HostPanel => VisualTreeHelper.GetParent(this) as Grid;
 
         public ResizingControl() => DataContext = this;
 
@@ -159,8 +159,8 @@ namespace WpfInvestigate.Controls
             var mousePosition = Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
-            var oldX = HostPanel is Canvas ? Canvas.GetLeft(this) : Margin.Left;
-            var oldY = HostPanel is Canvas ? Canvas.GetTop(this) : Margin.Top;
+            var oldX = Margin.Left;
+            var oldY = Margin.Top;
 
             var newX = oldX + e.HorizontalChange;
             if (LimitPositionToPanelBounds)
@@ -178,14 +178,7 @@ namespace WpfInvestigate.Controls
                 if (newY < 0) newY = 0;
             }
 
-            if (HostPanel is Canvas)
-            {
-                if (!Tips.AreEqual(oldX, newX)) Canvas.SetLeft(this, newX);
-                if (!Tips.AreEqual(oldY, newY)) Canvas.SetTop(this, newY);
-            }
-            else
-                Margin = new Thickness(newX, newY, -1, -1);
-
+            Margin = new Thickness(newX, newY, -1, -1);
             e.Handled = true;
 
             var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
@@ -221,7 +214,7 @@ namespace WpfInvestigate.Controls
 
         private void OnResizeLeft(double horizontalChange)
         {
-            var oldX = HostPanel is Canvas ? Canvas.GetLeft(this) : Margin.Left;
+            var oldX = Margin.Left;
             var change = Math.Min(horizontalChange, ActualWidth - MinWidth);
 
             if (LimitPositionToPanelBounds)
@@ -233,15 +226,12 @@ namespace WpfInvestigate.Controls
             if (!Tips.AreEqual(0.0, change))
             {
                 Width = ActualWidth - change;
-                if (HostPanel is Canvas)
-                    Canvas.SetLeft(this, oldX + change);
-                else
-                    Margin = new Thickness(oldX + change, Margin.Top, -1, -1);
+                Margin = new Thickness(oldX + change, Margin.Top, -1, -1);
             }
         }
         private void OnResizeTop(double verticalChange)
         {
-            var oldY = HostPanel is Canvas ? Canvas.GetTop(this) : Margin.Top;
+            var oldY = Margin.Top;
             var change = Math.Min(verticalChange, ActualHeight - MinHeight);
             
             if (LimitPositionToPanelBounds)
@@ -253,10 +243,7 @@ namespace WpfInvestigate.Controls
             if (!Tips.AreEqual(0.0, change))
             {
                 Height = ActualHeight - change;
-                if (HostPanel is Canvas)
-                    Canvas.SetTop(this, oldY + change);
-                else
-                    Margin = new Thickness(Margin.Left, oldY + change, -1, -1);
+                Margin = new Thickness(Margin.Left, oldY + change, -1, -1);
             }
         }
         private void OnResizeRight(double horizontalChange)
@@ -265,7 +252,7 @@ namespace WpfInvestigate.Controls
 
             if (LimitPositionToPanelBounds)
             {
-                var oldX = HostPanel is Canvas ? Canvas.GetLeft(this) : Margin.Left;
+                var oldX = Margin.Left;
                 if ((ActualWidth - change) > MaxWidth)
                     change = ActualWidth - MaxWidth;
                 if ((oldX + ActualWidth - change) > HostPanel.ActualWidth)
@@ -281,7 +268,7 @@ namespace WpfInvestigate.Controls
 
             if (LimitPositionToPanelBounds)
             {
-                var oldY = HostPanel is Canvas ? Canvas.GetTop(this) : Margin.Top;
+                var oldY = Margin.Top;
                 if ((ActualHeight - change) > MaxHeight)
                     change = ActualHeight - MaxHeight;
                 if ((oldY + ActualHeight - change) > HostPanel.ActualHeight)

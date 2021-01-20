@@ -15,8 +15,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="120"/>
-            <ColumnDefinition Width="1.5*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid ZIndex="1" Background="White">
@@ -104,18 +103,10 @@
                     </Grid>
                 </controls:ResizingControl>
 
+                <controls:ResizingControl Margin="100 100 0 0" Width="100" Height="100" Content="BBB" Background="Yellow"/>
+                <controls:ResizingControl Margin="100 300 0 0"  Width="100" Height="100" Content="Limited" Background="Yellow"
+                                          LimitPositionToPanelBounds="True"/>
             </Grid>
-        </ScrollViewer>
-
-        <ScrollViewer Grid.Column="3" Margin="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <Canvas Background="Gainsboro" x:Name="CanvasPanel">
-                <Canvas.LayoutTransform>
-                    <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
-                </Canvas.LayoutTransform>
-                <controls:ResizingControl Canvas.Left="100" Canvas.Top="100" Width="100" Height="100" Content="BBB" Background="Yellow"/>
-                <controls:ResizingControl Canvas.Left="100" Canvas.Top="300" Width="100" Height="100" Content="Limited" Background="Yellow"
-                                           LimitPositionToPanelBounds="True"/>
-            </Canvas>
         </ScrollViewer>
     </Grid>
 </Window>

@@ -42,7 +42,7 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=150"
             };
-            new DialogAdorner(CanvasPanel) {CloseOnClickBackground = true}.ShowContent(content);
+            new DialogAdorner(GridPanel) {CloseOnClickBackground = true}.ShowContent(content);
         }
 
         private void AddWindowPanelSync_OnClick(object sender, RoutedEventArgs e)
