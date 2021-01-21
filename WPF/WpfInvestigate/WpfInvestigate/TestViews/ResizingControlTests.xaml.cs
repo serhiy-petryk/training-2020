@@ -219,5 +219,26 @@ namespace WpfInvestigate.TestViews
             var aa = DialogMessage.ShowDialog("Test message 0 1 2 3 4", "Show Dialog", DialogMessage.DialogMessageIcon.Question);
         }
 
+        private void AddWindowedContent_OnClick(object sender, RoutedEventArgs e)
+        {
+            var window = new Window
+            {
+                Style = (Style)FindResource("HeadlessWindow"),
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                // Opacity = 0
+            };
+            var control = new ResizingControl
+            {
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Width = 250,
+                Height = 250,
+                LimitPositionToPanelBounds = false,
+                ToolTip = "Width/Height=250"
+            };
+            control.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e1) => ((Window)control.Parent).Close() ));
+            window.Content = control;
+            window.Show();
+
+        }
     }
 }

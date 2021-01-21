@@ -24,6 +24,7 @@ namespace WpfInvestigate.Controls
 
         public const string MovingThumbName = "MovingThumb";
         public bool LimitPositionToPanelBounds { get; set; } = false;
+        public bool IsWindowed => Parent is Window;
 
         private static int Unique = 1;
         private Grid HostPanel => VisualTreeHelper.GetParent(this) as Grid;
@@ -158,10 +159,8 @@ namespace WpfInvestigate.Controls
             var mousePosition = Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
-            var oldX = Margin.Left;
-            var oldY = Margin.Top;
-
-            var newX = oldX + e.HorizontalChange;
+            var oldPosition = Position;
+            var newX = oldPosition.X + e.HorizontalChange;
             if (LimitPositionToPanelBounds)
             {
                 if (newX + ActualWidth > HostPanel.ActualWidth)
@@ -169,7 +168,7 @@ namespace WpfInvestigate.Controls
                 if (newX < 0) newX = 0;
             }
 
-            var newY = oldY + e.VerticalChange;
+            var newY = oldPosition.Y + e.VerticalChange;
             if (LimitPositionToPanelBounds)
             {
                 if (newY + ActualHeight > HostPanel.ActualHeight)
@@ -177,7 +176,7 @@ namespace WpfInvestigate.Controls
                 if (newY < 0) newY = 0;
             }
 
-            Margin = new Thickness(newX, newY, -1, -1);
+            Position = new Point(newX, newY);
             e.Handled = true;
 
             var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
@@ -193,7 +192,7 @@ namespace WpfInvestigate.Controls
 
         private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var mousePosition = Mouse.GetPosition(HostPanel);
+            var mousePosition = IsWindowed ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
             var thumb = (Thumb)sender;
@@ -213,45 +212,44 @@ namespace WpfInvestigate.Controls
 
         private void OnResizeLeft(double horizontalChange)
         {
-            var oldX = Margin.Left;
+            var oldPosition = Position;
             var change = Math.Min(horizontalChange, ActualWidth - MinWidth);
 
             if (LimitPositionToPanelBounds)
             {
-                if (oldX + change < 0) change = -oldX;
+                if (oldPosition.X + change < 0) change = -oldPosition.X;
                 if ((ActualWidth - change) > MaxWidth) change = ActualWidth - MaxWidth;
             }
 
             if (!Tips.AreEqual(0.0, change))
             {
                 Width = ActualWidth - change;
-                Margin = new Thickness(oldX + change, Margin.Top, -1, -1);
+                Position = new Point(oldPosition.X + change, oldPosition.Y);
             }
         }
         private void OnResizeTop(double verticalChange)
         {
-            var oldY = Margin.Top;
+            var oldPosition = Position;
             var change = Math.Min(verticalChange, ActualHeight - MinHeight);
             
             if (LimitPositionToPanelBounds)
             {
-                if (oldY + change < 0) change = -oldY;
+                if (oldPosition.Y + change < 0) change = -oldPosition.Y;
                 if ((Height - change) > MaxHeight) change = Height - MaxHeight;
             }
 
             if (!Tips.AreEqual(0.0, change))
             {
                 Height = ActualHeight - change;
-                Margin = new Thickness(Margin.Left, oldY + change, -1, -1);
+                Position = new Point(oldPosition.X, oldPosition.Y + change);
             }
         }
         private void OnResizeRight(double horizontalChange)
         {
             var change = Math.Min(-horizontalChange, ActualWidth - MinWidth);
-
             if (LimitPositionToPanelBounds)
             {
-                var oldX = Margin.Left;
+                var oldX = Position.X;
                 if ((ActualWidth - change) > MaxWidth)
                     change = ActualWidth - MaxWidth;
                 if ((oldX + ActualWidth - change) > HostPanel.ActualWidth)
@@ -264,10 +262,9 @@ namespace WpfInvestigate.Controls
         private void OnResizeBottom(double verticalChange)
         {
             var change = Math.Min(-verticalChange, ActualHeight - MinHeight);
-
             if (LimitPositionToPanelBounds)
             {
-                var oldY = Margin.Top;
+                var oldY = Position.Y;
                 if ((ActualHeight - change) > MaxHeight)
                     change = ActualHeight - MaxHeight;
                 if ((oldY + ActualHeight - change) > HostPanel.ActualHeight)
@@ -280,8 +277,8 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #region ==========  Properties  ===============
-        public static readonly DependencyProperty MovingThumbProperty =
-            DependencyProperty.Register("MovingThumb", typeof(Thumb), typeof(ResizingControl), new PropertyMetadata(null, OnMovingThumbChanged));
+        public static readonly DependencyProperty MovingThumbProperty = DependencyProperty.Register("MovingThumb",
+            typeof(Thumb), typeof(ResizingControl), new PropertyMetadata(null, OnMovingThumbChanged));
         public Thumb MovingThumb
         {
             get => (Thumb)GetValue(MovingThumbProperty);
@@ -299,13 +296,35 @@ namespace WpfInvestigate.Controls
             }
         }
         //=========================
-        public static readonly DependencyProperty EdgeThicknessProperty =
-            DependencyProperty.Register("EdgeThickness", typeof(Thickness), typeof(ResizingControl), new PropertyMetadata(new Thickness(6)));
+        public static readonly DependencyProperty EdgeThicknessProperty =  DependencyProperty.Register("EdgeThickness",
+            typeof(Thickness), typeof(ResizingControl), new PropertyMetadata(new Thickness(6)));
 
         public Thickness EdgeThickness
         {
             get => (Thickness)GetValue(EdgeThicknessProperty);
             set => SetValue(EdgeThicknessProperty, value);
+        }
+        //=========================
+        public Point Position
+        {
+            get => IsWindowed
+                ? new Point(((Window) Parent).Left, ((Window) Parent).Top)
+                : new Point(Margin.Left, Margin.Top);
+            set
+            {
+                if (IsWindowed)
+                {
+                    var window = (Window) Parent;
+                    var newTop = Math.Min(SystemParameters.PrimaryScreenHeight, value.Y);
+                    if (!Tips.AreEqual(newTop, window.Top))
+                        window.Top = newTop;
+                    var newLeft = Math.Min(SystemParameters.PrimaryScreenWidth, value.X);
+                    if (!Tips.AreEqual(newLeft, window.Left))
+                        window.Left = newLeft;
+                }
+                else
+                    Margin = new Thickness(value.X, value.Y, -1, -1);
+            }
         }
         #endregion
     }

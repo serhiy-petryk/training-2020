@@ -37,6 +37,7 @@
 
         <StackPanel Grid.Column="1" Orientation="Vertical">
             <Button Content="Add content" Click="AddContent_OnClick"/>
+            <Button Content="Add windowed content" Click="AddWindowedContent_OnClick"/>
             <Button Margin="0 10 0 0" Content="Add Sync" Click="AddWindowPanelSync_OnClick"/>
             <Button Content="Add Async" Click="AddWindowPanelAsync_OnClick"/>
             <Button Content="Add Dialog" Click="AddWindowPanelDialog_OnClick"/>

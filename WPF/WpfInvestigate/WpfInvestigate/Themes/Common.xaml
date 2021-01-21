@@ -240,4 +240,13 @@
             </Style>
         </Style.Resources>
     </Style>
+
+    <!-- =======  Window wrapper  ======= -->
+    <Style x:Key="HeadlessWindow" TargetType="Window">
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
 </ResourceDictionary>
