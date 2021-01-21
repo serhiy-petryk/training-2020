@@ -16,18 +16,23 @@ namespace WpfInvestigate.TestViews
             InitializeComponent();
 
             var resizingControl = new ResizingControl
-                {Content = new ResizableContentTemplateSample(), Margin = new Thickness(200, 100, 0, 0)};
+            { Content = new ResizableContentTemplateSample(), Margin = new Thickness(200, 100, 0, 0) };
             GridPanel.Children.Add(resizingControl);
 
             var resizingControl2 = new ResizingControl
-                { Content = new ResizableSample(), Margin = new Thickness(20, 10, 0, 0), ToolTip = "No Width/Height" };
+            { Content = new ResizableSample(), Margin = new Thickness(20, 10, 0, 0), ToolTip = "No Width/Height" };
             GridPanel.Children.Add(resizingControl2);
 
             var resizingControl3 = new ResizingControl
             {
-                Content = new ResizableSample{Width = double.NaN, Height = double.NaN}, Margin = new Thickness(200, 200, 0, 0),
-                Width = 150, Height = 150, LimitPositionToPanelBounds = true, ToolTip="Width/Height=150"
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Margin = new Thickness(200, 200, 0, 0),
+                Width = 150,
+                Height = 150,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=150"
             };
+            resizingControl3.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e) => GridPanel.Children.Remove(resizingControl3)));
             GridPanel.Children.Add(resizingControl3);
         }
 
@@ -41,7 +46,7 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=150"
             };
-            new DialogAdorner(GridPanel) {CloseOnClickBackground = true}.ShowContent(content);
+            new DialogAdorner(GridPanel) { CloseOnClickBackground = true }.ShowContent(content);
         }
 
         private void AddWindowPanelSync_OnClick(object sender, RoutedEventArgs e)
@@ -147,7 +152,7 @@ namespace WpfInvestigate.TestViews
         private void MessageDialog_OnClick(object sender, RoutedEventArgs e)
         {
             var result = DialogMessage.ShowDialog("Test message", "Caption",
-                DialogMessage.DialogMessageIcon.Question, new[] {"OK", "Cancel", "Right", "Left"});
+                DialogMessage.DialogMessageIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
             Debug.Print($"MessageDialog: {result}");
         }
 
@@ -234,6 +239,7 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = false,
                 ToolTip = "Width/Height=250"
             };
+            control.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e1) => ((Window)control.Parent).Close()));
             window.Content = control;
             window.Show();
 

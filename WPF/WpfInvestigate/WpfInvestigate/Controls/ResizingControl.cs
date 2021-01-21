@@ -15,46 +15,24 @@ namespace WpfInvestigate.Controls
 {
     public class ResizingControl : ContentControl
     {
-        public static RoutedUICommand CommandClose { get; } = new RoutedUICommand();
-
         static ResizingControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(typeof(ResizingControl)));
             KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(false));
             FocusableProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(true));
-
-            var bindingClose = new CommandBinding(CommandClose, ((sender, args) => ((ResizingControl)sender).DoClose()),
-                (sender, args) => args.CanExecute = ((ResizingControl) sender).AllowClose);
-            CommandManager.RegisterClassCommandBinding(typeof(ResizingControl), bindingClose);
         }
 
         public ResizingControl()
         {
             // DataContext = this;
+            // CmdClose = new RelayCommand(DoClose, _ => AllowClose);
         }
-
-        private void DoClose()
-        {
-            if (IsWindowed)
-                ((Window) Parent).Close();
-            else
-                HostPanel.Children.Remove(this);
-            /*AnimateHide(() =>
-            {
-                if (Content is IDisposable)
-                    ((IDisposable)Content).Dispose();
-                DetachedHost?.Close();
-                Container?.Children.Remove(this);
-            });*/
-        }
-
 
         public const string MovingThumbName = "MovingThumb";
-
-        public bool AllowClose { get; set; } = true;
+        public RelayCommand CmdClose { get; }
 
         public bool LimitPositionToPanelBounds { get; set; } = false;
-        private bool IsWindowed => Parent is Window;
+        // private bool IsWindowed => Parent is Window;
 
         private static int Unique = 1;
         private Grid HostPanel => VisualTreeHelper.GetParent(this) as Grid;
@@ -123,7 +101,7 @@ namespace WpfInvestigate.Controls
 
             void OnContentLoaded(object sender, RoutedEventArgs args)
             {
-                var content = (FrameworkElement) sender;
+                var content = (FrameworkElement)sender;
                 content.Loaded -= OnContentLoaded;
                 var thumb = Tips.GetVisualChildren(content).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
                 if (thumb != null)
@@ -174,7 +152,7 @@ namespace WpfInvestigate.Controls
 
             // If thumb of focused control pressed => don't change focus & zindex
             if (Tips.GetElementsUnderMouseClick(this, e).OfType<FrameworkElement>().Any(c => c.TemplatedParent is Thumb) &&
-                Tips.GetVisualParents(Keyboard.FocusedElement as DependencyObject).Any(c=> c == this))
+                Tips.GetVisualParents(Keyboard.FocusedElement as DependencyObject).Any(c => c == this))
                 return;
 
             if (Focusable) Focus();
@@ -184,7 +162,7 @@ namespace WpfInvestigate.Controls
         #region ==========  Moving && resizing  =========
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var mousePosition = IsWindowed ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
+            var mousePosition = Parent is Window ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
             var oldPosition = Position;
@@ -220,7 +198,7 @@ namespace WpfInvestigate.Controls
 
         private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var mousePosition = IsWindowed ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
+            var mousePosition = Parent is Window ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
             var thumb = (Thumb)sender;
@@ -259,7 +237,7 @@ namespace WpfInvestigate.Controls
         {
             var oldPosition = Position;
             var change = Math.Min(verticalChange, ActualHeight - MinHeight);
-            
+
             if (LimitPositionToPanelBounds)
             {
                 if (oldPosition.Y + change < 0) change = -oldPosition.Y;
@@ -319,12 +297,12 @@ namespace WpfInvestigate.Controls
             {
                 if (e.OldValue is Thumb oldThumb)
                     oldThumb.DragDelta -= control.MoveThumb_OnDragDelta;
-                if (e.NewValue is Thumb newThumb) 
+                if (e.NewValue is Thumb newThumb)
                     newThumb.DragDelta += control.MoveThumb_OnDragDelta;
             }
         }
         //=========================
-        public static readonly DependencyProperty EdgeThicknessProperty =  DependencyProperty.Register("EdgeThickness",
+        public static readonly DependencyProperty EdgeThicknessProperty = DependencyProperty.Register("EdgeThickness",
             typeof(Thickness), typeof(ResizingControl), new PropertyMetadata(new Thickness(6)));
 
         public Thickness EdgeThickness
@@ -335,14 +313,16 @@ namespace WpfInvestigate.Controls
         //=========================
         public Point Position
         {
-            get => IsWindowed
-                ? new Point(((Window) Parent).Left, ((Window) Parent).Top)
-                : new Point(Margin.Left, Margin.Top);
+            get
+            {
+                if (Parent is Window window)
+                    return new Point(window.Left, window.Top);
+                return new Point(Margin.Left, Margin.Top);
+            }
             set
             {
-                if (IsWindowed)
-                {
-                    var window = (Window) Parent;
+                if (Parent is Window window)
+                { 
                     var newTop = Math.Min(SystemParameters.PrimaryScreenHeight, value.Y);
                     if (!Tips.AreEqual(newTop, window.Top))
                         window.Top = newTop;
@@ -354,6 +334,7 @@ namespace WpfInvestigate.Controls
                     Margin = new Thickness(value.X, value.Y, -1, -1);
             }
         }
+
         #endregion
     }
 }
