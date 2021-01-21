@@ -334,7 +334,6 @@ namespace WpfInvestigate.Controls
                     Margin = new Thickness(value.X, value.Y, -1, -1);
             }
         }
-
         #endregion
     }
 }
