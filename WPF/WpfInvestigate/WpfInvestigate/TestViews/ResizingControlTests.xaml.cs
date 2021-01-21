@@ -28,7 +28,6 @@ namespace WpfInvestigate.TestViews
                 Content = new ResizableSample{Width = double.NaN, Height = double.NaN}, Margin = new Thickness(200, 200, 0, 0),
                 Width = 150, Height = 150, LimitPositionToPanelBounds = true, ToolTip="Width/Height=150"
             };
-            resizingControl3.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e) => GridPanel.Children.Remove(resizingControl3)));
             GridPanel.Children.Add(resizingControl3);
         }
 
@@ -235,7 +234,6 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = false,
                 ToolTip = "Width/Height=250"
             };
-            control.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e1) => ((Window)control.Parent).Close() ));
             window.Content = control;
             window.Show();
 

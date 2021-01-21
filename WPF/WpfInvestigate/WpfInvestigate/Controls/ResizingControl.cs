@@ -15,21 +15,43 @@ namespace WpfInvestigate.Controls
 {
     public class ResizingControl : ContentControl
     {
+        public static RoutedUICommand CommandClose { get; } = new RoutedUICommand();
+
         static ResizingControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(typeof(ResizingControl)));
             KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(false));
             FocusableProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(true));
+
+            var bindingClose = new CommandBinding(CommandClose, ((sender, args) => ((ResizingControl)sender).DoClose()),
+                (sender, args) => args.CanExecute = ((ResizingControl) sender).AllowClose);
+            CommandManager.RegisterClassCommandBinding(typeof(ResizingControl), bindingClose);
         }
 
         public ResizingControl()
         {
             // DataContext = this;
-            // CmdClose = new RelayCommand(DoClose, _ => AllowClose);
         }
 
+        private void DoClose()
+        {
+            if (IsWindowed)
+                ((Window) Parent).Close();
+            else
+                HostPanel.Children.Remove(this);
+            /*AnimateHide(() =>
+            {
+                if (Content is IDisposable)
+                    ((IDisposable)Content).Dispose();
+                DetachedHost?.Close();
+                Container?.Children.Remove(this);
+            });*/
+        }
+
+
         public const string MovingThumbName = "MovingThumb";
-        public RelayCommand CmdClose { get; }
+
+        public bool AllowClose { get; set; } = true;
 
         public bool LimitPositionToPanelBounds { get; set; } = false;
         private bool IsWindowed => Parent is Window;
