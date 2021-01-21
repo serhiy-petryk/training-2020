@@ -22,14 +22,20 @@ namespace WpfInvestigate.Controls
             FocusableProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(true));
         }
 
+        public ResizingControl()
+        {
+            // DataContext = this;
+            // CmdClose = new RelayCommand(DoClose, _ => AllowClose);
+        }
+
         public const string MovingThumbName = "MovingThumb";
+        public RelayCommand CmdClose { get; }
+
         public bool LimitPositionToPanelBounds { get; set; } = false;
-        public bool IsWindowed => Parent is Window;
+        private bool IsWindowed => Parent is Window;
 
         private static int Unique = 1;
         private Grid HostPanel => VisualTreeHelper.GetParent(this) as Grid;
-
-        public ResizingControl() => DataContext = this;
 
         protected override void OnContentChanged(object oldContent, object newContent)
         {
@@ -156,7 +162,7 @@ namespace WpfInvestigate.Controls
         #region ==========  Moving && resizing  =========
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var mousePosition = Mouse.GetPosition(HostPanel);
+            var mousePosition = IsWindowed ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
             var oldPosition = Position;
