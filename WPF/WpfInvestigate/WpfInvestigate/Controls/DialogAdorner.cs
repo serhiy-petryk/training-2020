@@ -68,7 +68,6 @@ namespace WpfInvestigate.Controls
             }
         }
 
-
         public Storyboard OpenPanelAnimation { get; set; } = Application.Current.FindResource("FadeInAnimation") as Storyboard;
         public Storyboard ClosePanelAnimation { get; set; } = Application.Current.FindResource("FadeOutAnimation") as Storyboard;
         public Storyboard OpenContentAnimation { get; set; } //= Application.Current.FindResource("FadeInAnimation") as Storyboard;
