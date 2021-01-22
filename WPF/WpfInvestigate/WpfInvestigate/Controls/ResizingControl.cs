@@ -24,7 +24,7 @@ namespace WpfInvestigate.Controls
 
         public ResizingControl()
         {
-            // DataContext = this;
+            DataContext = this;
             // CmdClose = new RelayCommand(DoClose, _ => AllowClose);
         }
 
@@ -32,7 +32,7 @@ namespace WpfInvestigate.Controls
         public RelayCommand CmdClose { get; }
 
         public bool LimitPositionToPanelBounds { get; set; } = false;
-        // private bool IsWindowed => Parent is Window;
+        public bool IsWindowed => Parent is Window;
 
         private static int Unique = 1;
         private Grid HostPanel => VisualTreeHelper.GetParent(this) as Grid;
@@ -162,7 +162,7 @@ namespace WpfInvestigate.Controls
         #region ==========  Moving && resizing  =========
         private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var mousePosition = Parent is Window ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
+            var mousePosition = IsWindowed ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
             var oldPosition = Position;
@@ -198,7 +198,7 @@ namespace WpfInvestigate.Controls
 
         private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var mousePosition = Parent is Window ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
+            var mousePosition = IsWindowed ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
             var thumb = (Thumb)sender;

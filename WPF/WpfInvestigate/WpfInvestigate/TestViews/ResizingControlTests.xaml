@@ -66,7 +66,8 @@
                     <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
                 </Grid.LayoutTransform>
 
-                <controls:ResizingControl Width="200" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <controls:ResizingControl Width="200" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                          EdgeThickness="15" ToolTip="EdgeThickness=15">
                     <samples:ResizableContentSample/>
                 </controls:ResizingControl>
 
