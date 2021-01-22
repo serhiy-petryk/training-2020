@@ -109,7 +109,7 @@
 
                                             <!--<Button Grid.Column="5" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
                                                 Visibility="{TemplateBinding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>-->
-                                            <Button Canvas.ZIndex="1" Grid.Column="6" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{DynamicResource CloseButtonStyle}" PreviewMouseLeftButtonUp="Button_PreviewMouseLeftButtonUp"/>
+                                            <Button Grid.Column="6" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{DynamicResource CloseButtonStyle}" PreviewMouseLeftButtonUp="Button_PreviewMouseLeftButtonUp"/>
                                         </Grid>
 
                                         <!-- Content & Command/Status bars -->
