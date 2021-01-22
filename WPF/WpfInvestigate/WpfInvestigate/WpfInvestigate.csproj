@@ -86,9 +86,13 @@
     <Compile Include="Controls\MwiChild.xaml.cs">
       <DependentUpon>MwiChild.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MwiChild1.xaml.cs">
+      <DependentUpon>MwiChild1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MwiContainer.xaml.cs">
       <DependentUpon>MwiContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Effects\TextBlockEffects.cs" />
     <Compile Include="Obsolete\DialogItems.cs" />
     <Compile Include="Controls\DialogMessage.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.cs" />
@@ -244,6 +248,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MwiChild.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MwiChild1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

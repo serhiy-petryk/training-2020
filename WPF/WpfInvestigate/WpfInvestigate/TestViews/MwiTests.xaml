@@ -32,7 +32,14 @@
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
-            <controls:MwiContainer Background="Beige"/>
+            <controls:MwiContainer Background="Beige">
+                <controls:MwiChild Content="Test" Title="Title"/>
+                <controls:MwiChild1 Position="100 100" Content="object Content">
+                </controls:MwiChild1>
+                <controls:MwiChild1 Position="200 200">
+                    <TextBlock Text="TextBlock Content" FontSize="16"/>
+                </controls:MwiChild1>
+            </controls:MwiContainer>
         </Grid>
     </Grid>
 
