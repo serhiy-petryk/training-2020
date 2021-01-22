@@ -11,13 +11,11 @@ namespace WpfInvestigate.Controls
     /// </summary>
     public partial class MwiChild
     {
-        private ResizingControl _resizingControl;
-
-        public bool IsWindowed => _resizingControl?.IsWindowed ?? false;
         public bool IsDialog => false;
         public MwiChild()
         {
             InitializeComponent();
+            DataContext = this;
             // MainContent.DataContext = this;
 
             if (Icon == null)
@@ -34,12 +32,8 @@ namespace WpfInvestigate.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            _resizingControl = Tips.GetVisualChildren(this).OfType<ResizingControl>().FirstOrDefault();
-
-            var mainContent = GetTemplateChild("PART_MainContent") as FrameworkElement;
-            mainContent.DataContext = this;
         }
+
         private void DoClose(object obj)
         {
             throw new System.NotImplementedException();
@@ -158,6 +152,14 @@ namespace WpfInvestigate.Controls
         {
             get => (FrameworkElement)GetValue(RightHeaderPanelProperty);
             set => SetValue(RightHeaderPanelProperty, value);
+        }
+        //==============================
+        public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content),
+            typeof(object), typeof(MwiChild), new UIPropertyMetadata(null));
+        public new object Content
+        {
+            get => (object)GetValue(ContentProperty);
+            set => SetValue(ContentProperty, value);
         }
 
         #endregion
