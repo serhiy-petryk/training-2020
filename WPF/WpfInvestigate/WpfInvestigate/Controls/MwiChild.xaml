@@ -103,7 +103,7 @@
 
                 <Button Grid.Column="5" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
                         Visibility="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                <Button Grid.Column="6" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{DynamicResource CloseButtonStyle}" PreviewMouseLeftButtonUp="Button_PreviewMouseLeftButtonUp"/>
+                <Button Grid.Column="6" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{StaticResource MwiCloseButtonStyle}" Width="20"/>
             </Grid>
 
             <!-- Content & Command/Status bars -->

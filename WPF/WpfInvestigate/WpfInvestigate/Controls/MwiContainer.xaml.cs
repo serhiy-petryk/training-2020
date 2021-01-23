@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Markup;
 
 namespace WpfInvestigate.Controls
@@ -12,12 +12,10 @@ namespace WpfInvestigate.Controls
     [ContentProperty("Children")]
     public partial class MwiContainer
     {
-        public ObservableCollection<FrameworkElement> Children { get; set; } = new ObservableCollection<FrameworkElement>();
         public MwiContainer()
         {
             InitializeComponent();
             Children.CollectionChanged += Children_OnCollectionChanged;
-
         }
 
         private void Children_OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -27,6 +25,7 @@ namespace WpfInvestigate.Controls
                 case NotifyCollectionChangedAction.Add:
                     var mwiChild = Children[e.NewStartingIndex];
                     MwiPanel.Children.Add(mwiChild);
+                    mwiChild.Closed += OnMwiChildClosed;
                     /*SetMwiContainer(mwiChild, this);
 
                     if (ActiveMwiChild?.WindowState == WindowState.Maximized && mwiChild.Resizable)
@@ -44,11 +43,11 @@ namespace WpfInvestigate.Controls
 
                 case NotifyCollectionChangedAction.Remove:
                     var oldChild = (MwiChild)e.OldItems[0];
-                    /*var oldActiveMwiChild = ActiveMwiChild == oldChild ? null : ActiveMwiChild;
-                    ActiveMwiChild = null; // must be null because sometimes there is an error on WindowTabs.Remove (select window tab => press delete button on active MwiChild): Index was outside the bounds of the array
+                    // var oldActiveMwiChild = ActiveMwiChild == oldChild ? null : ActiveMwiChild;
+                    // ActiveMwiChild = null; // must be null because sometimes there is an error on WindowTabs.Remove (select window tab => press delete button on active MwiChild): Index was outside the bounds of the array
 
-                    MwiCanvas.Children.Remove(oldChild);
-                    ActiveMwiChild = oldActiveMwiChild ?? GetTopChild();*/
+                    MwiPanel.Children.Remove(oldChild);
+                    // ActiveMwiChild = oldActiveMwiChild ?? GetTopChild();*/
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
@@ -56,8 +55,20 @@ namespace WpfInvestigate.Controls
                         Children[0].Close();*/
                     break;
             }
+
+            void OnMwiChildClosed(object o, EventArgs args)
+            {
+                var mwiChild = (MwiChild)o;
+                mwiChild.Closed -= OnMwiChildClosed;
+                Children.Remove(mwiChild);
+            }
         }
 
+        #region =======  Properties  =========
+        public ObservableCollection<MwiChild> Children { get; set; } = new ObservableCollection<MwiChild>();
+        #endregion
+
+        #region =======  TEMP section  =========
         private int cnt = 0;
         private void AddChild_OnClick(object sender, RoutedEventArgs e)
         {
@@ -70,5 +81,6 @@ namespace WpfInvestigate.Controls
                 Position = new Point(300, 80)
             });
         }
+        #endregion
     }
 }

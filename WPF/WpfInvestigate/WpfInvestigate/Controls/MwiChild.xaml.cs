@@ -14,23 +14,29 @@ namespace WpfInvestigate.Controls
         public bool IsDialog => false;
         public MwiChild()
         {
-            InitializeComponent();
-            DataContext = this;
-
-            if (Icon == null)
-                Icon = (ImageSource)FindResource("DefaultIcon");
-
             CmdDetach = new RelayCommand(ToggleDetach, _ => AllowDetach);
             CmdMinimize = new RelayCommand(ToggleMinimize, _ => AllowMinimize);
             CmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize);
             SysCmdRestore = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState == WindowState.Maximized);
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
-            CmdClose = new RelayCommand(DoClose, _ => AllowClose);
+            CmdClose = new RelayCommand(Close, _ => AllowClose);
+
+            InitializeComponent();
+            DataContext = this;
+
+            if (Icon == null)
+                Icon = (ImageSource)FindResource("DefaultIcon");
         }
 
-        private void DoClose(object obj)
+        private void Close(object obj)
         {
-            Closed?.Invoke(this, EventArgs.Empty);
+            AnimateHide(() =>
+            {
+                if (Content is IDisposable)
+                    ((IDisposable)Content).Dispose();
+                if (IsWindowed) ((Window)Parent).Close();
+                Closed?.Invoke(this, EventArgs.Empty);
+            });
         }
 
         private void ToggleMaximize(object obj)
@@ -57,7 +63,7 @@ namespace WpfInvestigate.Controls
 
         private void Button_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            DialogMessage.ShowDialog("need ToDo!");
+            DialogMessage.ShowDialog("Button_PreviewMouseLeftButtonUp. need ToDo!");
         }
 
         #region =============  Properties  =================
@@ -106,8 +112,8 @@ namespace WpfInvestigate.Controls
 
         public WindowState WindowState
         {
-            get { return (WindowState)GetValue(WindowStateProperty); }
-            set { SetValue(WindowStateProperty, value); }
+            get => (WindowState)GetValue(WindowStateProperty);
+            set => SetValue(WindowStateProperty, value);
         }
         private static void OnWindowStateValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -151,6 +157,5 @@ namespace WpfInvestigate.Controls
         }
 
         #endregion
-
     }
 }

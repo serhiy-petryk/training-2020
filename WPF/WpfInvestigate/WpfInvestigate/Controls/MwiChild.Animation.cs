@@ -42,16 +42,15 @@ namespace WpfInvestigate.Controls
             if (_sbWindowState == null)
             {
                 _sbWindowState = new Storyboard();
-                /*_sbWindowState.Children.Add(AnimationHelper.CreateFrameAnimation(this, new Point(), new Point(), FillBehavior.Stop));
-                // _sbWindowState.Children.Add(AnimationHelper.GetPositionAnimation(this, new Point(), new Point(), FillBehavior.Stop));
-                _sbWindowState.Children.Add(AnimationHelper.GetWidthAnimation(this, 0, 0, FillBehavior.Stop));
-                _sbWindowState.Children.Add(AnimationHelper.GetHeightAnimation(this, 0, 0, FillBehavior.Stop));
-                _sbWindowState.Children.Add(AnimationHelper.GetOpacityAnimation(this, 0, 0, FillBehavior.Stop));
+                _sbWindowState.Children.Add(AnimationHelper.CreateAnimation(this, PositionProperty));
+                _sbWindowState.Children.Add(AnimationHelper.CreateAnimation(this, WidthProperty));
+                _sbWindowState.Children.Add(AnimationHelper.CreateAnimation(this, HeightProperty));
+                _sbWindowState.Children.Add(AnimationHelper.CreateAnimation(this, OpacityProperty));
                 _sbWindowState.Children[0].Completed += (o, args) =>
                 {
                     _sbWindowStateCallback?.Invoke();
                     _sbWindowStateCallback = null;
-                };*/
+                };
             }
         }
 
