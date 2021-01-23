@@ -281,14 +281,14 @@ namespace WpfInvestigate.Controls
 
         #region ==========  Properties  ===============
         public static readonly DependencyProperty MovingThumbProperty = DependencyProperty.Register("MovingThumb",
-            typeof(Thumb), typeof(ResizingControl), new PropertyMetadata(null, OnMovingThumbChanged));
+            typeof(Thumb), typeof(ResizingControl), new PropertyMetadata(null, OnMovingThumbValueChanged));
         public Thumb MovingThumb
         {
             get => (Thumb)GetValue(MovingThumbProperty);
             set => SetValue(MovingThumbProperty, value);
         }
 
-        private static void OnMovingThumbChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnMovingThumbValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ResizingControl control)
             {
@@ -309,35 +309,36 @@ namespace WpfInvestigate.Controls
         }
         //================================
         public static readonly DependencyProperty ResizableProperty = DependencyProperty.Register(nameof(Resizable),
-            typeof(bool), typeof(MwiChild), new UIPropertyMetadata(true));
+            typeof(bool), typeof(ResizingControl), new UIPropertyMetadata(true));
         public bool Resizable
         {
             get => (bool)GetValue(ResizableProperty);
             set => SetValue(ResizableProperty, value);
         }
         //=========================
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Point), typeof(ResizingControl), new UIPropertyMetadata(new Point(-1, -1), OnPositionValueChanged));
         public Point Position
         {
-            get
+            get => (Point)GetValue(PositionProperty);
+            set => SetValue(PositionProperty, value);
+        }
+        private static void OnPositionValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if ((Point)e.NewValue == (Point)e.OldValue) return;
+
+            var resizingControl = (ResizingControl)d;
+            var newPosition = (Point)e.NewValue;
+            if (resizingControl.Parent is Window window)
             {
-                if (Parent is Window window)
-                    return new Point(window.Left, window.Top);
-                return new Point(Margin.Left, Margin.Top);
+                var newTop = Math.Min(SystemParameters.PrimaryScreenHeight, newPosition.Y);
+                if (!Tips.AreEqual(newTop, window.Top))
+                    window.Top = newTop;
+                var newLeft = Math.Min(SystemParameters.PrimaryScreenWidth, newPosition.X);
+                if (!Tips.AreEqual(newLeft, window.Left))
+                    window.Left = newLeft;
             }
-            set
-            {
-                if (Parent is Window window)
-                { 
-                    var newTop = Math.Min(SystemParameters.PrimaryScreenHeight, value.Y);
-                    if (!Tips.AreEqual(newTop, window.Top))
-                        window.Top = newTop;
-                    var newLeft = Math.Min(SystemParameters.PrimaryScreenWidth, value.X);
-                    if (!Tips.AreEqual(newLeft, window.Left))
-                        window.Left = newLeft;
-                }
-                else
-                    Margin = new Thickness(value.X, value.Y, -1, -1);
-            }
+            else
+                resizingControl.Margin = new Thickness(newPosition.X, newPosition.Y, -1, -1);
         }
         #endregion
     }
