@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 using WpfInvestigate.Common;
@@ -9,7 +8,7 @@ namespace WpfInvestigate.Controls
     public partial class MwiChild
     {
         private Storyboard _sbWindowState;
-        public Task SetRectangleWithAnimation(Rect to, Tuple<double, double> opacity = null)
+        public Task SetRectangleWithAnimation(Rect to, double fromOpacity, double toOpacity)
         {
             if (_sbWindowState == null)
             {
@@ -19,24 +18,22 @@ namespace WpfInvestigate.Controls
             }
 
             var from = new Rect(Position.X, Position.Y, ActualWidth, ActualHeight);
+
+            _sbWindowState.Children[0].SetFromToValues(new Point(from.Left, from.Top), new Point(to.Left, to.Top));
+            _sbWindowState.Children[1].SetFromToValues(from.Width, to.Width);
+            _sbWindowState.Children[2].SetFromToValues(from.Height, to.Height);
+            _sbWindowState.Children[3].SetFromToValues(fromOpacity, toOpacity);
+
             // To restore window rect after animation
             Position = new Point(to.Left, to.Top);
             Width = to.Width;
             Height = to.Height;
-
-            ((PointAnimation)_sbWindowState.Children[0]).From = new Point(from.Left, from.Top);
-            ((PointAnimation)_sbWindowState.Children[0]).To = new Point(to.Left, to.Top);
-            ((DoubleAnimation)_sbWindowState.Children[1]).From = from.Width;
-            ((DoubleAnimation)_sbWindowState.Children[1]).To = to.Width;
-            ((DoubleAnimation)_sbWindowState.Children[2]).From = from.Height;
-            ((DoubleAnimation)_sbWindowState.Children[2]).To = to.Height;
-            ((DoubleAnimation)_sbWindowState.Children[3]).From = opacity?.Item1 ?? 1;
-            ((DoubleAnimation)_sbWindowState.Children[3]).To = opacity?.Item2 ?? 1;
+            Opacity = toOpacity;
 
             return _sbWindowState.BeginAsync(this);
         }
 
-        private Task AnimateShow() => SetRectangleWithAnimation(new Rect(Position.X, Position.Y, ActualWidth, ActualHeight), new Tuple<double, double>(0, 1));
-        private Task AnimateHide() => SetRectangleWithAnimation(new Rect(Position.X, Position.Y, ActualWidth, ActualHeight), new Tuple<double, double>(1, 0));
+        private Task AnimateShow() => SetRectangleWithAnimation(new Rect(Position.X, Position.Y, ActualWidth, ActualHeight), 0, 1);
+        private Task AnimateHide() => SetRectangleWithAnimation(new Rect(Position.X, Position.Y, ActualWidth, ActualHeight), 1, 0);
     }
 }

@@ -41,8 +41,8 @@ namespace WpfInvestigate.Common
 
         #region ================  Create animation  ===================
 
-        public static IEnumerable<Timeline> CreateAnimations(this FrameworkElement element, params DependencyProperty[] propertyPaths) =>
-            propertyPaths.Select(p => CreateAnimation(element, new PropertyPath(p), p.PropertyType));
+        public static Timeline[] CreateAnimations(this FrameworkElement element, params DependencyProperty[] propertyPaths) =>
+            propertyPaths.Select(p => CreateAnimation(element, new PropertyPath(p), p.PropertyType)).ToArray();
         public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, Duration? duration = null) =>
             CreateAnimation(element, new PropertyPath(propertyPath), propertyPath.PropertyType, duration);
         public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, double duration) =>
