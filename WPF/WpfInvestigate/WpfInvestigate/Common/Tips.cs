@@ -23,6 +23,21 @@ namespace WpfInvestigate.Common
         public static DateTime MaxDateTime(DateTime date1, DateTime date2) => date1 > date2 ? date1 : date2;
 
         public static void Beep() => SystemSounds.Beep.Play();
+        // ===================================
+        private static Rect? _maximizedWindowRectangle;
+        public static Rect GetMaximizedWindowRectangle()
+        {
+            if (!_maximizedWindowRectangle.HasValue)
+            {
+                var window = new Window { WindowState = WindowState.Maximized };
+                window.Show();
+                var delta = Math.Min(0, Math.Min(window.Left, window.Top));
+                _maximizedWindowRectangle = new Rect(window.Left - delta, window.Top - delta, window.ActualWidth + 2 * delta, window.ActualHeight + 2 * delta);
+                window.Close();
+            }
+            return _maximizedWindowRectangle.Value;
+        }
+
 
         // ===================================
         public static List<DependencyObject> GetElementsUnderMouseClick(UIElement sender, MouseButtonEventArgs e)

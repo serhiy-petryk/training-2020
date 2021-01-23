@@ -71,6 +71,7 @@ namespace WpfInvestigate.Controls
         #region =============  Properties  =================
         public event EventHandler Closed;
         public bool IsDialog => false;
+        public MwiContainer MwiContainer { get; set; }
 
         //============  Commands  =============
         public RelayCommand CmdDetach { get; }
@@ -123,7 +124,7 @@ namespace WpfInvestigate.Controls
             ((MwiChild) sender).WindowStateValueChanged((WindowState) e.NewValue, (WindowState) e.OldValue);
         private void WindowStateValueChanged(WindowState newWindowState, WindowState previousWindowState)
         {
-            /*var isDetachEvent = previousWindowState == newWindowState;
+            var isDetachEvent = previousWindowState == newWindowState;
 
             if (previousWindowState == WindowState.Normal && !isDetachEvent)
                 SaveActualRectangle();
@@ -137,8 +138,8 @@ namespace WpfInvestigate.Controls
                     Position = new Point(_detachedPosition.X, _detachedPosition.Y);
                 }
 
-                if (newWindowState != WindowState.Minimized && DetachedHost.WindowState != WindowState.Normal)
-                    DetachedHost.WindowState = WindowState.Normal;
+                if (newWindowState != WindowState.Minimized && ((Window)Parent).WindowState != WindowState.Normal)
+                    ((Window)Parent).WindowState = WindowState.Normal;
 
                 if (newWindowState == WindowState.Maximized)
                 {
@@ -152,18 +153,31 @@ namespace WpfInvestigate.Controls
             if (!IsWindowed && !isDetachEvent)
                 AnimateWindowState(previousWindowState);
 
-            if (!IsWindowed || isDetachEvent)
+            /* todo: container if (!IsWindowed || isDetachEvent)
             {
                 Container?.InvalidateSize();
                 Container?.OnPropertiesChanged(nameof(MwiContainer.ScrollBarKind));
-            }
+            }*/
 
             // Activate main window (in case of attach)
-            if (IsWindowed && !DetachedHost.IsFocused)
-                DetachedHost.Focus();
+            if (IsWindowed && !((Window)Parent).IsFocused)
+                ((Window)Parent).Focus();
             else if (!IsWindowed && !Window.GetWindow(this).IsFocused)
-                Window.GetWindow(this)?.Focus();*/
+                Window.GetWindow(this)?.Focus();
         }
+        private void SaveActualRectangle()
+        {
+            _lastNormalSize = new Size(ActualWidth, ActualHeight);
+            SaveActualPosition();
+        }
+        private void SaveActualPosition()
+        {
+            if (IsWindowed)
+                _detachedPosition = new Point(((Window)Parent).Left, ((Window)Parent).Top);
+            else
+                _attachedPosition = new Point(Position.X, Position.Y);
+        }
+
         //================================
         public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(ImageSource), typeof(MwiChild));
         public ImageSource Icon

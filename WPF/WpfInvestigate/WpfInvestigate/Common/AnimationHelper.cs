@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,7 +11,7 @@ namespace WpfInvestigate.Common
     #region ======  AnimationHelper  =====
     public static class AnimationHelper
     {
-        public const double AnimationTime = 1200.0;
+        public const double AnimationTime = 420.0;
         public static readonly Duration AnimationDuration = TimeSpan.FromMilliseconds(AnimationTime);
         public static readonly Duration AnimationDurationSlow = TimeSpan.FromMilliseconds(AnimationTime * 2);
 

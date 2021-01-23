@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Windows;
 using System.Windows.Markup;
 
@@ -24,6 +26,7 @@ namespace WpfInvestigate.Controls
             {
                 case NotifyCollectionChangedAction.Add:
                     var mwiChild = Children[e.NewStartingIndex];
+                    mwiChild.MwiContainer = this;
                     MwiPanel.Children.Add(mwiChild);
                     mwiChild.Closed += OnMwiChildClosed;
                     /*SetMwiContainer(mwiChild, this);
@@ -66,6 +69,8 @@ namespace WpfInvestigate.Controls
 
         #region =======  Properties  =========
         public ObservableCollection<MwiChild> Children { get; set; } = new ObservableCollection<MwiChild>();
+        internal IEnumerable<MwiChild> InternalWindows => Children.Where(w => !w.IsWindowed);
+        internal double InnerHeight => ScrollViewer.ActualHeight;
         #endregion
 
         #region =======  TEMP section  =========
