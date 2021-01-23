@@ -66,26 +66,24 @@
                     <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
                 </Grid.LayoutTransform>
 
-                <controls:ResizingControl Width="200" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                          EdgeThickness="15" ToolTip="EdgeThickness=15">
+                <controls:ResizingControl Width="200" Height="100" Background="Yellow" EdgeThickness="15" ToolTip="EdgeThickness=15">
                     <samples:ResizableContentSample/>
                 </controls:ResizingControl>
 
-                <controls:ResizingControl Width="200" Height="100" Background="Yellow" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100 350 0 0"
+                <controls:ResizingControl Background="Yellow" Position="500 350"
                                           EdgeThickness="{Binding BorderThickness, ElementName=Sample2}">
                     <samples:ResizableSample x:Name="Sample2" ToolTip="No Width/Height, resizing control.Width=200, Height=100"/>
                 </controls:ResizingControl>
 
-                <controls:ResizingControl Margin="0 300 0 0" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
+                <controls:ResizingControl Position="0 250" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
                                            ToolTip="LimitPositionToPanelBounds=True"
                                            MovingThumb="{Binding ElementName=Test2, Path=MovingThumb}">
                     <samples:ResizableContentPropertySample x:Name="Test2"/>
                 </controls:ResizingControl>
 
-                <controls:ResizingControl Margin="100 100 0 0" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
+                <controls:ResizingControl Position="400 100" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
                                           ToolTip="LimitPositionToPanelBounds=True">
-                    <Grid Background="Green" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                          Focusable="False">
+                    <Grid Background="Green" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Focusable="False">
                         <Rectangle Fill="Yellow" Margin="7"
                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                    Effect="{StaticResource ShadowEffect}"/>
@@ -105,8 +103,9 @@
                     </Grid>
                 </controls:ResizingControl>
 
-                <controls:ResizingControl Margin="100 100 0 0" Width="100" Height="100" Content="BBB" Background="Yellow"/>
-                <controls:ResizingControl Margin="100 300 0 0"  Width="100" Height="100" Content="Limited" Background="Yellow"
+                <controls:ResizingControl Position="100 100" Width="100" Height="100" Content="BBB" Background="Yellow"/>
+                <controls:ResizingControl Position="150 150" Width="100" Height="100" Content="Not resizable" Background="Yellow" Resizable="False"/>
+                <controls:ResizingControl Position="200 200"  Width="100" Height="100" Content="Limited" Background="Yellow"
                                           LimitPositionToPanelBounds="True"/>
             </Grid>
         </ScrollViewer>

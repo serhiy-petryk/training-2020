@@ -99,14 +99,6 @@ namespace WpfInvestigate.Controls
             set => SetValue(AllowCloseProperty, value);
         }
         //================================
-        public static readonly DependencyProperty ResizableProperty = DependencyProperty.Register(nameof(Resizable),
-            typeof(bool), typeof(MwiChild), new UIPropertyMetadata(true));
-        public bool Resizable
-        {
-            get => (bool)GetValue(ResizableProperty);
-            set => SetValue(ResizableProperty, value);
-        }
-        //================================
         public static readonly DependencyProperty WindowStateProperty = DependencyProperty.Register("WindowState", typeof(WindowState), typeof(MwiChild), new UIPropertyMetadata(WindowState.Normal, OnWindowStateValueChanged));
 
         public WindowState WindowState

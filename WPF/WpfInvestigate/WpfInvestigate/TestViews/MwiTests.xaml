@@ -45,6 +45,10 @@
                 <controls:MwiChild Position="250 250" Title="Title" Height="150">
                     <TextBlock Text="Mwi Child TextBlock Content" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Yellow"/>
                 </controls:MwiChild>
+
+                <controls:MwiChild Position="300 300" Title="Title" Resizable="False">
+                    <TextBlock Text="Not resizable" Background="Yellow"/>
+                </controls:MwiChild>
             </controls:MwiContainer>
         </Grid>
     </Grid>

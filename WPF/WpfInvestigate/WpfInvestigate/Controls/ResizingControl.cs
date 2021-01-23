@@ -310,6 +310,14 @@ namespace WpfInvestigate.Controls
             get => (Thickness)GetValue(EdgeThicknessProperty);
             set => SetValue(EdgeThicknessProperty, value);
         }
+        //================================
+        public static readonly DependencyProperty ResizableProperty = DependencyProperty.Register(nameof(Resizable),
+            typeof(bool), typeof(MwiChild), new UIPropertyMetadata(true));
+        public bool Resizable
+        {
+            get => (bool)GetValue(ResizableProperty);
+            set => SetValue(ResizableProperty, value);
+        }
         //=========================
         public Point Position
         {

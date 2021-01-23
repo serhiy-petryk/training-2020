@@ -13,6 +13,7 @@
             <Style x:Key="ResizeThumb" TargetType="Thumb">
                 <Setter Property="Opacity" Value="0"/>
                 <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Visibility" Value="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
             </Style>
         </Style.Resources>
 
