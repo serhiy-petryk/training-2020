@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
@@ -48,7 +49,50 @@ namespace WpfInvestigate.Controls
 
         private void ToggleMinimize(object obj)
         {
-            DialogMessage.ShowDialog("need ToDo!");
+            if (WindowState != WindowState.Minimized)
+                CreateThumbnail();
+
+            if (IsWindowed)
+            {
+                if (((Window)Parent).WindowState == WindowState.Minimized)
+                    ((Window)Parent).WindowState = _beforeMinimizedState ?? WindowState.Normal;
+                else
+                {
+                    _beforeMinimizedState = ((Window)Parent).WindowState;
+                    ((Window)Parent).WindowState = WindowState.Minimized;
+                }
+            }
+            else if (WindowState == WindowState.Minimized)
+            {
+                if (Visibility != Visibility.Visible)
+                    Visibility = Visibility.Visible;
+                WindowState = _beforeMinimizedState ?? WindowState.Normal;
+            }
+            else
+            {
+                _beforeMinimizedState = WindowState;
+                WindowState = WindowState.Minimized;
+            }
+        }
+        private ImageSource CreateThumbnail()
+        {
+            if (WindowState != WindowState.Minimized || _thumbnailCache == null)
+            {
+                var bitmap = new RenderTargetBitmap((int)Math.Round(ActualWidth),
+                    (int)Math.Round(ActualHeight), 96, 96, PixelFormats.Default);
+                var drawingVisual = new DrawingVisual();
+                using (var context = drawingVisual.RenderOpen())
+                {
+                    var brush = new VisualBrush(this);
+                    context.DrawRectangle(brush, null,
+                        new Rect(new Point(), new Size(ActualWidth, ActualHeight)));
+                    context.Close();
+                }
+
+                bitmap.Render(drawingVisual);
+                _thumbnailCache = bitmap;
+            }
+            return _thumbnailCache;
         }
 
         private void ToggleDetach(object obj)

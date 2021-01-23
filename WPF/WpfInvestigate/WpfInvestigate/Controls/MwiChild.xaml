@@ -98,7 +98,7 @@
                     <Button Grid.Column="0" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}"
                             Visibility="{Binding AllowDetach, Converter={x:Static common:VisibilityConverter.Instance}}"/>
                     <Button Grid.Column="1" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource MinimizeButtonStyle}"
-                            Visibility="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}" PreviewMouseLeftButtonUp="Button_PreviewMouseLeftButtonUp"/>
+                            Visibility="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
                 </Grid>
 
                 <Button Grid.Column="5" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
