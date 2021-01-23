@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +12,7 @@ namespace WpfInvestigate.Common
     #region ======  AnimationHelper  =====
     public static class AnimationHelper
     {
-        public const double AnimationTime = 120.0;
+        public const double AnimationTime = 1200.0;
         public static readonly Duration AnimationDuration = TimeSpan.FromMilliseconds(AnimationTime);
         public static readonly Duration AnimationDurationSlow = TimeSpan.FromMilliseconds(AnimationTime * 2);
 
@@ -39,6 +41,8 @@ namespace WpfInvestigate.Common
 
         #region ================  Create animation  ===================
 
+        public static IEnumerable<Timeline> CreateAnimations(this FrameworkElement element, params DependencyProperty[] propertyPaths) =>
+            propertyPaths.Select(p => CreateAnimation(element, new PropertyPath(p), p.PropertyType));
         public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, Duration? duration = null) =>
             CreateAnimation(element, new PropertyPath(propertyPath), propertyPath.PropertyType, duration);
         public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, double duration) =>

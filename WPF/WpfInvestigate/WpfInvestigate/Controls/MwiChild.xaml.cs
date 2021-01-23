@@ -11,7 +11,13 @@ namespace WpfInvestigate.Controls
     /// </summary>
     public partial class MwiChild
     {
-        public bool IsDialog => false;
+        //  ===============  MwiChild State ===============
+        private Size _lastNormalSize;
+        private Point _attachedPosition;
+        private Point _detachedPosition;
+        private WindowState? _beforeMinimizedState { get; set; } // Previous state of minimized window.
+        private ImageSource _thumbnailCache;
+
         public MwiChild()
         {
             CmdDetach = new RelayCommand(ToggleDetach, _ => AllowDetach);
@@ -28,21 +34,17 @@ namespace WpfInvestigate.Controls
                 Icon = (ImageSource)FindResource("DefaultIcon");
         }
 
-        private void Close(object obj)
+        private async void Close(object obj)
         {
-            AnimateHide(() =>
-            {
-                if (Content is IDisposable)
-                    ((IDisposable)Content).Dispose();
-                if (IsWindowed) ((Window)Parent).Close();
-                Closed?.Invoke(this, EventArgs.Empty);
-            });
+            await AnimateHide();
+
+            if (Content is IDisposable)
+                ((IDisposable)Content).Dispose();
+            if (IsWindowed) ((Window)Parent).Close();
+            Closed?.Invoke(this, EventArgs.Empty);
         }
 
-        private void ToggleMaximize(object obj)
-        {
-            DialogMessage.ShowDialog("need ToDo!");
-        }
+        private void ToggleMaximize(object p) => WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
 
         private void ToggleMinimize(object obj)
         {
@@ -68,6 +70,7 @@ namespace WpfInvestigate.Controls
 
         #region =============  Properties  =================
         public event EventHandler Closed;
+        public bool IsDialog => false;
 
         //============  Commands  =============
         public RelayCommand CmdDetach { get; }
@@ -115,9 +118,51 @@ namespace WpfInvestigate.Controls
             get => (WindowState)GetValue(WindowStateProperty);
             set => SetValue(WindowStateProperty, value);
         }
-        private static void OnWindowStateValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+
+        private static void OnWindowStateValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) =>
+            ((MwiChild) sender).WindowStateValueChanged((WindowState) e.NewValue, (WindowState) e.OldValue);
+        private void WindowStateValueChanged(WindowState newWindowState, WindowState previousWindowState)
         {
-            DialogMessage.ShowDialog("need ToDo!");
+            /*var isDetachEvent = previousWindowState == newWindowState;
+
+            if (previousWindowState == WindowState.Normal && !isDetachEvent)
+                SaveActualRectangle();
+
+            if (IsWindowed)
+            {
+                if (newWindowState == WindowState.Normal)
+                {
+                    Width = _lastNormalSize.Width;
+                    Height = _lastNormalSize.Height;
+                    Position = new Point(_detachedPosition.X, _detachedPosition.Y);
+                }
+
+                if (newWindowState != WindowState.Minimized && DetachedHost.WindowState != WindowState.Normal)
+                    DetachedHost.WindowState = WindowState.Normal;
+
+                if (newWindowState == WindowState.Maximized)
+                {
+                    var maximizedWindowRectangle = Tips.GetMaximizedWindowRectangle();
+                    Position = new Point(maximizedWindowRectangle.Left, maximizedWindowRectangle.Top);
+                    Width = maximizedWindowRectangle.Width;
+                    Height = maximizedWindowRectangle.Height;
+                }
+            }
+
+            if (!IsWindowed && !isDetachEvent)
+                AnimateWindowState(previousWindowState);
+
+            if (!IsWindowed || isDetachEvent)
+            {
+                Container?.InvalidateSize();
+                Container?.OnPropertiesChanged(nameof(MwiContainer.ScrollBarKind));
+            }
+
+            // Activate main window (in case of attach)
+            if (IsWindowed && !DetachedHost.IsFocused)
+                DetachedHost.Focus();
+            else if (!IsWindowed && !Window.GetWindow(this).IsFocused)
+                Window.GetWindow(this)?.Focus();*/
         }
         //================================
         public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(ImageSource), typeof(MwiChild));
