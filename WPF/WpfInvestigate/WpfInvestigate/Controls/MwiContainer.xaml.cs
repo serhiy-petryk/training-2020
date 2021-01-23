@@ -71,6 +71,8 @@ namespace WpfInvestigate.Controls
         public ObservableCollection<MwiChild> Children { get; set; } = new ObservableCollection<MwiChild>();
         internal IEnumerable<MwiChild> InternalWindows => Children.Where(w => !w.IsWindowed);
         internal double InnerHeight => ScrollViewer.ActualHeight;
+        internal bool WindowShowLock = false; // lock for async window.Show()
+
         #endregion
 
         #region =======  TEMP section  =========

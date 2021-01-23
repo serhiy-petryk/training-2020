@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -9,7 +10,7 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for MwiChild.xaml
     /// </summary>
-    public partial class MwiChild
+    public partial class MwiChild: INotifyPropertyChanged
     {
         public MwiChild()
         {
@@ -137,7 +138,17 @@ namespace WpfInvestigate.Controls
             get => (object)GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
         }
+        #endregion
+
+        #region ============  INotifyPropertyChanged  ================
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         #endregion
+
     }
 }

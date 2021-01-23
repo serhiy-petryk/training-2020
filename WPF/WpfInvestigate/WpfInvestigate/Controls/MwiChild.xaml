@@ -35,6 +35,19 @@
                 </MenuItem.Icon>-->
             </MenuItem>
         </ControlTemplate>
+
+        <Style TargetType="controls:MwiChild">
+            <Setter Property="Background" Value="Orange"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Blue"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="BorderBrush" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </controls:ResizingControl.Resources>
 
     <Border BorderThickness="12" BorderBrush="Aqua">

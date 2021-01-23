@@ -1,7 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
@@ -66,9 +70,127 @@ namespace WpfInvestigate.Controls
             return _thumbnailCache;
         }
 
-        private void ToggleDetach(object obj)
+        private async void ToggleDetach(object obj)
         {
-            DialogMessage.ShowDialog("need ToDo!");
+            if (WindowState == WindowState.Normal)
+                SaveActualRectangle();
+
+            if (IsWindowed)
+            {
+                await AnimateHide();
+                var host = (Window)Parent;
+                host.Close();
+                ((Window)Parent).Content = null;
+                MwiContainer.MwiPanel.Children.Add(this);
+                // Focused = true;
+
+                if (WindowState == WindowState.Maximized)
+                {
+                    Position = new Point(0, 0);
+                    Width = MwiContainer.ActualWidth;
+                    Height = MwiContainer.ActualHeight;
+                }
+                else
+                    Position = _attachedPosition;
+
+                OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
+                OnPropertiesChanged(nameof(IsWindowed));
+
+                var opacityAnimation = new DoubleAnimation { Duration = AnimationHelper.AnimationDuration };
+                opacityAnimation.SetFromToValues(Opacity, 1.0);
+                BeginAnimation(OpacityProperty, opacityAnimation);
+                /*var storyboard = new Storyboard();
+                storyboard.Children.Add(AnimationHelper.GetOpacityAnimation(this, 0, 1));
+                storyboard.Begin();*/
+            }
+            else
+            {
+                    var window = new Window
+                    {
+                        Style = (Style)FindResource("HeadlessWindow"),
+                        WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                        Background = Brushes.LightBlue,
+                        Opacity = 1
+                    };
+
+                    await AnimateHide();
+                    Margin = new Thickness(0,0,-1,-1);
+                    MwiContainer.MwiPanel.Children.Remove(this);
+                    window.Content = this;
+                    RestoreExternalWindowRect();
+
+                    /*window.Activated += (sender, args) =>
+                    {
+                        if (MwiContainer.ActiveMwiChild != this)
+                            MwiContainer.ActiveMwiChild = this;
+                        else
+                            Focused = true;
+                    };
+                    window.Deactivated += (sender, args) =>
+                    {
+                        if (!MwiContainer.WindowShowLock)
+                            Focused = false;
+                    };*/
+
+                    MwiContainer.WindowShowLock = true;
+                    window.Show();
+                    MwiContainer.WindowShowLock = false;
+
+                    // Refresh ScrollBar scrolling
+                    MwiContainer.ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+                    MwiContainer.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+
+                    OnWindowStateValueChanged(this,
+                        new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState,
+                            WindowState));
+                    OnPropertiesChanged(nameof(IsWindowed));
+
+                    var opacityAnimation = new DoubleAnimation { Duration = AnimationHelper.AnimationDuration };
+                    opacityAnimation.SetFromToValues(0.0, 1.0);
+                    BeginAnimation(OpacityProperty, opacityAnimation);
+
+                    /*await Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+                      {
+                          var opacityAnimation = new DoubleAnimation { Duration = AnimationHelper.AnimationDuration };
+                          opacityAnimation.SetFromToValues(1.0, 1.0);
+                          // window.BeginAnimation(OpacityProperty, opacityAnimation);
+                            // var storyboard = new Storyboard();
+                            // storyboard.Children.Add(AnimationHelper.GetOpacityAnimation(window, 0, 1));
+                            // storyboard.Begin();
+                        }));*/
+
+            }
+        }
+
+        public void RestoreExternalWindowRect(Size? newSize = null)
+        {
+            var window = (Window)Parent;
+            if (window == null)
+                return;
+
+            if (newSize.HasValue)
+                _lastNormalSize = newSize.Value;
+
+            Position = _detachedPosition; // new Point(window.Left, window.Top);
+            var maximizedWindowRectangle = Tips.GetMaximizedWindowRectangle();
+
+            _detachedPosition = new Point(
+                Math.Max(0, maximizedWindowRectangle.X + (maximizedWindowRectangle.Width - _lastNormalSize.Width) / 2),
+                Math.Max(0, maximizedWindowRectangle.Y + (maximizedWindowRectangle.Height - _lastNormalSize.Height) / 2));
+
+            if (WindowState == WindowState.Maximized)
+            {
+                window.Left = maximizedWindowRectangle.Left;
+                window.Top = maximizedWindowRectangle.Top;
+                Width = maximizedWindowRectangle.Width;
+                Height = maximizedWindowRectangle.Height;
+            }
+            else
+            {
+                Width = _lastNormalSize.Width;
+                Height = _lastNormalSize.Height;
+                Position = _detachedPosition;
+            }
         }
 
         #region ==============  OnWindowStateValueChanged  =================
