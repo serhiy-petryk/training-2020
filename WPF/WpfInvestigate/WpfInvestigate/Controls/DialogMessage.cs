@@ -30,7 +30,7 @@ namespace WpfInvestigate.Controls
         private static readonly string[] _iconColors = {"Primary", "Danger", "Danger", "Warning", "Info", "Success"};
 
         #region ============  Public Static Methods  =============
-        public static string ShowDialog(string messageText, string caption, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        public static string ShowDialog(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
             var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
             var content = new ResizingControl
@@ -43,7 +43,7 @@ namespace WpfInvestigate.Controls
             return dialogMessage.Result;
         }
 
-        public static async Task<string> ShowAsync(string messageText, string caption, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        public static async Task<string> ShowAsync(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
             var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
             var content = new ResizingControl
@@ -58,7 +58,7 @@ namespace WpfInvestigate.Controls
             return dialogMessage.Result;
         }
 
-        public static void Show(string messageText, string caption, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        public static void Show(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
             var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
             var content = new ResizingControl

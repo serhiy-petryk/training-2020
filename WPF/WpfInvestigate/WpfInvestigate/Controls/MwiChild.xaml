@@ -35,99 +35,94 @@
                 </MenuItem.Icon>-->
             </MenuItem>
         </ControlTemplate>
+    </controls:ResizingControl.Resources>
 
-        <Style TargetType="{x:Type controls:MwiChild}">
-            <Setter Property="Resizable" Value="True"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type controls:MwiChild}">
-                        <controls:ResizingControl EdgeThickness="{TemplateBinding EdgeThickness}" Height="{TemplateBinding Height}">
-                            <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}}">
-                                <Border BorderThickness="12" BorderBrush="Aqua">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="30"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
+    <Border BorderThickness="12" BorderBrush="Aqua">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-                                        <Grid Grid.Row="0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-                                            <Thumb Grid.Column="0" Grid.ColumnSpan="5" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"
-                                                   MouseDoubleClick="MovingThumb_OnMouseDoubleClick"
-                                                   effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header}"/>
+                <Thumb Grid.Column="0" Grid.ColumnSpan="5" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"
+                       MouseDoubleClick="MovingThumb_OnMouseDoubleClick"
+                       effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header}"/>
 
-                                            <!-- Window icon & System menu -->
-                                            <ToggleButton Grid.Column="0" Width="16" Height="16" Margin="3 0 0 0" Focusable="False" IsThreeState="False" IsChecked="False" BorderThickness="0" Background="Transparent" Padding="0"
-                                                          Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}" 
-                                                          Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}" 
-                                                          Checked="SystemMenuButton_OnChecked">
-                                                <ToggleButton.Resources>
-                                                    <ContextMenu x:Key="cm" StaysOpen="False" Padding="0 4">
-                                                        <MenuItem Header="Restore" Command="{Binding SysCmdRestore}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource RestoreGeometry}" />
-                                                        <MenuItem Header="Minimize" Command="{Binding CmdMinimize}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource MinimizeGeometry}" />
-                                                        <MenuItem Header="Maximize" Command="{Binding SysCmdMaximize}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource MaximizeGeometry}"/>
-                                                        <Separator Height="12" Margin="0 -2"/>
-                                                       <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
-                                                              Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.InverseInstance}}" InputGestureText="Ctrl+F4"/>
-                                                        <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
-                                                              Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.Instance}}" InputGestureText="Alt+F4"/>
-                                                    </ContextMenu>
-                                                </ToggleButton.Resources>
-                                                <Image x:Name="IconImage" Source="{Binding Icon}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                                            </ToggleButton>
+                <!-- Window icon & System menu -->
+                <ToggleButton Grid.Column="0" Width="16" Height="16" Margin="3 0 0 0" Focusable="False" IsThreeState="False" IsChecked="False" BorderThickness="0" Background="Transparent" Padding="0"
+                              Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}" 
+                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}" 
+                              Checked="SystemMenuButton_OnChecked">
+                    <ToggleButton.Resources>
+                        <ContextMenu x:Key="cm" StaysOpen="False" Padding="0 4">
+                            <MenuItem Header="Restore" Command="{Binding SysCmdRestore}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource RestoreGeometry}" />
+                            <MenuItem Header="Minimize" Command="{Binding CmdMinimize}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource MinimizeGeometry}" />
+                            <MenuItem Header="Maximize" Command="{Binding SysCmdMaximize}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource MaximizeGeometry}"/>
+                            <Separator Height="12" Margin="0 -2"/>
+                            <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
+                                      Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.InverseInstance}}" InputGestureText="Ctrl+F4"/>
+                            <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
+                                      Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.Instance}}" InputGestureText="Alt+F4"/>
+                        </ContextMenu>
+                    </ToggleButton.Resources>
+                    <Image x:Name="IconImage" Source="{Binding Icon}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                </ToggleButton>
 
-                                            <!-- Left header panel -->
-                                            <ContentPresenter Grid.Column="1" Content="{Binding LeftHeaderPanel}" UseLayoutRounding="False"/>
+                <!-- Left header panel -->
+                <ContentPresenter Grid.Column="1" Content="{Binding LeftHeaderPanel}" UseLayoutRounding="False"/>
 
-                                            <!-- Window title -->
-                                            <TextBlock Grid.Column="2" x:Name="Header" Margin="3 0 0 0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{TemplateBinding Title}"/>
+                <!-- Window title -->
+                <TextBlock Grid.Column="2" x:Name="Header" Margin="3 0 0 0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{Binding Title}"/>
 
-                                            <!-- Left header panel -->
-                                            <ContentPresenter Grid.Column="3" Content="{Binding RightHeaderPanel}"/>
+                <!-- Left header panel -->
+                <ContentPresenter Grid.Column="3" Content="{Binding RightHeaderPanel}"/>
 
-                                            <!-- Window buttons -->
-                                            <!--<Grid Grid.Column="4" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:MwiChild}}, Path=IsDialog, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Button Grid.Column="0" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}"
-                                                        Visibility="{TemplateBinding AllowDetach, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                                                <Button Grid.Column="1" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource MinimizeButtonStyle}"
-                                                        Visibility="{TemplateBinding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}" PreviewMouseLeftButtonUp="Button_PreviewMouseLeftButtonUp"/>
-                                            </Grid>-->
+                <!-- Window buttons -->
+                <Grid Grid.Column="4" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:MwiChild}}, Path=IsDialog, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}"
+                            Visibility="{Binding AllowDetach, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                    <Button Grid.Column="1" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource MinimizeButtonStyle}"
+                            Visibility="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}" PreviewMouseLeftButtonUp="Button_PreviewMouseLeftButtonUp"/>
+                </Grid>
 
-                                            <!--<Button Grid.Column="5" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
-                                                Visibility="{TemplateBinding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>-->
-                                            <Button Grid.Column="6" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{DynamicResource CloseButtonStyle}" PreviewMouseLeftButtonUp="Button_PreviewMouseLeftButtonUp"/>
-                                        </Grid>
+                <Button Grid.Column="5" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
+                        Visibility="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                <Button Grid.Column="6" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{DynamicResource CloseButtonStyle}" PreviewMouseLeftButtonUp="Button_PreviewMouseLeftButtonUp"/>
+            </Grid>
 
-                                        <!-- Content & Command/Status bars -->
-                                        <Border Grid.Row="1" x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                            <Grid Grid.Row="1">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <!-- Command bar -->
-                                                <!--<ContentPresenter Grid.Row="0" Content="{Binding CommandBar}"/>-->
-                                                <!-- Window content -->
-                                                <ContentControl Grid.Row="1" Content="{TemplateBinding Content}" />
-                                                <!-- Status bar -->
-                                                <!--<ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>-->
-                                            </Grid>
-                                            <!--<Border.Style>
+            <!-- Content & Command/Status bars -->
+            <!--<Border Grid.Row="1" x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">-->
+            <Border Grid.Row="1" x:Name="ContentBorder">
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <!-- Command bar -->
+                    <!--<ContentPresenter Grid.Row="0" Content="{Binding CommandBar}"/>-->
+                    <!-- Window content -->
+                    <ContentControl Grid.Row="1" Content="{Binding Content}" />
+                    <!-- Status bar -->
+                    <!--<ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>-->
+                </Grid>
+                <!--<Border.Style>
                                                 <Style TargetType="Border">
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding IsWindowed}" Value="true">
@@ -136,16 +131,8 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </Border.Style>-->
-                                        </Border>
-                                    </Grid>
-                                </Border>
-                            </Grid>
-                        </controls:ResizingControl>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-    </controls:ResizingControl.Resources>
+            </Border>
+        </Grid>
+    </Border>
 
 </controls:ResizingControl>

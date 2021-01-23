@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
@@ -16,7 +15,6 @@ namespace WpfInvestigate.Controls
         {
             InitializeComponent();
             DataContext = this;
-            // MainContent.DataContext = this;
 
             if (Icon == null)
                 Icon = (ImageSource)FindResource("DefaultIcon");
@@ -29,41 +27,36 @@ namespace WpfInvestigate.Controls
             CmdClose = new RelayCommand(DoClose, _ => AllowClose);
         }
 
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-        }
-
         private void DoClose(object obj)
         {
-            throw new System.NotImplementedException();
+            DialogMessage.ShowDialog("need ToDo!");
         }
 
         private void ToggleMaximize(object obj)
         {
-            throw new System.NotImplementedException();
+            DialogMessage.ShowDialog("need ToDo!");
         }
 
         private void ToggleMinimize(object obj)
         {
-            throw new System.NotImplementedException();
+            DialogMessage.ShowDialog("need ToDo!");
         }
 
         private void ToggleDetach(object obj)
         {
-            throw new System.NotImplementedException();
+            DialogMessage.ShowDialog("need ToDo!");
         }
 
         private void SystemMenuButton_OnChecked(object sender, RoutedEventArgs e) => Helpers.DropDownButtonHelper.OpenDropDownMenu(sender);
 
         private void MovingThumb_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DialogMessage.ShowDialog("need ToDo!", null);
+            DialogMessage.ShowDialog("need ToDo!");
         }
 
         private void Button_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            DialogMessage.ShowDialog("need ToDo!", null);
+            DialogMessage.ShowDialog("need ToDo!");
         }
 
         #region =============  Properties  =================
@@ -123,7 +116,7 @@ namespace WpfInvestigate.Controls
         }
         private static void OnWindowStateValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            DialogMessage.ShowDialog("need ToDo!");
         }
         //================================
         public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(ImageSource), typeof(MwiChild));
