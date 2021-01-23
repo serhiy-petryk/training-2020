@@ -342,18 +342,12 @@ namespace WpfInvestigate.Controls
 
         private void AnimateHand(Shape hand, double newValue, double oldValue)
         {
-            if (hand == null || Tips.AreEqual(newValue, oldValue))
-                return;
+            if (hand == null || Tips.AreEqual(newValue, oldValue)) return;
 
             if (!(hand.RenderTransform is RotateTransform))
                 hand.RenderTransform = new RotateTransform {Angle = oldValue};
 
-            var animation = new DoubleAnimation
-            {
-                From = oldValue, To = newValue,
-                Duration = AnimationHelper.AnimationDuration
-            };
-            hand.RenderTransform.BeginAnimation(RotateTransform.AngleProperty, animation);
+            hand.RenderTransform.BeginAnimationAsync(RotateTransform.AngleProperty, oldValue, newValue);
         }
 
         private static void OnSelectedTimeFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

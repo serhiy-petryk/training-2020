@@ -127,12 +127,7 @@ namespace WpfInvestigate.Controls
             content.Visibility = Visibility.Visible;
 
             if (OpenContentAnimation == null)
-            {
-                var contentAnimation = new ThicknessAnimation(new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
-                contentAnimation.FillBehavior = FillBehavior.Stop;
-                contentAnimation.Freeze();
-                await content.BeginAnimationAsync(MarginProperty, contentAnimation);
-            }
+                await content.BeginAnimationAsync(MarginProperty, new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
             else
                 OpenContentAnimation.Begin(content);
         }
