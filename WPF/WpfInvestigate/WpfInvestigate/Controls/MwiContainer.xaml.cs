@@ -57,5 +57,18 @@ namespace WpfInvestigate.Controls
                     break;
             }
         }
+
+        private int cnt = 0;
+        private void AddChild_OnClick(object sender, RoutedEventArgs e)
+        {
+            Children.Add(new MwiChild
+            {
+                Title = "Window Using Code",
+                Content = $"New MwiChild: {cnt++}",
+                Width = 300,
+                Height = 200,
+                Position = new Point(300, 80)
+            });
+        }
     }
 }
