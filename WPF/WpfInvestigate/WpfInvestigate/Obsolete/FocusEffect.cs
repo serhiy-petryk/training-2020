@@ -58,8 +58,6 @@ namespace WpfInvestigate.Obsolete
             {
                 var layer = AdornerLayer.GetAdornerLayer(element);
                 var adornerControl = layer.GetAdorners(element)?.OfType<AdornerControl>().FirstOrDefault(a => a.Child.Name == "Focus");
-                var colorAnimation = (ColorAnimation)adornerControl?.Child.Resources["ColorAnimation"];
-                var thicknessAnimation = (ThicknessAnimation)adornerControl?.Child.Resources["ThicknessAnimation"];
 
                 if (adornerControl == null)
                 {
@@ -68,11 +66,6 @@ namespace WpfInvestigate.Obsolete
                         Name = "Focus", Background = Brushes.Transparent, Focusable = false, IsHitTestVisible = false,
                         UseLayoutRounding = false, SnapsToDevicePixels = false
                     };
-
-                    colorAnimation = new ColorAnimation {Duration = Common.AnimationHelper.AnimationDuration};
-                    adorner.Resources.Add("ColorAnimation", colorAnimation);
-                    thicknessAnimation = new ThicknessAnimation { Duration = Common.AnimationHelper.AnimationDuration };
-                    adorner.Resources.Add("ThicknessAnimation", thicknessAnimation);
 
                     adornerControl = new AdornerControl(element) { Child = adorner, AdornerSize  = AdornerControl.AdornerSizeType.ChildElement};
                     layer.Add(adornerControl);
@@ -104,18 +97,14 @@ namespace WpfInvestigate.Obsolete
                     var oldColor = ((SolidColorBrush)child.BorderBrush).Color;
                     var newColor = ((SolidColorBrush) focusBrush).Color;
                     if (oldColor != newColor)
-                    {
-                        colorAnimation.SetFromToValues(oldColor, newColor);
-                        child.BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
-                    }
+                        child.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, oldColor, newColor);
                 }
                 else
                     child.BorderBrush = focusBrush.Clone();
 
                 // +0.25: to remove gap between focus and element
                 // var newThickness = new Thickness(thickness.Left + 0.25, thickness.Top + 0.25, thickness.Right + 0.25, thickness.Bottom + 0.25);
-                thicknessAnimation.SetFromToValues(child.BorderThickness, thickness);
-                child.BeginAnimation(Control.BorderThicknessProperty, thicknessAnimation);
+                child.BeginAnimationAsync(Control.BorderThicknessProperty, child.BorderThickness, thickness);
             }
             else
             {
@@ -128,16 +117,10 @@ namespace WpfInvestigate.Obsolete
                     {
                         var oldColor = ((SolidColorBrush)border.BorderBrush).Color;
                         if (oldColor != Colors.Transparent)
-                        {
-                            var animation = (ColorAnimation)adorner.Child.Resources["ColorAnimation"];
-                            animation.SetFromToValues(oldColor, Colors.Transparent);
-                            border.BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
-                        }
+                            border.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, oldColor, Colors.Transparent);
                     }
 
-                    var thicknessAnimation = (ThicknessAnimation)adorner.Child.Resources["ThicknessAnimation"];
-                    thicknessAnimation.SetFromToValues(border.BorderThickness, new Thickness());
-                    border.BeginAnimation(Control.BorderThicknessProperty, thicknessAnimation);
+                    border.BeginAnimationAsync(Control.BorderThicknessProperty, border.BorderThickness, new Thickness());
                 }
 
                 // if isFocused=false не завжди спрацьовує фокус на новому елементі -> Activate focus on focused element

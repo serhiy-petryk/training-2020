@@ -96,9 +96,7 @@ namespace WpfInvestigate.Controls
                 OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
                 OnPropertiesChanged(nameof(IsWindowed));
 
-                var opacityAnimation = new DoubleAnimation { Duration = AnimationHelper.AnimationDuration };
-                opacityAnimation.SetFromToValues(0.0, 1.0);
-                BeginAnimation(OpacityProperty, opacityAnimation);
+                await this.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
             }
             else
             {
@@ -142,9 +140,7 @@ namespace WpfInvestigate.Controls
                             WindowState));
                     OnPropertiesChanged(nameof(IsWindowed));
 
-                    var opacityAnimation = new DoubleAnimation { Duration = AnimationHelper.AnimationDuration };
-                    opacityAnimation.SetFromToValues(0.0, 1.0);
-                    BeginAnimation(OpacityProperty, opacityAnimation);
+                    await this.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
             }
         }
 

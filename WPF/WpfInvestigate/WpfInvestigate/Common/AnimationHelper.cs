@@ -38,6 +38,34 @@ namespace WpfInvestigate.Common
         }
         #endregion
 
+        #region ================  Begin animation async ===================
+
+        public static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, double from, double to, Duration? duration = null)
+        {
+            var animation = new DoubleAnimation(from, to, duration ?? AnimationDuration);
+            animation.FillBehavior = FillBehavior.Stop;
+            animation.Freeze();
+            ((DependencyObject)element).SetValue(property, to);
+            return element.BeginAnimationAsync(property, animation);
+        }
+        public static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, Thickness from, Thickness to, Duration? duration = null)
+        {
+            var animation = new ThicknessAnimation(from, to, duration ?? AnimationDuration);
+            animation.FillBehavior = FillBehavior.Stop;
+            animation.Freeze();
+            ((DependencyObject)element).SetValue(property, to);
+            return element.BeginAnimationAsync(property, animation);
+        }
+        public static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, Color from, Color to, Duration? duration = null)
+        {
+            var animation = new ColorAnimation(from, to, duration ?? AnimationDuration);
+            animation.FillBehavior = FillBehavior.Stop;
+            animation.Freeze();
+            ((DependencyObject)element).SetValue(property, to);
+            return element.BeginAnimationAsync(property, animation);
+        }
+        #endregion
+
         #region ================  Create animation  ===================
 
         public static Timeline[] CreateAnimations(this FrameworkElement element, params DependencyProperty[] propertyPaths) =>
