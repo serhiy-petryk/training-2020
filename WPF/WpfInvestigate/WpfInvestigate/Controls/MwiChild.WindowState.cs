@@ -97,11 +97,8 @@ namespace WpfInvestigate.Controls
                 OnPropertiesChanged(nameof(IsWindowed));
 
                 var opacityAnimation = new DoubleAnimation { Duration = AnimationHelper.AnimationDuration };
-                opacityAnimation.SetFromToValues(Opacity, 1.0);
+                opacityAnimation.SetFromToValues(0.0, 1.0);
                 BeginAnimation(OpacityProperty, opacityAnimation);
-                /*var storyboard = new Storyboard();
-                storyboard.Children.Add(AnimationHelper.GetOpacityAnimation(this, 0, 1));
-                storyboard.Begin();*/
             }
             else
             {
@@ -148,17 +145,6 @@ namespace WpfInvestigate.Controls
                     var opacityAnimation = new DoubleAnimation { Duration = AnimationHelper.AnimationDuration };
                     opacityAnimation.SetFromToValues(0.0, 1.0);
                     BeginAnimation(OpacityProperty, opacityAnimation);
-
-                    /*await Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
-                      {
-                          var opacityAnimation = new DoubleAnimation { Duration = AnimationHelper.AnimationDuration };
-                          opacityAnimation.SetFromToValues(1.0, 1.0);
-                          // window.BeginAnimation(OpacityProperty, opacityAnimation);
-                            // var storyboard = new Storyboard();
-                            // storyboard.Children.Add(AnimationHelper.GetOpacityAnimation(window, 0, 1));
-                            // storyboard.Begin();
-                        }));*/
-
             }
         }
 
