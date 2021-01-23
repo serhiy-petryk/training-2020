@@ -25,12 +25,9 @@ namespace WpfInvestigate.Controls
         public ResizingControl()
         {
             DataContext = this;
-            // CmdClose = new RelayCommand(DoClose, _ => AllowClose);
         }
 
         public const string MovingThumbName = "MovingThumb";
-        public RelayCommand CmdClose { get; }
-
         public bool LimitPositionToPanelBounds { get; set; } = false;
         public bool IsWindowed => Parent is Window;
 

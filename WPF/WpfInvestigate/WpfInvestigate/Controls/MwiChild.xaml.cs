@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
@@ -29,7 +30,7 @@ namespace WpfInvestigate.Controls
 
         private void DoClose(object obj)
         {
-            DialogMessage.ShowDialog("need ToDo!");
+            Closed?.Invoke(this, EventArgs.Empty);
         }
 
         private void ToggleMaximize(object obj)
@@ -60,6 +61,8 @@ namespace WpfInvestigate.Controls
         }
 
         #region =============  Properties  =================
+        public event EventHandler Closed;
+
         //============  Commands  =============
         public RelayCommand CmdDetach { get; }
         public RelayCommand CmdMinimize { get; }
@@ -68,7 +71,7 @@ namespace WpfInvestigate.Controls
         public RelayCommand SysCmdRestore { get; }
         public RelayCommand CmdClose { get; }
 
-        //============  Commands  =============
+        //=========================
         public static readonly DependencyProperty AllowDetachProperty = DependencyProperty.Register(nameof(AllowDetach), typeof(bool), typeof(MwiChild), new UIPropertyMetadata(true));
         public bool AllowDetach
         {
