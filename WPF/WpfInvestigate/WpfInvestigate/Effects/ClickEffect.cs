@@ -128,9 +128,8 @@ namespace WpfInvestigate.Effects
             {
                 sb = new Storyboard();
                 ellipse.Resources["storyboard"] = sb;
-                sb.Children.Add(ellipse.CreateAnimation(FrameworkElement.MarginProperty));
-                sb.Children.Add(ellipse.CreateAnimation(FrameworkElement.WidthProperty));
-                sb.Children.Add(ellipse.CreateAnimation(UIElement.OpacityProperty));
+                foreach (var timeline in ellipse.CreateAnimations(FrameworkElement.MarginProperty, FrameworkElement.WidthProperty, UIElement.OpacityProperty))
+                    sb.Children.Add(timeline);
             }
 
             var newSize = Math.Max(fe.ActualWidth, fe.ActualHeight) * 3;

@@ -43,10 +43,6 @@ namespace WpfInvestigate.Common
 
         public static Timeline[] CreateAnimations(this FrameworkElement element, params DependencyProperty[] propertyPaths) =>
             propertyPaths.Select(p => CreateAnimation(element, new PropertyPath(p), p.PropertyType)).ToArray();
-        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, Duration? duration = null) =>
-            CreateAnimation(element, new PropertyPath(propertyPath), propertyPath.PropertyType, duration);
-        public static Timeline CreateAnimation(this FrameworkElement element, DependencyProperty propertyPath, double duration) =>
-            CreateAnimation(element, new PropertyPath(propertyPath), propertyPath.PropertyType, TimeSpan.FromMilliseconds(duration));
         public static Timeline CreateAnimation(this FrameworkElement element, string propertyPath, Type propertyType, Duration? duration = null) =>
             CreateAnimation(element, new PropertyPath(propertyPath), propertyType, duration);
         public static Timeline CreateAnimation(this FrameworkElement element, PropertyPath propertyPath, Type propertyType, Duration? duration = null)

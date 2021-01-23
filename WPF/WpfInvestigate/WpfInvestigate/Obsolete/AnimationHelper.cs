@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Obsolete
 {
@@ -13,20 +14,17 @@ namespace WpfInvestigate.Obsolete
             result[0].Add(Common.AnimationHelper.CreateFrameAnimation(element, Path.DataProperty, to));
             result[1].Add(Common.AnimationHelper.CreateFrameAnimation(element, Path.DataProperty, from));
 
-            var widthPart1Animation = Common.AnimationHelper.CreateAnimation(element, FrameworkElement.WidthProperty);
-            Common.AnimationHelper.SetFromToValues(widthPart1Animation, element.Width, 0.0);
+            var widthPartAnimations = Common.AnimationHelper.CreateAnimations(element, FrameworkElement.WidthProperty, FrameworkElement.WidthProperty);
+            widthPartAnimations[0].SetFromToValues(element.Width, 0.0);
+            widthPartAnimations[1].SetFromToValues(0.0, element.Width);
+            widthPartAnimations[1].BeginTime = Common.AnimationHelper.AnimationDuration.TimeSpan;
 
-            var widthPart2Animation = Common.AnimationHelper.CreateAnimation(element, FrameworkElement.WidthProperty);
-            Common.AnimationHelper.SetFromToValues(widthPart2Animation, 0.0, element.Width);
-            widthPart2Animation.BeginTime = Common.AnimationHelper.AnimationDuration.TimeSpan;
-
-            result[0].Add(widthPart1Animation);
-            result[0].Add(widthPart2Animation);
-            result[1].Add(widthPart1Animation);
-            result[1].Add(widthPart2Animation);
+            result[0].Add(widthPartAnimations[0]);
+            result[0].Add(widthPartAnimations[1]);
+            result[1].Add(widthPartAnimations[0]);
+            result[1].Add(widthPartAnimations[1]);
 
             return result;
         }
-
     }
 }

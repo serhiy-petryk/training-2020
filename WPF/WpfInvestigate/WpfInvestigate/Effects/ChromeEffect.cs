@@ -145,7 +145,7 @@ namespace WpfInvestigate.Effects
                     sb.Children.Add(control.CreateAnimation("(Border.Background).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.AnimationDuration));
                     sb.Children.Add(control.CreateAnimation("(Control.Foreground).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.AnimationDuration));
                     sb.Children.Add(control.CreateAnimation("(Border.BorderBrush).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.AnimationDuration));
-                    sb.Children.Add(control.CreateAnimation(UIElement.OpacityProperty));
+                    sb.Children.Add(control.CreateAnimations(UIElement.OpacityProperty)[0]);
                 }
 
                 sb.Children[0].SetFromToValues(((SolidColorBrush)control.Background).Color, newValues.Item1.Value);
