@@ -25,7 +25,7 @@ namespace WpfInvestigate.Controls
         private Task AnimateShow() => SetRectangleWithAnimation(new Rect(Position.X, Position.Y, ActualWidth, ActualHeight), 0, 1);
         private Task AnimateHide() => SetRectangleWithAnimation(new Rect(Position.X, Position.Y, ActualWidth, ActualHeight), 1, 0);
 
-        private void AnimateWindowState(WindowState previousWindowState)
+        private async Task AnimateWindowState(WindowState previousWindowState)
         {
             Rect to;
             if (WindowState == WindowState.Normal)
@@ -44,9 +44,7 @@ namespace WpfInvestigate.Controls
             else
                 to = new Rect(Position.X, 0, ActualWidth, MinHeight);
 
-            SetRectangleWithAnimation(to, previousWindowState == WindowState.Minimized ? 0 : 1, WindowState == WindowState.Minimized ? 0 : 1);
-            /*await SetRectangleWithAnimation(to, previousWindowState == WindowState.Minimized ? 0 : 1,
-                WindowState == WindowState.Minimized ? 0 : 1);*/
+            await SetRectangleWithAnimation(to, previousWindowState == WindowState.Minimized ? 0 : 1, WindowState == WindowState.Minimized ? 0 : 1);
 
             /*if (WindowState == WindowState.Minimized)
             {

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
@@ -178,7 +175,7 @@ namespace WpfInvestigate.Controls
         #region ==============  OnWindowStateValueChanged  =================
         private static void OnWindowStateValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) =>
     ((MwiChild)sender).WindowStateValueChanged((WindowState)e.NewValue, (WindowState)e.OldValue);
-        private void WindowStateValueChanged(WindowState newWindowState, WindowState previousWindowState)
+        private async void WindowStateValueChanged(WindowState newWindowState, WindowState previousWindowState)
         {
             var isDetachEvent = previousWindowState == newWindowState;
 
@@ -207,7 +204,7 @@ namespace WpfInvestigate.Controls
             }
 
             if (!IsWindowed && !isDetachEvent)
-                AnimateWindowState(previousWindowState);
+                await AnimateWindowState(previousWindowState);
 
             /* todo: container if (!IsWindowed || isDetachEvent)
             {
