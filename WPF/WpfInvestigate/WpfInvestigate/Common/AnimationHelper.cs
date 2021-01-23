@@ -48,6 +48,14 @@ namespace WpfInvestigate.Common
             ((DependencyObject)element).SetValue(property, to);
             return element.BeginAnimationAsync(property, animation);
         }
+        public static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, Point from, Point to, Duration? duration = null)
+        {
+            var animation = new PointAnimation(from, to, duration ?? AnimationDuration);
+            animation.FillBehavior = FillBehavior.Stop;
+            animation.Freeze();
+            ((DependencyObject)element).SetValue(property, to);
+            return element.BeginAnimationAsync(property, animation);
+        }
         public static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, Thickness from, Thickness to, Duration? duration = null)
         {
             var animation = new ThicknessAnimation(from, to, duration ?? AnimationDuration);

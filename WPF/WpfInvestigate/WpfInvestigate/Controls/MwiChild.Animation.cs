@@ -1,45 +1,31 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media.Animation;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
     public partial class MwiChild
     {
-        private Storyboard _sbWindowState;
         public Task SetRectangleWithAnimation(Rect to, double fromOpacity, double toOpacity)
         {
-            if (_sbWindowState == null)
-            {
-                _sbWindowState = new Storyboard();
-                foreach (var timeline in AnimationHelper.CreateAnimations(this, PositionProperty, WidthProperty, HeightProperty, OpacityProperty))
-                {
-                    timeline.FillBehavior = FillBehavior.Stop;
-                    _sbWindowState.Children.Add(timeline);
-                }
-            }
+            var tasks = new List<Task>();
+            if (!Tips.AreEqual(Position.X, to.X) || !Tips.AreEqual(Position.Y, to.Y))
+                tasks.Add(this.BeginAnimationAsync(PositionProperty, Position, new Point(to.X, to.Y)));
+            if (!Tips.AreEqual(ActualWidth, to.Width))
+                tasks.Add(this.BeginAnimationAsync(WidthProperty, ActualWidth, to.Width));
+            if (!Tips.AreEqual(ActualHeight, to.Height))
+                tasks.Add(this.BeginAnimationAsync(HeightProperty, ActualHeight, to.Height));
+            if (!Tips.AreEqual(fromOpacity, toOpacity))
+                tasks.Add(this.BeginAnimationAsync(OpacityProperty, fromOpacity, toOpacity));
 
-            var from = new Rect(Position.X, Position.Y, ActualWidth, ActualHeight);
-
-            _sbWindowState.Children[0].SetFromToValues(new Point(from.Left, from.Top), new Point(to.Left, to.Top));
-            _sbWindowState.Children[1].SetFromToValues(from.Width, to.Width);
-            _sbWindowState.Children[2].SetFromToValues(from.Height, to.Height);
-            _sbWindowState.Children[3].SetFromToValues(fromOpacity, toOpacity);
-
-            // To restore window rect after animation
-            Position = new Point(to.Left, to.Top);
-            Width = to.Width;
-            Height = to.Height;
-            Opacity = toOpacity;
-
-            return _sbWindowState.BeginAsync(this);
+            return Task.WhenAll(tasks.ToArray());
         }
 
         private Task AnimateShow() => SetRectangleWithAnimation(new Rect(Position.X, Position.Y, ActualWidth, ActualHeight), 0, 1);
         private Task AnimateHide() => SetRectangleWithAnimation(new Rect(Position.X, Position.Y, ActualWidth, ActualHeight), 1, 0);
 
-        private async void AnimateWindowState(WindowState previousWindowState)
+        private void AnimateWindowState(WindowState previousWindowState)
         {
             Rect to;
             if (WindowState == WindowState.Normal)
@@ -58,8 +44,9 @@ namespace WpfInvestigate.Controls
             else
                 to = new Rect(Position.X, 0, ActualWidth, MinHeight);
 
-            await SetRectangleWithAnimation(to, previousWindowState == WindowState.Minimized ? 0 : 1,
-                WindowState == WindowState.Minimized ? 0 : 1);
+            SetRectangleWithAnimation(to, previousWindowState == WindowState.Minimized ? 0 : 1, WindowState == WindowState.Minimized ? 0 : 1);
+            /*await SetRectangleWithAnimation(to, previousWindowState == WindowState.Minimized ? 0 : 1,
+                WindowState == WindowState.Minimized ? 0 : 1);*/
 
             /*if (WindowState == WindowState.Minimized)
             {
