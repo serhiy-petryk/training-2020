@@ -88,8 +88,14 @@ namespace WpfInvestigate.Effects
             var tb = (ToggleButton)sender;
             var newGeometry = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb);
             var newMargin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb);
-            var sb = GetAnimation(GetViewbox(tb), newGeometry, newMargin);
-            sb?.Begin();
+            var viewbox = GetViewbox(tb);
+
+            var sb = (Storyboard)viewbox.Resources["Animation"];
+            if (sb == null)
+                sb = CreateAnimation(viewbox);
+            ((ObjectAnimationUsingKeyFrames)sb.Children[0]).KeyFrames[0].Value = newGeometry;
+            ((ObjectAnimationUsingKeyFrames)sb.Children[1]).KeyFrames[0].Value = newMargin;
+            sb.Begin();
         }
 
         //============= Animation service ===================
@@ -98,11 +104,13 @@ namespace WpfInvestigate.Effects
             var path = (Path)viewbox.Child;
             if (!(viewbox.RenderTransform is ScaleTransform))
                 viewbox.RenderTransform = new ScaleTransform(1, 1);
-            ((ScaleTransform)viewbox.RenderTransform).CenterX = viewbox.ActualWidth / 2;
+            viewbox.RenderTransformOrigin = new Point(0.5, 0.5);
 
             var a1 = viewbox.CreateAnimation(new PropertyPath("RenderTransform.ScaleX"), typeof(double));
+            // var a11 = viewbox.CreateAnimations(ScaleTransform.ScaleXProperty)[0];
             a1.SetFromToValues(1.0, 0.0);
             var a2 = viewbox.CreateAnimation(new PropertyPath("RenderTransform.ScaleX"), typeof(double));
+            // var a21 = viewbox.CreateAnimations(ScaleTransform.ScaleXProperty)[0];
             a2.BeginTime = a1.Duration.TimeSpan;
             a2.SetFromToValues(0.0, 1.0);
 
@@ -113,23 +121,6 @@ namespace WpfInvestigate.Effects
             storyboard.Children.Add(a2);
 
             viewbox.Resources.Add("Animation", storyboard);
-            return storyboard;
-        }
-
-        private static Storyboard GetAnimation(Viewbox viewbox, Geometry newGeometry, Thickness newMargin)
-        {
-            if (viewbox == null) return null;
-
-            var storyboard = (Storyboard)viewbox.Resources["Animation"];
-            if (storyboard == null)
-            {
-                storyboard = CreateAnimation(viewbox);
-                if (storyboard == null)
-                    return null;
-            }
-
-            ((ObjectAnimationUsingKeyFrames)storyboard.Children[0]).KeyFrames[0].Value = newGeometry;
-            ((ObjectAnimationUsingKeyFrames)storyboard.Children[1]).KeyFrames[0].Value = newMargin;
             return storyboard;
         }
 
