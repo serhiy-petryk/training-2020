@@ -40,11 +40,22 @@ namespace WpfInvestigate.Common
 
         #region ================  Begin animation async ===================
 
+        public static Task BeginFrameAnimationAsync(this IAnimatable element, DependencyProperty property, object value)
+        {
+            if (element == null || property == null || value == null)
+                throw new NullReferenceException();
+            if (!property.PropertyType.IsInstanceOfType(value))
+                throw new Exception("GetFrameAnimation error. Data type of 'value' parameter doesn't match dataProperty.PropertyType.");
+
+            var animation = new ObjectAnimationUsingKeyFrames();
+            animation.KeyFrames.Add(new DiscreteObjectKeyFrame { Value = value, KeyTime = AnimationDuration.TimeSpan });
+            return element.BeginAnimationAsync(property, animation);
+        }
         public static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, double from, double to, Duration? duration = null)
         {
             var animation = new DoubleAnimation(from, to, duration ?? AnimationDuration);
             animation.FillBehavior = FillBehavior.Stop;
-            animation.Freeze();
+            // animation.Freeze();
             ((DependencyObject)element).SetValue(property, to);
             return element.BeginAnimationAsync(property, animation);
         }
@@ -52,7 +63,7 @@ namespace WpfInvestigate.Common
         {
             var animation = new PointAnimation(from, to, duration ?? AnimationDuration);
             animation.FillBehavior = FillBehavior.Stop;
-            animation.Freeze();
+            // animation.Freeze();
             ((DependencyObject)element).SetValue(property, to);
             return element.BeginAnimationAsync(property, animation);
         }
@@ -60,7 +71,7 @@ namespace WpfInvestigate.Common
         {
             var animation = new ThicknessAnimation(from, to, duration ?? AnimationDuration);
             animation.FillBehavior = FillBehavior.Stop;
-            animation.Freeze();
+            // animation.Freeze();
             ((DependencyObject)element).SetValue(property, to);
             return element.BeginAnimationAsync(property, animation);
         }
@@ -68,7 +79,7 @@ namespace WpfInvestigate.Common
         {
             var animation = new ColorAnimation(from, to, duration ?? AnimationDuration);
             animation.FillBehavior = FillBehavior.Stop;
-            animation.Freeze();
+            // animation.Freeze();
             ((DependencyObject)element).SetValue(property, to);
             return element.BeginAnimationAsync(property, animation);
         }
@@ -76,11 +87,11 @@ namespace WpfInvestigate.Common
 
         #region ================  Create animation  ===================
 
-        public static Timeline[] CreateAnimations(this FrameworkElement element, params DependencyProperty[] propertyPaths) =>
+        public static Timeline[] CreateAnimations(this IAnimatable element, params DependencyProperty[] propertyPaths) =>
             propertyPaths.Select(p => CreateAnimation(element, new PropertyPath(p), p.PropertyType)).ToArray();
         public static Timeline CreateAnimation(this FrameworkElement element, string propertyPath, Type propertyType, Duration? duration = null) =>
             CreateAnimation(element, new PropertyPath(propertyPath), propertyType, duration);
-        public static Timeline CreateAnimation(this FrameworkElement element, PropertyPath propertyPath, Type propertyType, Duration? duration = null)
+        public static Timeline CreateAnimation(this IAnimatable element, PropertyPath propertyPath, Type propertyType, Duration? duration = null)
         {
             AnimationTimeline animation = null;
             if (propertyType == typeof(double)) animation = new DoubleAnimation();
@@ -92,7 +103,7 @@ namespace WpfInvestigate.Common
                 throw new NotImplementedException();
 
             animation.Duration = duration ?? AnimationDuration;
-            Storyboard.SetTarget(animation, element);
+            Storyboard.SetTarget(animation, (DependencyObject)element);
             Storyboard.SetTargetProperty(animation, propertyPath);
             return animation;
         }
@@ -137,11 +148,11 @@ namespace WpfInvestigate.Common
             return tcs.Task;
         }
 
-        public static Task BeginAnimationAsync(this IAnimatable animatable, DependencyProperty animationProperty, AnimationTimeline animation)
+        public static Task BeginAnimationAsync(this IAnimatable animatable, DependencyProperty animationProperty, AnimationTimeline animationClone)
         {
             // state in constructor == animation cancel action
             var tcs = new TaskCompletionSource<bool>(new Action(() => animatable.BeginAnimation(animationProperty, null)));
-            var animationClone = animation.Clone();
+            // var animationClone = animation.Clone();
             animationClone.Completed += (s, e) => tcs.SetResult(true);
             animationClone.Freeze();
             animatable.BeginAnimation(animationProperty, animationClone);

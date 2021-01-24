@@ -137,23 +137,10 @@ namespace WpfInvestigate.Effects
             }
             else
             {
-                var sb = control.Resources["animation"] as Storyboard;
-                if (sb == null)
-                {
-                    sb = new Storyboard();
-                    control.Resources["animation"] = sb;
-                    sb.Children.Add(control.CreateAnimation("(Border.Background).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.AnimationDuration));
-                    sb.Children.Add(control.CreateAnimation("(Control.Foreground).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.AnimationDuration));
-                    sb.Children.Add(control.CreateAnimation("(Border.BorderBrush).(SolidColorBrush.Color)", typeof(Color), AnimationHelper.AnimationDuration));
-                    sb.Children.Add(control.CreateAnimations(UIElement.OpacityProperty)[0]);
-                }
-
-                sb.Children[0].SetFromToValues(((SolidColorBrush)control.Background).Color, newValues.Item1.Value);
-                sb.Children[1].SetFromToValues(((SolidColorBrush)control.Foreground).Color, newValues.Item2.Value);
-                sb.Children[2].SetFromToValues(((SolidColorBrush)control.BorderBrush).Color, newValues.Item3.Value);
-                sb.Children[3].SetFromToValues(control.Opacity, newValues.Item4);
-
-                sb.Begin();
+                control.Background.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush)control.Background).Color, newValues.Item1.Value);
+                control.Foreground.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush)control.Foreground).Color, newValues.Item2.Value);
+                control.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush)control.BorderBrush).Color, newValues.Item3.Value);
+                control.BeginAnimationAsync(UIElement.OpacityProperty, control.Opacity, newValues.Item4);
             }
         }
 

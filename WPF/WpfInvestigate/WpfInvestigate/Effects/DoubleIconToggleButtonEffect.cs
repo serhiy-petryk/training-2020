@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
@@ -83,48 +84,29 @@ namespace WpfInvestigate.Effects
                 tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb), GetWidth(tb));
         }
 
-        private static void OnToggleButtonCheckChanged(object sender, RoutedEventArgs e)
+        private static async void OnToggleButtonCheckChanged(object sender, RoutedEventArgs e)
         {
             var tb = (ToggleButton)sender;
-            var newGeometry = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb);
-            var newMargin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb);
             var viewbox = GetViewbox(tb);
-
-            var sb = (Storyboard)viewbox.Resources["Animation"];
-            if (sb == null)
-                sb = CreateAnimation(viewbox);
-            ((ObjectAnimationUsingKeyFrames)sb.Children[0]).KeyFrames[0].Value = newGeometry;
-            ((ObjectAnimationUsingKeyFrames)sb.Children[1]).KeyFrames[0].Value = newMargin;
-            sb.Begin();
-        }
-
-        //============= Animation service ===================
-        private static Storyboard CreateAnimation(Viewbox viewbox)
-        {
             var path = (Path)viewbox.Child;
+
             if (!(viewbox.RenderTransform is ScaleTransform))
                 viewbox.RenderTransform = new ScaleTransform(1, 1);
             viewbox.RenderTransformOrigin = new Point(0.5, 0.5);
 
-            var a1 = viewbox.CreateAnimation(new PropertyPath("RenderTransform.ScaleX"), typeof(double));
-            // var a11 = viewbox.CreateAnimations(ScaleTransform.ScaleXProperty)[0];
-            a1.SetFromToValues(1.0, 0.0);
-            var a2 = viewbox.CreateAnimation(new PropertyPath("RenderTransform.ScaleX"), typeof(double));
-            // var a21 = viewbox.CreateAnimations(ScaleTransform.ScaleXProperty)[0];
-            a2.BeginTime = a1.Duration.TimeSpan;
-            a2.SetFromToValues(0.0, 1.0);
+            var newGeometry = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb);
+            var newMargin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb);
+            var tasks = new List<Task>
+            {
+                viewbox.BeginFrameAnimationAsync(FrameworkElement.MarginProperty, newMargin),
+                path.BeginFrameAnimationAsync(Path.DataProperty, newGeometry),
+                viewbox.RenderTransform.BeginAnimationAsync(ScaleTransform.ScaleXProperty, 1.0, 0.0)
+            };
+            await Task.WhenAll(tasks.ToArray());
 
-            var storyboard = new Storyboard();
-            storyboard.Children.Add(AnimationHelper.CreateFrameAnimation(path, Path.DataProperty, Geometry.Empty));
-            storyboard.Children.Add(AnimationHelper.CreateFrameAnimation(viewbox, FrameworkElement.MarginProperty, new Thickness()));
-            storyboard.Children.Add(a1);
-            storyboard.Children.Add(a2);
-
-            viewbox.Resources.Add("Animation", storyboard);
-            return storyboard;
+            await viewbox.RenderTransform.BeginAnimationAsync(ScaleTransform.ScaleXProperty, 0.0, 1.0);
         }
 
-        // private static Viewbox GetViewbox(Grid grid) => grid.Children.OfType<Viewbox>().FirstOrDefault(vb => Grid.GetColumn(vb) == 1);
         private static Viewbox GetViewbox(ToggleButton tb) => Tips.GetVisualChildren(tb).OfType<Viewbox>().FirstOrDefault(vb => vb.Resources["IconViewBox"] is bool);
     }
 }
