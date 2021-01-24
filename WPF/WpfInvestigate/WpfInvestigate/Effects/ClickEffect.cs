@@ -123,27 +123,13 @@ namespace WpfInvestigate.Effects
             grid.Width = fe.ActualWidth;
             grid.Height = fe.ActualHeight;
 
-            var sb = ellipse.Resources["storyboard"] as Storyboard;
-            if (sb == null)
-            {
-                sb = new Storyboard();
-                ellipse.Resources["storyboard"] = sb;
-                foreach (var timeline in ellipse.CreateAnimations(FrameworkElement.MarginProperty, FrameworkElement.WidthProperty, UIElement.OpacityProperty))
-                    sb.Children.Add(timeline);
-            }
-
             var newSize = Math.Max(fe.ActualWidth, fe.ActualHeight) * 3;
             var oldMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
             var newMargin = new Thickness(mousePosition.X - newSize / 2, mousePosition.Y - newSize / 2, 0, 0);
-            sb.Children[0].SetFromToValues(oldMargin, newMargin);
-            sb.Children[1].SetFromToValues(0.0, newSize);
-            sb.Children[2].SetFromToValues(0.5, 0.0);
-
-            var newDuration = Math.Min(1000, Math.Max(300, newSize * 2.5));
-            sb.Children[0].Duration = TimeSpan.FromMilliseconds(newDuration);
-            sb.Children[1].Duration = sb.Children[0].Duration;
-            sb.Children[2].Duration = TimeSpan.FromMilliseconds(newDuration * 2 / 3);
-            sb.Begin();
+            var duration = Math.Min(1000, Math.Max(300, newSize * 2.5));
+            ellipse.BeginAnimationAsync(FrameworkElement.MarginProperty, oldMargin, newMargin, TimeSpan.FromMilliseconds(duration));
+            ellipse.BeginAnimationAsync(FrameworkElement.WidthProperty, 0.0, newSize, TimeSpan.FromMilliseconds(duration));
+            ellipse.BeginAnimationAsync(UIElement.OpacityProperty, 0.5, 0.0, TimeSpan.FromMilliseconds(duration * 2 / 3));
         }
     }
 }
