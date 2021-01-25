@@ -120,6 +120,20 @@ namespace WpfInvestigate.Controls
             }
         }
 
+        protected override void OnVisualParentChanged(DependencyObject oldParent)
+        {
+            base.OnVisualParentChanged(oldParent);
+
+            if (Parent is Window wnd && Position == new Point(-1, -1) && !wnd.IsLoaded)
+                wnd.LocationChanged += OnWindowLocationChanged;
+
+            void OnWindowLocationChanged(object sender, EventArgs e)
+            {
+                wnd.LocationChanged -= OnWindowLocationChanged;
+                Position = new Point(wnd.Left, wnd.Top);
+            }
+        }
+
         private void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             var sv = (ScrollViewer)sender;
