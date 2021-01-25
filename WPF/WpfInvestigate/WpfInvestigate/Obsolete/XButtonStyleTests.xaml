@@ -28,7 +28,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" ZIndex="1" Background="White">
+        <Grid Grid.Column="0" Background="White">
             <Slider Grid.Column="0"
                     x:Name="uiScaleSlider"
                     Focusable="False"
