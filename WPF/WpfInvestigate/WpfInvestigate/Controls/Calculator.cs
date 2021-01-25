@@ -288,7 +288,7 @@ namespace WpfInvestigate.Controls
             }
 
             if (_firstOperand.HasValue)
-                _firstOperand = NormalizeDecimal(_firstOperand.Value);
+                _firstOperand = NormalizeDecimal(Math.Round(_firstOperand.Value, DecimalPlaces));
 
             _lastButtonIsDigit = false;
         }
