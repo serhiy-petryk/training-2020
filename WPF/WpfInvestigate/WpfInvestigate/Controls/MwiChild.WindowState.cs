@@ -50,8 +50,8 @@ namespace WpfInvestigate.Controls
         {
             if (WindowState != WindowState.Minimized || _thumbnailCache == null)
             {
-                var bitmap = new RenderTargetBitmap((int)Math.Round(ActualWidth),
-                    (int)Math.Round(ActualHeight), 96, 96, PixelFormats.Default);
+                var bitmap = new RenderTargetBitmap((int)Math.Round(ActualWidth), (int)Math.Round(ActualHeight),
+                    96, 96, PixelFormats.Default);
                 var drawingVisual = new DrawingVisual();
                 using (var context = drawingVisual.RenderOpen())
                 {
@@ -174,7 +174,7 @@ namespace WpfInvestigate.Controls
 
         #region ==============  OnWindowStateValueChanged  =================
         private static void OnWindowStateValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) =>
-    ((MwiChild)sender).WindowStateValueChanged((WindowState)e.NewValue, (WindowState)e.OldValue);
+            ((MwiChild)sender).WindowStateValueChanged((WindowState)e.NewValue, (WindowState)e.OldValue);
         private async void WindowStateValueChanged(WindowState newWindowState, WindowState previousWindowState)
         {
             var isDetachEvent = previousWindowState == newWindowState;
