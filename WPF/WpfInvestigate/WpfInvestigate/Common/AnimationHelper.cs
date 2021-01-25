@@ -25,6 +25,7 @@ namespace WpfInvestigate.Common
             animation.KeyFrames.Add(new DiscreteObjectKeyFrame { Value = value, KeyTime = AnimationDuration.TimeSpan });
             return element.BeginAnimationAsync(property, animation);
         }
+
         public static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, object from, object to, Duration? duration = null)
         {
             if (element == null || property == null || from == null || to == null)
@@ -51,13 +52,14 @@ namespace WpfInvestigate.Common
         #endregion
 
         #region ================  Animation as Task  ================
-        private static Task BeginAnimationAsync(this IAnimatable animatable, DependencyProperty animationProperty, AnimationTimeline animation)
+        private static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, AnimationTimeline animation)
         {
             // state in constructor == animation cancel action
-            var tcs = new TaskCompletionSource<bool>(new Action(() => animatable.BeginAnimation(animationProperty, null)));
+            // var tcs = new TaskCompletionSource<bool>(new Action(() => element.BeginAnimation(property, null)));
+            var tcs = new TaskCompletionSource<bool>();
             animation.Completed += (s, e) => tcs.SetResult(true);
             animation.Freeze(); // one time animation
-            animatable.BeginAnimation(animationProperty, animation);
+            element.BeginAnimation(property, animation);
             return tcs.Task;
         }
         #endregion
