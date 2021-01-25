@@ -119,21 +119,6 @@ namespace WpfInvestigate.Controls
                 sv.ScrollChanged += ScrollViewer_OnScrollChanged;
             }
         }
-
-        protected override void OnVisualParentChanged(DependencyObject oldParent)
-        {
-            base.OnVisualParentChanged(oldParent);
-
-            if (Parent is Window wnd && Position == new Point(-1, -1) && !wnd.IsLoaded)
-                wnd.LocationChanged += OnWindowLocationChanged;
-
-            void OnWindowLocationChanged(object sender, EventArgs e)
-            {
-                wnd.LocationChanged -= OnWindowLocationChanged;
-                Position = new Point(wnd.Left, wnd.Top);
-            }
-        }
-
         private void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             var sv = (ScrollViewer)sender;
@@ -147,6 +132,20 @@ namespace WpfInvestigate.Controls
             {
                 sv.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
                 sv.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            }
+        }
+
+        protected override void OnVisualParentChanged(DependencyObject oldParent)
+        {
+            base.OnVisualParentChanged(oldParent);
+
+            if (Parent is Window wnd && Position == new Point(-1, -1) && !wnd.IsLoaded)
+                wnd.LocationChanged += OnWindowLocationChanged;
+
+            void OnWindowLocationChanged(object sender, EventArgs e)
+            {
+                wnd.LocationChanged -= OnWindowLocationChanged;
+                Position = new Point(wnd.Left, wnd.Top);
             }
         }
 
