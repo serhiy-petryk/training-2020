@@ -24,7 +24,6 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="26"/>
@@ -58,9 +57,6 @@
                             </Style>
                         </ToggleButton.Resources>
                     </ToggleButton>
-
-                    <Button Grid.Column="3" Content="Add" Click="AddChild_OnClick"/>
-
                 </Grid>
             </Border>
         </Grid>

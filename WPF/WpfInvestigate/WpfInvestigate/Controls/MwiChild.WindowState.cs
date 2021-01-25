@@ -133,8 +133,7 @@ namespace WpfInvestigate.Controls
                     MwiContainer.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
 
                     OnWindowStateValueChanged(this,
-                        new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState,
-                            WindowState));
+                        new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
                     OnPropertiesChanged(nameof(IsWindowed));
 
                     await this.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
