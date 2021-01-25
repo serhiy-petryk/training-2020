@@ -3,7 +3,7 @@
                     xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Obsolete/ForObsolete.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type obsolete:DialogItems}">
