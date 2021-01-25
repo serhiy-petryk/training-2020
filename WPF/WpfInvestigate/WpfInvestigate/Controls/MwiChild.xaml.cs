@@ -28,6 +28,16 @@ namespace WpfInvestigate.Controls
                 Icon = (ImageSource)FindResource("DefaultIcon");
         }
 
+        #region =============  Override methods  ====================
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            base.OnGotFocus(e);
+
+            if (MwiContainer != null)
+                MwiContainer.ActiveMwiChild = this;
+        }
+
+        #endregion
         private async void Close(object obj)
         {
             await AnimateHide();
@@ -90,6 +100,36 @@ namespace WpfInvestigate.Controls
             get => (bool)GetValue(AllowCloseProperty);
             set => SetValue(AllowCloseProperty, value);
         }
+        //================================
+        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(MwiChild), new UIPropertyMetadata(false, OnIsActiveValueChanged));
+        public bool IsActive
+        {
+            get => (bool)GetValue(IsActiveProperty);
+            set => SetValue(IsActiveProperty, value);
+        }
+        private static void OnIsActiveValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            /*var mwiChild = (MwiChild)sender;
+            var focused = (bool)e.NewValue;
+            if (mwiChild.Container == null)
+                return;
+
+            if (focused)
+            {
+                if (mwiChild.WindowState == WindowState.Minimized || mwiChild.DetachedHost?.WindowState == WindowState.Minimized)
+                {
+                    // nothing to do (ToggleMinimize is doing in WindowsBar.TabItem_PreviewMouseLeftButtonDown): mwiChild.ToggleMinimize(null);
+                }
+                else if (mwiChild.IsWindowed)
+                    mwiChild.DetachedHost?.Focus();
+            }
+
+            if (focused)
+                mwiChild.RaiseEvent(new RoutedEventArgs(GotFocusEvent, mwiChild));
+            else
+                mwiChild.RaiseEvent(new RoutedEventArgs(LostFocusEvent, mwiChild));*/
+        }
+
         //================================
         public static readonly DependencyProperty WindowStateProperty = DependencyProperty.Register("WindowState", typeof(WindowState), typeof(MwiChild), new UIPropertyMetadata(WindowState.Normal, OnWindowStateValueChanged));
         public WindowState WindowState

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Markup;
 
 namespace WpfInvestigate.Controls
@@ -12,8 +15,11 @@ namespace WpfInvestigate.Controls
     /// Interaction logic for MwiContainer.xaml
     /// </summary>
     [ContentProperty("Children")]
-    public partial class MwiContainer
+    public partial class MwiContainer: INotifyPropertyChanged
     {
+        const int WINDOW_OFFSET_STEP = 25;
+        public static int MwiUniqueCount = 1;
+
         public MwiContainer()
         {
             InitializeComponent();
@@ -27,8 +33,18 @@ namespace WpfInvestigate.Controls
                 case NotifyCollectionChangedAction.Add:
                     var mwiChild = Children[e.NewStartingIndex];
                     mwiChild.MwiContainer = this;
+
+                    if (mwiChild.Position.X < 0 || mwiChild.Position.Y < 0)
+                        mwiChild.Position = new Point(_windowOffset, _windowOffset);
+                    _windowOffset += WINDOW_OFFSET_STEP;
+                    if ((_windowOffset + mwiChild.Width > ActualWidth) || (_windowOffset + mwiChild.Height > ActualHeight))
+                        _windowOffset = 0;
+
                     MwiPanel.Children.Add(mwiChild);
                     mwiChild.Closed += OnMwiChildClosed;
+
+                    ActiveMwiChild = mwiChild;
+
                     /*SetMwiContainer(mwiChild, this);
 
                     if (ActiveMwiChild?.WindowState == WindowState.Maximized && mwiChild.Resizable)
@@ -73,6 +89,55 @@ namespace WpfInvestigate.Controls
         internal double InnerHeight => ScrollViewer.ActualHeight;
         internal bool WindowShowLock = false; // lock for async window.Show()
 
+        /// Offset for new window.
+        private double _windowOffset;
+        private MwiChild _activeMwiChild;
+
+        public MwiChild ActiveMwiChild
+        {
+            get => _activeMwiChild;
+            set
+            {
+                Debug.Print($"Set ActiveMwiChild");
+                if (WindowShowLock) // Async window.Show() is running for detaching window => new ActiveMwiChild is not valid
+                    return;
+
+                if (_activeMwiChild != value)
+                {
+                    _activeMwiChild = value;
+                    foreach (var window in Children.Where(c => c != value && c.IsActive))
+                        window.IsActive = false;
+
+                    if (_activeMwiChild != null)
+                    {
+                        _activeMwiChild.IsActive = true;
+                        // Panel.SetZIndex(_activeMwiChild, MwiUniqueCount++);
+                        // ScrollIntoView
+                        //if (_activeMwiChild.WindowState == WindowState.Normal && !_activeMwiChild.IsWindowed)
+                          //  _activeMwiChild.BringIntoView();
+                    }
+                }
+                OnPropertiesChanged(nameof(ActiveMwiChild), nameof(ScrollBarKind));
+                // Dispatcher.Invoke(DispatcherPriority.Render, Tips.EmptyDelegate); // Refresh UI (bug on Startup => active child doesn't highlight and ScrollBar is bad)
+                // InvalidateSize();
+            }
+        }
+
+        public ScrollBarVisibility ScrollBarKind =>
+            ActiveMwiChild != null && ActiveMwiChild.WindowState == WindowState.Maximized
+                ? ScrollBarVisibility.Disabled
+                : ScrollBarVisibility.Auto;
+
         #endregion
+
+        #region =================  INotifyPropertyChanged  ==================
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
     }
 }

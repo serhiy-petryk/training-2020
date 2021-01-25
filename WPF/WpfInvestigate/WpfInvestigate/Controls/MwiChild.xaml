@@ -38,15 +38,9 @@
 
         <Style TargetType="controls:MwiChild">
             <Setter Property="Opacity" Value="1"/>
-            <Setter Property="Background" Value="Orange"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="BorderBrush" Value="Blue"/>
             <Style.Triggers>
-                <Trigger Property="IsFocused" Value="True">
-                    <Setter Property="Opacity" Value="0.5"/>
-                    <Setter Property="Background" Value="Red"/>
-                    <Setter Property="BorderThickness" Value="2"/>
-                    <Setter Property="BorderBrush" Value="Red"/>
+                <Trigger Property="IsActive" Value="True">
+                    <Setter Property="Opacity" Value="0.7"/>
                 </Trigger>
             </Style.Triggers>
         </Style>

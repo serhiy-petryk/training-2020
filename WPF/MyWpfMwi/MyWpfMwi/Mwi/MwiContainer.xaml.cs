@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -97,12 +98,18 @@ namespace MyWpfMwi.Mwi
 
         private void MwiContainer_OnActivated(object sender, EventArgs e)
         {
+            var wnd = Window.GetWindow(this);
+            var a1 = wnd.IsActive;
+            Debug.Print($"OnActivated: {a1}");
             if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
                 ActiveMwiChild.Focused = true;
         }
 
         private void MwiContainer_OnDeactivated(object sender, EventArgs e)
         {
+            var wnd = Window.GetWindow(this);
+            var a1 = wnd.IsActive;
+            Debug.Print($"MwiContainer_OnDeactivated: {a1}");
             foreach (var child in InternalWindows.Where(w => w.Focused))
                 child.Focused = false;
         }

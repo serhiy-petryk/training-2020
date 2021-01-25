@@ -33,5 +33,11 @@ namespace WpfInvestigate.TestViews
             foreach (var c in MwiContainer.Children)
                 c.AllowDetach = !c.AllowDetach;
         }
+
+        private void OpenWindow_OnClick(object sender, RoutedEventArgs e)
+        {
+            var wnd = new Window();
+            wnd.Show();
+        }
     }
 }
