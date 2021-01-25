@@ -28,5 +28,10 @@ namespace WpfInvestigate.TestViews
         }
         #endregion
 
+        private void Test_OnClick(object sender, RoutedEventArgs e)
+        {
+            foreach (var c in MwiContainer.Children)
+                c.AllowDetach = !c.AllowDetach;
+        }
     }
 }
