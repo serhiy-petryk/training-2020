@@ -31,6 +31,7 @@
 
         <StackPanel Grid.Column="1" Orientation="Vertical">
             <Button Content="Add" Click="AddChild_OnClick"/>
+            <Button Content="Add" Click="AddChild2_OnClick"/>
             <Button Content="Test" Click="Test_OnClick"/>
             <Button Content="OpenWindow" Click="OpenWindow_OnClick"/>
         </StackPanel>

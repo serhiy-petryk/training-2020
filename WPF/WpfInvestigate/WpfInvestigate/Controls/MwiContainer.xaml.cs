@@ -34,7 +34,7 @@ namespace WpfInvestigate.Controls
                     var mwiChild = Children[e.NewStartingIndex];
                     mwiChild.MwiContainer = this;
 
-                    if (mwiChild.Position.X < 0 || mwiChild.Position.Y < 0)
+                    if (mwiChild.ActualPosition.X < 0 || mwiChild.ActualPosition.Y < 0)
                         mwiChild.Position = new Point(_windowOffset, _windowOffset);
                     _windowOffset += WINDOW_OFFSET_STEP;
                     if ((_windowOffset + mwiChild.Width > ActualWidth) || (_windowOffset + mwiChild.Height > ActualHeight))
@@ -50,7 +50,7 @@ namespace WpfInvestigate.Controls
                     if (ActiveMwiChild?.WindowState == WindowState.Maximized && mwiChild.Resizable)
                         mwiChild.Loaded += (s, a) => mwiChild.WindowState = WindowState.Maximized;
 
-                    if (mwiChild.Position.X < 0 || mwiChild.Position.Y < 0)
+                    if (mwiChild.ActualPosition.X < 0 || mwiChild.ActualPosition.Y < 0)
                         mwiChild.Position = new Point(_windowOffset, _windowOffset);
                     _windowOffset += WINDOW_OFFSET_STEP;
                     if ((_windowOffset + mwiChild.Width > ActualWidth) || (_windowOffset + mwiChild.Height > ActualHeight))
@@ -138,6 +138,5 @@ namespace WpfInvestigate.Controls
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
     }
 }

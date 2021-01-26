@@ -10,8 +10,8 @@ namespace WpfInvestigate.Controls
         public Task SetRectangleWithAnimation(Rect to, double fromOpacity, double toOpacity)
         {
             var tasks = new List<Task>();
-            if (!Tips.AreEqual(Position.X, to.X) || !Tips.AreEqual(Position.Y, to.Y))
-                tasks.Add(this.BeginAnimationAsync(PositionProperty, Position, new Point(to.X, to.Y)));
+            if (!Tips.AreEqual(ActualPosition.X, to.X) || !Tips.AreEqual(ActualPosition.Y, to.Y))
+                tasks.Add(this.BeginAnimationAsync(PositionProperty, ActualPosition, new Point(to.X, to.Y)));
             if (!Tips.AreEqual(ActualWidth, to.Width))
                 tasks.Add(this.BeginAnimationAsync(WidthProperty, ActualWidth, to.Width));
             if (!Tips.AreEqual(ActualHeight, to.Height))
@@ -22,8 +22,8 @@ namespace WpfInvestigate.Controls
             return Task.WhenAll(tasks.ToArray());
         }
 
-        private Task AnimateShow() => SetRectangleWithAnimation(new Rect(Position.X, Position.Y, ActualWidth, ActualHeight), 0, 1);
-        private Task AnimateHide() => SetRectangleWithAnimation(new Rect(Position.X, Position.Y, ActualWidth, ActualHeight), 1, 0);
+        private Task AnimateShow() => SetRectangleWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 0, 1);
+        private Task AnimateHide() => SetRectangleWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 1, 0);
 
         private async Task AnimateWindowState(WindowState previousWindowState)
         {
@@ -42,7 +42,7 @@ namespace WpfInvestigate.Controls
                     to = new Rect(0, 0, MwiContainer.ActualWidth, MwiContainer.InnerHeight);
             }
             else
-                to = new Rect(Position.X, 0, ActualWidth, MinHeight);
+                to = new Rect(ActualPosition.X, 0, ActualWidth, MinHeight);
 
             await SetRectangleWithAnimation(to, previousWindowState == WindowState.Minimized ? 0 : 1, WindowState == WindowState.Minimized ? 0 : 1);
 

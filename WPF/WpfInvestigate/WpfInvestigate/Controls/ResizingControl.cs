@@ -13,7 +13,7 @@ using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
-    public class ResizingControl : ContentControl
+    public class ResizingControl : ContentControl, INotifyPropertyChanged
     {
         static ResizingControl()
         {
@@ -175,7 +175,7 @@ namespace WpfInvestigate.Controls
             var mousePosition = IsWindowed ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
 
-            var oldPosition = Position;
+            var oldPosition = ActualPosition;
             var newX = oldPosition.X + e.HorizontalChange;
             if (LimitPositionToPanelBounds)
             {
@@ -228,7 +228,7 @@ namespace WpfInvestigate.Controls
 
         private void OnResizeLeft(double horizontalChange)
         {
-            var oldPosition = Position;
+            var oldPosition = ActualPosition;
             var change = Math.Min(horizontalChange, ActualWidth - MinWidth);
 
             if (LimitPositionToPanelBounds)
@@ -245,7 +245,7 @@ namespace WpfInvestigate.Controls
         }
         private void OnResizeTop(double verticalChange)
         {
-            var oldPosition = Position;
+            var oldPosition = ActualPosition;
             var change = Math.Min(verticalChange, ActualHeight - MinHeight);
 
             if (LimitPositionToPanelBounds)
@@ -265,7 +265,7 @@ namespace WpfInvestigate.Controls
             var change = Math.Min(-horizontalChange, ActualWidth - MinWidth);
             if (LimitPositionToPanelBounds)
             {
-                var oldX = Position.X;
+                var oldX = ActualPosition.X;
                 if ((ActualWidth - change) > MaxWidth)
                     change = ActualWidth - MaxWidth;
                 if ((oldX + ActualWidth - change) > HostPanel.ActualWidth)
@@ -280,7 +280,7 @@ namespace WpfInvestigate.Controls
             var change = Math.Min(-verticalChange, ActualHeight - MinHeight);
             if (LimitPositionToPanelBounds)
             {
-                var oldY = Position.Y;
+                var oldY = ActualPosition.Y;
                 if ((ActualHeight - change) > MaxHeight)
                     change = ActualHeight - MaxHeight;
                 if ((oldY + ActualHeight - change) > HostPanel.ActualHeight)
@@ -293,6 +293,12 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #region ==========  Properties  ===============
+
+        public Point ActualPosition => IsWindowed
+            ? new Point(((Window) Parent).Left, ((Window) Parent).Top)
+            : new Point(Margin.Left, Margin.Top);
+
+        //======================
         public static readonly DependencyProperty MovingThumbProperty = DependencyProperty.Register("MovingThumb",
             typeof(Thumb), typeof(ResizingControl), new PropertyMetadata(null, OnMovingThumbValueChanged));
         public Thumb MovingThumb
@@ -341,17 +347,28 @@ namespace WpfInvestigate.Controls
 
             var resizingControl = (ResizingControl)d;
             var newPosition = (Point)e.NewValue;
-            if (resizingControl.Parent is Window window)
+            if (resizingControl.Parent is Window wnd)
             {
                 var newTop = Math.Min(SystemParameters.PrimaryScreenHeight, newPosition.Y);
-                if (!Tips.AreEqual(newTop, window.Top))
-                    window.Top = newTop;
+                if (!Tips.AreEqual(newTop, wnd.Top))
+                    wnd.Top = newTop;
                 var newLeft = Math.Min(SystemParameters.PrimaryScreenWidth, newPosition.X);
-                if (!Tips.AreEqual(newLeft, window.Left))
-                    window.Left = newLeft;
+                if (!Tips.AreEqual(newLeft, wnd.Left))
+                    wnd.Left = newLeft;
             }
             else
                 resizingControl.Margin = new Thickness(newPosition.X, newPosition.Y, -1, -1);
+
+            resizingControl.OnPropertiesChanged(nameof(ActualPosition));
+        }
+        #endregion
+
+        #region =================  INotifyPropertyChanged  ==================
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using WpfInvestigate.Controls;
+using WpfInvestigate.Samples;
 
 namespace WpfInvestigate.TestViews
 {
@@ -13,7 +14,6 @@ namespace WpfInvestigate.TestViews
             InitializeComponent();
         }
 
-        #region =======  TEMP section  =========
         private int cnt = 0;
         private void AddChild_OnClick(object sender, RoutedEventArgs e)
         {
@@ -26,7 +26,18 @@ namespace WpfInvestigate.TestViews
                 Position = new Point(300, 80)
             });
         }
-        #endregion
+
+        private void AddChild2_OnClick(object sender, RoutedEventArgs e)
+        {
+            MwiContainer.Children.Add(new MwiChild
+            {
+                Title = "Window Using Code",
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Width = 300,
+                Height = 200,
+                Position = new Point(300, 80)
+            });
+        }
 
         private void Test_OnClick(object sender, RoutedEventArgs e)
         {
@@ -39,5 +50,6 @@ namespace WpfInvestigate.TestViews
             var wnd = new Window();
             wnd.Show();
         }
+
     }
 }

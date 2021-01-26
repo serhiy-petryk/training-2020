@@ -225,9 +225,9 @@ namespace WpfInvestigate.Controls
         private void SaveActualPosition()
         {
             if (IsWindowed)
-                _detachedPosition = new Point(((Window)Parent).Left, ((Window)Parent).Top);
+                _detachedPosition = ActualPosition;
             else
-                _attachedPosition = new Point(Position.X, Position.Y);
+                _attachedPosition = ActualPosition;
         }
         #endregion
     }
