@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -94,19 +95,27 @@ namespace WpfInvestigate.Controls
         }
 
         #region ============  Public Section  ===============
+        private readonly SemaphoreSlim _openSemaphore = new SemaphoreSlim(1, 1);
         public async Task ShowContentAsync(FrameworkElement content)
         {
             if (content == null)
                 throw new ArgumentNullException(nameof(content));
 
-            if (_panel.Children.Count == 0)
+            await _openSemaphore.WaitAsync();
+            try
             {
-                AdornerLayer.Add(this);
-                _panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
-                await _panel.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
+                if (_panel.Children.Count == 0)
+                {
+                    AdornerLayer.Add(this);
+                    _panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
+                    await _panel.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
+                }
+                _panel.Children.Add(content);
             }
-
-            _panel.Children.Add(content);
+            finally
+            {
+                _openSemaphore.Release();
+            }
 
             content.CommandBindings.Add(_closeCommand);
             content.Visibility = Visibility.Hidden;
