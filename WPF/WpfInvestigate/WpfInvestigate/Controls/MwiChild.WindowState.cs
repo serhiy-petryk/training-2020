@@ -200,7 +200,8 @@ namespace WpfInvestigate.Controls
                     Width = maximizedWindowRectangle.Width;
                     Height = maximizedWindowRectangle.Height;
 
-                    /* ToDo: ???Animate 
+                    /* ToDo: standard window maximized set window to full screen including taskbar => need to use manual maximized with Tips.GetMaximizedWindowRectangle()
+                    /* ToDo: ???Animate
                      var x1 = maximizedWindowRectangle;
                     var wnd = ((Window)Parent);
                     wnd.SizeToContent = SizeToContent.Manual;
