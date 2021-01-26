@@ -199,6 +199,32 @@ namespace WpfInvestigate.Controls
                     Position = new Point(maximizedWindowRectangle.Left, maximizedWindowRectangle.Top);
                     Width = maximizedWindowRectangle.Width;
                     Height = maximizedWindowRectangle.Height;
+
+                    /* ToDo: ???Animate 
+                     var x1 = maximizedWindowRectangle;
+                    var wnd = ((Window)Parent);
+                    wnd.SizeToContent = SizeToContent.Manual;
+                    HorizontalAlignment = HorizontalAlignment.Stretch;
+                    VerticalAlignment = VerticalAlignment.Stretch;
+                    Width = double.NaN;
+                    Height = double.NaN;
+
+                    wnd.Width = ActualWidth;
+                    wnd.Height = ActualHeight;
+                    await wnd.Dispatcher.Invoke(async () =>
+                    {
+                        var tasks = new List<Task>();
+                        tasks.Add(wnd.BeginAnimationAsync(Window.HeightProperty, ActualHeight, x1.Height));
+                        tasks.Add(wnd.BeginAnimationAsync(Window.TopProperty, ActualPosition.Y, x1.Y));
+                        await Task.WhenAll(tasks.ToArray());
+                        tasks.Clear();
+                        tasks.Add(wnd.BeginAnimationAsync(Window.WidthProperty, ActualWidth, x1.Width));
+                        tasks.Add(wnd.BeginAnimationAsync(Window.LeftProperty, ActualPosition.X, x1.X));
+
+                        await Task.WhenAll(tasks.ToArray());
+
+                        // wnd.SizeToContent = SizeToContent.WidthAndHeight;
+                    }, DispatcherPriority.ContextIdle);*/
                 }
             }
 

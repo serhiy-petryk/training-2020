@@ -51,7 +51,8 @@
                 </controls:MwiChild>
 
                 <controls:MwiChild Position="250 250" Title="Title" Height="150">
-                    <TextBlock Text="Mwi Child TextBlock Content" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Yellow"/>
+                    <TextBlock Text="Mwi Child TextBlock Content" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Orange"
+                               PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
                 </controls:MwiChild>
 
                 <controls:MwiChild Position="300 300" Title="Title" Resizable="False" AllowClose="False">

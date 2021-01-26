@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Samples;
 
@@ -51,5 +52,11 @@ namespace WpfInvestigate.TestViews
             wnd.Show();
         }
 
+        private void UIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var wnd = Window.GetWindow((DependencyObject)sender);
+            var a1 = wnd.ActualWidth;
+            var a2 = wnd.ActualHeight;
+        }
     }
 }

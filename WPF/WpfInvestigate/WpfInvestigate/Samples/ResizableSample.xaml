@@ -30,10 +30,6 @@
                         <Button Grid.Row="1" Width="75" Margin="10 0 0 10" Focusable="True" HorizontalAlignment="Center" VerticalAlignment="Bottom" Command="ApplicationCommands.Close" Content="Close"
                                 effects:FocusVisualEffect.AlwaysShowFocus="True"
                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>
-                        <Button Grid.Row="2" Width="75" Focusable="True" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="Toggle Maximized"
-                                Click="OnToggleMaximizedClick"
-                                effects:FocusVisualEffect.AlwaysShowFocus="True"
-                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>
                     </Grid>
                 </Border>
             </Border>
