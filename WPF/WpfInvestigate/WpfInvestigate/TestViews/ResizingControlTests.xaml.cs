@@ -36,7 +36,7 @@ namespace WpfInvestigate.TestViews
 
         private void AddContent_OnClick(object sender, RoutedEventArgs e)
         {
-            var content = new ResizingControl
+            var control = new ResizingControl
             {
                 Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
                 Width = 150,
@@ -44,7 +44,8 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=150"
             };
-            new DialogAdorner(GridPanel) { CloseOnClickBackground = true }.ShowContent(content);
+            // new DialogAdorner(GridPanel) { CloseOnClickBackground = true }.ShowContent(content);
+            GridPanel.Children.Add(control);
         }
 
         private void AddWindowPanelSync_OnClick(object sender, RoutedEventArgs e)
