@@ -205,7 +205,7 @@
     <Compile Include="TestViews\DatePickerEffectTests.xaml.cs">
       <DependentUpon>DatePickerEffectTests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Samples\SampleDialogMovable.xaml.cs">
+    <Compile Include="Obsolete\TestViews\SampleDialogMovable.xaml.cs">
       <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Obsolete\TestViews\DialogTests.xaml.cs">
@@ -439,7 +439,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Samples\SampleDialogMovable.xaml">
+    <Page Include="Obsolete\TestViews\SampleDialogMovable.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -7,7 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 
-namespace WpfInvestigate.Samples
+namespace WpfInvestigate.Obsolete.TestViews
 {
     public partial class SampleDialogMovable : UserControl
     {
