@@ -40,7 +40,7 @@
             <Setter Property="Opacity" Value="1"/>
             <Style.Triggers>
                 <Trigger Property="IsActive" Value="True">
-                    <Setter Property="Opacity" Value="0.7"/>
+                    <Setter Property="Opacity" Value="0.75"/>
                 </Trigger>
             </Style.Triggers>
         </Style>

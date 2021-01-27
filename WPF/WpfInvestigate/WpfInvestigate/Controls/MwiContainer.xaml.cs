@@ -91,8 +91,8 @@ namespace WpfInvestigate.Controls
 
         /// Offset for new window.
         private double _windowOffset;
-        private MwiChild _activeMwiChild;
 
+        private MwiChild _activeMwiChild;
         public MwiChild ActiveMwiChild
         {
             get => _activeMwiChild;
@@ -105,8 +105,8 @@ namespace WpfInvestigate.Controls
                 if (_activeMwiChild != value)
                 {
                     _activeMwiChild = value;
-                    foreach (var window in Children.Where(c => c != value && c.IsActive))
-                        window.IsActive = false;
+
+                    Children.Where(c => c != value && c.IsActive).ToList().ForEach(c=> c.IsActive = false);
 
                     if (_activeMwiChild != null)
                     {
@@ -118,6 +118,7 @@ namespace WpfInvestigate.Controls
                           //  _activeMwiChild.BringIntoView();
                     }
                 }
+
                 OnPropertiesChanged(nameof(ActiveMwiChild), nameof(ScrollBarKind));
                 // Dispatcher.Invoke(DispatcherPriority.Render, Tips.EmptyDelegate); // Refresh UI (bug on Startup => active child doesn't highlight and ScrollBar is bad)
                 // InvalidateSize();
