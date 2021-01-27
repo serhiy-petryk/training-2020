@@ -44,7 +44,6 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=150"
             };
-            // new DialogAdorner(GridPanel) { CloseOnClickBackground = true }.ShowContent(content);
             GridPanel.Children.Add(control);
         }
 
