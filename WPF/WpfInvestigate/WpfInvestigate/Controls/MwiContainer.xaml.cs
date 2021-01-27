@@ -110,6 +110,7 @@ namespace WpfInvestigate.Controls
 
                     if (_activeMwiChild != null)
                     {
+                        _activeMwiChild.Focus();
                         _activeMwiChild.IsActive = true;
                         // Panel.SetZIndex(_activeMwiChild, MwiUniqueCount++);
                         // ScrollIntoView
