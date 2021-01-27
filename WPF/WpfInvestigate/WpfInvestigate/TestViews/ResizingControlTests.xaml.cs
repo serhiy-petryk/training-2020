@@ -108,6 +108,9 @@ namespace WpfInvestigate.TestViews
                 ToolTip = "Content3 Width/Height=200/250"
             };
 
+            content1.Opacity = 1.0;
+            content2.Opacity = 1.0;
+
             await a1.ShowContentAsync(content1);
             a1.ShowContent(content3);
             a1.ShowContent(content2);
