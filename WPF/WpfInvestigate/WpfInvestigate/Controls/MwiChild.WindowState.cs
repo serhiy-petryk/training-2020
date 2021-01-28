@@ -75,10 +75,14 @@ namespace WpfInvestigate.Controls
             if (IsWindowed)
             {
                 await AnimateHide();
-                var host = (Window)Parent;
-                host.Close();
-                ((Window)Parent).Content = null;
+                var wnd = (Window)Parent;
+                wnd.Activated -= OnWindowActivated;
+                wnd.Deactivated -= OnWindowDeactivated;
+                wnd.Close();
+                wnd.Content = null;
                 MwiContainer.MwiPanel.Children.Add(this);
+                // IsActive = true;
+                Focus();
                 // Focused = true;
 
                 if (WindowState == WindowState.Maximized)
@@ -97,46 +101,64 @@ namespace WpfInvestigate.Controls
             }
             else
             {
-                    var window = new Window
-                    {
-                        Style = (Style)FindResource("HeadlessWindow"),
-                        WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                        Background = Brushes.LightBlue,
-                        Opacity = 1
-                    };
+                var wnd = new Window
+                {
+                    Style = (Style)FindResource("HeadlessWindow"),
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                    Background = Brushes.LightBlue,
+                    Opacity = 1
+                };
 
-                    await AnimateHide();
-                    Margin = new Thickness(0,0,-1,-1);
-                    MwiContainer.MwiPanel.Children.Remove(this);
-                    window.Content = this;
-                    RestoreExternalWindowRect();
+                await AnimateHide();
+                Margin = new Thickness(0, 0, -1, -1);
+                MwiContainer.MwiPanel.Children.Remove(this);
+                wnd.Content = this;
+                RestoreExternalWindowRect();
 
-                    /*window.Activated += (sender, args) =>
-                    {
-                        if (MwiContainer.ActiveMwiChild != this)
-                            MwiContainer.ActiveMwiChild = this;
-                        else
-                            Focused = true;
-                    };
-                    window.Deactivated += (sender, args) =>
-                    {
-                        if (!MwiContainer.WindowShowLock)
-                            Focused = false;
-                    };*/
+                wnd.Activated += OnWindowActivated;
+                wnd.Deactivated += OnWindowDeactivated;
+                /*window.Activated += (sender, args) =>
+                {
+                    if (MwiContainer.ActiveMwiChild != this)
+                        MwiContainer.ActiveMwiChild = this;
+                    else
+                        Focused = true;
+                };
+                window.Deactivated += (sender, args) =>
+                {
+                    if (!MwiContainer.WindowShowLock)
+                        Focused = false;
+                };*/
 
-                    MwiContainer.WindowShowLock = true;
-                    window.Show();
-                    MwiContainer.WindowShowLock = false;
+                MwiContainer.WindowShowLock = true;
+                wnd.Show();
+                MwiContainer.WindowShowLock = false;
 
-                    // Refresh ScrollBar scrolling
-                    MwiContainer.ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
-                    MwiContainer.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                // Refresh ScrollBar scrolling
+                MwiContainer.ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+                MwiContainer.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
 
-                    OnWindowStateValueChanged(this,
-                        new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
-                    OnPropertiesChanged(nameof(IsWindowed));
+                OnWindowStateValueChanged(this,
+                    new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
+                OnPropertiesChanged(nameof(IsWindowed));
 
-                    await this.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
+                await this.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
+            }
+
+            void OnWindowActivated(object sender, EventArgs e)
+            {
+                if (MwiContainer.ActiveMwiChild != this)
+                    MwiContainer.ActiveMwiChild = this;
+                else
+                    Focus();
+                // IsActive = true;
+                // Focused = true;
+            }
+            void OnWindowDeactivated(object sender, EventArgs e)
+            {
+                if (!MwiContainer.WindowShowLock)
+                    IsActive = false;
+                    // Focused = false;
             }
         }
 

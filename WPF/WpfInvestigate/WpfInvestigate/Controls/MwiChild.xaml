@@ -35,15 +35,6 @@
                 </MenuItem.Icon>-->
             </MenuItem>
         </ControlTemplate>
-
-        <Style TargetType="controls:MwiChild">
-            <Setter Property="Opacity" Value="1"/>
-            <Style.Triggers>
-                <Trigger Property="IsActive" Value="True">
-                    <Setter Property="Opacity" Value="0.75"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
     </controls:ResizingControl.Resources>
 
     <Border BorderThickness="12" BorderBrush="Aqua">
@@ -94,6 +85,8 @@
 
                 <!-- Window title -->
                 <TextBlock Grid.Column="2" x:Name="Header" Margin="3 0 0 0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{Binding Title}"/>
+                <TextBlock Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Right" IsHitTestVisible="False" Text="AA" Background="Red"
+                           Visibility="{Binding IsActive, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
                 <!-- Left header panel -->
                 <ContentPresenter Grid.Column="3" Content="{Binding RightHeaderPanel}"/>
@@ -104,15 +97,15 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}"
+                    <Button Focusable="False" Grid.Column="0" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}"
                             Visibility="{Binding AllowDetach, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                    <Button Grid.Column="1" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource MinimizeButtonStyle}"
+                    <Button Focusable="False" Grid.Column="1" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource MinimizeButtonStyle}"
                             Visibility="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
                 </Grid>
 
-                <Button Grid.Column="5" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
+                <Button Focusable="False" Grid.Column="5" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
                         Visibility="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                <Button Grid.Column="6" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{StaticResource MwiCloseButtonStyle}" Width="20"/>
+                <Button Focusable="False" Grid.Column="6" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{StaticResource MwiCloseButtonStyle}" Width="20"/>
             </Grid>
 
             <!-- Content & Command/Status bars -->

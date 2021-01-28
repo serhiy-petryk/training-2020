@@ -18,7 +18,6 @@ namespace WpfInvestigate.Controls
     public partial class MwiContainer: INotifyPropertyChanged
     {
         const int WINDOW_OFFSET_STEP = 25;
-        public static int MwiUniqueCount = 1;
 
         public MwiContainer()
         {
@@ -83,6 +82,37 @@ namespace WpfInvestigate.Controls
             }
         }
 
+        #region ============  Override  ====================
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
+            {
+                wnd.Activated += OnWindowActivated;
+                wnd.Deactivated += OnWindowDeactivated;
+            }
+
+            void OnWindowActivated(object sender, EventArgs e)
+            {
+                //var wnd = Window.GetWindow(this);
+                var a1 = wnd.IsActive;
+                Debug.Print($"OnActivated: {a1}");
+                if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
+                    ActiveMwiChild.Focus();
+                    // ActiveMwiChild.IsActive = true;
+            }
+            void OnWindowDeactivated(object sender, EventArgs e)
+            {
+                //var wnd = Window.GetWindow(this);
+                var a1 = wnd.IsActive;
+                Debug.Print($"MwiContainer_OnDeactivated: {a1}");
+                foreach (var child in InternalWindows.Where(w => w.IsActive))
+                    child.IsActive = false;
+            }
+        }
+        #endregion
+
         #region =======  Properties  =========
         public ObservableCollection<MwiChild> Children { get; set; } = new ObservableCollection<MwiChild>();
         internal IEnumerable<MwiChild> InternalWindows => Children.Where(w => !w.IsWindowed);
@@ -98,7 +128,6 @@ namespace WpfInvestigate.Controls
             get => _activeMwiChild;
             set
             {
-                Debug.Print($"Set ActiveMwiChild");
                 if (WindowShowLock) // Async window.Show() is running for detaching window => new ActiveMwiChild is not valid
                     return;
 
@@ -111,13 +140,15 @@ namespace WpfInvestigate.Controls
                     if (_activeMwiChild != null)
                     {
                         _activeMwiChild.Focus();
-                        _activeMwiChild.IsActive = true;
+                        // _activeMwiChild.IsActive = true;
                         // Panel.SetZIndex(_activeMwiChild, MwiUniqueCount++);
                         // ScrollIntoView
                         //if (_activeMwiChild.WindowState == WindowState.Normal && !_activeMwiChild.IsWindowed)
                           //  _activeMwiChild.BringIntoView();
                     }
                 }
+
+                Debug.Print($"Set ActiveMwiChild: {_activeMwiChild?._controlId}");
 
                 OnPropertiesChanged(nameof(ActiveMwiChild), nameof(ScrollBarKind));
                 // Dispatcher.Invoke(DispatcherPriority.Render, Tips.EmptyDelegate); // Refresh UI (bug on Startup => active child doesn't highlight and ScrollBar is bad)

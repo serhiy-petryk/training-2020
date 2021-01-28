@@ -67,7 +67,7 @@
             </Grid.RowDefinitions>
 
             <!-- Desktop -->
-            <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Focusable="False">
                 <Grid x:Name="MwiPanel"
                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                       Background="{x:Static SystemColors.AppWorkspaceBrush}"/>

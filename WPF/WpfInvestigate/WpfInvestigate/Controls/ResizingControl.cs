@@ -16,6 +16,9 @@ namespace WpfInvestigate.Controls
 {
     public class ResizingControl : ContentControl, INotifyPropertyChanged
     {
+        private static int controlId = 0;
+        private int _controlId = controlId ++;
+
         static ResizingControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(typeof(ResizingControl)));
@@ -29,10 +32,9 @@ namespace WpfInvestigate.Controls
         }
 
         public const string MovingThumbName = "MovingThumb";
+        private static int ZIndexCount = 1;
         public bool LimitPositionToPanelBounds { get; set; } = false;
         public bool IsWindowed => Parent is Window;
-
-        private static int Unique = 1;
         private Grid HostPanel => VisualTreeHelper.GetParent(this) as Grid;
 
         protected override void OnContentChanged(object oldContent, object newContent)
@@ -154,8 +156,10 @@ namespace WpfInvestigate.Controls
         protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
-            Debug.Print($"ResizingControl.OnGotFocus: {Unique}");
-            Panel.SetZIndex(this, Unique++);
+            Debug.Print($"ResizingControl.OnGotFocus: {_controlId}");
+            // if (Panel.GetZIndex(this) != ZIndexCount)
+            //    Panel.SetZIndex(this, ++ZIndexCount);
+            Activate();
         }
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -163,11 +167,19 @@ namespace WpfInvestigate.Controls
             base.OnPreviewMouseLeftButtonDown(e);
 
             // If thumb of focused control pressed => don't change focus & zindex
-            if (Tips.GetElementsUnderMouseClick(this, e).OfType<FrameworkElement>().Any(c => c.TemplatedParent is Thumb) &&
-                Tips.GetVisualParents(Keyboard.FocusedElement as DependencyObject).Any(c => c == this))
-                return;
+            //if (Tips.GetElementsUnderMouseClick(this, e).OfType<FrameworkElement>().Any(c => c.TemplatedParent is Thumb) &&
+              //  Tips.GetVisualParents(Keyboard.FocusedElement as DependencyObject).Any(c => c == this))
+                // return;
 
-            if (Focusable) Focus();
+            // if (Focusable && !IsKeyboardFocusWithin) Focus();
+            Activate();
+        }
+
+        protected virtual void Activate()
+        {
+            if (Focusable && !IsKeyboardFocusWithin) Focus();
+            if (Panel.GetZIndex(this) != ZIndexCount)
+                Panel.SetZIndex(this, ++ZIndexCount);
         }
         #endregion
 
