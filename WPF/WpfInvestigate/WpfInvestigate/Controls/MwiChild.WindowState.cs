@@ -82,7 +82,8 @@ namespace WpfInvestigate.Controls
                 wnd.Content = null;
                 MwiContainer.MwiPanel.Children.Add(this);
                 // IsActive = true;
-                Focus();
+                // Focus();
+                Activate();
                 // Focused = true;
 
                 if (WindowState == WindowState.Maximized)
@@ -150,7 +151,8 @@ namespace WpfInvestigate.Controls
                 if (MwiContainer.ActiveMwiChild != this)
                     MwiContainer.ActiveMwiChild = this;
                 else
-                    Focus();
+                    Activate();
+                    //Focus();
                 // IsActive = true;
                 // Focused = true;
             }

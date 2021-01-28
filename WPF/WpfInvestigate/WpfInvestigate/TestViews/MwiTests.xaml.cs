@@ -46,8 +46,10 @@ namespace WpfInvestigate.TestViews
 
         private void Test_OnClick(object sender, RoutedEventArgs e)
         {
-            foreach (var c in MwiContainer.Children)
-                c.AllowDetach = !c.AllowDetach;
+            // foreach (var c in MwiContainer.Children)
+            // c.AllowDetach = !c.AllowDetach;
+            MwiContainer.Children[0].Focus();
+            var a1 = Keyboard.FocusedElement;
         }
 
         private void OpenWindow_OnClick(object sender, RoutedEventArgs e)

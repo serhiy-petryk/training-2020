@@ -68,7 +68,7 @@
 
             <!-- Desktop -->
             <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Focusable="False">
-                <Grid x:Name="MwiPanel"
+                <Grid x:Name="MwiPanel" KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.DirectionalNavigation="Cycle"
                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                       Background="{x:Static SystemColors.AppWorkspaceBrush}"/>
             </ScrollViewer>

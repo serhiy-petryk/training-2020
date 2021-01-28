@@ -99,7 +99,7 @@ namespace WpfInvestigate.Controls
                 var a1 = wnd.IsActive;
                 Debug.Print($"OnActivated: {a1}");
                 if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
-                    ActiveMwiChild.Focus();
+                    ActiveMwiChild.Activate();
                     // ActiveMwiChild.IsActive = true;
             }
             void OnWindowDeactivated(object sender, EventArgs e)
@@ -139,7 +139,7 @@ namespace WpfInvestigate.Controls
 
                     if (_activeMwiChild != null)
                     {
-                        _activeMwiChild.Focus();
+                        // _activeMwiChild.Focus();
                         // _activeMwiChild.IsActive = true;
                         // Panel.SetZIndex(_activeMwiChild, MwiUniqueCount++);
                         // ScrollIntoView

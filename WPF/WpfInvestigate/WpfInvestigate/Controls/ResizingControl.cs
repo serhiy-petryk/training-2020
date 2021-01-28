@@ -175,10 +175,10 @@ namespace WpfInvestigate.Controls
             Activate();
         }
 
-        protected virtual void Activate()
+        public virtual void Activate()
         {
             if (Focusable && !IsKeyboardFocusWithin) Focus();
-            if (Panel.GetZIndex(this) != ZIndexCount)
+            if (!IsWindowed && Panel.GetZIndex(this) != ZIndexCount)
                 Panel.SetZIndex(this, ++ZIndexCount);
         }
         #endregion

@@ -33,7 +33,7 @@ namespace WpfInvestigate.Controls
 
         #region =============  Override methods  ====================
 
-        protected override void Activate()
+        public override void Activate()
         {
             base.Activate();
             if (MwiContainer != null && MwiContainer?.ActiveMwiChild != this)
