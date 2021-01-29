@@ -41,9 +41,13 @@
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
             <controls:MwiContainer x:Name="MwiContainer" Background="Beige">
-                <controls:MwiChild Position="50 50" Content="Mwi Child Test" Title="Title" EdgeThickness="12" Height="150"/>
+                <controls:MwiChild Position="50 50" Title="Title" EdgeThickness="12" Height="150">
+                    <ContentControl Content="Mwi Child Test" IsTabStop="False"/>
+                </controls:MwiChild>
 
-                <controls:MwiChild Position="100 100" Content="object Content"/>
+                <controls:MwiChild Position="100 100">
+                    <ContentControl Content="object Content" IsTabStop="False"/>
+                </controls:MwiChild>
 
                 <controls:MwiChild Position="200 200" Height="150" EdgeThickness="15">
                     <TextBlock Text="TextBlock Content: height=150, EdgeThickness=15" FontSize="16" Background="Yellow"
@@ -52,10 +56,11 @@
 
                 <controls:MwiChild Position="250 250" Title="Title" Height="150">
                     <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Mwi Child TextBlock Content" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Orange"
-                               PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
-                    <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
-                    <Button Focusable="False">Not focusable</Button>
+                        <TextBlock Text="Mwi Child TextBlock Content" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Orange"
+                                   PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                        <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
+                        <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
+                        <Button Focusable="False">Not focusable</Button>
                     </StackPanel>
                 </controls:MwiChild>
 
