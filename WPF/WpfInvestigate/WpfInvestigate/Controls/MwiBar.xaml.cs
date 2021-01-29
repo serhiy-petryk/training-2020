@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -112,10 +113,14 @@ namespace WpfInvestigate.Controls
 
         private void TabItem_OnToolTipOpening(object sender, ToolTipEventArgs e)
         {
+            ((MwiChild)((FrameworkElement)sender).DataContext).RefreshThumbnail();
         }
 
         private void TabToolTip_OnOpened(object sender, RoutedEventArgs e)
         {
+            var toolTip = (ToolTip)sender;
+            var tabTextBlock = Tips.GetVisualChildren(toolTip.PlacementTarget).OfType<TextBlock>().First();
+            toolTip.Tag = Tips.IsTextTrimmed(tabTextBlock) ? "1" : null;
         }
 
     }

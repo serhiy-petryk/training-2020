@@ -46,26 +46,6 @@ namespace WpfInvestigate.Controls
                 WindowState = WindowState.Minimized;
             }
         }
-        private ImageSource CreateThumbnail()
-        {
-            if (WindowState != WindowState.Minimized || _thumbnailCache == null)
-            {
-                var bitmap = new RenderTargetBitmap((int)Math.Round(ActualWidth), (int)Math.Round(ActualHeight),
-                    96, 96, PixelFormats.Default);
-                var drawingVisual = new DrawingVisual();
-                using (var context = drawingVisual.RenderOpen())
-                {
-                    var brush = new VisualBrush(this);
-                    context.DrawRectangle(brush, null,
-                        new Rect(new Point(), new Size(ActualWidth, ActualHeight)));
-                    context.Close();
-                }
-
-                bitmap.Render(drawingVisual);
-                _thumbnailCache = bitmap;
-            }
-            return _thumbnailCache;
-        }
 
         private async void ToggleDetach(object obj)
         {
