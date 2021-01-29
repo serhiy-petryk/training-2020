@@ -7,8 +7,6 @@
              xmlns:controls="clr-namespace:WpfInvestigate.Controls"
              xmlns:common="clr-namespace:WpfInvestigate.Common"
              xmlns:effects="clr-namespace:WpfInvestigate.Effects"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
              Focusable="True" IsTabStop="True"
              KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.ControlTabNavigation="None" KeyboardNavigation.DirectionalNavigation="Continue"
              KeyboardNavigation.IsTabStop="True">
