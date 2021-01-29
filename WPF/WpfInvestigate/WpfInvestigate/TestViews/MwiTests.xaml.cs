@@ -66,10 +66,6 @@ namespace WpfInvestigate.TestViews
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
-            var a1 = sender as Button;
-            var a2 = Tips.GetVisualParents(a1).OfType<MwiChild>().First();
-            var a3 = a2.IsActive;
-            Debug.Print($"IsActive {a2._controlId} MwiChild: {a3}");
         }
     }
 }

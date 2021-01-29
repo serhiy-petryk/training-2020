@@ -156,22 +156,12 @@ namespace WpfInvestigate.Controls
         protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
-            Debug.Print($"ResizingControl.OnGotFocus: {_controlId}");
-            // if (Panel.GetZIndex(this) != ZIndexCount)
-            //    Panel.SetZIndex(this, ++ZIndexCount);
             Activate();
         }
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonDown(e);
-
-            // If thumb of focused control pressed => don't change focus & zindex
-            //if (Tips.GetElementsUnderMouseClick(this, e).OfType<FrameworkElement>().Any(c => c.TemplatedParent is Thumb) &&
-              //  Tips.GetVisualParents(Keyboard.FocusedElement as DependencyObject).Any(c => c == this))
-                // return;
-
-            // if (Focusable && !IsKeyboardFocusWithin) Focus();
             Activate();
         }
 

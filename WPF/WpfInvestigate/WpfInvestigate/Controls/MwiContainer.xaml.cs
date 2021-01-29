@@ -108,18 +108,11 @@ namespace WpfInvestigate.Controls
 
             void OnWindowActivated(object sender, EventArgs e)
             {
-                //var wnd = Window.GetWindow(this);
-                var a1 = wnd.IsActive;
-                Debug.Print($"OnActivated: {a1}");
                 if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
                     ActiveMwiChild.Activate();
-                    // ActiveMwiChild.IsActive = true;
             }
             void OnWindowDeactivated(object sender, EventArgs e)
             {
-                //var wnd = Window.GetWindow(this);
-                var a1 = wnd.IsActive;
-                Debug.Print($"MwiContainer_OnDeactivated: {a1}");
                 foreach (var child in InternalWindows.Where(w => w.IsActive))
                     child.IsActive = false;
             }
@@ -146,9 +139,6 @@ namespace WpfInvestigate.Controls
             {
                 if (!Equals(_activeMwiChild, value))
                     _activeMwiChild = value;
-
-                Debug.Print($"Set ActiveMwiChild: {_activeMwiChild?._controlId}");
-
                 OnPropertiesChanged(nameof(ActiveMwiChild), nameof(ScrollBarKind));
             }
         }

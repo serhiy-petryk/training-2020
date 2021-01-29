@@ -59,8 +59,6 @@ namespace WpfInvestigate.Controls
             
             OnPropertiesChanged(nameof(MwiContainer.ActiveMwiChild), nameof(MwiContainer.ScrollBarKind));
             BringIntoView();
-
-            Debug.Print($"!!! Activate: {_controlId}");
         }
 
         #endregion
