@@ -32,7 +32,7 @@
         <StackPanel Grid.Column="1" Orientation="Vertical">
             <Button Content="Add" Click="AddChild_OnClick"/>
             <Button Content="Add" Click="AddChild2_OnClick"/>
-            <Button Content="Test" Click="Test_OnClick"/>
+            <Button Content="Test" Click="Test_OnClick" Focusable="False"/>
             <Button Content="OpenWindow" Click="OpenWindow_OnClick"/>
         </StackPanel>
 
@@ -41,9 +41,13 @@
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
             <controls:MwiContainer x:Name="MwiContainer" Background="Beige">
-                <controls:MwiChild Position="50 50" Content="Mwi Child Test" Title="Title" EdgeThickness="12" Height="150"/>
+                <controls:MwiChild Position="50 50" Title="Title" EdgeThickness="12" Height="150">
+                    <ContentControl Content="Mwi Child Test"/>
+                </controls:MwiChild>
 
-                <controls:MwiChild Position="100 100" Content="object Content"/>
+                <controls:MwiChild Position="100 100">
+                    <ContentControl Content="object Content"/>
+                </controls:MwiChild>
 
                 <controls:MwiChild Position="200 200" Height="150" EdgeThickness="15">
                     <TextBlock Text="TextBlock Content: height=150, EdgeThickness=15" FontSize="16" Background="Yellow"
@@ -51,8 +55,13 @@
                 </controls:MwiChild>
 
                 <controls:MwiChild Position="250 250" Title="Title" Height="150">
-                    <TextBlock Text="Mwi Child TextBlock Content" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Orange"
-                               PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Mwi Child TextBlock Content" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Orange"
+                                   PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                        <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
+                        <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
+                        <Button Focusable="False">Not focusable</Button>
+                    </StackPanel>
                 </controls:MwiChild>
 
                 <controls:MwiChild Position="300 300" Title="Title" Resizable="False" AllowClose="False">

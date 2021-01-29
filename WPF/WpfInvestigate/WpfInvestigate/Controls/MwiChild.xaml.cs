@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -12,6 +13,8 @@ namespace WpfInvestigate.Controls
     /// </summary>
     public partial class MwiChild: INotifyPropertyChanged
     {
+        private static int controlId = 0;
+        internal int _controlId = controlId++;
         public MwiChild()
         {
             CmdDetach = new RelayCommand(ToggleDetach, _ => AllowDetach);
@@ -29,13 +32,26 @@ namespace WpfInvestigate.Controls
         }
 
         #region =============  Override methods  ====================
-        protected override void OnGotFocus(RoutedEventArgs e)
+
+        public override void Activate()
+        {
+            base.Activate();
+            if (MwiContainer != null && MwiContainer?.ActiveMwiChild != this)
+                MwiContainer.ActiveMwiChild = this;
+            IsActive = true;
+            BringIntoView();
+        }
+
+        /*protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
 
+            // Panel.SetZIndex(this, Unique++);
+
+            Debug.Print($"MwiChild.OnGotFocus: {_controlId}");
             if (MwiContainer != null)
                 MwiContainer.ActiveMwiChild = this;
-        }
+        }*/
 
         #endregion
         private async void Close(object obj)

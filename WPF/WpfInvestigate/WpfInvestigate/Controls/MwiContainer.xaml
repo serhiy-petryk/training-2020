@@ -6,7 +6,7 @@
              xmlns:effects="clr-namespace:WpfInvestigate.Effects"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Margin="10">
+             Margin="10" Focusable="False">
 
     <ContentControl.Resources>
     </ContentControl.Resources>
@@ -67,9 +67,10 @@
             </Grid.RowDefinitions>
 
             <!-- Desktop -->
-            <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid x:Name="MwiPanel"
-                      VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+            <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Focusable="False">
+                <Grid x:Name="MwiPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                      KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.ControlTabNavigation="Cycle" KeyboardNavigation.DirectionalNavigation="Cycle"
+                      KeyboardNavigation.IsTabStop="True"
                       Background="{x:Static SystemColors.AppWorkspaceBrush}"/>
             </ScrollViewer>
 
