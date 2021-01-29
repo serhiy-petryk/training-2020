@@ -32,8 +32,7 @@ namespace WpfInvestigate.Common.ColorSpaces
     {
         static ColorUtils()
         {
-            var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).FirstOrDefault(t => t.Namespace == "System.Windows.Media" && t.Name == "KnownColor");
-            if (type != null)
+            if (AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).FirstOrDefault(t => t.Namespace == "System.Windows.Media" && t.Name == "KnownColor") is Type type)
             {
                 var nameList = Enum.GetValues(type).OfType<object>().Skip(1).Select(a => a.ToString()).OrderBy(a => a).ToList();
                 nameList.AddRange(new[] { "Cyan", "Aqua", "Fuchsia", "Magenta" });// repeating color values: name may be skipped
