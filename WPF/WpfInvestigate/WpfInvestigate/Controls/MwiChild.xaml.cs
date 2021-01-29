@@ -94,14 +94,12 @@ namespace WpfInvestigate.Controls
         {
             if (WindowState != WindowState.Minimized || _thumbnailCache == null)
             {
-                var bitmap = new RenderTargetBitmap((int)Math.Round(ActualWidth), (int)Math.Round(ActualHeight),
-                    96, 96, PixelFormats.Default);
+                var bitmap = new RenderTargetBitmap(Convert.ToInt32(ActualWidth), Convert.ToInt32(ActualHeight), 96, 96, PixelFormats.Default);
                 var drawingVisual = new DrawingVisual();
                 using (var context = drawingVisual.RenderOpen())
                 {
                     var brush = new VisualBrush(this);
-                    context.DrawRectangle(brush, null,
-                        new Rect(new Point(), new Size(ActualWidth, ActualHeight)));
+                    context.DrawRectangle(brush, null, new Rect(new Point(), new Size(ActualWidth, ActualHeight)));
                     context.Close();
                 }
 
