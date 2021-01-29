@@ -97,6 +97,19 @@ namespace WpfInvestigate.Controls
         }
         #endregion
 
+        private async void TabItem_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            await ((TabItem)sender).BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
+        }
+
+        private void TabItem_OnMouseEnterOrLeave(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void TabItem_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
         private void TabItem_OnToolTipOpening(object sender, ToolTipEventArgs e)
         {
         }
@@ -105,16 +118,5 @@ namespace WpfInvestigate.Controls
         {
         }
 
-        private void TabItem_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-        }
-
-        private void TabItem_OnLoaded(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void TabItem_OnMouseEnterOrLeave(object sender, MouseEventArgs e)
-        {
-        }
     }
 }
