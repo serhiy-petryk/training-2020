@@ -33,16 +33,14 @@ namespace WpfInvestigate.Controls
                     var mwiChild = Children[e.NewStartingIndex];
                     mwiChild.MwiContainer = this;
 
-                    if (mwiChild.ActualPosition.X < 0 || mwiChild.ActualPosition.Y < 0)
-                        mwiChild.Position = new Point(_windowOffset, _windowOffset);
-                    _windowOffset += WINDOW_OFFSET_STEP;
-                    if ((_windowOffset + mwiChild.Width > ActualWidth) || (_windowOffset + mwiChild.Height > ActualHeight))
-                        _windowOffset = 0;
+                    if (mwiChild.IsLoaded)
+                        OnMwiChildLoaded(mwiChild, null);
+                    else
+                        mwiChild.Loaded += OnMwiChildLoaded;
 
                     MwiPanel.Children.Add(mwiChild);
                     mwiChild.Closed += OnMwiChildClosed;
-
-                    ActiveMwiChild = mwiChild;
+                    mwiChild.Activate();
 
                     /*SetMwiContainer(mwiChild, this);
 
@@ -66,6 +64,8 @@ namespace WpfInvestigate.Controls
 
                     MwiPanel.Children.Remove(oldChild);
                     // ActiveMwiChild = oldActiveMwiChild ?? GetTopChild();*/
+                    if (GetTopChild() is MwiChild newChild)
+                        newChild.Activate();
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
@@ -79,6 +79,19 @@ namespace WpfInvestigate.Controls
                 var mwiChild = (MwiChild)o;
                 mwiChild.Closed -= OnMwiChildClosed;
                 Children.Remove(mwiChild);
+            }
+
+            void OnMwiChildLoaded(object o, RoutedEventArgs args)
+            {
+                var mwiChild = (MwiChild)o;
+                mwiChild.Loaded -= OnMwiChildLoaded;
+                if (mwiChild.Position.X < 0 || mwiChild.Position.Y < 0)
+                {
+                    _windowOffset += WINDOW_OFFSET_STEP;
+                    if ((_windowOffset + mwiChild.ActualWidth > MwiPanel.ActualWidth) || (_windowOffset + mwiChild.ActualHeight > MwiPanel.ActualHeight))
+                        _windowOffset = 0;
+                    mwiChild.Position = new Point(_windowOffset, _windowOffset);
+                }
             }
         }
 
@@ -116,11 +129,14 @@ namespace WpfInvestigate.Controls
         #region =======  Properties  =========
         public ObservableCollection<MwiChild> Children { get; set; } = new ObservableCollection<MwiChild>();
         internal IEnumerable<MwiChild> InternalWindows => Children.Where(w => !w.IsWindowed);
+        internal MwiChild GetTopChild() => Children.Any()
+            ? Children.Aggregate((w1, w2) => Panel.GetZIndex(w1) > Panel.GetZIndex(w2) ? w1 : w2)
+            : null;
+
         internal double InnerHeight => ScrollViewer.ActualHeight;
-        internal bool WindowShowLock = false; // lock for async window.Show()
 
         /// Offset for new window.
-        private double _windowOffset;
+        private double _windowOffset = -WINDOW_OFFSET_STEP;
 
         private MwiChild _activeMwiChild;
         public MwiChild ActiveMwiChild
@@ -128,31 +144,12 @@ namespace WpfInvestigate.Controls
             get => _activeMwiChild;
             set
             {
-                if (WindowShowLock) // Async window.Show() is running for detaching window => new ActiveMwiChild is not valid
-                    return;
-
-                if (_activeMwiChild != value)
-                {
+                if (!Equals(_activeMwiChild, value))
                     _activeMwiChild = value;
-
-                    Children.Where(c => c != value && c.IsActive).ToList().ForEach(c=> c.IsActive = false);
-
-                    if (_activeMwiChild != null)
-                    {
-                        // _activeMwiChild.Focus();
-                        // _activeMwiChild.IsActive = true;
-                        // Panel.SetZIndex(_activeMwiChild, MwiUniqueCount++);
-                        // ScrollIntoView
-                        //if (_activeMwiChild.WindowState == WindowState.Normal && !_activeMwiChild.IsWindowed)
-                          //  _activeMwiChild.BringIntoView();
-                    }
-                }
 
                 Debug.Print($"Set ActiveMwiChild: {_activeMwiChild?._controlId}");
 
                 OnPropertiesChanged(nameof(ActiveMwiChild), nameof(ScrollBarKind));
-                // Dispatcher.Invoke(DispatcherPriority.Render, Tips.EmptyDelegate); // Refresh UI (bug on Startup => active child doesn't highlight and ScrollBar is bad)
-                // InvalidateSize();
             }
         }
 

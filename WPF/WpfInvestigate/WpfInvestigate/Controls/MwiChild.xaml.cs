@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -32,25 +34,34 @@ namespace WpfInvestigate.Controls
 
         #region =============  Override methods  ====================
 
+        private static bool _isActivating = false;
         public override void Activate()
         {
+            if (_isActivating) return;
+            _isActivating = true;
+
             base.Activate();
-            if (MwiContainer != null && MwiContainer?.ActiveMwiChild != this)
-                MwiContainer.ActiveMwiChild = this;
-            IsActive = true;
-            BringIntoView();
-        }
 
-        /*protected override void OnGotFocus(RoutedEventArgs e)
-        {
-            base.OnGotFocus(e);
-
-            // Panel.SetZIndex(this, Unique++);
-
-            Debug.Print($"MwiChild.OnGotFocus: {_controlId}");
             if (MwiContainer != null)
-                MwiContainer.ActiveMwiChild = this;
-        }*/
+            {
+                MwiContainer.Children.Where(c => c != this && c.IsActive).ToList().ForEach(c => c.IsActive = false);
+
+                if (MwiContainer.ActiveMwiChild != this)
+                    MwiContainer.ActiveMwiChild = this;
+            }
+
+            IsActive = true;
+
+            if (Window.GetWindow(this) is Window wnd && !wnd.IsFocused)
+                wnd.Focus();
+
+            _isActivating = false;
+            
+            OnPropertiesChanged(nameof(MwiContainer.ActiveMwiChild), nameof(MwiContainer.ScrollBarKind));
+            BringIntoView();
+
+            Debug.Print($"!!! Activate: {_controlId}");
+        }
 
         #endregion
         private async void Close(object obj)

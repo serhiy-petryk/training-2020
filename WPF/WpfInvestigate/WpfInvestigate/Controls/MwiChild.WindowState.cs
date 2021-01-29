@@ -81,10 +81,7 @@ namespace WpfInvestigate.Controls
                 wnd.Close();
                 wnd.Content = null;
                 MwiContainer.MwiPanel.Children.Add(this);
-                // IsActive = true;
-                // Focus();
                 Activate();
-                // Focused = true;
 
                 if (WindowState == WindowState.Maximized)
                 {
@@ -118,22 +115,7 @@ namespace WpfInvestigate.Controls
 
                 wnd.Activated += OnWindowActivated;
                 wnd.Deactivated += OnWindowDeactivated;
-                /*window.Activated += (sender, args) =>
-                {
-                    if (MwiContainer.ActiveMwiChild != this)
-                        MwiContainer.ActiveMwiChild = this;
-                    else
-                        Focused = true;
-                };
-                window.Deactivated += (sender, args) =>
-                {
-                    if (!MwiContainer.WindowShowLock)
-                        Focused = false;
-                };*/
-
-                MwiContainer.WindowShowLock = true;
                 wnd.Show();
-                MwiContainer.WindowShowLock = false;
 
                 // Refresh ScrollBar scrolling
                 MwiContainer.ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
@@ -146,22 +128,8 @@ namespace WpfInvestigate.Controls
                 await this.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
             }
 
-            void OnWindowActivated(object sender, EventArgs e)
-            {
-                if (MwiContainer.ActiveMwiChild != this)
-                    MwiContainer.ActiveMwiChild = this;
-                else
-                    Activate();
-                    //Focus();
-                // IsActive = true;
-                // Focused = true;
-            }
-            void OnWindowDeactivated(object sender, EventArgs e)
-            {
-                if (!MwiContainer.WindowShowLock)
-                    IsActive = false;
-                    // Focused = false;
-            }
+            void OnWindowActivated(object sender, EventArgs e) => Activate();
+            void OnWindowDeactivated(object sender, EventArgs e) => IsActive = false;
         }
 
         public void RestoreExternalWindowRect(Size? newSize = null)
@@ -263,10 +231,10 @@ namespace WpfInvestigate.Controls
             }*/
 
             // Activate main window (in case of attach)
-            if (IsWindowed && !((Window)Parent).IsFocused)
+            /*if (IsWindowed && !((Window)Parent).IsFocused)
                 ((Window)Parent).Focus();
             else if (!IsWindowed && !Window.GetWindow(this).IsFocused)
-                Window.GetWindow(this)?.Focus();
+                Window.GetWindow(this)?.Focus();*/
         }
         private void SaveActualRectangle()
         {

@@ -64,7 +64,7 @@
                     </StackPanel>
                 </controls:MwiChild>
 
-                <controls:MwiChild Position="300 300" Title="Title" Resizable="False" AllowClose="False">
+                <controls:MwiChild Position="300 300" Title="Title" Resizable="False">
                     <TextBlock Text="Not resizable" Background="Yellow"/>
                 </controls:MwiChild>
             </controls:MwiContainer>
