@@ -84,8 +84,7 @@ namespace WpfInvestigate.Controls
             else
                 newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.BackgroundBrush");
 
-            // tabItem.Background = AnimationHelper.RunLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background);
-            tabItem.Background = newBrush;
+            tabItem.Background = AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background);
         }
 
 

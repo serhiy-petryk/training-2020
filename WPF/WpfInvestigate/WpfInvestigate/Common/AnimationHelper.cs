@@ -13,6 +13,21 @@ namespace WpfInvestigate.Common
         public static readonly Duration AnimationDuration = TimeSpan.FromMilliseconds(AnimationTime);
         public static readonly Duration AnimationDurationSlow = TimeSpan.FromMilliseconds(AnimationTime * 2);
 
+        public static LinearGradientBrush BeginLinearGradientBrushAnimation(LinearGradientBrush newBrush, LinearGradientBrush oldBrush)
+        {
+            // usage: tabItem.Background = AnimationHelper.RunLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background);
+            if (newBrush.GradientStops.Count != oldBrush.GradientStops.Count)
+                throw new Exception("RunLinearGradientBrushAnimation error! Different size of newBrush and oldBrush GradientStops collection");
+
+            newBrush = newBrush.Clone();
+            for (var k = 0; k < newBrush.GradientStops.Count; k++)
+            {
+                var ca = new ColorAnimation(oldBrush.GradientStops[k].Color, newBrush.GradientStops[k].Color, AnimationDuration);
+                newBrush.GradientStops[k].BeginAnimation(GradientStop.ColorProperty, ca);
+            }
+            return newBrush;
+        }
+
         #region ================  Begin animation async ===================
         public static Task BeginFrameAnimationAsync(this IAnimatable element, DependencyProperty property, object value)
         {
