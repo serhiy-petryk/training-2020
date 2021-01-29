@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
-using WpfInvestigate.Samples;
 
 namespace WpfInvestigate.Obsolete.TestViews
 {
