@@ -42,13 +42,6 @@ namespace WpfInvestigate.Controls
             BringIntoView();
         }
 
-        protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
-        {
-            base.OnIsKeyboardFocusWithinChanged(e);
-            if (Equals(e.NewValue, true))
-                Activate();
-        }
-
         /*protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);

@@ -175,6 +175,13 @@ namespace WpfInvestigate.Controls
             Activate();
         }
 
+        protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnIsKeyboardFocusWithinChanged(e);
+            if (Equals(e.NewValue, true))
+                Activate();
+        }
+
         public virtual void Activate()
         {
             if (Focusable && !IsKeyboardFocusWithin) Focus();
