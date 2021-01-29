@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -88,6 +87,7 @@ namespace WpfInvestigate.Controls
         public event EventHandler Closed;
         public bool IsDialog => false;
         public MwiContainer MwiContainer { get; set; }
+        public bool IsSelected => MwiContainer?.ActiveMwiChild == this;
 
         //============  Commands  =============
         public RelayCommand CmdDetach { get; }

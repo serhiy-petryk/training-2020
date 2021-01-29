@@ -4,6 +4,108 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfInvestigate.Controls"
+             xmlns:common="clr-namespace:WpfInvestigate.Common"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             SelectionChanged="WindowsBar_OnSelectionChanged">
+
+    <TabControl.Resources>
+        <Style x:Key="ThumbnailStyle" TargetType="{x:Type ToolTip}">
+            <Setter Property="Background" Value="{DynamicResource Mwi.WindowTab.Thumbnail.BackgroundBrush}"/>
+            <Setter Property="BorderThickness" Value="4"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <!--<Setter Property="FontFamily" Value="{Binding Source={x:Static viewModels:AppViewModel.Instance}, Path=DefaultFontFamily}"/>-->
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="0.7" CenterX="90" />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Tag" Value="{x:Null}">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+                <EventTrigger RoutedEvent="ToolTip.Opened">
+                    <BeginStoryboard HandoffBehavior="Compose">
+                        <Storyboard TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" RenderOptions.BitmapScalingMode="HighQuality" >
+                            <DoubleAnimation From="0.7" To="1" Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TabItem">
+            <Setter Property="Foreground" Value="{DynamicResource Mwi.WindowTab.ForegroundBrush}" />
+            <Setter Property="Background" Value="{DynamicResource Mwi.WindowTab.BackgroundBrush}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border BorderThickness="1" BorderBrush="{DynamicResource Mwi.WindowTab.BorderBrush}" CornerRadius="2" Margin="1 0 0 0" Background="{TemplateBinding Background}" ToolTipOpening="TabItem_OnToolTipOpening">
+                            <Grid MaxWidth="240">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Grid.Column="0" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Source="{Binding Icon}" Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Title}" Margin="5 2 4 0" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                                <Button Grid.Column="2" x:Name="DeleteTabButton" Width="20" Height="20" Focusable="False" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Command="{Binding CmdClose}">
+                                    <Path Stroke="{DynamicResource Mwi.WindowTab.DeleteButton.ForegroundBrush}" StrokeThickness="1.5" Data="M 0 0 L 8 8 M 0 8 L 8 0" Width="8" Height="8" />
+                                </Button>
+                            </Grid>
+
+                            <Border.ToolTip>
+                                <ToolTip Style="{StaticResource ThumbnailStyle}" Opened="TabToolTip_OnOpened">
+                                    <Grid MaxWidth="180">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Title}" TextWrapping="Wrap" TextAlignment="Center" Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToolTip}}, Path=Tag, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                        <Image Grid.Row="1" Width="{Binding ThumbnailWidth}" Height="{Binding ThumbnailHeight}" Stretch="UniformToFill" Margin="0 4 0 0" Source="{Binding Path=Thumbnail}" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    </Grid>
+                                </ToolTip>
+                            </Border.ToolTip>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="TabItem_OnPreviewMouseLeftButtonDown"/>
+            <EventSetter Event="Loaded" Handler="TabItem_OnLoaded"/>
+            <EventSetter Event="MouseEnter" Handler="TabItem_OnMouseEnterOrLeave" />
+            <EventSetter Event="MouseLeave" Handler="TabItem_OnMouseEnterOrLeave" />
+        </Style>
+
+        <!-- ========================= -->
+        <Style TargetType="{x:Type local:MwiBar}">
+            <Setter Property="UseLayoutRounding" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:MwiBar}">
+                        <Grid ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
+                            <Border Grid.Column="0" Grid.Row="0" Padding="0 2 0 2">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ScrollViewer Grid.Column="0" x:Name="PART_ScrollBar" IsTabStop="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" 
+                                                  BorderThickness="0" Padding="0,0,0,0" Margin="0,0,0,-1" ScrollChanged="TabScrollViewer_OnScrollChanged">
+                                        <TabPanel IsItemsHost="true" Margin="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+    </TabControl.Resources>
 </TabControl>
