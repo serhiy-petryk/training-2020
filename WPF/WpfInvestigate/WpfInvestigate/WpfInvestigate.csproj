@@ -70,7 +70,6 @@
     <Compile Include="Common\BindingProxy.cs" />
     <Compile Include="Common\ColorConverters.cs" />
     <Compile Include="Common\ColorSpaces.cs" />
-    <Compile Include="Common\ColorUtils.cs" />
     <Compile Include="Common\DataTypeMetadata.cs" />
     <Compile Include="Common\INotifyPropertyChangedAbstract.cs" />
     <Compile Include="Common\RelayCommand.cs" />
