@@ -42,11 +42,11 @@
             </Grid.LayoutTransform>
             <controls:MwiContainer x:Name="MwiContainer" Background="Beige">
                 <controls:MwiChild Position="50 50" Title="Title" EdgeThickness="12" Height="150">
-                    <ContentControl Content="Mwi Child Test" IsTabStop="False"/>
+                    <ContentControl Content="Mwi Child Test"/>
                 </controls:MwiChild>
 
                 <controls:MwiChild Position="100 100">
-                    <ContentControl Content="object Content" IsTabStop="False"/>
+                    <ContentControl Content="object Content"/>
                 </controls:MwiChild>
 
                 <controls:MwiChild Position="200 200" Height="150" EdgeThickness="15">

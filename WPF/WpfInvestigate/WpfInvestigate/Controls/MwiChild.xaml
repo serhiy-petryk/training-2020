@@ -9,8 +9,8 @@
              xmlns:effects="clr-namespace:WpfInvestigate.Effects"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Focusable="True"
-             KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.ControlTabNavigation="Once" KeyboardNavigation.DirectionalNavigation="Once"
+             Focusable="True" IsTabStop="True"
+             KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.ControlTabNavigation="None" KeyboardNavigation.DirectionalNavigation="Continue"
              KeyboardNavigation.IsTabStop="True">
 
     <controls:ResizingControl.Resources>
