@@ -52,6 +52,9 @@ namespace WpfInvestigate.Controls
 
             IsActive = true;
 
+            if (WindowState == WindowState.Minimized || (IsWindowed && ((Window)Parent).WindowState == WindowState.Minimized))
+                ToggleMinimize(null);
+
             if (Window.GetWindow(this) is Window wnd && !wnd.IsFocused)
                 wnd.Focus();
 

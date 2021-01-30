@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
@@ -46,7 +48,7 @@ namespace WpfInvestigate.Controls
 
             await SetRectangleWithAnimation(to, previousWindowState == WindowState.Minimized ? 0 : 1, WindowState == WindowState.Minimized ? 0 : 1);
 
-            /*if (WindowState == WindowState.Minimized)
+            if (WindowState == WindowState.Minimized)
             {
                 Visibility = Visibility.Collapsed;
                 if (MwiContainer.ActiveMwiChild == this)
@@ -55,10 +57,9 @@ namespace WpfInvestigate.Controls
                         ? MwiContainer.InternalWindows.Where(w => w.WindowState != WindowState.Minimized)
                             .Aggregate((w1, w2) => Panel.GetZIndex(w1) > Panel.GetZIndex(w2) ? w1 : w2)
                         : null;
-                    if (newMwiChild != null)
-                        MwiContainer.ActiveMwiChild = newMwiChild;
+                    newMwiChild?.Activate();
                 }
-            }*/
+            }
         }
 
 

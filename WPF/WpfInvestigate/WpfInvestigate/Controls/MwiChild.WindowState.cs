@@ -112,11 +112,10 @@ namespace WpfInvestigate.Controls
             void OnWindowDeactivated(object sender, EventArgs e) => IsActive = false;
         }
 
-        public void RestoreExternalWindowRect(Size? newSize = null)
+        private void RestoreExternalWindowRect(Size? newSize = null)
         {
             var window = (Window)Parent;
-            if (window == null)
-                return;
+            if (window == null) return;
 
             if (newSize.HasValue)
                 _lastNormalSize = newSize.Value;
