@@ -37,6 +37,11 @@ namespace WpfInvestigate.Controls
         private static bool _isActivating = false;
         public override void Activate()
         {
+            Activate(true);
+        }
+
+        public void Activate(bool restoreMinimizedSize)
+        {
             if (_isActivating) return;
             _isActivating = true;
 
@@ -52,14 +57,14 @@ namespace WpfInvestigate.Controls
 
             IsActive = true;
 
-            if (WindowState == WindowState.Minimized || (IsWindowed && ((Window)Parent).WindowState == WindowState.Minimized))
+            if (restoreMinimizedSize && WindowState == WindowState.Minimized || (IsWindowed && ((Window)Parent).WindowState == WindowState.Minimized))
                 ToggleMinimize(null);
 
             if (Window.GetWindow(this) is Window wnd && !wnd.IsFocused)
                 wnd.Focus();
 
             _isActivating = false;
-            
+
             OnPropertiesChanged(nameof(MwiContainer.ActiveMwiChild), nameof(MwiContainer.ScrollBarKind));
             BringIntoView();
         }

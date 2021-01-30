@@ -37,24 +37,10 @@ namespace WpfInvestigate.Controls
                         OnMwiChildLoaded(mwiChild, null);
                     else
                         mwiChild.Loaded += OnMwiChildLoaded;
+                    mwiChild.Closed += OnMwiChildClosed;
 
                     MwiPanel.Children.Add(mwiChild);
-                    mwiChild.Closed += OnMwiChildClosed;
                     mwiChild.Activate();
-
-                    /*SetMwiContainer(mwiChild, this);
-
-                    if (ActiveMwiChild?.WindowState == WindowState.Maximized && mwiChild.Resizable)
-                        mwiChild.Loaded += (s, a) => mwiChild.WindowState = WindowState.Maximized;
-
-                    if (mwiChild.ActualPosition.X < 0 || mwiChild.ActualPosition.Y < 0)
-                        mwiChild.Position = new Point(_windowOffset, _windowOffset);
-                    _windowOffset += WINDOW_OFFSET_STEP;
-                    if ((_windowOffset + mwiChild.Width > ActualWidth) || (_windowOffset + mwiChild.Height > ActualHeight))
-                        _windowOffset = 0;
-
-                    MwiCanvas.Children.Add(mwiChild);
-                    ActiveMwiChild = mwiChild;*/
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
@@ -65,7 +51,7 @@ namespace WpfInvestigate.Controls
                     MwiPanel.Children.Remove(oldChild);
                     // ActiveMwiChild = oldActiveMwiChild ?? GetTopChild();*/
                     if (GetTopChild() is MwiChild newChild)
-                        newChild.Activate();
+                        newChild.Activate(false);
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
