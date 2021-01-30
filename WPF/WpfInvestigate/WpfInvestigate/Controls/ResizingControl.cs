@@ -60,10 +60,14 @@ namespace WpfInvestigate.Controls
 
             if (newContent is FrameworkElement m_newContent)
             {
-                SetBinding(MinWidthProperty, new Binding("MinWidth") { Source = m_newContent });
-                SetBinding(MaxWidthProperty, new Binding("MaxWidth") { Source = m_newContent });
-                SetBinding(MinHeightProperty, new Binding("MinHeight") { Source = m_newContent });
-                SetBinding(MaxHeightProperty, new Binding("MaxHeight") { Source = m_newContent });
+                if (!Tips.AreEqual(0, m_newContent.MinWidth))
+                    SetBinding(MinWidthProperty, new Binding("MinWidth") { Source = m_newContent });
+                if (!double.IsInfinity(m_newContent.MaxWidth))
+                    SetBinding(MaxWidthProperty, new Binding("MaxWidth") { Source = m_newContent });
+                if (!Tips.AreEqual(0, m_newContent.MinHeight))
+                    SetBinding(MinHeightProperty, new Binding("MinHeight") { Source = m_newContent });
+                if (!double.IsInfinity(m_newContent.MaxHeight))
+                    SetBinding(MaxHeightProperty, new Binding("MaxHeight") { Source = m_newContent });
 
                 ControlHelper.SetFocus(m_newContent);
 
