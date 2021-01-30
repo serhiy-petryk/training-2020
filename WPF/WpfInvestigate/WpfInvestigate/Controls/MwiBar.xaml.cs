@@ -71,33 +71,8 @@ namespace WpfInvestigate.Controls
                 Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
                     new Action(() => AnimateTabButton((TabItem)ItemContainerGenerator.ContainerFromItem(a1))));
         }
-        private void AnimateTabButton(TabItem tabItem)
-        {
-            if (tabItem == null) // For VS designer
-                return;
 
-            LinearGradientBrush newBrush;
-            var dc = tabItem.DataContext as MwiChild;
-            if (dc.IsSelected)
-                newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.Selected.BackgroundBrush");
-            else if (tabItem.IsMouseOver)
-                newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.MouseOver.BackgroundBrush");
-            else
-                newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.BackgroundBrush");
-
-            tabItem.Background = AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background);
-        }
-
-
-        #region ===========  INotifyPropertyChanged  ==============
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertiesChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
-
+        #region ==============  Tab item  ==============
         private async void TabItem_OnLoaded(object sender, RoutedEventArgs e)
         {
             await ((TabItem)sender).BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
@@ -105,6 +80,7 @@ namespace WpfInvestigate.Controls
 
         private void TabItem_OnMouseEnterOrLeave(object sender, MouseEventArgs e)
         {
+            AnimateTabButton((TabItem)sender);
         }
 
         private void TabItem_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -123,5 +99,31 @@ namespace WpfInvestigate.Controls
             toolTip.Tag = Tips.IsTextTrimmed(tabTextBlock) ? "1" : null;
         }
 
+        private void AnimateTabButton(TabItem tabItem)
+        {
+            if (tabItem == null) // For VS designer
+                return;
+
+            LinearGradientBrush newBrush;
+            var dc = tabItem.DataContext as MwiChild;
+            if (dc.IsSelected)
+                newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.Selected.BackgroundBrush");
+            else if (tabItem.IsMouseOver)
+                newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.MouseOver.BackgroundBrush");
+            else
+                newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.BackgroundBrush");
+
+            tabItem.Background = AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background);
+        }
+        #endregion
+
+        #region ===========  INotifyPropertyChanged  ==============
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 }

@@ -53,11 +53,6 @@ namespace MyWpfMwi.Mwi
             }
         }
 
-        private void TabItem_OnMouseEnterOrLeave(object sender, MouseEventArgs e)
-        {
-            AnimateTabButton((TabItem)sender);
-        }
-
         private void WindowsBar_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var model = base.SelectedItem;
@@ -76,6 +71,12 @@ namespace MyWpfMwi.Mwi
             foreach (var a1 in e.AddedItems)
                 Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
                     new Action(() => AnimateTabButton((TabItem)ItemContainerGenerator.ContainerFromItem(a1))));
+        }
+
+        #region ==============  Tab item  ==============
+        private void TabItem_OnMouseEnterOrLeave(object sender, MouseEventArgs e)
+        {
+            AnimateTabButton((TabItem)sender);
         }
 
         private void TabItem_OnToolTipOpening(object sender, ToolTipEventArgs e)
@@ -128,6 +129,7 @@ namespace MyWpfMwi.Mwi
 
             tabItem.Background = AnimationHelper.RunLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background);
         }
+        #endregion
 
         //============================================================
         //===========  INotifyPropertyChanged  =======================
