@@ -85,6 +85,17 @@ namespace WpfInvestigate.Controls
 
         private void TabItem_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            var mwiChild = ((FrameworkElement)sender).DataContext as MwiChild;
+            var element = (FrameworkElement)Mouse.DirectlyOver;
+            while (element != null && element.Name != "DeleteTabButton")
+                element = VisualTreeHelper.GetParent(element) as FrameworkElement;
+
+            if (element != null) // delete button was pressed
+                mwiChild.CmdClose.Execute(null);
+            else
+                mwiChild.Activate();
+
+            e.Handled = true;
         }
 
         private void TabItem_OnToolTipOpening(object sender, ToolTipEventArgs e)
