@@ -14,8 +14,6 @@
             <Setter Property="Background" Value="{DynamicResource Mwi.WindowTab.Thumbnail.BackgroundBrush}"/>
             <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
-            <!--<Setter Property="FontFamily" Value="{Binding Source={x:Static viewModels:AppViewModel.Instance}, Path=DefaultFontFamily}"/>-->
-            <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <ScaleTransform ScaleX="0.7" CenterX="90" />
@@ -105,7 +103,5 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-
     </TabControl.Resources>
 </TabControl>
