@@ -28,7 +28,7 @@
                 <EventTrigger RoutedEvent="ToolTip.Opened">
                     <BeginStoryboard HandoffBehavior="Compose">
                         <Storyboard TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" RenderOptions.BitmapScalingMode="HighQuality" >
-                            <DoubleAnimation From="0.7" To="1" Duration="0:0:1" />
+                            <DoubleAnimation From="0.7" To="1" Duration="0:0:0.1" />
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
