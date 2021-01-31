@@ -128,6 +128,7 @@ namespace WpfInvestigate.Controls
 
         private ImageSource CreateThumbnail()
         {
+            // Execute before minimized, collapsed or mouse over on tab button
             if ((WindowState != WindowState.Minimized || _thumbnailCache == null) && Visibility == Visibility.Visible)
             {
                 var bitmap = new RenderTargetBitmap(Convert.ToInt32(ActualWidth), Convert.ToInt32(ActualHeight), 96, 96, PixelFormats.Default);
