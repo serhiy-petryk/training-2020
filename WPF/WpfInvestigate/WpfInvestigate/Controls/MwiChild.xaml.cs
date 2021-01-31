@@ -71,7 +71,7 @@ namespace WpfInvestigate.Controls
 
         public void Activate(bool restoreMinimizedSize)
         {
-            if (_isActivating) return;
+            if (_isActivating || MwiContainer == null) return;
             _isActivating = true;
 
             base.Activate();

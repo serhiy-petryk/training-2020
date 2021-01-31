@@ -280,13 +280,12 @@ namespace WpfInvestigate.Helpers
 
         public static void SetFocus(UIElement element)
         {
-            element?.Dispatcher.BeginInvoke(DispatcherPriority.Background,
-                new Action(() =>
-                {
-                    element.Focus();
-                    element.Dispatcher.BeginInvoke(DispatcherPriority.Background,
-                        new Action(() => element.MoveFocus(new TraversalRequest(FocusNavigationDirection.First))));
-                }));
+            element?.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+            {
+                element.Focus();
+                element.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                    new Action(() => element.MoveFocus(new TraversalRequest(FocusNavigationDirection.First))));
+            }));
         }
         #endregion
     }

@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
-using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
@@ -69,8 +68,6 @@ namespace WpfInvestigate.Controls
                 if (!double.IsInfinity(m_newContent.MaxHeight))
                     SetBinding(MaxHeightProperty, new Binding("MaxHeight") { Source = m_newContent });
 
-                ControlHelper.SetFocus(m_newContent);
-
                 if (m_newContent.IsLoaded)
                     OnContentLoaded(m_newContent, null);
                 else
@@ -78,6 +75,8 @@ namespace WpfInvestigate.Controls
 
                 dpdWidth.AddValueChanged(m_newContent, OnWidthChanged);
                 dpdHeight.AddValueChanged(m_newContent, OnHeightChanged);
+
+                Activate();
             }
 
             void OnWidthChanged(object sender, EventArgs e)

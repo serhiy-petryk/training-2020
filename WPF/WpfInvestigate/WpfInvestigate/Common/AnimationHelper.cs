@@ -38,7 +38,7 @@ namespace WpfInvestigate.Common
 
             var animation = new ObjectAnimationUsingKeyFrames();
             animation.KeyFrames.Add(new DiscreteObjectKeyFrame { Value = value, KeyTime = AnimationDuration.TimeSpan });
-            return element.BeginAnimationAsync(property, animation);
+            return element.BeginAnimationAsync(property, animation, value);
         }
 
         public static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, object from, object to, Duration? duration = null)
@@ -56,23 +56,27 @@ namespace WpfInvestigate.Common
             if (pType == typeof(double)) animation = new DoubleAnimation((double)from, (double)to, d);
             else if (pType == typeof(Point)) animation = new PointAnimation((Point)from, (Point)to, d);
             else if (pType == typeof(Thickness)) animation = new ThicknessAnimation((Thickness)from, (Thickness)to, d);
+            else if (pType == typeof(Rect)) animation = new RectAnimation((Rect)from, (Rect)to, d);
             else if (pType == typeof(Color)) animation = new ColorAnimation((Color)from, (Color)to, d);
             if (animation == null)
                 throw new NotImplementedException();
 
             animation.FillBehavior = FillBehavior.Stop;
-            ((DependencyObject)element).SetValue(property, to);
-            return element.BeginAnimationAsync(property, animation);
+            return element.BeginAnimationAsync(property, animation, to);
         }
         #endregion
 
         #region ================  Animation as Task  ================
-        private static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, AnimationTimeline animation)
+        private static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, AnimationTimeline animation, object to)
         {
             // state in constructor == animation cancel action
             // var tcs = new TaskCompletionSource<bool>(new Action(() => element.BeginAnimation(property, null)));
             var tcs = new TaskCompletionSource<bool>();
-            animation.Completed += (s, e) => tcs.SetResult(true);
+            animation.Completed += (s, e) =>
+            {
+                ((DependencyObject) element).SetValue(property, to);
+                tcs.SetResult(true);
+            };
             animation.Freeze(); // one time animation
             element.BeginAnimation(property, animation);
             return tcs.Task;
