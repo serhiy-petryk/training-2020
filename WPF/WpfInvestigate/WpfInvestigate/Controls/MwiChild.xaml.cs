@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -91,9 +92,14 @@ namespace WpfInvestigate.Controls
         {
             await AnimateHide();
 
-            if (Content is IDisposable)
-                ((IDisposable)Content).Dispose();
+            if (Content is IDisposable) ((IDisposable)Content).Dispose();
+            if (!IsWindowed && WindowState == WindowState.Maximized)
+            {
+                BindingOperations.ClearBinding(this, WidthProperty);
+                BindingOperations.ClearBinding(this, HeightProperty);
+            }
             if (IsWindowed) ((Window)Parent).Close();
+
             Closed?.Invoke(this, EventArgs.Empty);
         }
 

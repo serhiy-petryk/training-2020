@@ -77,9 +77,7 @@ namespace WpfInvestigate.Controls
                 var wnd = new Window
                 {
                     Style = (Style)FindResource("HeadlessWindow"),
-                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                    Background = Brushes.LightBlue,
-                    Opacity = 1
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen
                 };
 
                 await AnimateHide();
