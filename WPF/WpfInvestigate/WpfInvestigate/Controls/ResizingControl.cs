@@ -184,7 +184,7 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #region ==========  Moving && resizing  =========
-        private void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
+        protected virtual void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
             var mousePosition = IsWindowed ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;
@@ -220,7 +220,7 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
+        protected virtual void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
             var mousePosition = IsWindowed ? PointToScreen(Mouse.GetPosition(this)) : Mouse.GetPosition(HostPanel);
             if (mousePosition.X < 0 || mousePosition.Y < 0) return;

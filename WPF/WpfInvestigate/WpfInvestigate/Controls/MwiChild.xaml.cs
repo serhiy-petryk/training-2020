@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -40,6 +41,22 @@ namespace WpfInvestigate.Controls
         public override void Activate()
         {
             Activate(true);
+        }
+
+        protected override void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                // SaveActualSize & SaveActualPosition doesn't work => ??? may be depend on animation
+                _lastNormalSize = new Size(ActualWidth * 0.8, ActualHeight * 0.8);
+                if (IsWindowed)
+                    _detachedPosition = new Point(0, 0);
+                else
+                    _attachedPosition = new Point(0, 0);
+                ToggleMaximize(null);
+            }
+
+            base.MoveThumb_OnDragDelta(sender, e);
         }
 
         public void Activate(bool restoreMinimizedSize)
