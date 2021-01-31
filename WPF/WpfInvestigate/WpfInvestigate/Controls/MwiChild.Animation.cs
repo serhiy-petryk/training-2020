@@ -41,7 +41,7 @@ namespace WpfInvestigate.Controls
                     to = new Rect(0, 0, container.ActualWidth, container.ActualHeight);
                 }
                 else*/
-                    to = new Rect(0, 0, MwiContainer.ActualWidth, MwiContainer.InnerHeight);
+                    to = new Rect(0, 0, HostPanel.ActualWidth, HostPanel.ActualHeight);
             }
             else
                 to = new Rect(ActualPosition.X, 0, ActualWidth, MinHeight);

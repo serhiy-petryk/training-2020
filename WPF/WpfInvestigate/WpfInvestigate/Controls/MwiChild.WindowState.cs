@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WpfInvestigate.Common;
@@ -61,17 +64,9 @@ namespace WpfInvestigate.Controls
                 wnd.Close();
                 wnd.Content = null;
                 MwiContainer.MwiPanel.Children.Add(this);
+
                 Activate();
-
-                if (WindowState == WindowState.Maximized)
-                {
-                    Position = new Point(0, 0);
-                    Width = MwiContainer.ActualWidth;
-                    Height = MwiContainer.ActualHeight;
-                }
-                else
-                    Position = _attachedPosition;
-
+                Position = WindowState == WindowState.Maximized ? new Point(0, 0) : _attachedPosition;
                 OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
                 OnPropertiesChanged(nameof(IsWindowed));
 
@@ -96,13 +91,13 @@ namespace WpfInvestigate.Controls
                 wnd.Activated += OnWindowActivated;
                 wnd.Deactivated += OnWindowDeactivated;
                 wnd.Show();
+                Activate();
 
                 // Refresh ScrollBar scrolling
                 MwiContainer.ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
                 MwiContainer.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
 
-                OnWindowStateValueChanged(this,
-                    new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
+                OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
                 OnPropertiesChanged(nameof(IsWindowed));
 
                 await this.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
@@ -147,6 +142,14 @@ namespace WpfInvestigate.Controls
             ((MwiChild)sender).WindowStateValueChanged((WindowState)e.NewValue, (WindowState)e.OldValue);
         private async void WindowStateValueChanged(WindowState newWindowState, WindowState previousWindowState)
         {
+            Debug.Print($"WindowStateValueChanged. Old: {previousWindowState}, new: {newWindowState}");
+
+            if (previousWindowState == WindowState.Maximized)
+            {
+                BindingOperations.ClearBinding(this, WidthProperty);
+                BindingOperations.ClearBinding(this, HeightProperty);
+            }
+
             var isDetachEvent = previousWindowState == newWindowState;
 
             if (previousWindowState == WindowState.Normal && !isDetachEvent)
@@ -202,6 +205,12 @@ namespace WpfInvestigate.Controls
 
             if (!IsWindowed && !isDetachEvent)
                 await AnimateWindowState(previousWindowState);
+
+            if (!IsWindowed && newWindowState == WindowState.Maximized)
+            {
+                SetBinding(WidthProperty, new Binding("ActualWidth") { Source = HostPanel });
+                SetBinding(HeightProperty, new Binding("ActualHeight") { Source = HostPanel });
+            }
 
             /* todo: container if (!IsWindowed || isDetachEvent)
             {

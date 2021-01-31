@@ -34,7 +34,7 @@ namespace WpfInvestigate.Controls
         private static int ZIndexCount = 1;
         public bool LimitPositionToPanelBounds { get; set; } = false;
         public bool IsWindowed => Parent is Window;
-        private Grid HostPanel => VisualTreeHelper.GetParent(this) as Grid;
+        protected Grid HostPanel => VisualTreeHelper.GetParent(this) as Grid;
 
         protected override void OnContentChanged(object oldContent, object newContent)
         {
