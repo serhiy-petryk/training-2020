@@ -88,7 +88,8 @@ namespace WpfInvestigate.Controls
         }
 
         #endregion
-        private async void Close(object obj)
+
+        public async void Close(object obj)
         {
             await AnimateHide();
 
@@ -99,6 +100,7 @@ namespace WpfInvestigate.Controls
                 BindingOperations.ClearBinding(this, HeightProperty);
             }
             if (IsWindowed) ((Window)Parent).Close();
+            MwiContainer.Children.Remove(this);
 
             Closed?.Invoke(this, EventArgs.Empty);
         }

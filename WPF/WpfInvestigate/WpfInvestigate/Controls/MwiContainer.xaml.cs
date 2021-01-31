@@ -37,7 +37,6 @@ namespace WpfInvestigate.Controls
                         OnMwiChildLoaded(mwiChild, null);
                     else
                         mwiChild.Loaded += OnMwiChildLoaded;
-                    mwiChild.Closed += OnMwiChildClosed;
 
                     MwiPanel.Children.Add(mwiChild);
                     mwiChild.Activate();
@@ -45,11 +44,8 @@ namespace WpfInvestigate.Controls
 
                 case NotifyCollectionChangedAction.Remove:
                     var oldChild = (MwiChild)e.OldItems[0];
-                    // var oldActiveMwiChild = ActiveMwiChild == oldChild ? null : ActiveMwiChild;
                     // ActiveMwiChild = null; // must be null because sometimes there is an error on WindowTabs.Remove (select window tab => press delete button on active MwiChild): Index was outside the bounds of the array
-
                     MwiPanel.Children.Remove(oldChild);
-                    // ActiveMwiChild = oldActiveMwiChild ?? GetTopChild();*/
                     if (GetTopChild() is MwiChild newChild)
                         newChild.Activate(false);
                     break;
@@ -58,13 +54,6 @@ namespace WpfInvestigate.Controls
                     /*while (Children.Count > 0)
                         Children[0].Close();*/
                     break;
-            }
-
-            void OnMwiChildClosed(object o, EventArgs args)
-            {
-                var mwiChild = (MwiChild)o;
-                mwiChild.Closed -= OnMwiChildClosed;
-                Children.Remove(mwiChild);
             }
 
             void OnMwiChildLoaded(object o, RoutedEventArgs args)
