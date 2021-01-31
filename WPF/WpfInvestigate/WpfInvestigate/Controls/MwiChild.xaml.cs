@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -38,41 +37,36 @@ namespace WpfInvestigate.Controls
         #region =============  Override methods  ====================
 
         private static bool _isActivating = false;
-        public override void Activate()
-        {
-            Activate(true);
-        }
+
+        public override void Activate() => Activate(true);
 
         protected override void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            if (WindowState == WindowState.Maximized)
-            {
-                // SaveActualSize & SaveActualPosition doesn't work => ??? may be depend on animation
-                _lastNormalSize = new Size(ActualWidth * 0.8, ActualHeight * 0.8);
-                if (IsWindowed)
-                    _detachedPosition = new Point(0, 0);
-                else
-                    _attachedPosition = new Point(0, 0);
-                ToggleMaximize(null);
-            }
-
+            TransitionFromMaximizedToNormalWindowState(true);
             base.MoveThumb_OnDragDelta(sender, e);
         }
 
         protected override void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
+            TransitionFromMaximizedToNormalWindowState(false);
+            base.ResizeThumb_OnDragDelta(sender, e);
+        }
+
+        private void TransitionFromMaximizedToNormalWindowState(bool isMoving)
+        {
             if (WindowState == WindowState.Maximized)
             {
                 // SaveActualSize & SaveActualPosition doesn't work => ??? may be depend on animation
-                _lastNormalSize = new Size(ActualWidth - 1.0, ActualHeight - 1.0);
+                _lastNormalSize = isMoving
+                    ? new Size(ActualWidth * 0.9, ActualHeight * 0.9)
+                    : new Size(ActualWidth - 0.01, ActualHeight - 0.01);
+
                 if (IsWindowed)
                     _detachedPosition = new Point(0, 0);
                 else
                     _attachedPosition = new Point(0, 0);
                 ToggleMaximize(null);
             }
-
-            base.ResizeThumb_OnDragDelta(sender, e);
         }
 
         public void Activate(bool restoreMinimizedSize)
@@ -124,15 +118,7 @@ namespace WpfInvestigate.Controls
 
         private void SystemMenuButton_OnChecked(object sender, RoutedEventArgs e) => Helpers.DropDownButtonHelper.OpenDropDownMenu(sender);
 
-        private void MovingThumb_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DialogMessage.ShowDialog("need ToDo!");
-        }
-
-        private void Button_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            DialogMessage.ShowDialog("Button_PreviewMouseLeftButtonUp. need ToDo!");
-        }
+        private void MovingThumb_OnMouseDoubleClick(object sender, MouseButtonEventArgs e) => ToggleMaximize(null);
 
         #region ==============  Thumbnail  ===================
         public void RefreshThumbnail() => OnPropertiesChanged(nameof(Thumbnail), nameof(ThumbnailWidth), nameof(ThumbnailHeight));
