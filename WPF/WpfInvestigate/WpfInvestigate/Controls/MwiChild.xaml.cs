@@ -49,6 +49,9 @@ namespace WpfInvestigate.Controls
 
             base.Activate();
 
+            if (!IsActive)
+                MwiContainer.InvalidateLayout();
+
             if (!IsActive && MwiContainer != null)
             {
                 MwiContainer.Children.Where(c => c != this && c.IsActive).ToList().ForEach(c => c.IsActive = false);
@@ -61,29 +64,10 @@ namespace WpfInvestigate.Controls
 
             if (restoreMinimizedSize && (WindowState == WindowState.Minimized || (IsWindowed && ((Window)Parent).WindowState == WindowState.Minimized)))
                 ToggleMinimize(null);
-
-            /*var maximizedFlag = false;
-            foreach (var mwiChild in MwiContainer?.InternalWindows.Where(w => w.WindowState != WindowState.Minimized).OrderByDescending(Panel.GetZIndex))
-            {
-                if (maximizedFlag)
-                {
-                    if (mwiChild.Visibility != Visibility.Collapsed)
-                        mwiChild.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    if (mwiChild.Visibility != Visibility.Visible)
-                        mwiChild.Visibility = Visibility.Visible;
-                    maximizedFlag = mwiChild.WindowState == WindowState.Maximized;
-                }
-            }*/
-
             if (Window.GetWindow(this) is Window wnd && !wnd.IsFocused)
                 wnd.Focus();
 
             _isActivating = false;
-
-            // OnPropertiesChanged(nameof(MwiContainer.ActiveMwiChild), nameof(MwiContainer.ScrollBarKind));
             BringIntoView();
         }
 

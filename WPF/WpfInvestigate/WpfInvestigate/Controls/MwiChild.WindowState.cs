@@ -210,6 +210,8 @@ namespace WpfInvestigate.Controls
                 SetBinding(HeightProperty, new Binding("ActualHeight") { Source = HostPanel });
             }
 
+            MwiContainer.InvalidateLayout();
+
             /* todo: container if (!IsWindowed || isDetachEvent)
             {
                 Container?.InvalidateSize();

@@ -70,6 +70,23 @@ namespace WpfInvestigate.Controls
             }
         }
 
+        internal void InvalidateLayout()
+        {
+            var maximizedFlag = false;
+            foreach (var mwiChild in InternalWindows.Where(w => w.WindowState != WindowState.Minimized).OrderByDescending(Panel.GetZIndex))
+            {
+                if (maximizedFlag)
+                {
+                    if (mwiChild.Visibility != Visibility.Collapsed) mwiChild.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    if (mwiChild.Visibility != Visibility.Visible) mwiChild.Visibility = Visibility.Visible;
+                    maximizedFlag = mwiChild.WindowState == WindowState.Maximized;
+                }
+            }
+        }
+
         #region ============  Override  ====================
         public override void OnApplyTemplate()
         {
@@ -112,8 +129,7 @@ namespace WpfInvestigate.Controls
             get => _activeMwiChild;
             set
             {
-                if (!Equals(_activeMwiChild, value))
-                    _activeMwiChild = value;
+                if (!Equals(_activeMwiChild, value)) _activeMwiChild = value;
                 OnPropertiesChanged(nameof(ActiveMwiChild), nameof(ScrollBarKind));
             }
         }
