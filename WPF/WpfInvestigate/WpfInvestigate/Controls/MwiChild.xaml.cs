@@ -59,6 +59,22 @@ namespace WpfInvestigate.Controls
             base.MoveThumb_OnDragDelta(sender, e);
         }
 
+        protected override void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                // SaveActualSize & SaveActualPosition doesn't work => ??? may be depend on animation
+                _lastNormalSize = new Size(ActualWidth - 1.0, ActualHeight - 1.0);
+                if (IsWindowed)
+                    _detachedPosition = new Point(0, 0);
+                else
+                    _attachedPosition = new Point(0, 0);
+                ToggleMaximize(null);
+            }
+
+            base.ResizeThumb_OnDragDelta(sender, e);
+        }
+
         public void Activate(bool restoreMinimizedSize)
         {
             if (_isActivating) return;
