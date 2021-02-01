@@ -16,6 +16,16 @@ namespace WpfInvestigate.Controls
     /// </summary>
     public partial class MwiChild
     {
+        [Flags]
+        public enum Buttons
+        {
+            None = 0,
+            Close = 1,
+            Minimize = 2,
+            Maximize = 4,
+            Detach = 8
+        }
+
         private static int controlId = 0;
         internal int _controlId = controlId++;
         public MwiChild()
@@ -108,7 +118,7 @@ namespace WpfInvestigate.Controls
             var cmdCloseBinding = CommandBindings.OfType<CommandBinding>().FirstOrDefault(c => Equals(c.Command, ApplicationCommands.Close));
             if (cmdCloseBinding == null)
                 await AnimateHide();
-            else
+            else  // Dialog
                 ((RoutedUICommand)cmdCloseBinding.Command).Execute(null, this);
 
             if (Content is IDisposable) ((IDisposable)Content).Dispose();
@@ -289,6 +299,17 @@ namespace WpfInvestigate.Controls
         {
             get => (FrameworkElement)GetValue(StatusBarProperty);
             set => SetValue(StatusBarProperty, value);
+        }
+        //==============================
+        public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons", typeof(Buttons), typeof(MwiChild), new FrameworkPropertyMetadata(null, OnVisibleButtonsChanged));
+        public Buttons VisibleButtons
+        {
+            get => (Buttons)GetValue(VisibleButtonsProperty);
+            set => SetValue(VisibleButtonsProperty, value);
+        }
+        private static void OnVisibleButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //Todo:
         }
         #endregion
     }
