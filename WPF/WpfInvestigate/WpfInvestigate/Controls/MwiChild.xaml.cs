@@ -15,7 +15,7 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for MwiChild.xaml
     /// </summary>
-    public partial class MwiChild: INotifyPropertyChanged
+    public partial class MwiChild
     {
         private static int controlId = 0;
         internal int _controlId = controlId++;
@@ -288,16 +288,5 @@ namespace WpfInvestigate.Controls
             set => SetValue(StatusBarProperty, value);
         }
         #endregion
-
-        #region ============  INotifyPropertyChanged  ================
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertiesChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
-
     }
 }
