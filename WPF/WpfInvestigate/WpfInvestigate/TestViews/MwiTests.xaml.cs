@@ -122,10 +122,10 @@ namespace WpfInvestigate.TestViews
 
         public RelayCommand CmdShowMessage { get; } = new RelayCommand(o =>
         {
-            /*var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
-                "Caption of Message block", MessageBlock.MessageBlockIcon.Warning, new[] { "OK", "Cancel" });
-            if (aa != null)
-                MessageBlock.Show($"You pressed '{aa}' button", null, MessageBlock.MessageBlockIcon.Information);*/
+            var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text",
+                "Caption of Message block", DialogMessage.DialogMessageIcon.Success, new[] { "OK", "Cancel" });
+
+            DialogMessage.ShowDialog($"You pressed '{aa ?? "X" }' button", null, DialogMessage.DialogMessageIcon.Info, new[] { "OK" });
         });
 
     }
