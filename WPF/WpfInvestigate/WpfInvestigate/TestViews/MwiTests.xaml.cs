@@ -103,18 +103,19 @@ namespace WpfInvestigate.TestViews
 
         public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
         {
-            // Tips.ShowMwiChildDialog(new TextBlock { Text = "Test dialog window", Background = new SolidColorBrush(Colors.Green) }, "Dialog");
-            var adorner = new DialogAdorner { CloseOnClickBackground = true };
+            var mwiContainer = ((MwiTests)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive))?.MwiContainer;
+            var adorner = new DialogAdorner(mwiContainer) {CloseOnClickBackground = true};
 
             var content = new MwiChild
             {
                 // AllowDetach = false, AllowMinimize = false,
-                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
-                Width = 250,
+                Content = new ResizableSample(),
+                Width = 350,
                 Height = 250,
                 LimitPositionToPanelBounds = true,
-                ToolTip = "Width/Height=250",
-                VisibleButtons = MwiChild.Buttons.Close| MwiChild.Buttons.Maximize
+                ToolTip = "Width/Height=350/250",
+                VisibleButtons = MwiChild.Buttons.Close| MwiChild.Buttons.Maximize,
+                Title="Dialog window"
             };
             adorner.ShowContentDialog(content);
         });
