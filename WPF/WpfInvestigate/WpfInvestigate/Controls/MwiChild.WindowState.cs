@@ -72,18 +72,13 @@ namespace WpfInvestigate.Controls
             }
             else
             {
-                var wnd = new Window
-                {
-                    Style = (Style) FindResource("HeadlessWindow"),
-                    WindowStartupLocation = WindowStartupLocation.CenterScreen
-                };
-
                 await AnimateHide();
+
                 Margin = new Thickness(0, 0, -1, -1);
                 MwiContainer.MwiPanel.Children.Remove(this);
-                wnd.Content = this;
-                RestoreExternalWindowRect();
 
+                var wnd = new Window {Style = (Style) FindResource("HeadlessWindow"), Content = this};
+                RestoreExternalWindowRect();
                 wnd.Activated += OnWindowActivated;
                 wnd.Deactivated += OnWindowDeactivated;
                 wnd.Show();
