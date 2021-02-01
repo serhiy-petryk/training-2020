@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace WpfInvestigate.Samples
+﻿namespace WpfInvestigate.Samples
 {
     /// <summary>
     /// Interaction logic for MwiStatusBarSample.xaml
