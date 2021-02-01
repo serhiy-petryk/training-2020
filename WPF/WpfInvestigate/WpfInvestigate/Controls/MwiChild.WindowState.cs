@@ -100,32 +100,15 @@ namespace WpfInvestigate.Controls
 
         private void RestoreExternalWindowRect(Size? newSize = null)
         {
-            var window = (Window)Parent;
-            if (window == null) return;
+            if (!IsWindowed) return;
 
-            if (newSize.HasValue)
+            if (newSize.HasValue) // Restore from Settings
                 _lastNormalSize = newSize.Value;
 
-            Position = _detachedPosition; // new Point(window.Left, window.Top);
             var maximizedWindowRectangle = Tips.GetMaximizedWindowRectangle();
-
             _detachedPosition = new Point(
                 Math.Max(0, maximizedWindowRectangle.X + (maximizedWindowRectangle.Width - _lastNormalSize.Width) / 2),
                 Math.Max(0, maximizedWindowRectangle.Y + (maximizedWindowRectangle.Height - _lastNormalSize.Height) / 2));
-
-            if (WindowState == WindowState.Maximized)
-            {
-                window.Left = maximizedWindowRectangle.Left;
-                window.Top = maximizedWindowRectangle.Top;
-                Width = maximizedWindowRectangle.Width;
-                Height = maximizedWindowRectangle.Height;
-            }
-            else
-            {
-                Width = _lastNormalSize.Width;
-                Height = _lastNormalSize.Height;
-                Position = _detachedPosition;
-            }
         }
 
         #region ==============  OnWindowStateValueChanged  =================
@@ -152,7 +135,7 @@ namespace WpfInvestigate.Controls
                 {
                     Width = _lastNormalSize.Width;
                     Height = _lastNormalSize.Height;
-                    Position = new Point(_detachedPosition.X, _detachedPosition.Y);
+                    Position = _detachedPosition;
                 }
 
                 if (newWindowState != WindowState.Minimized && ((Window)Parent).WindowState != WindowState.Normal)
