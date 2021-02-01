@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Samples;
 
 namespace WpfInvestigate.Controls
 {
@@ -31,14 +32,21 @@ namespace WpfInvestigate.Controls
             InitializeComponent();
             DataContext = this;
 
-            if (Icon == null)
-                Icon = (ImageSource)FindResource("DefaultIcon");
+            if (Icon == null) Icon = (ImageSource) FindResource("DefaultIcon");
         }
 
         #region =============  Override methods  ====================
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            if (MwiContainer != null)
+                StatusBar = new MwiStatusBarSample();
+
+            AnimateShow();
+        }
 
         private static bool _isActivating = false;
-
         public override void Activate() => Activate(true);
 
         protected override void MoveThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
@@ -255,6 +263,14 @@ namespace WpfInvestigate.Controls
             get => (string)GetValue(TitleProperty);
             set => SetValue(TitleProperty, value);
         }
+        //==============================
+        public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content),
+            typeof(object), typeof(MwiChild), new UIPropertyMetadata(null));
+        public new object Content
+        {
+            get => (object)GetValue(ContentProperty);
+            set => SetValue(ContentProperty, value);
+        }
         //================================
         public static readonly DependencyProperty LeftHeaderPanelProperty = DependencyProperty.Register("LeftHeaderPanel", typeof(FrameworkElement), typeof(MwiChild), new FrameworkPropertyMetadata(null));
         public FrameworkElement LeftHeaderPanel
@@ -270,12 +286,11 @@ namespace WpfInvestigate.Controls
             set => SetValue(RightHeaderPanelProperty, value);
         }
         //==============================
-        public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content),
-            typeof(object), typeof(MwiChild), new UIPropertyMetadata(null));
-        public new object Content
+        public static readonly DependencyProperty StatusBarProperty = DependencyProperty.Register("StatusBar", typeof(FrameworkElement), typeof(MwiChild), new FrameworkPropertyMetadata(null));
+        public FrameworkElement StatusBar
         {
-            get => (object)GetValue(ContentProperty);
-            set => SetValue(ContentProperty, value);
+            get => (FrameworkElement)GetValue(StatusBarProperty);
+            set => SetValue(StatusBarProperty, value);
         }
         #endregion
 

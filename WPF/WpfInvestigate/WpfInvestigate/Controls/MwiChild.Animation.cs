@@ -9,7 +9,7 @@ namespace WpfInvestigate.Controls
 {
     public partial class MwiChild
     {
-        public Task SetRectangleWithAnimation(Rect to, double fromOpacity, double toOpacity)
+        public Task SetRectWithAnimation(Rect to, double fromOpacity, double toOpacity)
         {
             var tasks = new List<Task>
             {
@@ -22,8 +22,8 @@ namespace WpfInvestigate.Controls
             return Task.WhenAll(tasks.ToArray());
         }
 
-        private Task AnimateShow() => SetRectangleWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 0, 1);
-        private Task AnimateHide() => SetRectangleWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 1, 0);
+        private Task AnimateShow() => SetRectWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 0, 1);
+        private Task AnimateHide() => SetRectWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 1, 0);
 
         private async Task AnimateWindowState(WindowState previousWindowState)
         {
@@ -44,7 +44,7 @@ namespace WpfInvestigate.Controls
             else
                 to = new Rect(ActualPosition.X, 0, ActualWidth, MinHeight);
 
-            await SetRectangleWithAnimation(to, previousWindowState == WindowState.Minimized ? 0 : 1, WindowState == WindowState.Minimized ? 0 : 1);
+            await SetRectWithAnimation(to, previousWindowState == WindowState.Minimized ? 0 : 1, WindowState == WindowState.Minimized ? 0 : 1);
 
             if (WindowState == WindowState.Minimized)
             {

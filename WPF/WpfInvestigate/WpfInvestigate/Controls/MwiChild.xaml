@@ -124,7 +124,7 @@
                     <!-- Window content -->
                     <ContentControl Grid.Row="1" Content="{Binding Content}" />
                     <!-- Status bar -->
-                    <!--<ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>-->
+                    <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>
                 </Grid>
                 <!--<Border.Style>
                                                 <Style TargetType="Border">

@@ -135,6 +135,9 @@
     </Compile>
     <Compile Include="Effects\WatermarkEffect.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
+    <Compile Include="Samples\MwiStatusBarSample.xaml.cs">
+      <DependentUpon>MwiStatusBarSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Samples\ResizableContentPropertySample.xaml.cs">
       <DependentUpon>ResizableContentPropertySample.xaml</DependentUpon>
     </Compile>
@@ -255,6 +258,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Obsolete\ForObsolete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\MwiStatusBarSample.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
