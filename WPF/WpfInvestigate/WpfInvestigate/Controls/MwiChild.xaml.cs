@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
@@ -118,7 +119,13 @@ namespace WpfInvestigate.Controls
 
         private void SystemMenuButton_OnChecked(object sender, RoutedEventArgs e) => Helpers.DropDownButtonHelper.OpenDropDownMenu(sender);
 
-        private void MovingThumb_OnMouseDoubleClick(object sender, MouseButtonEventArgs e) => ToggleMaximize(null);
+        private void MovingThumb_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var element = (FrameworkElement)sender;
+            element.IsEnabled = false;
+            ToggleMaximize(null);
+            Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => element.IsEnabled = true)); // nexttick action to prevent MoveThumb_OnDragDelta event
+        }
 
         #region ==============  Thumbnail  ===================
         public void RefreshThumbnail() => OnPropertiesChanged(nameof(Thumbnail), nameof(ThumbnailWidth), nameof(ThumbnailHeight));
