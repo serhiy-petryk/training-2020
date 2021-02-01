@@ -181,9 +181,14 @@ namespace WpfInvestigate.Controls
 
         #region =============  Properties  =================
         public event EventHandler Closed;
-        public bool IsDialog => false;
         public MwiContainer MwiContainer { get; set; }
         public bool IsSelected => MwiContainer?.ActiveMwiChild == this;
+
+        //============  Buttons  ============
+        public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;
+        public bool IsMinimizeButtonVisible => (VisibleButtons & Buttons.Minimize) == Buttons.Minimize && Resizable;
+        public bool IsMaximizeButtonVisible => (VisibleButtons & Buttons.Maximize) == Buttons.Maximize && Resizable;
+        public bool IsDetachButtonVisible => (VisibleButtons & Buttons.Detach) == Buttons.Detach;
 
         //============  Commands  =============
         public RelayCommand CmdDetach { get; }
@@ -301,7 +306,9 @@ namespace WpfInvestigate.Controls
             set => SetValue(StatusBarProperty, value);
         }
         //==============================
-        public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons", typeof(Buttons), typeof(MwiChild), new FrameworkPropertyMetadata(null, OnVisibleButtonsChanged));
+        public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons",
+            typeof(Buttons), typeof(MwiChild), new FrameworkPropertyMetadata(
+                Buttons.Close | Buttons.Minimize | Buttons.Maximize | Buttons.Detach, OnVisibleButtonsChanged));
         public Buttons VisibleButtons
         {
             get => (Buttons)GetValue(VisibleButtonsProperty);
@@ -309,7 +316,8 @@ namespace WpfInvestigate.Controls
         }
         private static void OnVisibleButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            //Todo:
+            ((MwiChild) d).OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),
+                nameof(IsMinimizeButtonVisible), nameof(IsDetachButtonVisible));
         }
         #endregion
     }

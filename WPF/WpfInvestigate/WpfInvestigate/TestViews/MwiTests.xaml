@@ -75,7 +75,7 @@
                     <TextBlock Text="Not resizable" Background="Yellow"/>
                 </controls:MwiChild>
 
-                <controls:MwiChild Title="Window Using XAML" Position="20 222" Icon="/Resources/OriginalLogo.png" Height="350">
+                <controls:MwiChild Title="Window Using XAML" Position="20 222" Icon="/Resources/OriginalLogo.png" Height="350" AllowMinimize="False">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel>
                             <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdDisableDetach}">Disable Detach</Button>

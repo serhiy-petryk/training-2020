@@ -33,7 +33,8 @@ namespace WpfInvestigate.TestViews
                 Content = $"New MwiChild: {cnt++}",
                 Width = 300,
                 Height = 200,
-                StatusBar = new MwiStatusBarSample()
+                StatusBar = new MwiStatusBarSample(),
+                // AllowDetach = false, AllowMinimize = false
             });
         }
 
@@ -107,12 +108,13 @@ namespace WpfInvestigate.TestViews
 
             var content = new MwiChild
             {
-                AllowDetach = false, AllowMinimize = false,
+                // AllowDetach = false, AllowMinimize = false,
                 Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
                 Width = 250,
                 Height = 250,
                 LimitPositionToPanelBounds = true,
-                ToolTip = "Width/Height=250"
+                ToolTip = "Width/Height=250",
+                VisibleButtons = MwiChild.Buttons.Close| MwiChild.Buttons.Maximize
             };
             adorner.ShowContentDialog(content);
         });

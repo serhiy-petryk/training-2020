@@ -56,6 +56,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <Thumb Grid.Column="0" Grid.ColumnSpan="5" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"
@@ -94,20 +95,14 @@
                 <ContentPresenter Grid.Column="3" Content="{Binding RightHeaderPanel}"/>
 
                 <!-- Window buttons -->
-                <Grid Grid.Column="4" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:MwiChild}}, Path=IsDialog, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Focusable="False" Grid.Column="0" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}"
-                            Visibility="{Binding AllowDetach, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                    <Button Focusable="False" Grid.Column="1" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource MinimizeButtonStyle}"
-                            Visibility="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                </Grid>
-
-                <Button Focusable="False" Grid.Column="5" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
-                        Visibility="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                <Button Focusable="False" Grid.Column="6" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{StaticResource MwiCloseButtonStyle}" Width="20"/>
+                <Button Grid.Column="4" Focusable="False" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}"
+                        Visibility="{Binding IsDetachButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                <Button Grid.Column="5" Focusable="False" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource MinimizeButtonStyle}"
+                        Visibility="{Binding IsMinimizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                <Button Grid.Column="6" Focusable="False" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
+                        Visibility="{Binding IsMaximizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                <Button Grid.Column="7" Focusable="False" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{StaticResource MwiCloseButtonStyle}" Width="20"
+                        Visibility="{Binding IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
             </Grid>
 
             <!-- Content & Command/Status bars -->
