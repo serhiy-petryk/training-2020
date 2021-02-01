@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Samples;
 
@@ -13,6 +16,12 @@ namespace WpfInvestigate.TestViews
         public MwiTests()
         {
             InitializeComponent();
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            TestMwi = MwiContainer.Children.FirstOrDefault(w => w.Title == "Window Using XAML");
         }
 
         private int cnt = 0;
@@ -64,5 +73,45 @@ namespace WpfInvestigate.TestViews
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
         }
+
+        //============  Test window  =============
+        private static MwiChild TestMwi;
+        public RelayCommand CmdDisableDetach { get; } = new RelayCommand(o => TestMwi.AllowDetach = false);
+        public RelayCommand CmdEnableDetach { get; } = new RelayCommand(o => TestMwi.AllowDetach = true);
+        public RelayCommand CmdDisableMinimize { get; } = new RelayCommand(o => TestMwi.AllowMinimize = false);
+        public RelayCommand CmdEnableMinimize { get; } = new RelayCommand(o => TestMwi.AllowMinimize = true);
+        public RelayCommand CmdDisableMaximize { get; } = new RelayCommand(o => TestMwi.AllowMaximize = false);
+        public RelayCommand CmdEnableMaximize { get; } = new RelayCommand(o => TestMwi.AllowMaximize = true);
+        public RelayCommand CmdDisableClose { get; } = new RelayCommand(o => TestMwi.AllowClose = false);
+        public RelayCommand CmdEnableClose { get; } = new RelayCommand(o => TestMwi.AllowClose = true);
+        public RelayCommand CmdHideIcon { get; } = new RelayCommand(o =>
+        {
+            if (TestMwi.Icon != null)
+            {
+                TestMwi.Tag = TestMwi.Icon;
+                TestMwi.Icon = null;
+            }
+        });
+        public RelayCommand CmdShowIcon { get; } = new RelayCommand(o =>
+        {
+            if (TestMwi.Tag is ImageSource tag)
+                TestMwi.Icon = tag;
+        });
+
+        public RelayCommand CmdChangeTitle { get; } = new RelayCommand(o => TestMwi.Title = "New " + TestMwi.Title);
+
+        public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
+        {
+            // Tips.ShowMwiChildDialog(new TextBlock { Text = "Test dialog window", Background = new SolidColorBrush(Colors.Green) }, "Dialog");
+        });
+
+        public RelayCommand CmdShowMessage { get; } = new RelayCommand(o =>
+        {
+            /*var aa = MessageBlock.Show("Message text Message text Message text Message text Message text Message text ",
+                "Caption of Message block", MessageBlock.MessageBlockIcon.Warning, new[] { "OK", "Cancel" });
+            if (aa != null)
+                MessageBlock.Show($"You pressed '{aa}' button", null, MessageBlock.MessageBlockIcon.Information);*/
+        });
+
     }
 }
