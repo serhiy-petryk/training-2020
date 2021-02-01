@@ -89,7 +89,8 @@
                             <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdShowIcon}">Show Icon</Button>
                             <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdHideIcon}">Hide Icon</Button>
                             <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdChangeTitle}">Change Title</Button>
-                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdOpenDialog}">Open Dialog Window</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdOpenDialog}">Cmd: Open Dialog Window</Button>
+                            <Button Height="20" Click="OnOpenDialogClick" Content="Open Dialog Window"/>
                             <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdShowMessage}">Show Message</Button>
                         </StackPanel>
                     </ScrollViewer>

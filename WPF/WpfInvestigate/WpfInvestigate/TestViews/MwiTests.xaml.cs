@@ -124,5 +124,18 @@ namespace WpfInvestigate.TestViews
             DialogMessage.ShowDialog($"You pressed '{aa ?? "X" }' button", null, DialogMessage.DialogMessageIcon.Info, new[] { "OK" });
         });
 
+        private void OnOpenDialogClick(object sender, RoutedEventArgs e)
+        {
+            var adorner = new DialogAdorner(MwiContainer) { CloseOnClickBackground = true };
+
+            var content = new MwiChild
+            {
+                Content = new ResizableSample(),
+                LimitPositionToPanelBounds = true,
+                VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
+                Title = "Dialog window"
+            };
+            adorner.ShowContentDialog(content);
+        }
     }
 }
