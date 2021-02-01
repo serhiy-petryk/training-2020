@@ -108,12 +108,8 @@ namespace WpfInvestigate.TestViews
 
             var content = new MwiChild
             {
-                // AllowDetach = false, AllowMinimize = false,
                 Content = new ResizableSample(),
-                Width = 350,
-                Height = 250,
                 LimitPositionToPanelBounds = true,
-                ToolTip = "Width/Height=350/250",
                 VisibleButtons = MwiChild.Buttons.Close| MwiChild.Buttons.Maximize,
                 Title="Dialog window"
             };
