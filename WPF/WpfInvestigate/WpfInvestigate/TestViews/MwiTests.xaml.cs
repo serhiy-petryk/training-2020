@@ -137,5 +137,20 @@ namespace WpfInvestigate.TestViews
             };
             adorner.ShowContentDialog(content);
         }
+
+        private void AddDialog_OnClick(object sender, RoutedEventArgs e) => 
+            MwiContainer.AddDialog(new ResizableSample {HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top});
+
+        private void AddMwiDialog_OnClick(object sender, RoutedEventArgs e)
+        {
+            var content = new MwiChild
+            {
+                Content = new ResizableSample(),
+                LimitPositionToPanelBounds = true,
+                VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
+                Title = "Dialog window"
+            };
+            MwiContainer.AddDialog(content);
+        }
     }
 }

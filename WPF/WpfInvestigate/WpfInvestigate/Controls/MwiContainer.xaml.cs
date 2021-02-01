@@ -25,6 +25,12 @@ namespace WpfInvestigate.Controls
             Children.CollectionChanged += Children_OnCollectionChanged;
         }
 
+        public void AddDialog(FrameworkElement content)
+        {
+            var adorner = new DialogAdorner(this) { CloseOnClickBackground = true };
+            adorner.ShowContentDialog(content);
+        }
+
         private void Children_OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)

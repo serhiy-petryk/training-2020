@@ -124,6 +124,7 @@ namespace WpfInvestigate.Controls
 
             var left = Math.Round(Math.Max(0, (Child.ActualWidth - content.ActualWidth) / 2));
             var top = Math.Round(Math.Max(0, (Child.ActualHeight - content.ActualHeight) / 2));
+            content.Margin = new Thickness(left, 0, 0, 0);
             content.Visibility = Visibility.Visible;
             await content.BeginAnimationAsync(MarginProperty, new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0));
         }
