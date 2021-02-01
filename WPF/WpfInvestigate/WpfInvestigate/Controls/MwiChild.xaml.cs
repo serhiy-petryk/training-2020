@@ -58,7 +58,7 @@ namespace WpfInvestigate.Controls
             {
                 // SaveActualSize & SaveActualPosition doesn't work => ??? may be depend on animation
                 _lastNormalSize = isMoving
-                    ? new Size(ActualWidth * 0.9, ActualHeight * 0.9)
+                    ? new Size(Math.Round(ActualWidth * 0.9), Math.Round(ActualHeight * 0.9))
                     : new Size(ActualWidth - 0.01, ActualHeight - 0.01);
 
                 if (IsWindowed)

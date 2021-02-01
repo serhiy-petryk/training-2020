@@ -11,15 +11,13 @@ namespace WpfInvestigate.Controls
     {
         public Task SetRectangleWithAnimation(Rect to, double fromOpacity, double toOpacity)
         {
-            var tasks = new List<Task>();
-            if (!Tips.AreEqual(ActualPosition.X, to.X) || !Tips.AreEqual(ActualPosition.Y, to.Y))
-                tasks.Add(this.BeginAnimationAsync(PositionProperty, ActualPosition, new Point(to.X, to.Y)));
-            if (!Tips.AreEqual(ActualWidth, to.Width))
-                tasks.Add(this.BeginAnimationAsync(WidthProperty, ActualWidth, to.Width));
-            if (!Tips.AreEqual(ActualHeight, to.Height))
-                tasks.Add(this.BeginAnimationAsync(HeightProperty, ActualHeight, to.Height));
-            if (!Tips.AreEqual(fromOpacity, toOpacity))
-                tasks.Add(this.BeginAnimationAsync(OpacityProperty, fromOpacity, toOpacity));
+            var tasks = new List<Task>
+            {
+                this.BeginAnimationAsync(PositionProperty, ActualPosition, new Point(to.X, to.Y)),
+                this.BeginAnimationAsync(WidthProperty, ActualWidth, to.Width),
+                this.BeginAnimationAsync(HeightProperty, ActualHeight, to.Height),
+                this.BeginAnimationAsync(OpacityProperty, fromOpacity, toOpacity)
+            };
 
             return Task.WhenAll(tasks.ToArray());
         }

@@ -95,8 +95,7 @@ namespace WpfInvestigate.Obsolete
 
                     var oldColor = ((SolidColorBrush)child.BorderBrush).Color;
                     var newColor = ((SolidColorBrush) focusBrush).Color;
-                    if (oldColor != newColor)
-                        child.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, oldColor, newColor);
+                    child.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, oldColor, newColor);
                 }
                 else
                     child.BorderBrush = focusBrush.Clone();
@@ -115,8 +114,7 @@ namespace WpfInvestigate.Obsolete
                     if (border.BorderBrush is SolidColorBrush)
                     {
                         var oldColor = ((SolidColorBrush)border.BorderBrush).Color;
-                        if (oldColor != Colors.Transparent)
-                            border.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, oldColor, Colors.Transparent);
+                        border.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, oldColor, Colors.Transparent);
                     }
 
                     border.BeginAnimationAsync(Control.BorderThicknessProperty, border.BorderThickness, new Thickness());
