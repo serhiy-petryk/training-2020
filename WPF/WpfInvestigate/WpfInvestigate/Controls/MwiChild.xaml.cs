@@ -9,7 +9,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
-using WpfInvestigate.Samples;
 
 namespace WpfInvestigate.Controls
 {
@@ -39,10 +38,6 @@ namespace WpfInvestigate.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            if (MwiContainer != null)
-                StatusBar = new MwiStatusBarSample();
-
             AnimateShow();
         }
 

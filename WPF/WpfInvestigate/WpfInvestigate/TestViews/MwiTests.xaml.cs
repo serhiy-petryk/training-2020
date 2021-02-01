@@ -23,7 +23,8 @@ namespace WpfInvestigate.TestViews
                 Title = "Window Using Code",
                 Content = $"New MwiChild: {cnt++}",
                 Width = 300,
-                Height = 200
+                Height = 200,
+                StatusBar = new MwiStatusBarSample()
             });
         }
 
