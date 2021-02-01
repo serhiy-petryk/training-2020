@@ -103,6 +103,18 @@ namespace WpfInvestigate.TestViews
         public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
         {
             // Tips.ShowMwiChildDialog(new TextBlock { Text = "Test dialog window", Background = new SolidColorBrush(Colors.Green) }, "Dialog");
+            var adorner = new DialogAdorner { CloseOnClickBackground = true };
+
+            var content = new MwiChild
+            {
+                AllowDetach = false, AllowMinimize = false,
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Width = 250,
+                Height = 250,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=250"
+            };
+            adorner.ShowContentDialog(content);
         });
 
         public RelayCommand CmdShowMessage { get; } = new RelayCommand(o =>

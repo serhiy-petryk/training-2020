@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -106,7 +105,11 @@ namespace WpfInvestigate.Controls
 
         public async void Close(object obj)
         {
-            await AnimateHide();
+            var cmdCloseBinding = CommandBindings.OfType<CommandBinding>().FirstOrDefault(c => Equals(c.Command, ApplicationCommands.Close));
+            if (cmdCloseBinding == null)
+                await AnimateHide();
+            else
+                ((RoutedUICommand)cmdCloseBinding.Command).Execute(null, this);
 
             if (Content is IDisposable) ((IDisposable)Content).Dispose();
             if (!IsWindowed && WindowState == WindowState.Maximized)
@@ -115,7 +118,7 @@ namespace WpfInvestigate.Controls
                 BindingOperations.ClearBinding(this, HeightProperty);
             }
             if (IsWindowed) ((Window)Parent).Close();
-            MwiContainer.Children.Remove(this);
+            MwiContainer?.Children.Remove(this);
 
             Closed?.Invoke(this, EventArgs.Empty);
         }
