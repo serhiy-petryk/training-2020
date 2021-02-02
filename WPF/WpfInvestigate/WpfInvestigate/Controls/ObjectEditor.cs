@@ -90,7 +90,7 @@ namespace WpfInvestigate.Controls
                 else
                     editor.Value = newValue;
 
-                editor.RefreshUI();
+                editor.UpdateUI();
 
                 if ((DataTypeMetadata.DataType) e.NewValue == DataTypeMetadata.DataType.Bool)
                     editor.PreviewMouseLeftButtonDown += EditorBoolean_PreviewMouseLeftButtonDown;
@@ -171,7 +171,7 @@ namespace WpfInvestigate.Controls
         #endregion
 
         //================================
-        private void RefreshUI() =>
+        private void UpdateUI() =>
             OnPropertiesChanged(nameof(Metadata), nameof(NumericMinValue), nameof(NumericMaxValue));
 
         private Control GetEditControl()

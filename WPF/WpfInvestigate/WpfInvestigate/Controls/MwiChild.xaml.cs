@@ -40,15 +40,18 @@ namespace WpfInvestigate.Controls
             DataContext = this;
 
             if (Icon == null) Icon = (ImageSource) FindResource("DefaultIcon");
+
+            Loaded += OnMwiChildLoaded;
+
+            void OnMwiChildLoaded(object sender, RoutedEventArgs e)
+            {
+                Loaded -= OnMwiChildLoaded;
+                // UpdateUI();
+                AnimateShow();
+            }
         }
 
         #region =============  Override methods  ====================
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-            AnimateShow();
-        }
-
         private static bool _isActivating = false;
         public override void Activate() => Activate(true);
 
@@ -71,7 +74,7 @@ namespace WpfInvestigate.Controls
                 // SaveActualSize & SaveActualPosition doesn't work => ??? may be depend on animation
                 _lastNormalSize = isMoving
                     ? new Size(Math.Round(ActualWidth * 0.9), Math.Round(ActualHeight * 0.9))
-                    : new Size(ActualWidth - 0.01, ActualHeight - 0.01);
+                    : new Size(ActualWidth, ActualHeight);
 
                 if (IsWindowed)
                     _detachedPosition = new Point(0, 0);
@@ -308,17 +311,16 @@ namespace WpfInvestigate.Controls
         //==============================
         public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons",
             typeof(Buttons?), typeof(MwiChild), new FrameworkPropertyMetadata(
-                Buttons.Close | Buttons.Minimize | Buttons.Maximize | Buttons.Detach, OnVisibleButtonsChanged));
+                Buttons.Close | Buttons.Minimize | Buttons.Maximize | Buttons.Detach,
+                (o, args) => ((MwiChild) o).UpdateUI()));
         public Buttons? VisibleButtons
         {
             get => (Buttons?)GetValue(VisibleButtonsProperty);
             set => SetValue(VisibleButtonsProperty, value);
         }
-        private static void OnVisibleButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((MwiChild) d).OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),
-                nameof(IsMinimizeButtonVisible), nameof(IsDetachButtonVisible));
-        }
         #endregion
+
+        private void UpdateUI() => OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),
+            nameof(IsMinimizeButtonVisible), nameof(IsDetachButtonVisible));
     }
 }

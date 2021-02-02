@@ -46,7 +46,11 @@ namespace WpfInvestigate.Common
             if (element == null || property == null || from == null || to == null)
                 throw new NullReferenceException();
 
-            if (Equals(from, to)) return Task.FromResult(true);
+            if (Equals(from, to))
+            {
+                ((DependencyObject)element).SetValue(property, to);
+                return Task.FromResult(true);
+            }
 
             var pType = property.PropertyType;
             if (!pType.IsInstanceOfType(from))

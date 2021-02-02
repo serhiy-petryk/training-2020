@@ -88,7 +88,7 @@ namespace WpfInvestigate.Controls
                 MwiContainer.ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
                 MwiContainer.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
 
-                Position = new Point(-1, -1); // Reset position (need for maximized window)
+                Position = new Point(-1, -1); // Reset position (need for maximized window or when positions before and after detach are equal)
                 OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
                 OnPropertiesChanged(nameof(IsWindowed));
 
