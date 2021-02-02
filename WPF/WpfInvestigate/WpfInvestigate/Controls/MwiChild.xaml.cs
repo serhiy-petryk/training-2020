@@ -103,8 +103,9 @@ namespace WpfInvestigate.Controls
 
             if (restoreMinimizedSize && (WindowState == WindowState.Minimized || (IsWindowed && ((Window)Parent).WindowState == WindowState.Minimized)))
                 ToggleMinimize(null);
-            if (Window.GetWindow(this) is Window wnd && !wnd.IsFocused)
-                wnd.Focus();
+
+            if (IsWindowed && !((Window)Parent).IsKeyboardFocusWithin)
+                ((Window)Parent).Focus();
 
             _isActivating = false;
             BringIntoView();
