@@ -498,6 +498,10 @@
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
+    <Page Include="Themes\MwiChild.Wnd7.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\MwiColors.Wnd7.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -532,6 +536,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\Mwi.Wnd7\Close.Disabled.png" />
+    <Resource Include="Resources\Mwi.Wnd7\Close.png" />
+    <Resource Include="Resources\Mwi.Wnd7\Maximize.Disabled.png" />
+    <Resource Include="Resources\Mwi.Wnd7\Maximize.png" />
+    <Resource Include="Resources\Mwi.Wnd7\Minimize.Disabled.png" />
+    <Resource Include="Resources\Mwi.Wnd7\Minimize.png" />
+    <Resource Include="Resources\Mwi.Wnd7\Restore.Disabled.png" />
+    <Resource Include="Resources\Mwi.Wnd7\Restore.png" />
     <Resource Include="Resources\OriginalLogo.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

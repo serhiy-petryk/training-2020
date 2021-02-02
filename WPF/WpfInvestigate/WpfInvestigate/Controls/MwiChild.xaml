@@ -101,7 +101,7 @@
                         Visibility="{Binding IsMinimizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
                 <Button Grid.Column="6" Focusable="False" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
                         Visibility="{Binding IsMaximizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                <Button Grid.Column="7" Focusable="False" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{StaticResource MwiCloseButtonStyle}" Width="20"
+                <Button Grid.Column="7" Focusable="False" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{StaticResource CloseButtonStyle}"
                         Visibility="{Binding IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
             </Grid>
 
