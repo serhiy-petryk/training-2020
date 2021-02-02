@@ -19,7 +19,6 @@ namespace WpfInvestigate.Controls
         [Flags]
         public enum Buttons
         {
-            None = 0,
             Close = 1,
             Minimize = 2,
             Maximize = 4,
@@ -307,11 +306,11 @@ namespace WpfInvestigate.Controls
         }
         //==============================
         public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons",
-            typeof(Buttons), typeof(MwiChild), new FrameworkPropertyMetadata(
+            typeof(Buttons?), typeof(MwiChild), new FrameworkPropertyMetadata(
                 Buttons.Close | Buttons.Minimize | Buttons.Maximize | Buttons.Detach, OnVisibleButtonsChanged));
-        public Buttons VisibleButtons
+        public Buttons? VisibleButtons
         {
-            get => (Buttons)GetValue(VisibleButtonsProperty);
+            get => (Buttons?)GetValue(VisibleButtonsProperty);
             set => SetValue(VisibleButtonsProperty, value);
         }
         private static void OnVisibleButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
