@@ -139,6 +139,13 @@
                                             </Border.Style>-->
                 </Border>
             </Grid>
+
+            <!-- Second line of window border -->
+            <Rectangle x:Name="LeftBorder" Width="1" HorizontalAlignment="Left" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.NearBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
+            <Rectangle x:Name="TopBorder" Height="1" VerticalAlignment="Top" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.NearBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
+            <Rectangle x:Name="RightBorder" Width="1" HorizontalAlignment="Right" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
+            <Rectangle x:Name="BottomBorder" Height="1" VerticalAlignment="Bottom" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
+
         </Grid>
     </Border>
 
