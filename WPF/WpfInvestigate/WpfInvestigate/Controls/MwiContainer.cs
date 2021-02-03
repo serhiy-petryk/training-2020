@@ -14,9 +14,16 @@ namespace WpfInvestigate.Controls
     /// Interaction logic for MwiContainer.xaml
     /// </summary>
     [ContentProperty("Children")]
-    public partial class MwiContainer: ContentControl, INotifyPropertyChanged
+    public class MwiContainer: ContentControl, INotifyPropertyChanged
     {
         const int WINDOW_OFFSET_STEP = 25;
+
+        static MwiContainer()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MwiContainer), new FrameworkPropertyMetadata(typeof(MwiContainer)));
+            // KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(MwiContainer), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(MwiContainer), new FrameworkPropertyMetadata(false));
+        }
 
         public ScrollViewer ScrollViewer;
         public Grid MwiPanel;
