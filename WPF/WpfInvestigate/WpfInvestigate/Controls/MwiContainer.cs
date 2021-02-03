@@ -14,16 +14,14 @@ namespace WpfInvestigate.Controls
     /// Interaction logic for MwiContainer.xaml
     /// </summary>
     [ContentProperty("Children")]
-    public partial class MwiContainer: INotifyPropertyChanged
+    public partial class MwiContainer: ContentControl, INotifyPropertyChanged
     {
         const int WINDOW_OFFSET_STEP = 25;
 
-        public MwiContainer()
-        {
-            InitializeComponent();
-            DataContext = this;
-            Children.CollectionChanged += Children_OnCollectionChanged;
-        }
+        public ScrollViewer ScrollViewer;
+        public Grid MwiPanel;
+
+        public MwiContainer() => DataContext = this;
 
         public void AddDialog(FrameworkElement content)
         {
@@ -101,6 +99,13 @@ namespace WpfInvestigate.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            ScrollViewer = GetTemplateChild("ScrollViewer") as ScrollViewer;
+            MwiPanel = GetTemplateChild("MwiPanel") as Grid;
+
+            Children.CollectionChanged += Children_OnCollectionChanged;
+            for (var k = 0; k < Children.Count; k++)
+                Children_OnCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children[k], k));
 
             if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
             {

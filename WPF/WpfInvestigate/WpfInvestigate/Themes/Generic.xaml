@@ -16,6 +16,8 @@
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/PopupResizeControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ResizingControl.xaml" />
 
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MwiContainer.xaml" />
+
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Obsolete/DialogItems.xaml" />
     </ResourceDictionary.MergedDictionaries>
 

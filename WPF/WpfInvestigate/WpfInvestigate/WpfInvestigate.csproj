@@ -88,9 +88,7 @@
     <Compile Include="Controls\MwiChild.xaml.cs">
       <DependentUpon>MwiChild.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MwiContainer.xaml.cs">
-      <DependentUpon>MwiContainer.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\MwiContainer.cs" />
     <Compile Include="Effects\TextBlockEffects.cs" />
     <Compile Include="Obsolete\DialogItems.cs" />
     <Compile Include="Controls\DialogMessage.cs" />
@@ -253,10 +251,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\MwiContainer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Obsolete\ForObsolete.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -349,6 +343,10 @@
     <Page Include="Styles\PopupResizeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\MwiContainer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\ResizingControl.xaml">
       <Generator>MSBuild:Compile</Generator>
