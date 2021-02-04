@@ -115,7 +115,7 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
 
-            foreach (var thumb in Tips.GetVisualChildren(this).OfType<Thumb>())
+            foreach (var thumb in Tips.GetVisualChildren(this).OfType<Thumb>().Where(t=>t.Name.StartsWith("Resize")))
                 thumb.DragDelta += ResizeThumb_OnDragDelta;
 
             if (Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault() is ScrollViewer sv && !Equals(sv.Resources["State"], "Activated"))

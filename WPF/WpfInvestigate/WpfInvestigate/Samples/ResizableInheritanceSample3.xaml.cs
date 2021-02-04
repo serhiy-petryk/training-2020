@@ -5,11 +5,11 @@ using WpfInvestigate.Common;
 namespace WpfInvestigate.Samples
 {
     /// <summary>
-    /// Interaction logic for ResizableInheritanceSample.xaml
+    /// Interaction logic for ResizableInheritanceSample3.xaml
     /// </summary>
-    public partial class ResizableInheritanceSample
+    public partial class ResizableInheritanceSample3
     {
-        public ResizableInheritanceSample()
+        public ResizableInheritanceSample3()
         {
             InitializeComponent();
             DataContext = this;
@@ -23,7 +23,7 @@ namespace WpfInvestigate.Samples
 
         // ==============================
         /*public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content),
-            typeof(object), typeof(ResizableInheritanceSample), new UIPropertyMetadata(null));
+            typeof(object), typeof(ResizableInheritanceSample3), new UIPropertyMetadata(null));
         public new object Content
         {
             get => (object)GetValue(ContentProperty);
@@ -31,7 +31,7 @@ namespace WpfInvestigate.Samples
         }*/
 
         /*public static readonly DependencyProperty XXContentProperty = DependencyProperty.Register(nameof(XXContent),
-            typeof(object), typeof(ResizableInheritanceSample), new UIPropertyMetadata(null));
+            typeof(object), typeof(ResizableInheritanceSample3), new UIPropertyMetadata(null));
         public object XXContent
         {
             get => (object)GetValue(XXContentProperty);
