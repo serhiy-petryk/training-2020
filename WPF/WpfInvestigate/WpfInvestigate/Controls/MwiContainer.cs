@@ -43,12 +43,6 @@ namespace WpfInvestigate.Controls
                 case NotifyCollectionChangedAction.Add:
                     var mwiChild = Children[e.NewStartingIndex];
                     mwiChild.MwiContainer = this;
-
-                    if (mwiChild.IsLoaded)
-                        OnMwiChildLoaded(mwiChild, null);
-                    else
-                        mwiChild.Loaded += OnMwiChildLoaded;
-
                     MwiPanel.Children.Add(mwiChild);
                     mwiChild.Activate();
                     break;
@@ -66,19 +60,14 @@ namespace WpfInvestigate.Controls
                         Children[0].Close();*/
                     break;
             }
+        }
 
-            void OnMwiChildLoaded(object o, RoutedEventArgs args)
-            {
-                var mwiChild = (MwiChild)o;
-                mwiChild.Loaded -= OnMwiChildLoaded;
-                if (mwiChild.Position.X < 0 || mwiChild.Position.Y < 0)
-                {
-                    _windowOffset += WINDOW_OFFSET_STEP;
-                    if ((_windowOffset + mwiChild.ActualWidth > MwiPanel.ActualWidth) || (_windowOffset + mwiChild.ActualHeight > MwiPanel.ActualHeight))
-                        _windowOffset = 0;
-                    mwiChild.Position = new Point(_windowOffset, _windowOffset);
-                }
-            }
+        internal Point GetStartPositionForMwiChild(MwiChild mwiChild)
+        {
+            _windowOffset += WINDOW_OFFSET_STEP;
+            if ((_windowOffset + mwiChild.ActualWidth > MwiPanel.ActualWidth) || (_windowOffset + mwiChild.ActualHeight > MwiPanel.ActualHeight))
+                _windowOffset = 0;
+            return new Point(_windowOffset, _windowOffset);
         }
 
         internal void InvalidateLayout()

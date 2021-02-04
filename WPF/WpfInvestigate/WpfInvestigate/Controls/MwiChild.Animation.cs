@@ -9,7 +9,7 @@ namespace WpfInvestigate.Controls
 {
     public partial class MwiChild
     {
-        public Task SetRectWithAnimation(Rect to, double fromOpacity, double toOpacity)
+        private Task SetRectWithAnimation(Rect to, double fromOpacity, double toOpacity)
         {
             var tasks = new List<Task>
             {
@@ -22,7 +22,14 @@ namespace WpfInvestigate.Controls
             return Task.WhenAll(tasks.ToArray());
         }
 
-        private Task AnimateShow() => SetRectWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 0, 1);
+        private Task AnimateShow()
+        {
+            if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
+                Position = MwiContainer.GetStartPositionForMwiChild(this);
+
+            return SetRectWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 0, 1);
+        }
+
         private Task AnimateHide() => SetRectWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 1, 0);
 
         private async Task AnimateWindowState(WindowState previousWindowState)
