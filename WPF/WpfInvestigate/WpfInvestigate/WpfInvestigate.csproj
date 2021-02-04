@@ -139,6 +139,9 @@
     <Compile Include="Samples\ResizableContentPropertySample.xaml.cs">
       <DependentUpon>ResizableContentPropertySample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Samples\ResizableInheritanceSample2.xaml.cs">
+      <DependentUpon>ResizableInheritanceSample2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Samples\ResizableInheritanceSample.xaml.cs">
       <DependentUpon>ResizableInheritanceSample.xaml</DependentUpon>
     </Compile>
@@ -263,6 +266,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Samples\ResizableContentPropertySample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\ResizableInheritanceSample2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
