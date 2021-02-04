@@ -15,12 +15,15 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Height="18" Padding="5 0 0 0" Background="LightBlue" Text="Header" IsHitTestVisible="False"/>
+                <TextBlock Grid.Row="0" Height="18" Padding="5 0 0 0" Background="LightBlue" Text="ResizableContentTemplateSample" IsHitTestVisible="False"/>
                 <Thumb x:Name="MovingThumb" Grid.Row="0" Opacity="0" Cursor="SizeAll"/>
 
-                <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="ResizableContentTemplateSample"/>
+                <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+                <TextBlock Grid.Row="2" Height="18" Padding="5 0 0 0" Background="LightBlue" Text="{Binding Content}" IsHitTestVisible="False"/>
             </Grid>
         </ControlTemplate>
     </UserControl.Template>

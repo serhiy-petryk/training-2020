@@ -15,7 +15,7 @@ namespace WpfInvestigate.TestViews
         {
             InitializeComponent();
 
-            var resizingControl = new ResizingControl {Content = new ResizableContentTemplateSample(), Position = new Point(200, 100)};
+            var resizingControl = new ResizingControl {Content = new ResizableContentTemplateSample{Content = "Content"}, Position = new Point(200, 100)};
             GridPanel.Children.Add(resizingControl);
 
             var resizingControl2 = new ResizingControl {Content = new ResizableSample(), Position = new Point(0, 400), ToolTip = "No Width/Height"};

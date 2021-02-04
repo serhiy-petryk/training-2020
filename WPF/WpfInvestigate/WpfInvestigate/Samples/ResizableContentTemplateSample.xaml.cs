@@ -10,6 +10,7 @@ namespace WpfInvestigate.Samples
         public ResizableContentTemplateSample()
         {
             InitializeComponent();
+            DataContext = this;
         }
     }
 }
