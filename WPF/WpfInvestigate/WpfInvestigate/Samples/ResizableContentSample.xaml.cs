@@ -1,15 +1,12 @@
-﻿using System.Windows.Controls;
-using WpfInvestigate.Controls;
-
-namespace WpfInvestigate.Samples
+﻿namespace WpfInvestigate.Samples
 {
     /// <summary>
-    /// Interaction logic for ResizableInheritanceSample.xaml
+    /// Interaction logic for ResizableContentSample.xaml
     /// </summary>
-    public partial class ResizableInheritanceSample : ResizingControl
+    public partial class ResizableContentSample
     {
         //public Thum
-        public ResizableInheritanceSample()
+        public ResizableContentSample()
         {
             InitializeComponent();
         }
