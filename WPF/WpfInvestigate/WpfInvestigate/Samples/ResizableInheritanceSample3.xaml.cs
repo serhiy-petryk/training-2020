@@ -43,11 +43,11 @@ namespace WpfInvestigate.Samples
 
         //=============================
         public static readonly DependencyProperty BaseContentProperty = DependencyProperty.Register(nameof(BaseContent),
-            typeof(FrameworkElement), typeof(ResizableInheritanceSample3),
+            typeof(object), typeof(ResizableInheritanceSample3),
             new UIPropertyMetadata(null, (o, args) => ((ResizableInheritanceSample3) o).SetBaseContent(args.NewValue)));
-        public FrameworkElement BaseContent
+        public object BaseContent
         {
-            get => (FrameworkElement)GetValue(BaseContentProperty);
+            get => GetValue(BaseContentProperty);
             set => SetValue(BaseContentProperty, value);
         }
         private void SetBaseContent(object content) => base.Content = content;
