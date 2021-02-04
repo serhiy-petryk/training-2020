@@ -5,57 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:WpfInvestigate.Controls"
              xmlns:samples="clr-namespace:WpfInvestigate.Samples"
-             xmlns:common="clr-namespace:WpfInvestigate.Common"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="Aqua">
 
     <controls:ResizingControl.Resources>
         <Style TargetType="samples:ResizableInheritanceSample3">
-            <Style.Resources>
-                <Style x:Key="ResizeThumb" TargetType="Thumb">
-                    <Setter Property="Opacity" Value="0"/>
-                    <Setter Property="Focusable" Value="False"/>
-                    <Setter Property="Visibility" Value="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                </Style>
-            </Style.Resources>
-
-            <Setter Property="BorderThickness" Value="4"/>
+            <Setter Property="BorderThickness" Value="7"/>
             <Setter Property="BorderBrush" Value="Yellow"/>
-            <Setter Property="Template">
+            <Setter Property="BaseContent">
                 <Setter.Value>
-                    <ControlTemplate TargetType="samples:ResizableInheritanceSample3">
+                    <Border BorderThickness="{Binding BorderThickness}" BorderBrush="{Binding BorderBrush}">
                         <Grid>
-                            <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Row="0" Height="28" Padding="5 0 0 0" Background="Violet" Text="Header" IsHitTestVisible="False"/>
-                                    <Thumb x:Name="MovingThumb" Grid.Row="0" Opacity="0" Cursor="SizeAll"/>
+                            <TextBlock Grid.Row="0" Height="28" Padding="5 0 0 0" Background="Violet" Text="Header" IsHitTestVisible="False"/>
+                            <Thumb x:Name="MovingThumb" Grid.Row="0" Opacity="0" Cursor="SizeAll"/>
 
-                                    <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Content}"/>
+                            <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Content}"/>
 
-                                    <TextBlock Grid.Row="2" Height="28" Padding="5 0 0 0" Background="Violet" Text="Footer"/>
-                                </Grid>
-                            </Border>
-
-                            <Thumb x:Name="ResizeLeft" Width="{Binding EdgeThickness.Left}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-                            <Thumb x:Name="ResizeTop" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-                            <Thumb x:Name="ResizeRight" Width="{Binding EdgeThickness.Right}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-                            <Thumb x:Name="ResizeBottom" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-                            <Thumb x:Name="ResizeTopLeft" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                                   Width="{Binding EdgeThickness.Left, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2*2+}"/>
-                            <Thumb x:Name="ResizeTopRight" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"
-                                   Width="{Binding EdgeThickness.Right, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2*2+}"/>
-                            <Thumb x:Name="ResizeBottomLeft" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"
-                                   Width="{Binding ElementName=ResizeTopLeft, Path=Width}"/>
-                            <Thumb x:Name="ResizeBottomRight" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                                   Width="{Binding ElementName=ResizeTopRight, Path=Width}"/>
+                            <TextBlock Grid.Row="2" Height="28" Padding="5 0 0 0" Background="Violet" Text="Footer"/>
                         </Grid>
-                    </ControlTemplate>
+                    </Border>
                 </Setter.Value>
             </Setter>
         </Style>

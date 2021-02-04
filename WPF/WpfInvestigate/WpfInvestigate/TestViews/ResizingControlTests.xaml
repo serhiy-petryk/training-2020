@@ -104,15 +104,15 @@
                 </controls:ResizingControl>
 
                 <samples:ResizableInheritanceSample Position="400 230" >
-                    <TextBlock Text="Content of ResizableInheritanceSample" FontSize="16" Background="YellowGreen"/>
+                    <TextBlock Text="Content of ResizableInheritanceSample (Rewrite base content)" FontSize="16" Background="YellowGreen"/>
                 </samples:ResizableInheritanceSample>
 
                 <samples:ResizableInheritanceSample2 Position="250 8" >
-                    <TextBlock Text="Content of ResizableInheritanceSample2" FontSize="16" Background="YellowGreen"/>
+                    <TextBlock Text="Content of ResizableInheritanceSample2 (ContentTemplate as DataTemplate)" FontSize="16" Background="YellowGreen"/>
                 </samples:ResizableInheritanceSample2>
 
                 <samples:ResizableInheritanceSample3 Position="200 400" >
-                    <TextBlock Text="Content of ResizableInheritanceSample3" FontSize="16" Background="YellowGreen"/>
+                    <TextBlock Text="Content of ResizableInheritanceSample3 (new property for BaseContent)" FontSize="16" Background="YellowGreen"/>
                 </samples:ResizableInheritanceSample3>
 
                 <controls:ResizingControl Position="100 100" Width="100" Height="100" Content="BBB" Background="Yellow"/>
