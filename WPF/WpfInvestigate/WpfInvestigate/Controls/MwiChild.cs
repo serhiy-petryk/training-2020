@@ -14,7 +14,7 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for MwiChild.xaml
     /// </summary>
-    public partial class MwiChild
+    public partial class MwiChild: ResizingControl
     {
         [Flags]
         public enum Buttons
@@ -36,7 +36,7 @@ namespace WpfInvestigate.Controls
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
             CmdClose = new RelayCommand(Close, _ => AllowClose);
 
-            InitializeComponent();
+            // InitializeComponent();
             DataContext = this;
 
             if (Icon == null) Icon = (ImageSource) FindResource("DefaultIcon");
@@ -67,6 +67,18 @@ namespace WpfInvestigate.Controls
             base.ResizeThumb_OnDragDelta(sender, e);
         }
 
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            var resizingThumb = Template.FindName("MovingThumb", this) as Thumb;
+            if (resizingThumb != null)
+                resizingThumb.MouseDoubleClick += MovingThumb_OnMouseDoubleClick;
+
+            var systemMenuButton = Template.FindName("SystemMenuButton", this) as ToggleButton;
+            if (systemMenuButton != null)
+                systemMenuButton.Checked += SystemMenuButton_OnChecked;
+        }
         private void TransitionFromMaximizedToNormalWindowState(bool isMoving)
         {
             if (WindowState == WindowState.Maximized)
