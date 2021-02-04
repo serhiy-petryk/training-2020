@@ -318,6 +318,16 @@ namespace WpfInvestigate.Controls
             get => (Buttons?)GetValue(VisibleButtonsProperty);
             set => SetValue(VisibleButtonsProperty, value);
         }
+        //==============================
+        public static readonly DependencyProperty BaseContentProperty = DependencyProperty.Register(nameof(BaseContent),
+            typeof(object), typeof(MwiChild),
+            new UIPropertyMetadata(null, (o, args) => ((MwiChild)o).SetBaseContent(args.NewValue)));
+        public object BaseContent
+        {
+            get => GetValue(BaseContentProperty);
+            set => SetValue(BaseContentProperty, value);
+        }
+        private void SetBaseContent(object content) => base.Content = content;
         #endregion
 
         private void UpdateUI() => OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),
