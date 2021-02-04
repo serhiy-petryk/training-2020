@@ -103,7 +103,7 @@
                     </Grid>
                 </controls:ResizingControl>
 
-                <samples:ResizableInheritanceSample Position="400 400" >
+                <samples:ResizableInheritanceSample Position="400 230" >
                     <TextBlock Text="ResizableInheritanceSample text"/>
                 </samples:ResizableInheritanceSample>
 
