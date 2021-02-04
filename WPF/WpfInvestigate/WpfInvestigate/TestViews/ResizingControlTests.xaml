@@ -104,7 +104,7 @@
                 </controls:ResizingControl>
 
                 <samples:ResizableInheritanceSample Position="400 230" >
-                    <TextBlock Text="Content of ResizableInheritanceSample"/>
+                    <TextBlock Text="Content of ResizableInheritanceSample" FontSize="16" Background="YellowGreen"/>
                 </samples:ResizableInheritanceSample>
 
                 <controls:ResizingControl Position="100 100" Width="100" Height="100" Content="BBB" Background="Yellow"/>
