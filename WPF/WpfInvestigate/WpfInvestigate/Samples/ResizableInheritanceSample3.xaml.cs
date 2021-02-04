@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
-using System.Windows.Markup;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Samples
