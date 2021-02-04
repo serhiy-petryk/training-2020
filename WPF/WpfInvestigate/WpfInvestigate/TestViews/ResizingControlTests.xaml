@@ -107,7 +107,7 @@
                     <TextBlock Text="Content of ResizableInheritanceSample" FontSize="16" Background="YellowGreen"/>
                 </samples:ResizableInheritanceSample>
 
-                <samples:ResizableInheritanceSample2 Position="400 8" >
+                <samples:ResizableInheritanceSample2 Position="250 8" >
                     <TextBlock Text="Content of ResizableInheritanceSample2" FontSize="16" Background="YellowGreen"/>
                 </samples:ResizableInheritanceSample2>
 
