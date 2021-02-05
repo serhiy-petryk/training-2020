@@ -20,6 +20,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.Row="0" Height="28" Padding="5 0 0 0" Background="{Binding Background}" Text="Header" IsHitTestVisible="False"/>
@@ -27,7 +28,8 @@
 
                             <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Content}"/>
 
-                            <TextBlock Grid.Row="2" Height="28" Padding="5 0 0 0" Background="Violet" Text="Footer"/>
+                            <TextBlock Grid.Row="2" Height="28" Padding="5 0 0 0" Background="Violet" Text="{Binding Source={x:Reference TestElement}, Path=Text}"/>
+                            <TextBlock Grid.Row="3" x:Name="TestElement" Height="28" Padding="5 0 0 0" Background="Violet" Text="Footer"/>
                         </Grid>
                     </Border>
                 </Setter.Value>

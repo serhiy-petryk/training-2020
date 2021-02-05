@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace WpfInvestigate.Effects
 {
@@ -32,13 +33,22 @@ namespace WpfInvestigate.Effects
 
         private static void OnAutoTooltipTargetPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var textBlock = e.NewValue as TextBlock;
-            if (textBlock == null)
-                return;
+            if (d is UIElement element)
+            {
+                var textBlock = e.NewValue as TextBlock;
+                element.MouseEnter -= OnElementMouseEnter;
+                if (textBlock != null)
+                    element.MouseEnter += OnElementMouseEnter;
 
-            textBlock.TextTrimming = TextTrimming.CharacterEllipsis;
-            ComputeAutoTooltip(textBlock, d);
-            textBlock.SizeChanged += (sender, eSizeChanged) => ComputeAutoTooltip(textBlock, d);
+                void OnElementMouseEnter(object sender, System.Windows.Input.MouseEventArgs args)
+                {
+                    if (textBlock != null)
+                    {
+                        textBlock.TextTrimming = TextTrimming.CharacterEllipsis;
+                        ComputeAutoTooltip(textBlock, d);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -50,11 +60,31 @@ namespace WpfInvestigate.Effects
             ToolTipService.SetToolTip(toolTipPlaceHolder ?? textBlock, isTextTrimmed ? textBlock.Text : null);
         }
 
-        public static bool IsTextTrimmed(FrameworkElement textBlock)
+        public static bool IsTextTrimmedOld(FrameworkElement textBlock)
         {
             textBlock.Measure(new Size(double.PositiveInfinity, height: double.PositiveInfinity));
-            return (textBlock.ActualWidth + textBlock.Margin.Left + textBlock.Margin.Right) < textBlock.DesiredSize.Width ||
+            return (textBlock.ActualWidth + textBlock.Margin.Left + textBlock.Margin.Right) <= textBlock.DesiredSize.Width ||
                    (textBlock.ActualHeight + textBlock.Margin.Top + textBlock.Margin.Bottom) < textBlock.DesiredSize.Height;
         }
+
+        private static bool IsTextTrimmed(TextBlock textBlock)
+        {
+            // From https://stackoverflow.com/questions/1041820/how-can-i-determine-if-my-textblock-text-is-being-trimmed
+            var typeface = new Typeface(textBlock.FontFamily, textBlock.FontStyle, textBlock.FontWeight, textBlock.FontStretch);
+            var formattedText =
+                new FormattedText(textBlock.Text, System.Threading.Thread.CurrentThread.CurrentCulture,
+                        textBlock.FlowDirection, typeface, textBlock.FontSize, textBlock.Foreground)
+                    {MaxTextWidth = textBlock.ActualWidth};
+
+            // When the maximum text width of the FormattedText instance is set to the actual
+            // width of the textBlock, if the textBlock is being trimmed to fit then the formatted
+            // text will report a larger height than the textBlock. Should work whether the
+            // textBlock is single or multi-line.
+            // The "formattedText.MinWidth > formattedText.MaxTextWidth" check detects if any 
+            // single line is too long to fit within the text area, this can only happen if there is a 
+            // long span of text with no spaces.
+            return (formattedText.Height > textBlock.ActualHeight || formattedText.MinWidth > formattedText.MaxTextWidth);
+        }
+
     }
 }
