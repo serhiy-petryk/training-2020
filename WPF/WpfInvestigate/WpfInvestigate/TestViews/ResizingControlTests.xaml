@@ -116,7 +116,7 @@
                 </samples:ResizableInheritanceSample3>
 
                 <samples:ResizableInheritanceSample4 Position="420 330">
-                    <TextBlock Text="!!! THE BEST: ResizableInheritanceSample4" FontSize="16" Background="YellowGreen"/>
+                    <TextBlock Text="!!! THE BEST: ResizableInheritanceSample4: &#x0a;found the best implementation for XAML Inheritance" FontSize="16" Background="YellowGreen" TextWrapping="Wrap"/>
                 </samples:ResizableInheritanceSample4>
 
                 <controls:ResizingControl Position="5 110" Width="100" Height="100" Content="BBB" Background="Yellow"/>
