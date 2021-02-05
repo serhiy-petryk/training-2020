@@ -198,6 +198,7 @@ namespace WpfInvestigate.Controls
         public event EventHandler Closed;
         public MwiContainer MwiContainer { get; set; }
         public bool IsSelected => MwiContainer?.ActiveMwiChild == this;
+        public Thickness OuterBorderMargin => IsWindowed ? (Thickness)FindResource("Mwi.Child.OuterBorderMargin") : new Thickness();
 
         //============  Buttons  ============
         public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;
