@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Runtime.Remoting.Contexts;
+using System.Windows;
 
 namespace WpfInvestigate.Samples
 {
@@ -21,7 +22,7 @@ namespace WpfInvestigate.Samples
             get => (object)GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
         }
-
+        /*
         //=============================
         public static readonly DependencyProperty BaseContentProperty = DependencyProperty.Register(nameof(BaseContent),
             typeof(object), typeof(ResizableInheritanceSample4),
@@ -31,7 +32,6 @@ namespace WpfInvestigate.Samples
             get => GetValue(BaseContentProperty);
             set => SetValue(BaseContentProperty, value);
         }
-        private void SetBaseContent(object content) => base.Content = content;
-
+        private void SetBaseContent(object content) => base.Content = content;*/
     }
 }

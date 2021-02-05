@@ -115,9 +115,9 @@
                     <TextBlock Text="ResizableInheritanceSample3 (new property for BaseContent)" FontSize="16" Background="YellowGreen"/>
                 </samples:ResizableInheritanceSample3>
 
-                <samples:ResizableInheritanceSample3 Position="420 330">
-                    <TextBlock Text="ResizableInheritanceSample4" FontSize="16" Background="YellowGreen"/>
-                </samples:ResizableInheritanceSample3>
+                <samples:ResizableInheritanceSample4 Position="420 330">
+                    <TextBlock Text="!!! THE BEST: ResizableInheritanceSample4" FontSize="16" Background="YellowGreen"/>
+                </samples:ResizableInheritanceSample4>
 
                 <controls:ResizingControl Position="5 110" Width="100" Height="100" Content="BBB" Background="Yellow"/>
                 <controls:ResizingControl Position="70 170" Width="100" Height="100" Content="Not resizable" Background="Yellow" Resizable="False"/>

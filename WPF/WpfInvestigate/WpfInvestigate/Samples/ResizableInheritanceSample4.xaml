@@ -10,30 +10,41 @@
 
     <controls:ResizingControl.Resources>
         <Style TargetType="samples:ResizableInheritanceSample4">
-            <Setter Property="BorderThickness" Value="7"/>
-            <Setter Property="BorderBrush" Value="Yellow"/>
-            <Setter Property="BaseContent">
+            <Setter Property="BorderThickness" Value="4"/>
+            <Setter Property="BorderBrush" Value="LightBlue"/>
+            <Setter Property="Template">
                 <Setter.Value>
-                    <Border BorderThickness="{Binding BorderThickness}" BorderBrush="{Binding BorderBrush}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+                    <ControlTemplate TargetType="samples:ResizableInheritanceSample4">
+                        <controls:ResizingControl>
+                            <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Height="28" Padding="5 0 0 0" Background="{Binding Background}" Text="Header" IsHitTestVisible="False"/>
-                            <Thumb x:Name="MovingThumb" Grid.Row="0" Opacity="0" Cursor="SizeAll"/>
+                                    <TextBlock Grid.Row="0" Height="28" Padding="5 0 0 0" Background="{TemplateBinding Background}" Text="Header" IsHitTestVisible="False"/>
+                                    <Thumb x:Name="MovingThumb" Grid.Row="0" Opacity="0" Cursor="SizeAll"/>
 
-                            <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Content}"/>
+                                    <ContentPresenter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{TemplateBinding Content}"/>
 
-                            <TextBlock Grid.Row="2" Height="28" Padding="5 0 0 0" Background="Violet" Text="{Binding Source={x:Reference TestElement}, Path=Text}"/>
-                            <TextBlock Grid.Row="3" x:Name="TestElement" Height="28" Padding="5 0 0 0" Background="Violet" Text="Footer"/>
-                        </Grid>
-                    </Border>
+                                    <TextBlock Grid.Row="2" Height="28" Padding="5 0 0 0" Background="Violet" Text="{Binding Source={x:Reference TestElement}, Path=Text}"/>
+                                    <TextBlock Grid.Row="3" x:Name="TestElement" Height="28" Padding="5 0 0 0" Background="Violet" Text="Footer"/>
+                                </Grid>
+                            </Border>
+                        </controls:ResizingControl>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="Yellow"/>
+                                <Setter TargetName="TestElement" Property="Background" Value="Yellow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
     </controls:ResizingControl.Resources>
+
 </controls:ResizingControl>
