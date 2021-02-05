@@ -15,16 +15,16 @@ namespace WpfInvestigate.TestViews
         {
             InitializeComponent();
 
-            var resizingControl = new ResizingControl {Content = new ResizableContentTemplateSample{Content = "Content"}, Position = new Point(200, 100)};
+            var resizingControl = new ResizingControl {Content = new ResizableContentTemplateSample{Content = "Content"}, Position = new Point(110, 110)};
             GridPanel.Children.Add(resizingControl);
 
-            var resizingControl2 = new ResizingControl {Content = new ResizableSample(), Position = new Point(0, 400), ToolTip = "No Width/Height"};
+            var resizingControl2 = new ResizingControl {Content = new ResizableSample(), Position = new Point(5, 390), ToolTip = "No Width/Height"};
             GridPanel.Children.Add(resizingControl2);
 
             var resizingControl3 = new ResizingControl
             {
                 Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
-                Position = new Point(300,300),
+                Position = new Point(250,140),
                 Width = 150,
                 Height = 150,
                 LimitPositionToPanelBounds = true,

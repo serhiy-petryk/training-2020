@@ -70,18 +70,18 @@
                     <samples:ResizableContentSample/>
                 </controls:ResizingControl>
 
-                <controls:ResizingControl Background="Yellow" Position="500 350"
+                <controls:ResizingControl Background="Yellow" Position="220 300"
                                           EdgeThickness="{Binding BorderThickness, ElementName=Sample2}">
                     <samples:ResizableSample x:Name="Sample2" ToolTip="No Width/Height, resizing control.Width=200, Height=100"/>
                 </controls:ResizingControl>
 
-                <controls:ResizingControl Position="0 250" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
+                <controls:ResizingControl Position="5 280" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
                                            ToolTip="LimitPositionToPanelBounds=True"
                                            MovingThumb="{Binding ElementName=Test2, Path=MovingThumb}">
                     <samples:ResizableContentPropertySample x:Name="Test2"/>
                 </controls:ResizingControl>
 
-                <controls:ResizingControl Position="400 100" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
+                <controls:ResizingControl Position="210 10" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
                                           ToolTip="LimitPositionToPanelBounds=True">
                     <Grid Background="Green" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Focusable="False">
                         <Rectangle Fill="Yellow" Margin="7"
@@ -103,21 +103,25 @@
                     </Grid>
                 </controls:ResizingControl>
 
-                <samples:ResizableInheritanceSample Position="400 230" >
-                    <TextBlock Text="Content of ResizableInheritanceSample (Rewrite base content)" FontSize="16" Background="YellowGreen"/>
+                <samples:ResizableInheritanceSample Position="420 5" >
+                    <TextBlock Text="ResizableInheritanceSample (Rewrite base content)" FontSize="16" Background="YellowGreen"/>
                 </samples:ResizableInheritanceSample>
 
-                <samples:ResizableInheritanceSample2 Position="250 8" >
-                    <TextBlock Text="Content of ResizableInheritanceSample2 (ContentTemplate as DataTemplate)" FontSize="16" Background="YellowGreen"/>
+                <samples:ResizableInheritanceSample2 Position="420 100" >
+                    <TextBlock Text="ResizableInheritanceSample2 (ContentTemplate as DataTemplate)" FontSize="16" Background="YellowGreen"/>
                 </samples:ResizableInheritanceSample2>
 
-                <samples:ResizableInheritanceSample3 Position="200 400" >
-                    <TextBlock Text="Content of ResizableInheritanceSample3 (new property for BaseContent)" FontSize="16" Background="YellowGreen"/>
+                <samples:ResizableInheritanceSample3 Position="420 200">
+                    <TextBlock Text="ResizableInheritanceSample3 (new property for BaseContent)" FontSize="16" Background="YellowGreen"/>
                 </samples:ResizableInheritanceSample3>
 
-                <controls:ResizingControl Position="100 100" Width="100" Height="100" Content="BBB" Background="Yellow"/>
-                <controls:ResizingControl Position="150 150" Width="100" Height="100" Content="Not resizable" Background="Yellow" Resizable="False"/>
-                <controls:ResizingControl Position="200 200"  Width="100" Height="100" Content="Limited" Background="Yellow"
+                <samples:ResizableInheritanceSample3 Position="420 330">
+                    <TextBlock Text="ResizableInheritanceSample4" FontSize="16" Background="YellowGreen"/>
+                </samples:ResizableInheritanceSample3>
+
+                <controls:ResizingControl Position="5 110" Width="100" Height="100" Content="BBB" Background="Yellow"/>
+                <controls:ResizingControl Position="70 170" Width="100" Height="100" Content="Not resizable" Background="Yellow" Resizable="False"/>
+                <controls:ResizingControl Position="130 220"  Width="100" Height="100" Content="Limited" Background="Yellow"
                                           LimitPositionToPanelBounds="True"/>
             </Grid>
         </ScrollViewer>
