@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -85,22 +86,31 @@ namespace WpfInvestigate.Controls
 
         private void TabItem_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var mwiChild = ((FrameworkElement)sender).DataContext as MwiChild;
+            var resizingControl = ((FrameworkElement)sender).DataContext as ResizingControl;
             var element = (FrameworkElement)Mouse.DirectlyOver;
             while (element != null && element.Name != "DeleteTabButton")
                 element = VisualTreeHelper.GetParent(element) as FrameworkElement;
 
             if (element != null) // delete button was pressed
-                mwiChild.CmdClose.Execute(null);
+                //mwiChild.CmdClose.Execute(null);
+            {
+                if (resizingControl is MwiChild mwiChild)
+                    mwiChild.CmdClose.Execute(null);
+                else if (ItemsSource is ItemCollection collection)
+                    collection.Remove(((FrameworkElement)sender).DataContext);
+                else if (ItemsSource is IList list)
+                    list.Remove(((FrameworkElement)sender).DataContext);
+            }
             else
-                mwiChild.Activate();
+                resizingControl?.Activate();
 
             e.Handled = true;
         }
 
         private void TabItem_OnToolTipOpening(object sender, ToolTipEventArgs e)
         {
-            ((MwiChild)((FrameworkElement)sender).DataContext).RefreshThumbnail();
+            if (((FrameworkElement)sender).DataContext is MwiChild mwiChild)
+                mwiChild.RefreshThumbnail();
         }
 
         private void TabToolTip_OnOpened(object sender, RoutedEventArgs e)
@@ -116,8 +126,9 @@ namespace WpfInvestigate.Controls
                 return;
 
             LinearGradientBrush newBrush;
-            var dc = tabItem.DataContext as MwiChild;
-            if (dc.IsSelected)
+            // var dc = tabItem.DataContext as MwiChild;
+            // if (dc.IsSelected)
+            if (tabItem.IsSelected)
                 newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.Selected.BackgroundBrush");
             else if (tabItem.IsMouseOver)
                 newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.MouseOver.BackgroundBrush");
