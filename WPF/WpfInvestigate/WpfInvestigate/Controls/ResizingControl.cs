@@ -44,9 +44,7 @@ namespace WpfInvestigate.Controls
 
             if (oldContent is FrameworkElement m_oldContent)
             {
-                var thumb = Tips.GetVisualChildren(m_oldContent).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
-                if (thumb != null)
-                    thumb.DragDelta -= MoveThumb_OnDragDelta;
+                MovingThumb = null;
 
                 BindingOperations.ClearBinding(this, MinWidthProperty);
                 BindingOperations.ClearBinding(this, MaxWidthProperty);
@@ -68,16 +66,17 @@ namespace WpfInvestigate.Controls
                 if (!double.IsInfinity(m_newContent.MaxHeight))
                     SetBinding(MaxHeightProperty, new Binding("MaxHeight") { Source = m_newContent });
 
-                if (m_newContent.IsLoaded)
-                    OnContentLoaded(m_newContent, null);
-                else
-                    m_newContent.Loaded += OnContentLoaded;
-
                 dpdWidth.AddValueChanged(m_newContent, OnWidthChanged);
                 dpdHeight.AddValueChanged(m_newContent, OnHeightChanged);
 
                 Activate();
             }
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (MovingThumb == null && Tips.GetVisualChildren(this).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName) is Thumb movingThumb)
+                    MovingThumb = movingThumb;
+            }), DispatcherPriority.Loaded);
 
             void OnWidthChanged(object sender, EventArgs e)
             {
@@ -99,15 +98,6 @@ namespace WpfInvestigate.Controls
                     resizingControl.Height = content.Height;
                     content.Dispatcher.Invoke(() => content.Height = double.NaN, DispatcherPriority.Render);
                 }
-            }
-
-            void OnContentLoaded(object sender, RoutedEventArgs args)
-            {
-                var content = (FrameworkElement)sender;
-                content.Loaded -= OnContentLoaded;
-                var thumb = Tips.GetVisualChildren(content).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
-                if (thumb != null)
-                    thumb.DragDelta += MoveThumb_OnDragDelta;
             }
         }
 
