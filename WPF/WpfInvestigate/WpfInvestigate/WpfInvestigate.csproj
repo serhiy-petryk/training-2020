@@ -83,6 +83,9 @@
     <Compile Include="Controls\MwiBar.xaml.cs">
       <DependentUpon>MwiBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MwiItem.Animation.cs" />
+    <Compile Include="Controls\MwiItem.WindowState.cs" />
+    <Compile Include="Controls\MwiItem.cs" />
     <Compile Include="Controls\MwiChild.Animation.cs" />
     <Compile Include="Controls\MwiChild.cs" />
     <Compile Include="Controls\MwiChild.WindowState.cs" />

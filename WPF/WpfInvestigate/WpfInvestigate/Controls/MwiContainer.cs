@@ -25,9 +25,6 @@ namespace WpfInvestigate.Controls
             FocusableProperty.OverrideMetadata(typeof(MwiContainer), new FrameworkPropertyMetadata(false));
         }
 
-        public ScrollViewer ScrollViewer;
-        public Grid MwiPanel;
-
         public MwiContainer() => DataContext = this;
 
         public void AddDialog(FrameworkElement content)
@@ -123,6 +120,8 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #region =======  Properties  =========
+        public ScrollViewer ScrollViewer;
+        public Grid MwiPanel;
         public ObservableCollection<MwiChild> Children { get; set; } = new ObservableCollection<MwiChild>();
         internal IEnumerable<MwiChild> InternalWindows => Children.Where(w => !w.IsWindowed);
         internal MwiChild GetTopChild() => Children.Any()

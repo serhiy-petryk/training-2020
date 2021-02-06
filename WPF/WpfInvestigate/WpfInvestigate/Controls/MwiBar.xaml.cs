@@ -96,8 +96,8 @@ namespace WpfInvestigate.Controls
             {
                 if (resizingControl is MwiChild mwiChild)
                     mwiChild.CmdClose.Execute(null);
-                else if (ItemsSource is ItemCollection collection)
-                    collection.Remove(((FrameworkElement)sender).DataContext);
+                else if (resizingControl is MwiItem mwiItem)
+                    mwiItem.CmdClose.Execute(null);
                 else if (ItemsSource is IList list)
                     list.Remove(((FrameworkElement)sender).DataContext);
             }
