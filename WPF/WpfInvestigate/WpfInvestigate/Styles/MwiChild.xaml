@@ -35,8 +35,19 @@
     </ControlTemplate>
 
     <Style TargetType="controls:MwiChild" x:Shared="False">
-        <Setter Property="BaseContent">
+        <Style.Resources>
+            <Style x:Key="ResizeThumb" TargetType="Thumb">
+                <Setter Property="Opacity" Value="0"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Visibility" Value="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+            </Style>
+        </Style.Resources>
+
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Template">
             <Setter.Value>
+                <ControlTemplate TargetType="controls:MwiChild">
                 <!-- Main border -->
                 <Border x:Name="BaseBorder" Margin="{Binding OuterBorderMargin}" BorderThickness="1" CornerRadius="{DynamicResource Mwi.Child.BaseBorderCornerRadius}" 
                         Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="{DynamicResource Mwi.Child.BaseBorderBrush}">
@@ -65,11 +76,11 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Thumb Grid.Column="0" Grid.ColumnSpan="5" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"
-                                       effects:TextBlockEffects.AutoTooltipTarget="{Binding Source={x:Reference Header}}"/>
+                                       effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header}"/>
 
                                 <!-- Window icon & System menu -->
                                 <ToggleButton Grid.Column="0" x:Name="SystemMenuButton" Width="16" Height="16" Margin="3 0 0 0" Focusable="False" IsThreeState="False" IsChecked="False" BorderThickness="0" Background="Transparent" Padding="0"
-                                              Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}" 
+                                              Visibility="{TemplateBinding Icon, Converter={x:Static common:VisibilityConverter.Instance}}" 
                                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
                                     <ToggleButton.Resources>
                                         <ContextMenu x:Key="cm" StaysOpen="False" Padding="0 4">
@@ -83,7 +94,7 @@
                                                       Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.Instance}}" InputGestureText="Alt+F4"/>
                                         </ContextMenu>
                                     </ToggleButton.Resources>
-                                    <Image x:Name="IconImage" Source="{Binding Icon}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                                        <Image x:Name="IconImage" Source="{TemplateBinding Icon}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                                 </ToggleButton>
 
                                 <!-- Left header panel -->
@@ -104,7 +115,7 @@
                                         Visibility="{Binding IsMaximizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
                                 <Button Grid.Column="7" Focusable="False" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{StaticResource CloseButtonStyle}"
                                         Visibility="{Binding IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                            </Grid>
+                                </Grid>
 
                             <!-- Content & Command/Status bars -->
                             <!--<Border Grid.Row="1" x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">-->
@@ -140,8 +151,22 @@
                         <Rectangle x:Name="RightBorder" Width="1" HorizontalAlignment="Right" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
                         <Rectangle x:Name="BottomBorder" Height="1" VerticalAlignment="Bottom" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
 
-                    </Grid>
+                            <Thumb x:Name="ResizeLeft" Width="{Binding EdgeThickness.Left}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="ResizeTop" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="ResizeRight" Width="{Binding EdgeThickness.Right}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                            <Thumb x:Name="ResizeBottom" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+
+                        <Thumb x:Name="ResizeTopLeft" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
+                               Width="{Binding EdgeThickness.Left, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2*2+}"/>
+                        <Thumb x:Name="ResizeTopRight" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"
+                               Width="{Binding EdgeThickness.Right, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2*2+}"/>
+                        <Thumb x:Name="ResizeBottomLeft" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"
+                               Width="{Binding ElementName=ResizeTopLeft, Path=Width}"/>
+                        <Thumb x:Name="ResizeBottomRight" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
+                               Width="{Binding ElementName=ResizeTopRight, Path=Width}"/>
+                        </Grid>
                 </Border>
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>

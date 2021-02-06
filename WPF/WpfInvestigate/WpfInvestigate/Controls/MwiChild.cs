@@ -302,14 +302,14 @@ namespace WpfInvestigate.Controls
             get => (string)GetValue(TitleProperty);
             set => SetValue(TitleProperty, value);
         }
-        //==============================
+        /*//==============================
         public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content),
             typeof(object), typeof(MwiChild), new UIPropertyMetadata(null));
         public new object Content
         {
             get => (object)GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
-        }
+        }*/
         //================================
         public static readonly DependencyProperty LeftHeaderPanelProperty = DependencyProperty.Register("LeftHeaderPanel", typeof(FrameworkElement), typeof(MwiChild), new FrameworkPropertyMetadata(null));
         public FrameworkElement LeftHeaderPanel
@@ -342,7 +342,7 @@ namespace WpfInvestigate.Controls
             set => SetValue(VisibleButtonsProperty, value);
         }
         //==============================
-        public static readonly DependencyProperty BaseContentProperty = DependencyProperty.Register(nameof(BaseContent),
+        /*public static readonly DependencyProperty BaseContentProperty = DependencyProperty.Register(nameof(BaseContent),
             typeof(object), typeof(MwiChild),
             new UIPropertyMetadata(null, (o, args) => ((MwiChild)o).SetBaseContent(args.NewValue)));
         public object BaseContent
@@ -350,7 +350,7 @@ namespace WpfInvestigate.Controls
             get => GetValue(BaseContentProperty);
             set => SetValue(BaseContentProperty, value);
         }
-        private void SetBaseContent(object content) => base.Content = content;
+        private void SetBaseContent(object content) => base.Content = content;*/
         #endregion
 
         private void UpdateUI() => OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),
