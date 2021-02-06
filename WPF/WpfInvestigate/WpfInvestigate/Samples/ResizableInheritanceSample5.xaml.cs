@@ -20,8 +20,7 @@ namespace WpfInvestigate.Samples
         {
             base.OnApplyTemplate();
 
-            var rControl = Template.FindName("ResizingControl", this) as FrameworkElement;
-            if (rControl != null)
+            if (GetTemplateChild("ResizingControl") is FrameworkElement rControl)
                 SetBinding(Panel.ZIndexProperty, new Binding("(Panel.ZIndex)") { Source = rControl });
         }
     }

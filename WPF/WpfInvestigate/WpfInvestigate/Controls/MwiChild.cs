@@ -81,12 +81,10 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
 
-            var resizingThumb = Template.FindName("MovingThumb", this) as Thumb;
-            if (resizingThumb != null)
+            if (GetTemplateChild("MovingThumb") is Thumb resizingThumb)
                 resizingThumb.MouseDoubleClick += MovingThumb_OnMouseDoubleClick;
 
-            var systemMenuButton = Template.FindName("SystemMenuButton", this) as ToggleButton;
-            if (systemMenuButton != null)
+            if (GetTemplateChild("SystemMenuButton") is ToggleButton systemMenuButton)
                 systemMenuButton.Checked += SystemMenuButton_OnChecked;
         }
         private void TransitionFromMaximizedToNormalWindowState(bool isMoving)

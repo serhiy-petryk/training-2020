@@ -23,7 +23,6 @@ namespace WpfInvestigate.Samples
             Loaded -= ResizableInheritanceSample2_Loaded;
             //Dispatcher.Invoke(() =>
             //{
-                var a1 = Template.FindName("MovingThumb", this);
                 var cp = Tips.GetVisualChildren(this).OfType<ContentPresenter>().FirstOrDefault();
                 var a2 = cp.ContentTemplate.FindName("MovingThumb", cp);
                 MovingThumb = a2 as Thumb;
