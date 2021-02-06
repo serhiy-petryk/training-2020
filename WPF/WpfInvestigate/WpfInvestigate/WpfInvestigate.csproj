@@ -87,6 +87,7 @@
     <Compile Include="Controls\MwiChild.cs" />
     <Compile Include="Controls\MwiChild.WindowState.cs" />
     <Compile Include="Controls\MwiContainer.cs" />
+    <Compile Include="Controls\MwiItems.cs" />
     <Compile Include="Effects\TextBlockEffects.cs" />
     <Compile Include="Obsolete\DialogItems.cs" />
     <Compile Include="Controls\DialogMessage.cs" />
@@ -176,6 +177,9 @@
     </Compile>
     <Compile Include="TestViews\FocusEffectTests.xaml.cs">
       <DependentUpon>FocusEffectTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\MwiItemsTests.xaml.cs">
+      <DependentUpon>MwiItemsTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\MwiTests.xaml.cs">
       <DependentUpon>MwiTests.xaml</DependentUpon>
@@ -373,6 +377,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\MwiItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\PopupResizeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -418,6 +426,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\FocusEffectTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\MwiItemsTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
