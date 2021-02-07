@@ -80,7 +80,7 @@ namespace WpfInvestigate.Effects
             dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
             dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 if (control.Style == null)
                 {
@@ -89,7 +89,7 @@ namespace WpfInvestigate.Effects
                         control.Style = style;
                 }
                 ChromeUpdate(control, null);
-            }));
+            }, DispatcherPriority.Loaded);
         }
 
         private static Tuple<Color?, Color?, Color?, Color?, Color?, Color?, Tuple<bool, bool, bool>> GetState(Control control)

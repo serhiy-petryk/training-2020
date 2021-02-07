@@ -119,7 +119,7 @@ namespace WpfInvestigate.Obsolete
             var tcs = new TaskCompletionSource<AdornerControl>();
             var adorner = CreateAdornerCore(host);
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 // When executing animations in parallel or when there is no dialogitems background animation,
                 // this asynchronous method is completed immediately.
@@ -127,7 +127,7 @@ namespace WpfInvestigate.Obsolete
                     tcs.SetResult(adorner);
                 else
                     CompleteInitializeDialogItems += (s, e) => tcs.SetResult(adorner);
-            }));
+            }, DispatcherPriority.Loaded);
             return tcs.Task;
         }
         private AdornerControl CreateAdornerCore(FrameworkElement host)

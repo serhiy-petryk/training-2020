@@ -65,12 +65,10 @@ namespace WpfInvestigate.Controls
             }
 
             foreach (var a1 in e.RemovedItems)
-                Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
-                    new Action(() => AnimateTabButton((TabItem)ItemContainerGenerator.ContainerFromItem(a1))));
+                Dispatcher.InvokeAsync(() => AnimateTabButton((TabItem)ItemContainerGenerator.ContainerFromItem(a1)), DispatcherPriority.ContextIdle);
 
             foreach (var a1 in e.AddedItems)
-                Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
-                    new Action(() => AnimateTabButton((TabItem)ItemContainerGenerator.ContainerFromItem(a1))));
+                Dispatcher.InvokeAsync(() => AnimateTabButton((TabItem)ItemContainerGenerator.ContainerFromItem(a1)), DispatcherPriority.ContextIdle);
         }
 
         #region ==============  Tab item  ==============

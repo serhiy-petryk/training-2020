@@ -35,12 +35,12 @@ namespace WpfInvestigate.Effects
         {
             if (d is FrameworkElement fe)
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+                Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                 {
                     var txtBox = fe as TextBox ?? Tips.GetVisualChildren(fe).FirstOrDefault(c => c is TextBox) as TextBox;
                     if (txtBox != null)
                     {
-                        txtBox.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None))));
+                        txtBox.Dispatcher.InvokeAsync(() => TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None)), DispatcherPriority.Background);
                         txtBox.TextChanged -= TxtBox_TextChanged;
                         txtBox.GotFocus -= ControlBox_ChangeFocus;
                         txtBox.LostFocus -= ControlBox_ChangeFocus;
@@ -54,7 +54,7 @@ namespace WpfInvestigate.Effects
                     var pswBox = fe as PasswordBox ?? Tips.GetVisualChildren(fe).FirstOrDefault(c => c is PasswordBox) as PasswordBox;
                     if (pswBox != null)
                     {
-                        pswBox.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => ControlBox_ChangeFocus(pswBox, new RoutedEventArgs())));
+                        pswBox.Dispatcher.InvokeAsync(() => ControlBox_ChangeFocus(pswBox, new RoutedEventArgs()), DispatcherPriority.Background);
                         pswBox.PasswordChanged -= ControlBox_ChangeFocus;
                         pswBox.GotFocus -= ControlBox_ChangeFocus;
                         pswBox.LostFocus -= ControlBox_ChangeFocus;
@@ -66,7 +66,7 @@ namespace WpfInvestigate.Effects
                     }
 
                     Debug.Print($"WatermarkEffect.Watermark is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
-                }));
+                }, DispatcherPriority.Loaded);
             }
         }
 

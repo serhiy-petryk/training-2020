@@ -98,7 +98,7 @@ namespace WpfInvestigate
         {
             MainGrid.Children.Remove(Grid);
             Debug.Print($"UIElement_OnPreviewMouseLeftButtonDown");
-            MainGrid.Dispatcher.Invoke(DispatcherPriority.Input, new Action(() => MainGrid.RaiseEvent(e)));
+            MainGrid.Dispatcher.InvokeAsync(() => MainGrid.RaiseEvent(e), DispatcherPriority.Input);
         }
 
         private void TestButton_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

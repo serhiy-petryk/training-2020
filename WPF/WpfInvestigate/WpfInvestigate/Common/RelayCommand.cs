@@ -35,7 +35,7 @@ namespace WpfInvestigate.Common
             if (dispatcher.CheckAccess())
                 CommandManager.InvalidateRequerySuggested();
             else
-                dispatcher.BeginInvoke(new Action(CommandManager.InvalidateRequerySuggested));
+                dispatcher.InvokeAsync(CommandManager.InvalidateRequerySuggested);
         }
     }
 }

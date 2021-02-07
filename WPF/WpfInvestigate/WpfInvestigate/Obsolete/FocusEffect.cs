@@ -38,11 +38,11 @@ namespace WpfInvestigate.Obsolete
 
                 if (e.NewValue is Brush newBrush && newBrush != Brushes.Transparent)
                 {
-                    Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+                    Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                     {
                         element.SizeChanged += Element_ChangeFocus;
                         dpd.AddValueChanged(element, OnElementFocusChanged );
-                    }));
+                    }, DispatcherPriority.Background);
                 }
             }
         }

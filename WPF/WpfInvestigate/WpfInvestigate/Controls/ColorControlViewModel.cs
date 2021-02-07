@@ -211,13 +211,13 @@ namespace WpfInvestigate.Controls
             foreach (var component in Sliders)
                 component.UpdateUI();
 
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+            Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
                     nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColorGrayLevel));
                 foreach (var tone in Tones)
                     tone.UpdateUI();
-            }));
+            }, DispatcherPriority.ContextIdle);
         }
         #endregion
 

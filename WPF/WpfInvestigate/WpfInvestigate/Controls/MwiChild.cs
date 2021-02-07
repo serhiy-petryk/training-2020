@@ -163,7 +163,7 @@ namespace WpfInvestigate.Controls
             var element = (FrameworkElement)sender;
             element.IsEnabled = false;
             ToggleMaximize(null);
-            Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => element.IsEnabled = true)); // nexttick action to prevent MoveThumb_OnDragDelta event
+            Dispatcher.InvokeAsync(new Action(() => element.IsEnabled = true), DispatcherPriority.Render); // nexttick action to prevent MoveThumb_OnDragDelta event
         }
 
         #region ==============  Thumbnail  ===================

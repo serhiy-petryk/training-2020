@@ -44,7 +44,7 @@ namespace WpfInvestigate.Obsolete
                     button.Content = new Viewbox { Child = path };
                 }*/
 
-                button.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
+                button.Dispatcher.InvokeAsync(() =>
                 {
                     button.Unloaded += OnMonochromeButtonUnloaded;
                     var dpd1 = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(Control));
@@ -59,7 +59,7 @@ namespace WpfInvestigate.Obsolete
                     }*/
 
                     OnBackgroundChanged(button, null);
-                }));
+                }, DispatcherPriority.ContextIdle);
             }
         }
 

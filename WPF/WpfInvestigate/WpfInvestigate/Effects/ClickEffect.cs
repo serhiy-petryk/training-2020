@@ -37,7 +37,7 @@ namespace WpfInvestigate.Effects
         {
             if (d is FrameworkElement fe)
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+                Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                 {
                     fe.PreviewMouseLeftButtonDown -= OnElementPreviewMouseLeftButtonDown;
                     fe.PreviewMouseLeftButtonUp -= OnElementPreviewMouseLeftButtonUp;
@@ -57,7 +57,7 @@ namespace WpfInvestigate.Effects
                                     visualGroup.States.Remove(state);
                             }
                     }
-                }));
+                }, DispatcherPriority.Loaded);
             }
         }
 
@@ -84,8 +84,7 @@ namespace WpfInvestigate.Effects
                 if (!(content.RenderTransform is TranslateTransform))
                     content.RenderTransform = new TranslateTransform();
 
-                content.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
-                    new Action(() => ((TranslateTransform) content.RenderTransform).Y = shiftOffsetOnClick));
+                content.Dispatcher.InvokeAsync(new Action(() => ((TranslateTransform) content.RenderTransform).Y = shiftOffsetOnClick), DispatcherPriority.ContextIdle);
             }
         }
 

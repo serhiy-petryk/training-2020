@@ -119,7 +119,7 @@ namespace WpfInvestigate.Helpers
 
         public static void HideInnerBorderOfDatePickerTextBox(FrameworkElement fe, bool toHide)
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 foreach (var textBox in Tips.GetVisualChildren(fe).OfType<DatePickerTextBox>())
                 {
@@ -129,7 +129,7 @@ namespace WpfInvestigate.Helpers
                     foreach (var x in borders)
                         x.BorderThickness = newBorderThickness;
                 }
-            }));
+            }, DispatcherPriority.Loaded);
         }
 
         public static void SetBorderOfToolbarComboBoxes(ToolBar toolBar)
@@ -280,12 +280,11 @@ namespace WpfInvestigate.Helpers
 
         public static void SetFocus(UIElement element)
         {
-            element?.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+            element?.Dispatcher.InvokeAsync(() =>
             {
                 element.Focus();
-                element.Dispatcher.BeginInvoke(DispatcherPriority.Background,
-                    new Action(() => element.MoveFocus(new TraversalRequest(FocusNavigationDirection.First))));
-            }));
+                element.Dispatcher.InvokeAsync(new Action(() => element.MoveFocus(new TraversalRequest(FocusNavigationDirection.First))), DispatcherPriority.Background);
+            }, DispatcherPriority.Background);
         }
         #endregion
     }

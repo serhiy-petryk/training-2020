@@ -37,11 +37,11 @@ namespace WpfInvestigate.Effects
                     if (element.FocusVisualStyle != null)
                         element.FocusVisualStyle = null;
 
-                    Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+                    Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                     {
                         element.SizeChanged += Element_ChangeFocus;
                         dpd.AddValueChanged(element, OnElementFocusChanged);
-                    }));
+                    }, DispatcherPriority.Background);
                 }
             }
         }

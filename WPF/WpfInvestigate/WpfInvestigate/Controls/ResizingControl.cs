@@ -72,11 +72,11 @@ namespace WpfInvestigate.Controls
                 Activate();
             }
 
-            Dispatcher.BeginInvoke(new Action(() =>
+            Dispatcher.InvokeAsync(() =>
             {
                 if (MovingThumb == null && Tips.GetVisualChildren(this).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName) is Thumb movingThumb)
                     MovingThumb = movingThumb;
-            }), DispatcherPriority.Loaded);
+            }, DispatcherPriority.Loaded);
 
             void OnWidthChanged(object sender, EventArgs e)
             {
@@ -85,7 +85,7 @@ namespace WpfInvestigate.Controls
                 {
                     var resizingControl = Tips.GetVisualParents(content).OfType<ResizingControl>().FirstOrDefault();
                     resizingControl.Width = content.Width;
-                    content.Dispatcher.Invoke(() => content.Width = double.NaN, DispatcherPriority.Render);
+                    content.Dispatcher.InvokeAsync(() => content.Width = double.NaN, DispatcherPriority.Render);
                 }
             }
 
@@ -96,7 +96,7 @@ namespace WpfInvestigate.Controls
                 {
                     var resizingControl = Tips.GetVisualParents(content).OfType<ResizingControl>().FirstOrDefault();
                     resizingControl.Height = content.Height;
-                    content.Dispatcher.Invoke(() => content.Height = double.NaN, DispatcherPriority.Render);
+                    content.Dispatcher.InvokeAsync(() => content.Height = double.NaN, DispatcherPriority.Render);
                 }
             }
         }

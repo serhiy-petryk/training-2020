@@ -656,7 +656,7 @@ namespace WpfInvestigate.Obsolete
         private void OnTextBoxGotFocus(object sender, RoutedEventArgs e)
         {
             if (SelectAllOnFocus)
-                Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => _textBox?.SelectAll()));
+                Dispatcher.InvokeAsync(() => _textBox?.SelectAll(), DispatcherPriority.ContextIdle);
         }
 
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)

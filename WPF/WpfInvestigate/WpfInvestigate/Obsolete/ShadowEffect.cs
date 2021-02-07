@@ -32,11 +32,11 @@ namespace WpfInvestigate.Obsolete
                 if (e.NewValue is DropShadowEffect)
                 {
                     element.SizeChanged += Element_DropShadowChanged;
-                    Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+                    Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                     {
                         Element_DropShadowChanged(element, null);
                         // dpd.AddValueChanged(element, OnElementFocusChanged);
-                    }));
+                    }, DispatcherPriority.Loaded);
                 }
             }
         }

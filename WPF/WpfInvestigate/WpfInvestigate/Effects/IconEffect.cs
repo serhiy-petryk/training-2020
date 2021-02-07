@@ -27,8 +27,7 @@ namespace WpfInvestigate.Effects
         {
             if (!(d is ContentControl control) || !(e.NewValue is Geometry geometry)) return;
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => 
-                ControlHelper.AddIconToControl(control, true, geometry, GetMargin(control))));
+            Dispatcher.CurrentDispatcher.InvokeAsync(() => ControlHelper.AddIconToControl(control, true, geometry, GetMargin(control)), DispatcherPriority.Loaded);
         }
     }
 }

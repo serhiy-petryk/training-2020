@@ -45,10 +45,7 @@ namespace WpfInvestigate.Effects
             }
 
             RemoveButtons(textBox);
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
-            {
-                AddButtons(textBox);
-            }));
+            Dispatcher.CurrentDispatcher.InvokeAsync(() => AddButtons(textBox), DispatcherPriority.Loaded);
 
         }
 

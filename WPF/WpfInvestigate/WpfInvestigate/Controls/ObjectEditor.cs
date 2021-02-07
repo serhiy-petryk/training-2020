@@ -75,7 +75,7 @@ namespace WpfInvestigate.Controls
             var editor = (ObjectEditor)d;
             var metadata = DataTypeMetadata.MetadataList[(DataTypeMetadata.DataType)e.NewValue];
             
-            editor.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+            editor.Dispatcher.InvokeAsync(() =>
             {
                 editor.PreviewMouseLeftButtonDown -= EditorBoolean_PreviewMouseLeftButtonDown;
 
@@ -94,7 +94,7 @@ namespace WpfInvestigate.Controls
 
                 if ((DataTypeMetadata.DataType) e.NewValue == DataTypeMetadata.DataType.Bool)
                     editor.PreviewMouseLeftButtonDown += EditorBoolean_PreviewMouseLeftButtonDown;
-            }));
+            }, DispatcherPriority.Normal);
 
         }
 

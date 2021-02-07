@@ -154,7 +154,7 @@ namespace WpfInvestigate.Controls
         {
             if (_popup != null && _popup.IsOpen)
                 _popup.IsOpen = false;
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => _textBox?.Focus()));
+            Dispatcher.InvokeAsync(new Action(() => _textBox?.Focus()), DispatcherPriority.ContextIdle);
         }
 
         /// <summary>

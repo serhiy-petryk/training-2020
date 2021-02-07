@@ -69,11 +69,11 @@ namespace WpfInvestigate.Controls
             base.OnApplyTemplate();
 
             ScrollViewer = GetTemplateChild("ScrollViewer") as ScrollViewer;
-            ScrollViewer?.Dispatcher.BeginInvoke(new Action(() =>
+            ScrollViewer?.Dispatcher.InvokeAsync(() =>
             {
                 if (ScrollViewer.Content is FrameworkElement itemsPresenter && VisualTreeHelper.GetChildrenCount(itemsPresenter) > 0)
                     MwiPanel = VisualTreeHelper.GetChild(itemsPresenter, 0) as Grid;
-            }), DispatcherPriority.Send);
+            }, DispatcherPriority.Send);
         }
         #endregion
 

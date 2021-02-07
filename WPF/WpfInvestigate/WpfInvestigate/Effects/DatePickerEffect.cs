@@ -38,13 +38,13 @@ namespace WpfInvestigate.Effects
                 return;
             }
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 RemoveClearButton(dp);
 
                 if ((bool)e.NewValue)
                     AddClearButton(dp);
-            }));
+            }, DispatcherPriority.Loaded);
         }
 
         private static void AddClearButton(DatePicker dp)
@@ -114,7 +114,7 @@ namespace WpfInvestigate.Effects
                 return;
             }
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 dp.SelectedDateChanged -= OnSelectedDateChanged;
                 var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
@@ -130,7 +130,7 @@ namespace WpfInvestigate.Effects
                 dpdEnd.AddValueChanged(dp, OnChangeDateLimit);
 
                 CheckDatePicker(dp);
-            }));
+            }, DispatcherPriority.Loaded);
         }
 
         private static void OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)

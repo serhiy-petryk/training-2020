@@ -43,28 +43,28 @@ namespace WpfInvestigate.Effects
         //=====================================
         private static void OnWidthPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 if (d is ToggleButton tb && GetViewbox(tb) is Viewbox viewbox)
                     viewbox.Width = (double)e.NewValue;
-            }));
+            }, DispatcherPriority.Loaded);
         }
         private static void OnMarginPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 if (d is ToggleButton tb && (GetViewbox(tb) is Viewbox viewbox) &&
                     ((tb.IsChecked == true && e.Property == MarginOnProperty) ||
                      (tb.IsChecked != null && e.Property == MarginOffProperty)))
                     viewbox.Margin = (Thickness)e.NewValue;
-            }));
+            }, DispatcherPriority.Loaded);
         }
 
         private static void OnGeometryPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ToggleButton tb)
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+                Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                 {
                     if ((!(tb.Content is FrameworkElement) || GetViewbox(tb) == null) && GetGeometryOn(tb) != Geometry.Empty && GetGeometryOff(tb) != Geometry.Empty)
                     {
@@ -74,7 +74,7 @@ namespace WpfInvestigate.Effects
                         tb.Checked += OnToggleButtonCheckChanged;
                         tb.Unchecked += OnToggleButtonCheckChanged;
                     }
-                }));
+                }, DispatcherPriority.Background);
             }
         }
 
