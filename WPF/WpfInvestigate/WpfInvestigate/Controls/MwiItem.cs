@@ -31,7 +31,7 @@ namespace WpfInvestigate.Controls
         internal int _controlId = controlId++;
         static MwiItem()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(MwiItem), new FrameworkPropertyMetadata(typeof(ResizingControl)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MwiItem), new FrameworkPropertyMetadata(typeof(MwiItem)));
             FocusableProperty.OverrideMetadata(typeof(MwiItem), new FrameworkPropertyMetadata(true));
             KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(MwiItem), new FrameworkPropertyMetadata(true));
             KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(MwiItem), new FrameworkPropertyMetadata(KeyboardNavigationMode.Cycle));
@@ -323,6 +323,13 @@ namespace WpfInvestigate.Controls
         {
             get => (FrameworkElement)GetValue(RightHeaderPanelProperty);
             set => SetValue(RightHeaderPanelProperty, value);
+        }
+        //==============================
+        public static readonly DependencyProperty CommandBarProperty = DependencyProperty.Register("CommandBar", typeof(FrameworkElement), typeof(MwiItem), new FrameworkPropertyMetadata(null));
+        public FrameworkElement CommandBar
+        {
+            get => (FrameworkElement)GetValue(CommandBarProperty);
+            set => SetValue(CommandBarProperty, value);
         }
         //==============================
         public static readonly DependencyProperty StatusBarProperty = DependencyProperty.Register("StatusBar", typeof(FrameworkElement), typeof(MwiItem), new FrameworkPropertyMetadata(null));

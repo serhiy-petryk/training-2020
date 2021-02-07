@@ -1,9 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
-        <!--<ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiColors.Wnd7.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiChild.Wnd7.xaml" />-->
-
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/DropDownButtons.xaml" />

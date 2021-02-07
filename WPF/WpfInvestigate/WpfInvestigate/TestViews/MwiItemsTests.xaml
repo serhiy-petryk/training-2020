@@ -48,7 +48,7 @@
                     <ContentControl Content="Mwi Child Test"/>
                 </controls:MwiItem>
 
-                <controls:ResizingControl Position="5 5">
+                <!--<controls:ResizingControl Position="5 5">
                     <ContentControl Content="Mwi Child Test"/>
                 </controls:ResizingControl>
 
@@ -62,7 +62,7 @@
                                           ToolTip="LimitPositionToPanelBounds=False"
                                           MovingThumb="{Binding ElementName=Test3, Path=MovingThumb}">
                     <samples:ResizableContentPropertySample x:Name="Test3"/>
-                </controls:ResizingControl>
+                </controls:ResizingControl>-->
 
                 <controls:MwiItem Position="100 100">
                     <ContentControl Content="object Content"/>
