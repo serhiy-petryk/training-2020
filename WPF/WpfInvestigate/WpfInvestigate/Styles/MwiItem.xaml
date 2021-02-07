@@ -62,62 +62,62 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <Thumb Grid.Column="0" Grid.ColumnSpan="5" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"
-                                       effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header}"/>
+                                    <Thumb Grid.Column="0" Grid.ColumnSpan="5" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"
+                                           effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header}"/>
 
-                                <!-- Window icon & System menu -->
-                                <ToggleButton Grid.Column="0" x:Name="SystemMenuButton" Width="16" Height="16" Margin="3 0 0 0" Focusable="False" IsThreeState="False" IsChecked="False" BorderThickness="0" Background="Transparent" Padding="0"
-                                              Visibility="{TemplateBinding Icon, Converter={x:Static common:VisibilityConverter.Instance}}" 
-                                              Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
-                                    <ToggleButton.Resources>
-                                        <ContextMenu x:Key="cm" StaysOpen="False" Padding="0 4">
-                                            <MenuItem Header="Restore" Command="{Binding SysCmdRestore}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource RestoreGeometry}" />
-                                            <MenuItem Header="Minimize" Command="{Binding CmdMinimize}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource MinimizeGeometry}" />
-                                            <MenuItem Header="Maximize" Command="{Binding SysCmdMaximize}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource MaximizeGeometry}"/>
-                                            <Separator Height="12" Margin="0 -2"/>
-                                            <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
-                                                      Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.InverseInstance}}" InputGestureText="Ctrl+F4"/>
-                                            <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
-                                                      Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.Instance}}" InputGestureText="Alt+F4"/>
-                                        </ContextMenu>
-                                    </ToggleButton.Resources>
+                                    <!-- Window icon & System menu -->
+                                    <ToggleButton Grid.Column="0" x:Name="SystemMenuButton" Width="16" Height="16" Margin="3 0 0 0" Focusable="False" IsThreeState="False" IsChecked="False" BorderThickness="0" Background="Transparent" Padding="0"
+                                                  Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}" 
+                                                  Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+                                        <ToggleButton.Resources>
+                                            <ContextMenu x:Key="cm" StaysOpen="False" Padding="0 4">
+                                                <MenuItem Header="Restore" Command="{Binding SysCmdRestore}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource RestoreGeometry}" />
+                                                <MenuItem Header="Minimize" Command="{Binding CmdMinimize}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource MinimizeGeometry}" />
+                                                <MenuItem Header="Maximize" Command="{Binding SysCmdMaximize}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource MaximizeGeometry}"/>
+                                                <Separator Height="12" Margin="0 -2"/>
+                                                <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
+                                                          Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.InverseInstance}}" InputGestureText="Ctrl+F4"/>
+                                                <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
+                                                          Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.Instance}}" InputGestureText="Alt+F4"/>
+                                            </ContextMenu>
+                                        </ToggleButton.Resources>
                                         <Image x:Name="IconImage" Source="{TemplateBinding Icon}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                                </ToggleButton>
+                                    </ToggleButton>
 
-                                <!-- Left header panel -->
-                                <ContentPresenter Grid.Column="1" Content="{Binding LeftHeaderPanel}" UseLayoutRounding="False"/>
+                                    <!-- Left header panel -->
+                                    <ContentPresenter Grid.Column="1" Content="{Binding LeftHeaderPanel}" UseLayoutRounding="False"/>
 
-                                <!-- Window title -->
-                                <TextBlock Grid.Column="2" x:Name="Header" Margin="3 0 0 0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{Binding Title}"/>
+                                    <!-- Window title -->
+                                    <TextBlock Grid.Column="2" x:Name="Header" Margin="3 0 0 0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{Binding Title}"/>
 
-                                <!-- Left header panel -->
-                                <ContentPresenter Grid.Column="3" Content="{Binding RightHeaderPanel}"/>
+                                    <!-- Left header panel -->
+                                    <ContentPresenter Grid.Column="3" Content="{Binding RightHeaderPanel}"/>
 
-                                <!-- Window buttons -->
-                                <Button Grid.Column="4" Focusable="False" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}"
-                                        Visibility="{Binding IsDetachButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                                <Button Grid.Column="5" Focusable="False" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource MinimizeButtonStyle}"
-                                        Visibility="{Binding IsMinimizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                                <Button Grid.Column="6" Focusable="False" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
-                                        Visibility="{Binding IsMaximizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                                <Button Grid.Column="7" Focusable="False" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{StaticResource CloseButtonStyle}"
-                                        Visibility="{Binding IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                    <!-- Window buttons -->
+                                    <Button Grid.Column="4" Focusable="False" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}"
+                                            Visibility="{Binding IsDetachButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                    <Button Grid.Column="5" Focusable="False" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource MinimizeButtonStyle}"
+                                            Visibility="{Binding IsMinimizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                    <Button Grid.Column="6" Focusable="False" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
+                                            Visibility="{Binding IsMaximizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                    <Button Grid.Column="7" Focusable="False" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{StaticResource CloseButtonStyle}"
+                                            Visibility="{Binding IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
                                 </Grid>
 
-                            <!-- Content & Command/Status bars -->
+                                <!-- Content & Command/Status bars -->
                             <!--<Border Grid.Row="1" x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">-->
                             <Border Grid.Row="1" x:Name="ContentBorder">
                                 <Grid Grid.Row="1">
@@ -127,7 +127,7 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <!-- Command bar -->
-                                    <!--<ContentPresenter Grid.Row="0" Content="{Binding CommandBar}"/>-->
+                                    <ContentPresenter Grid.Row="0" Content="{Binding CommandBar}"/>
                                     <!-- Window content -->
                                     <ContentControl Grid.Row="1" Content="{Binding Content}" />
                                     <!-- Status bar -->
@@ -151,10 +151,10 @@
                         <Rectangle x:Name="RightBorder" Width="1" HorizontalAlignment="Right" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
                         <Rectangle x:Name="BottomBorder" Height="1" VerticalAlignment="Bottom" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
 
-                            <Thumb x:Name="ResizeLeft" Width="{Binding EdgeThickness.Left}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-                            <Thumb x:Name="ResizeTop" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-                            <Thumb x:Name="ResizeRight" Width="{Binding EdgeThickness.Right}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-                            <Thumb x:Name="ResizeBottom" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeLeft" Width="{Binding EdgeThickness.Left}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeTop" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeRight" Width="{Binding EdgeThickness.Right}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottom" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
 
                         <Thumb x:Name="ResizeTopLeft" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
                                Width="{Binding EdgeThickness.Left, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2*2+}"/>
