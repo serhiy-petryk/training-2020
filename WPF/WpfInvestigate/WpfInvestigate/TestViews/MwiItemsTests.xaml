@@ -44,14 +44,15 @@
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
             <controls:MwiItems x:Name="MwiContainer" Background="Beige">
-                <!--<controls:MwiChild Position="50 50" Title="Title" EdgeThickness="12" Height="150">
+                <controls:MwiItem Position="50 50" Title="Title" EdgeThickness="12" Height="150">
                     <ContentControl Content="Mwi Child Test"/>
-                </controls:MwiChild>-->
+                </controls:MwiItem>
+
                 <controls:ResizingControl Position="5 5">
                     <ContentControl Content="Mwi Child Test"/>
                 </controls:ResizingControl>
 
-                <controls:ResizingControl Position="5 50" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
+                <!--<controls:ResizingControl Position="5 50" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
                                           ToolTip="LimitPositionToPanelBounds=True"
                                           MovingThumb="{Binding ElementName=Test2, Path=MovingThumb}">
                     <samples:ResizableContentPropertySample x:Name="Test2"/>
@@ -60,7 +61,7 @@
                                           ToolTip="LimitPositionToPanelBounds=False"
                                           MovingThumb="{Binding ElementName=Test3, Path=MovingThumb}">
                     <samples:ResizableContentPropertySample x:Name="Test3"/>
-                </controls:ResizingControl>
+                </controls:ResizingControl>-->
 
 
                 <!--<controls:MwiChild Position="100 100">

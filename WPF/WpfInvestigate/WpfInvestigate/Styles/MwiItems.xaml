@@ -54,7 +54,7 @@
                                                   effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
 
                                     <!-- Window tab control -->
-                                    <controls:MwiBar Grid.Column="1" x:Name="WindowsBar" ItemsSource="{Binding Items}" SelectedItem="{Binding ActiveMwiChild}" Margin="0"/>
+                                    <controls:MwiBar Grid.Column="1" x:Name="WindowsBar" ItemsSource="{Binding Items}" SelectedItem="{Binding ActiveMwiItem}" Margin="0"/>
 
                                 </Grid>
                             </Border>

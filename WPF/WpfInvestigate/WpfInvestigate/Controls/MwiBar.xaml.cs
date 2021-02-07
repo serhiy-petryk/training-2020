@@ -109,6 +109,8 @@ namespace WpfInvestigate.Controls
         {
             if (((FrameworkElement)sender).DataContext is MwiChild mwiChild)
                 mwiChild.RefreshThumbnail();
+            else if (((FrameworkElement)sender).DataContext is MwiItem mwiItem)
+                mwiItem.RefreshThumbnail();
         }
 
         private void TabToolTip_OnOpened(object sender, RoutedEventArgs e)
