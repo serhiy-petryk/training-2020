@@ -52,31 +52,31 @@
                     <ContentControl Content="Mwi Child Test"/>
                 </controls:ResizingControl>
 
-                <!--<controls:ResizingControl Position="5 50" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
+                <controls:ResizingControl Position="5 50" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="True"
                                           ToolTip="LimitPositionToPanelBounds=True"
                                           MovingThumb="{Binding ElementName=Test2, Path=MovingThumb}">
                     <samples:ResizableContentPropertySample x:Name="Test2"/>
                 </controls:ResizingControl>
+
                 <controls:ResizingControl Position="5 160" Width="200" Height="100" Background="Yellow" LimitPositionToPanelBounds="False"
                                           ToolTip="LimitPositionToPanelBounds=False"
                                           MovingThumb="{Binding ElementName=Test3, Path=MovingThumb}">
                     <samples:ResizableContentPropertySample x:Name="Test3"/>
-                </controls:ResizingControl>-->
+                </controls:ResizingControl>
 
-
-                <!--<controls:MwiChild Position="100 100">
+                <controls:MwiItem Position="100 100">
                     <ContentControl Content="object Content"/>
-                </controls:MwiChild>
+                </controls:MwiItem>
 
-                <controls:MwiChild Position="200 200" Height="150" EdgeThickness="15">
-                    <controls:MwiChild.StatusBar>
+                <controls:MwiItem Position="200 200" Height="150" EdgeThickness="15">
+                    <controls:MwiItem.StatusBar>
                         <samples:MwiStatusBarSample/>
-                    </controls:MwiChild.StatusBar>
+                    </controls:MwiItem.StatusBar>
                     <TextBlock Text="TextBlock Content: height=150, EdgeThickness=15" FontSize="16" Background="Yellow"
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                </controls:MwiChild>
+                </controls:MwiItem>
 
-                <controls:MwiChild Position="250 250" Title="Long long very long Title very long very long" Height="150">
+                <controls:MwiItem Position="250 250" Title="Long long very long Title very long very long" Height="150">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Mwi Child TextBlock Content" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Orange"
                                    PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
@@ -84,16 +84,16 @@
                         <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
                         <Button Focusable="False">Not focusable</Button>
                     </StackPanel>
-                </controls:MwiChild>
+                </controls:MwiItem>
 
-                <controls:MwiChild Position="300 300" Title="Title" Resizable="False">
-                    <controls:MwiChild.StatusBar>
+                <controls:MwiItem Position="300 300" Title="Title" Resizable="False">
+                    <controls:MwiItem.StatusBar>
                         <samples:MwiStatusBarSample/>
-                    </controls:MwiChild.StatusBar>
+                    </controls:MwiItem.StatusBar>
                     <TextBlock Text="Not resizable" Background="Yellow"/>
-                </controls:MwiChild>
+                </controls:MwiItem>
 
-                <controls:MwiChild Title="Window Using XAML" Position="20 222" Icon="/Resources/OriginalLogo.png" Height="350">
+                <controls:MwiItem Title="Window Using XAML" Position="20 222" Icon="/Resources/OriginalLogo.png" Height="350">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel>
                             <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdDisableDetach}">Disable Detach</Button>
@@ -112,7 +112,7 @@
                             <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdShowMessage}">Show Message</Button>
                         </StackPanel>
                     </ScrollViewer>
-                </controls:MwiChild>-->
+                </controls:MwiItem>
 
             </controls:MwiItems>
         </Grid>
