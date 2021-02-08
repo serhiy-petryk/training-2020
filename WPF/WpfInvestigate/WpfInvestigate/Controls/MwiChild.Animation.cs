@@ -57,13 +57,8 @@ namespace WpfInvestigate.Controls
             {
                 Visibility = Visibility.Collapsed;
                 if (MwiContainer.ActiveMwiChild == this)
-                {
-                    var newMwiChild = MwiContainer.InternalWindows.Any(w => w.WindowState != WindowState.Minimized)
-                        ? MwiContainer.InternalWindows.Where(w => w.WindowState != WindowState.Minimized)
-                            .Aggregate((w1, w2) => Panel.GetZIndex(w1) > Panel.GetZIndex(w2) ? w1 : w2)
-                        : null;
-                    newMwiChild?.Activate();
-                }
+                    MwiContainer.GetTopChild(MwiContainer.InternalWindows
+                        .Where(w => w.WindowState != WindowState.Minimized).ToArray())?.Activate();
             }
         }
 
