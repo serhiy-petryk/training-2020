@@ -1,5 +1,4 @@
-﻿using System.Runtime.Remoting.Contexts;
-using System.Windows;
+﻿using System.Windows;
 
 namespace WpfInvestigate.Samples
 {
