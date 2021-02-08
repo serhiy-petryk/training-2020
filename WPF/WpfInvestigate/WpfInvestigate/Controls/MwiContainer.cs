@@ -33,28 +33,25 @@ namespace WpfInvestigate.Controls
             adorner.ShowContentDialog(content);
         }
 
-        private void Children_OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    var mwiChild = Children[e.NewStartingIndex];
-                    mwiChild.MwiContainer = this;
-                    MwiPanel.Children.Add(mwiChild);
-                    mwiChild.Activate();
+                    foreach (MwiChild mwiChild in e.NewItems)
+                    {
+                        mwiChild.MwiContainer = this;
+                        MwiPanel.Children.Add(mwiChild);
+                    }
+                    if (e.NewItems.Count > 0)
+                        ((MwiChild) e.NewItems[e.NewItems.Count - 1]).Activate();
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    var oldChild = (MwiChild)e.OldItems[0];
-                    // ActiveMwiChild = null; // must be null because sometimes there is an error on WindowTabs.Remove (select window tab => press delete button on active MwiChild): Index was outside the bounds of the array
-                    MwiPanel.Children.Remove(oldChild);
+                    foreach (MwiChild oldChild in e.OldItems)
+                        MwiPanel.Children.Remove(oldChild);
                     if (GetTopChild() is MwiChild newChild)
                         newChild.Activate(false);
-                    break;
-
-                case NotifyCollectionChangedAction.Reset:
-                    /*while (Children.Count > 0)
-                        Children[0].Close();*/
                     break;
             }
         }
@@ -96,9 +93,8 @@ namespace WpfInvestigate.Controls
             ScrollViewer = GetTemplateChild("ScrollViewer") as ScrollViewer;
             MwiPanel = GetTemplateChild("MwiPanel") as Grid;
 
-            Children.CollectionChanged += Children_OnCollectionChanged;
-            for (var k = 0; k < Children.Count; k++)
-                Children_OnCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children[k], k));
+            Children.CollectionChanged += OnChildrenCollectionChanged;
+            OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
 
             if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
             {

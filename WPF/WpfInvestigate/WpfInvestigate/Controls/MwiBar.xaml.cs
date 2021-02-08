@@ -103,11 +103,8 @@ namespace WpfInvestigate.Controls
             e.Handled = true;
         }
 
-        private void TabItem_OnToolTipOpening(object sender, ToolTipEventArgs e)
-        {
-            if (((FrameworkElement)sender).DataContext is MwiChild mwiChild)
-                mwiChild.RefreshThumbnail();
-        }
+        private void TabItem_OnToolTipOpening(object sender, ToolTipEventArgs e) =>
+            ((MwiChild) ((FrameworkElement) sender).DataContext).RefreshThumbnail();
 
         private void TabToolTip_OnOpened(object sender, RoutedEventArgs e)
         {
