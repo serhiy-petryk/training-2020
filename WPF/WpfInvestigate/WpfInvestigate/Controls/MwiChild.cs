@@ -81,8 +81,11 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
 
-            if (GetTemplateChild("MovingThumb") is Thumb resizingThumb)
-                resizingThumb.MouseDoubleClick += MovingThumb_OnMouseDoubleClick;
+            if (GetTemplateChild("MovingThumb") is Thumb movingThumb)
+            {
+                MovingThumb = movingThumb;
+                movingThumb.MouseDoubleClick += MovingThumb_OnMouseDoubleClick;
+            }
 
             if (GetTemplateChild("SystemMenuButton") is ToggleButton systemMenuButton)
                 systemMenuButton.Checked += SystemMenuButton_OnChecked;
