@@ -94,7 +94,7 @@
                                                       Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.Instance}}" InputGestureText="Alt+F4"/>
                                         </ContextMenu>
                                     </ToggleButton.Resources>
-                                        <Image x:Name="IconImage" Source="{TemplateBinding Icon}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                                    <Image x:Name="IconImage" Source="{TemplateBinding Icon}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                                 </ToggleButton>
 
                                 <!-- Left header panel -->

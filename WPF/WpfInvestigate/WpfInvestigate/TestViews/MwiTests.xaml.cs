@@ -152,5 +152,11 @@ namespace WpfInvestigate.TestViews
             };
             MwiContainer.AddDialog(content);
         }
+
+        private void OnTestClick(object sender, RoutedEventArgs e)
+        {
+            var a1 = sender as FrameworkElement;
+            var aa1 = Tips.GetVisualParents(a1);
+        }
     }
 }

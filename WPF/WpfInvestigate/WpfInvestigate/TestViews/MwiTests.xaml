@@ -94,6 +94,7 @@
                             <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdOpenDialog}">Cmd: Open Dialog Window</Button>
                             <Button Height="20" Click="OnOpenDialogClick" Content="Open Dialog Window"/>
                             <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdShowMessage}">Show Message</Button>
+                            <Button Height="20" Click="OnTestClick" Content="Test click"/>
                         </StackPanel>
                     </ScrollViewer>
                 </controls:MwiChild>
