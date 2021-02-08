@@ -125,9 +125,7 @@ namespace WpfInvestigate.Controls
         internal IEnumerable<MwiChild> InternalWindows => Children.Where(w => !w.IsWindowed);
         internal MwiChild GetTopChild(IEnumerable<MwiChild> items) => items.OrderByDescending(Panel.GetZIndex).FirstOrDefault();
 
-        internal double InnerHeight => ScrollViewer.ActualHeight;
-
-        /// Offset for new window.
+        // Offset for new window.
         private double _windowOffset = -WINDOW_OFFSET_STEP;
 
         private MwiChild _activeMwiChild;

@@ -253,35 +253,12 @@ namespace WpfInvestigate.Controls
             set => SetValue(AllowCloseProperty, value);
         }
         //================================
-        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(MwiChild), new UIPropertyMetadata(false, OnIsActiveValueChanged));
+        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(MwiChild), new UIPropertyMetadata(false));
         public bool IsActive
         {
             get => (bool)GetValue(IsActiveProperty);
             set => SetValue(IsActiveProperty, value);
         }
-        private static void OnIsActiveValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            /*var mwiChild = (MwiChild)sender;
-            var focused = (bool)e.NewValue;
-            if (mwiChild.Container == null)
-                return;
-
-            if (focused)
-            {
-                if (mwiChild.WindowState == WindowState.Minimized || mwiChild.DetachedHost?.WindowState == WindowState.Minimized)
-                {
-                    // nothing to do (ToggleMinimize is doing in WindowsBar.TabItem_PreviewMouseLeftButtonDown): mwiChild.ToggleMinimize(null);
-                }
-                else if (mwiChild.IsWindowed)
-                    mwiChild.DetachedHost?.Focus();
-            }
-
-            if (focused)
-                mwiChild.RaiseEvent(new RoutedEventArgs(GotFocusEvent, mwiChild));
-            else
-                mwiChild.RaiseEvent(new RoutedEventArgs(LostFocusEvent, mwiChild));*/
-        }
-
         //================================
         public static readonly DependencyProperty WindowStateProperty = DependencyProperty.Register("WindowState", typeof(WindowState), typeof(MwiChild), new UIPropertyMetadata(WindowState.Normal, OnWindowStateValueChanged));
         public WindowState WindowState
@@ -303,14 +280,6 @@ namespace WpfInvestigate.Controls
             get => (string)GetValue(TitleProperty);
             set => SetValue(TitleProperty, value);
         }
-        /*//==============================
-        public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content),
-            typeof(object), typeof(MwiChild), new UIPropertyMetadata(null));
-        public new object Content
-        {
-            get => (object)GetValue(ContentProperty);
-            set => SetValue(ContentProperty, value);
-        }*/
         //================================
         public static readonly DependencyProperty LeftHeaderPanelProperty = DependencyProperty.Register("LeftHeaderPanel", typeof(FrameworkElement), typeof(MwiChild), new FrameworkPropertyMetadata(null));
         public FrameworkElement LeftHeaderPanel
@@ -342,16 +311,6 @@ namespace WpfInvestigate.Controls
             get => (Buttons?)GetValue(VisibleButtonsProperty);
             set => SetValue(VisibleButtonsProperty, value);
         }
-        //==============================
-        /*public static readonly DependencyProperty BaseContentProperty = DependencyProperty.Register(nameof(BaseContent),
-            typeof(object), typeof(MwiChild),
-            new UIPropertyMetadata(null, (o, args) => ((MwiChild)o).SetBaseContent(args.NewValue)));
-        public object BaseContent
-        {
-            get => GetValue(BaseContentProperty);
-            set => SetValue(BaseContentProperty, value);
-        }
-        private void SetBaseContent(object content) => base.Content = content;*/
         #endregion
 
         private void UpdateUI() => OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),
