@@ -94,8 +94,6 @@ namespace WpfInvestigate.Controls
             {
                 if (resizingControl is MwiChild mwiChild)
                     mwiChild.CmdClose.Execute(null);
-                else if (resizingControl is MwiItem mwiItem)
-                    mwiItem.CmdClose.Execute(null);
                 else if (ItemsSource is IList list)
                     list.Remove(((FrameworkElement)sender).DataContext);
             }
@@ -109,8 +107,6 @@ namespace WpfInvestigate.Controls
         {
             if (((FrameworkElement)sender).DataContext is MwiChild mwiChild)
                 mwiChild.RefreshThumbnail();
-            else if (((FrameworkElement)sender).DataContext is MwiItem mwiItem)
-                mwiItem.RefreshThumbnail();
         }
 
         private void TabToolTip_OnOpened(object sender, RoutedEventArgs e)

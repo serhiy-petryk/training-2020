@@ -64,7 +64,6 @@
                     <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
                     <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
                     <Button x:Name="MwiTests" Width="200" Margin="0 5" Content="WiP: Mwi" Click="MwiTests_OnClick"/>
-                    <Button x:Name="MwiItemsTests" Width="200" Margin="0 5" Content="WiP: MwiItems" Click="MwiItemsTests_OnClick"/>
 
                     <WrapPanel Margin="5" Background="Aqua" HorizontalAlignment="Stretch">
                         <Grid x:Name="MainGrid" Width="100" Height="100" Background="Gainsboro" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseLeftButtonDown="MainUIElement_OnPreviewMouseLeftButtonDown">

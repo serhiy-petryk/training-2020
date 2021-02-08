@@ -83,14 +83,10 @@
     <Compile Include="Controls\MwiBar.xaml.cs">
       <DependentUpon>MwiBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MwiItem.Animation.cs" />
-    <Compile Include="Controls\MwiItem.WindowState.cs" />
-    <Compile Include="Controls\MwiItem.cs" />
     <Compile Include="Controls\MwiChild.Animation.cs" />
     <Compile Include="Controls\MwiChild.cs" />
     <Compile Include="Controls\MwiChild.WindowState.cs" />
     <Compile Include="Controls\MwiContainer.cs" />
-    <Compile Include="Controls\MwiItems.cs" />
     <Compile Include="Effects\TextBlockEffects.cs" />
     <Compile Include="Obsolete\DialogItems.cs" />
     <Compile Include="Controls\DialogMessage.cs" />
@@ -180,9 +176,6 @@
     </Compile>
     <Compile Include="TestViews\FocusEffectTests.xaml.cs">
       <DependentUpon>FocusEffectTests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TestViews\MwiItemsTests.xaml.cs">
-      <DependentUpon>MwiItemsTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\MwiTests.xaml.cs">
       <DependentUpon>MwiTests.xaml</DependentUpon>
@@ -376,15 +369,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\MwiItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Styles\MwiChild.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\MwiItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -433,10 +418,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\FocusEffectTests.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TestViews\MwiItemsTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

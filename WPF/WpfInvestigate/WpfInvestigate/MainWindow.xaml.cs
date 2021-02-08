@@ -82,7 +82,6 @@ namespace WpfInvestigate
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
         private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
         private void MwiTests_OnClick(object sender, RoutedEventArgs e) => new MwiTests().Show();
-        private void MwiItemsTests_OnClick(object sender, RoutedEventArgs e) => new MwiItemsTests().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
