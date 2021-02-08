@@ -53,7 +53,7 @@ namespace WpfInvestigate.Controls
                     foreach (MwiChild oldChild in e.OldItems)
                         MwiPanel.Children.Remove(oldChild);
 
-                    GetTopChild(Children.ToArray())?.Activate(false);
+                    GetTopChild(Children)?.Activate(false);
                     
                     break;
             }
@@ -123,9 +123,7 @@ namespace WpfInvestigate.Controls
         public Grid MwiPanel;
         public ObservableCollection<MwiChild> Children { get; set; } = new ObservableCollection<MwiChild>();
         internal IEnumerable<MwiChild> InternalWindows => Children.Where(w => !w.IsWindowed);
-        internal MwiChild GetTopChild(MwiChild[] items) => items.Any()
-            ? items.Aggregate((w1, w2) => Panel.GetZIndex(w1) > Panel.GetZIndex(w2) ? w1 : w2)
-            : null;
+        internal MwiChild GetTopChild(IEnumerable<MwiChild> items) => items.OrderByDescending(Panel.GetZIndex).FirstOrDefault();
 
         internal double InnerHeight => ScrollViewer.ActualHeight;
 
