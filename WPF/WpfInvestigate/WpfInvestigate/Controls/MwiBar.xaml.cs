@@ -84,21 +84,15 @@ namespace WpfInvestigate.Controls
 
         private void TabItem_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var resizingControl = ((FrameworkElement)sender).DataContext as ResizingControl;
+            var mwiChild = ((FrameworkElement)sender).DataContext as MwiChild;
             var element = (FrameworkElement)Mouse.DirectlyOver;
             while (element != null && element.Name != "DeleteTabButton")
                 element = VisualTreeHelper.GetParent(element) as FrameworkElement;
 
             if (element != null) // delete button was pressed
-                //mwiChild.CmdClose.Execute(null);
-            {
-                if (resizingControl is MwiChild mwiChild)
-                    mwiChild.CmdClose.Execute(null);
-                else if (ItemsSource is IList list)
-                    list.Remove(((FrameworkElement)sender).DataContext);
-            }
+                mwiChild?.CmdClose.Execute(null);
             else
-                resizingControl?.Activate();
+                mwiChild?.Activate();
 
             e.Handled = true;
         }
