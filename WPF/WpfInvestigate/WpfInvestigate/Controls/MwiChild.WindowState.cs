@@ -20,7 +20,7 @@ namespace WpfInvestigate.Controls
         //==========================
         private void ToggleMaximize(object p) => WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
 
-        private void ToggleMinimize(object obj)
+        internal void ToggleMinimize(object obj)
         {
             if (WindowState != WindowState.Minimized)
                 CreateThumbnail();

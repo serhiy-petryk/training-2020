@@ -10,6 +10,13 @@ using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Common
 {
+    public class StringToGeometryConverter : IValueConverter
+    {
+        public static StringToGeometryConverter Instance = new StringToGeometryConverter();
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => Geometry.Parse((string)value);
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+
     public class DummyConverter : DependencyObject, IValueConverter
     {
         public static DummyConverter Instance = new DummyConverter();

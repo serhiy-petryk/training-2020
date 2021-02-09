@@ -30,7 +30,7 @@ namespace WpfInvestigate.Controls
         }
 
         public const string MovingThumbName = "MovingThumb";
-        private static int ZIndexCount = 1;
+        internal static int ZIndexCount = 1;
         public bool LimitPositionToPanelBounds { get; set; } = false;
         public bool IsWindowed => Parent is Window;
         protected Grid HostPanel => VisualTreeHelper.GetParent(this) as Grid;

@@ -6,7 +6,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
+using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
@@ -14,7 +16,7 @@ namespace WpfInvestigate.Controls
     /// Interaction logic for MwiContainer.xaml
     /// </summary>
     [ContentProperty("Children")]
-    public class MwiContainer: ContentControl, INotifyPropertyChanged
+    public partial class MwiContainer: ContentControl, INotifyPropertyChanged
     {
         const int WINDOW_OFFSET_STEP = 25;
 
@@ -25,7 +27,11 @@ namespace WpfInvestigate.Controls
             FocusableProperty.OverrideMetadata(typeof(MwiContainer), new FrameworkPropertyMetadata(false));
         }
 
-        public MwiContainer() => DataContext = this;
+        public MwiContainer()
+        {
+            DataContext = this;
+            CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption);
+        }
 
         public void AddDialog(FrameworkElement content)
         {
@@ -97,6 +103,11 @@ namespace WpfInvestigate.Controls
 
             ScrollViewer = GetTemplateChild("ScrollViewer") as ScrollViewer;
             MwiPanel = GetTemplateChild("MwiPanel") as Grid;
+            if (GetTemplateChild("WindowsMenuButton") is ToggleButton windowsMenuButton)
+            {
+                windowsMenuButton.Checked += OnWindowsMenuButtonCheckedChange;
+                windowsMenuButton.Unchecked += OnWindowsMenuButtonCheckedChange;
+            }
 
             Children.CollectionChanged += OnChildrenCollectionChanged;
             OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
@@ -146,6 +157,7 @@ namespace WpfInvestigate.Controls
                 ? ScrollBarVisibility.Disabled
                 : ScrollBarVisibility.Auto;
 
+        public RelayCommand CmdSetLayout { get; }
         #endregion
 
         #region =================  INotifyPropertyChanged  ==================

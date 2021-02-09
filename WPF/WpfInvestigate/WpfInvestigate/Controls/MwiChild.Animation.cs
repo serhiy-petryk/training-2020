@@ -8,7 +8,7 @@ namespace WpfInvestigate.Controls
 {
     public partial class MwiChild
     {
-        private Task SetRectWithAnimation(Rect to, double fromOpacity, double toOpacity)
+        internal Task SetRectWithAnimation(Rect to, double fromOpacity, double toOpacity)
         {
             var tasks = new List<Task>
             {
