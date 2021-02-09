@@ -385,6 +385,11 @@
                                       effects:CornerRadiusEffect.CornerRadius="4"
                                       Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
 
+                        <ToggleButton Margin="5" Height="30" 
+                                      Style="{StaticResource MonochromeDropDownButtonStyle}"
+                                      effects:ChromeEffect.MonochromeAnimated="Yellow"
+                                      Resources="{StaticResource PopupMenu}" Checked="OpenDropDownMenu"/>
+
                         <ToggleButton Margin="5" Height="30" Padding="4"
                                       Style="{StaticResource MonochromeDropDownButtonStyle}"
                                       ToolTip="Complex content"

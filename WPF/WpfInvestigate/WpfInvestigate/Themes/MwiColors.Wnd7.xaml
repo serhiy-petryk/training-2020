@@ -9,7 +9,8 @@
     <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{x:Static SystemColors.AppWorkspaceColor}"/>
 
     <!-- Windows Bar -->
-    <SolidColorBrush x:Key="Mwi.WindowBar.ForegroundBrush" Color="#FF0069D6"/>
+    <Color x:Key="Mwi.WindowBar.BackgroundColor">#FFD6EAFF</Color>
+    <SolidColorBrush x:Key="Mwi.WindowBar.ForegroundBrush" Color="{StaticResource Mwi.WindowBar.BackgroundColor}"/>
     <SolidColorBrush x:Key="Mwi.WindowBar.BackgroundBrush" Color="#FFD6EAFF"/>
     <SolidColorBrush x:Key="Mwi.WindowBar.BorderBrush" Color="{x:Static SystemColors.HotTrackColor}"/>
 
