@@ -96,6 +96,7 @@
                                                   Style="{StaticResource DefaultButtonBaseStyle}"
                                                   ToolTip="SnapsToDevicePixels=True"
                                                   SnapsToDevicePixels="True"
+                                                  Visibility="{Binding Path=Children.Count, Converter={x:Static common:VisibilityConverter.Instance}, ConverterParameter=Hide}"
                                                   effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
                                                   effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100"
                                                   effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
