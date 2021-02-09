@@ -166,6 +166,41 @@
                                    Width="{Binding ElementName=ResizeTopRight, Path=Width}"/>
                         </Grid>
                     </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsActive" Value="False">
+                            <Setter TargetName="BaseBorder" Property="Background" Value="{DynamicResource Mwi.Child.Unfocused.BaseBackgroundBrush}" />
+                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{DynamicResource Mwi.Child.Unfocused.BaseBorderBrush}" />
+                            <Setter TargetName="HighlightBackground" Property="Opacity" Value="0" />
+                            <Setter TargetName="DarkenBackground" Property="Opacity" Value="0.5" />
+                            <Setter TargetName="LeftBorder" Property="Opacity" Value="0.75" />
+                            <Setter TargetName="TopBorder" Property="Opacity" Value="0.75" />
+                            <Setter TargetName="RightBorder" Property="Opacity" Value="0" />
+                            <Setter TargetName="BottomBorder" Property="Opacity" Value="0" />
+                        </Trigger>
+                        <Trigger SourceName="IconImage" Property="Source" Value="{x:Null}">
+                            <Setter TargetName="IconImage" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter TargetName="BaseBorder" Property="Margin" Value="0" />
+                            <!--<Setter TargetName="ShadowBorder" Property="Visibility" Value="Collapsed" />-->
+                            <Setter TargetName="HeaderAndContent" Property="Margin" Value="0" />
+                            <!--<Setter TargetName="ResizeLeft" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="ResizeLeft" Property="IsHitTestVisible" Value="False"/>
+                            <Setter TargetName="ResizeTop" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeRight" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeBottom" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeTopLeft" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeTopRight" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeBottomRight" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeBottomLeft" Property="IsHitTestVisible" Value="False" />-->
+                            <Setter TargetName="LeftBorder" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="TopBorder" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="RightBorder" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="BottomBorder" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="BaseBorder" Property="BorderThickness" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
