@@ -30,6 +30,8 @@ namespace WpfInvestigate.Controls
         public void AddDialog(FrameworkElement content)
         {
             var adorner = new DialogAdorner(this) { CloseOnClickBackground = true };
+            if (content is MwiChild mwiChild)
+                mwiChild.IsActive = true;
             adorner.ShowContentDialog(content);
         }
 
