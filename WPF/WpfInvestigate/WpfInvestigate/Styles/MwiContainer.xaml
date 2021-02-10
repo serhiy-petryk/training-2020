@@ -11,6 +11,48 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="controls:MwiContainer">
+        <Style.Resources>
+            <Style TargetType="MenuItem" x:Key="WindowsMenuItemStyle">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="MenuItem">
+                            <MenuItem Header="{TemplateBinding Header}" Command="{Binding CmdSetLayout}"
+                                      CommandParameter="{TemplateBinding CommandParameter}">
+                                <MenuItem.Icon>
+                                    <Viewbox Width="16" Height="16">
+                                        <Path x:Name="AA" Width="24" Height="24"
+                                              Fill="{Binding RelativeSource={RelativeSource AncestorType=Control}, Path=Foreground}"
+                                              Data="{TemplateBinding Tag, Converter={x:Static common:StringToGeometryConverter.Instance}}"/>
+                                    </Viewbox>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Windows Menu -->
+            <!--<ContextMenu x:Key="WindowsMenu" StaysOpen="False">
+                <ContextMenu.Resources>
+                    <Style TargetType="Image">
+                        <Setter Property="Width" Value="16" />
+                        <Setter Property="Height" Value="16" />
+                        <Setter Property="Stretch" Value="Fill" />
+                    </Style>
+                </ContextMenu.Resources>
+                <MenuItem Header="Arrange Windows" IsEnabled="False" Foreground="{DynamicResource Mwi.WindowsMenu.ForegroundBrush}" />
+                <MenuItem Header="Tiles Horizontally" CommandParameter="TilesHorizontally" Style="{StaticResource WindowsMenuItemStyle}" Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M15,2v6H9  V2H15z M15,9v6H9V9H15z M2,2h6v6H2V2z M2,9h6v6H2V9z M2,22v-6h6v6H2z M9,22v-6h6v6H9z M22,22h-6v-6h6V22z M22,15h-6V9h6V15z M22,8  h-6V2h6V8z" />
+                <MenuItem Header="Tiles Vertically" CommandParameter="TilesVertically" Style="{StaticResource WindowsMenuItemStyle}" Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M15,2v6H9  V2H15z M15,9v6H9V9H15z M2,2h6v6H2V2z M2,9h6v6H2V9z M2,22v-6h6v6H2z M9,22v-6h6v6H9z M22,22h-6v-6h6V22z M22,15h-6V9h6V15z M22,8  h-6V2h6V8z" />
+                <MenuItem Header="Horizontal" CommandParameter="Horizontal" Style="{StaticResource WindowsMenuItemStyle}" Tag="M24,22.9V1.1C24,0.5,23.5,0,22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8C23.5,24,24,23.5,24,22.9z M2,2h20  v6H2V2z M2,9h20v6H2V9z M2,22v-6h20v6H2z" />
+                <MenuItem Header="Vertical" CommandParameter="Vertical" Style="{StaticResource WindowsMenuItemStyle}" Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M2,22V2h6  v20H2z M9,22V2h6v20H9z M22,22h-6V2h6V22z" />
+                <MenuItem Header="Cascade" CommandParameter="Cascade" Style="{StaticResource WindowsMenuItemStyle}" Tag="M23,8h-3V5c0-0.6-0.4-1-1-1h-3V1c0-0.6-0.4-1-1-1H1C0.4,0,0,0.4,0,1v14c0,0.6,0.4,1,1,1h3v3c0,0.6,0.4,1,1,1h3v3  c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1V9C24,8.4,23.6,8,23,8z M4,5v9H2V2h12v2H5C4.4,4,4,4.4,4,5z M8,9v9H6V6h12v2H9C8.4,8,8,8.4,8,9z   M22,22H10V10h12V22z" />
+                <Separator />
+                <Separator />
+                <MenuItem Header="Collapse all" CommandParameter="CollapseAllWindows" Style="{StaticResource WindowsMenuItemStyle}" Tag="M18 11H10V9H18M20 4V16H8V4H20M20 2H8C6.9 2 6 2.9 6 4V16C6 17.11 6.9 18 8 18H20C21.11 18 22 17.11 22 16V4C22 2.9 21.11 2 20 2M4 6H2V20C2 21.11 2.9 22 4 22H18V20H4V6Z" />
+                <MenuItem Header="Close all" CommandParameter="CloseAllWindows" Style="{StaticResource WindowsMenuItemStyle}" Tag="M20 2H8C6.9 2 6 2.9 6 4V16C6 17.11 6.9 18 8 18H20C21.11 18 22 17.11 22 16V4C22 2.9 21.11 2 20 2M20 16H8V4H20V16M4 6V20H18V22H4C2.9 22 2 21.11 2 20V6H4M9.77 12.84L12.6 10L9.77 7.15L11.17 5.75L14 8.6L16.84 5.77L18.24 7.17L15.4 10L18.23 12.84L16.83 14.24L14 11.4L11.17 14.24L9.77 12.84Z" />
+            </ContextMenu>-->
+        </Style.Resources>
+
         <!--<Setter Property="MinWidth" Value="50"/>
         <Setter Property="MinHeight" Value="50"/>
         <Setter Property="MaxWidth" Value="3000"/>
@@ -78,30 +120,17 @@
                                                         <Setter Property="Height" Value="16" />
                                                         <Setter Property="Stretch" Value="Fill" />
                                                     </Style>
-
-                                                    <ControlTemplate TargetType="MenuItem" x:Key="WindowsMenuItem">
-                                                        <MenuItem Header="{TemplateBinding Header}" Command="{Binding CmdSetLayout}"
-                                                                  CommandParameter="{TemplateBinding CommandParameter}">
-                                                            <MenuItem.Icon>
-                                                                <Viewbox Width="16" Height="16">
-                                                                    <Path x:Name="AA" Width="24" Height="24"
-                                                                          Fill="{Binding RelativeSource={RelativeSource AncestorType=Control}, Path=Foreground}"
-                                                                          Data="{TemplateBinding Tag, Converter={x:Static common:StringToGeometryConverter.Instance}}"/>
-                                                                </Viewbox>
-                                                            </MenuItem.Icon>
-                                                        </MenuItem>
-                                                    </ControlTemplate>
                                                 </ContextMenu.Resources>
                                                 <MenuItem Header="Arrange Windows" IsEnabled="False" Foreground="{DynamicResource Mwi.WindowsMenu.ForegroundBrush}" />
-                                                <MenuItem Header="Tiles Horizontally" CommandParameter="TilesHorizontally" Template="{StaticResource WindowsMenuItem}" Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M15,2v6H9  V2H15z M15,9v6H9V9H15z M2,2h6v6H2V2z M2,9h6v6H2V9z M2,22v-6h6v6H2z M9,22v-6h6v6H9z M22,22h-6v-6h6V22z M22,15h-6V9h6V15z M22,8  h-6V2h6V8z" />
-                                                <MenuItem Header="Tiles Vertically" CommandParameter="TilesVertically" Template="{StaticResource WindowsMenuItem}" Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M15,2v6H9  V2H15z M15,9v6H9V9H15z M2,2h6v6H2V2z M2,9h6v6H2V9z M2,22v-6h6v6H2z M9,22v-6h6v6H9z M22,22h-6v-6h6V22z M22,15h-6V9h6V15z M22,8  h-6V2h6V8z" />
-                                                <MenuItem Header="Horizontal" CommandParameter="Horizontal" Template="{StaticResource WindowsMenuItem}" Tag="M24,22.9V1.1C24,0.5,23.5,0,22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8C23.5,24,24,23.5,24,22.9z M2,2h20  v6H2V2z M2,9h20v6H2V9z M2,22v-6h20v6H2z" />
-                                                <MenuItem Header="Vertical" CommandParameter="Vertical" Template="{StaticResource WindowsMenuItem}" Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M2,22V2h6  v20H2z M9,22V2h6v20H9z M22,22h-6V2h6V22z" />
-                                                <MenuItem Header="Cascade" CommandParameter="Cascade" Template="{StaticResource WindowsMenuItem}" Tag="M23,8h-3V5c0-0.6-0.4-1-1-1h-3V1c0-0.6-0.4-1-1-1H1C0.4,0,0,0.4,0,1v14c0,0.6,0.4,1,1,1h3v3c0,0.6,0.4,1,1,1h3v3  c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1V9C24,8.4,23.6,8,23,8z M4,5v9H2V2h12v2H5C4.4,4,4,4.4,4,5z M8,9v9H6V6h12v2H9C8.4,8,8,8.4,8,9z   M22,22H10V10h12V22z" />
+                                                <MenuItem Header="Tiles Horizontally" CommandParameter="TilesHorizontally" Style="{StaticResource WindowsMenuItemStyle}" Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M15,2v6H9  V2H15z M15,9v6H9V9H15z M2,2h6v6H2V2z M2,9h6v6H2V9z M2,22v-6h6v6H2z M9,22v-6h6v6H9z M22,22h-6v-6h6V22z M22,15h-6V9h6V15z M22,8  h-6V2h6V8z" />
+                                                <MenuItem Header="Tiles Vertically" CommandParameter="TilesVertically" Style="{StaticResource WindowsMenuItemStyle}" Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M15,2v6H9  V2H15z M15,9v6H9V9H15z M2,2h6v6H2V2z M2,9h6v6H2V9z M2,22v-6h6v6H2z M9,22v-6h6v6H9z M22,22h-6v-6h6V22z M22,15h-6V9h6V15z M22,8  h-6V2h6V8z" />
+                                                <MenuItem Header="Horizontal" CommandParameter="Horizontal" Style="{StaticResource WindowsMenuItemStyle}" Tag="M24,22.9V1.1C24,0.5,23.5,0,22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8C23.5,24,24,23.5,24,22.9z M2,2h20  v6H2V2z M2,9h20v6H2V9z M2,22v-6h20v6H2z" />
+                                                <MenuItem Header="Vertical" CommandParameter="Vertical" Style="{StaticResource WindowsMenuItemStyle}" Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M2,22V2h6  v20H2z M9,22V2h6v20H9z M22,22h-6V2h6V22z" />
+                                                <MenuItem Header="Cascade" CommandParameter="Cascade" Style="{StaticResource WindowsMenuItemStyle}" Tag="M23,8h-3V5c0-0.6-0.4-1-1-1h-3V1c0-0.6-0.4-1-1-1H1C0.4,0,0,0.4,0,1v14c0,0.6,0.4,1,1,1h3v3c0,0.6,0.4,1,1,1h3v3  c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1V9C24,8.4,23.6,8,23,8z M4,5v9H2V2h12v2H5C4.4,4,4,4.4,4,5z M8,9v9H6V6h12v2H9C8.4,8,8,8.4,8,9z   M22,22H10V10h12V22z" />
                                                 <Separator />
                                                 <Separator />
-                                                <MenuItem Header="Collapse all" CommandParameter="CollapseAllWindows" Template="{StaticResource WindowsMenuItem}" Tag="M18 11H10V9H18M20 4V16H8V4H20M20 2H8C6.9 2 6 2.9 6 4V16C6 17.11 6.9 18 8 18H20C21.11 18 22 17.11 22 16V4C22 2.9 21.11 2 20 2M4 6H2V20C2 21.11 2.9 22 4 22H18V20H4V6Z" />
-                                                <MenuItem Header="Close all" CommandParameter="CloseAllWindows" Template="{StaticResource WindowsMenuItem}" Tag="M20 2H8C6.9 2 6 2.9 6 4V16C6 17.11 6.9 18 8 18H20C21.11 18 22 17.11 22 16V4C22 2.9 21.11 2 20 2M20 16H8V4H20V16M4 6V20H18V22H4C2.9 22 2 21.11 2 20V6H4M9.77 12.84L12.6 10L9.77 7.15L11.17 5.75L14 8.6L16.84 5.77L18.24 7.17L15.4 10L18.23 12.84L16.83 14.24L14 11.4L11.17 14.24L9.77 12.84Z" />
+                                                <MenuItem Header="Collapse all" CommandParameter="CollapseAllWindows" Style="{StaticResource WindowsMenuItemStyle}" Tag="M18 11H10V9H18M20 4V16H8V4H20M20 2H8C6.9 2 6 2.9 6 4V16C6 17.11 6.9 18 8 18H20C21.11 18 22 17.11 22 16V4C22 2.9 21.11 2 20 2M4 6H2V20C2 21.11 2.9 22 4 22H18V20H4V6Z" />
+                                                <MenuItem Header="Close all" CommandParameter="CloseAllWindows" Style="{StaticResource WindowsMenuItemStyle}" Tag="M20 2H8C6.9 2 6 2.9 6 4V16C6 17.11 6.9 18 8 18H20C21.11 18 22 17.11 22 16V4C22 2.9 21.11 2 20 2M20 16H8V4H20V16M4 6V20H18V22H4C2.9 22 2 21.11 2 20V6H4M9.77 12.84L12.6 10L9.77 7.15L11.17 5.75L14 8.6L16.84 5.77L18.24 7.17L15.4 10L18.23 12.84L16.83 14.24L14 11.4L11.17 14.24L9.77 12.84Z" />
                                             </ContextMenu>
                                         </ToggleButton.Resources>
                                     </ToggleButton>
