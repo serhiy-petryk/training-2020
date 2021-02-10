@@ -113,6 +113,42 @@ namespace WpfInvestigate.Controls
                 systemMenuButton.Checked += (sender, args) => Helpers.DropDownButtonHelper.OpenDropDownMenu(sender);
         }
 
+        protected override void OnVisualParentChanged(DependencyObject oldParent)
+        {
+            base.OnVisualParentChanged(oldParent);
+
+            if (!IsWindowed) return;
+
+            var host = Parent as Window;
+            if (Icon != null && host.Icon == null)
+                host.Icon = Icon;
+            else if (Icon == null && host.Icon != null)
+                Icon = host.Icon;
+            else if (Icon == null && host.Icon == null)
+            {
+                Icon = (ImageSource)FindResource("DefaultIcon");
+                host.Icon = (ImageSource)FindResource("DefaultIcon");
+            }
+
+            if (!string.IsNullOrEmpty(Title) && string.IsNullOrEmpty(host.Title))
+                host.Title = Title;
+            else if (string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(host.Title))
+                Title = host.Title;
+
+            host.KeyDown -= OnHostKeyDown;
+            host.KeyDown += OnHostKeyDown;
+            host.Closed += (sender, args) => host.KeyDown -= OnHostKeyDown;
+
+            void OnHostKeyDown(object sender, KeyEventArgs e)
+            {
+                if (Keyboard.Modifiers == ModifierKeys.Alt && Keyboard.IsKeyDown(Key.F4)) // Is Alt+F4 key pressed
+                {
+                    CmdClose.Execute(null);
+                    e.Handled = true;
+                }
+            }
+        }
+
         #endregion
 
         public void Activate(bool restoreMinimizedSize)

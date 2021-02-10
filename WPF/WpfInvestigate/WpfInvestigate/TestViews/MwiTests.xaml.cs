@@ -158,5 +158,15 @@ namespace WpfInvestigate.TestViews
             var a1 = sender as FrameworkElement;
             var aa1 = Tips.GetVisualParents(a1);
         }
+
+        private void MwiTests_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            var mwiContainer = MwiContainer;
+            if (Keyboard.Modifiers == ModifierKeys.Control && Keyboard.IsKeyDown(Key.F4) && mwiContainer.ActiveMwiChild != null && !mwiContainer.ActiveMwiChild.IsWindowed) // Is Ctrl+F4 key pressed
+            {
+                mwiContainer.ActiveMwiChild.CmdClose.Execute(null);
+                e.Handled = true;
+            }
+        }
     }
 }
