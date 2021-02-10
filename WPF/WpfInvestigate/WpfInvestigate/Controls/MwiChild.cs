@@ -76,20 +76,6 @@ namespace WpfInvestigate.Controls
             TransitionFromMaximizedToNormalWindowState(false);
             base.ResizeThumb_OnDragDelta(sender, e);
         }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            if (GetTemplateChild("MovingThumb") is Thumb movingThumb)
-            {
-                MovingThumb = movingThumb;
-                movingThumb.MouseDoubleClick += MovingThumb_OnMouseDoubleClick;
-            }
-
-            if (GetTemplateChild("SystemMenuButton") is ToggleButton systemMenuButton)
-                systemMenuButton.Checked += SystemMenuButton_OnChecked;
-        }
         private void TransitionFromMaximizedToNormalWindowState(bool isMoving)
         {
             if (WindowState == WindowState.Maximized)
@@ -106,6 +92,28 @@ namespace WpfInvestigate.Controls
                 ToggleMaximize(null);
             }
         }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            if (GetTemplateChild("MovingThumb") is Thumb movingThumb)
+            {
+                MovingThumb = movingThumb;
+                movingThumb.MouseDoubleClick += (sender, args) =>
+                {
+                    var element = (FrameworkElement)sender;
+                    element.IsEnabled = false;
+                    ToggleMaximize(null);
+                    Dispatcher.InvokeAsync(new Action(() => element.IsEnabled = true), DispatcherPriority.Render); // nexttick action to prevent MoveThumb_OnDragDelta event
+                };
+            }
+
+            if (GetTemplateChild("SystemMenuButton") is ToggleButton systemMenuButton)
+                systemMenuButton.Checked += (sender, args) => Helpers.DropDownButtonHelper.OpenDropDownMenu(sender);
+        }
+
+        #endregion
 
         public void Activate(bool restoreMinimizedSize)
         {
@@ -137,8 +145,6 @@ namespace WpfInvestigate.Controls
             BringIntoView();
         }
 
-        #endregion
-
         public async void Close(object obj)
         {
             var cmdCloseBinding = CommandBindings.OfType<CommandBinding>().FirstOrDefault(c => Equals(c.Command, ApplicationCommands.Close));
@@ -157,16 +163,6 @@ namespace WpfInvestigate.Controls
             MwiContainer?.Children.Remove(this);
 
             Closed?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void SystemMenuButton_OnChecked(object sender, RoutedEventArgs e) => Helpers.DropDownButtonHelper.OpenDropDownMenu(sender);
-
-        private void MovingThumb_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var element = (FrameworkElement)sender;
-            element.IsEnabled = false;
-            ToggleMaximize(null);
-            Dispatcher.InvokeAsync(new Action(() => element.IsEnabled = true), DispatcherPriority.Render); // nexttick action to prevent MoveThumb_OnDragDelta event
         }
 
         #region ==============  Thumbnail  ===================
