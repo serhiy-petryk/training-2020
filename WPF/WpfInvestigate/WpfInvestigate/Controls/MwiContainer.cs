@@ -36,8 +36,9 @@ namespace WpfInvestigate.Controls
 
         private bool CanExecutePredicate(object obj)
         {
-            Debug.Print($"CanExecutePredicate: {obj}");
-            return true;
+            // Debug.Print($"CanExecutePredicate: {obj}");
+            return !Equals(obj, "Cascade");
+            // return true;
         }
 
         public void AddDialog(FrameworkElement content)
