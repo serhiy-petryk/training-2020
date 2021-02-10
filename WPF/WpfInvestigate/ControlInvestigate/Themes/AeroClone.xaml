@@ -2450,19 +2450,19 @@
         </Setter>
     </Style>
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=TopLevelItemTemplateKey}"
-                   TargetType="{x:Type MenuItem}">
+                     TargetType="{x:Type MenuItem}">
         <Grid SnapsToDevicePixels="true">
             <Rectangle x:Name="OuterBorder" RadiusX="2" RadiusY="2"/>
             <Rectangle Name="Bg" Margin="1" Fill="{TemplateBinding Control.Background}"
-                 Stroke="{TemplateBinding Control.BorderBrush}" StrokeThickness="1" RadiusX="1" RadiusY="1"/>
+                       Stroke="{TemplateBinding Control.BorderBrush}" StrokeThickness="1" RadiusX="1" RadiusY="1"/>
             <Rectangle x:Name="InnerBorder" Margin="2"/>
             <DockPanel>
                 <ContentPresenter x:Name="Icon" Margin="4,0,6,0" VerticalAlignment="Center" ContentSource="Icon"
-                          SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                                  SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
                 <Path x:Name="GlyphPanel" Margin="7,0,0,0" Visibility="Collapsed" VerticalAlignment="Center"
-              Fill="{TemplateBinding Control.Foreground}" FlowDirection="LeftToRight" Data="{StaticResource Ę}"/>
+                      Fill="{TemplateBinding Control.Foreground}" FlowDirection="LeftToRight" Data="{StaticResource Ę}"/>
                 <ContentPresenter ContentSource="Header" Margin="{TemplateBinding Control.Padding}" RecognizesAccessKey="true"
-                          SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                                  SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
             </DockPanel>
         </Grid>
         <ControlTemplate.Triggers>
