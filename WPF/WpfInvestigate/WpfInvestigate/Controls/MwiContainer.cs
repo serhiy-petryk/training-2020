@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,14 +30,7 @@ namespace WpfInvestigate.Controls
         public MwiContainer()
         {
             DataContext = this;
-            CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecutePredicate);
-        }
-
-        private bool CanExecutePredicate(object obj)
-        {
-            // Debug.Print($"CanExecutePredicate: {obj}");
-            return !Equals(obj, "Cascade");
-            // return true;
+            CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
         }
 
         public void AddDialog(FrameworkElement content)

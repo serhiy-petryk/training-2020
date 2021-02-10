@@ -12,7 +12,6 @@ namespace WpfInvestigate.Controls
 {
     public partial class MwiContainer
     {
-        // internal double InnerHeight => ScrollViewer.ActualHeight;
         private void OnWindowsMenuButtonCheckedChange(object sender, RoutedEventArgs e)
         {
             var button = (ToggleButton)sender;
@@ -39,6 +38,13 @@ namespace WpfInvestigate.Controls
                     });
                 }
             }
+        }
+
+        private bool CanExecuteWindowsMenuOption(object obj)
+        {
+            if (Equals(obj, "CloseAllWindows"))
+                return InternalWindows.Any();
+            return InternalWindows.Any(w => w.WindowState != WindowState.Minimized);
         }
 
         private void ExecuteWindowsMenuOption(object menuOption)
