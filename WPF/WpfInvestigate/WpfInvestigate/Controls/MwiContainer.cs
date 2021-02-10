@@ -37,8 +37,7 @@ namespace WpfInvestigate.Controls
         private bool CanExecutePredicate(object obj)
         {
             Debug.Print($"CanExecutePredicate: {obj}");
-            // throw new NotImplementedException();
-            return false;
+            return true;
         }
 
         public void AddDialog(FrameworkElement content)
