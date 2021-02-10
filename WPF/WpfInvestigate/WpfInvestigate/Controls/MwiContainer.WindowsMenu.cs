@@ -12,17 +12,6 @@ namespace WpfInvestigate.Controls
 {
     public partial class MwiContainer
     {
-        public enum WindowsMenuOptions
-        {
-            TilesHorizontally,
-            TilesVertically,
-            Horizontal,
-            Vertical,
-            Cascade,
-            CollapseAllWindows,
-            CloseAllWindows
-        }
-
         // internal double InnerHeight => ScrollViewer.ActualHeight;
         private void OnWindowsMenuButtonCheckedChange(object sender, RoutedEventArgs e)
         {
@@ -54,23 +43,23 @@ namespace WpfInvestigate.Controls
 
         private void ExecuteWindowsMenuOption(object menuOption)
         {
-            switch ((WindowsMenuOptions)menuOption)
+            switch ((string)menuOption)
             {
-                case WindowsMenuOptions.CollapseAllWindows:
+                case "CollapseAllWindows":
                     foreach (var window in InternalWindows.Where(w => w.WindowState != WindowState.Minimized).OrderBy(w => Panel.GetZIndex(w)).ToArray())
                         window.ToggleMinimize(null);
                     break;
-                case WindowsMenuOptions.CloseAllWindows:
+                case "CloseAllWindows":
                     foreach (var window in InternalWindows.OrderBy(w => Panel.GetZIndex(w)).ToArray())
                         window.Close(null);
                     break;
                 default:
-                    ApplyWindowsLayout((WindowsMenuOptions)menuOption);
+                    ApplyWindowsLayout((string)menuOption);
                     break;
             }
         }
 
-        private void ApplyWindowsLayout(WindowsMenuOptions menuOption)
+        private void ApplyWindowsLayout(string menuOption)
         {
             var windows = InternalWindows.Where(w => w.WindowState != WindowState.Minimized).ToList();
             if (windows.Count == 0) return;
