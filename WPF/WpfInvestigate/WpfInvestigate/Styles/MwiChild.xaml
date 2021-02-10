@@ -19,21 +19,6 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
-    <!-- System menu (icons are taken from Mahapps) -->
-    <system:String x:Key="RestoreGeometry">F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z</system:String>
-    <system:String x:Key="MinimizeGeometry">F1M0,7L0,10 10,10 10,7 0,7z</system:String>
-    <system:String x:Key="MaximizeGeometry">F1M0,0L0,10 10,10 10,0 0,0 0,3 9,3 9,9 1,9 1,3z</system:String>
-    <ControlTemplate TargetType="MenuItem" x:Key="SystemMenuItem">
-        <MenuItem Header="{TemplateBinding Header}" Height="22" Padding="5 2 -5 2" Background="{TemplateBinding Background}" Margin="{TemplateBinding Margin}"
-                  FontWeight="{TemplateBinding FontWeight}" Command="{TemplateBinding Command}" InputGestureText="{TemplateBinding InputGestureText}">
-            <!--<MenuItem.Icon>
-                    <Viewbox Width="8" Height="8">
-                        <Path Width="10" Height="10" Fill="Black" Data="{TemplateBinding Tag, Converter={x:Static common:StringToGeometryConverter.Instance}}"/>
-                    </Viewbox>
-                </MenuItem.Icon>-->
-        </MenuItem>
-    </ControlTemplate>
-
     <Style TargetType="controls:MwiChild" x:Shared="False">
         <Style.Resources>
             <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -41,6 +26,22 @@
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="Visibility" Value="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
             </Style>
+
+            <!-- System menu (icons are taken from Mahapps) -->
+            <system:String x:Key="SysMenuRestoreGeometry">F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z</system:String>
+            <system:String x:Key="SysMenuMinimizeGeometry">F1M0,7L0,10 10,10 10,7 0,7z</system:String>
+            <system:String x:Key="SysMenuMaximizeGeometry">F1M0,0L0,10 10,10 10,0 0,0 0,3 9,3 9,9 1,9 1,3z</system:String>
+            <system:String x:Key="SysMenuCloseGeometry">M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005</system:String>
+            <ControlTemplate TargetType="MenuItem" x:Key="SysMenuItem">
+                <MenuItem Header="{TemplateBinding Header}" Height="22" Padding="5 2 -5 2" Background="{TemplateBinding Background}" Margin="{TemplateBinding Margin}"
+                          FontWeight="{TemplateBinding FontWeight}" Command="{TemplateBinding Command}" InputGestureText="{TemplateBinding InputGestureText}">
+                    <MenuItem.Icon>
+                        <Viewbox Width="8" Height="8">
+                            <Path Width="10" Height="10" Fill="Black" Data="{TemplateBinding Tag, Converter={x:Static common:StringToGeometryConverter.Instance}}"/>
+                        </Viewbox>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ControlTemplate>
         </Style.Resources>
 
         <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -84,13 +85,13 @@
                                               Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
                                         <ToggleButton.Resources>
                                             <ContextMenu x:Key="cm" StaysOpen="False" Padding="0 4">
-                                                <MenuItem Header="Restore" Command="{Binding SysCmdRestore}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource RestoreGeometry}" />
-                                                <MenuItem Header="Minimize" Command="{Binding CmdMinimize}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource MinimizeGeometry}" />
-                                                <MenuItem Header="Maximize" Command="{Binding SysCmdMaximize}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource MaximizeGeometry}"/>
+                                                <MenuItem Header="Restore" Command="{Binding SysCmdRestore}" Template="{StaticResource SysMenuItem}" Tag="{StaticResource SysMenuRestoreGeometry}" />
+                                                <MenuItem Header="Minimize" Command="{Binding CmdMinimize}" Template="{StaticResource SysMenuItem}" Tag="{StaticResource SysMenuMinimizeGeometry}" />
+                                                <MenuItem Header="Maximize" Command="{Binding SysCmdMaximize}" Template="{StaticResource SysMenuItem}" Tag="{StaticResource SysMenuMaximizeGeometry}"/>
                                                 <Separator Height="12" Margin="0 -2"/>
-                                                <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
+                                                <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SysMenuItem}" Tag="{StaticResource SysMenuCloseGeometry}" FontWeight="Bold"
                                                           Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.InverseInstance}}" InputGestureText="Ctrl+F4"/>
-                                                <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SystemMenuItem}" Tag="{StaticResource CloseGeometry}" FontWeight="Bold"
+                                                <MenuItem Header="Close" Command="{Binding CmdClose}" Template="{StaticResource SysMenuItem}" Tag="{StaticResource SysMenuCloseGeometry}" FontWeight="Bold"
                                                           Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.Instance}}" InputGestureText="Alt+F4"/>
                                             </ContextMenu>
                                         </ToggleButton.Resources>
@@ -193,12 +194,12 @@
                             <Setter TargetName="ResizeTopLeft" Property="IsHitTestVisible" Value="False" />
                             <Setter TargetName="ResizeTopRight" Property="IsHitTestVisible" Value="False" />
                             <Setter TargetName="ResizeBottomRight" Property="IsHitTestVisible" Value="False" />
-                            <Setter TargetName="ResizeBottomLeft" Property="IsHitTestVisible" Value="False" />-->
+                            <Setter TargetName="ResizeBottomLeft" Property="IsHitTestVisible" Value="False" />
                             <Setter TargetName="LeftBorder" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="TopBorder" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="RightBorder" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="BottomBorder" Property="Visibility" Value="Hidden" />
-                            <Setter TargetName="BaseBorder" Property="BorderThickness" Value="0" />
+                            <Setter TargetName="BaseBorder" Property="BorderThickness" Value="0" />-->
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
