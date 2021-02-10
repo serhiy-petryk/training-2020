@@ -135,9 +135,9 @@ namespace WpfInvestigate.Controls
             else if (string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(host.Title))
                 Title = host.Title;
 
-            host.KeyDown -= OnHostKeyDown;
+            OnHostClosed(host, null);
             host.KeyDown += OnHostKeyDown;
-            host.Closed += (sender, args) => host.KeyDown -= OnHostKeyDown;
+            host.Closed += OnHostClosed;
 
             void OnHostKeyDown(object sender, KeyEventArgs e)
             {
@@ -147,8 +147,12 @@ namespace WpfInvestigate.Controls
                     e.Handled = true;
                 }
             }
+            void OnHostClosed(object sender, EventArgs e)
+            {
+                host.Closed -= OnHostClosed;
+                host.KeyDown -= OnHostKeyDown;
+            }
         }
-
         #endregion
 
         public void Activate(bool restoreMinimizedSize)
