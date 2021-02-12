@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -62,7 +63,7 @@ namespace WpfInvestigate.Common
         }
 
         #region ===========  Element tree  ================
-        public static IEnumerable<DependencyObject> GetVisualParents(DependencyObject current)
+        public static IEnumerable<DependencyObject> GetVisualParents(this DependencyObject current)
         {
             while (current != null)
             {
@@ -71,7 +72,7 @@ namespace WpfInvestigate.Common
             }
         }
 
-        public static IEnumerable<DependencyObject> GetVisualChildren(DependencyObject current)
+        public static IEnumerable<DependencyObject> GetVisualChildren(this DependencyObject current)
         {
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
             {
@@ -80,6 +81,28 @@ namespace WpfInvestigate.Common
 
                 foreach (var childOfChild in GetVisualChildren(child))
                     yield return childOfChild;
+            }
+        }
+
+        private static Dictionary<Type, List<FieldInfo>> _dpOfTypeCache = new Dictionary<Type, List<FieldInfo>>();
+        public static void UpdateAllBindings(this DependencyObject target)
+        {
+            foreach (var child in GetVisualChildren(target))
+            {
+                var type = child.GetType();
+                if (!_dpOfTypeCache.ContainsKey(type))
+                {
+                    var propertiesDp = new List<FieldInfo>();
+                    var currentType = type;
+                    while (currentType != typeof(object))
+                    {
+                        propertiesDp.AddRange(currentType.GetFields().Where(x => x.FieldType == typeof(DependencyProperty)));
+                        currentType = currentType.BaseType;
+                    }
+                    _dpOfTypeCache[type] = propertiesDp;
+                }
+
+                _dpOfTypeCache[type].ForEach(dp => BindingOperations.GetBindingExpression(child, dp.GetValue(child) as DependencyProperty)?.UpdateTarget());
             }
         }
         #endregion =============================

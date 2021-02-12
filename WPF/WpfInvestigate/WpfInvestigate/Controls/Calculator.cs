@@ -56,7 +56,7 @@ namespace WpfInvestigate.Controls
             base.OnApplyTemplate();
 
             // Allow to select text in indicators
-            foreach (var textBox in Tips.GetVisualChildren(this).OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
+            foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
               textBox.LostFocus += (sender, args) => args.Handled = true;
         }
 

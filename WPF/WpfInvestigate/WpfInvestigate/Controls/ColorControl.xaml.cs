@@ -63,7 +63,7 @@ namespace WpfInvestigate.Controls
         private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             var fe = sender as FrameworkElement;
-            foreach (var cc in Tips.GetVisualChildren(fe).OfType<Canvas>().Where(cc => cc.DataContext is ColorControlViewModel.XYSlider))
+            foreach (var cc in fe.GetVisualChildren().OfType<Canvas>().Where(cc => cc.DataContext is ColorControlViewModel.XYSlider))
                 ((ColorControlViewModel.XYSlider)cc.DataContext).SetSizeOfControl(cc);
 
             VM.UpdateUI();
