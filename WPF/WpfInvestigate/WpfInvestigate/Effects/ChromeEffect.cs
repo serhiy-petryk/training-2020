@@ -97,7 +97,7 @@ namespace WpfInvestigate.Effects
             return new Tuple<Color?, Color?, Color?, Color?, Color?, Color?, Tuple<bool, bool, bool>>(GetMonochrome(control),
                 GetMonochromeAnimated(control), GetBichromeBackground(control), GetBichromeForeground(control),
                 GetBichromeAnimatedBackground(control), GetBichromeAnimatedForeground(control),
-                new Tuple<bool, bool, bool>(control.IsMouseOver, control.IsEnabled, Mouse.LeftButton == MouseButtonState.Pressed));
+                new Tuple<bool, bool, bool>(control.IsMouseOver, control.IsEnabled, IsPressed(control)));
         }
 
         private static void ChromeUpdate(object sender, EventArgs e)
@@ -145,7 +145,7 @@ namespace WpfInvestigate.Effects
 
         private static Tuple<Color?, Color?, Color?, double> GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
         {
-            var isPressed = Mouse.LeftButton == MouseButtonState.Pressed;
+            var isPressed = IsPressed(control);
             if (isPressed && ClickEffect.GetRippleColor(control).HasValue)
                 return new Tuple<Color?, Color?, Color?, double>(null, null,  null, 1.0);
 
@@ -216,6 +216,9 @@ namespace WpfInvestigate.Effects
             if (GetBichromeBackground(control) != null) return GetBichromeBackground;
             return GetBichromeAnimatedBackground;
         }
+
+        private static bool IsPressed(Control control) => control.IsMouseOver && Mouse.LeftButton == MouseButtonState.Pressed;
+
         #endregion
 
     }
