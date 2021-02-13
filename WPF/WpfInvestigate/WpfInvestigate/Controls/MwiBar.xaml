@@ -106,12 +106,14 @@
                                                       Padding="3 3 16 13"
                                                       IsEnabled="{Binding CanScrollLeft}"
                                                       effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
+                                                      effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100, +10%,+50%,+50%,100"
                                                       ToolTip="Scroll window tabs to left"
                                                       CommandTarget="{Binding ElementName=PART_ScrollBar}" Command="ScrollBar.LineLeftCommand"/>
                                         <RepeatButton Focusable="False" Interval="15" Style="{StaticResource RightDownDoubleButtonStyle}"
                                                       Padding="16 13 3 3"
                                                       IsEnabled="{Binding CanScrollRight}"
                                                       effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
+                                                      effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100, +10%,+50%,+50%,100"
                                                       ToolTip="Scroll window tabs to right"
                                                       CommandTarget="{Binding ElementName=PART_ScrollBar}" Command="ScrollBar.LineRightCommand"/>
                                     </Grid>
