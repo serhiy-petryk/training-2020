@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -51,10 +49,7 @@ namespace WpfInvestigate.Controls
                 _horizontalOffset = newHorizontalOffset;
 
                 if (oldScrollButtonVisibility != _scrollableWidth < Tips.SCREEN_TOLERANCE)
-                {
-                    var doubleButtonGrid = GetTemplateChild("DoubleButtonGrid") as Grid;
-                    doubleButtonGrid?.UpdateAllBindings();
-                }
+                    (GetTemplateChild("DoubleButtonGrid") as Grid)?.UpdateAllBindings();
 
                 if (oldCanScrollLeft != CanScrollLeft || oldCanScrollRight != CanScrollRight)
                     OnPropertiesChanged(nameof(CanScrollLeft), nameof(CanScrollRight), nameof(ScrollButtonVisibility));
