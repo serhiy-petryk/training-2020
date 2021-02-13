@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,10 +25,20 @@ namespace WpfInvestigate.Controls
             InitializeComponent();
         }
 
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            _doubleButtonGrid = GetTemplateChild("DoubleButtonGrid") as Grid;
+        }
+
         public bool CanScrollLeft => _scrollableWidth >= Tips.SCREEN_TOLERANCE && !Tips.AreEqual(_horizontalOffset, 0);
         public bool CanScrollRight => _scrollableWidth >= Tips.SCREEN_TOLERANCE && !Tips.AreEqual(_horizontalOffset + _viewportWidth, _extentWidth);
-        public Visibility ScrollButtonVisibility => _scrollableWidth < Tips.SCREEN_TOLERANCE ? Visibility.Collapsed : Visibility.Visible;
 
+        public Visibility ScrollButtonVisibility =>
+            _scrollableWidth < (Tips.SCREEN_TOLERANCE + (_doubleButtonGrid.IsVisible ? _doubleButtonGrid.ActualWidth + _doubleButtonGrid.Margin.Left + _doubleButtonGrid.Margin.Right : 0))
+                ? Visibility.Collapsed : Visibility.Visible;
+
+        private Grid _doubleButtonGrid;
         private double _scrollableWidth;
         private double _viewportWidth;
         private double _extentWidth;
@@ -42,14 +53,15 @@ namespace WpfInvestigate.Controls
             {
                 var oldCanScrollLeft = CanScrollLeft;
                 var oldCanScrollRight = CanScrollRight;
-                var oldScrollButtonVisibility = _scrollableWidth < Tips.SCREEN_TOLERANCE;
+                var oldScrollButtonVisibility = ScrollButtonVisibility;
                 _scrollableWidth = newScrollableWidth;
                 _viewportWidth = newViewportWidth;
                 _extentWidth = newExtentWidth;
                 _horizontalOffset = newHorizontalOffset;
 
-                if (oldScrollButtonVisibility != _scrollableWidth < Tips.SCREEN_TOLERANCE)
-                    (GetTemplateChild("DoubleButtonGrid") as Grid)?.UpdateAllBindings();
+                if (ScrollButtonVisibility != oldScrollButtonVisibility)
+                    Dispatcher.BeginInvoke(new Action(() => _doubleButtonGrid?.UpdateAllBindings()), DispatcherPriority.Render);
+
 
                 if (oldCanScrollLeft != CanScrollLeft || oldCanScrollRight != CanScrollRight)
                     OnPropertiesChanged(nameof(CanScrollLeft), nameof(CanScrollRight), nameof(ScrollButtonVisibility));
