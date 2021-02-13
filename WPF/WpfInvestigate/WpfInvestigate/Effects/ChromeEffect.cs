@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
@@ -138,26 +139,10 @@ namespace WpfInvestigate.Effects
             }
             else
             {
-                var semaphore = control.Resources["semaphore"] as SemaphoreSlim;
-                if (semaphore == null)
-                {
-                    semaphore = new SemaphoreSlim(1, 1);
-                    control.Resources["semaphore"] = semaphore;
-                }
-
-                await semaphore.WaitAsync();
-                try
-                {
-                    await Task.WhenAll(
-                        control.Background.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush) control.Background).Color, newValues.Item1.Value),
-                        control.Foreground.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush) control.Foreground).Color, newValues.Item2.Value),
-                        control.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush) control.BorderBrush).Color, newValues.Item3.Value),
-                        control.BeginAnimationAsync(UIElement.OpacityProperty, control.Opacity, newValues.Item4));
-                }
-                finally
-                {
-                    semaphore.Release();
-                }
+                control.Background.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation(((SolidColorBrush)control.Background).Color, newValues.Item1.Value, AnimationHelper.AnimationDuration));
+                control.Foreground.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation(((SolidColorBrush)control.Foreground).Color, newValues.Item2.Value, AnimationHelper.AnimationDuration));
+                control.BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation(((SolidColorBrush)control.BorderBrush).Color, newValues.Item3.Value, AnimationHelper.AnimationDuration));
+                control.BeginAnimation(UIElement.OpacityProperty, new DoubleAnimation(control.Opacity, newValues.Item4, AnimationHelper.AnimationDuration));
             }
         }
 
