@@ -83,11 +83,17 @@ namespace WpfInvestigate.Common
                     yield return childOfChild;
             }
         }
+        public static IEnumerable<DependencyObject> GetThisAndVisualChildren(this DependencyObject current)
+        {
+            yield return current;
+            foreach (var child in GetVisualChildren(current))
+                yield return child;
+        }
 
         private static Dictionary<Type, List<FieldInfo>> _dpOfTypeCache = new Dictionary<Type, List<FieldInfo>>();
         public static void UpdateAllBindings(this DependencyObject target)
         {
-            foreach (var child in GetVisualChildren(target))
+            foreach (var child in GetThisAndVisualChildren(target))
             {
                 var type = child.GetType();
                 if (!_dpOfTypeCache.ContainsKey(type))

@@ -26,10 +26,10 @@ namespace WpfInvestigate.Controls
 
         // public bool CanScrollLeft => _scrollableWidth >= Tips.SCREEN_TOLERANCE && !Tips.AreEqual(_horizontalOffset, 0);
         // public bool CanScrollRight => _scrollableWidth >= Tips.SCREEN_TOLERANCE && !Tips.AreEqual(_horizontalOffset + _viewportWidth, _extentWidth);
-        // public Visibility ScrollButtonVisibility => _scrollableWidth < Tips.SCREEN_TOLERANCE ? Visibility.Collapsed : Visibility.Visible;
+        public Visibility ScrollButtonVisibility => _scrollableWidth < Tips.SCREEN_TOLERANCE ? Visibility.Collapsed : Visibility.Visible;
         public bool CanScrollLeft => true;
         public bool CanScrollRight => true;
-        public Visibility ScrollButtonVisibility => Visibility.Visible;
+        // public Visibility ScrollButtonVisibility => Visibility.Visible;
 
         private double _scrollableWidth;
         private double _viewportWidth;
@@ -45,10 +45,24 @@ namespace WpfInvestigate.Controls
             {
                 var oldCanScrollLeft = CanScrollLeft;
                 var oldCanScrollRight = CanScrollRight;
+                var oldScrollButtonVisibility = _scrollableWidth < Tips.SCREEN_TOLERANCE;
                 _scrollableWidth = newScrollableWidth;
                 _viewportWidth = newViewportWidth;
                 _extentWidth = newExtentWidth;
                 _horizontalOffset = newHorizontalOffset;
+
+                /*if (oldScrollButtonVisibility != _scrollableWidth < Tips.SCREEN_TOLERANCE)
+                {
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        var a1 = GetTemplateChild("DoubleButton") as Grid;
+                        a1?.UpdateAllBindings();
+                    }), DispatcherPriority.Normal);
+                }*/
+
+                var a1 = GetTemplateChild("DoubleButton") as Grid;
+                a1?.UpdateAllBindings();
+
                 if (oldCanScrollLeft != CanScrollLeft || oldCanScrollRight != CanScrollRight)
                     OnPropertiesChanged(nameof(CanScrollLeft), nameof(CanScrollRight), nameof(ScrollButtonVisibility));
             }
