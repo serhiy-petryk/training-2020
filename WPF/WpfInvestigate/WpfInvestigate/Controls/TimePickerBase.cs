@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
@@ -346,7 +347,7 @@ namespace WpfInvestigate.Controls
             if (!(hand.RenderTransform is RotateTransform))
                 hand.RenderTransform = new RotateTransform {Angle = oldValue};
 
-            hand.RenderTransform.BeginAnimationAsync(RotateTransform.AngleProperty, oldValue, newValue);
+            hand.RenderTransform.BeginAnimation(RotateTransform.AngleProperty,new DoubleAnimation(oldValue, newValue, AnimationHelper.AnimationDuration));
         }
 
         private static void OnSelectedTimeFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

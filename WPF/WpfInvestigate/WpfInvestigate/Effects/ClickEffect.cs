@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
@@ -125,9 +126,9 @@ namespace WpfInvestigate.Effects
             var oldMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
             var newMargin = new Thickness(mousePosition.X - newSize / 2, mousePosition.Y - newSize / 2, 0, 0);
             var duration = Math.Min(1000, Math.Max(300, newSize * 2.5));
-            ellipse.BeginAnimationAsync(FrameworkElement.MarginProperty, oldMargin, newMargin, TimeSpan.FromMilliseconds(duration));
-            ellipse.BeginAnimationAsync(FrameworkElement.WidthProperty, 0.0, newSize, TimeSpan.FromMilliseconds(duration));
-            ellipse.BeginAnimationAsync(UIElement.OpacityProperty, 0.5, 0.0, TimeSpan.FromMilliseconds(duration * 2 / 3));
+            ellipse.BeginAnimation(FrameworkElement.MarginProperty, new ThicknessAnimation(oldMargin, newMargin, TimeSpan.FromMilliseconds(duration)));
+            ellipse.BeginAnimation(FrameworkElement.WidthProperty, new DoubleAnimation(0.0, newSize, TimeSpan.FromMilliseconds(duration)));
+            ellipse.BeginAnimation(UIElement.OpacityProperty, new DoubleAnimation(0.5, 0.0, TimeSpan.FromMilliseconds(duration * 2 / 3)));
         }
     }
 }

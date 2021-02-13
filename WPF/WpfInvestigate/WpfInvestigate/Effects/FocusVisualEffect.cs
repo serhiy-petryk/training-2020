@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
@@ -79,7 +80,7 @@ namespace WpfInvestigate.Effects
                     layer.Add(adornerControl);
                 }
 
-                adornerControl.BeginAnimationAsync(UIElement.OpacityProperty, 0.0, 1.0, AnimationHelper.AnimationDurationSlow);
+                adornerControl.BeginAnimation(UIElement.OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDurationSlow));
             }
             else
             {
@@ -88,7 +89,7 @@ namespace WpfInvestigate.Effects
                 var layer = AdornerLayer.GetAdornerLayer(element);
                 var adorners = layer?.GetAdorners(element) ?? new Adorner[0];
                 foreach (var adorner in adorners.OfType<AdornerControl>().Where(a => a.Child.Name == "FocusControl"))
-                    adorner.BeginAnimationAsync(UIElement.OpacityProperty, adorner.Opacity, 0.0, AnimationHelper.AnimationDurationSlow);
+                    adorner.BeginAnimation(UIElement.OpacityProperty, new DoubleAnimation(adorner.Opacity, 0.0, AnimationHelper.AnimationDurationSlow));
 
                 // if isFocused=false не завжди спрацьовує фокус на новому елементі -> Activate focus on focused element
                 var focusedControl = Keyboard.FocusedElement as FrameworkElement;

@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
@@ -95,14 +96,14 @@ namespace WpfInvestigate.Obsolete
 
                     var oldColor = ((SolidColorBrush)child.BorderBrush).Color;
                     var newColor = ((SolidColorBrush) focusBrush).Color;
-                    child.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, oldColor, newColor);
+                    child.BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation(oldColor, newColor, Common.AnimationHelper.AnimationDuration));
                 }
                 else
                     child.BorderBrush = focusBrush.Clone();
 
                 // +0.25: to remove gap between focus and element
                 // var newThickness = new Thickness(thickness.Left + 0.25, thickness.Top + 0.25, thickness.Right + 0.25, thickness.Bottom + 0.25);
-                child.BeginAnimationAsync(Control.BorderThicknessProperty, child.BorderThickness, thickness);
+                child.BeginAnimation(Control.BorderThicknessProperty, new ThicknessAnimation(child.BorderThickness, thickness, Common.AnimationHelper.AnimationDuration));
             }
             else
             {
@@ -114,10 +115,10 @@ namespace WpfInvestigate.Obsolete
                     if (border.BorderBrush is SolidColorBrush)
                     {
                         var oldColor = ((SolidColorBrush)border.BorderBrush).Color;
-                        border.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, oldColor, Colors.Transparent);
+                        border.BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation(oldColor, Colors.Transparent, Common.AnimationHelper.AnimationDuration));
                     }
 
-                    border.BeginAnimationAsync(Control.BorderThicknessProperty, border.BorderThickness, new Thickness());
+                    border.BeginAnimation(Control.BorderThicknessProperty, new ThicknessAnimation(border.BorderThickness, new Thickness(), Common.AnimationHelper.AnimationDuration));
                 }
 
                 // if isFocused=false не завжди спрацьовує фокус на новому елементі -> Activate focus on focused element
