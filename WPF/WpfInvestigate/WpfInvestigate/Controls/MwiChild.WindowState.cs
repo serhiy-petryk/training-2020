@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
@@ -65,10 +66,6 @@ namespace WpfInvestigate.Controls
 
                 Activate();
                 Position = WindowState == WindowState.Maximized ? new Point(0, 0) : _attachedPosition;
-                OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
-                OnPropertiesChanged(nameof(IsWindowed));
-
-                await this.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
             }
             else
             {
@@ -87,13 +84,12 @@ namespace WpfInvestigate.Controls
                 // Refresh ScrollBar scrolling
                 MwiContainer.ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
                 MwiContainer.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-
                 Position = new Point(-1, -1); // Reset position (need for maximized window or when positions before and after detach are equal)
-                OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
-                OnPropertiesChanged(nameof(IsWindowed));
-
-                await this.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
             }
+
+            OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, WindowState, WindowState));
+            OnPropertiesChanged(nameof(IsWindowed));
+            BeginAnimation(OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDuration));
 
             void OnWindowActivated(object sender, EventArgs e) => Activate();
             void OnWindowDeactivated(object sender, EventArgs e) => IsActive = false;

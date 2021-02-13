@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
@@ -87,15 +88,11 @@ namespace WpfInvestigate.Controls
         }
 
         #region ==============  Tab item  ==============
-        private async void TabItem_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            await ((TabItem)sender).BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
-        }
 
-        private void TabItem_OnMouseEnterOrLeave(object sender, MouseEventArgs e)
-        {
-            AnimateTabButton((TabItem)sender);
-        }
+        private void TabItem_OnLoaded(object sender, RoutedEventArgs e) =>
+            ((TabItem) sender).BeginAnimation(OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDuration));
+
+        private void TabItem_OnMouseEnterOrLeave(object sender, MouseEventArgs e) => AnimateTabButton((TabItem)sender);
 
         private void TabItem_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

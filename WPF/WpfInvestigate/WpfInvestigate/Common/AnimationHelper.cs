@@ -21,10 +21,8 @@ namespace WpfInvestigate.Common
 
             newBrush = newBrush.Clone();
             for (var k = 0; k < newBrush.GradientStops.Count; k++)
-            {
-                var ca = new ColorAnimation(oldBrush.GradientStops[k].Color, newBrush.GradientStops[k].Color, AnimationDuration);
-                newBrush.GradientStops[k].BeginAnimation(GradientStop.ColorProperty, ca);
-            }
+                newBrush.GradientStops[k].BeginAnimation(GradientStop.ColorProperty,
+                    new ColorAnimation(oldBrush.GradientStops[k].Color, newBrush.GradientStops[k].Color, AnimationDuration));
             return newBrush;
         }
 
