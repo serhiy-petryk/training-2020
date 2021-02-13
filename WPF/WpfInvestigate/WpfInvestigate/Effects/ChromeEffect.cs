@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -100,7 +102,7 @@ namespace WpfInvestigate.Effects
                 new Tuple<bool, bool, bool>(control.IsMouseOver, control.IsEnabled, IsPressed(control)));
         }
 
-        private static void ChromeUpdate(object sender, EventArgs e)
+        private static async void ChromeUpdate(object sender, EventArgs e)
         {
             if (!(sender is Control control)) return;
 
@@ -136,10 +138,26 @@ namespace WpfInvestigate.Effects
             }
             else
             {
-                control.Background.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush)control.Background).Color, newValues.Item1.Value);
-                control.Foreground.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush)control.Foreground).Color, newValues.Item2.Value);
-                control.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush)control.BorderBrush).Color, newValues.Item3.Value);
-                control.BeginAnimationAsync(UIElement.OpacityProperty, control.Opacity, newValues.Item4);
+                var semaphore = control.Resources["semaphore"] as SemaphoreSlim;
+                if (semaphore == null)
+                {
+                    semaphore = new SemaphoreSlim(1, 1);
+                    control.Resources["semaphore"] = semaphore;
+                }
+
+                await semaphore.WaitAsync();
+                try
+                {
+                    await Task.WhenAll(
+                        control.Background.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush) control.Background).Color, newValues.Item1.Value),
+                        control.Foreground.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush) control.Foreground).Color, newValues.Item2.Value),
+                        control.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush) control.BorderBrush).Color, newValues.Item3.Value),
+                        control.BeginAnimationAsync(UIElement.OpacityProperty, control.Opacity, newValues.Item4));
+                }
+                finally
+                {
+                    semaphore.Release();
+                }
             }
         }
 
