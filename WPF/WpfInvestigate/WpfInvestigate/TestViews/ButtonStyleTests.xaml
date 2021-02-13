@@ -662,12 +662,18 @@
                                           effects:DoubleIconToggleButtonEffect.MarginOn="1 5 1 5"/>
 
                             <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="LeftRightDoubleButton:"/>
+                            <TextBlock Margin="2 0" VerticalAlignment="Center" Text="Left Enabled:"/>
+                            <CheckBox x:Name="LeftEnabled" IsThreeState="False" IsChecked="False" VerticalAlignment="Center"/>
+                            <TextBlock Margin="2 0" VerticalAlignment="Center" Text="Right Enabled:"/>
+                            <CheckBox x:Name="RightEnabled" IsThreeState="False" IsChecked="False" VerticalAlignment="Center"/>
                             <Grid Margin="2 0" Height="26" Width="26" Background="Aqua" Tag="1">
                                 <RepeatButton Focusable="False" Interval="15" Style="{StaticResource LeftUpDoubleButtonStyle}"
                                               Padding="3 3 16 13"
+                                              IsEnabled="{Binding IsChecked, ElementName=LeftEnabled}"
                                               ToolTip="Scroll window tabs to left"/>
                                 <RepeatButton Focusable="False" Interval="15" Style="{StaticResource RightDownDoubleButtonStyle}"
                                               Padding="16 13 3 3"
+                                              IsEnabled="{Binding IsChecked, ElementName=RightEnabled}"
                                               ToolTip="Scroll window tabs to right"/>
                             </Grid>
                             <Grid Margin="2 0" Height="26" Width="26" Background="Aqua">
