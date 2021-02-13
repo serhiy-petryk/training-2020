@@ -83,17 +83,12 @@ namespace WpfInvestigate.Common
                     yield return childOfChild;
             }
         }
-        public static IEnumerable<DependencyObject> GetThisAndVisualChildren(this DependencyObject current)
-        {
-            yield return current;
-            foreach (var child in GetVisualChildren(current))
-                yield return child;
-        }
 
         private static Dictionary<Type, List<FieldInfo>> _dpOfTypeCache = new Dictionary<Type, List<FieldInfo>>();
         public static void UpdateAllBindings(this DependencyObject target)
+        // based on 'H.B.' comment in https://stackoverflow.com/questions/5023025/is-there-a-way-to-get-all-bindingexpression-objects-for-a-window
         {
-            foreach (var child in GetThisAndVisualChildren(target))
+            foreach (var child in (new [] {target}).Union(GetVisualChildren(target)))
             {
                 var type = child.GetType();
                 if (!_dpOfTypeCache.ContainsKey(type))
