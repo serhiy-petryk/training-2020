@@ -87,6 +87,7 @@
     <Compile Include="Controls\MwiChild.cs" />
     <Compile Include="Controls\MwiChild.WindowState.cs" />
     <Compile Include="Controls\MwiContainer.cs" />
+    <Compile Include="Controls\MwiContainer.LeftPanel.cs" />
     <Compile Include="Controls\MwiContainer.WindowsMenu.cs" />
     <Compile Include="Effects\TextBlockEffects.cs" />
     <Compile Include="Obsolete\DialogItems.cs" />
