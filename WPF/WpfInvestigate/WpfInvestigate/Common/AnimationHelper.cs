@@ -39,10 +39,17 @@ namespace WpfInvestigate.Common
             return element.BeginAnimationAsync(property, animation);
         }
 
+        public static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, object to, Duration? duration = null)
+        {
+            if (element == null || property == null || to == null) throw new NullReferenceException();
+
+            var from = ((DependencyObject)element).GetValue(property);
+            return BeginAnimationAsync(element, property, from, to, duration);
+        }
+
         public static Task BeginAnimationAsync(this IAnimatable element, DependencyProperty property, object from, object to, Duration? duration = null)
         {
-            if (element == null || property == null || from == null || to == null)
-                throw new NullReferenceException();
+            if (element == null || property == null || from == null || to == null) throw new NullReferenceException();
 
             if (Equals(from, to))
             {
