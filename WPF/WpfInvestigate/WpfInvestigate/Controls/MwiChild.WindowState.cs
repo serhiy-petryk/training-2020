@@ -157,19 +157,8 @@ namespace WpfInvestigate.Controls
             }
 
             MwiContainer?.InvalidateLayout();
-
-            /* todo: container if (!IsWindowed || isDetachEvent)
-            {
-                Container?.InvalidateSize();
-                Container?.OnPropertiesChanged(nameof(MwiContainer.ScrollBarKind));
-            }*/
-
-            // Activate main window (in case of attach)
-            /*if (IsWindowed && !((Window)Parent).IsFocused)
-                ((Window)Parent).Focus();
-            else if (!IsWindowed && !Window.GetWindow(this).IsFocused)
-                Window.GetWindow(this)?.Focus();*/
         }
+
         private void SaveActualRectangle()
         {
             _lastNormalSize = new Size(ActualWidth, ActualHeight);
