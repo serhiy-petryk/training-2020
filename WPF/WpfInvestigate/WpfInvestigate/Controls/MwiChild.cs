@@ -243,7 +243,6 @@ namespace WpfInvestigate.Controls
         #region =============  Properties  =================
         public event EventHandler Closed;
         public MwiContainer MwiContainer { get; set; }
-        public bool IsSelected => MwiContainer?.ActiveMwiChild == this;
         public Thickness OuterBorderMargin => IsWindowed ? (Thickness)FindResource("Mwi.Child.OuterBorderMargin") : new Thickness();
 
         //============  Buttons  ============
@@ -259,6 +258,11 @@ namespace WpfInvestigate.Controls
         public RelayCommand SysCmdMaximize { get; }
         public RelayCommand SysCmdRestore { get; }
         public RelayCommand CmdClose { get; }
+        //=========================
+        /// <summary>
+        /// Force user not to use Margin property.
+        /// </summary>
+        private new Thickness Margin { set { } }
         //=========================
         public static readonly DependencyProperty AllowDetachProperty = DependencyProperty.Register(nameof(AllowDetach), typeof(bool), typeof(MwiChild), new UIPropertyMetadata(true));
         public bool AllowDetach

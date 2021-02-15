@@ -33,7 +33,7 @@ namespace WpfInvestigate.Controls
                     cm.Items.Insert(++index, new MenuItem
                     {
                         Header = item.Title,
-                        IsChecked = item.IsSelected,
+                        IsChecked = item == ActiveMwiChild,
                         Icon = new Image { Source = item.Icon },
                         DataContext = item,
                         Command = new RelayCommand((p) => item.Activate())
