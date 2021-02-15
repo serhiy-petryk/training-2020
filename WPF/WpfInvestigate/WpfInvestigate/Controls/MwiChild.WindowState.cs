@@ -51,9 +51,9 @@ namespace WpfInvestigate.Controls
 
         private async void ToggleDetach(object obj)
         {
-            if (WindowState == WindowState.Normal)
-                SaveActualRectangle();
+            if (MwiContainer == null) return;
 
+            if (WindowState == WindowState.Normal) SaveActualRectangle();
             if (IsWindowed)
             {
                 await AnimateHide();

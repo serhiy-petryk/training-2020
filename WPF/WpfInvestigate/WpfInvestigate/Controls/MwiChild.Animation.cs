@@ -40,7 +40,7 @@ namespace WpfInvestigate.Controls
             if (WindowState == WindowState.Minimized)
             {
                 Visibility = Visibility.Collapsed;
-                if (MwiContainer.ActiveMwiChild == this)
+                if (MwiContainer != null && MwiContainer.ActiveMwiChild == this)
                     MwiContainer.GetTopChild(MwiContainer.InternalWindows.Where(w => w.WindowState != WindowState.Minimized))?.Activate();
             }
         }
