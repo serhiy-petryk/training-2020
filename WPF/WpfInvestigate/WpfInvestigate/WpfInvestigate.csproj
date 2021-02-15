@@ -133,11 +133,14 @@
     </Compile>
     <Compile Include="Effects\WatermarkEffect.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
-    <Compile Include="Samples\ExampleControl.xaml.cs">
-      <DependentUpon>ExampleControl.xaml</DependentUpon>
+    <Compile Include="Samples\MwiCommandBarSample.xaml.cs">
+      <DependentUpon>MwiCommandBarSample.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Samples\LeftPanelSample.xaml.cs">
-      <DependentUpon>LeftPanelSample.xaml</DependentUpon>
+    <Compile Include="Samples\MwiExampleControl.xaml.cs">
+      <DependentUpon>MwiExampleControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\MwiLeftPanelSample.xaml.cs">
+      <DependentUpon>MwiLeftPanelSample.xaml</DependentUpon>
     </Compile>
     <Compile Include="Samples\MwiStatusBarSample.xaml.cs">
       <DependentUpon>MwiStatusBarSample.xaml</DependentUpon>
@@ -272,11 +275,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Samples\ExampleControl.xaml">
+    <Page Include="Samples\MwiCommandBarSample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Samples\LeftPanelSample.xaml">
+    <Page Include="Samples\MwiExampleControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\MwiLeftPanelSample.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

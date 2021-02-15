@@ -34,8 +34,9 @@ namespace WpfInvestigate.TestViews
                 Width = 300,
                 Height = 200,
                 StatusBar = new MwiStatusBarSample(),
-                // AllowDetach = false, AllowMinimize = false
-            });
+                CommandBar = new MwiCommandBarSample()
+            // AllowDetach = false, AllowMinimize = false
+        });
         }
 
         private void AddChild2_OnClick(object sender, RoutedEventArgs e)

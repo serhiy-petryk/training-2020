@@ -337,6 +337,13 @@ namespace WpfInvestigate.Controls
             set => SetValue(StatusBarProperty, value);
         }
         //==============================
+        public static readonly DependencyProperty CommandBarProperty = DependencyProperty.Register("CommandBar", typeof(FrameworkElement), typeof(MwiChild), new FrameworkPropertyMetadata(null));
+        public FrameworkElement CommandBar
+        {
+            get => (FrameworkElement)GetValue(CommandBarProperty);
+            set => SetValue(CommandBarProperty, value);
+        }
+        //==============================
         public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons",
             typeof(Buttons?), typeof(MwiChild), new FrameworkPropertyMetadata(
                 Buttons.Close | Buttons.Minimize | Buttons.Maximize | Buttons.Detach,

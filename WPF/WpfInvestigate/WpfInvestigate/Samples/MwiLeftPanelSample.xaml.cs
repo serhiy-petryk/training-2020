@@ -8,12 +8,12 @@ namespace WpfInvestigate.Samples
     /// <summary>
     /// Interaction logic for LeftPanelSample.xaml
     /// </summary>
-    public partial class LeftPanelSample
+    public partial class MwiLeftPanelSample
     {
         private MwiContainer Container => MwiContainer.GetMwiContainer(this);
         private static int count = 0;
 
-        public LeftPanelSample()
+        public MwiLeftPanelSample()
         {
             InitializeComponent();
         }
@@ -23,7 +23,7 @@ namespace WpfInvestigate.Samples
             Container.Children.Add(new MwiChild
             {
                 Title = "Window Using Code",
-                Content = new ExampleControl(),
+                Content = new MwiExampleControl(),
                 Width = 514,
                 Height = 434,
                 Position = new Point(300, 80)

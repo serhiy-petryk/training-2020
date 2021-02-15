@@ -128,7 +128,7 @@
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <!-- Command bar -->
-                                        <!--<ContentPresenter Grid.Row="0" Content="{Binding CommandBar}"/>-->
+                                        <ContentPresenter Grid.Row="0" Content="{Binding CommandBar}"/>
                                         <!-- Window content -->
                                         <ContentControl Grid.Row="1" Content="{Binding Content}" />
                                         <!-- Status bar -->

@@ -3,12 +3,12 @@
     /// <summary>
     /// Interaction logic for ExampleControl.xaml
     /// </summary>
-    public partial class ExampleControl
+    public partial class MwiExampleControl
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExampleControl"/> class.
+        /// Initializes a new instance of the <see cref="MwiExampleControl"/> class.
         /// </summary>
-        public ExampleControl()
+        public MwiExampleControl()
         {
             InitializeComponent();
 
