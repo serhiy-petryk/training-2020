@@ -103,6 +103,17 @@ namespace WpfInvestigate.Controls
 
             ScrollViewer = GetTemplateChild("ScrollViewer") as ScrollViewer;
             MwiPanel = GetTemplateChild("MwiPanel") as Grid;
+            LeftPanelContainer = GetTemplateChild("LeftPanelContainer") as Grid;
+            LeftPanelButton = GetTemplateChild("LeftPanelButton") as ToggleButton;
+            if (LeftPanelButton != null)
+            {
+                LeftPanelButton.Checked += LeftPanelButton_OnCheckedChanged;
+                LeftPanelButton.Unchecked += LeftPanelButton_OnCheckedChanged;
+            }
+
+            if (GetTemplateChild("LeftPanelDragThumb") is Thumb leftPanelDragThumb)
+                leftPanelDragThumb.DragDelta += LeftPanel_OnDragDelta;
+
             if (GetTemplateChild("WindowsMenuButton") is ToggleButton windowsMenuButton)
             {
                 windowsMenuButton.Checked += OnWindowsMenuButtonCheckedChange;
@@ -157,9 +168,12 @@ namespace WpfInvestigate.Controls
                 ? ScrollBarVisibility.Disabled
                 : ScrollBarVisibility.Auto;
 
-        public RelayCommand CmdSetLayout { get; }
-        #endregion
+        //==============================
+        public static readonly DependencyProperty MwiContainerProperty = DependencyProperty.RegisterAttached("MwiContainer", typeof(MwiContainer), typeof(MwiContainer));
+        public static void SetMwiContainer(DependencyObject element, MwiContainer value) => element?.SetValue(MwiContainerProperty, value); // NotNull propagation need to prevent VS designer error
+        public static MwiContainer GetMwiContainer(DependencyObject element) => element?.GetValue(MwiContainerProperty) as MwiContainer; // NotNull propagation need to prevent VS designer error
 
+        #endregion
         #region =================  INotifyPropertyChanged  ==================
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertiesChanged(params string[] propertyNames)

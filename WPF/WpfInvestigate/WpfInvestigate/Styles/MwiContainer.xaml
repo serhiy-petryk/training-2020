@@ -130,15 +130,15 @@
                             </ScrollViewer>
 
                             <!-- Left Panel -->
-                            <!--<Grid x:Name="LeftPanelContainer" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="{Binding ElementName=ScrollViewer, Path=ActualHeight}" Background="{DynamicResource Mwi.Child.ChildBackground}" Visibility="Hidden" Margin="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <ContentControl Grid.Column="0" Content="{Binding LeftPanel}" />
-                <Border Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="6" BorderThickness="0 0 1 0" Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="{DynamicResource Mwi.Child.BaseBorderBrush}" />
-                <Thumb Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="6" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" DragDelta="LeftPanel_OnDragDelta" Cursor="SizeWE" Opacity="0" />
-            </Grid>-->
+                            <Grid x:Name="LeftPanelContainer" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="{Binding ElementName=ScrollViewer, Path=ActualHeight}" Background="{DynamicResource Mwi.Child.ChildBackground}" Visibility="Hidden" Margin="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ContentControl Grid.Column="0" Content="{Binding LeftPanel}" />
+                                <Border Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="6" BorderThickness="0 0 1 0" Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="{DynamicResource Mwi.Child.BaseBorderBrush}" />
+                                <Thumb Grid.Column="1" x:Name="LeftPanelDragThumb" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="6" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Cursor="SizeWE" Opacity="0" />
+                            </Grid>
                         </Grid>
                     </DockPanel>
 

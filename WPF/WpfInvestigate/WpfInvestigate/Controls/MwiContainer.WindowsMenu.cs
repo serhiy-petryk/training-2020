@@ -12,6 +12,8 @@ namespace WpfInvestigate.Controls
 {
     public partial class MwiContainer
     {
+        public RelayCommand CmdSetLayout { get; }
+
         private void OnWindowsMenuButtonCheckedChange(object sender, RoutedEventArgs e)
         {
             var button = (ToggleButton)sender;

@@ -45,6 +45,10 @@
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
             <controls:MwiContainer x:Name="MwiContainer" Background="Beige">
+                <controls:MwiContainer.LeftPanel>
+                    <samples:LeftPanelSample/>
+                </controls:MwiContainer.LeftPanel>
+
                 <controls:MwiChild Position="50 50" Title="Title" EdgeThickness="12" Height="150">
                     <ContentControl Content="Mwi Child Test"/>
                 </controls:MwiChild>
