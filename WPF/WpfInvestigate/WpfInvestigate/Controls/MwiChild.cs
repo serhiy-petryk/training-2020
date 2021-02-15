@@ -46,17 +46,16 @@ namespace WpfInvestigate.Controls
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
             CmdClose = new RelayCommand(Close, _ => AllowClose);
 
-            // InitializeComponent();
             DataContext = this;
-
-            if (Icon == null) Icon = (ImageSource) FindResource("DefaultIcon");
-
+            if (Icon == null)
+                Icon = (ImageSource) FindResource("DefaultIcon");
             Loaded += OnMwiChildLoaded;
 
             void OnMwiChildLoaded(object sender, RoutedEventArgs e)
             {
                 Loaded -= OnMwiChildLoaded;
-                // UpdateUI();
+                if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
+                    Position = MwiContainer.GetStartPositionForMwiChild(this);
                 AnimateShow();
             }
         }

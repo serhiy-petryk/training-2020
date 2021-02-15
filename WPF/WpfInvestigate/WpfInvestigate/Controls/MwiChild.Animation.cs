@@ -21,13 +21,7 @@ namespace WpfInvestigate.Controls
             return Task.WhenAll(tasks.ToArray());
         }
 
-        private Task AnimateShow()
-        {
-            if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
-                Position = MwiContainer.GetStartPositionForMwiChild(this);
-
-            return SetRectWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 0, 1);
-        }
+        private Task AnimateShow() => SetRectWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 0, 1);
 
         private Task AnimateHide() => SetRectWithAnimation(new Rect(ActualPosition.X, ActualPosition.Y, ActualWidth, ActualHeight), 1, 0);
 
@@ -37,16 +31,7 @@ namespace WpfInvestigate.Controls
             if (WindowState == WindowState.Normal)
                 to = new Rect(_attachedPosition.X, _attachedPosition.Y, _lastNormalSize.Width, _lastNormalSize.Height);
             else if (WindowState == WindowState.Maximized)
-            {
-                /*if (IsDialog)
-                {
-                    var itemsPresenter = ((DialogItems)Parent).ItemsPresenter;
-                    var container = itemsPresenter == null ? null : VisualTreeHelper.GetParent(itemsPresenter) as FrameworkElement;
-                    to = new Rect(0, 0, container.ActualWidth, container.ActualHeight);
-                }
-                else*/
-                    to = new Rect(0, 0, HostPanel.ActualWidth, HostPanel.ActualHeight);
-            }
+                to = new Rect(0, 0, HostPanel.ActualWidth, HostPanel.ActualHeight);
             else
                 to = new Rect(ActualPosition.X, 0, ActualWidth, MinHeight);
 
@@ -59,7 +44,5 @@ namespace WpfInvestigate.Controls
                     MwiContainer.GetTopChild(MwiContainer.InternalWindows.Where(w => w.WindowState != WindowState.Minimized))?.Activate();
             }
         }
-
-
     }
 }
