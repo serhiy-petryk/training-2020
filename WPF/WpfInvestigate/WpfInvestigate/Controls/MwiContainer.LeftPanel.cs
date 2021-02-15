@@ -9,11 +9,10 @@ namespace WpfInvestigate.Controls
 {
     public partial class MwiContainer
     {
-        public static readonly DependencyProperty LeftPanelProperty = DependencyProperty.Register("LeftPanel", typeof(FrameworkElement), typeof(MwiContainer), new FrameworkPropertyMetadata(null, LeftPanel_OnPropertyChanged));
-
         private Grid LeftPanelContainer;
         private ToggleButton LeftPanelButton;
 
+        public static readonly DependencyProperty LeftPanelProperty = DependencyProperty.Register("LeftPanel", typeof(FrameworkElement), typeof(MwiContainer), new FrameworkPropertyMetadata(null, LeftPanel_OnPropertyChanged));
         public FrameworkElement LeftPanel
         {
             get => (FrameworkElement)GetValue(LeftPanelProperty);
@@ -21,6 +20,8 @@ namespace WpfInvestigate.Controls
         }
         private static void LeftPanel_OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            if (e.NewValue is FrameworkElement leftPanel && d is MwiContainer)
+                leftPanel.SetValue(MwiContainerProperty, d);
         }
 
         public void HideLeftPanel()
