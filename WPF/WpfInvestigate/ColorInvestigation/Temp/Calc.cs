@@ -39,7 +39,6 @@ namespace ColorInvestigation.Temp
                 if (cnt == min)
                     result.Add(new Tuple<double, double, double, double, double>(split1, split2, r, g, b));
             }
-            var end = 0;
         }
     }
 }

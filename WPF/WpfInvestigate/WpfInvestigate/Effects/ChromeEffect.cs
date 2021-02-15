@@ -85,12 +85,8 @@ namespace WpfInvestigate.Effects
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                if (control.Style == null)
-                {
-                    var style = Application.Current.TryFindResource("DefaultButtonBaseStyle") as Style;
-                    if (style != null && style.TargetType.IsInstanceOfType(control))
-                        control.Style = style;
-                }
+                if (control.Style == null && Application.Current.TryFindResource("DefaultButtonBaseStyle") is Style style && style.TargetType.IsInstanceOfType(control))
+                    control.Style = style;
                 ChromeUpdate(control, null);
             }, DispatcherPriority.Loaded);
         }
@@ -103,7 +99,7 @@ namespace WpfInvestigate.Effects
                 new Tuple<bool, bool, bool>(control.IsMouseOver, control.IsEnabled, IsPressed(control)));
         }
 
-        private static async void ChromeUpdate(object sender, EventArgs e)
+        private static void ChromeUpdate(object sender, EventArgs e)
         {
             if (!(sender is Control control)) return;
 
@@ -118,11 +114,11 @@ namespace WpfInvestigate.Effects
             if (!newValues.Item3.HasValue) 
                 return;
 
-            if (!(control.Background is SolidColorBrush && !((SolidColorBrush)control.Background).IsSealed))
+            if (!(control.Background is SolidColorBrush backgroundBrush && !backgroundBrush.IsSealed))
                 control.Background = new SolidColorBrush(newValues.Item1.Value);
-            if (!(control.Foreground is SolidColorBrush && !((SolidColorBrush)control.Foreground).IsSealed))
+            if (!(control.Foreground is SolidColorBrush foregroundBrush && !foregroundBrush.IsSealed))
                 control.Foreground = new SolidColorBrush(newValues.Item2.Value);
-            if (!(control.BorderBrush is SolidColorBrush && !((SolidColorBrush)control.BorderBrush).IsSealed))
+            if (!(control.BorderBrush is SolidColorBrush borderBrush && !borderBrush.IsSealed))
                 control.BorderBrush = new SolidColorBrush(newValues.Item3.Value);
 
             var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;

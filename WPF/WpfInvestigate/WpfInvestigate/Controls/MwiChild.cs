@@ -192,7 +192,7 @@ namespace WpfInvestigate.Controls
             else  // Dialog
                 ((RoutedUICommand)cmdCloseBinding.Command).Execute(null, this);
 
-            if (Content is IDisposable) ((IDisposable)Content).Dispose();
+            if (Content is IDisposable disposable) disposable.Dispose();
             if (!IsWindowed && WindowState == WindowState.Maximized)
             {
                 BindingOperations.ClearBinding(this, WidthProperty);

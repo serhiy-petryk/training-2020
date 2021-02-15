@@ -19,7 +19,7 @@ namespace GridInvestigation.TestViews
     /// </summary>
     public partial class INotifyDataErrorInfoValidationTests : Window
     {
-        PersonModel1 Tom;
+        readonly PersonModel1 Tom;
         public INotifyDataErrorInfoValidationTests()
         {
             InitializeComponent();
