@@ -50,7 +50,7 @@ namespace WpfInvestigate.Samples
             sp.Children.Add(new ComboBox { Margin = new Thickness(20), Width = 300 });
             var sv = new ScrollViewer { Content = sp, HorizontalScrollBarVisibility = ScrollBarVisibility.Auto };
 
-            Container.Children.Add(new MwiChild { Content = sv, Title = "Window " + count++ });
+            Container.Children.Add(new MwiChild { Content = sv, Title = "Window " + count++, Width = 200});
             Container.HideLeftPanel();
         }
 
