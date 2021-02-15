@@ -62,8 +62,6 @@ namespace WpfInvestigate.Controls
 
                 if (ScrollButtonVisibility != oldScrollButtonVisibility)
                     Dispatcher.BeginInvoke(new Action(() => _doubleButtonGrid?.UpdateAllBindings()), DispatcherPriority.Render);
-
-
                 if (oldCanScrollLeft != CanScrollLeft || oldCanScrollRight != CanScrollRight)
                     OnPropertiesChanged(nameof(CanScrollLeft), nameof(CanScrollRight), nameof(ScrollButtonVisibility));
             }
