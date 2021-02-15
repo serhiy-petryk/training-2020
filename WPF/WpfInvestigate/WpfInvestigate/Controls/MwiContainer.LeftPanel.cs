@@ -20,6 +20,8 @@ namespace WpfInvestigate.Controls
         }
         private static void LeftPanel_OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            if (e.OldValue is FrameworkElement oldLeftPanel && d is MwiContainer)
+                oldLeftPanel.SetValue(MwiContainerProperty, null);
             if (e.NewValue is FrameworkElement leftPanel && d is MwiContainer)
                 leftPanel.SetValue(MwiContainerProperty, d);
         }
