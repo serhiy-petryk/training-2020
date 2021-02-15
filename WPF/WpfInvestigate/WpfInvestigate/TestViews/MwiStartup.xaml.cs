@@ -11,17 +11,23 @@ namespace WpfInvestigate.TestViews
     /// <summary>
     /// Interaction logic for MwiStartup.xaml
     /// </summary>
-    public partial class MwiStartup : Window
+    public partial class MwiStartup
     {
+        private static MwiChild TestMwi;
         public MwiStartup()
         {
             InitializeComponent();
+            DataContext = this;
+            // TopControl.RestoreRectFromSetting();
+            // TopControl.CommandBar = new CommandBarExample();
         }
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            TestMwi = MwiContainer.Children.FirstOrDefault(w => w.Title == "Window Using XAML");
+
+            if (MwiContainer != null && MwiContainer.Children != null)
+                TestMwi = MwiContainer.Children.FirstOrDefault(w => w.Title == "Window Using XAML");
         }
 
         private int cnt = 0;
@@ -77,7 +83,6 @@ namespace WpfInvestigate.TestViews
         }
 
         //============  Test window  =============
-        private static MwiChild TestMwi;
         public RelayCommand CmdDisableDetach { get; } = new RelayCommand(o => TestMwi.AllowDetach = false);
         public RelayCommand CmdEnableDetach { get; } = new RelayCommand(o => TestMwi.AllowDetach = true);
         public RelayCommand CmdDisableMinimize { get; } = new RelayCommand(o => TestMwi.AllowMinimize = false);
