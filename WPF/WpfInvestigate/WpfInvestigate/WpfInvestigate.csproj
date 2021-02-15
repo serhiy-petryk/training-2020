@@ -188,6 +188,9 @@
     <Compile Include="TestViews\FocusEffectTests.xaml.cs">
       <DependentUpon>FocusEffectTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\MwiStartup.xaml.cs">
+      <DependentUpon>MwiStartup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\MwiTests.xaml.cs">
       <DependentUpon>MwiTests.xaml</DependentUpon>
     </Compile>
@@ -441,6 +444,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="TestViews\FocusEffectTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\MwiStartup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
