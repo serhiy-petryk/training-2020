@@ -52,8 +52,8 @@ namespace WpfInvestigate.Controls
                 var lastLeftPanelWidth = LeftPanelContainer.ActualWidth;
                 await Task.WhenAll(
                     LeftPanelContainer.BeginAnimationAsync(WidthProperty, LeftPanelContainer.ActualWidth, 0.0),
-                    LeftPanelContainer.BeginAnimationAsync(OpacityProperty,  0.0),
-                    MwiPanel.BeginAnimationAsync(OpacityProperty, 1.0));
+                    LeftPanelContainer.BeginAnimationAsync(OpacityProperty,  LeftPanelContainer.Opacity, 0.0),
+                    MwiPanel.BeginAnimationAsync(OpacityProperty, MwiPanel.Opacity, 1.0));
 
                 LeftPanelContainer.Visibility = Visibility.Hidden;
                 LeftPanelContainer.Width = lastLeftPanelWidth;
