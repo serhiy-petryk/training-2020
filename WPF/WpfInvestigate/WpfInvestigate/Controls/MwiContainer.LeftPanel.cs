@@ -9,8 +9,8 @@ namespace WpfInvestigate.Controls
 {
     public partial class MwiContainer
     {
-        private Grid LeftPanelContainer;
-        private ToggleButton LeftPanelButton;
+        private Grid _leftPanelContainer;
+        private ToggleButton _leftPanelButton;
 
         public static readonly DependencyProperty LeftPanelProperty = DependencyProperty.Register("LeftPanel", typeof(FrameworkElement), typeof(MwiContainer), new FrameworkPropertyMetadata(null, LeftPanel_OnPropertyChanged));
         public FrameworkElement LeftPanel
@@ -28,15 +28,15 @@ namespace WpfInvestigate.Controls
 
         public void HideLeftPanel()
         {
-            if (LeftPanelButton != null)
-                LeftPanelButton.IsChecked = false;
+            if (_leftPanelButton != null)
+                _leftPanelButton.IsChecked = false;
         }
 
         private void LeftPanel_OnDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var newWidth = LeftPanelContainer.ActualWidth + e.HorizontalChange;
+            var newWidth = _leftPanelContainer.ActualWidth + e.HorizontalChange;
             if (newWidth >= 0)
-                LeftPanelContainer.Width = newWidth;
+                _leftPanelContainer.Width = newWidth;
             e.Handled = true;
         }
 
@@ -45,21 +45,21 @@ namespace WpfInvestigate.Controls
             var button = (ToggleButton)sender;
             if (button.IsChecked == true)
             {
-                LeftPanelContainer.Visibility = Visibility.Visible;
-                LeftPanelContainer.BeginAnimation(WidthProperty, new DoubleAnimation(0, LeftPanelContainer.ActualWidth, AnimationHelper.AnimationDuration, FillBehavior.Stop));
-                LeftPanelContainer.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, AnimationHelper.AnimationDuration));
+                _leftPanelContainer.Visibility = Visibility.Visible;
+                _leftPanelContainer.BeginAnimation(WidthProperty, new DoubleAnimation(0, _leftPanelContainer.ActualWidth, AnimationHelper.AnimationDuration, FillBehavior.Stop));
+                _leftPanelContainer.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, AnimationHelper.AnimationDuration));
                 MwiPanel.BeginAnimation(OpacityProperty, new DoubleAnimation(1.0, 0.75, AnimationHelper.AnimationDuration));
             }
             else
             {
-                var lastLeftPanelWidth = LeftPanelContainer.ActualWidth;
+                var lastLeftPanelWidth = _leftPanelContainer.ActualWidth;
                 await Task.WhenAll(
-                    LeftPanelContainer.BeginAnimationAsync(WidthProperty, LeftPanelContainer.ActualWidth, 0.0),
-                    LeftPanelContainer.BeginAnimationAsync(OpacityProperty,  LeftPanelContainer.Opacity, 0.0),
+                    _leftPanelContainer.BeginAnimationAsync(WidthProperty, _leftPanelContainer.ActualWidth, 0.0),
+                    _leftPanelContainer.BeginAnimationAsync(OpacityProperty,  _leftPanelContainer.Opacity, 0.0),
                     MwiPanel.BeginAnimationAsync(OpacityProperty, MwiPanel.Opacity, 1.0));
 
-                LeftPanelContainer.Visibility = Visibility.Hidden;
-                LeftPanelContainer.Width = lastLeftPanelWidth;
+                _leftPanelContainer.Visibility = Visibility.Hidden;
+                _leftPanelContainer.Width = lastLeftPanelWidth;
             }
         }
 
