@@ -189,6 +189,5 @@ namespace WpfInvestigate.Controls
                 ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
             }
         }
-
     }
 }

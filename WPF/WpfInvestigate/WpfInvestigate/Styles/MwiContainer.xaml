@@ -141,7 +141,6 @@
                             </Grid>
                         </Grid>
                     </DockPanel>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
