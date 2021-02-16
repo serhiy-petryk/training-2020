@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfInvestigate.TestViews.MwiStartup"
+﻿<Window x:Class="WpfInvestigate.MwiStartup"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -23,6 +23,11 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
             </Grid>
+
+            <!--<Slider Grid.Column="1" x:Uid="ScaleSlider" ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Width="100" Margin="2 2 0 0" Orientation="Horizontal" Minimum="0.5" Maximum="4" Value="{Binding Source={x:Static viewModels:AppViewModel.Instance}, Path=ScaleValue, Mode=TwoWay}"
+                    IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"/>-->
+
         </controls:MwiChild.RightHeaderPanel>
 
         <controls:MwiContainer x:Name="MwiContainer" Background="Beige">

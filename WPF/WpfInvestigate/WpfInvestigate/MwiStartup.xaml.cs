@@ -6,7 +6,7 @@ using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Samples;
 
-namespace WpfInvestigate.TestViews
+namespace WpfInvestigate
 {
     /// <summary>
     /// Interaction logic for MwiStartup.xaml
