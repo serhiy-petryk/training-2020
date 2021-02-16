@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WpfInvestigate.Samples"
              mc:Ignorable="d">
 
-    <Grid Background="Red">
+    <Grid Background="Orange">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>

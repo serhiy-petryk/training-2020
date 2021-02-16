@@ -19,7 +19,8 @@ namespace WpfInvestigate.TestViews
             InitializeComponent();
             DataContext = this;
             // TopControl.RestoreRectFromSetting();
-            // TopControl.CommandBar = new CommandBarExample();
+            TopControl.CommandBar = new MwiCommandBarSample();
+            TopControl.StatusBar = new MwiStatusBarSample();
         }
 
         public override void OnApplyTemplate()
