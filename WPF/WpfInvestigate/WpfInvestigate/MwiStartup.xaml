@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:samples="clr-namespace:WpfInvestigate.Samples"
+        xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels"
         mc:Ignorable="d"
         Title="MwiStartup"
         Style="{StaticResource HeadlessWindow}"
@@ -22,11 +23,11 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-            </Grid>
 
-            <!--<Slider Grid.Column="1" x:Uid="ScaleSlider" ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
-                    Width="100" Margin="2 2 0 0" Orientation="Horizontal" Minimum="0.5" Maximum="4" Value="{Binding Source={x:Static viewModels:AppViewModel.Instance}, Path=ScaleValue, Mode=TwoWay}"
-                    IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"/>-->
+                <Slider Grid.Column="1" x:Name="XScaleSlider" ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                        Width="100" Margin="2 2 0 0" Orientation="Horizontal" Minimum="0.5" Maximum="4" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=ScaleValue, Mode=TwoWay}"
+                        IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"/>
+            </Grid>
 
         </controls:MwiChild.RightHeaderPanel>
 

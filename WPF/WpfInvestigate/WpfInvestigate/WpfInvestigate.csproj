@@ -270,6 +270,8 @@
     <Compile Include="TestViews\WiPTests.xaml.cs">
       <DependentUpon>WiPTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Themes\MwiThemeInfo.cs" />
+    <Compile Include="ViewModels\MwiAppViewModel.cs" />
     <Page Include="Controls\MwiBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
