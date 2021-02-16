@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -58,8 +57,6 @@ namespace WpfInvestigate.Controls
             {
                 await AnimateHide();
                 var wnd = (Window)Parent;
-                wnd.Activated -= OnWindowActivated;
-                wnd.Deactivated -= OnWindowDeactivated;
                 wnd.Close();
                 wnd.Content = null;
                 MwiContainer.MwiPanel.Children.Add(this);
@@ -76,8 +73,6 @@ namespace WpfInvestigate.Controls
 
                 var wnd = new Window {Style = (Style) FindResource("HeadlessWindow"), Content = this};
                 RestoreExternalWindowRect();
-                wnd.Activated += OnWindowActivated;
-                wnd.Deactivated += OnWindowDeactivated;
                 wnd.Show();
                 Activate();
 
@@ -90,9 +85,6 @@ namespace WpfInvestigate.Controls
             OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, WindowState, WindowState));
             OnPropertiesChanged(nameof(IsWindowed));
             BeginAnimation(OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDuration));
-
-            void OnWindowActivated(object sender, EventArgs e) => Activate();
-            void OnWindowDeactivated(object sender, EventArgs e) => IsActive = false;
         }
 
         private void RestoreExternalWindowRect(Size? newSize = null)
@@ -113,8 +105,6 @@ namespace WpfInvestigate.Controls
             ((MwiChild)sender).WindowStateValueChanged((WindowState)e.NewValue, (WindowState)e.OldValue);
         private async void WindowStateValueChanged(WindowState newWindowState, WindowState previousWindowState)
         {
-            Debug.Print($"WindowStateValueChanged. Old: {previousWindowState}, new: {newWindowState}");
-
             if (previousWindowState == WindowState.Maximized)
             {
                 BindingOperations.ClearBinding(this, WidthProperty);

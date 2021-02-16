@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -116,6 +117,13 @@ namespace WpfInvestigate.Controls
         {
             base.OnVisualParentChanged(oldParent);
 
+            if (oldParent != null && !(oldParent is Grid) && Window.GetWindow(oldParent) is Window oldHost)
+            {
+                oldHost.Activated -= OnWindowActivated;
+                oldHost.Deactivated -= OnWindowDeactivated;
+                return;
+            }
+
             if (!IsWindowed) return;
 
             var host = Parent as Window;
@@ -137,6 +145,8 @@ namespace WpfInvestigate.Controls
             OnHostClosed(host, null);
             host.KeyDown += OnHostKeyDown;
             host.Closed += OnHostClosed;
+            host.Activated += OnWindowActivated;
+            host.Deactivated += OnWindowDeactivated;
 
             void OnHostKeyDown(object sender, KeyEventArgs e)
             {
@@ -151,12 +161,18 @@ namespace WpfInvestigate.Controls
                 host.Closed -= OnHostClosed;
                 host.KeyDown -= OnHostKeyDown;
             }
+            void OnWindowActivated(object sender, EventArgs e) => Activate();
+            void OnWindowDeactivated(object sender, EventArgs e) => IsActive = false;
         }
         #endregion
 
         public void Activate(bool restoreMinimizedSize)
         {
+            if (MwiContainer == null && IsWindowed) // MwiStartup
+                IsActive = true;
+
             if (_isActivating || MwiContainer == null) return;
+
             _isActivating = true;
 
             base.Activate();
@@ -258,11 +274,6 @@ namespace WpfInvestigate.Controls
         public RelayCommand SysCmdMaximize { get; }
         public RelayCommand SysCmdRestore { get; }
         public RelayCommand CmdClose { get; }
-        //=========================
-        /// <summary>
-        /// Force user not to use Margin property.
-        /// </summary>
-        private new Thickness Margin { set { } }
         //=========================
         public static readonly DependencyProperty AllowDetachProperty = DependencyProperty.Register(nameof(AllowDetach), typeof(bool), typeof(MwiChild), new UIPropertyMetadata(true));
         public bool AllowDetach

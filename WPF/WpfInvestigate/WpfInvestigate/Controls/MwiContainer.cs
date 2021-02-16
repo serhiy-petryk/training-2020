@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -122,23 +121,6 @@ namespace WpfInvestigate.Controls
 
             Children.CollectionChanged += OnChildrenCollectionChanged;
             OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
-
-            if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
-            {
-                wnd.Activated += OnWindowActivated;
-                wnd.Deactivated += OnWindowDeactivated;
-            }
-
-            void OnWindowActivated(object sender, EventArgs e)
-            {
-                if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
-                    ActiveMwiChild.Activate();
-            }
-            void OnWindowDeactivated(object sender, EventArgs e)
-            {
-                foreach (var child in InternalWindows.Where(w => w.IsActive))
-                    child.IsActive = false;
-            }
         }
         #endregion
 
