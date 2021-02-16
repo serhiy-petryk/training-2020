@@ -6,6 +6,7 @@
                     xmlns:common="clr-namespace:WpfInvestigate.Common">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiCommon.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiChild.Wnd7.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -133,15 +134,15 @@
                                         <!-- Status bar -->
                                         <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>
                                     </Grid>
-                                    <!--<Border.Style>
-                                                <Style TargetType="Border">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsWindowed}" Value="true">
-                                                            <Setter Property="LayoutTransform" Value="{StaticResource ScaleTransform}"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>-->
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsWindowed}" Value="True">
+                                                    <Setter Property="LayoutTransform" Value="{StaticResource ScaleTransform}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
                                 </Border>
                             </Grid>
 
