@@ -128,6 +128,7 @@ namespace WpfInvestigate.Controls
                 wnd.Activated += OnWindowActivated;
                 wnd.Deactivated += OnWindowDeactivated;
             }
+
             void OnWindowActivated(object sender, EventArgs e)
             {
                 if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
