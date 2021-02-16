@@ -113,40 +113,42 @@ namespace WpfInvestigate.Controls
                 systemMenuButton.Checked += (sender, args) => Helpers.DropDownButtonHelper.OpenDropDownMenu(sender);
         }
 
+        private Window _activatedHost;
         protected override void OnVisualParentChanged(DependencyObject oldParent)
         {
             base.OnVisualParentChanged(oldParent);
 
-            if (oldParent != null && !(oldParent is Grid) && Window.GetWindow(oldParent) is Window oldHost)
+            if (_activatedHost != null)
             {
-                oldHost.Activated -= OnWindowActivated;
-                oldHost.Deactivated -= OnWindowDeactivated;
+                _activatedHost.Activated -= OnWindowActivated;
+                _activatedHost.Deactivated -= OnWindowDeactivated;
+                _activatedHost = null;
                 return;
             }
 
             if (!IsWindowed) return;
 
-            var host = Parent as Window;
-            if (Icon != null && host.Icon == null)
-                host.Icon = Icon;
-            else if (Icon == null && host.Icon != null)
-                Icon = host.Icon;
-            else if (Icon == null && host.Icon == null)
+            _activatedHost = Parent as Window;
+            if (Icon != null && _activatedHost.Icon == null)
+                _activatedHost.Icon = Icon;
+            else if (Icon == null && _activatedHost.Icon != null)
+                Icon = _activatedHost.Icon;
+            else if (Icon == null && _activatedHost.Icon == null)
             {
                 Icon = (ImageSource)FindResource("DefaultIcon");
-                host.Icon = (ImageSource)FindResource("DefaultIcon");
+                _activatedHost.Icon = (ImageSource)FindResource("DefaultIcon");
             }
 
-            if (!string.IsNullOrEmpty(Title) && string.IsNullOrEmpty(host.Title))
-                host.Title = Title;
-            else if (string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(host.Title))
-                Title = host.Title;
+            if (!string.IsNullOrEmpty(Title) && string.IsNullOrEmpty(_activatedHost.Title))
+                _activatedHost.Title = Title;
+            else if (string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(_activatedHost.Title))
+                Title = _activatedHost.Title;
 
-            OnHostClosed(host, null);
-            host.KeyDown += OnHostKeyDown;
-            host.Closed += OnHostClosed;
-            host.Activated += OnWindowActivated;
-            host.Deactivated += OnWindowDeactivated;
+            OnHostClosed(_activatedHost, null);
+            _activatedHost.KeyDown += OnHostKeyDown;
+            _activatedHost.Closed += OnHostClosed;
+            _activatedHost.Activated += OnWindowActivated;
+            _activatedHost.Deactivated += OnWindowDeactivated;
 
             void OnHostKeyDown(object sender, KeyEventArgs e)
             {
@@ -158,8 +160,11 @@ namespace WpfInvestigate.Controls
             }
             void OnHostClosed(object sender, EventArgs e)
             {
-                host.Closed -= OnHostClosed;
-                host.KeyDown -= OnHostKeyDown;
+                if (sender is Window wnd)
+                {
+                    wnd.Closed -= OnHostClosed;
+                    wnd.KeyDown -= OnHostKeyDown;
+                }
             }
             void OnWindowActivated(object sender, EventArgs e) => Activate();
             void OnWindowDeactivated(object sender, EventArgs e) => IsActive = false;
