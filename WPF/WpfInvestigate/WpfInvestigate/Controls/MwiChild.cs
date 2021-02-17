@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -202,7 +201,18 @@ namespace WpfInvestigate.Controls
                 ((Window)Parent).Focus();
 
             _isActivating = false;
-            BringIntoView();
+
+            // BringIntoView(); // mouse click on element is not working in case of active BringIntoView -> need to delay BringIntoView
+            // todo: delay for ResizingControl.Activate, cancel original RequestBringIntoView, make own BringIntoView (see Obsolete.AnimationHelper.ScrollViewerAnimator method)
+            var timer = new DispatcherTimer {Interval = TimeSpan.FromMilliseconds(300)};
+            timer.Tick += OnDispatcherTimerTick;
+            timer.Start();
+
+            void OnDispatcherTimerTick(object sender, EventArgs e)
+            {
+                ((DispatcherTimer)sender).Stop();
+                BringIntoView();
+            }
         }
 
         public async void Close(object obj)

@@ -226,7 +226,6 @@ namespace WpfInvestigate.Controls
                 OnResizeBottom(e.VerticalChange);
 
             e.Handled = true;
-            BringIntoView();
         }
 
         private void OnResizeLeft(double horizontalChange)
