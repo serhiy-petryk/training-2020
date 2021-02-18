@@ -4,6 +4,15 @@
 + 2. Object editor
 + 3. Refactoring animation
 
+ToDo 2021-02-18
+===============
+1. Mwi Scale (??? можливо зробити все красиво, але потрібно попрацювати - а чи стоїть це робити):
+	adjust size when detach/attach window
+	binding size for maximized detached window.Content (MwiChild)
+	add ScaleTransform only for MwiContainer of MwiStartup and MwiChild in detach action - all content (header & content) in detached window will be scaled
+2. BringToFornt issue: коли активується MwiChild -> focused -> Request BringToFront (є event) -> не спрацьовує MouseClick on element
+	можлмво потрібно робити cancel original RequestBringIntoView + зробити свій BringIntoView метод (на базі Obsolete.AnimationHelper.ScrollViewerAnimator)
+
 ToDo 2020-10-05
 ===============
 1. Bootstrap button

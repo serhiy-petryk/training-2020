@@ -164,6 +164,8 @@ namespace WpfInvestigate
         {
             var a1 = sender as FrameworkElement;
             var aa1 = Tips.GetVisualParents(a1);
+            var a2 = Tips.GetVisualParents(a1).OfType<MwiChild>().FirstOrDefault();
+            var wnd = Window.GetWindow(a1);
         }
 
         private void MwiStartup_OnKeyDown(object sender, KeyEventArgs e)

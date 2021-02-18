@@ -5,6 +5,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using WpfInvestigate.Common;
+using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
@@ -53,12 +54,23 @@ namespace WpfInvestigate.Controls
             if (MwiContainer == null) return;
 
             if (WindowState == WindowState.Normal) SaveActualRectangle();
+
+            var contentHeight = GetTemplateChild("ContentBorder") is Border contentBorder1 ? contentBorder1.ActualHeight : ActualHeight;
+            var headerSize = GetTemplateChild("ContentBorder") is Border contentBorder ? new Size(ActualWidth - contentBorder.ActualWidth,  ActualHeight - contentBorder.ActualHeight) : new Size(0,0);
             if (IsWindowed)
             {
                 await AnimateHide();
                 var wnd = (Window)Parent;
                 wnd.Close();
                 wnd.Content = null;
+                if (WindowState == WindowState.Normal)
+                {
+                    // Width = ActualWidth / MwiAppViewModel.Instance.ScaleValue;
+                    // Height = ActualHeight - contentHeight * MwiAppViewModel.Instance.ScaleValue + contentHeight;
+                    Width = ActualWidth - (ActualWidth - headerSize.Width) * MwiAppViewModel.Instance.ScaleValue + ActualWidth - headerSize.Width;
+                    Height = ActualHeight - (ActualHeight - headerSize.Height) * MwiAppViewModel.Instance.ScaleValue + ActualHeight - headerSize.Height;
+                }
+
                 MwiContainer.MwiPanel.Children.Add(this);
 
                 Activate();
@@ -71,8 +83,12 @@ namespace WpfInvestigate.Controls
                 Margin = new Thickness(0, 0, -1, -1);
                 MwiContainer.MwiPanel.Children.Remove(this);
 
-                var wnd = new Window {Style = (Style) FindResource("HeadlessWindow"), Content = this};
-                RestoreExternalWindowRect();
+                var wnd = new Window { Style = (Style)FindResource("HeadlessWindow"), Content = this };
+                var lastSize = WindowState == WindowState.Normal ? new Size(ActualWidth, ActualHeight) : _lastNormalSize;
+                var wndWidth = headerSize.Width + (lastSize.Width - headerSize.Width) * MwiAppViewModel.Instance.ScaleValue;
+                var wndHeight = headerSize.Height + (lastSize.Height - headerSize.Height) * MwiAppViewModel.Instance.ScaleValue;
+                RestoreExternalWindowRect(new Size(wndWidth, wndHeight));
+
                 wnd.Show();
                 Activate();
 
@@ -96,8 +112,8 @@ namespace WpfInvestigate.Controls
 
             var maximizedWindowRectangle = Tips.GetMaximizedWindowRectangle();
             _detachedPosition = new Point(
-                Math.Max(0, maximizedWindowRectangle.X + (maximizedWindowRectangle.Width - _lastNormalSize.Width) / 2),
-                Math.Max(0, maximizedWindowRectangle.Y + (maximizedWindowRectangle.Height - _lastNormalSize.Height) / 2));
+                Math.Max(0, maximizedWindowRectangle.X + (maximizedWindowRectangle.Width - _lastNormalSize.Width * MwiAppViewModel.Instance.ScaleValue) / 2),
+                Math.Max(0, maximizedWindowRectangle.Y + (maximizedWindowRectangle.Height - _lastNormalSize.Height * MwiAppViewModel.Instance.ScaleValue) / 2));
         }
 
         #region ==============  OnWindowStateValueChanged  =================
