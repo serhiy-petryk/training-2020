@@ -332,7 +332,7 @@ namespace WpfInvestigate.Controls
             set => SetValue(WindowStateProperty, value);
         }
         //================================
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(ImageSource), typeof(MwiChild));
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(ImageSource), typeof(MwiChild), new UIPropertyMetadata(null));
         public ImageSource Icon
         {
             get => (ImageSource)GetValue(IconProperty);
