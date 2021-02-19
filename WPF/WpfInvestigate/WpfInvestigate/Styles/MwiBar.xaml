@@ -6,7 +6,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
-        <!--<ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiChild.Wnd7.xaml" />-->
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="controls:MwiBar" x:Shared="False">
@@ -101,23 +100,23 @@
                                 </ScrollViewer>
 
                                 <Grid Grid.Column="1" x:Name="DoubleButtonGrid" Margin="2 0 0 0" Tag="1"
-                                          Width="{TemplateBinding ActualHeight}" Height="{TemplateBinding ActualHeight}"
-                                          DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}"
-                                          Visibility="{Binding ScrollButtonVisibility}">
+                                      Width="{TemplateBinding ActualHeight}" Height="{TemplateBinding ActualHeight}"
+                                      DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}"
+                                      Visibility="{Binding ScrollButtonVisibility}">
                                     <RepeatButton Focusable="False" Interval="15" Style="{StaticResource LeftUpDoubleButtonStyle}"
-                                                      Padding="3 3 16 13"
-                                                      IsEnabled="{Binding CanScrollLeft}"
-                                                      effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
-                                                      effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100, +10%,+50%,+50%,100"
-                                                      ToolTip="Scroll window tabs to left"
-                                                      CommandTarget="{Binding ElementName=PART_ScrollBar}" Command="ScrollBar.LineLeftCommand"/>
+                                                  Padding="3 3 16 13"
+                                                  IsEnabled="{Binding CanScrollLeft}"
+                                                  effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
+                                                  effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100, +10%,+50%,+50%,100"
+                                                  ToolTip="Scroll window tabs to left"
+                                                  CommandTarget="{Binding ElementName=PART_ScrollBar}" Command="ScrollBar.LineLeftCommand"/>
                                     <RepeatButton Focusable="False" Interval="15" Style="{StaticResource RightDownDoubleButtonStyle}"
-                                                      Padding="16 13 3 3"
-                                                      IsEnabled="{Binding CanScrollRight}"
-                                                      effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
-                                                      effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100, +10%,+50%,+50%,100"
-                                                      ToolTip="Scroll window tabs to right"
-                                                      CommandTarget="{Binding ElementName=PART_ScrollBar}" Command="ScrollBar.LineRightCommand"/>
+                                                  Padding="16 13 3 3"
+                                                  IsEnabled="{Binding CanScrollRight}"
+                                                  effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
+                                                  effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100, +10%,+50%,+50%,100"
+                                                  ToolTip="Scroll window tabs to right"
+                                                  CommandTarget="{Binding ElementName=PART_ScrollBar}" Command="ScrollBar.LineRightCommand"/>
                                 </Grid>
                             </Grid>
                         </Border>
