@@ -48,7 +48,7 @@ namespace WpfInvestigate.Controls
 
             DataContext = this;
             if (Icon == null)
-                Icon = (ImageSource) FindResource("DefaultIcon");
+                Icon = FindResource("DefaultIcon") as ImageSource;
             Loaded += OnMwiChildLoaded;
 
             void OnMwiChildLoaded(object sender, RoutedEventArgs e)
@@ -134,8 +134,8 @@ namespace WpfInvestigate.Controls
                 Icon = _activatedHost.Icon;
             else if (Icon == null && _activatedHost.Icon == null)
             {
-                Icon = (ImageSource)FindResource("DefaultIcon");
-                _activatedHost.Icon = (ImageSource)FindResource("DefaultIcon");
+                Icon = FindResource("DefaultIcon") as ImageSource;
+                _activatedHost.Icon = FindResource("DefaultIcon") as ImageSource;
             }
 
             if (!string.IsNullOrEmpty(Title) && string.IsNullOrEmpty(_activatedHost.Title))
