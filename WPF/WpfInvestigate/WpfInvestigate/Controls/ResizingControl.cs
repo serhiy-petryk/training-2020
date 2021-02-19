@@ -330,14 +330,14 @@ namespace WpfInvestigate.Controls
         }
         //================================
         public static readonly DependencyProperty ResizableProperty = DependencyProperty.Register(nameof(Resizable),
-            typeof(bool), typeof(ResizingControl), new UIPropertyMetadata(true));
+            typeof(bool), typeof(ResizingControl), new FrameworkPropertyMetadata(true));
         public bool Resizable
         {
             get => (bool)GetValue(ResizableProperty);
             set => SetValue(ResizableProperty, value);
         }
         //=========================
-        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Point), typeof(ResizingControl), new UIPropertyMetadata(new Point(-1, -1), OnPositionValueChanged));
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Point), typeof(ResizingControl), new FrameworkPropertyMetadata(new Point(-1, -1), OnPositionValueChanged));
         public Point Position
         {
             get => (Point)GetValue(PositionProperty);

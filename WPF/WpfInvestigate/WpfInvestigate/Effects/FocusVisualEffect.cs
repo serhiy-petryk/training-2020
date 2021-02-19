@@ -16,12 +16,12 @@ namespace WpfInvestigate.Effects
     {
         #region ==============  Properties  ==============
         public static readonly DependencyProperty AlwaysShowFocusProperty = DependencyProperty.RegisterAttached(
-            "AlwaysShowFocus", typeof(bool), typeof(FocusVisualEffect), new UIPropertyMetadata(false));
+            "AlwaysShowFocus", typeof(bool), typeof(FocusVisualEffect), new FrameworkPropertyMetadata(false));
         public static bool GetAlwaysShowFocus(DependencyObject obj) => (bool)obj.GetValue(AlwaysShowFocusProperty);
         public static void SetAlwaysShowFocus(DependencyObject obj, bool value) => obj.SetValue(AlwaysShowFocusProperty, value);
         //================
         public static readonly DependencyProperty FocusControlStyleProperty = DependencyProperty.RegisterAttached(
-            "FocusControlStyle", typeof(Style), typeof(FocusVisualEffect), new UIPropertyMetadata(null, OnFocusControlStyleChanged));
+            "FocusControlStyle", typeof(Style), typeof(FocusVisualEffect), new FrameworkPropertyMetadata(null, OnFocusControlStyleChanged));
         public static Style GetFocusControlStyle(DependencyObject obj) => (Style)obj.GetValue(FocusControlStyleProperty);
         public static void SetFocusControlStyle(DependencyObject obj, Style value) => obj.SetValue(FocusControlStyleProperty, value);
 

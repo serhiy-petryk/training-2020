@@ -18,12 +18,12 @@ namespace WpfInvestigate.Obsolete
     public class FocusEffect
     {
         public static readonly DependencyProperty BrushProperty = DependencyProperty.RegisterAttached(
-            "Brush", typeof(Brush), typeof(FocusEffect), new UIPropertyMetadata(null, OnBrushChanged));
+            "Brush", typeof(Brush), typeof(FocusEffect), new FrameworkPropertyMetadata(null, OnBrushChanged));
         public static Brush GetBrush(DependencyObject obj) => (Brush)obj.GetValue(BrushProperty);
         public static void SetBrush(DependencyObject obj, Brush value) => obj.SetValue(BrushProperty, value);
 
         public static readonly DependencyProperty ThicknessProperty = DependencyProperty.RegisterAttached(
-            "Thickness", typeof(Thickness), typeof(FocusEffect), new UIPropertyMetadata(new Thickness(3)));
+            "Thickness", typeof(Thickness), typeof(FocusEffect), new FrameworkPropertyMetadata(new Thickness(3)));
         public static Thickness GetThickness(DependencyObject obj) => (Thickness)obj.GetValue(ThicknessProperty);
         public static void SetThickness(DependencyObject obj, Thickness value) => obj.SetValue(ThicknessProperty, value);
 

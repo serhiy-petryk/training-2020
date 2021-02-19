@@ -23,13 +23,13 @@ namespace WpfInvestigate.Effects
     public class ClickEffect
     {
         public static readonly DependencyProperty ShiftOffsetOnClickProperty = DependencyProperty.RegisterAttached("ShiftOffsetOnClick",
-            typeof(double), typeof(ClickEffect), new UIPropertyMetadata(0.0, OnPropertiesChanged));
+            typeof(double), typeof(ClickEffect), new FrameworkPropertyMetadata(0.0, OnPropertiesChanged));
         public static double GetShiftOffsetOnClick(DependencyObject obj) => (double)obj.GetValue(ShiftOffsetOnClickProperty);
         /// <summary>The number of pixels by which the element will move down when the mouse button is pressed. Recommended value is 1.0 or 1.5</summary>
         public static void SetShiftOffsetOnClick(DependencyObject obj, double value) => obj.SetValue(ShiftOffsetOnClickProperty, value);
 
         public static readonly DependencyProperty RippleColorProperty = DependencyProperty.RegisterAttached("RippleColor",
-            typeof(Color?), typeof(ClickEffect), new UIPropertyMetadata(null, OnPropertiesChanged));
+            typeof(Color?), typeof(ClickEffect), new FrameworkPropertyMetadata(null, OnPropertiesChanged));
         public static Color? GetRippleColor(DependencyObject obj) => (Color?)obj.GetValue(RippleColorProperty);
         public static void SetRippleColor(DependencyObject obj, Color? value) => obj.SetValue(RippleColorProperty, value);
 

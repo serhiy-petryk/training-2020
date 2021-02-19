@@ -15,27 +15,27 @@ namespace WpfInvestigate.Effects
     public class DoubleIconToggleButtonEffect
     {
         public static readonly DependencyProperty GeometryOnProperty = DependencyProperty.RegisterAttached("GeometryOn",
-            typeof(Geometry), typeof(DoubleIconToggleButtonEffect), new UIPropertyMetadata(Geometry.Empty, OnGeometryPropertyChanged));
+            typeof(Geometry), typeof(DoubleIconToggleButtonEffect), new FrameworkPropertyMetadata(Geometry.Empty, OnGeometryPropertyChanged));
         public static Geometry GetGeometryOn(DependencyObject obj) => (Geometry)obj.GetValue(GeometryOnProperty);
         public static void SetGeometryOn(DependencyObject obj, Geometry value) => obj.SetValue(GeometryOnProperty, value);
         //================
         public static readonly DependencyProperty GeometryOffProperty = DependencyProperty.RegisterAttached("GeometryOff",
-            typeof(Geometry), typeof(DoubleIconToggleButtonEffect), new UIPropertyMetadata(Geometry.Empty, OnGeometryPropertyChanged));
+            typeof(Geometry), typeof(DoubleIconToggleButtonEffect), new FrameworkPropertyMetadata(Geometry.Empty, OnGeometryPropertyChanged));
         public static Geometry GetGeometryOff(DependencyObject obj) => (Geometry)obj.GetValue(GeometryOffProperty);
         public static void SetGeometryOff(DependencyObject obj, Geometry value) => obj.SetValue(GeometryOffProperty, value);
         //================
         public static readonly DependencyProperty WidthProperty = DependencyProperty.RegisterAttached("Width",
-            typeof(double), typeof(DoubleIconToggleButtonEffect), new UIPropertyMetadata(double.NaN, OnWidthPropertyChanged));
+            typeof(double), typeof(DoubleIconToggleButtonEffect), new FrameworkPropertyMetadata(double.NaN, OnWidthPropertyChanged));
         public static double GetWidth(DependencyObject obj) => (double)obj.GetValue(WidthProperty);
         public static void SetWidth(DependencyObject obj, double value) => obj.SetValue(WidthProperty, value);
         //================
         public static readonly DependencyProperty MarginOnProperty = DependencyProperty.RegisterAttached("MarginOn",
-            typeof(Thickness), typeof(DoubleIconToggleButtonEffect), new UIPropertyMetadata(new Thickness(), OnMarginPropertyChanged));
+            typeof(Thickness), typeof(DoubleIconToggleButtonEffect), new FrameworkPropertyMetadata(new Thickness(), OnMarginPropertyChanged));
         public static Thickness GetMarginOn(DependencyObject obj) => (Thickness)obj.GetValue(MarginOnProperty);
         public static void SetMarginOn(DependencyObject obj, Thickness value) => obj.SetValue(MarginOnProperty, value);
         //================
         public static readonly DependencyProperty MarginOffProperty = DependencyProperty.RegisterAttached("MarginOff",
-            typeof(Thickness), typeof(DoubleIconToggleButtonEffect), new UIPropertyMetadata(new Thickness(), OnMarginPropertyChanged));
+            typeof(Thickness), typeof(DoubleIconToggleButtonEffect), new FrameworkPropertyMetadata(new Thickness(), OnMarginPropertyChanged));
         public static Thickness GetMarginOff(DependencyObject obj) => (Thickness)obj.GetValue(MarginOffProperty);
         public static void SetMarginOff(DependencyObject obj, Thickness value) => obj.SetValue(MarginOffProperty, value);
 

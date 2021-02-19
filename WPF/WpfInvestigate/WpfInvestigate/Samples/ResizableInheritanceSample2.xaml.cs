@@ -31,7 +31,7 @@ namespace WpfInvestigate.Samples
 
         // ==============================
         /*public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content),
-            typeof(object), typeof(ResizableInheritanceSample2), new UIPropertyMetadata(null));
+            typeof(object), typeof(ResizableInheritanceSample2), new FrameworkPropertyMetadata(null));
         public new object Content
         {
             get => (object)GetValue(ContentProperty);
@@ -39,7 +39,7 @@ namespace WpfInvestigate.Samples
         }*/
 
         /*public static readonly DependencyProperty XXContentProperty = DependencyProperty.Register(nameof(XXContent),
-            typeof(object), typeof(ResizableInheritanceSample2), new UIPropertyMetadata(null));
+            typeof(object), typeof(ResizableInheritanceSample2), new FrameworkPropertyMetadata(null));
         public object XXContent
         {
             get => (object)GetValue(XXContentProperty);

@@ -16,7 +16,7 @@ namespace WpfInvestigate.Obsolete
     public class ShadowEffect
     {
         public static readonly DependencyProperty DropShadowEffectProperty = DependencyProperty.RegisterAttached(
-            "DropShadowEffect", typeof(DropShadowEffect), typeof(ShadowEffect), new UIPropertyMetadata(null, OnDropShadowEffectChanged));
+            "DropShadowEffect", typeof(DropShadowEffect), typeof(ShadowEffect), new FrameworkPropertyMetadata(null, OnDropShadowEffectChanged));
         public static DropShadowEffect GetDropShadowEffect(DependencyObject obj) => (DropShadowEffect)obj.GetValue(DropShadowEffectProperty);
         public static void SetDropShadowEffect(DependencyObject obj, DropShadowEffect value) => obj.SetValue(DropShadowEffectProperty, value);
 

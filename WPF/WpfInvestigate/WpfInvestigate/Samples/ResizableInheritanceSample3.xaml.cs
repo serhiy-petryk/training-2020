@@ -15,7 +15,7 @@ namespace WpfInvestigate.Samples
 
         // ==============================
         public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content),
-            typeof(object), typeof(ResizableInheritanceSample3), new UIPropertyMetadata(null));
+            typeof(object), typeof(ResizableInheritanceSample3), new FrameworkPropertyMetadata(null));
         public new object Content
         {
             get => (object)GetValue(ContentProperty);
@@ -25,7 +25,7 @@ namespace WpfInvestigate.Samples
         //=============================
         public static readonly DependencyProperty BaseContentProperty = DependencyProperty.Register(nameof(BaseContent),
             typeof(object), typeof(ResizableInheritanceSample3),
-            new UIPropertyMetadata(null, (o, args) => ((ResizableInheritanceSample3) o).SetBaseContent(args.NewValue)));
+            new FrameworkPropertyMetadata(null, (o, args) => ((ResizableInheritanceSample3) o).SetBaseContent(args.NewValue)));
         public object BaseContent
         {
             get => GetValue(BaseContentProperty);

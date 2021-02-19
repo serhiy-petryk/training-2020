@@ -21,7 +21,7 @@ namespace WpfInvestigate.Effects
     public class WatermarkEffect
     {
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached(
-            "Watermark", typeof(string), typeof(WatermarkEffect), new UIPropertyMetadata(string.Empty, OnPropertiesChanged));
+            "Watermark", typeof(string), typeof(WatermarkEffect), new FrameworkPropertyMetadata(string.Empty, OnPropertiesChanged));
         public static string GetWatermark(DependencyObject obj) => (string)obj.GetValue(WatermarkProperty);
         public static void SetWatermark(DependencyObject obj, string value) => obj.SetValue(WatermarkProperty, value);
         
