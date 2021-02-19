@@ -80,9 +80,7 @@
     </Compile>
     <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DialogAdorner.cs" />
-    <Compile Include="Controls\MwiBar.xaml.cs">
-      <DependentUpon>MwiBar.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\MwiBar.cs" />
     <Compile Include="Controls\MwiChild.Animation.cs" />
     <Compile Include="Controls\MwiChild.cs" />
     <Compile Include="Controls\MwiChild.WindowState.cs" />
@@ -272,10 +270,6 @@
     </Compile>
     <Compile Include="Themes\MwiThemeInfo.cs" />
     <Compile Include="ViewModels\MwiAppViewModel.cs" />
-    <Page Include="Controls\MwiBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Obsolete\ForObsolete.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -396,6 +390,10 @@
     <Page Include="Styles\DialogMessage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\MwiBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\MwiChild.xaml">
       <SubType>Designer</SubType>

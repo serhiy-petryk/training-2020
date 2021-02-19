@@ -14,7 +14,7 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for MwiBar.xaml
     /// </summary>
-    public partial class MwiBar : INotifyPropertyChanged
+    public partial class MwiBar : TabControl, INotifyPropertyChanged
     {
         static MwiBar()
         {
@@ -23,7 +23,7 @@ namespace WpfInvestigate.Controls
 
         public MwiBar()
         {
-            InitializeComponent();
+            // InitializeComponent();
         }
 
         public override void OnApplyTemplate()
