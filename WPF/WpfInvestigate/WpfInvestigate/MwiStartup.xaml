@@ -31,7 +31,7 @@
 
         </controls:MwiChild.RightHeaderPanel>
 
-        <controls:MwiContainer x:Name="MwiContainer" Background="Beige">
+        <controls:MwiContainer x:Name="MwiContainer" Background="Beige" LayoutTransform="{StaticResource ScaleTransform}">
             <controls:MwiContainer.LeftPanel>
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>

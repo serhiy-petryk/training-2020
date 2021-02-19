@@ -128,21 +128,12 @@
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <!-- Command bar -->
-                                        <ContentPresenter Grid.Row="0" Content="{Binding CommandBar}"/>
+                                        <ContentControl Grid.Row="0" Content="{Binding CommandBar}" LayoutTransform="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.LayoutTransform}"/>
                                         <!-- Window content -->
-                                        <ContentControl Grid.Row="1" Content="{Binding Content}" />
+                                        <ContentControl Grid.Row="1" x:Name="Content" Content="{Binding Content}" />
                                         <!-- Status bar -->
-                                        <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>
+                                        <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}" LayoutTransform="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.LayoutTransform}"/>
                                     </Grid>
-                                    <Border.Style>
-                                        <Style TargetType="Border">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsWindowed}" Value="True">
-                                                    <Setter Property="LayoutTransform" Value="{StaticResource ScaleTransform}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
                                 </Border>
                             </Grid>
 
