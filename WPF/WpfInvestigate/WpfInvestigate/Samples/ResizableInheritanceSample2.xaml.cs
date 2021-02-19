@@ -24,8 +24,8 @@ namespace WpfInvestigate.Samples
             //Dispatcher.Invoke(() =>
             //{
                 var cp = Tips.GetVisualChildren(this).OfType<ContentPresenter>().FirstOrDefault();
-                var a2 = cp.ContentTemplate.FindName("MovingThumb", cp);
-                MovingThumb = a2 as Thumb;
+                var a2 = cp.ContentTemplate.FindName("MovingThumb", cp) as Thumb;
+                MovingThumb = a2;
             //}, DispatcherPriority.DataBind);
         }
 

@@ -228,7 +228,7 @@ namespace WpfInvestigate.TestViews
         {
             var window = new Window
             {
-                Style = (Style)FindResource("HeadlessWindow"),
+                Style = FindResource("HeadlessWindow") as Style,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 // Opacity = 0
             };

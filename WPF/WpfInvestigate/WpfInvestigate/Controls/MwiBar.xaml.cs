@@ -126,11 +126,11 @@ namespace WpfInvestigate.Controls
             // var dc = tabItem.DataContext as MwiChild;
             // if (dc.IsSelected)
             if (tabItem.IsSelected)
-                newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.Selected.BackgroundBrush");
+                newBrush = FindResource("Mwi.WindowTab.Selected.BackgroundBrush") as LinearGradientBrush;
             else if (tabItem.IsMouseOver)
-                newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.MouseOver.BackgroundBrush");
+                newBrush = FindResource("Mwi.WindowTab.MouseOver.BackgroundBrush") as LinearGradientBrush;
             else
-                newBrush = (LinearGradientBrush)FindResource("Mwi.WindowTab.BackgroundBrush");
+                newBrush = FindResource("Mwi.WindowTab.BackgroundBrush") as LinearGradientBrush;
 
             tabItem.Background = AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background);
         }

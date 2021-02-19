@@ -188,7 +188,7 @@ namespace WpfInvestigate.Controls
             if (!((GetTemplateChild("PART_Clock") as Viewbox)?.Child is Canvas canvas) || canvas.Children.Count > 60)
                 return;
 
-            var brush = this.FindResource("BlackBrush") as Brush;
+            var brush = FindResource("BlackBrush") as Brush;
             for (var k = 0; k < 60; k++)
             {
                 var isMinute = k % 5 == 0;
