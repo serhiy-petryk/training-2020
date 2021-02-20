@@ -40,7 +40,6 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabItem">
-                            <!--<Border BorderThickness="1" BorderBrush="{DynamicResource Mwi.WindowTab.BorderBrush}" CornerRadius="2" Margin="1 0 0 0" Background="{TemplateBinding Background}" ToolTipOpening="TabItem_OnToolTipOpening">-->
                                 <Border BorderThickness="1" BorderBrush="{DynamicResource Mwi.WindowTab.BorderBrush}" CornerRadius="2" Margin="1 0 0 0" Background="{TemplateBinding Background}">
                                 <Grid MaxWidth="240">
                                     <Grid.ColumnDefinitions>
@@ -57,7 +56,6 @@
                                 </Grid>
 
                                 <Border.ToolTip>
-                                    <!--<ToolTip Style="{StaticResource ThumbnailStyle}" Opened="TabToolTip_OnOpened">-->
                                         <ToolTip Style="{StaticResource ThumbnailStyle}">
                                         <Grid MaxWidth="180">
                                             <Grid.RowDefinitions>
@@ -73,10 +71,6 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-                <!--<EventSetter Event="PreviewMouseLeftButtonDown" Handler="TabItem_OnPreviewMouseLeftButtonDown"/>
-                <EventSetter Event="Loaded" Handler="TabItem_OnLoaded"/>
-                <EventSetter Event="MouseEnter" Handler="TabItem_OnMouseEnterOrLeave" />
-                <EventSetter Event="MouseLeave" Handler="TabItem_OnMouseEnterOrLeave" />-->
             </Style>
         </Style.Resources>
 
@@ -93,9 +87,8 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <ScrollViewer Grid.Column="0" x:Name="PART_ScrollBar" IsTabStop="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" 
+                                <ScrollViewer Grid.Column="0" x:Name="PART_ScrollViewer" IsTabStop="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" 
                                               BorderThickness="0" Padding="0,0,0,0" Margin="0,0,1,-1">
-<!--                                    BorderThickness="0" Padding="0,0,0,0" Margin="0,0,1,-1" ScrollChanged="TabScrollViewer_OnScrollChanged">-->
                                     <TabPanel IsItemsHost="true" Margin="0 2" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
                                 </ScrollViewer>
 
@@ -109,14 +102,14 @@
                                                   effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
                                                   effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100, +10%,+50%,+50%,100"
                                                   ToolTip="Scroll window tabs to left"
-                                                  CommandTarget="{Binding ElementName=PART_ScrollBar}" Command="ScrollBar.LineLeftCommand"/>
+                                                  CommandTarget="{Binding ElementName=PART_ScrollViewer}" Command="ScrollBar.LineLeftCommand"/>
                                     <RepeatButton Focusable="False" Interval="15" Style="{StaticResource RightDownDoubleButtonStyle}"
                                                   Padding="16 13 3 3"
                                                   IsEnabled="{Binding CanScrollRight}"
                                                   effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
                                                   effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100, +10%,+50%,+50%,100"
                                                   ToolTip="Scroll window tabs to right"
-                                                  CommandTarget="{Binding ElementName=PART_ScrollBar}" Command="ScrollBar.LineRightCommand"/>
+                                                  CommandTarget="{Binding ElementName=PART_ScrollViewer}" Command="ScrollBar.LineRightCommand"/>
                                 </Grid>
                             </Grid>
                         </Border>
