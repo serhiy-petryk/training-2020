@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
+using System.Windows.Threading;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
@@ -41,7 +42,7 @@ namespace WpfInvestigate.Controls
             adorner.ShowContentDialog(content);
         }
 
-        private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private async void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
@@ -50,11 +51,9 @@ namespace WpfInvestigate.Controls
                     {
                         mwiChild.MwiContainer = this;
                         MwiPanel.Children.Add(mwiChild);
+                        mwiChild.Activate();
+                        await mwiChild.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Normal).Task;
                     }
-                    
-                    if (e.NewItems.Count > 0)
-                        ((MwiChild) e.NewItems[e.NewItems.Count - 1]).Activate();
-                    
                     break;
 
                 case NotifyCollectionChangedAction.Remove:

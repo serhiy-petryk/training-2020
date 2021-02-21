@@ -145,11 +145,11 @@ namespace WpfInvestigate.Controls
         }
 
         #region ==========  Focus  ============
-        protected override void OnGotFocus(RoutedEventArgs e)
+        /*protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
             Activate();
-        }
+        }*/
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
