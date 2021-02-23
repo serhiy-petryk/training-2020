@@ -156,15 +156,12 @@ namespace WpfInvestigate.Controls
             _popup = GetTemplateChild("PART_Popup") as Popup;
             _toggleButton = GetTemplateChild("PART_ToggleButton") as ToggleButton;
 
-            if (_clearButton == null || _upButton == null || _downButton == null || _textBox == null || _popup == null || _toggleButton == null)
-                throw new InvalidOperationException("Invalid control template");
-
             ToggleReadOnlyMode();
 
-            _clearButton.Click += (o, e) => ClearButtonClicked();
-            _upButton.Click += (o, e) => ChangeValueWithSpeedUp(true, false);
-            _downButton.Click += (o, e) => ChangeValueWithSpeedUp(false, false);
-            _popup.Opened += (o, e) => _popup.Child.Focus();
+            if (_clearButton != null) _clearButton.Click += (o, e) => ClearButtonClicked();
+            if (_upButton != null) _upButton.Click += (o, e) => ChangeValueWithSpeedUp(true, false);
+            if (_downButton != null) _downButton.Click += (o, e) => ChangeValueWithSpeedUp(false, false);
+            if (_popup != null) _popup.Opened += (o, e) => _popup.Child.Focus();
 
             Value = (decimal?)CoerceValue(this, Value);
             OnValueChanged(Value, Value);

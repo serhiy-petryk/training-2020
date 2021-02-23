@@ -30,23 +30,31 @@ namespace WpfInvestigate.Common.ColorSpaces
     #region  ================  Color Utilities  =================
     public static class ColorUtils
     {
-        static ColorUtils()
-        {
-            if (AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).FirstOrDefault(t => t.Namespace == "System.Windows.Media" && t.Name == "KnownColor") is Type type)
-            {
-                var nameList = Enum.GetValues(type).OfType<object>().Skip(1).Select(a => a.ToString()).OrderBy(a => a).ToList();
-                nameList.AddRange(new[] { "Cyan", "Aqua", "Fuchsia", "Magenta" });// repeating color values: name may be skipped
-                foreach (var colorName in nameList)
-                    if (!KnownColors.ContainsKey(colorName))
-                        KnownColors.Add(colorName, StringToColor(colorName));
-            }
-        }
-
+        /*private static Dictionary<string, Color> _knownColors;
         /// <summary>
         /// 141 known colors from System.Windows.Media.KnownColor enumeration
         /// I don't want to use System.Drawing.KnownColor because I need to add additional assembly to my project
         /// </summary>
-        public static Dictionary<string, Color> KnownColors { get; } = new Dictionary<string, Color>();
+        public static Dictionary<string, Color> KnownColors
+        {
+            get
+            {
+                if (_knownColors == null)
+                {
+                    _knownColors = new Dictionary<string, Color>();
+                    if (AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).FirstOrDefault(t => t.Namespace == "System.Windows.Media" && t.Name == "KnownColor") is Type type)
+                    {
+                        var nameList = Enum.GetValues(type).OfType<object>().Skip(1).Select(a => a.ToString()).OrderBy(a => a).ToList();
+                        nameList.AddRange(new[] { "Cyan", "Aqua", "Fuchsia", "Magenta" });// repeating color values: name may be skipped
+                        foreach (var colorName in nameList)
+                            if (!_knownColors.ContainsKey(colorName))
+                                _knownColors.Add(colorName, StringToColor(colorName));
+                    }
+                }
+
+                return _knownColors;
+            }
+        }*/
 
         public static Color StringToColor(string hexStringOfColor) => (Color)ColorConverter.ConvertFromString(hexStringOfColor);
 

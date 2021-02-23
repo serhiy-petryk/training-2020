@@ -47,7 +47,7 @@ namespace WpfInvestigate.Controls
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    foreach (MwiChild mwiChild in e.NewItems)
+                    foreach (var mwiChild in e.NewItems.OfType<MwiChild>().Where(c => c.Parent == null)) // in VS designer mwiChild.Parent not always is equal to null
                     {
                         mwiChild.MwiContainer = this;
                         MwiPanel.Children.Add(mwiChild);

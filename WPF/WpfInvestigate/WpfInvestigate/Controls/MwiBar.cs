@@ -64,7 +64,7 @@ namespace WpfInvestigate.Controls
                             TabItem_AttachEvents(ItemContainerGenerator.ContainerFromItem(item) as TabItem, false);
                         break;
                     case NotifyCollectionChangedAction.Reset:
-                        foreach (var item in ItemsSource)
+                        foreach (var item in ItemsSource ?? new string[0]) // in VS designer ItemsSource is equal to null sometimes
                             TabItem_AttachEvents(ItemContainerGenerator.ContainerFromItem(item) as TabItem, false);
                         break;
                     case NotifyCollectionChangedAction.Remove:
