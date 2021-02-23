@@ -47,7 +47,7 @@ namespace WpfInvestigate.Controls
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    foreach (var mwiChild in e.NewItems.OfType<MwiChild>().Where(c => c.Parent == null)) // in VS designer mwiChild.Parent not always is equal to null
+                    foreach (MwiChild mwiChild in e.NewItems)
                     {
                         mwiChild.MwiContainer = this;
                         MwiPanel.Children.Add(mwiChild);
@@ -96,9 +96,13 @@ namespace WpfInvestigate.Controls
         }
 
         #region ============  Override  ====================
+        private bool _isTemplated;
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            if (_isTemplated) return;
+            _isTemplated = true;
 
             ScrollViewer = GetTemplateChild("ScrollViewer") as ScrollViewer;
             MwiPanel = GetTemplateChild("MwiPanel") as Grid;

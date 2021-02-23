@@ -22,13 +22,17 @@ namespace WpfInvestigate.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MwiBar), new FrameworkPropertyMetadata(typeof(MwiBar)));
         }
 
+        private bool _isTemplated;
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            if (_isTemplated) return;
+            _isTemplated = true;
+
             _doubleButtonGrid = GetTemplateChild("DoubleButtonGrid") as Grid;
             _scrollViewer = GetTemplateChild("PART_ScrollViewer") as ScrollViewer;
-            if (_scrollViewer != null)
-                _scrollViewer.ScrollChanged += TabScrollViewer_OnScrollChanged;
+            if (_scrollViewer != null) _scrollViewer.ScrollChanged += TabScrollViewer_OnScrollChanged;
         }
 
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
@@ -64,7 +68,7 @@ namespace WpfInvestigate.Controls
                             TabItem_AttachEvents(ItemContainerGenerator.ContainerFromItem(item) as TabItem, false);
                         break;
                     case NotifyCollectionChangedAction.Reset:
-                        foreach (var item in ItemsSource ?? new string[0]) // in VS designer ItemsSource is equal to null sometimes
+                        foreach (var item in Items)
                             TabItem_AttachEvents(ItemContainerGenerator.ContainerFromItem(item) as TabItem, false);
                         break;
                     case NotifyCollectionChangedAction.Remove:

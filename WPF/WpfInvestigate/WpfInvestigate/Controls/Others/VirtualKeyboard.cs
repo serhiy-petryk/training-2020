@@ -46,9 +46,13 @@ namespace WpfInvestigate.Controls
         public bool IsShifted { get; private set; }
         public bool IsExtra { get; private set; }
 
+        private bool _isTemplated;
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            if(_isTemplated) return;
+            _isTemplated = true;
 
             if (GetTemplateChild("PART_LanguageSelector") is ToggleButton languageSelector)
                 languageSelector.Checked += (sender, args) => DropDownButtonHelper.OpenDropDownMenu(sender);
