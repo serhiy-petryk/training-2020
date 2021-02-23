@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Obsolete/FlatButton.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Obsolete/FlatButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="obsolete:NumericUpDown">
