@@ -29,7 +29,7 @@ namespace WpfInvestigate.Controls
                 {
                     Label = ci.DisplayName == ci.NativeName ? ci.DisplayName : $"{ci.DisplayName} ({ci.NativeName})";
                     var canvas = Application.Current.TryFindResource($"LanguageIcon" + Id) as Canvas;
-                    if (canvas != null)
+                    if (canvas != null && canvas.Parent == null) // canvas.Parent == null -> to prevent VS designer error
                         Icon = new Viewbox { Child = canvas };
                 }
                 LanguageSelectCommand = new RelayCommand(LanguageSelectHandler);
