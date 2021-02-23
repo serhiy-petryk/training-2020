@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Window Header -->
+    <!-- ??? Not used: Window Header -->
     <SolidColorBrush x:Key="Mwi.WindowHeader.ForegroundBrush" Color="{x:Static SystemColors.GrayTextColor}"/>
     <SolidColorBrush x:Key="Mwi.WindowHeader.MouseOver.ForegroundBrush" Color="{x:Static SystemColors.ActiveCaptionTextColor}"/>
 
-    <!-- Mwi Container -->
+    <!-- ??? Not used: Mwi Container -->
     <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{x:Static SystemColors.AppWorkspaceColor}"/>
 
     <!-- Windows Bar -->
@@ -43,7 +43,7 @@
     <!-- Windows Menu -->
     <SolidColorBrush x:Key="Mwi.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
 
-    <!-- Double button -->
+    <!-- ??? Not used: Double button -->
     <SolidColorBrush x:Key="DoubleButton.BorderBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="DoubleButton.BackgroundBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="DoubleButton.MouseOver.BorderBrush" Color="#FF3399FF"/>

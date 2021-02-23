@@ -61,11 +61,11 @@ namespace WpfInvestigate.Controls
                 {
                     case NotifyCollectionChangedAction.Add:
                         foreach (var item in e.NewItems)
-                            TabItem_AttachEvent(ItemContainerGenerator.ContainerFromItem(item) as TabItem, false);
+                            TabItem_AttachEvents(ItemContainerGenerator.ContainerFromItem(item) as TabItem, false);
                         break;
                     case NotifyCollectionChangedAction.Reset:
                         foreach (var item in ItemsSource)
-                            TabItem_AttachEvent(ItemContainerGenerator.ContainerFromItem(item) as TabItem, false);
+                            TabItem_AttachEvents(ItemContainerGenerator.ContainerFromItem(item) as TabItem, false);
                         break;
                     case NotifyCollectionChangedAction.Remove:
                         break;
@@ -111,7 +111,7 @@ namespace WpfInvestigate.Controls
         }
 
         #region ==============  Tab item  ==============
-        private void TabItem_AttachEvent(TabItem item, bool onlyDetach)
+        private void TabItem_AttachEvents(TabItem item, bool onlyDetach)
         {
             if (item == null) return;
             var child = VisualTreeHelper.GetChildrenCount(item) > 0 ? VisualTreeHelper.GetChild(item, 0) as FrameworkElement : null;
@@ -123,8 +123,8 @@ namespace WpfInvestigate.Controls
             item.MouseLeave -= TabItem_OnMouseEnterOrLeave;
             if (child != null)
                 child.ToolTipOpening -= TabItem_OnToolTipOpening;
-            if (child != null && child.ToolTip is ToolTip childTooltip1)
-                childTooltip1.Opened -= TabToolTip_OnOpened;
+            if (child != null && child.ToolTip is ToolTip childToolTip1)
+                childToolTip1.Opened -= TabToolTip_OnOpened;
 
             if (onlyDetach) return;
 
@@ -135,10 +135,10 @@ namespace WpfInvestigate.Controls
             item.MouseLeave += TabItem_OnMouseEnterOrLeave;
             if (child != null)
                 child.ToolTipOpening += TabItem_OnToolTipOpening;
-            if (child != null && child.ToolTip is ToolTip childTooltip)
-                childTooltip.Opened += TabToolTip_OnOpened;
+            if (child != null && child.ToolTip is ToolTip childToolTip)
+                childToolTip.Opened += TabToolTip_OnOpened;
 
-            void OnTabItemUnloaded(object sender, RoutedEventArgs e) => TabItem_AttachEvent(sender as TabItem, true);
+            void OnTabItemUnloaded(object sender, RoutedEventArgs e) => TabItem_AttachEvents(sender as TabItem, true);
         }
 
         private void TabItem_OnLoaded(object sender, RoutedEventArgs e) =>
@@ -176,11 +176,11 @@ namespace WpfInvestigate.Controls
 
             LinearGradientBrush newBrush;
             if (tabItem.IsSelected)
-                newBrush = FindResource("Mwi.WindowTab.Selected.BackgroundBrush") as LinearGradientBrush;
+                newBrush = TryFindResource("Mwi.WindowTab.Selected.BackgroundBrush") as LinearGradientBrush;
             else if (tabItem.IsMouseOver)
-                newBrush = FindResource("Mwi.WindowTab.MouseOver.BackgroundBrush") as LinearGradientBrush;
+                newBrush = TryFindResource("Mwi.WindowTab.MouseOver.BackgroundBrush") as LinearGradientBrush;
             else
-                newBrush = FindResource("Mwi.WindowTab.BackgroundBrush") as LinearGradientBrush;
+                newBrush = TryFindResource("Mwi.WindowTab.BackgroundBrush") as LinearGradientBrush;
 
             tabItem.Background = AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background);
         }
