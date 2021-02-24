@@ -26,7 +26,9 @@ namespace WpfInvestigate.Samples
                 Content = new MwiExampleControl(),
                 Width = 514,
                 Height = 434,
-                Position = new Point(300, 80)
+                Position = new Point(300, 80),
+                StatusBar = new MwiStatusBarSample(),
+                CommandBar = new MwiCommandBarSample()
             });
             Container.HideLeftPanel();
         }
