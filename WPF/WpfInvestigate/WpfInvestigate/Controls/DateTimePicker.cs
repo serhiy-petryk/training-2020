@@ -16,104 +16,18 @@ namespace WpfInvestigate.Controls
     [DefaultEvent("SelectedDateChanged")]
     public class DateTimePicker : TimePickerBase
     {
-        private new TimeSpan? SelectedTime => base.SelectedTime;
-
-        public static readonly RoutedEvent SelectedDateTimeChangedEvent = EventManager.RegisterRoutedEvent("SelectedDateTimeChanged", RoutingStrategy.Direct,
-            typeof(RoutedPropertyChangedEventHandler<DateTime?>), typeof(DateTimePicker));
-
-        public static readonly DependencyProperty SelectedDateTimeProperty = DependencyProperty.Register("SelectedDateTime", typeof(DateTime?),
-            typeof(DateTimePicker), new PropertyMetadata(null, OnSelectedDateTimeChanged, CoerceDateTime));
-
-        public static readonly DependencyProperty DisplayDateStartProperty = DatePicker.DisplayDateStartProperty.AddOwner(typeof(DateTimePicker));
-        public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
-        public static readonly DependencyProperty IsTodayHighlightedProperty = DatePicker.IsTodayHighlightedProperty.AddOwner(typeof(DateTimePicker));
-        public static readonly DependencyProperty SelectedDateFormatProperty = DatePicker.SelectedDateFormatProperty.AddOwner(
-            typeof(DateTimePicker), new FrameworkPropertyMetadata(DatePickerFormat.Short, OnSelectedDateFormatChanged));
-
-        public static readonly DependencyProperty IsDateOnlyModeProperty = DependencyProperty.Register("IsDateOnlyMode", typeof(bool),
-            typeof(DateTimePicker), new PropertyMetadata(false, IsDateOnlyModeChanged));
-
-        private const string ElementCalendar = "PART_Calendar";
-        private Calendar _calendar;
-        private bool _isDateTimeChanging;
-        private DateTime _defaultDate => DisplayDateStart.HasValue && DisplayDateStart.Value > DateTime.Today ? DisplayDateStart.Value : DateTime.Today;
-
         static DateTimePicker()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(typeof(DateTimePicker)));
         }
 
-        /// <summary>
-        ///     Occurs when the <see cref="SelectedDateTime" /> property is changed.
-        /// </summary>
-        public event RoutedPropertyChangedEventHandler<DateTime?> SelectedDateTimeChanged
-        {
-            add => AddHandler(SelectedDateTimeChangedEvent, value);
-            remove => RemoveHandler(SelectedDateTimeChangedEvent, value);
-        }
+        private const string ElementCalendar = "PART_Calendar";
+        private new TimeSpan? SelectedTime => base.SelectedTime;
+        private Calendar _calendar;
+        private bool _isDateTimeChanging;
+        private DateTime _defaultDate => DisplayDateStart.HasValue && DisplayDateStart.Value > DateTime.Today ? DisplayDateStart.Value : DateTime.Today;
 
-        /// <summary>
-        ///     Gets or sets the currently selected date and time.
-        /// </summary>
-        /// <returns>
-        ///     The date and time currently selected. The default is null.
-        /// </returns>
-        public DateTime? SelectedDateTime
-        {
-            get => (DateTime?)GetValue(SelectedDateTimeProperty);
-            set => SetValue(SelectedDateTimeProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the first date to be displayed.
-        /// </summary>
-        /// <returns>The first date to display.</returns>
-        public DateTime? DisplayDateStart
-        {
-            get => (DateTime?)GetValue(DisplayDateStartProperty);
-            set => SetValue(DisplayDateStartProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the last date to be displayed.
-        /// </summary>
-        /// <returns>The last date to display.</returns>
-        public DateTime? DisplayDateEnd
-        {
-            get => (DateTime?)GetValue(DisplayDateEndProperty);
-            set => SetValue(DisplayDateEndProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets a value that indicates whether the current date will be highlighted.
-        /// </summary>
-        /// <returns>true if the current date is highlighted; otherwise, false. The default is true. </returns>
-        public bool IsTodayHighlighted
-        {
-            get => (bool)GetValue(IsTodayHighlightedProperty);
-            set => SetValue(IsTodayHighlightedProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the format that is used to display the selected date.
-        /// </summary>
-        [Category("Appearance")]
-        [DefaultValue(DatePickerFormat.Short)]
-        public DatePickerFormat SelectedDateFormat
-        {
-            get => (DatePickerFormat)GetValue(SelectedDateFormatProperty);
-            set => SetValue(SelectedDateFormatProperty, value);
-        }
-
-        /// <summary>
-        ///     Does picker support only date?
-        /// </summary>
-        public bool IsDateOnlyMode
-        {
-            get => (bool)GetValue(IsDateOnlyModeProperty);
-            set => SetValue(IsDateOnlyModeProperty, value);
-        }
-
+        #region ==========  Global Override  =============
         public override void OnApplyTemplate()
         {
             _calendar = GetTemplateChild(ElementCalendar) as Calendar;
@@ -122,7 +36,6 @@ namespace WpfInvestigate.Controls
             CoerceValue(SelectedDateTimeProperty);
             IsDateOnlyModeChanged(this, new DependencyPropertyChangedEventArgs(IsDateOnlyModeProperty, null, IsDateOnlyMode));
         }
-
         private void ApplyBindings()
         {
             if (_calendar != null)
@@ -139,23 +52,22 @@ namespace WpfInvestigate.Controls
         }
         private Binding GetBinding(DependencyProperty property) => new Binding(property.Name) { Source = this };
 
-        protected virtual void OnSelectedDateTimeChanged(RoutedPropertyChangedEventArgs<DateTime?> e)
-        {
-            RaiseEvent(e);
-        }
-
-        private static void OnSelectedDateFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var picker = d as DateTimePicker;
-            picker?.WriteValueToTextBox();
-        }
-
         protected override void OnPopupOpened(object sender, EventArgs e)
         {
             SetDatePartValues();
             base.OnPopupOpened(sender, e);
         }
 
+        protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseUp(e);
+            if (Mouse.Captured is CalendarItem)
+                Mouse.Capture(null);
+        }
+
+        #endregion
+
+        #region ==========  TimePickerBase Override  =============
         protected sealed override void ApplyCulture()
         {
             base.ApplyCulture();
@@ -168,6 +80,12 @@ namespace WpfInvestigate.Controls
             }
         }
 
+        protected override void OnBaseValueChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            base.OnBaseValueChanged(sender, e);
+            SetDatePartValues();
+        }
+
         protected override string GetValueForTextBox()
         {
             var formatInfo = Culture.DateTimeFormat;
@@ -175,19 +93,6 @@ namespace WpfInvestigate.Controls
 
             var valueForTextBox = SelectedDateTime?.ToString(dateFormat, Culture);
             return valueForTextBox + (!IsDateOnlyMode && SelectedDateTime.HasValue ? " " + base.GetValueForTextBox() : null);
-        }
-
-        protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
-        {
-            base.OnPreviewMouseUp(e);
-            if (Mouse.Captured is CalendarItem) 
-                Mouse.Capture(null);
-        }
-
-        protected override void OnBaseValueChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            base.OnBaseValueChanged(sender, e);
-            SetDatePartValues();
         }
 
         protected override void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
@@ -204,38 +109,6 @@ namespace WpfInvestigate.Controls
             WriteValueToTextBox(); // need in case: isNullbale=false; set textbox=empty twice (no OnSelectedDateChanged event for second call and textbox is empty but SelectedDate!=empty)
         }
 
-        private static void IsDateOnlyModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var picker = (DateTimePicker)d;
-            if (picker.GetTemplateChild("PART_Clock") is FrameworkElement clock)
-            {
-                clock.Visibility = (bool) e.NewValue ? Visibility.Collapsed : Visibility.Visible;
-                OnSelectedDateTimeChanged(d, new DependencyPropertyChangedEventArgs(SelectedDateTimeProperty, null, picker.SelectedDateTime));
-            }
-        }
-
-        private static void OnSelectedDateTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var picker = (DateTimePicker)d;
-            if (picker._isDateTimeChanging)
-                return;
-
-            picker._isDateTimeChanging = true;
-            var oldDateTimeValue = picker.SelectedDateTime;
-
-            CoerceDateTime(d, e.NewValue);
-            picker.SelectedDateTime = (DateTime?)e.NewValue;
-            ((TimePickerBase)picker).SelectedTime = picker.SelectedDateTime?.TimeOfDay;
-            
-            picker.OnSelectedDateTimeChanged(new RoutedPropertyChangedEventArgs<DateTime?>(oldDateTimeValue, picker.SelectedDateTime, SelectedDateTimeChangedEvent));
-            picker._isDateTimeChanging = false;
-            
-            picker.WriteValueToTextBox();
-            if (picker.IsDateOnlyMode)
-                picker.ClosePopup();
-        }
-
-
         protected override void OnSelectedTimeChanged(RoutedPropertyChangedEventArgs<TimeSpan?> e)
         {
             base.OnSelectedTimeChanged(e);
@@ -248,23 +121,9 @@ namespace WpfInvestigate.Controls
                 SelectedDateTime = null;
         }
 
-        private static object CoerceDateTime(DependencyObject d, object basevalue)
-        {
-            var picker = (DateTimePicker)d;
-            var dt = (DateTime?)basevalue;
-            if (dt == null)
-                return picker.IsNullable ? (DateTime?)null : picker._defaultDate;
+        #endregion
 
-            if (picker.IsDateOnlyMode) dt = dt.Value.Date;
-            
-            if (picker.DisplayDateStart.HasValue && picker.DisplayDateStart.Value > dt.Value)
-                return picker.DisplayDateStart.Value;
-            if (picker.DisplayDateEnd.HasValue && picker.DisplayDateEnd.Value.Date < dt.Value.Date)
-                return picker.DisplayDateEnd.Value;
-
-            return dt.Value;
-        }
-
+        #region ============  Internal methods  ==============
         private void SetDatePartValues()
         {
             if (_isDateTimeChanging)
@@ -278,18 +137,141 @@ namespace WpfInvestigate.Controls
             }
             _isDateTimeChanging = false;
         }
+        #endregion
 
-        protected override void IsNullableChanged()
+        #region ==================  Properties & Events  =====================
+        public static readonly RoutedEvent SelectedDateTimeChangedEvent = EventManager.RegisterRoutedEvent("SelectedDateTimeChanged", RoutingStrategy.Direct,
+            typeof(RoutedPropertyChangedEventHandler<DateTime?>), typeof(DateTimePicker));
+        /// <summary>
+        ///     Occurs when the <see cref="SelectedDateTime" /> property is changed.
+        /// </summary>
+        public event RoutedPropertyChangedEventHandler<DateTime?> SelectedDateTimeChanged
         {
-            base.IsNullableChanged();
-            if (!IsNullable && !SelectedDateTime.HasValue)
-                SelectedDateTime = _defaultDate;
+            add => AddHandler(SelectedDateTimeChangedEvent, value);
+            remove => RemoveHandler(SelectedDateTimeChangedEvent, value);
+        }
+        //=====================================
+        public static readonly DependencyProperty SelectedDateTimeProperty = DependencyProperty.Register("SelectedDateTime", typeof(DateTime?),
+            typeof(DateTimePicker), new PropertyMetadata(null, OnSelectedDateTimeChanged, CoerceDateTime));
+        /// <summary>
+        ///     Gets or sets the currently selected date and time.
+        /// </summary>
+        /// <returns>
+        ///     The date and time currently selected. The default is null.
+        /// </returns>
+        public DateTime? SelectedDateTime
+        {
+            get => (DateTime?)GetValue(SelectedDateTimeProperty);
+            set => SetValue(SelectedDateTimeProperty, value);
+        }
+        private static void OnSelectedDateTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var picker = (DateTimePicker)d;
+            if (picker._isDateTimeChanging)
+                return;
+
+            picker._isDateTimeChanging = true;
+            var oldDateTimeValue = picker.SelectedDateTime;
+
+            CoerceDateTime(d, e.NewValue);
+            picker.SelectedDateTime = (DateTime?)e.NewValue;
+            ((TimePickerBase)picker).SelectedTime = picker.SelectedDateTime?.TimeOfDay;
+
+            picker.RaiseEvent(new RoutedPropertyChangedEventArgs<DateTime?>(oldDateTimeValue, picker.SelectedDateTime, SelectedDateTimeChangedEvent));
+            picker._isDateTimeChanging = false;
+
+            picker.WriteValueToTextBox();
+            if (picker.IsDateOnlyMode)
+                picker.ClosePopup();
+        }
+        private static object CoerceDateTime(DependencyObject d, object basevalue)
+        {
+            var picker = (DateTimePicker)d;
+            var dt = (DateTime?)basevalue;
+            if (dt == null)
+                return picker.IsNullable ? (DateTime?)null : picker._defaultDate;
+
+            if (picker.IsDateOnlyMode) dt = dt.Value.Date;
+
+            if (picker.DisplayDateStart.HasValue && picker.DisplayDateStart.Value > dt.Value)
+                return picker.DisplayDateStart.Value;
+            if (picker.DisplayDateEnd.HasValue && picker.DisplayDateEnd.Value.Date < dt.Value.Date)
+                return picker.DisplayDateEnd.Value;
+
+            return dt.Value;
+        }
+        //=====================================
+        public static readonly DependencyProperty DisplayDateStartProperty = DatePicker.DisplayDateStartProperty.AddOwner(typeof(DateTimePicker));
+        /// <summary>
+        ///     Gets or sets the first date to be displayed.
+        /// </summary>
+        /// <returns>The first date to display.</returns>
+        public DateTime? DisplayDateStart
+        {
+            get => (DateTime?)GetValue(DisplayDateStartProperty);
+            set => SetValue(DisplayDateStartProperty, value);
+        }
+        //=====================================
+        public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
+        /// <summary>
+        ///     Gets or sets the last date to be displayed.
+        /// </summary>
+        /// <returns>The last date to display.</returns>
+        public DateTime? DisplayDateEnd
+        {
+            get => (DateTime?)GetValue(DisplayDateEndProperty);
+            set => SetValue(DisplayDateEndProperty, value);
         }
 
-        protected override void ClearValue()
+        //=====================================
+        public static readonly DependencyProperty IsTodayHighlightedProperty = DatePicker.IsTodayHighlightedProperty.AddOwner(typeof(DateTimePicker));
+        /// <summary>
+        ///     Gets or sets a value that indicates whether the current date will be highlighted.
+        /// </summary>
+        /// <returns>true if the current date is highlighted; otherwise, false. The default is true. </returns>
+        public bool IsTodayHighlighted
         {
-            base.ClearValue();
-            SelectedDateTime = IsNullable ? (DateTime?)null : _defaultDate;
+            get => (bool)GetValue(IsTodayHighlightedProperty);
+            set => SetValue(IsTodayHighlightedProperty, value);
         }
+        //=====================================
+        public static readonly DependencyProperty SelectedDateFormatProperty = DatePicker.SelectedDateFormatProperty.AddOwner(
+            typeof(DateTimePicker), new FrameworkPropertyMetadata(DatePickerFormat.Short, OnSelectedDateFormatChanged));
+        /// <summary>
+        /// Gets or sets the format that is used to display the selected date.
+        /// </summary>
+        [Category("Appearance")]
+        [DefaultValue(DatePickerFormat.Short)]
+        public DatePickerFormat SelectedDateFormat
+        {
+            get => (DatePickerFormat)GetValue(SelectedDateFormatProperty);
+            set => SetValue(SelectedDateFormatProperty, value);
+        }
+        private static void OnSelectedDateFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var picker = d as DateTimePicker;
+            picker?.WriteValueToTextBox();
+        }
+        //=====================================
+        public static readonly DependencyProperty IsDateOnlyModeProperty = DependencyProperty.Register("IsDateOnlyMode", typeof(bool),
+            typeof(DateTimePicker), new PropertyMetadata(false, IsDateOnlyModeChanged));
+        /// <summary>
+        ///     Does picker support date only?
+        /// </summary>
+        public bool IsDateOnlyMode
+        {
+            get => (bool)GetValue(IsDateOnlyModeProperty);
+            set => SetValue(IsDateOnlyModeProperty, value);
+        }
+        private static void IsDateOnlyModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var picker = (DateTimePicker)d;
+            if (picker.GetTemplateChild("PART_Clock") is FrameworkElement clock)
+            {
+                clock.Visibility = (bool)e.NewValue ? Visibility.Collapsed : Visibility.Visible;
+                OnSelectedDateTimeChanged(d, new DependencyPropertyChangedEventArgs(SelectedDateTimeProperty, null, picker.SelectedDateTime));
+            }
+        }
+        #endregion
     }
 }
