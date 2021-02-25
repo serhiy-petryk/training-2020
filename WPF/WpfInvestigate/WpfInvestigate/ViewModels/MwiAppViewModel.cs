@@ -37,15 +37,13 @@ namespace WpfInvestigate.ViewModels
 
         public MwiAppViewModel()
         {
-            CmdToggleScheme = new RelayCommand(ToggleTheme);
-            Application.Current.Dispatcher.InvokeAsync(new System.Action(() => { ToggleTheme(null); }), DispatcherPriority.ApplicationIdle);
+            CmdToggleScheme = new RelayCommand(o => ApplyTheme(null));
         }
 
-        //=========================
-        private void ToggleTheme(object parameter)
+        public void ApplyTheme(MwiThemeInfo theme)
         {
             var oldTheme = _currentTheme;
-            _currentTheme = MwiThemeInfo.Themes.First(t => t != _currentTheme);
+            _currentTheme = theme == null ? MwiThemeInfo.Themes.First(t => t != _currentTheme) : theme;
             _currentTheme.ApplyTheme();
 
             var args = new RoutedPropertyChangedEventArgs<MwiThemeInfo>(oldTheme, _currentTheme) { RoutedEvent = ThemeChangedEvent };

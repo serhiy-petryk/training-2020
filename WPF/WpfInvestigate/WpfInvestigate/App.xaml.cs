@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Markup;
 using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
+using WpfInvestigate.Themes;
+using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate
 {
@@ -26,6 +28,8 @@ namespace WpfInvestigate
             var a2 = Thread.CurrentThread.CurrentUICulture;
             var a3 = CultureInfo.DefaultThreadCurrentCulture;
             var a4 = CultureInfo.DefaultThreadCurrentUICulture;
+
+            MwiAppViewModel.Instance.ApplyTheme(MwiThemeInfo.Themes[0]);
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
 
