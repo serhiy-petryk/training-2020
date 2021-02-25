@@ -50,6 +50,8 @@ namespace WpfInvestigate.Controls
                     foreach (MwiChild mwiChild in e.NewItems)
                     {
                         mwiChild.MwiContainer = this;
+                        if (mwiChild.Parent is Grid parent)  // remove VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first
+                            parent.Children.Remove(mwiChild);
                         MwiPanel.Children.Add(mwiChild);
                         mwiChild.Activate();
                         await mwiChild.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Normal).Task;
@@ -96,13 +98,9 @@ namespace WpfInvestigate.Controls
         }
 
         #region ============  Override  ====================
-        private bool _isTemplated;
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            if (_isTemplated) return; // remove VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first.
-            _isTemplated = true;
 
             ScrollViewer = GetTemplateChild("ScrollViewer") as ScrollViewer;
             MwiPanel = GetTemplateChild("MwiPanel") as Grid;
