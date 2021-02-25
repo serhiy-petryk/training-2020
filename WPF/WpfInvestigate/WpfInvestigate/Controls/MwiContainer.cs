@@ -53,8 +53,8 @@ namespace WpfInvestigate.Controls
                         if (mwiChild.Parent is Grid parent)  // remove VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first
                             parent.Children.Remove(mwiChild);
                         MwiPanel.Children.Add(mwiChild);
-                        mwiChild.Activate();
                         await mwiChild.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Normal).Task;
+                        mwiChild.Activate();
                     }
                     break;
 
