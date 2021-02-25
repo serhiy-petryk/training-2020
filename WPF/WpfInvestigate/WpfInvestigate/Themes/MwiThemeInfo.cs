@@ -10,8 +10,8 @@ namespace WpfInvestigate.Themes
     {
         public static MwiThemeInfo[] Themes =
         {
-            new MwiThemeInfo("Windows10", "Стиль Windows 10", null, new[] { "/Themes/Mwi.Wnd7.xaml"}),
-            new MwiThemeInfo("Windows7", "Стиль Windows 7", null, new[] { "/Themes/Mwi.Wnd10.xaml"})
+            new MwiThemeInfo("Windows10", "Стиль Windows 10", null, new[] { "/Themes/Mwi.Wnd10.xaml"}),
+            new MwiThemeInfo("Windows7", "Стиль Windows 7", null, new[] { "/Themes/Mwi.Wnd7.xaml"})
             /*new MwiThemeInfo("Windows10", "Стиль Windows 10", null, new[] { "/Mwi/Themes/MwiChild.Wnd10.xaml", "/Themes/MwiContainer.Wnd7.xaml"}),
             new MwiThemeInfo("Windows7", "Стиль Windows 7", null, new[] { "/Mwi/Themes/MwiChild.Wnd7.xaml", "/Themes/MwiContainer.Wnd7.xaml"})*/
         };

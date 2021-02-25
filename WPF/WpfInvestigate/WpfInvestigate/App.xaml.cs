@@ -29,7 +29,7 @@ namespace WpfInvestigate
             var a3 = CultureInfo.DefaultThreadCurrentCulture;
             var a4 = CultureInfo.DefaultThreadCurrentUICulture;
 
-            MwiAppViewModel.Instance.ApplyTheme(MwiThemeInfo.Themes[0]);
+            MwiAppViewModel.Instance.ApplyTheme(MwiThemeInfo.Themes[1]);
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
 
