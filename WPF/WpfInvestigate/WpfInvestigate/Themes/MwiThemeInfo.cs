@@ -60,12 +60,7 @@ namespace WpfInvestigate.Themes
                 _resources = uris.Select(uri => Application.LoadComponent(uri) as ResourceDictionary).ToArray();
             }
             else if (_resources == null && _uris != null)
-            {
-                _resources = new ResourceDictionary[_uris.Length];
-                for (var k = 0; k < _uris.Length; k++) // If use Linq -> error: Evaluation of native methods in this context is not supported.
-                    _resources[k] = new ResourceDictionary {Source = new Uri(_uris[k], UriKind.RelativeOrAbsolute)};
-                // _resources = _uris.Select(uri => new ResourceDictionary{Source = new Uri(uri, UriKind.RelativeOrAbsolute)}).ToArray();
-            }
+                _resources = _uris.Select(uri => new ResourceDictionary{Source = new Uri(uri, UriKind.RelativeOrAbsolute)}).ToArray();
             else if (_resources == null && _uris == null)
                 _resources = new ResourceDictionary[0];
 
