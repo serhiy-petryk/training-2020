@@ -87,9 +87,9 @@ namespace WpfInvestigate.Controls
                 MwiContainer.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
 
                 dpd.AddValueChanged(MwiAppViewModel.Instance, OnScaleValueChanged);
-                var maximizedWindowRectangle = Tips.GetMaximizedWindowRectangle();
-                _detachedPosition = new Point(Math.Max(0, maximizedWindowRectangle.X + (maximizedWindowRectangle.Width - _lastNormalSize.Width * _scale.X) / 2),
-                    Math.Max(0, maximizedWindowRectangle.Y + (maximizedWindowRectangle.Height - _lastNormalSize.Height * _scale.Y) / 2));
+                _detachedPosition = new Point(
+                    SystemParameters.WorkArea.X + Math.Max(0, (SystemParameters.WorkArea.Width - _lastNormalSize.Width * _scale.X) / 2),
+                    SystemParameters.WorkArea.Y + Math.Max(0, (SystemParameters.WorkArea.Height - _lastNormalSize.Height * _scale.Y) / 2));
                 Position = new Point(-1, -1); // Reset position (need for maximized window or when positions before and after detach are equal)
             }
 
@@ -102,24 +102,10 @@ namespace WpfInvestigate.Controls
         {
             if (IsWindowed && WindowState == WindowState.Maximized)
             {
-                var maximizedWindowRectangle = Tips.GetMaximizedWindowRectangle();
-                Position = new Point(maximizedWindowRectangle.Left, maximizedWindowRectangle.Top);
-                Width = maximizedWindowRectangle.Width / _scale.X;
-                Height = maximizedWindowRectangle.Height / _scale.Y;
+                Position = new Point(SystemParameters.WorkArea.Left, SystemParameters.WorkArea.Top);
+                Width = SystemParameters.WorkArea.Width / _scale.X;
+                Height = SystemParameters.WorkArea.Height / _scale.Y;
             }
-        }
-
-        private void RestoreExternalWindowRect(Size? newSize = null)
-        {
-            if (!IsWindowed) return;
-
-            if (newSize.HasValue) // Restore from Settings
-                _lastNormalSize = newSize.Value;
-
-            var maximizedWindowRectangle = Tips.GetMaximizedWindowRectangle();
-            _detachedPosition = new Point(
-                Math.Max(0, maximizedWindowRectangle.X + (maximizedWindowRectangle.Width - _lastNormalSize.Width) / 2),
-                Math.Max(0, maximizedWindowRectangle.Y + (maximizedWindowRectangle.Height - _lastNormalSize.Height) / 2));
         }
 
         #region ==============  OnWindowStateValueChanged  =================
