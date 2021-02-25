@@ -92,13 +92,9 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private bool _isTemplated;
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            if (_isTemplated) return;
-            _isTemplated = true;
 
             if (GetTemplateChild("MovingThumb") is Thumb movingThumb)
             {

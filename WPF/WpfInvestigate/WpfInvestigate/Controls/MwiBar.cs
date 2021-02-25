@@ -22,13 +22,9 @@ namespace WpfInvestigate.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MwiBar), new FrameworkPropertyMetadata(typeof(MwiBar)));
         }
 
-        private bool _isTemplated;
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            if (_isTemplated) return;
-            _isTemplated = true;
 
             _doubleButtonGrid = GetTemplateChild("DoubleButtonGrid") as Grid;
             _scrollViewer = GetTemplateChild("PART_ScrollViewer") as ScrollViewer;

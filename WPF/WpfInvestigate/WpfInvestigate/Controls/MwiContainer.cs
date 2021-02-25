@@ -101,7 +101,7 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
 
-            if (_isTemplated) return;
+            if (_isTemplated) return; // remove VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first.
             _isTemplated = true;
 
             ScrollViewer = GetTemplateChild("ScrollViewer") as ScrollViewer;
