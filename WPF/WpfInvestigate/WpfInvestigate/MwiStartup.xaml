@@ -84,20 +84,20 @@
             <controls:MwiChild Title="Window Using XAML" Position="20 222" Icon="/Resources/OriginalLogo.png" Height="350" x:Name="Test2">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdDisableDetach}">Disable Detach</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdEnableDetach}">Enable Detach</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdDisableMinimize}">Disable Minimize</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdEnableMinimize}">Enable Minimize</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdDisableMaximize}">Disable Maximize</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdEnableMaximize}">Enable Maximize</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdDisableClose}">Disable Close</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdEnableClose}">Enable Close</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdShowIcon}">Show Icon</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdHideIcon}">Hide Icon</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdChangeTitle}">Change Title</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdOpenDialog}">Cmd: Open Dialog Window</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdDisableDetach}">Disable Detach</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdEnableDetach}">Enable Detach</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdDisableMinimize}">Disable Minimize</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdEnableMinimize}">Enable Minimize</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdDisableMaximize}">Disable Maximize</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdEnableMaximize}">Enable Maximize</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdDisableClose}">Disable Close</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdEnableClose}">Enable Close</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdShowIcon}">Show Icon</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdHideIcon}">Hide Icon</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdChangeTitle}">Change Title</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdOpenDialog}">Cmd: Open Dialog Window</Button>
                         <Button Height="20" Click="OnOpenDialogClick" Content="Open Dialog Window"/>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdShowMessage}">Show Message</Button>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdShowMessage}">Show Message</Button>
                         <Button Height="20" Click="OnTestClick" Content="Test click"/>
                     </StackPanel>
                 </ScrollViewer>

@@ -11,7 +11,7 @@
     <controls:ResizingControl.Resources>
         <DataTemplate x:Key="TestTemplate">
             <Border BorderThickness="2"
-                    BorderBrush="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=samples:ResizableInheritanceSample2}, Path=BorderBrush}">
+                    BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=samples:ResizableInheritanceSample2}, Path=BorderBrush}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>

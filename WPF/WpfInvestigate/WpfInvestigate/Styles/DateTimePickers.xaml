@@ -256,15 +256,15 @@
                                                         </Grid.RowDefinitions>
                                                         <Border Grid.Row="0" BorderThickness="1 1 0 0"
                                                                 BorderBrush="{StaticResource CalendarBorderBrush}" Background="#FFECF0F4"
-                                                                Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
-                                                            <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=AMText}"
+                                                                Visibility="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                                            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePickerBase}, Path=AMText}"
                                                                        HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold"
                                                                        Foreground="{StaticResource CalendarForegroundBrush}"/>
                                                         </Border>
                                                         <Border Grid.Row="2" BorderThickness="1 0 0 1"
                                                                 BorderBrush="{StaticResource CalendarBorderBrush}" Background="#FFECF0F4"
-                                                                Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
-                                                            <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=PMText}"
+                                                                Visibility="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                                            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePickerBase}, Path=PMText}"
                                                                        HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold"
                                                                        Foreground="{StaticResource CalendarForegroundBrush}"/>
                                                         </Border>
@@ -278,7 +278,7 @@
                                                                   BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1 0 0 1"
                                                                   ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.DayHourRows}}"
                                                                   FontFamily="{TemplateBinding FontFamily}" Style="{StaticResource TimeSelectorStyle}"
-                                                                  Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}" />
+                                                                  Visibility="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}" />
                                                     </Grid>
 
                                                     <DataGrid x:Name="PART_MinuteSelector" Grid.Column="1"
