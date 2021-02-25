@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
+using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Themes;
 
@@ -33,7 +35,11 @@ namespace WpfInvestigate.ViewModels
 
         private MwiThemeInfo _currentTheme;
 
-        public MwiAppViewModel() => CmdToggleScheme = new RelayCommand(ToggleTheme);
+        public MwiAppViewModel()
+        {
+            CmdToggleScheme = new RelayCommand(ToggleTheme);
+            Application.Current.Dispatcher.InvokeAsync(new System.Action(() => { ToggleTheme(null); }), DispatcherPriority.ApplicationIdle);
+        }
 
         //=========================
         private void ToggleTheme(object parameter)

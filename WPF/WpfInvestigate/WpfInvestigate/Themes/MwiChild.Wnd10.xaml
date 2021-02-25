@@ -1,0 +1,156 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:WpfInvestigate.Controls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiColors.Wnd7.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ============= Windows 10 specific ============ -->
+    <SolidColorBrush x:Key="Mwi.Child.ChildBackground" Color="#FFF0F0F0" />
+    <Thickness x:Key="Mwi.Child.OuterBorderMargin">6 0 6 6</Thickness>
+    <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="#3394F6" />
+    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="Black" Opacity="0.25" />
+    <CornerRadius x:Key="Mwi.Child.BaseBorderCornerRadius">0</CornerRadius>
+    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="#FFFFFFFF"/>
+    <Visibility x:Key="Mwi.Child.OnlyWnd7">Collapsed</Visibility>
+    <Visibility x:Key="Mwi.Child.OnlyWnd10">Visible</Visibility>
+    <Thickness x:Key="Mwi.Child.HeaderAndContentMargin">0</Thickness>
+    <GridLength x:Key="Mwi.Child.HeaderHeight">29</GridLength>
+    <Thickness x:Key="Mwi.Child.ResizeLeftMargin">-7 0 0 0</Thickness>
+    <Thickness x:Key="Mwi.Child.ResizeTopMargin">0</Thickness>
+    <Thickness x:Key="Mwi.Child.ResizeRightMargin">0 0 -7 0</Thickness>
+    <Thickness x:Key="Mwi.Child.ResizeBottomMargin">0 0 0 -7</Thickness>
+    <Thickness x:Key="Mwi.Child.ResizeTopLeftMargin">-7 0 0 0</Thickness>
+    <Thickness x:Key="Mwi.Child.ResizeTopRightMargin">0 0 -7 0</Thickness>
+    <Thickness x:Key="Mwi.Child.ResizeBottomLeftMargin">-7 0 0 -7</Thickness>
+    <Thickness x:Key="Mwi.Child.ResizeBottomRightMargin">0 0 -7 -7</Thickness>
+
+    <!-- ================ -->
+    <SolidColorBrush x:Key="Mwi.Child.BackBorderBackgroundBrush" Color="#FFBBD2EB" />
+    <SolidColorBrush x:Key="Mwi.Child.BackBorderBrush" Color="#3394F6" />
+    <CornerRadius x:Key="Mwi.Child.BackBorderCornerRadius">0 0 0 0</CornerRadius>
+
+    <!-- =======  Not used for Windows 10  ========== -->
+    <SolidColorBrush x:Key="Mwi.Child.DarkenBackgroundBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Mwi.Child.HighlightBackgroundBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Mwi.Child.NearBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="Mwi.Child.FarBorderBrush" Color="Transparent" />
+
+    <!--  =====  Buttos  ===== -->
+    <!-- =================================== -->
+    <Geometry x:Key="WindowMinimizeGeometry">M0,5 10,5 10,6 0,6 0,5z</Geometry>
+    <Geometry x:Key="WindowMaximizeGeometry">M1,1 1,9 9,9 9,1 1,1Z M0,10 0,0 10,0 10,10 0,10Z</Geometry>
+    <Geometry x:Key="WindowRestoreGeometry">M9,7 8,7 8,2 3,2 3,1 9,1 9,7Z M7,9 1,9 1,3 7,3 7,9Z M2,0 2,2 0,2 0,10 8,10 8,8 10,8 10,0 2,0Z</Geometry>
+
+    <ControlTemplate x:Key="BorderlessButtonTemplate" TargetType="Button">
+        <Border BorderThickness="{TemplateBinding Border.BorderThickness}" Padding="{TemplateBinding Control.Padding}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" Name="Bd" SnapsToDevicePixels="True">
+            <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="WindowButtonBaseStyle" TargetType="{x:Type Button}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Margin" Value="1 0 0 0"/>
+        <Setter Property="Width" Value="44"/>
+        <Setter Property="Height" Value="29"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template" Value="{StaticResource BorderlessButtonTemplate}"/>
+        <Setter Property="Foreground" Value="#FF020202"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:MwiChild}, Path=Focused}" Value="False">
+                <Setter Property="Foreground" Value="#FF9A9A9A"/>
+            </DataTrigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.7"/>
+            </Trigger>
+        </Style.Triggers>
+        <Style.Resources>
+            <Style TargetType="Path">
+                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=Foreground}"/>
+            </Style>
+            <Style TargetType="Line">
+                <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=Foreground}"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="WindowCommonButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource WindowButtonBaseStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FFE5E5E5"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#FFCCCCCC"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="WindowCloseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource WindowButtonBaseStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FFE81123"/>
+                <Setter Property="Foreground" Value="#FFFFFFFF"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#FFF1707A"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- =======  Detached Button ===== -->
+    <Viewbox x:Key="DetachedPath" Width="12" Height="12" x:Shared="False">
+        <Path Width="24" Height="24" Data="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12M8.8,14L10,12.8V4H14V12.8L15.2,14H8.8Z"/>
+        <Viewbox.Style>
+            <Style TargetType="Viewbox">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext.IsWindowed}" Value="True">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <RotateTransform CenterX="6" CenterY="6" Angle="90" />
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Viewbox.Style>
+    </Viewbox>
+    <Style x:Key="DetachedButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowCommonButtonStyle}">
+        <Setter Property="Content" Value="{StaticResource DetachedPath}"/>
+    </Style>
+
+    <!-- =======  MinimizeButton ===== -->
+    <Path x:Key="WindowMinimizePath" Width="10" Height="10" Data="{StaticResource WindowMinimizeGeometry}" x:Shared="False"/>
+    <Style x:Key="MinimizeButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowCommonButtonStyle}">
+        <Setter Property="Content" Value="{StaticResource WindowMinimizePath}"/>
+    </Style>
+
+    <!-- =======  MaximizeButton ===== -->
+    <Path x:Key="WindowMaximizePath" Width="10" Height="10" Data="{StaticResource WindowMaximizeGeometry}" x:Shared="False"/>
+    <Path x:Key="WindowRestorePath" Width="10" Height="10" Data="{StaticResource WindowRestoreGeometry}" x:Shared="False"/>
+    <Style x:Key="MaximizeButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowCommonButtonStyle}">
+        <Setter Property="Content" Value="{StaticResource WindowMaximizePath}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding DataContext.WindowState}" Value="{x:Static WindowState.Maximized}">
+                <Setter Property="Content" Value="{StaticResource WindowRestorePath}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- =======  CloseButton ===== -->
+    <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowCloseButtonStyle}" x:Shared="False">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Grid>
+                    <Line HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True" X1="0" X2="10" Y1="0" Y2="10" />
+                    <Line HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True" X1="0" X2="10" Y1="10" Y2="0" />
+                </Grid>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -10,8 +10,8 @@ namespace WpfInvestigate.Themes
     {
         public static MwiThemeInfo[] Themes =
         {
-            new MwiThemeInfo("Windows10", "Стиль Windows 10", null, new[] { "/Themes/Wnd7.xaml"}),
-            new MwiThemeInfo("Windows7", "Стиль Windows 7", null, new[] { "/Themes/Wnd10.xaml"})
+            new MwiThemeInfo("Windows10", "Стиль Windows 10", null, new[] { "/Themes/Mwi.Wnd7.xaml"}),
+            new MwiThemeInfo("Windows7", "Стиль Windows 7", null, new[] { "/Themes/Mwi.Wnd10.xaml"})
             /*new MwiThemeInfo("Windows10", "Стиль Windows 10", null, new[] { "/Mwi/Themes/MwiChild.Wnd10.xaml", "/Themes/MwiContainer.Wnd7.xaml"}),
             new MwiThemeInfo("Windows7", "Стиль Windows 7", null, new[] { "/Mwi/Themes/MwiChild.Wnd7.xaml", "/Themes/MwiContainer.Wnd7.xaml"})*/
         };
@@ -60,12 +60,20 @@ namespace WpfInvestigate.Themes
                 _resources = uris.Select(uri => Application.LoadComponent(uri) as ResourceDictionary).ToArray();
             }
             else if (_resources == null && _uris != null)
-                _resources = _uris.Select(uri => new ResourceDictionary { Source = new Uri(uri, UriKind.RelativeOrAbsolute) }).ToArray();
+            {
+                _resources = new ResourceDictionary[_uris.Length];
+                for (var k = 0; k < _uris.Length; k++) // If use Linq -> error: Evaluation of native methods in this context is not supported.
+                    _resources[k] = new ResourceDictionary {Source = new Uri(_uris[k], UriKind.RelativeOrAbsolute)};
+                // _resources = _uris.Select(uri => new ResourceDictionary{Source = new Uri(uri, UriKind.RelativeOrAbsolute)}).ToArray();
+            }
             else if (_resources == null && _uris == null)
                 _resources = new ResourceDictionary[0];
 
             // Clear old themes and add new theme
-            Application.Current.Resources.MergedDictionaries.Clear();
+            // Application.Current.Resources.MergedDictionaries.Clear();
+            foreach (var rd in Application.Current.Resources.MergedDictionaries.Where(d => d.Source.OriginalString.Contains("Mwi")).ToArray())
+                Application.Current.Resources.MergedDictionaries.Remove(rd);
+
             foreach (var r in _resources)
                 Application.Current.Resources.MergedDictionaries.Add(r);
         }

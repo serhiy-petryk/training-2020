@@ -27,6 +27,12 @@
                 <Slider Grid.Column="1" ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
                         Width="100" Margin="2 2 0 0" Orientation="Horizontal" Minimum="0.5" Maximum="4" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=ScaleValue, Mode=TwoWay}"
                         IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"/>
+
+                <!-- CmdToggleScheme button -->
+                <Button Grid.Column="4" Style="{DynamicResource Mwi.Startup.WindowHeaderTextButton}" Content="Toggle Theme" ToolTip="Change the color theme of application"
+                        Command="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CmdToggleScheme}" />
+
+                <Separator Grid.Column="5" Style="{DynamicResource Mwi.Startup.WindowHeaderSeparator}"/>
             </Grid>
 
         </controls:MwiChild.RightHeaderPanel>

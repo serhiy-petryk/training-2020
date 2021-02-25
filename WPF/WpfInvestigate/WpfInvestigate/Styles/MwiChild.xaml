@@ -7,7 +7,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiCommon.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiChild.Wnd7.xaml" />
+        <!--<ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiChild.Wnd7.xaml" />-->
     </ResourceDictionary.MergedDictionaries>
 
     <!-- Default application icon -->

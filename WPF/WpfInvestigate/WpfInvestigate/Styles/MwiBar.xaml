@@ -5,7 +5,7 @@
                     xmlns:common="clr-namespace:WpfInvestigate.Common">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiColors.Wnd7.xaml" />
+        <!--<ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiColors.Wnd7.xaml" />-->
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
