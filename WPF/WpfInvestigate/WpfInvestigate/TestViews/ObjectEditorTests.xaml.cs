@@ -54,7 +54,5 @@ namespace WpfInvestigate.TestViews
             if (editor.ValueDataType == DataTypeMetadata.DataType.DateTime)
                 editor.Value = ((DateTime)editor.Value).AddHours(1);
         }
-
-
     }
 }

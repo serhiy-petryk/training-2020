@@ -126,6 +126,18 @@ namespace WpfInvestigate.Controls
                 SelectedDateTime = null;
         }
 
+        protected override void IsNullableChanged()
+        {
+            base.IsNullableChanged();
+            if (!IsNullable && !SelectedDateTime.HasValue)
+                SelectedDateTime = _defaultDate;
+        }
+
+        protected override void ClearValue()
+        {
+            base.ClearValue();
+            SelectedDateTime = IsNullable ? (DateTime?)null : _defaultDate;
+        }
         #endregion
 
         #region ============  Internal methods  ==============
