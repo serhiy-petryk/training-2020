@@ -346,18 +346,18 @@ namespace WpfInvestigate.Controls
             set => SetValue(TitleProperty, value);
         }
         //================================
-        public static readonly DependencyProperty LeftHeaderPanelProperty = DependencyProperty.Register("LeftHeaderPanel", typeof(FrameworkElement), typeof(MwiChild), new FrameworkPropertyMetadata(null));
-        public FrameworkElement LeftHeaderPanel
+        public static readonly DependencyProperty LeftHeaderBarProperty = DependencyProperty.Register("LeftHeaderBar", typeof(FrameworkElement), typeof(MwiChild), new FrameworkPropertyMetadata(null));
+        public FrameworkElement LeftHeaderBar
         {
-            get => (FrameworkElement)GetValue(LeftHeaderPanelProperty);
-            set => SetValue(LeftHeaderPanelProperty, value);
+            get => (FrameworkElement)GetValue(LeftHeaderBarProperty);
+            set => SetValue(LeftHeaderBarProperty, value);
         }
         //================================
-        public static readonly DependencyProperty RightHeaderPanelProperty = DependencyProperty.Register("RightHeaderPanel", typeof(FrameworkElement), typeof(MwiChild), new FrameworkPropertyMetadata(null));
-        public FrameworkElement RightHeaderPanel
+        public static readonly DependencyProperty RightHeaderBarProperty = DependencyProperty.Register("RightHeaderBar", typeof(FrameworkElement), typeof(MwiChild), new FrameworkPropertyMetadata(null));
+        public FrameworkElement RightHeaderBar
         {
-            get => (FrameworkElement)GetValue(RightHeaderPanelProperty);
-            set => SetValue(RightHeaderPanelProperty, value);
+            get => (FrameworkElement)GetValue(RightHeaderBarProperty);
+            set => SetValue(RightHeaderBarProperty, value);
         }
         //==============================
         public static readonly DependencyProperty StatusBarProperty = DependencyProperty.Register("StatusBar", typeof(FrameworkElement), typeof(MwiChild), new FrameworkPropertyMetadata(null));

@@ -12,7 +12,7 @@
         KeyDown="MwiStartup_OnKeyDown">
 
     <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000">
-        <controls:MwiChild.RightHeaderPanel>
+        <controls:MwiChild.RightHeaderBar>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -66,7 +66,7 @@
                 </Button>
             </Grid>
 
-        </controls:MwiChild.RightHeaderPanel>
+        </controls:MwiChild.RightHeaderBar>
 
         <controls:MwiContainer x:Name="MwiContainer" Background="Beige" LayoutTransform="{StaticResource ScaleTransform}">
             <controls:MwiContainer.LeftPanel>
