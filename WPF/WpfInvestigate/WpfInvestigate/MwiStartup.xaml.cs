@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Samples;
@@ -13,22 +15,24 @@ namespace WpfInvestigate
     /// </summary>
     public partial class MwiStartup
     {
+        public RelayCommand CmdScaleSliderReset { get; private set; }
+
         private static MwiChild TestMwi;
         public MwiStartup()
         {
             InitializeComponent();
             DataContext = this;
+            CmdScaleSliderReset = new RelayCommand(p => ScaleSlider.Value = 1.0);
+
             // TopControl.RestoreRectFromSetting();
             TopControl.CommandBar = new MwiCommandBarSample();
             TopControl.StatusBar = new MwiStatusBarSample();
-        }
 
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            if (MwiContainer != null && MwiContainer.Children != null)
-                TestMwi = MwiContainer.Children.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (MwiContainer?.Children != null)
+                    TestMwi = MwiContainer.Children.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
+            }), DispatcherPriority.Normal);
         }
 
         private int cnt = 0;
