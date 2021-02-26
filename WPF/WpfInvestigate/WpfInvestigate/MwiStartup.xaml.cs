@@ -28,7 +28,7 @@ namespace WpfInvestigate
             base.OnApplyTemplate();
 
             if (MwiContainer != null && MwiContainer.Children != null)
-                TestMwi = MwiContainer.Children.FirstOrDefault(w => w.Title == "Window Using XAML");
+                TestMwi = MwiContainer.Children.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
         }
 
         private int cnt = 0;
@@ -62,7 +62,7 @@ namespace WpfInvestigate
         {
             // foreach (var c in MwiContainer.Children)
             // c.AllowDetach = !c.AllowDetach;
-            MwiContainer.Children[0].Focus();
+            ((MwiChild)MwiContainer.Children[0]).Focus();
             var a1 = Keyboard.FocusedElement;
         }
 

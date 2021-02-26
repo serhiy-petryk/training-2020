@@ -186,7 +186,7 @@ namespace WpfInvestigate.Controls
 
             if (!IsActive && MwiContainer != null)
             {
-                MwiContainer.Children.Where(c => c != this && c.IsActive).ToList().ForEach(c => c.IsActive = false);
+                MwiContainer.Children.Cast<MwiChild>().Where(c => !Equals(c, this) && c.IsActive).ToList().ForEach(c => c.IsActive = false);
 
                 if (MwiContainer.ActiveMwiChild != this)
                     MwiContainer.ActiveMwiChild = this;

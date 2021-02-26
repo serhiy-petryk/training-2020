@@ -47,8 +47,12 @@ namespace WpfInvestigate.Controls
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    foreach (MwiChild mwiChild in e.NewItems)
+                    foreach (var o in e.NewItems)
                     {
+                        var mwiChild = o as MwiChild;
+                        if (mwiChild == null)
+                            throw new Exception($"All children of MwiContainer object have to be MwiChild type but it is '{o.GetType().Name}' type");
+
                         mwiChild.MwiContainer = this;
                         if (mwiChild.Parent is Grid parent)  // remove VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first
                             parent.Children.Remove(mwiChild);
@@ -65,6 +69,8 @@ namespace WpfInvestigate.Controls
                     GetTopChild(Children)?.Activate(false);
                     
                     break;
+
+                default: throw new Exception("Please, check code");
             }
         }
 
@@ -146,9 +152,9 @@ namespace WpfInvestigate.Controls
         #region =======  Properties  =========
         public ScrollViewer ScrollViewer;
         public Grid MwiPanel;
-        public ObservableCollection<MwiChild> Children { get; set; } = new ObservableCollection<MwiChild>();
-        internal IEnumerable<MwiChild> InternalWindows => Children.Where(w => !w.IsWindowed);
-        internal MwiChild GetTopChild(IEnumerable<MwiChild> items) => items.OrderByDescending(Panel.GetZIndex).FirstOrDefault();
+        public ObservableCollection<object> Children { get; set; } = new ObservableCollection<object>(); // if define as ObservableCollection<MwiChild>: there are vs designer errors in test forms "A value of type 'MwiChild' cannot be added to a collection or dictionary of type 'ObservableCollection`1'"
+        internal IEnumerable<MwiChild> InternalWindows => Children.Cast<MwiChild>().Where(w => !w.IsWindowed);
+        internal MwiChild GetTopChild(IEnumerable<object> items) => items.Cast<MwiChild>().OrderByDescending(Panel.GetZIndex).FirstOrDefault();
 
         // Offset for new window.
         private double _windowOffset = -WINDOW_OFFSET_STEP;

@@ -28,7 +28,7 @@ namespace WpfInvestigate.Controls
 
                 // Add current window tab items
                 var index = cm.Items.Cast<FrameworkElement>().TakeWhile(item => item.GetType() != typeof(Separator)).Count();
-                foreach (var item in Children)
+                foreach (MwiChild item in Children)
                 {
                     cm.Items.Insert(++index, new MenuItem
                     {
