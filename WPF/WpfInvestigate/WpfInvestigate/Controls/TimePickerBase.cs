@@ -377,6 +377,7 @@ namespace WpfInvestigate.Controls
 
         protected virtual void OnPopupOpened(object sender, EventArgs e)
         {
+            InternalOnTextBoxLostFocus(_textBox, null);
             DrawClockDivisions();
             SetSelectorValues();
         }
@@ -391,7 +392,7 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private void InternalOnTextBoxLostFocus(object sender, RoutedEventArgs e)
+        protected virtual void InternalOnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             if (_textInputChanged)
             {

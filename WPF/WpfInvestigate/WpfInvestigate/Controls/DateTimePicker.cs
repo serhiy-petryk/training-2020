@@ -52,8 +52,13 @@ namespace WpfInvestigate.Controls
         }
         private Binding GetBinding(DependencyProperty property) => new Binding(property.Name) { Source = this };
 
+        private bool _isPopupOpening;
         protected override void OnPopupOpened(object sender, EventArgs e)
         {
+            _isPopupOpening = true;
+            InternalOnTextBoxLostFocus(_textBox, null);
+            _isPopupOpening = false;
+
             SetDatePartValues();
             base.OnPopupOpened(sender, e);
         }
@@ -181,7 +186,7 @@ namespace WpfInvestigate.Controls
             picker._isDateTimeChanging = false;
 
             picker.WriteValueToTextBox();
-            if (picker.IsDateOnlyMode)
+            if (picker.IsDateOnlyMode && !picker._isPopupOpening)
                 picker.ClosePopup();
         }
         private static object CoerceDateTime(DependencyObject d, object basevalue)
