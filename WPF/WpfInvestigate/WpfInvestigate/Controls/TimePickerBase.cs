@@ -481,7 +481,6 @@ namespace WpfInvestigate.Controls
                 nameof(IsSeparatorVisible), nameof(SeparatorWidth));
         }
 
-
         //=============================================
         public static readonly DependencyProperty IsNullableProperty = DependencyProperty.Register("IsNullable", typeof(bool), typeof(TimePickerBase), new FrameworkPropertyMetadata(false, OnIsNullableChanged));
         /// <summary>
