@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using MyWpfMwi.Common;
@@ -95,5 +96,12 @@ namespace MyWpfMwi
             if (aa != null)
                 MessageBlock.Show($"You pressed '{aa}' button", null, MessageBlock.MessageBlockIcon.Information);
         });
+
+        private void OnTestButtonClick(object sender, RoutedEventArgs e)
+        {
+            var a1 = Window1.Template.FindName("BaseBorder", Window1);
+            var a2 = Window1.Template.FindName("ResizeLeft", Window1) as Thumb;
+            var a3 = Tips.GetVisualParents(a2).ToArray();
+        }
     }
 }
