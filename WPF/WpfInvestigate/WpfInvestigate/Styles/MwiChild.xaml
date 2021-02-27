@@ -44,7 +44,6 @@
             </ControlTemplate>
         </Style.Resources>
 
-        <Setter Property="VisibleButtons" Value="Minimize,Maximize,Close"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MwiChild">
@@ -123,9 +122,8 @@
                                     </Grid>
 
                                     <!-- Content & Command/Status bars -->
-                                    <!--<Border Grid.Row="1" x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">-->
-                                    <Border Grid.Row="1" x:Name="ContentBorder">
-                                        <Grid Grid.Row="1">
+                                    <Border Grid.Row="1" x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="*"/>
