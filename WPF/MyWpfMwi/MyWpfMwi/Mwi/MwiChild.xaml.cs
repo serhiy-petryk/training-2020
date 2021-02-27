@@ -409,7 +409,7 @@ namespace MyWpfMwi.Mwi
                         Position = _attachedPosition;
 
                     OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState, WindowState));
-                    OnPropertiesChanged(nameof(IsWindowed));
+                    OnPropertiesChanged(nameof(IsWindowed), nameof(OuterBorderMargin));
 
                     var storyboard = new Storyboard();
                     storyboard.Children.Add(AnimationHelper.GetOpacityAnimation(this, 0, 1));
@@ -455,7 +455,7 @@ namespace MyWpfMwi.Mwi
                     OnWindowStateValueChanged(this,
                         new DependencyPropertyChangedEventArgs(WindowStateProperty, this.WindowState,
                             WindowState));
-                    OnPropertiesChanged(nameof(IsWindowed));
+                    OnPropertiesChanged(nameof(IsWindowed), nameof(OuterBorderMargin));
 
                     Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() =>
                     {
