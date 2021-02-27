@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -83,10 +84,6 @@ namespace WpfInvestigate
             var a2 = wnd.ActualHeight;
         }
 
-        private void OnTestButtonClick(object sender, RoutedEventArgs e)
-        {
-        }
-
         //============  Test window  =============
         public RelayCommand CmdDisableDetach { get; } = new RelayCommand(o => TestMwi.AllowDetach = false);
         public RelayCommand CmdEnableDetach { get; } = new RelayCommand(o => TestMwi.AllowDetach = true);
@@ -164,14 +161,6 @@ namespace WpfInvestigate
             MwiContainer.AddDialog(content);
         }
 
-        private void OnTestClick(object sender, RoutedEventArgs e)
-        {
-            var a1 = sender as FrameworkElement;
-            var aa1 = Tips.GetVisualParents(a1);
-            var a2 = Tips.GetVisualParents(a1).OfType<MwiChild>().FirstOrDefault();
-            var wnd = Window.GetWindow(a1);
-        }
-
         private void MwiStartup_OnKeyDown(object sender, KeyEventArgs e)
         {
             var mwiContainer = MwiContainer;
@@ -180,6 +169,13 @@ namespace WpfInvestigate
                 mwiContainer.ActiveMwiChild.CmdClose.Execute(null);
                 e.Handled = true;
             }
+        }
+
+        private void OnTestButtonClick(object sender, RoutedEventArgs e)
+        {
+            var a1 = TestMwi.Template.FindName("BaseBorder", TestMwi);
+            var a2 = TestMwi.Template.FindName("ResizeLeft", TestMwi) as Thumb;
+            var a3 = a2.GetVisualParents().ToArray();
         }
     }
 }
