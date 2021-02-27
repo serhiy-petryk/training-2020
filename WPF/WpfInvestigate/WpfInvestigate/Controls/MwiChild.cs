@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
@@ -47,9 +48,12 @@ namespace WpfInvestigate.Controls
             CmdClose = new RelayCommand(Close, _ => AllowClose);
 
             DataContext = this;
-            if (Icon == null)
-                Icon = FindResource("DefaultIcon") as ImageSource;
+
+            if (Icon == null) Icon = FindResource("DefaultIcon") as ImageSource;
+
             Loaded += OnMwiChildLoaded;
+
+            MwiAppViewModel.Instance.ThemeChanged += (sender, args) => OnPropertiesChanged(nameof(OuterBorderMargin));
 
             void OnMwiChildLoaded(object sender, RoutedEventArgs e)
             {
@@ -375,12 +379,12 @@ namespace WpfInvestigate.Controls
         }
         //==============================
         public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons",
-            typeof(Buttons?), typeof(MwiChild), new FrameworkPropertyMetadata(
-                Buttons.Close | Buttons.Minimize | Buttons.Maximize | Buttons.Detach,
+            typeof(Buttons), typeof(MwiChild),
+            new FrameworkPropertyMetadata(Buttons.Close | Buttons.Minimize | Buttons.Maximize | Buttons.Detach,
                 (o, args) => ((MwiChild) o).UpdateUI()));
-        public Buttons? VisibleButtons
+        public Buttons VisibleButtons
         {
-            get => (Buttons?)GetValue(VisibleButtonsProperty);
+            get => (Buttons)GetValue(VisibleButtonsProperty);
             set => SetValue(VisibleButtonsProperty, value);
         }
         #endregion
