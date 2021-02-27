@@ -44,8 +44,8 @@
             </ControlTemplate>
         </Style.Resources>
 
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
+        <!--<Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MwiChild">
@@ -86,7 +86,7 @@
 
                                         <!-- Window icon & System menu -->
                                         <ToggleButton Grid.Column="0" x:Name="SystemMenuButton" Width="16" Height="16" Margin="3 0 0 0" Focusable="False" IsThreeState="False" IsChecked="False" BorderThickness="0" Background="Transparent" Padding="0"
-                                                      Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon, Converter={x:Static common:VisibilityConverter.Instance}}" 
+                                                      Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}" 
                                                       Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
                                             <ToggleButton.Resources>
                                                 <ContextMenu x:Key="cm" StaysOpen="False" Padding="0 4">
@@ -104,13 +104,13 @@
                                         </ToggleButton>
 
                                         <!-- Left header panel -->
-                                        <ContentPresenter Grid.Column="1" Content="{Binding LeftHeaderBar}" UseLayoutRounding="False"/>
+                                        <ContentPresenter Grid.Column="1" Content="{TemplateBinding LeftHeaderBar}" UseLayoutRounding="False"/>
 
                                         <!-- Window title -->
-                                        <TextBlock Grid.Column="2" x:Name="Header" Margin="3 0 0 0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{Binding Title}"/>
+                                        <TextBlock Grid.Column="2" x:Name="Header" Margin="3 0 0 0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{TemplateBinding Title}"/>
 
                                         <!-- Left header panel -->
-                                        <ContentPresenter Grid.Column="3" Content="{Binding RightHeaderBar}"/>
+                                        <ContentPresenter Grid.Column="3" Content="{TemplateBinding RightHeaderBar}"/>
 
                                         <!-- Window buttons -->
                                         <Button Grid.Column="4" Focusable="False" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}"
