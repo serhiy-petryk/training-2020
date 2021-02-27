@@ -44,8 +44,7 @@
             </ControlTemplate>
         </Style.Resources>
 
-        <!--<Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>-->
+        <Setter Property="VisibleButtons" Value="Minimize,Maximize,Close"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MwiChild">
