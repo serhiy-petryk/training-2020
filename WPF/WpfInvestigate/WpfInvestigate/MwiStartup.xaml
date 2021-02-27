@@ -73,7 +73,7 @@
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>
 
-            <controls:MwiChild Position="50 50" Title="Title" EdgeThickness="12" Height="150">
+            <controls:MwiChild Position="50 50" Title="Title" Height="150">
                 <ContentControl Content="Mwi Child Test"/>
             </controls:MwiChild>
 

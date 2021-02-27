@@ -49,11 +49,11 @@
                 <ControlTemplate TargetType="controls:MwiChild">
                     <Grid>
                         <!-- Shadow -->
-                        <Border x:Name="ShadowBorder" Margin="{Binding OuterBorderMargin}" Background="White" Effect="{StaticResource Mwi.ShadowEffect}"
+                        <Border x:Name="ShadowBorder" Margin="{DynamicResource Mwi.Child.OuterBorderMargin}" Background="White" Effect="{StaticResource Mwi.ShadowEffect}"
                                 Visibility="{DynamicResource Mwi.Child.OnlyWnd10}"/>
 
                         <!-- Main border -->
-                        <Border x:Name="BaseBorder" Margin="{Binding OuterBorderMargin}" BorderThickness="1" CornerRadius="{DynamicResource Mwi.Child.BaseBorderCornerRadius}" 
+                        <Border x:Name="BaseBorder" Margin="{DynamicResource Mwi.Child.OuterBorderMargin}" BorderThickness="1" CornerRadius="{DynamicResource Mwi.Child.BaseBorderCornerRadius}" 
                                 Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="{DynamicResource Mwi.Child.BaseBorderBrush}">
                             <Grid>
                                 <!-- Window 7 thick border -->
@@ -144,22 +144,22 @@
                                 <Rectangle x:Name="TopBorder" Height="1" VerticalAlignment="Top" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.NearBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
                                 <Rectangle x:Name="RightBorder" Width="1" HorizontalAlignment="Right" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
                                 <Rectangle x:Name="BottomBorder" Height="1" VerticalAlignment="Bottom" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
-
-                                <Thumb x:Name="ResizeLeft" Width="{Binding EdgeThickness.Left}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-                                <Thumb x:Name="ResizeTop" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-                                <Thumb x:Name="ResizeRight" Width="{Binding EdgeThickness.Right}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-                                <Thumb x:Name="ResizeBottom" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-
-                                <Thumb x:Name="ResizeTopLeft" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                                       Width="{Binding EdgeThickness.Left, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2*2+}"/>
-                                <Thumb x:Name="ResizeTopRight" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"
-                                       Width="{Binding EdgeThickness.Right, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2*2+}"/>
-                                <Thumb x:Name="ResizeBottomLeft" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"
-                                       Width="{Binding ElementName=ResizeTopLeft, Path=Width}"/>
-                                <Thumb x:Name="ResizeBottomRight" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                                       Width="{Binding ElementName=ResizeTopRight, Path=Width}"/>
                             </Grid>
                         </Border>
+
+                        <Thumb x:Name="ResizeLeft" Width="{Binding EdgeThickness.Left}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeTop" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeRight" Width="{Binding EdgeThickness.Right}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottom" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+
+                        <Thumb x:Name="ResizeTopLeft" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
+                               Width="{Binding EdgeThickness.Left, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2*2+}"/>
+                        <Thumb x:Name="ResizeTopRight" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"
+                               Width="{Binding EdgeThickness.Right, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2*2+}"/>
+                        <Thumb x:Name="ResizeBottomLeft" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"
+                               Width="{Binding ElementName=ResizeTopLeft, Path=Width}"/>
+                        <Thumb x:Name="ResizeBottomRight" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
+                               Width="{Binding ElementName=ResizeTopRight, Path=Width}"/>
                     </Grid>
 
                     <ControlTemplate.Triggers>

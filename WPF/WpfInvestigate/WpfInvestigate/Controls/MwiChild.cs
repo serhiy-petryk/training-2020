@@ -53,7 +53,16 @@ namespace WpfInvestigate.Controls
 
             Loaded += OnMwiChildLoaded;
 
-            MwiAppViewModel.Instance.ThemeChanged += (sender, args) => OnPropertiesChanged(nameof(OuterBorderMargin));
+            MwiAppViewModel.Instance.ThemeChanged += async (sender, args) =>
+            {
+                if (ActualWidth > 0)
+                {
+                    var oldWidth = ActualWidth;
+                    Width = ActualWidth + 1;
+                    await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
+                    Width = oldWidth;
+                }
+            };
 
             void OnMwiChildLoaded(object sender, RoutedEventArgs e)
             {
@@ -278,7 +287,6 @@ namespace WpfInvestigate.Controls
         #region =============  Properties  =================
         public event EventHandler Closed;
         public MwiContainer MwiContainer { get; set; }
-        public Thickness OuterBorderMargin => IsWindowed && FindResource("Mwi.Child.OuterBorderMargin") is Thickness thickness ? thickness : new Thickness();
 
         //============  Buttons  ============
         public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;

@@ -89,10 +89,10 @@ namespace WpfInvestigate.Controls
             {
                 if (maximizedFlag)
                 {
-                    if (mwiChild.Visibility != Visibility.Collapsed)
+                    if (mwiChild.Visibility != Visibility.Hidden)
                     {
                         var temp = mwiChild.Thumbnail; // update thumbnail
-                        mwiChild.Visibility = Visibility.Collapsed;
+                        mwiChild.Visibility = Visibility.Hidden;
                     }
                 }
                 else
