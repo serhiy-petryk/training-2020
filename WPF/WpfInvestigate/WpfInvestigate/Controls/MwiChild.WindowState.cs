@@ -77,7 +77,7 @@ namespace WpfInvestigate.Controls
 
                 var appWindow = Window.GetWindow(this);
                 MwiContainer.MwiPanel.Children.Remove(this);
-                var wnd = new Window { Style = FindResource("HeadlessWindow") as Style, Content = this, Owner= appWindow};
+                var wnd = new Window { Style = FindResource("HeadlessWindow") as Style, Content = this};
                 LayoutTransform = FindResource("ScaleTransform") as ScaleTransform;
                 wnd.Show();
                 Activate();

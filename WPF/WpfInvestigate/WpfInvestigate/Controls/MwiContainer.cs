@@ -129,6 +129,7 @@ namespace WpfInvestigate.Controls
 
             Children.CollectionChanged += OnChildrenCollectionChanged;
             OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
+            Unloaded += OnMwiContainerUnloaded;
 
             if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
             {
@@ -146,7 +147,14 @@ namespace WpfInvestigate.Controls
                 if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
                     ActiveMwiChild.IsActive = false;
             }
+            void OnMwiContainerUnloaded(object sender, RoutedEventArgs e)
+            {
+                Unloaded -= OnMwiContainerUnloaded;
+                foreach (var mwiChild in Children.Cast<MwiChild>().Where(c=>c.IsWindowed))
+                    ((Window) mwiChild.Parent).Close();
+            }
         }
+
         #endregion
 
         #region =======  Properties  =========
