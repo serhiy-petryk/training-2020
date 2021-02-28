@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -173,9 +174,10 @@ namespace WpfInvestigate
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
-            var a1 = TestMwi.Template.FindName("BaseBorder", TestMwi);
-            var a2 = TestMwi.Template.FindName("ResizeLeft", TestMwi) as Thumb;
-            var a3 = a2.GetVisualParents().ToArray();
+            foreach (var a1 in TestMwi.MwiContainer.Children.OfType<MwiChild>())
+            {
+                Debug.Print($"Child: {a1._controlId}, {a1.ActualWidth}, {a1.ActualHeight}");
+            }
         }
     }
 }
