@@ -12,7 +12,7 @@
     <Style TargetType="controls:MwiBar" x:Shared="False">
         <Style.Resources>
             <Style x:Key="ThumbnailStyle" TargetType="{x:Type ToolTip}">
-                <Setter Property="Background" Value="{DynamicResource Mwi.Bar.Thumbnail.BackgroundBrush}"/>
+                <Setter Property="Background" Value="{DynamicResource Mwi.TabItem.Thumbnail.BackgroundBrush}"/>
                 <Setter Property="BorderThickness" Value="4"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="RenderTransform">
@@ -36,12 +36,12 @@
             </Style>
 
             <Style TargetType="TabItem">
-                <Setter Property="Foreground" Value="{DynamicResource Mwi.Bar.ForegroundBrush}" />
-                <Setter Property="Background" Value="{DynamicResource Mwi.Bar.BackgroundBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource Mwi.TabItem.ForegroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource Mwi.TabItem.BackgroundBrush}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabItem">
-                                <Border BorderThickness="1" BorderBrush="{DynamicResource Mwi.Bar.BorderBrush}" CornerRadius="2" Margin="1 0 0 0" Background="{TemplateBinding Background}">
+                                <Border BorderThickness="1" BorderBrush="{DynamicResource Mwi.TabItem.BorderBrush}" CornerRadius="2" Margin="1 0 0 0" Background="{TemplateBinding Background}">
                                 <Grid MaxWidth="240">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -52,7 +52,7 @@
                                     <Image Grid.Column="0" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Source="{Binding Icon}" Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Title}" Margin="5 2 4 0" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
                                     <Button Grid.Column="2" x:Name="DeleteTabButton" Width="20" Height="20" Focusable="False" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Command="{Binding CmdClose}">
-                                        <Path Stroke="{DynamicResource Mwi.Bar.DeleteButton.ForegroundBrush}" StrokeThickness="1.5" Data="M 0 0 L 8 8 M 0 8 L 8 0" Width="8" Height="8" />
+                                        <Path Stroke="{DynamicResource Mwi.TabItem.DeleteButton.ForegroundBrush}" StrokeThickness="1.5" Data="M 0 0 L 8 8 M 0 8 L 8 0" Width="8" Height="8" />
                                     </Button>
                                 </Grid>
 
@@ -100,14 +100,14 @@
                                     <RepeatButton Focusable="False" Interval="15" Style="{StaticResource LeftUpDoubleButtonStyle}"
                                                   Padding="3 3 16 13"
                                                   IsEnabled="{Binding CanScrollLeft}"
-                                                  effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
+                                                  effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.Bar.BackgroundColor}"
                                                   effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100, +10%,+50%,+50%,100"
                                                   ToolTip="Scroll window tabs to left"
                                                   CommandTarget="{Binding ElementName=PART_ScrollViewer}" Command="ScrollBar.LineLeftCommand"/>
                                     <RepeatButton Focusable="False" Interval="15" Style="{StaticResource RightDownDoubleButtonStyle}"
                                                   Padding="16 13 3 3"
                                                   IsEnabled="{Binding CanScrollRight}"
-                                                  effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
+                                                  effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.Bar.BackgroundColor}"
                                                   effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100, +10%,+50%,+50%,100"
                                                   ToolTip="Scroll window tabs to right"
                                                   CommandTarget="{Binding ElementName=PART_ScrollViewer}" Command="ScrollBar.LineRightCommand"/>

@@ -51,8 +51,8 @@
                             </Grid.RowDefinitions>
 
                             <!-- Windows bar -->
-                            <Border Margin="0" Padding="0" BorderThickness="0 0 0 1" Background="{DynamicResource Mwi.WindowBar.BackgroundBrush}"
-                                    BorderBrush="{DynamicResource Mwi.WindowBar.BorderBrush}">
+                            <Border Margin="0" Padding="0" BorderThickness="0 0 0 1" Background="{DynamicResource Mwi.Bar.BackgroundBrush}"
+                                    BorderBrush="{DynamicResource Mwi.Bar.BorderBrush}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -70,7 +70,7 @@
                                                   Visibility="{Binding Path=LeftPanel, Converter={x:Static common:VisibilityConverter.Instance}}"
                                                   ToolTip="Open/Close Task panel"
                                                   SnapsToDevicePixels="True"
-                                                  effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
+                                                  effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.Bar.BackgroundColor}"
                                                   effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100"
                                                   effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
                                                   effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
@@ -84,7 +84,7 @@
                                                   ToolTip="SnapsToDevicePixels=True"
                                                   SnapsToDevicePixels="True"
                                                   Visibility="{Binding Path=Children.Count, Converter={x:Static common:VisibilityConverter.Instance}, ConverterParameter=Hide}"
-                                                  effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.WindowBar.BackgroundColor}"
+                                                  effects:ChromeEffect.MonochromeAnimated="{DynamicResource Mwi.Bar.BackgroundColor}"
                                                   effects:ChromeEffect.ChromeMatrix="+0%,+50%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100"
                                                   effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                                   effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"

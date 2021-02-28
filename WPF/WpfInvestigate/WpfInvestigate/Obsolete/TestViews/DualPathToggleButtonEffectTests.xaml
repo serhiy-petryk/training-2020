@@ -10,7 +10,7 @@
 
     <Window.Resources>
         <!-- Double buttons -->
-        <SolidColorBrush x:Key="Mwi.WindowBar.ForegroundBrush" Color="Black"/>
+        <SolidColorBrush x:Key="Mwi.Bar.ForegroundBrush" Color="Black"/>
         <SolidColorBrush x:Key="DoubleButton.BorderBrush" Color="Transparent"/>
         <SolidColorBrush x:Key="DoubleButton.BackgroundBrush" Color="Transparent"/>
         <SolidColorBrush x:Key="DoubleButton.MouseOver.BorderBrush" Color="#FF3399FF"/>
@@ -225,14 +225,14 @@
                                   Width="22" Height="22" BorderThickness="1" Focusable="False"
                                   Interval="15"
                                   ToolTip="Scroll window tabs to left">
-                        <Path Width="5" Height="10" Margin="-11 -9 0 0" Fill="{DynamicResource Mwi.WindowBar.ForegroundBrush}" Data="M 5 0 L 0 5 L 5 10 Z" />
+                        <Path Width="5" Height="10" Margin="-11 -9 0 0" Fill="{DynamicResource Mwi.Bar.ForegroundBrush}" Data="M 5 0 L 0 5 L 5 10 Z" />
                     </RepeatButton>
 
                     <RepeatButton Template="{DynamicResource RightDownDoubleButtonTemplate}" Style="{DynamicResource DoubleButtonStyle}"
                                   Margin="-22 0 0 0" Width="22" Height="22" BorderThickness="1" Focusable="False"
                                   Interval="15"
                                   ToolTip="Scroll window tabs to right">
-                        <Path Width="5" Height="10" Margin="11 9 0 0" Fill="{DynamicResource Mwi.WindowBar.ForegroundBrush}" Data="M 0 0 L 5 5 L 0 10 Z" />
+                        <Path Width="5" Height="10" Margin="11 9 0 0" Fill="{DynamicResource Mwi.Bar.ForegroundBrush}" Data="M 0 0 L 5 5 L 0 10 Z" />
                     </RepeatButton>
                 </StackPanel>
             </WrapPanel>
@@ -325,14 +325,14 @@
                                       Width="26" Height="26" BorderThickness="1" Focusable="False"
                                       Interval="15"
                                       ToolTip="Scroll window tabs to left">
-                            <Path Width="5" Height="10" Margin="-13 -10 0 0" Fill="{DynamicResource Mwi.WindowBar.ForegroundBrush}" Data="M 5 0 L 0 5 L 5 10 Z" />
+                            <Path Width="5" Height="10" Margin="-13 -10 0 0" Fill="{DynamicResource Mwi.Bar.ForegroundBrush}" Data="M 5 0 L 0 5 L 5 10 Z" />
                         </RepeatButton>
 
                         <RepeatButton Template="{DynamicResource RightDownDoubleButtonTemplate}" Style="{DynamicResource DoubleButtonStyle}"
                                       Margin="-26 0 0 0" Width="26" Height="26" BorderThickness="1" Focusable="False"
                                       Interval="15"
                                       ToolTip="Scroll window tabs to right">
-                            <Path Width="5" Height="10" Margin="13 10 0 0" Fill="{DynamicResource Mwi.WindowBar.ForegroundBrush}" Data="M 0 0 L 5 5 L 0 10 Z" />
+                            <Path Width="5" Height="10" Margin="13 10 0 0" Fill="{DynamicResource Mwi.Bar.ForegroundBrush}" Data="M 0 0 L 5 5 L 0 10 Z" />
                         </RepeatButton>
                     </StackPanel>
                 </ToolBar>
