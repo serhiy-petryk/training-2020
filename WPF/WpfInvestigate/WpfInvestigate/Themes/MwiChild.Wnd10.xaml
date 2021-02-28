@@ -43,6 +43,7 @@
     <Geometry x:Key="WindowMinimizeGeometry">M0,5 10,5 10,6 0,6 0,5z</Geometry>
     <Geometry x:Key="WindowMaximizeGeometry">M1,1 1,9 9,9 9,1 1,1Z M0,10 0,0 10,0 10,10 0,10Z</Geometry>
     <Geometry x:Key="WindowRestoreGeometry">M9,7 8,7 8,2 3,2 3,1 9,1 9,7Z M7,9 1,9 1,3 7,3 7,9Z M2,0 2,2 0,2 0,10 8,10 8,8 10,8 10,0 2,0Z</Geometry>
+    <Geometry x:Key="WindowCloseGeometry">M 0 0 L 10 10 M 0 10 L 10 0</Geometry>
 
     <ControlTemplate x:Key="BorderlessButtonTemplate" TargetType="Button">
         <Border BorderThickness="{TemplateBinding Border.BorderThickness}" Padding="{TemplateBinding Control.Padding}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" Name="Bd" SnapsToDevicePixels="True">
@@ -72,9 +73,6 @@
         <Style.Resources>
             <Style TargetType="Path">
                 <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
-            </Style>
-            <Style TargetType="Line">
-                <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
             </Style>
         </Style.Resources>
     </Style>
@@ -142,15 +140,15 @@
     </Style>
 
     <!-- =======  CloseButton ===== -->
-    <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowCloseButtonStyle}" x:Shared="False">
-        <Setter Property="Content">
-            <Setter.Value>
-                <Grid>
-                    <Line HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True" X1="0" X2="10" Y1="0" Y2="10" />
-                    <Line HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True" X1="0" X2="10" Y1="10" Y2="0" />
-                </Grid>
-            </Setter.Value>
-        </Setter>
+    <Path x:Key="WindowClosePath" Width="10" Height="10" Data="{StaticResource WindowCloseGeometry}" x:Shared="False"/>
+    <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowCloseButtonStyle}">
+        <Style.Resources>
+            <Style TargetType="Path">
+                <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                <Setter Property="StrokeThickness" Value="1"/>
+            </Style>
+        </Style.Resources>
+        <Setter Property="Content" Value="{StaticResource WindowClosePath}"/>
     </Style>
 
 </ResourceDictionary>
