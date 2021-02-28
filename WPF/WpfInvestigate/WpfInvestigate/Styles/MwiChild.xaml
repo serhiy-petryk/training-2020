@@ -44,6 +44,8 @@
             </ControlTemplate>
         </Style.Resources>
 
+        <Setter Property="MinWidth" Value="150"/>
+        <Setter Property="MinHeight" Value="50"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MwiChild">
