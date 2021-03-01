@@ -147,8 +147,7 @@ namespace WpfInvestigate
             adorner.ShowContentDialog(content);
         }
 
-        private void AddDialog_OnClick(object sender, RoutedEventArgs e) => 
-            MwiContainer.AddDialog(new ResizableSample {HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top});
+        private void AddDialog_OnClick(object sender, RoutedEventArgs e) => MwiContainer.AddDialog(new ResizingControl{Content = new ResizableSample(), LimitPositionToPanelBounds = true});
 
         private void AddMwiDialog_OnClick(object sender, RoutedEventArgs e)
         {

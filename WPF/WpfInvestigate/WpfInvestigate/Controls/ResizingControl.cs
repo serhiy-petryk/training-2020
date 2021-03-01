@@ -69,14 +69,13 @@ namespace WpfInvestigate.Controls
                 dpdWidth.AddValueChanged(m_newContent, OnWidthChanged);
                 dpdHeight.AddValueChanged(m_newContent, OnHeightChanged);
 
+                if (m_newContent.IsLoaded)
+                    OnContentLoaded(m_newContent, null);
+                else
+                    m_newContent.Loaded += OnContentLoaded;
+
                 Activate();
             }
-
-            Dispatcher.InvokeAsync(() =>
-            {
-                if (MovingThumb == null && Tips.GetVisualChildren(this).OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName) is Thumb movingThumb)
-                    MovingThumb = movingThumb;
-            }, DispatcherPriority.Loaded);
 
             void OnWidthChanged(object sender, EventArgs e)
             {
@@ -88,7 +87,6 @@ namespace WpfInvestigate.Controls
                     content.Dispatcher.InvokeAsync(() => content.Width = double.NaN, DispatcherPriority.Render);
                 }
             }
-
             void OnHeightChanged(object sender, EventArgs e)
             {
                 var content = (FrameworkElement)sender;
@@ -98,6 +96,12 @@ namespace WpfInvestigate.Controls
                     resizingControl.Height = content.Height;
                     content.Dispatcher.InvokeAsync(() => content.Height = double.NaN, DispatcherPriority.Render);
                 }
+            }
+            void OnContentLoaded(object sender, RoutedEventArgs args)
+            {
+                var content = (FrameworkElement)sender;
+                content.Loaded -= OnContentLoaded;
+                MovingThumb = MovingThumb ?? content.GetVisualChildren().OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
             }
         }
 
