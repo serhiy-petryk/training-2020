@@ -27,6 +27,8 @@ namespace WpfInvestigate.Controls
             if (host == null)
                 host = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
             host = (host as Window)?.Content as FrameworkElement ?? host;
+            if (host is MwiChild mwiChild && mwiChild.Template.FindName("BaseBorder", mwiChild) is Border baseBorder)
+                host = baseBorder;
 
             if (host == null)
                 throw new Exception("AdornerControl error! AdornedElement can't be null");
@@ -72,7 +74,7 @@ namespace WpfInvestigate.Controls
 
         public DialogAdorner(FrameworkElement host = null) : base(GetAdornedElement(host))
         {
-            _host = host ?? Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            _host = GetAdornedElement(host);
             if (AdornerLayer == null)
                 throw new Exception("DialogAdorner constructor error! AdornerLevel can't be null");
 
