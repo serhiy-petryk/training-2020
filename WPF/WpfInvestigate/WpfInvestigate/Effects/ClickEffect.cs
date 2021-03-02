@@ -125,7 +125,7 @@ namespace WpfInvestigate.Effects
             var newSize = Math.Max(fe.ActualWidth, fe.ActualHeight) * 3;
             var oldMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
             var newMargin = new Thickness(mousePosition.X - newSize / 2, mousePosition.Y - newSize / 2, 0, 0);
-            var duration = Math.Min(1000, Math.Max(300, newSize * 2.5));
+            var duration = Math.Min(1000, Math.Max(500, newSize * 2.5));
             ellipse.BeginAnimation(FrameworkElement.MarginProperty, new ThicknessAnimation(oldMargin, newMargin, TimeSpan.FromMilliseconds(duration)));
             ellipse.BeginAnimation(FrameworkElement.WidthProperty, new DoubleAnimation(0.0, newSize, TimeSpan.FromMilliseconds(duration)));
             ellipse.BeginAnimation(UIElement.OpacityProperty, new DoubleAnimation(0.5, 0.0, TimeSpan.FromMilliseconds(duration * 2 / 3)));

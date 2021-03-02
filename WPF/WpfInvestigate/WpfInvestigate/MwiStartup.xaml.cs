@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -112,8 +113,9 @@ namespace WpfInvestigate
 
         public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
         {
-            var mwiContainer = ((MwiStartup)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive))?.MwiContainer;
-            var adorner = new DialogAdorner(mwiContainer) {CloseOnClickBackground = true};
+            var activeWnd = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            var host = activeWnd is MwiStartup mwiStartup ? mwiStartup.MwiContainer as FrameworkElement : activeWnd;
+            var adorner = new DialogAdorner(host) {CloseOnClickBackground = true};
 
             var content = new MwiChild
             {
@@ -130,12 +132,13 @@ namespace WpfInvestigate
             var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text",
                 "Caption of Message block", DialogMessage.DialogMessageIcon.Success, new[] { "OK", "Cancel" });
 
-            DialogMessage.ShowDialog($"You pressed '{aa ?? "X" }' button", null, DialogMessage.DialogMessageIcon.Info, new[] { "OK" });
+            // DialogMessage.ShowDialog($"You pressed '{aa ?? "X" }' button", null, DialogMessage.DialogMessageIcon.Info, new[] { "OK" });
         });
 
         private void OnOpenDialogClick(object sender, RoutedEventArgs e)
         {
-            var adorner = new DialogAdorner(MwiContainer) { CloseOnClickBackground = true };
+            var a1 = MwiContainer.GetVisualParents().OfType<Border>().FirstOrDefault();
+            var adorner = new DialogAdorner(MwiContainer.GetVisualParents().OfType<Border>().FirstOrDefault() as FrameworkElement) { CloseOnClickBackground = true };
 
             var content = new MwiChild
             {

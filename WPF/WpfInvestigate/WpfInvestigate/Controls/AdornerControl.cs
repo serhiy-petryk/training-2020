@@ -44,7 +44,7 @@ namespace WpfInvestigate.Controls
             var newSize = AdornerSize == AdornerSizeType.AdornedElement
                 ? AdornedElement.RenderSize
                 : (AdornerSize == AdornerSizeType.Container || double.IsNaN(_child.Width)
-                    ? new Size(constraint.Width, constraint.Height)
+                    ? new Size(AdornerLayer.ActualWidth, AdornerLayer.ActualHeight)
                     : new Size(_child.Width, _child.Height));
 
             _child.Width = newSize.Width;
