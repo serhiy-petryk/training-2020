@@ -134,6 +134,9 @@
                         <Button Height="20" Click="OnTestButtonClick" Content="Test click"/>
                     </StackPanel>
                 </ScrollViewer>
+                <controls:MwiChild.StatusBar>
+                    <samples:MwiStatusBarSample/>
+                </controls:MwiChild.StatusBar>
             </controls:MwiChild>
         </controls:MwiContainer>
     </controls:MwiChild>
