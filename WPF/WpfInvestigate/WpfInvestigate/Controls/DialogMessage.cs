@@ -43,7 +43,7 @@ namespace WpfInvestigate.Controls
             return dialogMessage.Result;
         }
 
-        public static async Task<string> ShowAsync(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        public static async Task<string> ShowAsync(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true, FrameworkElement messageHost = null)
         {
             var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
             var content = new ResizingControl
@@ -52,13 +52,13 @@ namespace WpfInvestigate.Controls
                 LimitPositionToPanelBounds = true
             };
 
-            var adorner = new DialogAdorner();
+            var adorner = new DialogAdorner(messageHost);
             adorner.ShowContent(content);
             await adorner.WaitUntilClosed();
             return dialogMessage.Result;
         }
 
-        public static void Show(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        public static void Show(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true, FrameworkElement messageHost = null)
         {
             var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
             var content = new ResizingControl
@@ -67,7 +67,7 @@ namespace WpfInvestigate.Controls
                 LimitPositionToPanelBounds = true
             };
 
-            new DialogAdorner().ShowContent(content);
+            new DialogAdorner(messageHost).ShowContent(content);
         }
 
         private static DialogMessage CreateDialogMessage(string messageText, string caption, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
