@@ -22,16 +22,11 @@ namespace WpfInvestigate.Controls
         }
 
         #region =========  Static Private Section  ==============
-        private static FrameworkElement GetAdornedElement(FrameworkElement host)
-        {
-            if (host == null)
-                host = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            host = (host as Window)?.Content as FrameworkElement ?? host;
-            if (host is MwiChild mwiChild && mwiChild.Template.FindName("BaseBorder", mwiChild) is Border baseBorder)
-                host = baseBorder;
 
-            if (host == null)
-                throw new Exception("AdornerControl error! AdornedElement can't be null");
+        private static FrameworkElement GetHost(FrameworkElement host)
+        {
+            if (host == null) host = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            if (host is Window wnd && wnd.Content is FrameworkElement fe) return fe;
             return host;
         }
 
@@ -72,9 +67,9 @@ namespace WpfInvestigate.Controls
         private FrameworkElement _host;
         #endregion
 
-        public DialogAdorner(FrameworkElement host = null) : base(GetAdornedElement(host))
+        public DialogAdorner(FrameworkElement host = null) : base(GetHost(host))
         {
-            _host = GetAdornedElement(host);
+            _host = GetHost(host);
             if (AdornerLayer == null)
                 throw new Exception("DialogAdorner constructor error! AdornerLevel can't be null");
 

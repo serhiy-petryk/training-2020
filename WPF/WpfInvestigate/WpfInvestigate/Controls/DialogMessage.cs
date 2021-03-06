@@ -30,7 +30,7 @@ namespace WpfInvestigate.Controls
         private static readonly string[] _iconColors = {"Primary", "Danger", "Danger", "Warning", "Info", "Success"};
 
         #region ============  Public Static Methods  =============
-        public static string ShowDialog(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        public static string ShowDialog(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true, FrameworkElement messageHost = null)
         {
             var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
             var content = new ResizingControl
@@ -39,7 +39,7 @@ namespace WpfInvestigate.Controls
                 LimitPositionToPanelBounds = true
             };
 
-            new DialogAdorner().ShowContentDialog(content);
+            new DialogAdorner(messageHost).ShowContentDialog(content);
             return dialogMessage.Result;
         }
 

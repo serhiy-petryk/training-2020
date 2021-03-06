@@ -132,11 +132,11 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <!-- Command bar -->
-                                            <ContentControl Grid.Row="0" Content="{Binding CommandBar}" LayoutTransform="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.LayoutTransform}"/>
+                                            <ContentControl Grid.Row="0" Content="{Binding CommandBar}"/>
                                             <!-- Window content -->
                                             <ContentControl Grid.Row="1" x:Name="Content" Content="{Binding Content}" />
                                             <!-- Status bar -->
-                                            <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}" LayoutTransform="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.LayoutTransform}"/>
+                                            <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>
                                         </Grid>
                                     </Border>
                                 </Grid>

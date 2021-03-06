@@ -68,7 +68,7 @@
 
         </controls:MwiChild.RightHeaderBar>
 
-        <controls:MwiContainer x:Name="MwiContainer" Background="Beige" LayoutTransform="{StaticResource ScaleTransform}">
+        <controls:MwiContainer x:Name="MwiContainer" Background="Beige">
             <controls:MwiContainer.LeftPanel>
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>
@@ -112,7 +112,7 @@
                 <TextBlock Text="Not resizable" Background="Yellow"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Title="Window Using XAML" Position="20 170" Icon="/Resources/OriginalLogo.png" Height="400" x:Name="Test2">
+            <controls:MwiChild Title="Window Using XAML" Position="20 170" Icon="/Resources/OriginalLogo.png" Height="350" x:Name="Test2">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdDisableDetach}">Disable Detach</Button>
@@ -126,11 +126,8 @@
                         <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdShowIcon}">Show Icon</Button>
                         <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdHideIcon}">Hide Icon</Button>
                         <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdChangeTitle}">Change Title</Button>
-                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdOpenDialog}">Cmd: Open Dialog Window</Button>
-                        <Button Height="20" Click="OnOpenDialogClick" Content="Open Dialog Window"/>
+                        <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdOpenDialog}">Show Dialog Window</Button>
                         <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdShowMessage}">Show Message</Button>
-                        <Button Height="20" Click="AddDialog_OnClick" Content="AddDialog"/>
-                        <Button Height="20" Click="AddMwiDialog_OnClick" Content="AddMwiDialog"/>
                         <Button Height="20" Click="OnTestButtonClick" Content="Test click"/>
                     </StackPanel>
                 </ScrollViewer>

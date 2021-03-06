@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Samples;
+using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate
 {
@@ -35,6 +36,8 @@ namespace WpfInvestigate
             {
                 if (MwiContainer?.Children != null)
                     TestMwi = MwiContainer.Children.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
+                if (TopControl.Template.FindName("ContentBorder", TopControl) is FrameworkElement topContentControl)
+                    topContentControl.LayoutTransform = FindResource("ScaleTransform") as ScaleTransform;
             }), DispatcherPriority.Normal);
         }
 
@@ -113,56 +116,26 @@ namespace WpfInvestigate
 
         public RelayCommand CmdOpenDialog { get; } = new RelayCommand(o =>
         {
-            var activeWnd = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            var host = activeWnd is MwiStartup mwiStartup ? mwiStartup.MwiContainer as FrameworkElement : activeWnd;
-            var adorner = new DialogAdorner(host) {CloseOnClickBackground = true};
-
             var content = new MwiChild
             {
-                Content = new ResizableSample(),
+                Content = new MwiExampleControl(),
                 LimitPositionToPanelBounds = true,
-                VisibleButtons = MwiChild.Buttons.Close| MwiChild.Buttons.Maximize,
-                Title="Dialog window"
+                VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
+                Title = "Dialog window",
+                Width = 300,
+                Height = 200
             };
+            var adorner = new DialogAdorner(MwiAppViewModel.Instance.DialogHost) { CloseOnClickBackground = true };
             adorner.ShowContentDialog(content);
         });
 
         public RelayCommand CmdShowMessage { get; } = new RelayCommand(o =>
         {
-            var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text",
-                "Caption of Message block", DialogMessage.DialogMessageIcon.Success, new[] { "OK", "Cancel" });
+            var result = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text",
+                "Caption of Message block", DialogMessage.DialogMessageIcon.Success, new[] { "OK", "Cancel" }, true, MwiAppViewModel.Instance.DialogHost);
 
-            // DialogMessage.ShowDialog($"You pressed '{aa ?? "X" }' button", null, DialogMessage.DialogMessageIcon.Info, new[] { "OK" });
+            DialogMessage.ShowDialog($"You pressed '{result ?? "X" }' button", null, DialogMessage.DialogMessageIcon.Info, new[] { "OK" }, true, MwiAppViewModel.Instance.DialogHost);
         });
-
-        private void OnOpenDialogClick(object sender, RoutedEventArgs e)
-        {
-            var a1 = MwiContainer.GetVisualParents().OfType<Border>().FirstOrDefault();
-            var adorner = new DialogAdorner(MwiContainer.GetVisualParents().OfType<Border>().FirstOrDefault() as FrameworkElement) { CloseOnClickBackground = true };
-
-            var content = new MwiChild
-            {
-                Content = new ResizableSample(),
-                LimitPositionToPanelBounds = true,
-                VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
-                Title = "Dialog window"
-            };
-            adorner.ShowContentDialog(content);
-        }
-
-        private void AddDialog_OnClick(object sender, RoutedEventArgs e) => MwiContainer.AddDialog(new ResizingControl{Content = new ResizableSample(), LimitPositionToPanelBounds = true});
-
-        private void AddMwiDialog_OnClick(object sender, RoutedEventArgs e)
-        {
-            var content = new MwiChild
-            {
-                Content = new ResizableSample(),
-                LimitPositionToPanelBounds = true,
-                VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
-                Title = "Dialog window"
-            };
-            MwiContainer.AddDialog(content);
-        }
 
         private void MwiStartup_OnKeyDown(object sender, KeyEventArgs e)
         {
