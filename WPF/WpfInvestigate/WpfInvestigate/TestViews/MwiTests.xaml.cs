@@ -119,10 +119,11 @@ namespace WpfInvestigate.TestViews
 
         public RelayCommand CmdShowMessage { get; } = new RelayCommand(o =>
         {
-            var aa = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text",
-                "Caption of Message block", DialogMessage.DialogMessageIcon.Success, new[] { "OK", "Cancel" });
+            var mwiContainer = ((MwiTests)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive))?.MwiContainer;
+            var result = DialogMessage.ShowDialog("Message text Message text Message text Message text Message text Message text",
+                "Caption of Message block", DialogMessage.DialogMessageIcon.Success, new[] { "OK", "Cancel" }, true, mwiContainer);
 
-            DialogMessage.ShowDialog($"You pressed '{aa ?? "X" }' button", null, DialogMessage.DialogMessageIcon.Info, new[] { "OK" });
+            DialogMessage.ShowDialog($"You pressed '{result ?? "X" }' button", null, DialogMessage.DialogMessageIcon.Info, new[] { "OK" });
         });
 
         private void OnOpenDialogClick(object sender, RoutedEventArgs e)

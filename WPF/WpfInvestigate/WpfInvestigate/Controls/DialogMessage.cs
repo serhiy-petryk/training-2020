@@ -30,6 +30,16 @@ namespace WpfInvestigate.Controls
         private static readonly string[] _iconColors = {"Primary", "Danger", "Danger", "Warning", "Info", "Success"};
 
         #region ============  Public Static Methods  =============
+        /// <summary>
+        /// Open dialog message
+        /// </summary>
+        /// <param name="messageText"></param>
+        /// <param name="caption"></param>
+        /// <param name="icon"></param>
+        /// <param name="buttons"></param>
+        /// <param name="isCloseButtonVisible"></param>
+        /// <param name="messageHost"></param>
+        /// <returns>Dialog result</returns>
         public static string ShowDialog(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true, FrameworkElement messageHost = null)
         {
             var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
