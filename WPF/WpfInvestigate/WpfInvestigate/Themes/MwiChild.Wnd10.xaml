@@ -140,7 +140,7 @@
     </Style>
 
     <!-- =======  CloseButton ===== -->
-    <Path x:Key="WindowClosePath" Width="10" Height="10" Data="{StaticResource WindowCloseGeometry}" x:Shared="False"/>
+    <Path x:Key="WindowClosePath" Width="10" Height="10" Data="{StaticResource WindowCloseGeometry}" x:Shared="False" ClipToBounds="True"/>
     <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowCloseButtonStyle}">
         <Style.Resources>
             <Style TargetType="Path">
