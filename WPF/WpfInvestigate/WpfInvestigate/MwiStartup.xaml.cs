@@ -19,7 +19,6 @@ namespace WpfInvestigate
     {
         public RelayCommand CmdScaleSliderReset { get; private set; }
 
-        private static MwiChild TestMwi;
         public MwiStartup()
         {
             InitializeComponent();
@@ -27,16 +26,22 @@ namespace WpfInvestigate
             CmdScaleSliderReset = new RelayCommand(p => ScaleSlider.Value = 1.0);
 
             // TopControl.RestoreRectFromSetting();
-            TopControl.CommandBar = new MwiCommandBarSample();
-            TopControl.StatusBar = new MwiStatusBarSample();
 
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (MwiContainer?.Children != null)
-                    TestMwi = MwiContainer.Children.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
                 if (TopControl.Template.FindName("ContentBorder", TopControl) is FrameworkElement topContentControl)
                     topContentControl.LayoutTransform = FindResource("ScaleTransform") as ScaleTransform;
             }), DispatcherPriority.Normal);
+        }
+
+        // =============  Specific properties && methods  ============
+
+        private static MwiChild TestMwi;
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            if (MwiContainer.Children != null)
+                TestMwi = MwiContainer.Children.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
         }
 
         private int cnt = 0;
