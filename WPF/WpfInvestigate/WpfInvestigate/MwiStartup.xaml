@@ -60,9 +60,9 @@
 
                 <Separator Grid.Column="3" Style="{DynamicResource Mwi.Startup.WindowHeaderSeparator}"/>
 
-                <!-- CmdToggleScheme button -->
-                <Button Grid.Column="4" Style="{DynamicResource Mwi.Startup.WindowHeaderTextButton}" Content="Toggle Theme" ToolTip="Change the color theme of application"
-                        Command="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CmdToggleScheme}" />
+                <!-- CmdToggleTheme button -->
+                <Button Grid.Column="4" Style="{DynamicResource Mwi.Startup.WindowHeaderTextButton}" Content="Toggle Theme" ToolTip="Change the theme of application"
+                        Command="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CmdToggleTheme}" />
 
                 <Separator Grid.Column="5" Style="{DynamicResource Mwi.Startup.WindowHeaderSeparator}"/>
 

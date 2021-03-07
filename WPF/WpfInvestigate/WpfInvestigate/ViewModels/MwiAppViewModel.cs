@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using WpfInvestigate.Common;
 using WpfInvestigate.Themes;
@@ -29,7 +30,7 @@ namespace WpfInvestigate.ViewModels
         // public MwiContainer ContainerControl { get; set; }
         // public FontFamily DefaultFontFamily { get; } = new FontFamily("Segoe UI");
         // public Dock WindowsBarLocation { get; } = Dock.Top;
-        public RelayCommand CmdToggleScheme { get; }
+        public RelayCommand CmdToggleTheme { get; }
 
         public FrameworkElement DialogHost
         {
@@ -46,13 +47,20 @@ namespace WpfInvestigate.ViewModels
 
         public MwiAppViewModel()
         {
-            CmdToggleScheme = new RelayCommand(o => ApplyTheme(null));
+            CmdToggleTheme = new RelayCommand(o => ToggleTheme(null));
         }
 
-        public void ApplyTheme(MwiThemeInfo theme)
+        public void ToggleTheme(MwiThemeInfo theme)
         {
             var oldTheme = _currentTheme;
-            _currentTheme = theme == null ? MwiThemeInfo.Themes.First(t => t != _currentTheme) : theme;
+            _currentTheme = theme;
+            if (_currentTheme == null)
+            {
+                var k = Array.IndexOf(MwiThemeInfo.Themes, oldTheme);
+                var newK = k >= 0 && k + 1 < MwiThemeInfo.Themes.Length ? k + 1 : 0;
+                _currentTheme = MwiThemeInfo.Themes[newK];
+            }
+
             _currentTheme.ApplyTheme();
 
             var args = new RoutedPropertyChangedEventArgs<MwiThemeInfo>(oldTheme, _currentTheme) { RoutedEvent = ThemeChangedEvent };
