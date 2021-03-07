@@ -123,7 +123,8 @@ namespace WpfInvestigate
                 VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
                 Title = "Dialog window",
                 Width = 300,
-                Height = 200
+                Height = 200,
+                IsActive = true
             };
             var adorner = new DialogAdorner(MwiAppViewModel.Instance.DialogHost) { CloseOnClickBackground = true };
             adorner.ShowContentDialog(content);
