@@ -34,6 +34,7 @@
         <StackPanel Grid.Column="1" Orientation="Vertical">
             <Button Content="Add" Click="AddChild_OnClick"/>
             <Button Content="Add dialog" Click="AddDialog_OnClick"/>
+            <Button Content="Add resizable dialog" Click="AddResizableDialog_OnClick"/>
             <Button Content="Add mwi dialog" Click="AddMwiDialog_OnClick"/>
             <Button Content="Add" Click="AddChild2_OnClick"/>
             <Button Content="Test" Click="Test_OnClick" Focusable="False"/>

@@ -140,8 +140,20 @@ namespace WpfInvestigate.TestViews
             adorner.ShowContentDialog(content);
         }
 
-        private void AddDialog_OnClick(object sender, RoutedEventArgs e) => 
-            MwiContainer.AddDialog(new ResizableSample {HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top});
+        private void AddDialog_OnClick(object sender, RoutedEventArgs e)
+        {
+            var content = new ResizableSample{HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top};
+            var adorner = new DialogAdorner(MwiContainer) { CloseOnClickBackground = true };
+            adorner.ShowContentDialog(content);
+        }
+
+        private void AddResizableDialog_OnClick(object sender, RoutedEventArgs e)
+        {
+            var content = new ResizableSample {Width = double.NaN, Height = double.NaN};
+            var resizable = new ResizingControl{Content = content};
+            var adorner = new DialogAdorner(MwiContainer);
+            adorner.ShowContentDialog(resizable);
+        }
 
         private void AddMwiDialog_OnClick(object sender, RoutedEventArgs e)
         {
@@ -152,7 +164,9 @@ namespace WpfInvestigate.TestViews
                 VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
                 Title = "Dialog window"
             };
-            MwiContainer.AddDialog(content);
+            var adorner = new DialogAdorner(MwiContainer) { CloseOnClickBackground = true };
+            content.IsActive = true;
+            adorner.ShowContentDialog(content);
         }
 
         private void OnTestClick(object sender, RoutedEventArgs e)

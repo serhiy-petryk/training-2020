@@ -34,14 +34,6 @@ namespace WpfInvestigate.Controls
             CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
         }
 
-        public void AddDialog(FrameworkElement content)
-        {
-            var adorner = new DialogAdorner(this) { CloseOnClickBackground = true };
-            if (content is MwiChild mwiChild)
-                mwiChild.IsActive = true;
-            adorner.ShowContentDialog(content);
-        }
-
         private async void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
