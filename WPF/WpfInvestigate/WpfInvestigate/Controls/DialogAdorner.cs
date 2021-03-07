@@ -36,7 +36,7 @@ namespace WpfInvestigate.Controls
             var adorner = Tips.GetVisualParents(content).OfType<DialogAdorner>().FirstOrDefault();
             if (adorner == null || content == null) return;
 
-            await content.BeginAnimationAsync(OpacityProperty, 1.0, 0.0);
+            await content.BeginAnimationAsync(OpacityProperty, 1.0, 0.0, AnimationHelper.AnimationDurationSlow);
 
             adorner._panel.Children.Remove(content);
             adorner.ContentClosed?.Invoke(adorner, content);
@@ -105,7 +105,7 @@ namespace WpfInvestigate.Controls
                 {
                     AdornerLayer.Add(this);
                     _panel.MouseLeftButtonDown += Panel_MouseLeftButtonDown;
-                    await _panel.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
+                    await _panel.BeginAnimationAsync(OpacityProperty, 0.0, 1.0, AnimationHelper.AnimationDuration);
                 }
                 _panel.Children.Add(content);
             }
@@ -123,7 +123,7 @@ namespace WpfInvestigate.Controls
             var top = Math.Round(Math.Max(0, (Child.ActualHeight - content.ActualHeight) / 2));
             content.Margin = new Thickness(left, 0, 0, 0);
             content.Visibility = Visibility.Visible;
-            await content.BeginAnimationAsync(MarginProperty, new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0));
+            await content.BeginAnimationAsync(MarginProperty, new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
         }
 
         public async void ShowContent(FrameworkElement content) => await ShowContentAsync(content);
@@ -182,12 +182,12 @@ namespace WpfInvestigate.Controls
             adorner._panel.MouseLeftButtonDown -= Panel_MouseLeftButtonDown;
 
             var contents = adorner._panel.Children.OfType<FrameworkElement>().ToArray();
-            await Task.WhenAll(contents.Select(content => content.BeginAnimationAsync(OpacityProperty, 1.0, 0.0)));
+            await Task.WhenAll(contents.Select(content => content.BeginAnimationAsync(OpacityProperty, 1.0, 0.0, AnimationHelper.AnimationDurationSlow)));
             adorner._panel.Children.RemoveRange(0, adorner._panel.Children.Count);
             foreach (var content in contents)
                 adorner.ContentClosed?.Invoke(adorner, content);
 
-            await adorner._panel.BeginAnimationAsync(OpacityProperty, 1.0, 0.0);
+            await adorner._panel.BeginAnimationAsync(OpacityProperty, 1.0, 0.0, AnimationHelper.AnimationDuration);
             adorner.AdornerLayer?.Remove(adorner);
 
             adorner.AllContentClosed?.Invoke(adorner, EventArgs.Empty);
