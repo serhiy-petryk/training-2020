@@ -61,8 +61,12 @@
                 <Separator Grid.Column="3" Style="{DynamicResource Mwi.Startup.WindowHeaderSeparator}"/>
 
                 <!-- CmdToggleTheme button -->
-                <Button Grid.Column="4" Style="{DynamicResource Mwi.Startup.WindowHeaderTextButton}" Content="Toggle Theme" ToolTip="Change the theme of application"
-                        Command="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CmdToggleTheme}" />
+                <Button Grid.Column="4" Style="{DynamicResource Mwi.Startup.WindowHeaderTextButton}" Content="Toggle Theme"
+                        Command="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CmdToggleTheme}">
+                    <Button.ToolTip>
+                        <ToolTip Content="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme}" ContentStringFormat="Change the theme of application. Current theme is {0}"/>
+                    </Button.ToolTip>
+                </Button>
 
                 <Separator Grid.Column="5" Style="{DynamicResource Mwi.Startup.WindowHeaderSeparator}"/>
 
