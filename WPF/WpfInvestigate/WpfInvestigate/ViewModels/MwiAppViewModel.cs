@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using WpfInvestigate.Common;
@@ -6,7 +7,7 @@ using WpfInvestigate.Themes;
 
 namespace WpfInvestigate.ViewModels
 {
-    public class MwiAppViewModel: UIElement
+    public class MwiAppViewModel: UIElement, INotifyPropertyChanged
     {
         #region ================  Static section  =====================
         public static MwiAppViewModel Instance = new MwiAppViewModel();
@@ -18,13 +19,6 @@ namespace WpfInvestigate.ViewModels
         {
             get => (double)GetValue(ScaleValueProperty);
             set => SetValue(ScaleValueProperty, value);
-        }
-        //=============================
-        public static readonly RoutedEvent ThemeChangedEvent = EventManager.RegisterRoutedEvent("ThemeChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<MwiThemeInfo>), typeof(MwiAppViewModel));
-        public event RoutedPropertyChangedEventHandler<MwiThemeInfo> ThemeChanged
-        {
-            add => AddHandler(ThemeChangedEvent, value);
-            remove => RemoveHandler(ThemeChangedEvent, value);
         }
         //=============================
         // public MwiContainer ContainerControl { get; set; }
@@ -43,7 +37,8 @@ namespace WpfInvestigate.ViewModels
             }
         }
 
-        private MwiThemeInfo _currentTheme;
+        public MwiThemeInfo CurrentTheme { get; private set; }
+        public int Test => 12;
 
         public MwiAppViewModel()
         {
@@ -52,19 +47,27 @@ namespace WpfInvestigate.ViewModels
 
         public void ToggleTheme(MwiThemeInfo theme)
         {
-            var oldTheme = _currentTheme;
-            _currentTheme = theme;
-            if (_currentTheme == null)
+            var oldTheme = CurrentTheme;
+            CurrentTheme = theme;
+            if (CurrentTheme == null)
             {
                 var k = Array.IndexOf(MwiThemeInfo.Themes, oldTheme);
                 var newK = k >= 0 && k + 1 < MwiThemeInfo.Themes.Length ? k + 1 : 0;
-                _currentTheme = MwiThemeInfo.Themes[newK];
+                CurrentTheme = MwiThemeInfo.Themes[newK];
             }
 
-            _currentTheme.ApplyTheme();
+            CurrentTheme.ApplyTheme();
+            OnPropertiesChanged(nameof(CurrentTheme));
+        }
+        #endregion
 
-            var args = new RoutedPropertyChangedEventArgs<MwiThemeInfo>(oldTheme, _currentTheme) { RoutedEvent = ThemeChangedEvent };
-            RaiseEvent(args);
+        #region ===========  INotifyPropertyChanged  ===============
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }

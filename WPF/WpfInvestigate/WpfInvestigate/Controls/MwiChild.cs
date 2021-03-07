@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -53,10 +54,11 @@ namespace WpfInvestigate.Controls
 
             Loaded += OnMwiChildLoaded;
 
-            MwiAppViewModel.Instance.ThemeChanged += async (sender, args) =>
+            MwiAppViewModel.Instance.PropertyChanged += async (sender, args) =>
             {
-                if (ActualWidth > 0)
+                if (ActualWidth > 0 && args is PropertyChangedEventArgs e && e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
                 {
+                    // fixed bug (?): при зміні theme в MwiChild зявляється справа полоса
                     var oldWidth = ActualWidth;
                     Width = ActualWidth + 1;
                     await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
