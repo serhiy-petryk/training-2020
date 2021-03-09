@@ -24,7 +24,7 @@ namespace WpfInvestigate.ViewModels
         // public MwiContainer ContainerControl { get; set; }
         // public FontFamily DefaultFontFamily { get; } = new FontFamily("Segoe UI");
         // public Dock WindowsBarLocation { get; } = Dock.Top;
-        public RelayCommand CmdToggleTheme { get; }
+        public RelayCommand CmdChangeTheme { get; }
 
         public FrameworkElement DialogHost
         {
@@ -42,10 +42,10 @@ namespace WpfInvestigate.ViewModels
 
         public MwiAppViewModel()
         {
-            CmdToggleTheme = new RelayCommand(o => ToggleTheme(null));
+            CmdChangeTheme = new RelayCommand(o => ChangeTheme(null));
         }
 
-        public void ToggleTheme(MwiThemeInfo theme)
+        public void ChangeTheme(MwiThemeInfo theme)
         {
             var oldTheme = CurrentTheme;
             CurrentTheme = theme;
