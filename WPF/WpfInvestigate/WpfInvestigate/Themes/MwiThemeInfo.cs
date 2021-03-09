@@ -10,11 +10,9 @@ namespace WpfInvestigate.Themes
     {
         public static MwiThemeInfo[] Themes =
         {
-            new MwiThemeInfo("Windows10 (internal resize thumbs)", "Стиль Windows 10 (internal resize thumbs)", null, new[] { "/Themes/Mwi.Wnd10.InternalResizeThumbs.xaml"}),
-            new MwiThemeInfo("Windows10", "Стиль Windows 10", null, new[] { "/Themes/Mwi.Wnd10.xaml"}),
-            new MwiThemeInfo("Windows7", "Стиль Windows 7", null, new[] { "/Themes/Mwi.Wnd7.xaml"})
-            /*new MwiThemeInfo("Windows10", "Стиль Windows 10", null, new[] { "/Mwi/Themes/MwiChild.Wnd10.xaml", "/Themes/MwiContainer.Wnd7.xaml"}),
-            new MwiThemeInfo("Windows7", "Стиль Windows 7", null, new[] { "/Mwi/Themes/MwiChild.Wnd7.xaml", "/Themes/MwiContainer.Wnd7.xaml"})*/
+            new MwiThemeInfo("Windows10 (internal resize thumbs)", null, new[] { "/Themes/Mwi.Wnd10.InternalResizeThumbs.xaml"}),
+            new MwiThemeInfo("Windows10", null, new[] { "/Themes/Mwi.Wnd10.xaml"}),
+            new MwiThemeInfo("Windows7", null, new[] { "/Themes/Mwi.Wnd7.xaml"})
         };
 
         // ==============   Static section  ======================
@@ -39,15 +37,12 @@ namespace WpfInvestigate.Themes
 
         // ==============   Instance section  ======================
         public string Id { get; }
-        public string Name { get; }
-
         private string _assemblyName;
         private string[] _uris;
         private ResourceDictionary[] _resources = null;
-        public MwiThemeInfo(string id, string name, string assemblyName, string[] uris)
+        public MwiThemeInfo(string id, string assemblyName, string[] uris)
         {
             Id = id;
-            Name = name;
             _assemblyName = assemblyName;
             _uris = uris;
         }
