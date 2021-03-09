@@ -59,6 +59,7 @@ namespace WpfInvestigate.Controls
                         MwiPanel.Children.Remove(oldChild);
 
                     GetTopChild(Children)?.Activate(false);
+                    InvalidateLayout();
                     
                     break;
 
