@@ -75,11 +75,11 @@
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>
 
-            <controls:MwiChild Position="50 50" Title="Title" Height="150">
+            <controls:MwiChild x:Name="TestChild" Position="50 50" Title="Title" Height="150" BorderBrush="Orange" Background="{DynamicResource Mwi.Child.ChildBackground}">
                 <ContentControl Content="Mwi Child Test"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Position="100 100">
+            <controls:MwiChild Position="100 100" Background="{DynamicResource Mwi.Child.ChildBackground}">
                 <ContentControl Content="object Content"/>
             </controls:MwiChild>
 

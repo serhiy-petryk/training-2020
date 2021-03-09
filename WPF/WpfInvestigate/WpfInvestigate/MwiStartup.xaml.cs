@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -32,6 +33,18 @@ namespace WpfInvestigate
                 if (TopControl.Template.FindName("ContentBorder", TopControl) is FrameworkElement topContentControl)
                     topContentControl.LayoutTransform = FindResource("ScaleTransform") as ScaleTransform;
             }), DispatcherPriority.Normal);
+
+            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelInstancePropertyChanged;
+            OnMwiAppViewModelInstancePropertyChanged(null, new PropertyChangedEventArgs(nameof(MwiAppViewModel.CurrentTheme)));
+
+            void OnMwiAppViewModelInstancePropertyChanged(object sender, PropertyChangedEventArgs args)
+            {
+                if (args is PropertyChangedEventArgs e && e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
+                {
+                    var a1 = FindResource("Mwi.Child.OnlyWnd7") as Visibility?;
+                    TestChild.BorderThickness = new Thickness(Equals(a1, Visibility.Visible) ? 0 : 6);
+                }
+            }
         }
 
         // =============  Specific properties && methods  ============
