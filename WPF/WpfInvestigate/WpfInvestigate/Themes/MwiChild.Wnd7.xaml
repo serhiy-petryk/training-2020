@@ -12,6 +12,7 @@
     <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="Black" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="Black" />
     <CornerRadius x:Key="Mwi.Child.BaseBorderCornerRadius">5 5 0 0</CornerRadius>
+    <Color x:Key="Mwi.Child.BaseBackgroundColor">#FFBBD2EB</Color>
     <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="#FFBBD2EB" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="#FFD7E4F2"/>
     <Visibility x:Key="Mwi.Child.OnlyWnd7">Visible</Visibility>

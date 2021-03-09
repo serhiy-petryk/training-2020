@@ -15,7 +15,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0">Status Bar</TextBlock>
-        <TextBlock Grid.Column="1">Right Status Bar</TextBlock>
+        <TextBlock Grid.Column="1">The right side of Status Bar</TextBlock>
     </Grid>
 
 </UserControl>

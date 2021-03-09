@@ -32,6 +32,7 @@ namespace WpfInvestigate.Helpers
                         if (element.RenderTransform != Transform.Identity)
                             renderTransform.Children.Add(element.RenderTransform.CloneCurrentValue());
                     }
+
                     if (layoutTransform.Children.Count > 1)
                         cm.LayoutTransform = layoutTransform;
                     else if (layoutTransform.Children.Count == 1)
