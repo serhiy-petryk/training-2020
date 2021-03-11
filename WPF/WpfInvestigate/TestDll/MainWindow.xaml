@@ -3,10 +3,101 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TestDll"
+        xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls;assembly=WpfInvestigate"
+        xmlns:effects="clr-namespace:WpfInvestigate.Effects;assembly=WpfInvestigate"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Test DLL" Height="700" Width="900">
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Slider Grid.Column="0"
+                x:Name="uiScaleSlider"
+                Focusable="False"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100"
+                Value="1" Minimum="0.5" Maximum="8"
+                Orientation="Vertical"
+                Ticks="1"
+                IsSnapToTickEnabled="False"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
+
+        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.LayoutTransform>
+                    <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+                </Grid.LayoutTransform>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition MaxWidth="250"/>
+                    <ColumnDefinition MaxWidth="250"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5" MaxWidth="500">
+                    <Label Content="Current culture:"/>
+                    <ComboBox x:Name="cbCulture" SelectionChanged="CbCulture_OnSelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type globalization:CultureInfo}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding DisplayName, Mode=OneWay}" />
+                                    <TextBlock Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding IetfLanguageTag, StringFormat=(\{0\})}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Label Content="WiP controls:" Margin="0 10 0 0"/>
+                    <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick"/>
+                    <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
+                    <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
+                    <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
+
+                    <WrapPanel Margin="5" Background="Aqua" HorizontalAlignment="Stretch">
+                        <Grid x:Name="MainGrid" Width="100" Height="100" Background="Gainsboro" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseLeftButtonDown="MainUIElement_OnPreviewMouseLeftButtonDown">
+                            <Button Content="AAA" Margin="5" Click="TestButton_OnClick" Width="40" Height="24" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                    PreviewMouseLeftButtonDown="TestButton_OnPreviewMouseLeftButtonDown"/>
+                            <TextBox Text="AAA" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5 35 0 0" Width="50"/>
+                            <Grid x:Name="Grid" Margin="0" Width="30" Height="80" Background="Yellow" PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"
+                                  HorizontalAlignment="Left" VerticalAlignment="Top"></Grid>
+                        </Grid>
+                    </WrapPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
+                    <Label>Ready:</Label>
+                    <Button x:Name="MwiStartup" Width="200" Margin="0 5" Content="Mwi Startup" Click="MwiStartup_OnClick"/>
+                    <Button x:Name="MwiTests" Width="200" Margin="0 5" Content="Mwi test" Click="MwiTests_OnClick"/>
+                    <Button x:Name="ResizingControlTests" Width="200" Margin="0 5" Content="Ready: ResizingControlTests" Click="ResizingControlTests_OnClick"/>
+                    <Button x:Name="ObjectEditorTest" Margin="5" Content="Ready: ObjectEditor" Click="ObjectEditorTest_OnClick"/>
+                    <Button x:Name="DropDownButtonTest" Width="200" Margin="0 5" Content="Ready: DropDownButton" Click="DropDownButtonTest_OnClick"/>
+                    <Button x:Name="NumericBoxTest" Width="200" Margin="0 5" Content="Ready: NumericBox" Click="NumericBoxTest_OnClick"/>
+                    <Button x:Name="TimePickerTest" Width="200" Margin="0 5" Content="Ready: TimePicker" Click="TimePickerTest_OnClick"/>
+                    <Button x:Name="DatePickerEffectTest" Width="200" Margin="0 5" Content="Ready: DatePickerEffect" Click="DatePickerEffectTest_OnClick"/>
+                    <Button x:Name="CalculatorTest" Width="200" Margin="0 5" Content="Ready: Calculator" Click="CalculatorTest_OnClick"/>
+                    <Button x:Name="WatermarkTest" Width="200" Margin="0 5" Content="Watermark Tests" Click="WatermarkTest_OnClick"/>
+                    <Button x:Name="RippleEffectTest" Width="200" Margin="0 5" Content="Ready: RippleEffect" Click="RippleEffectTest_OnClick"/>
+                    <Button x:Name="ChromeTest" Width="200" Margin="0 5" Content="Ready: Chrome tests" Click="ChromeTest_OnClick"/>
+                    <Button x:Name="ColorControlTest" Width="200" Margin="0 5" Content="Ready: ColorControlTest" Click="ColorControlTest_OnClick"/>
+                    <Button x:Name="ButtonStyleTest" Width="200" Margin="0 5" Content="Ready: ButtonStyleTests" Click="ButtonStyleTests_OnClick"/>
+                    <Button x:Name="FocusEffectTest" Width="200" Margin="0 5" Content="Ready: FocusEffectTests" Click="FocusEffectTests_OnClick"/>
+                    <Button x:Name="TextBoxTest" Width="200" Margin="0 5" Content="WiP: TextBoxTests" Click="TextBoxTests_OnClick"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
+                    <Label>Others:</Label>
+                    <Button x:Name="KeyboardTest" Margin="5" Content="Others: Keyboard" Click="KeyboardTest_OnClick"/>
+                    <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="Others: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
+                    <Button x:Name="WiPTest" Margin="5" Content="WiP Tests" Click="WiPTest_OnClick"/>
+                    <controls:NumericBox Margin="5 0" Width="120" Height="24" effects:WatermarkEffect.Watermark="No value" Focusable="True" IsNullable="True" Value="323"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Window>

@@ -53,6 +53,9 @@
     <Compile Include="TestViews\BootstrapButtonTests.xaml.cs">
       <DependentUpon>BootstrapButtonTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\ButtonStyleTests.xaml.cs">
+      <DependentUpon>ButtonStyleTests.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -66,6 +69,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="TestViews\BootstrapButtonTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ButtonStyleTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -101,6 +108,33 @@
       <Project>{63d9ee61-8d0e-4d40-9cb1-a6ddc081f088}</Project>
       <Name>WpfInvestigate</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Close.Disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Maximize.Disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Maximize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Minimize.Disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Minimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Restore.Disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Restore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\OriginalLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
