@@ -6,6 +6,7 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:samples="clr-namespace:WpfInvestigate.Samples"
         xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels"
+        xmlns:common="clr-namespace:WpfInvestigate.Common"
         mc:Ignorable="d"
         Title="MwiStartup"
         Style="{StaticResource HeadlessWindow}"
@@ -79,8 +80,18 @@
                 <ContentControl Content="Mwi Child Test"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Position="100 100" Background="{DynamicResource Mwi.Child.ChildBackground}">
+            <controls:MwiChild Position="100 100" Background="{DynamicResource Mwi.Child.ChildBackground}" BorderBrush="Orange" Margin="100,101,0,0">
                 <ContentControl Content="object Content"/>
+                <controls:MwiChild.Resources>
+                    <Style TargetType="controls:MwiChild" BasedOn="{StaticResource {x:Type controls:MwiChild}}">
+                        <Setter Property="BorderThickness" Value="4"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme.Id}" Value="Windows7">
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </controls:MwiChild.Resources>
             </controls:MwiChild>
 
             <controls:MwiChild Position="200 200" Height="150" EdgeThickness="15">
