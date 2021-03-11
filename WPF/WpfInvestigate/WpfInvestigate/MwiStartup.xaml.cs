@@ -47,6 +47,16 @@ namespace WpfInvestigate
             }
         }
 
+        private void MwiStartup_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            var mwiContainer = MwiContainer;
+            if (Keyboard.Modifiers == ModifierKeys.Control && Keyboard.IsKeyDown(Key.F4) && mwiContainer.ActiveMwiChild != null && !mwiContainer.ActiveMwiChild.IsWindowed) // Is Ctrl+F4 key pressed
+            {
+                mwiContainer.ActiveMwiChild.CmdClose.Execute(null);
+                e.Handled = true;
+            }
+        }
+
         // =============  Specific properties && methods  ============
 
         private static MwiChild TestMwi;
@@ -153,16 +163,6 @@ namespace WpfInvestigate
 
             DialogMessage.ShowDialog($"You pressed '{result ?? "X" }' button", null, DialogMessage.DialogMessageIcon.Info, new[] { "OK" }, true, MwiAppViewModel.Instance.DialogHost);
         });
-
-        private void MwiStartup_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            var mwiContainer = MwiContainer;
-            if (Keyboard.Modifiers == ModifierKeys.Control && Keyboard.IsKeyDown(Key.F4) && mwiContainer.ActiveMwiChild != null && !mwiContainer.ActiveMwiChild.IsWindowed) // Is Ctrl+F4 key pressed
-            {
-                mwiContainer.ActiveMwiChild.CmdClose.Execute(null);
-                e.Handled = true;
-            }
-        }
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
