@@ -109,32 +109,5 @@
       <Name>WpfInvestigate</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Close.Disabled.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Close.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Maximize.Disabled.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Maximize.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Minimize.Disabled.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Minimize.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Restore.Disabled.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\NotNeed.Mwi.Wnd7\Restore.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\OriginalLogo.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

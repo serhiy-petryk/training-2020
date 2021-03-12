@@ -259,8 +259,8 @@
     </Style>
 
     <!-- =======  MinimizeButton ===== -->
-    <Image x:Key="MinimizeImage" Width="11" Height="5" Margin="0,3,0,0" Source="/Resources/Mwi.Wnd7/Minimize.png" x:Shared="False"/>
-    <Image x:Key="MinimizeDisabledImage" Width="11" Height="5" Margin="0,3,0,0" Source="/Resources/Mwi.Wnd7/Minimize.Disabled.png" x:Shared="False"/>
+    <Image x:Key="MinimizeImage" Width="11" Height="5" Margin="0,3,0,0" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Minimize.png" x:Shared="False"/>
+    <Image x:Key="MinimizeDisabledImage" Width="11" Height="5" Margin="0,3,0,0" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Minimize.Disabled.png" x:Shared="False"/>
     <Style x:Key="MinimizeButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowCommonButtonStyle}">
         <Setter Property="Content" Value="{StaticResource MinimizeImage}"/>
         <Style.Triggers>
@@ -271,10 +271,10 @@
     </Style>
 
     <!-- =======  MaximizeButton ===== -->
-    <Image x:Key="MaximizeImage" Width="11" Height="9" Source="/Resources/Mwi.Wnd7/Maximize.png" x:Shared="False"/>
-    <Image x:Key="RestoreImage" Width="12" Height="11" Source="/Resources/Mwi.Wnd7/Restore.png" x:Shared="False"/>
-    <Image x:Key="MaximizeDisabledImage" Width="11" Height="9" Source="/Resources/Mwi.Wnd7/Maximize.Disabled.png" x:Shared="False"/>
-    <Image x:Key="RestoreDisabledImage" Width="12" Height="11" Source="/Resources/Mwi.Wnd7/Restore.Disabled.png" x:Shared="False"/>
+    <Image x:Key="MaximizeImage" Width="11" Height="9" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Maximize.png" x:Shared="False"/>
+    <Image x:Key="RestoreImage" Width="12" Height="11" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Restore.png" x:Shared="False"/>
+    <Image x:Key="MaximizeDisabledImage" Width="11" Height="9" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Maximize.Disabled.png" x:Shared="False"/>
+    <Image x:Key="RestoreDisabledImage" Width="12" Height="11" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Restore.Disabled.png" x:Shared="False"/>
     <Style x:Key="MaximizeButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowCommonButtonStyle}">
         <Setter Property="Content" Value="{StaticResource MaximizeImage}"/>
         <Style.Triggers>
@@ -309,8 +309,8 @@
     </Style>
 
     <!-- =======  CloseButton ===== -->
-    <Image x:Key="CloseImage" Width="11" Height="9" Source="/Resources/Mwi.Wnd7/Close.png" x:Shared="False"/>
-    <Image x:Key="CloseDisabledImage" Width="11" Height="9" Source="/Resources/Mwi.Wnd7/Close.Disabled.png" x:Shared="False"/>
+    <Image x:Key="CloseImage" Width="11" Height="9" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Close.png" x:Shared="False"/>
+    <Image x:Key="CloseDisabledImage" Width="11" Height="9" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Close.Disabled.png" x:Shared="False"/>
     <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowCommonButtonStyle}">
         <Setter Property="Content" Value="{StaticResource CloseImage}"/>
         <Setter Property="RenderOptions.BitmapScalingMode" Value="Unspecified" />
