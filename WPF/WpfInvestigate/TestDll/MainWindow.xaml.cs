@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Threading;
-using WpfInvestigate;
-using WpfInvestigate.Helpers;
-using WpfInvestigate.Temp;
-using WpfInvestigate.TestViews;
 
 namespace TestDll
 {
@@ -27,7 +20,7 @@ namespace TestDll
             cbCulture.ItemsSource = CultureInfos;
             cbCulture.SelectedValue = Thread.CurrentThread.CurrentUICulture;
 
-            ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
+            WpfInvestigate.Helpers.ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
         }
 
         private static string[] _cultures = { "", "sq-AL", "uk-UA", "en-US", "km-KH", "yo-NG" };
@@ -49,58 +42,9 @@ namespace TestDll
             }
         }
 
-        private void ResizingControlTests_OnClick(object sender, RoutedEventArgs e) => new ResizingControlTests().Show();
-        private void TimePickerTest_OnClick(object sender, RoutedEventArgs e) => new TimePickerTests().Show();
-        private void ObjectEditorTest_OnClick(object sender, RoutedEventArgs e) => new ObjectEditorTests().Show();
-        private void WatermarkTest_OnClick(object sender, RoutedEventArgs e) => new WatermarkTests().Show();
-        private void DatePickerEffectTest_OnClick(object sender, RoutedEventArgs e) => new DatePickerEffectTests().Show();
-        private void WiPTest_OnClick(object sender, RoutedEventArgs e) => new WiPTests().Show();
-        private void RippleEffectTest_OnClick(object sender, RoutedEventArgs e) => new RippleEffectTests().Show();
-        private void CalculatorTest_OnClick(object sender, RoutedEventArgs e) => new CalculatorTests().Show();
-        private void DropDownButtonTest_OnClick(object sender, RoutedEventArgs e) => new DropDownButtonTests().Show();
-        private void NumericBoxTest_OnClick(object sender, RoutedEventArgs e) => new NumericBoxTests().Show();
-        private void KeyboardTest_OnClick(object sender, RoutedEventArgs e) => new VirtualKeyboardTests().Show();
-        private void ColorControlTest_OnClick(object sender, RoutedEventArgs e) => new ColorControlTests().Show();
-        private void ControlEffectTests_OnClick(object sender, RoutedEventArgs e) => new ControlEffectTests().Show();
         private void BootstrapButtonTests_OnClick(object sender, RoutedEventArgs e) => new TestViews.BootstrapButtonTests().Show();
-        private void ChromeTest_OnClick(object sender, RoutedEventArgs e) => new ChromeTests().Show();
         private void ButtonStyleTests_OnClick(object sender, RoutedEventArgs e) => new TestViews.ButtonStyleTests().Show();
-        private void FocusEffectTests_OnClick(object sender, RoutedEventArgs e) => new FocusEffectTests().Show();
-        private void TextBoxTests_OnClick(object sender, RoutedEventArgs e) => new TextBoxTests().Show();
-
-        private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
-        private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
-        private void MwiTests_OnClick(object sender, RoutedEventArgs e) => new MwiTests().Show();
         private void MwiStartup_OnClick(object sender, RoutedEventArgs e) => new MwiStartup().Show();
-
-        private void OnTestButtonClick(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void TestButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            Debug.Print($"TestButton_OnClick");
-            e.Handled = false;
-        }
-
-        private void UIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MainGrid.Children.Remove(Grid);
-            Debug.Print($"UIElement_OnPreviewMouseLeftButtonDown");
-            MainGrid.Dispatcher.InvokeAsync(() => MainGrid.RaiseEvent(e), DispatcherPriority.Input);
-        }
-
-        private void TestButton_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Debug.Print($"TestButton_OnPreviewMouseLeftButtonDown");
-            e.Handled = false;
-        }
-
-        private void MainUIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Debug.Print($"MainUIElement_OnPreviewMouseLeftButtonDown");
-            e.Handled = false;
-        }
 
     }
 }
