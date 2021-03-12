@@ -73,9 +73,7 @@ namespace WpfInvestigate.Controls
             }
             else
             {
-                Margin = new Thickness(0, 0, -1, -1);
-
-                var appWindow = Window.GetWindow(this);
+                Margin = new Thickness();
                 MwiContainer.MwiPanel.Children.Remove(this);
                 var wnd = new Window { Style = FindResource("HeadlessWindow") as Style, Content = this};
                 LayoutTransform = FindResource("ScaleTransform") as ScaleTransform;
