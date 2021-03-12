@@ -54,7 +54,7 @@ namespace WpfInvestigate.Controls
 
             Loaded += OnMwiChildLoaded;
 
-            MwiAppViewModel.Instance.PropertyChanged += async (sender, args) =>
+            /* can't reproduce (2021-03-12): MwiAppViewModel.Instance.PropertyChanged += async (sender, args) =>
             {
                 if (ActualWidth > 0 && args is PropertyChangedEventArgs e && e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
                 {
@@ -64,7 +64,7 @@ namespace WpfInvestigate.Controls
                     await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
                     Width = oldWidth;
                 }
-            };
+            };*/
 
             void OnMwiChildLoaded(object sender, RoutedEventArgs e)
             {
