@@ -23,8 +23,8 @@
         <Setter Property="MaxHeight" Value="2000"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="False"/>
+        <Setter Property="SnapsToDevicePixels" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ResizingControl">
