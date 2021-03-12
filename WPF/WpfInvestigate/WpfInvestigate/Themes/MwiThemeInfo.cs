@@ -11,9 +11,9 @@ namespace WpfInvestigate.Themes
         private static string _currentAssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
         public static MwiThemeInfo[] Themes =
         {
-            new MwiThemeInfo("Windows10 (internal resize thumbs)", null, new[] { $"/{_currentAssemblyName};component/Themes/Mwi.Wnd10.InternalResizeThumbs.xaml"}),
-            new MwiThemeInfo("Windows10", null, new[] { $"/{_currentAssemblyName};component/Themes/Mwi.Wnd10.xaml"}),
-            new MwiThemeInfo("Windows7", null, new[] { $"/{_currentAssemblyName};component/Themes/Mwi.Wnd7.xaml" })
+            new MwiThemeInfo("Windows10 (internal resize thumbs)", null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.InternalResizeThumbs.xaml"}),
+            new MwiThemeInfo("Windows10", null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.xaml"}),
+            new MwiThemeInfo("Windows7", null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd7.xaml" })
         };
 
         // ==============   Static section  ======================
