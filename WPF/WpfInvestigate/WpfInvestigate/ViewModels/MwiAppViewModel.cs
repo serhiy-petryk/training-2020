@@ -51,8 +51,8 @@ namespace WpfInvestigate.ViewModels
             CurrentTheme = theme;
             if (CurrentTheme == null)
             {
-                var k = Array.IndexOf(MwiThemeInfo.Themes, oldTheme);
-                var newK = k >= 0 && k + 1 < MwiThemeInfo.Themes.Length ? k + 1 : 0;
+                var k = MwiThemeInfo.Themes.IndexOf(oldTheme);
+                var newK = k >= 0 && k + 1 < MwiThemeInfo.Themes.Count ? k + 1 : 0;
                 CurrentTheme = MwiThemeInfo.Themes[newK];
             }
 

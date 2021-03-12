@@ -9,7 +9,7 @@ namespace WpfInvestigate.Themes
     public class MwiThemeInfo
     {
         private static string _currentAssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
-        public static MwiThemeInfo[] Themes =
+        public static List<MwiThemeInfo> Themes = new List<MwiThemeInfo>
         {
             new MwiThemeInfo("Windows10 (internal resize thumbs)", null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.InternalResizeThumbs.xaml"}),
             new MwiThemeInfo("Windows10", null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.xaml"}),
