@@ -6,6 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Mwi.Wnd7.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
