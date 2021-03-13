@@ -88,30 +88,5 @@ namespace WpfInvestigate
         {
         }
 
-        private void TestButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            Debug.Print($"TestButton_OnClick");
-            e.Handled = false;
-        }
-
-        private void UIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MainGrid.Children.Remove(Grid);
-            Debug.Print($"UIElement_OnPreviewMouseLeftButtonDown");
-            MainGrid.Dispatcher.InvokeAsync(() => MainGrid.RaiseEvent(e), DispatcherPriority.Input);
-        }
-
-        private void TestButton_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Debug.Print($"TestButton_OnPreviewMouseLeftButtonDown");
-            e.Handled = false;
-        }
-
-        private void MainUIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Debug.Print($"MainUIElement_OnPreviewMouseLeftButtonDown");
-            e.Handled = false;
-        }
-
     }
 }
