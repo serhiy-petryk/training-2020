@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfInvestigate.TestViews"
         mc:Ignorable="d"
-        Title="MwiTemplate" Height="450" Width="800">
+        Title="MwiTemplate" Height="600" Width="1100">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -32,6 +31,23 @@
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Background="Lavender" Margin="5">
+                <Border x:Name="ShadowBorder" Margin="7 0 7 7" Background="White" Effect="{StaticResource Mwi.ShadowEffect}" Visibility="Visible"/>
+            </Grid>
+
+            <Grid Grid.Column="1" Background="LemonChiffon">
+
+            </Grid>
+
+            <Grid Grid.Column="2" Background="LightCyan">
+
+            </Grid>
         </Grid>
     </Grid>
 </Window>
