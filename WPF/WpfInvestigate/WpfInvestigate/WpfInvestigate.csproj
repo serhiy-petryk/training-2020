@@ -189,6 +189,9 @@
     <Compile Include="MwiStartup.xaml.cs">
       <DependentUpon>MwiStartup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\MwiTemplate.xaml.cs">
+      <DependentUpon>MwiTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\MwiTests.xaml.cs">
       <DependentUpon>MwiTests.xaml</DependentUpon>
     </Compile>
@@ -450,6 +453,10 @@
     <Page Include="MwiStartup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\MwiTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestViews\MwiTests.xaml">
       <SubType>Designer</SubType>
