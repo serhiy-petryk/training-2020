@@ -9,6 +9,7 @@
 
     <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
     <system:Double x:Key="Mwi.Child.CornerEdgeWidth">16</system:Double>
+
     <!-- ============= Windows 10 specific ============ -->
     <SolidColorBrush x:Key="Mwi.Child.ChildBackground" Color="#FFF0F0F0" />
     <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="#3394F6" />
