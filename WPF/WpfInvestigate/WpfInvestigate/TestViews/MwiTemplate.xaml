@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:samples="clr-namespace:WpfInvestigate.Samples"
         mc:Ignorable="d"
         Title="MwiTemplate" Height="600" Width="1100">
 
@@ -37,8 +38,46 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Background="Lavender" Margin="5">
-                <Border x:Name="ShadowBorder" Margin="7 0 7 7" Background="White" Effect="{StaticResource Mwi.ShadowEffect}" Visibility="Visible"/>
+            <Grid Grid.Column="0" >
+                <TextBlock Text="Wnd10" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Aquamarine"/>
+                <Grid Background="Transparent" Margin="5 20 5 5">
+                    <Border x:Name="ShadowBorder" Margin="7 0 7 7" Background="White" Effect="{StaticResource Mwi.ShadowEffect}" Visibility="Visible"/>
+
+                    <Border x:Name="BaseBorder" Margin="7 0 7 7" BorderThickness="1" CornerRadius="0" 
+                            Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="{DynamicResource Mwi.Child.BaseBorderBrush}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="22"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" BorderThickness="0" Padding="0" Background="Aquamarine">
+                                <TextBlock x:Name="Header" Margin="3 0 0 0" Padding="0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="Title"/>
+                            </Border>
+
+                            <!-- Content & Command/Status bars -->
+                            <Border Grid.Row="1" x:Name="ContentBorder" Background="LightCoral" BorderBrush="Blue" BorderThickness="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <!-- Command bar -->
+                                    <ContentControl Grid.Row="0">
+                                        <samples:MwiCommandBarSample/>
+                                    </ContentControl>
+                                    <!-- Window content -->
+                                    <ContentControl Grid.Row="1" x:Name="Content" Content="Content" />
+                                    <!-- Status bar -->
+                                    <ContentControl Grid.Row="2">
+                                        <samples:MwiStatusBarSample/>
+                                    </ContentControl>
+                                </Grid>
+                            </Border>
+
+                        </Grid>
+                    </Border>
+                </Grid>
             </Grid>
 
             <Grid Grid.Column="1" Background="LemonChiffon">
