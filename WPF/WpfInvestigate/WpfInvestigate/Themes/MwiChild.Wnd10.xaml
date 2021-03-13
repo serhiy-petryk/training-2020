@@ -1,14 +1,16 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:WpfInvestigate.Controls">
+                    xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiColors.Wnd7.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
+    <system:Double x:Key="Mwi.Child.CornerEdgeWidth">16</system:Double>
     <!-- ============= Windows 10 specific ============ -->
     <SolidColorBrush x:Key="Mwi.Child.ChildBackground" Color="#FFF0F0F0" />
-    <Thickness x:Key="Mwi.Child.OuterBorderMargin">6 0 6 6</Thickness>
     <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="#3394F6" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="Black" Opacity="0.25" />
     <CornerRadius x:Key="Mwi.Child.BaseBorderCornerRadius">0</CornerRadius>
@@ -17,16 +19,9 @@
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="{DynamicResource Mwi.Child.BaseBackgroundColor}"/>
     <Visibility x:Key="Mwi.Child.OnlyWnd7">Collapsed</Visibility>
     <Visibility x:Key="Mwi.Child.OnlyWnd10">Visible</Visibility>
-    <Thickness x:Key="Mwi.Child.HeaderAndContentMargin">0</Thickness>
     <GridLength x:Key="Mwi.Child.HeaderHeight">29</GridLength>
-    <Thickness x:Key="Mwi.Child.ResizeLeftMargin">-7 0 0 0</Thickness>
-    <Thickness x:Key="Mwi.Child.ResizeTopMargin">0</Thickness>
-    <Thickness x:Key="Mwi.Child.ResizeRightMargin">0 0 -7 0</Thickness>
-    <Thickness x:Key="Mwi.Child.ResizeBottomMargin">0 0 0 -7</Thickness>
-    <Thickness x:Key="Mwi.Child.ResizeTopLeftMargin">-7 0 0 0</Thickness>
-    <Thickness x:Key="Mwi.Child.ResizeTopRightMargin">0 0 -7 0</Thickness>
-    <Thickness x:Key="Mwi.Child.ResizeBottomLeftMargin">-7 0 0 -7</Thickness>
-    <Thickness x:Key="Mwi.Child.ResizeBottomRightMargin">0 0 -7 -7</Thickness>
+    <Thickness x:Key="Mwi.Child.HeaderAndContentMargin">0</Thickness>
+    <Thickness x:Key="Mwi.Child.OuterBorderMargin" Left="{StaticResource Mwi.Child.Edge}" Top="0" Right="{StaticResource Mwi.Child.Edge}" Bottom="{StaticResource Mwi.Child.Edge}"/>
 
     <!-- ================ -->
     <SolidColorBrush x:Key="Mwi.Child.BackBorderBackgroundBrush" Color="#FFBBD2EB" />

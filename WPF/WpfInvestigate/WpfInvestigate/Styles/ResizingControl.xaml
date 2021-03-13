@@ -35,18 +35,14 @@
                                               UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
 
-                        <Thumb x:Name="ResizeLeft" Width="{Binding EdgeThickness.Left}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeTop" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeRight" Width="{Binding EdgeThickness.Right}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeBottom" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeTopLeft" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                               Width="{Binding EdgeThickness.Left, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2*2+}"/>
-                        <Thumb x:Name="ResizeTopRight" Height="{Binding EdgeThickness.Top}" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"
-                               Width="{Binding EdgeThickness.Right, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2*2+}"/>
-                        <Thumb x:Name="ResizeBottomLeft" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"
-                               Width="{Binding ElementName=ResizeTopLeft, Path=Width}"/>
-                        <Thumb x:Name="ResizeBottomRight" Height="{Binding EdgeThickness.Bottom}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
-                               Width="{Binding ElementName=ResizeTopRight, Path=Width}"/>
+                        <Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeTop" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeRight" Width="7" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottom" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeTopLeft" Height="7" Width="16" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeTopRight" Height="7" Width="16" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottomLeft" Height="7" Width="16" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottomRight" Height="7" Width="16" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

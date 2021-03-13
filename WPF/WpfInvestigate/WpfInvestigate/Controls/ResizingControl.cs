@@ -323,15 +323,6 @@ namespace WpfInvestigate.Controls
                     newThumb.DragDelta += control.MoveThumb_OnDragDelta;
             }
         }
-        //=========================
-        public static readonly DependencyProperty EdgeThicknessProperty = DependencyProperty.Register("EdgeThickness",
-            typeof(Thickness), typeof(ResizingControl), new PropertyMetadata(new Thickness(6)));
-
-        public Thickness EdgeThickness
-        {
-            get => (Thickness)GetValue(EdgeThicknessProperty);
-            set => SetValue(EdgeThicknessProperty, value);
-        }
         //================================
         public static readonly DependencyProperty ResizableProperty = DependencyProperty.Register(nameof(Resizable),
             typeof(bool), typeof(ResizingControl), new FrameworkPropertyMetadata(true));

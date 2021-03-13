@@ -50,7 +50,7 @@
                     <samples:MwiLeftPanelSample/>
                 </controls:MwiContainer.LeftPanel>
 
-                <controls:MwiChild Position="50 50" Title="Title" EdgeThickness="12" Height="150">
+                <controls:MwiChild Position="50 50" Title="Title" Height="150">
                     <ContentControl Content="Mwi Child Test"/>
                 </controls:MwiChild>
 
@@ -58,14 +58,14 @@
                     <ContentControl Content="object Content"/>
                 </controls:MwiChild>
 
-                <controls:MwiChild Position="200 200" Height="150" EdgeThickness="15">
+                <controls:MwiChild Position="200 200" Height="150">
                     <controls:MwiChild.CommandBar>
                         <samples:MwiCommandBarSample/>
                     </controls:MwiChild.CommandBar>
                     <controls:MwiChild.StatusBar>
                         <samples:MwiStatusBarSample/>
                     </controls:MwiChild.StatusBar>
-                    <TextBlock Text="TextBlock Content: height=150, EdgeThickness=15" FontSize="16" Background="Yellow"
+                    <TextBlock Text="TextBlock Content: height=150" FontSize="16" Background="Yellow"
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </controls:MwiChild>
 

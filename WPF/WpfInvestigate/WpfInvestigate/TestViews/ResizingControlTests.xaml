@@ -70,11 +70,11 @@
                         <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
                     </Grid.LayoutTransform>
 
-                    <controls:ResizingControl Width="200" Height="100" Background="Yellow" EdgeThickness="15" ToolTip="EdgeThickness=15">
+                    <controls:ResizingControl Width="200" Height="100" Background="Yellow">
                         <samples:ResizableContentSample/>
                     </controls:ResizingControl>
 
-                    <controls:ResizingControl Background="Yellow" Position="220 300" EdgeThickness="{Binding BorderThickness, ElementName=Sample2}">
+                    <controls:ResizingControl Background="Yellow" Position="220 300">
                         <samples:ResizableSample x:Name="Sample2" ToolTip="No Width/Height, resizing control.Width=200, Height=100"/>
                     </controls:ResizingControl>
 

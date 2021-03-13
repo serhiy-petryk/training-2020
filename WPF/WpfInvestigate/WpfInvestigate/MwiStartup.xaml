@@ -95,14 +95,14 @@
                 </controls:MwiChild.Resources>
             </controls:MwiChild>
 
-            <controls:MwiChild Position="200 200" Height="150" EdgeThickness="15">
+            <controls:MwiChild Position="200 200" Height="150">
                 <controls:MwiChild.CommandBar>
                     <samples:MwiCommandBarSample/>
                 </controls:MwiChild.CommandBar>
                 <controls:MwiChild.StatusBar>
                     <samples:MwiStatusBarSample/>
                 </controls:MwiChild.StatusBar>
-                <TextBlock Text="TextBlock Content: height=150, EdgeThickness=15" FontSize="16" Background="Yellow"
+                <TextBlock Text="TextBlock Content: height=150" FontSize="16" Background="Yellow"
                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </controls:MwiChild>
 
