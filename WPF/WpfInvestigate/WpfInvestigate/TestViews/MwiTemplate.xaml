@@ -115,26 +115,22 @@
                     <Thumb x:Name="ResizeBottomLeft" Width="16" Height="6" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
                     <Thumb x:Name="ResizeBottomRight" Width="16" Height="6" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
 
-                    <Border BorderThickness="1 1 0 0" BorderBrush="Transparent">
-                        <StackPanel x:Name="LeftHeader" Orientation="Horizontal" Margin="7 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                    Height="{StaticResource HeaderHeight}">
-                            <ToggleButton x:Name="SystemMenuButton"
-                                          Width="{StaticResource HeaderHeight}" Height="{StaticResource HeaderHeight}"
-                                          Margin="0" Focusable="False" IsThreeState="False" IsChecked="False"
-                                          BorderThickness="0" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                          Background="PaleVioletRed"
-                                          Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}" Cursor="Cross"/>
-                            <ContentPresenter Content="Left" UseLayoutRounding="False"/>
-                        </StackPanel>
-                    </Border>
+                    <StackPanel x:Name="LeftHeader" Orientation="Horizontal" Margin="8 1 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Height="{StaticResource HeaderHeight}">
+                        <ToggleButton x:Name="SystemMenuButton"
+                                      Width="{StaticResource HeaderHeight}" Height="{StaticResource HeaderHeight}"
+                                      Margin="0" Focusable="False" IsThreeState="False" IsChecked="False"
+                                      BorderThickness="0" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                      Background="PaleVioletRed"
+                                      Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}" Cursor="Cross"/>
+                        <ContentPresenter Content="Left" UseLayoutRounding="False"/>
+                    </StackPanel>
 
-                    <Border BorderThickness="0 1 1 0" BorderBrush="Transparent">
-                        <StackPanel x:Name="RightHeader" Orientation="Horizontal" Margin="0 0 7 0" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                    Height="{StaticResource HeaderHeight}" Background="Yellow">
-                            <ContentPresenter Height="{StaticResource HeaderHeight}" Cursor="Cross" Content="{Binding Tag}"/>
-                            <Button Focusable="False" x:Name="CloseButton" Style="{DynamicResource CloseButtonStyle}"/>
-                        </StackPanel>
-                    </Border>
+                    <StackPanel x:Name="RightHeader" Orientation="Horizontal" Margin="0 1 8 0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                Height="{StaticResource HeaderHeight}" Background="Yellow">
+                        <ContentPresenter Height="{StaticResource HeaderHeight}" Cursor="Cross" Content="{Binding Tag}"/>
+                        <Button Focusable="False" x:Name="CloseButton" Style="{DynamicResource CloseButtonStyle}"/>
+                    </StackPanel>
 
                 </Grid>
             </Grid>
@@ -192,7 +188,7 @@
                         </Grid>
                     </Border>
 
-                    <Thumb Margin="0" x:Name="MovingThumb2" Opacity="0" Cursor="SizeAll" VerticalAlignment="Top"
+                    <Thumb Margin="0 7 0 0" x:Name="MovingThumb2" Opacity="0" Cursor="SizeAll" VerticalAlignment="Top"
                            Height="{StaticResource HeaderHeight}"
                            effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header2}"/>
 
@@ -206,26 +202,22 @@
                     <Thumb x:Name="ResizeBottomLeft2" Width="16" Height="6" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
                     <Thumb x:Name="ResizeBottomRight2" Width="16" Height="6" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
 
-                    <Border BorderThickness="0 0 0 0" BorderBrush="Transparent" Margin="7 7 0 0">
-                        <StackPanel x:Name="LeftHeader2" Orientation="Horizontal" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                    Height="{StaticResource HeaderHeight}">
-                            <ToggleButton x:Name="SystemMenuButton2"
-                                          Width="{StaticResource HeaderHeight}" Height="{StaticResource HeaderHeight}"
-                                          Margin="0" Focusable="False" IsThreeState="False" IsChecked="False"
-                                          BorderThickness="0" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                          Background="PaleVioletRed"
-                                          Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}" Cursor="Cross"/>
-                            <ContentPresenter Content="Left" UseLayoutRounding="False"/>
-                        </StackPanel>
-                    </Border>
+                    <StackPanel x:Name="LeftHeader2" Orientation="Horizontal" Margin="7 7 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Height="{StaticResource HeaderHeight}">
+                        <ToggleButton x:Name="SystemMenuButton2"
+                                      Width="{StaticResource HeaderHeight}" Height="{StaticResource HeaderHeight}"
+                                      Margin="0" Focusable="False" IsThreeState="False" IsChecked="False"
+                                      BorderThickness="0" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                      Background="PaleVioletRed"
+                                      Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}" Cursor="Cross"/>
+                        <ContentPresenter Content="Left" UseLayoutRounding="False"/>
+                    </StackPanel>
 
-                    <Border BorderThickness="0 0 0 0" BorderBrush="Transparent">
-                        <StackPanel x:Name="RightHeader2" Orientation="Horizontal" Margin="0 7 7 0" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                    Height="{StaticResource HeaderHeight}" Background="Yellow">
-                            <ContentPresenter Height="{StaticResource HeaderHeight}" Cursor="Cross" Content="{Binding Tag}"/>
-                            <Button Focusable="False" x:Name="CloseButton2" Style="{DynamicResource CloseButtonStyle}"/>
-                        </StackPanel>
-                    </Border>
+                    <StackPanel x:Name="RightHeader2" Orientation="Horizontal" Margin="0 7 7 0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                Height="{StaticResource HeaderHeight}" Background="Yellow">
+                        <ContentPresenter Height="{StaticResource HeaderHeight}" Cursor="Cross" Content="{Binding Tag}"/>
+                        <Button Focusable="False" x:Name="CloseButton2" Style="{DynamicResource CloseButtonStyle}"/>
+                    </StackPanel>
 
                 </Grid>
             </Grid>
