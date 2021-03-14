@@ -145,7 +145,7 @@
                     <system:Double x:Key="HeaderHeight">29</system:Double>
                 </Grid.Resources>
 
-                <TextBlock Text="Wnd10" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Aquamarine"/>
+                <TextBlock Text="Wnd7" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Aquamarine"/>
                 <Grid Background="Transparent" Margin="5 20 5 5">
                     <Border x:Name="ShadowBorder2" Margin="7 0 7 7" Background="White" Effect="{StaticResource Mwi.ShadowEffect}" Visibility="Visible"/>
 
