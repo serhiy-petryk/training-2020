@@ -230,7 +230,7 @@
 
                 <TextBlock Text="Wnd10-2" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Aquamarine"/>
                 <Grid Background="Transparent" Margin="5 20 5 5">
-                    <Border x:Name="ShadowBorder3" Margin="0 0 0 0" Background="White" Effect="{StaticResource Mwi.ShadowEffect}" Visibility="Collapsed"/>
+                    <Border x:Name="ShadowBorder3" Margin="0 0 0 0" Background="White" Effect="{StaticResource Mwi.ShadowEffect}" Visibility="Visible"/>
 
                     <Border x:Name="BaseBorder3" Margin="0" BorderThickness="1" CornerRadius="0 0 0 0" 
                             Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="Red">
