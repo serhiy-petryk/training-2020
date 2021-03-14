@@ -51,19 +51,33 @@
                 <ControlTemplate TargetType="controls:MwiChild">
                     <Grid>
                         <!-- Shadow -->
-                        <Border x:Name="ShadowBorder" Margin="0" Background="White" Effect="{StaticResource Mwi.ShadowEffect}"
+                        <Border x:Name="ShadowBorder" Background="White" Effect="{StaticResource Mwi.ShadowEffect}"
+                                Margin="{DynamicResource Mwi.Child.Border.Margin}"
                                 CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
                                 Visibility="{DynamicResource Mwi.Child.ShadowBorder.Visibility}"/>
 
                         <!-- Main border -->
-                        <Border x:Name="BaseBorder" Margin="0" BorderThickness="1" CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}" 
+                        <Border x:Name="BaseBorder" BorderThickness="1" CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}" 
+                                Margin="{DynamicResource Mwi.Child.Border.Margin}"
                                 Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="{DynamicResource Mwi.Child.BaseBorderBrush}">
-                            <Grid Margin="{DynamicResource Mwi.Child.Content.Margin}">
+                            <Grid>
                                 <!-- Window 7 thick border -->
-                                <Border x:Name="DarkenBackground" Height="29" VerticalAlignment="Top" CornerRadius="5,5,0,0" Background="{DynamicResource Mwi.Child.DarkenBackgroundBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
-                                <Border x:Name="HighlightBackground" Height="120" VerticalAlignment="Top" CornerRadius="5,5,0,0" Background="{DynamicResource Mwi.Child.HighlightBackgroundBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
+                                <Border x:Name="DarkenBackground" Height="29" VerticalAlignment="Top"
+                                        CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
+                                        Background="{DynamicResource Mwi.Child.DarkenBackgroundBrush}" Visibility="{DynamicResource Mwi.Child.SecondBorders.Visibility}"/>
+                                <Border x:Name="HighlightBackground" Height="120" VerticalAlignment="Top"
+                                        CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
+                                        Background="{DynamicResource Mwi.Child.HighlightBackgroundBrush}" Visibility="{DynamicResource Mwi.Child.SecondBorders.Visibility}"/>
 
-                                <Grid x:Name="HeaderAndContent" Margin="{DynamicResource Mwi.Child.HeaderAndContentMargin}">
+                                <!-- Window 7 think border -->
+                                <Border x:Name="SecondLeftTopBorder" BorderThickness="1 1 0 0" Background="Transparent" Margin="0"
+                                        CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
+                                        BorderBrush="{DynamicResource Mwi.Child.NearBorderBrush}" Visibility="{DynamicResource Mwi.Child.SecondBorders.Visibility}"/>
+                                <Border x:Name="SecondRightBottomBorder" BorderThickness="0 0 1 1" Background="Transparent" Margin="0"
+                                        CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
+                                        BorderBrush="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.SecondBorders.Visibility}"/>
+
+                                <Grid x:Name="HeaderAndContent" Margin="{DynamicResource Mwi.Child.Content.Margin}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
@@ -101,11 +115,11 @@
                                 </Grid>
 
                                 <!-- Second line of window border -->
-                                <Rectangle x:Name="LeftBorder" Width="1" HorizontalAlignment="Left" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.NearBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
+                                <!--<Rectangle x:Name="LeftBorder" Width="1" HorizontalAlignment="Left" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.NearBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
                                 <Rectangle x:Name="TopBorder" Height="1" VerticalAlignment="Top" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.NearBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
                                 <Rectangle x:Name="RightBorder" Width="1" HorizontalAlignment="Right" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
                                 <Rectangle x:Name="BottomBorder" Height="1" VerticalAlignment="Bottom" RadiusX="9" RadiusY="9" Fill="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.OnlyWnd7}"/>
-                            </Grid>
+-->                            </Grid>
                         </Border>
 
                         <Thumb x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"
@@ -170,10 +184,12 @@
                             <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{DynamicResource Mwi.Child.Unfocused.BaseBorderBrush}" />
                             <Setter TargetName="HighlightBackground" Property="Opacity" Value="0" />
                             <Setter TargetName="DarkenBackground" Property="Opacity" Value="0.5" />
-                            <Setter TargetName="LeftBorder" Property="Opacity" Value="0.75" />
+                            <!--<Setter TargetName="LeftBorder" Property="Opacity" Value="0.75" />
                             <Setter TargetName="TopBorder" Property="Opacity" Value="0.75" />
                             <Setter TargetName="RightBorder" Property="Opacity" Value="0" />
-                            <Setter TargetName="BottomBorder" Property="Opacity" Value="0" />
+                            <Setter TargetName="BottomBorder" Property="Opacity" Value="0" />-->
+                            <Setter TargetName="SecondLeftTopBorder" Property="Opacity" Value="0.75" />
+                            <Setter TargetName="SecondRightBottomBorder" Property="Opacity" Value="0.25" />
                         </Trigger>
                         <Trigger SourceName="IconImage" Property="Source" Value="{x:Null}">
                             <Setter TargetName="IconImage" Property="Visibility" Value="Collapsed" />
@@ -191,10 +207,12 @@
                             <Setter TargetName="ResizeTopRight" Property="IsHitTestVisible" Value="False" />
                             <Setter TargetName="ResizeBottomRight" Property="IsHitTestVisible" Value="False" />
                             <Setter TargetName="ResizeBottomLeft" Property="IsHitTestVisible" Value="False" />
-                            <Setter TargetName="LeftBorder" Property="Visibility" Value="Hidden" />
+                            <!--<Setter TargetName="LeftBorder" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="TopBorder" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="RightBorder" Property="Visibility" Value="Hidden" />
-                            <Setter TargetName="BottomBorder" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="BottomBorder" Property="Visibility" Value="Hidden" />-->
+                            <Setter TargetName="SecondLeftTopBorder" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="SecondRightBottomBorder" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="BaseBorder" Property="BorderThickness" Value="0" />
                         </Trigger>
                     </ControlTemplate.Triggers>

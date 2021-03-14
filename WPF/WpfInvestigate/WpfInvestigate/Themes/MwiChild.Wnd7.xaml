@@ -13,6 +13,7 @@
     <!-- ============= Windows 7 layout ============ -->
     <system:Double x:Key="Mwi.Child.Header.Height">22</system:Double>
     <Visibility x:Key="Mwi.Child.ShadowBorder.Visibility">Collapsed</Visibility>
+    <Visibility x:Key="Mwi.Child.SecondBorders.Visibility">Visible</Visibility>
     <Thickness x:Key="Mwi.Child.Border.Margin">0</Thickness>
     <CornerRadius x:Key="Mwi.Child.Border.CornerRadius">5 5 0 0</CornerRadius>
     <Thickness x:Key="Mwi.Child.Content.Margin">6</Thickness>
