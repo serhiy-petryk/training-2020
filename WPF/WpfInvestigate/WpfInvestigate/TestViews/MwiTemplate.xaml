@@ -221,11 +221,92 @@
 
                 </Grid>
             </Grid>
-
             
             
             <Grid Grid.Column="2" Background="LightCyan">
+                <Grid.Resources>
+                    <system:Double x:Key="HeaderHeight">29</system:Double>
+                </Grid.Resources>
 
+                <TextBlock Text="Wnd10-2" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Aquamarine"/>
+                <Grid Background="Transparent" Margin="5 20 5 5">
+                    <Border x:Name="ShadowBorder3" Margin="0 0 0 0" Background="White" Effect="{StaticResource Mwi.ShadowEffect}" Visibility="Collapsed"/>
+
+                    <Border x:Name="BaseBorder3" Margin="0" BorderThickness="1" CornerRadius="0 0 0 0" 
+                            Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="Red">
+                        <Grid Margin="6 0 6 6">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Background="Aquamarine" Height="{StaticResource HeaderHeight}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Width="{Binding ElementName=LeftHeader3, Path=ActualWidth}" Background="GreenYellow"/>
+                                <TextBlock Grid.Column="1" x:Name="Header3" Margin="3 0 0 0" Padding="0" VerticalAlignment="Center"
+                                           IsHitTestVisible="False" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"
+                                           Text="Title long title 123 Title long title 123"/>
+                                <Grid Grid.Column="2" Width="{Binding ElementName=RightHeader3, Path=ActualWidth}"/>
+                            </Grid>
+
+                            <!-- Content & Command/Status bars -->
+                            <Border Grid.Row="1" x:Name="ContentBorder3" Background="LightBlue" BorderBrush="Blue" BorderThickness="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <!-- Command bar -->
+                                    <ContentControl Grid.Row="0">
+                                        <samples:MwiCommandBarSample/>
+                                    </ContentControl>
+                                    <!-- Window content -->
+                                    <ContentControl Grid.Row="1" x:Name="Content3" Content="Content" />
+                                    <!-- Status bar -->
+                                    <ContentControl Grid.Row="2">
+                                        <samples:MwiStatusBarSample/>
+                                    </ContentControl>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Thumb Margin="0 0 0 0" x:Name="MovingThumb3" Opacity="0" Cursor="SizeAll" VerticalAlignment="Top"
+                           Height="{StaticResource HeaderHeight}"
+                           effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header3}"/>
+
+                    <Thumb x:Name="ResizeLeft3" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                    <Thumb x:Name="ResizeTop3" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                    <Thumb x:Name="ResizeRight3" Width="7" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                    <Thumb x:Name="ResizeBottom3" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+
+                    <Thumb x:Name="ResizeTopLeft3" Width="16" Height="6" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                    <Thumb x:Name="ResizeTopRight3" Width="16" Height="6" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+                    <Thumb x:Name="ResizeBottomLeft3" Width="16" Height="6" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+                    <Thumb x:Name="ResizeBottomRight3" Width="16" Height="6" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+
+                    <StackPanel x:Name="LeftHeader3" Orientation="Horizontal" Margin="7 1 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Height="{StaticResource HeaderHeight}">
+                        <ToggleButton x:Name="SystemMenuButton3"
+                                      Width="{StaticResource HeaderHeight}" Height="{StaticResource HeaderHeight}"
+                                      Margin="0" Focusable="False" IsThreeState="False" IsChecked="False"
+                                      BorderThickness="0" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                      Background="PaleVioletRed"
+                                      Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}" Cursor="Cross"/>
+                        <ContentPresenter Content="Left" UseLayoutRounding="False"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="RightHeader3" Orientation="Horizontal" Margin="0 1 7 0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                Height="{StaticResource HeaderHeight}" Background="Yellow">
+                        <ContentPresenter Height="{StaticResource HeaderHeight}" Cursor="Cross" Content="{Binding Tag}"/>
+                        <Button Focusable="False" x:Name="CloseButton3" Style="{DynamicResource CloseButtonStyle}"/>
+                    </StackPanel>
+
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
