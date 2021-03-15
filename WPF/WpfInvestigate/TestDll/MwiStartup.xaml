@@ -85,7 +85,7 @@
                 <ContentControl Content="object Content"/>
                 <controls:MwiChild.Resources>
                     <Style TargetType="controls:MwiChild" BasedOn="{StaticResource {x:Type controls:MwiChild}}">
-                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="BorderThickness" Value="4"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme.Id}" Value="Windows7">
                                 <Setter Property="BorderThickness" Value="0"/>
