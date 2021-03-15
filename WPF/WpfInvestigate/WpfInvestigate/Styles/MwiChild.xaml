@@ -94,7 +94,6 @@
                                         <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>
                                     </Grid>
                                 </Border>
-
                             </Grid>
                         </Border>
 
@@ -123,7 +122,7 @@
 
                             <!-- Window icon & System menu -->
                             <ToggleButton Grid.Column="0" x:Name="SystemMenuButton" Width="{DynamicResource Mwi.Child.Header.Height}" Height="{DynamicResource Mwi.Child.Header.Height}"
-                                          Margin="0 0 0 0" Focusable="False" IsThreeState="False" IsChecked="False" BorderThickness="0" Background="Transparent" Padding="0"
+                                          Margin="0" Focusable="False" IsThreeState="False" IsChecked="False" BorderThickness="0" Background="Transparent" Padding="0"
                                           Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}" 
                                           Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
                                 <ToggleButton.Resources>
@@ -148,7 +147,7 @@
                             <TextBlock Grid.Column="2" x:Name="Header" Margin="3 0 0 0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{TemplateBinding Title}"/>
                             <!-- Moving thumb -->
                             <Thumb Grid.Column="2" x:Name="MovingThumb" Focusable="False" Opacity="0" Cursor="SizeAll" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                   Margin="0 6 0 0" BorderThickness="0" effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header}"/>
+                                   Margin="{DynamicResource Mwi.Child.MovingThumb.Margin}" effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header}"/>
 
                             <!-- Right header panel -->
                             <ContentPresenter Grid.Column="3" Content="{TemplateBinding RightHeaderBar}"/>
