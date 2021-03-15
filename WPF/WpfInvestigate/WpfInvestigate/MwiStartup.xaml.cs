@@ -34,7 +34,7 @@ namespace WpfInvestigate
                     topContentControl.LayoutTransform = FindResource("ScaleTransform") as ScaleTransform;
             }), DispatcherPriority.Normal);
 
-            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelInstancePropertyChanged;
+            /*MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelInstancePropertyChanged;
             OnMwiAppViewModelInstancePropertyChanged(null, new PropertyChangedEventArgs(nameof(MwiAppViewModel.CurrentTheme)));
 
             void OnMwiAppViewModelInstancePropertyChanged(object sender, PropertyChangedEventArgs args)
@@ -44,7 +44,7 @@ namespace WpfInvestigate
                     var a1 = FindResource("Mwi.Child.OnlyWnd7") as Visibility?;
                     TestChild.BorderThickness = new Thickness(Equals(a1, Visibility.Visible) ? 0 : 6);
                 }
-            }
+            }*/
         }
 
         private void MwiStartup_OnKeyDown(object sender, KeyEventArgs e)

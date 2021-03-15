@@ -24,15 +24,9 @@
     <SolidColorBrush x:Key="Mwi.Child.ChildBackground" Color="#FFF0F0F0" />
     <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="Black" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="Black" />
-    <CornerRadius x:Key="Mwi.Child.BaseBorderCornerRadius">5 5 0 0</CornerRadius>
     <Color x:Key="Mwi.Child.BaseBackgroundColor">#FFBBD2EB</Color>
     <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{DynamicResource Mwi.Child.BaseBackgroundColor}" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="#FFD7E4F2"/>
-    <Visibility x:Key="Mwi.Child.OnlyWnd7">Visible</Visibility>
-    <Visibility x:Key="Mwi.Child.OnlyWnd10">Collapsed</Visibility>
-    <GridLength x:Key="Mwi.Child.HeaderHeight">22</GridLength>
-    <Thickness x:Key="Mwi.Child.HeaderAndContentMargin" Left="{StaticResource Mwi.Child.Edge}" Top="{StaticResource Mwi.Child.Edge}" Right="{StaticResource Mwi.Child.Edge}" Bottom="{StaticResource Mwi.Child.Edge}"/>
-    <Thickness x:Key="Mwi.Child.OuterBorderMargin">0</Thickness>
 
     <LinearGradientBrush x:Key="Mwi.Child.DarkenBackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#20000000" Offset="0.0" />
