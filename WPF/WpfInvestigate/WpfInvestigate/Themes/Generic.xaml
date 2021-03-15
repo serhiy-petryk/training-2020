@@ -15,7 +15,7 @@
 
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiCommon.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MwiContainer.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MwiChild1.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MwiChild.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MwiBar.xaml" />
 
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Obsolete/DialogItems.xaml" />
