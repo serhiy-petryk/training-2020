@@ -566,7 +566,7 @@
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="Themes\Mwi.Wnd10.InternalResizeThumbs.xaml">
+    <Page Include="Themes\Mwi.Wnd10.WithBorders.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -4,8 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
-        xmlns:controls="clr-namespace:WpfInvestigate.Controls;assembly=WpfInvestigate"
-        xmlns:effects="clr-namespace:WpfInvestigate.Effects;assembly=WpfInvestigate"
         mc:Ignorable="d"
         Title="Test DLL" Height="700" Width="900">
 
