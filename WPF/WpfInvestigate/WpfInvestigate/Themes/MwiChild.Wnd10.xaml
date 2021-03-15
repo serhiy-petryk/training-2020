@@ -16,10 +16,9 @@
     <Visibility x:Key="Mwi.Child.SecondBorders.Visibility">Collapsed</Visibility>
     <Thickness x:Key="Mwi.Child.Border.Margin">7 0 7 7</Thickness>
     <CornerRadius x:Key="Mwi.Child.Border.CornerRadius">0</CornerRadius>
-    <Thickness x:Key="Mwi.Child.Content.Margin">0</Thickness>
-    <Thickness x:Key="Mwi.Child.HeaderThumb.Margin">0</Thickness>
-    <Thickness x:Key="Mwi.Child.LeftHeader.Margin">8 1 0 0</Thickness>
-    <Thickness x:Key="Mwi.Child.RightHeader.Margin">0 1 8 0</Thickness>
+    <Thickness x:Key="Mwi.Child.Content.Margin">0 29 0 0</Thickness>
+    <Thickness x:Key="Mwi.Child.Content.Maximized.Margin">0 29 0 0</Thickness>
+    <Thickness x:Key="Mwi.Child.Header.Margin">8 1 8 0</Thickness>
 
     <!-- ============= Windows 10 specific ============ -->
     <SolidColorBrush x:Key="Mwi.Child.ChildBackground" Color="#FFF0F0F0" />

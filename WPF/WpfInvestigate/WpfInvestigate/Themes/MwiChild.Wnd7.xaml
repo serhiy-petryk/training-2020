@@ -16,10 +16,9 @@
     <Visibility x:Key="Mwi.Child.SecondBorders.Visibility">Visible</Visibility>
     <Thickness x:Key="Mwi.Child.Border.Margin">0</Thickness>
     <CornerRadius x:Key="Mwi.Child.Border.CornerRadius">5 5 0 0</CornerRadius>
-    <Thickness x:Key="Mwi.Child.Content.Margin">6</Thickness>
-    <Thickness x:Key="Mwi.Child.HeaderThumb.Margin">0 7 0 0</Thickness>
-    <Thickness x:Key="Mwi.Child.LeftHeader.Margin">7 7 0 0</Thickness>
-    <Thickness x:Key="Mwi.Child.RightHeader.Margin">0 7 7 0</Thickness>
+    <Thickness x:Key="Mwi.Child.Content.Margin">6 28 6 6</Thickness>
+    <Thickness x:Key="Mwi.Child.Content.Maximized.Margin">0 22 0 0</Thickness>
+    <Thickness x:Key="Mwi.Child.Header.Margin">7 7 7 0</Thickness>
 
 <!-- ============= Windows 7 specific ============ -->
     <SolidColorBrush x:Key="Mwi.Child.ChildBackground" Color="#FFF0F0F0" />
