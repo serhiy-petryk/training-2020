@@ -60,13 +60,6 @@ namespace WpfInvestigate.Effects
             ToolTipService.SetToolTip(toolTipPlaceHolder ?? textBlock, isTextTrimmed ? textBlock.Text : null);
         }
 
-        public static bool IsTextTrimmedOld(FrameworkElement textBlock)
-        {
-            textBlock.Measure(new Size(double.PositiveInfinity, height: double.PositiveInfinity));
-            return (textBlock.ActualWidth + textBlock.Margin.Left + textBlock.Margin.Right) <= textBlock.DesiredSize.Width ||
-                   (textBlock.ActualHeight + textBlock.Margin.Top + textBlock.Margin.Bottom) < textBlock.DesiredSize.Height;
-        }
-
         private static bool IsTextTrimmed(TextBlock textBlock)
         {
             // From https://stackoverflow.com/questions/1041820/how-can-i-determine-if-my-textblock-text-is-being-trimmed
