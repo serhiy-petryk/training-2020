@@ -126,7 +126,7 @@
                                 <Grid x:Name="MwiPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                       KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.ControlTabNavigation="Cycle" KeyboardNavigation.DirectionalNavigation="Cycle"
                                       KeyboardNavigation.IsTabStop="True"
-                                      Background="{x:Static SystemColors.AppWorkspaceBrush}"/>
+                                      Background="{DynamicResource Mwi.Container.BackgroundBrush}"/>
                             </ScrollViewer>
 
                             <!-- Left Panel -->
