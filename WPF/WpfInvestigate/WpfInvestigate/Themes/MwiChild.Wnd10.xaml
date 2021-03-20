@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:common="clr-namespace:WpfInvestigate.Common"
+                    xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiColors.Wnd7.xaml" />
@@ -25,8 +27,10 @@
     <SolidColorBrush x:Key="Mwi.Child.ChildBackground" Color="#FFF0F0F0" />
     <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="#3394F6" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="Black" Opacity="0.25" />
+    <common:BindingProxy x:Key="TestColor" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
+    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{Binding Source={StaticResource TestColor}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}}"/>
     <Color x:Key="Mwi.Child.BaseBackgroundColor">#FFFFFFFF</Color>
-    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{DynamicResource Mwi.Child.BaseBackgroundColor}"/>
+    <SolidColorBrush x:Key="xMwi.Child.BaseBackgroundBrush" Color="{DynamicResource Mwi.Child.BaseBackgroundColor}"/>
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="{DynamicResource Mwi.Child.BaseBackgroundColor}"/>
 
     <!-- ================ -->

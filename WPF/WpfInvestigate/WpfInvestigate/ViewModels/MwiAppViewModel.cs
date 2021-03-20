@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Themes;
 
@@ -19,6 +20,13 @@ namespace WpfInvestigate.ViewModels
         {
             get => (double)GetValue(ScaleValueProperty);
             set => SetValue(ScaleValueProperty, value);
+        }
+        //=============================
+        public static readonly DependencyProperty AppColorProperty = DependencyProperty.Register(nameof(AppColor), typeof(Color), typeof(MwiAppViewModel), new UIPropertyMetadata(Colors.White));
+        public Color AppColor
+        {
+            get => (Color)GetValue(AppColorProperty);
+            set => SetValue(AppColorProperty, value);
         }
         //=============================
         // public MwiContainer ContainerControl { get; set; }
