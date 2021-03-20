@@ -10,7 +10,6 @@
 
     <!-- Windows Bar -->
     <Color x:Key="Mwi.Bar.BackgroundColor">#FFD6EAFF</Color>
-    <SolidColorBrush x:Key="Mwi.Bar.ForegroundBrush" Color="#FF0069D6"/>
     <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{StaticResource Mwi.Bar.BackgroundColor}"/>
     <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{x:Static SystemColors.HotTrackColor}"/>
 
