@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:common="clr-namespace:WpfInvestigate.Common">
 
     <!-- ??? Not used: Window Header -->
     <SolidColorBrush x:Key="Mwi.WindowHeader.ForegroundBrush" Color="{x:Static SystemColors.GrayTextColor}"/>
@@ -11,7 +12,7 @@
     <!-- Windows Bar -->
     <Color x:Key="Mwi.Bar.BackgroundColor">#FFD6EAFF</Color>
     <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{StaticResource Mwi.Bar.BackgroundColor}"/>
-    <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{x:Static SystemColors.HotTrackColor}"/>
+    <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100:50%'}"/>
 
     <!-- Window Tab -->
     <SolidColorBrush x:Key="Mwi.TabItem.ForegroundBrush" Color="White"/>
