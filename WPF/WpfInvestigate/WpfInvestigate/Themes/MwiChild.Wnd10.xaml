@@ -24,14 +24,11 @@
     <Thickness x:Key="Mwi.Child.MovingThumb.Margin">0 6 0 0</Thickness>
 
     <!-- ============= Windows 10 specific ============ -->
-    <SolidColorBrush x:Key="Mwi.Child.ChildBackground" Color="#FFF0F0F0" />
-    <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="#3394F6" />
-    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="Black" Opacity="0.25" />
-    <common:BindingProxy x:Key="TestColor" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
-    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{Binding Source={StaticResource TestColor}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-    <Color x:Key="Mwi.Child.BaseBackgroundColor">#FFFFFFFF</Color>
-    <SolidColorBrush x:Key="xMwi.Child.BaseBackgroundBrush" Color="{DynamicResource Mwi.Child.BaseBackgroundColor}"/>
-    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="{DynamicResource Mwi.Child.BaseBackgroundColor}"/>
+    <common:BindingProxy x:Key="BaseColorProxy" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
+    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}}" Opacity="0.75"/>
+    <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+65%}" />
+    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}" Opacity="0.25" />
 
     <!-- ================ -->
     <SolidColorBrush x:Key="Mwi.Child.BackBorderBackgroundBrush" Color="#FFBBD2EB" />

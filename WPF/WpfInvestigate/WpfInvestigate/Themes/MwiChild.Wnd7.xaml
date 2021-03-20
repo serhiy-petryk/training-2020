@@ -22,12 +22,10 @@
     <Thickness x:Key="Mwi.Child.MovingThumb.Margin">0</Thickness>
 
 <!-- ============= Windows 7 specific ============ -->
-    <SolidColorBrush x:Key="Mwi.Child.ChildBackground" Color="#FFF0F0F0" />
+    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="#FFBBD2EB" />
+    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="#FFD7E4F2"/>
     <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="Black" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="Black" />
-    <Color x:Key="Mwi.Child.BaseBackgroundColor">#FFBBD2EB</Color>
-    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{DynamicResource Mwi.Child.BaseBackgroundColor}" />
-    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="#FFD7E4F2"/>
 
     <LinearGradientBrush x:Key="Mwi.Child.DarkenBackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#20000000" Offset="0.0" />

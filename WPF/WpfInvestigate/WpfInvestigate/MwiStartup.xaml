@@ -76,13 +76,13 @@
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>
 
-            <controls:MwiChild x:Name="TestChild" Position="50 50" Title="Title" Height="150" BorderBrush="Orange" Background="{DynamicResource Mwi.Child.ChildBackground}">
+            <controls:MwiChild x:Name="TestChild" Position="50 50" Title="Title" Height="150" BorderBrush="Orange" Background="Gainsboro">
                 <ContentControl Content="Mwi Child Test"/>
             </controls:MwiChild>
 
             <controls:MwiChild Title="Empty Window Using XAML and long header" />
 
-            <controls:MwiChild Position="100 100" Background="{DynamicResource Mwi.Child.ChildBackground}" BorderBrush="Orange" Margin="100,101,0,0">
+            <controls:MwiChild Position="100 100" Background="Gainsboro" BorderBrush="Orange" Margin="100,101,0,0">
                 <ContentControl Content="object Content"/>
                 <controls:MwiChild.Resources>
                     <Style TargetType="controls:MwiChild" BasedOn="{StaticResource {x:Type controls:MwiChild}}">

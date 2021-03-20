@@ -130,7 +130,7 @@
                             </ScrollViewer>
 
                             <!-- Left Panel -->
-                            <Grid x:Name="LeftPanelContainer" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="{Binding ElementName=ScrollViewer, Path=ActualHeight}" Background="{DynamicResource Mwi.Child.ChildBackground}" Visibility="Hidden" Margin="0">
+                            <Grid x:Name="LeftPanelContainer" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="{Binding ElementName=ScrollViewer, Path=ActualHeight}" Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" Visibility="Hidden" Margin="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
