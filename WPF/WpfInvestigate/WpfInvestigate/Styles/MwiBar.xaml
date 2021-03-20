@@ -80,7 +80,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:MwiBar}">
-                    <Grid ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
+                    <Grid ClipToBounds="true" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
                         <Border Grid.Column="0" Grid.Row="0" Padding="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>

@@ -43,14 +43,6 @@
     <!-- Windows Menu -->
     <SolidColorBrush x:Key="Mwi.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
 
-    <!-- ??? Not used: Double button -->
-    <SolidColorBrush x:Key="DoubleButton.BorderBrush" Color="Transparent"/>
-    <SolidColorBrush x:Key="DoubleButton.BackgroundBrush" Color="Transparent"/>
-    <SolidColorBrush x:Key="DoubleButton.MouseOver.BorderBrush" Color="#FF3399FF"/>
-    <SolidColorBrush x:Key="DoubleButton.MouseOver.BackgroundBrush" Color="#FFC2E0FF"/>
-    <SolidColorBrush x:Key="DoubleButton.Pressed.BorderBrush" Color="#FF3399FF"/>
-    <SolidColorBrush x:Key="DoubleButton.Pressed.BackgroundBrush" Color="#FF99CCFF"/>
-
     <!-- MwiChild -->
     <SolidColorBrush x:Key="MwiChild.Button.BorderBrush" Color="#FF6A7A93" />
     <SolidColorBrush x:Key="MwiChild.CloseButton.BorderBrush" Color="#FF431422" />
