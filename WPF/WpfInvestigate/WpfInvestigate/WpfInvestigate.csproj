@@ -624,6 +624,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Comments\Localization.txt" />
     <Resource Include="Resources\Mwi.Wnd7\Close.Disabled.png" />
     <Resource Include="Resources\Mwi.Wnd7\Close.png" />
     <Resource Include="Resources\Mwi.Wnd7\Maximize.Disabled.png" />

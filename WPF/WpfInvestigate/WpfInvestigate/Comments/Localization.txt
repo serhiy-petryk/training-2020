@@ -1,0 +1,2 @@
+﻿1. https://www.codeproject.com/Articles/17334/Localizing-WPF-Applications-using-Locbaml
+2007, 4.98 (46 votes), 3 підходи
