@@ -44,7 +44,7 @@
     <!-- =============  MwiChild system menu  =============== -->
 
     <!-- =============  MwiContainer  =============== -->
-    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%:+33%}"/>
+    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=10:+33%}"/>
 
     <!--  =====  Buttons  ===== -->
     <!-- =================================== -->
