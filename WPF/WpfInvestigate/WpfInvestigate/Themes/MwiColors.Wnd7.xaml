@@ -2,10 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:common="clr-namespace:WpfInvestigate.Common">
 
-    <!-- ??? Not used: Window Header -->
-    <SolidColorBrush x:Key="Mwi.WindowHeader.ForegroundBrush" Color="{x:Static SystemColors.GrayTextColor}"/>
-    <SolidColorBrush x:Key="Mwi.WindowHeader.MouseOver.ForegroundBrush" Color="{x:Static SystemColors.ActiveCaptionTextColor}"/>
-
     <!-- ??? Not used: Mwi Container -->
     <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{x:Static SystemColors.AppWorkspaceColor}"/>
 
