@@ -47,7 +47,7 @@ namespace WpfInvestigate.Controls
             {
                 _leftPanelContainer.Visibility = Visibility.Visible;
                 _leftPanelContainer.BeginAnimation(WidthProperty, new DoubleAnimation(0, _leftPanelContainer.ActualWidth, AnimationHelper.AnimationDuration, FillBehavior.Stop));
-                _leftPanelContainer.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, AnimationHelper.AnimationDuration));
+                _leftPanelContainer.BeginAnimation(OpacityProperty, new DoubleAnimation(0.5, 1, AnimationHelper.AnimationDuration));
                 MwiPanel.BeginAnimation(OpacityProperty, new DoubleAnimation(1.0, 0.75, AnimationHelper.AnimationDuration));
             }
             else
@@ -55,7 +55,7 @@ namespace WpfInvestigate.Controls
                 var lastLeftPanelWidth = _leftPanelContainer.ActualWidth;
                 await Task.WhenAll(
                     _leftPanelContainer.BeginAnimationAsync(WidthProperty, _leftPanelContainer.ActualWidth, 0.0),
-                    _leftPanelContainer.BeginAnimationAsync(OpacityProperty,  _leftPanelContainer.Opacity, 0.0),
+                    _leftPanelContainer.BeginAnimationAsync(OpacityProperty,  _leftPanelContainer.Opacity, 0.5),
                     MwiPanel.BeginAnimationAsync(OpacityProperty, MwiPanel.Opacity, 1.0));
 
                 _leftPanelContainer.Visibility = Visibility.Hidden;
