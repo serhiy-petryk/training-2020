@@ -157,6 +157,10 @@
 
     <!-- =============  MwiChild system menu  =============== -->
 
+    <!-- =============  MwiContainer  =============== -->
+    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{x:Static SystemColors.AppWorkspaceColor}"/>
+
+    <!--  =====  Buttons  ===== -->
     <!-- =================================== -->
     <Style x:Key="WindowCommonButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="IsTabStop" Value="False" />

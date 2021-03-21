@@ -2,9 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:common="clr-namespace:WpfInvestigate.Common">
 
-    <!-- ??? Not used: Mwi Container -->
-    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{x:Static SystemColors.AppWorkspaceColor}"/>
-
     <!-- Windows Bar -->
     <Color x:Key="Mwi.Bar.BackgroundColor">#FFD6EAFF</Color>
     <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{StaticResource Mwi.Bar.BackgroundColor}"/>

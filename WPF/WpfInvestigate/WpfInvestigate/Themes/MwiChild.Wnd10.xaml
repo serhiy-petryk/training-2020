@@ -43,7 +43,10 @@
 
     <!-- =============  MwiChild system menu  =============== -->
 
-    <!--  =====  Buttos  ===== -->
+    <!-- =============  MwiContainer  =============== -->
+    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%:+33%}"/>
+
+    <!--  =====  Buttons  ===== -->
     <!-- =================================== -->
     <Geometry x:Key="WindowMinimizeGeometry">M0,5 10,5 10,6 0,6 0,5z</Geometry>
     <Geometry x:Key="WindowMaximizeGeometry">M1,1 1,9 9,9 9,1 1,1Z M0,10 0,0 10,0 10,10 0,10Z</Geometry>
