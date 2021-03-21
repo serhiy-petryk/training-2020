@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
@@ -146,6 +147,14 @@ namespace WpfInvestigate.Controls
                 foreach (var mwiChild in Children.Cast<MwiChild>().Where(c=>c.IsWindowed))
                     ((Window) mwiChild.Parent).Close();
             }
+        }
+
+        protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseLeftButtonUp(e);
+
+            if (_leftPanelButton!= null && Equals(_leftPanelButton.IsChecked, true) && !_leftPanelContainer.IsMouseOver && !_leftPanelButton.IsMouseOver)
+                HideLeftPanel();
         }
 
         #endregion
