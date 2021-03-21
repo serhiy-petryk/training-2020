@@ -36,6 +36,9 @@
     <SolidColorBrush x:Key="Mwi.Child.NearBorderBrush" Color="Transparent" />
     <SolidColorBrush x:Key="Mwi.Child.FarBorderBrush" Color="Transparent" />
 
+    <!-- =================================== -->
+    <SolidColorBrush x:Key="Mwi.Child.IconBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=+180:100%:50%}" />
+
     <!--  =====  Buttos  ===== -->
     <!-- =================================== -->
     <Geometry x:Key="WindowMinimizeGeometry">M0,5 10,5 10,6 0,6 0,5z</Geometry>

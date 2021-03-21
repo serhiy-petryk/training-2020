@@ -151,6 +151,9 @@
     </LinearGradientBrush>
 
     <!-- =================================== -->
+    <SolidColorBrush x:Key="Mwi.Child.IconBrush" Color="DodgerBlue" />
+
+    <!-- =================================== -->
     <Style x:Key="WindowCommonButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Width" Value="31"/>
