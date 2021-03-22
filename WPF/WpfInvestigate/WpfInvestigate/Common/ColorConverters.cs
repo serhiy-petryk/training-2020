@@ -125,9 +125,9 @@ namespace WpfInvestigate.Common
                 var newS = hsl.S;
                 var newH = hsl.H;
                 if (pp.Length > 2)
-                    newH = ConvertValue(hsl.H, pp[pp.Length - 3], !noSplit ? isDarkColor : (bool?) null, 360);
+                    newH = ConvertValue(hsl.H, pp[pp.Length - 3], !noSplit ? hsl.H < 0.5 : (bool?) null, 360);
                 if (pp.Length > 1)
-                    newS = ConvertValue(hsl.S, pp[pp.Length - 2], !noSplit ? isDarkColor : (bool?) null);
+                    newS = ConvertValue(hsl.S, pp[pp.Length - 2], !noSplit ? hsl.S < 0.5 : (bool?)null);
                 var newL = ConvertValue(hsl.L, pp[pp.Length - 1], !noSplit ? isDarkColor : (bool?) null);
                 hsl = new HSL(newH, newS, newL);
             }
