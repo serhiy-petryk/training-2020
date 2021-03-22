@@ -25,7 +25,7 @@
     <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="#FFBBD2EB" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="#FFD7E4F2"/>
     <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="Black" />
-    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="Black" />
+    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="#FF4C4C4C" />
 
     <LinearGradientBrush x:Key="Mwi.Child.DarkenBackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#20000000" Offset="0.0" />
