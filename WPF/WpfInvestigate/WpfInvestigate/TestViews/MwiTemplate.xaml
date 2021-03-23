@@ -122,7 +122,7 @@
                                    Text="Title" Background="YellowGreen"/>
 
                         <ContentPresenter Grid.Column="4" Cursor="Cross" Content="{Binding Tag}"/>
-                        <Button Grid.Column="5" Focusable="False" x:Name="CloseButton" Style="{DynamicResource CloseButtonStyle}"/>
+                        <Button Grid.Column="5" Focusable="False" x:Name="CloseButton" Style="{DynamicResource Mwi.CloseButtonStyle}"/>
                     </Grid>
 
                 </Grid>
@@ -202,7 +202,7 @@
                                    Text="Title" Background="YellowGreen"/>
 
                         <ContentPresenter Grid.Column="4" Cursor="Cross" Content="{Binding Tag}"/>
-                        <Button Grid.Column="5" Focusable="False" x:Name="CloseButton2" Style="{DynamicResource CloseButtonStyle}"/>
+                        <Button Grid.Column="5" Focusable="False" x:Name="CloseButton2" Style="{DynamicResource Mwi.CloseButtonStyle}"/>
                     </Grid>
 
                 </Grid>
@@ -281,7 +281,7 @@
                                    Text="Title" Background="YellowGreen"/>
 
                         <ContentPresenter Grid.Column="4" Cursor="Cross" Content="{Binding Tag}"/>
-                        <Button Grid.Column="5" Focusable="False" x:Name="CloseButton3" Style="{DynamicResource CloseButtonStyle}"/>
+                        <Button Grid.Column="5" Focusable="False" x:Name="CloseButton3" Style="{DynamicResource Mwi.CloseButtonStyle}"/>
                     </Grid>
 
                 </Grid>

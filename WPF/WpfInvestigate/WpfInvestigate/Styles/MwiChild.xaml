@@ -166,13 +166,13 @@
                             <ContentPresenter Grid.Column="3" Content="{TemplateBinding RightHeaderBar}"/>
 
                             <!-- Window buttons -->
-                            <Button Grid.Column="4" Focusable="False" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource DetachedButtonStyle}"
+                            <Button Grid.Column="4" Focusable="False" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource Mwi.DetachedButtonStyle}"
                                     Visibility="{Binding IsDetachButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                            <Button Grid.Column="5" Focusable="False" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource MinimizeButtonStyle}"
+                            <Button Grid.Column="5" Focusable="False" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource Mwi.MinimizeButtonStyle}"
                                     Visibility="{Binding IsMinimizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                            <Button Grid.Column="6" Focusable="False" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource MaximizeButtonStyle}"
+                            <Button Grid.Column="6" Focusable="False" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource Mwi.MaximizeButtonStyle}"
                                     Visibility="{Binding IsMaximizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                            <Button Grid.Column="7" Focusable="False" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{DynamicResource CloseButtonStyle}"
+                            <Button Grid.Column="7" Focusable="False" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{DynamicResource Mwi.CloseButtonStyle}"
                                     Visibility="{Binding IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
                         </Grid>
                     </Grid>
