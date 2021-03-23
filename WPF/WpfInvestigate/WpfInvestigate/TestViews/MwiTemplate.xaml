@@ -60,26 +60,27 @@
 
                     <Border x:Name="BaseBorder" Margin="7 0 7 7" BorderThickness="1" CornerRadius="0" 
                             Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="Red">
-                        <!-- Content & Command/Status bars -->
-                        <Border Margin="0 29 0 0" x:Name="ContentBorder" Background="LightBlue" BorderBrush="Blue" BorderThickness="2">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <!-- Command bar -->
-                                <ContentControl Grid.Row="0">
-                                    <samples:MwiCommandBarSample/>
-                                </ContentControl>
-                                <!-- Window content -->
-                                <ContentControl Grid.Row="1" x:Name="Content" Content="Content" />
-                                <!-- Status bar -->
-                                <ContentControl Grid.Row="2">
-                                    <samples:MwiStatusBarSample/>
-                                </ContentControl>
-                            </Grid>
-                        </Border>
+                    </Border>
+
+                    <!-- Content & Command/Status bars -->
+                    <Border Margin="8 30 8 8" x:Name="ContentBorder" Background="LightBlue" BorderBrush="Blue" BorderThickness="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <!-- Command bar -->
+                            <ContentControl Grid.Row="0">
+                                <samples:MwiCommandBarSample/>
+                            </ContentControl>
+                            <!-- Window content -->
+                            <ContentControl Grid.Row="1" x:Name="Content" Content="Content" />
+                            <!-- Status bar -->
+                            <ContentControl Grid.Row="2">
+                                <samples:MwiStatusBarSample/>
+                            </ContentControl>
+                        </Grid>
                     </Border>
 
                     <Thumb Margin="0" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll" VerticalAlignment="Top"
@@ -137,28 +138,29 @@
                 <Grid Background="Transparent" Margin="5 20 5 5">
                     <Border x:Name="ShadowBorder2" Margin="0 0 0 0" Background="White" Effect="{StaticResource Mwi.ShadowEffect}" Visibility="Visible" CornerRadius="5 5 0 0" />
 
-                    <Border x:Name="BaseBorder2" Margin="0" BorderThickness="1" CornerRadius="5 5 0 0" 
+                    <Border x:Name="BaseBorder2" Margin="0" BorderThickness="1" CornerRadius="5 5 0 0"
                             Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="Red">
-                        <!-- Content & Command/Status bars -->
-                        <Border Margin="6 28 6 6" x:Name="ContentBorder2" Background="LightBlue" BorderBrush="Blue" BorderThickness="2">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <!-- Command bar -->
-                                <ContentControl Grid.Row="0">
-                                    <samples:MwiCommandBarSample/>
-                                </ContentControl>
-                                <!-- Window content -->
-                                <ContentControl Grid.Row="1" x:Name="Content2" Content="Content" />
-                                <!-- Status bar -->
-                                <ContentControl Grid.Row="2">
-                                    <samples:MwiStatusBarSample/>
-                                </ContentControl>
-                            </Grid>
-                        </Border>
+                    </Border>
+
+                    <!-- Content & Command/Status bars -->
+                    <Border Margin="7 29 7 7" x:Name="ContentBorder2" Background="LightBlue" BorderBrush="Blue" BorderThickness="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <!-- Command bar -->
+                            <ContentControl Grid.Row="0">
+                                <samples:MwiCommandBarSample/>
+                            </ContentControl>
+                            <!-- Window content -->
+                            <ContentControl Grid.Row="1" x:Name="Content2" Content="Content" />
+                            <!-- Status bar -->
+                            <ContentControl Grid.Row="2">
+                                <samples:MwiStatusBarSample/>
+                            </ContentControl>
+                        </Grid>
                     </Border>
 
                     <Thumb Margin="0 7 0 0" x:Name="MovingThumb2" Opacity="0" Cursor="SizeAll" VerticalAlignment="Top"
@@ -218,25 +220,26 @@
 
                     <Border x:Name="BaseBorder3" Margin="0" BorderThickness="1" CornerRadius="0 0 0 0" 
                             Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="Red">
-                        <Border x:Name="ContentBorder3" Background="LightBlue" BorderBrush="Blue" BorderThickness="2" Margin="6 29 6 6">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <!-- Command bar -->
-                                <ContentControl Grid.Row="0">
-                                    <samples:MwiCommandBarSample/>
-                                </ContentControl>
-                                <!-- Window content -->
-                                <ContentControl Grid.Row="1" x:Name="Content3" Content="Content" />
-                                <!-- Status bar -->
-                                <ContentControl Grid.Row="2">
-                                    <samples:MwiStatusBarSample/>
-                                </ContentControl>
-                            </Grid>
-                        </Border>
+                    </Border>
+
+                    <Border x:Name="ContentBorder3" Background="LightBlue" BorderBrush="Blue" BorderThickness="2" Margin="7 30 7 7">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <!-- Command bar -->
+                            <ContentControl Grid.Row="0">
+                                <samples:MwiCommandBarSample/>
+                            </ContentControl>
+                            <!-- Window content -->
+                            <ContentControl Grid.Row="1" x:Name="Content3" Content="Content" />
+                            <!-- Status bar -->
+                            <ContentControl Grid.Row="2">
+                                <samples:MwiStatusBarSample/>
+                            </ContentControl>
+                        </Grid>
                     </Border>
 
                     <Thumb Margin="0 0 0 0" x:Name="MovingThumb3" Opacity="0" Cursor="SizeAll" VerticalAlignment="Top"
