@@ -81,23 +81,24 @@
                                         CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
                                         BorderBrush="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.SecondBorders.Visibility}"/>
 
-                                <!-- Content & Command/Status bars -->
-                                <Border x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                                        Margin="{DynamicResource Mwi.Child.Content.Margin}">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <!-- Command bar -->
-                                        <ContentControl Grid.Row="0" Content="{Binding CommandBar}"/>
-                                        <!-- Window content -->
-                                        <ContentControl Grid.Row="1" x:Name="Content" Content="{Binding Content}" />
-                                        <!-- Status bar -->
-                                        <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>
-                                    </Grid>
-                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Content & Command/Status bars -->
+                        <Border x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                Margin="{DynamicResource Mwi.Child.Content.Margin}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <!-- Command bar -->
+                                <ContentControl Grid.Row="0" Content="{Binding CommandBar}"/>
+                                <!-- Window content -->
+                                <ContentControl Grid.Row="1" x:Name="Content" Content="{Binding Content}" />
+                                <!-- Status bar -->
+                                <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>
                             </Grid>
                         </Border>
 

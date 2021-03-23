@@ -7,7 +7,7 @@
 
     <!-- ============= Windows 10 with borders layout ============ -->
     <Thickness x:Key="Mwi.Child.Border.Margin">0</Thickness>
-    <Thickness x:Key="Mwi.Child.Content.Margin">6 29 6 6</Thickness>
+    <Thickness x:Key="Mwi.Child.Content.Margin">7 30 7 7</Thickness>
     <Thickness x:Key="Mwi.Child.Header.Margin">7 1 7 0</Thickness>
 
 </ResourceDictionary>
