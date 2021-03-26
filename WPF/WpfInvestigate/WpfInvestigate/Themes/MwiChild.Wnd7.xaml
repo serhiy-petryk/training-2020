@@ -152,8 +152,8 @@
 
     <!-- =============  MwiChild header  =============== -->
     <SolidColorBrush x:Key="Mwi.Child.IconBrush" Color="DodgerBlue" />
-    <SolidColorBrush x:Key="Mwi.WindowHeader.ForegroundBrush" Color="{x:Static SystemColors.GrayTextColor}"/>
-    <SolidColorBrush x:Key="Mwi.WindowHeader.MouseOver.ForegroundBrush" Color="{x:Static SystemColors.ActiveCaptionTextColor}"/>
+    <SolidColorBrush x:Key="Mwi.WindowHeader.ForegroundBrush" Color="{x:Static SystemColors.ActiveCaptionTextColor}"/>
+    <SolidColorBrush x:Key="Mwi.WindowHeader.Inactive.ForegroundBrush" Color="{x:Static SystemColors.GrayTextColor}"/>
 
     <!-- =============  MwiChild system menu  =============== -->
 

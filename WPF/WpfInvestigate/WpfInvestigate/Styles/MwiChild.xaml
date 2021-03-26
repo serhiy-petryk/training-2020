@@ -22,7 +22,7 @@
             <Style x:Key="Mwi.Startup.WindowHeaderSeparator" TargetType="Separator" BasedOn="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}">
                 <Setter Property="Margin" Value="4" />
                 <Setter Property="Opacity" Value="0.5" />
-                <Setter Property="Background" Value="{DynamicResource Mwi.WindowHeader.ForegroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource Mwi.WindowHeader.Inactive.ForegroundBrush}" />
             </Style>
 
             <Style x:Key="ResizeThumb" TargetType="Thumb">
@@ -150,7 +150,7 @@
 
                             <!-- Header label -->
                             <TextBlock Grid.Column="2" x:Name="Header" Margin="3 0 0 0" VerticalAlignment="Center" IsHitTestVisible="False"
-                                       Foreground="{DynamicResource Mwi.WindowHeader.MouseOver.ForegroundBrush}"
+                                       Foreground="{DynamicResource Mwi.WindowHeader.ForegroundBrush}"
                                        TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{TemplateBinding Title}"/>
                             <!-- Moving thumb -->
                             <Thumb Grid.Column="2" x:Name="MovingThumb" Focusable="False" Opacity="0" Cursor="SizeAll" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
@@ -185,7 +185,7 @@
                             <Setter TargetName="DarkenBackground" Property="Opacity" Value="0.5" />
                             <Setter TargetName="SecondLeftTopBorder" Property="Opacity" Value="0.75" />
                             <Setter TargetName="SecondRightBottomBorder" Property="Opacity" Value="0" />
-                            <Setter TargetName="Header" Property="Foreground" Value="{DynamicResource Mwi.WindowHeader.ForegroundBrush}" />
+                            <Setter TargetName="Header" Property="Foreground" Value="{DynamicResource Mwi.WindowHeader.Inactive.ForegroundBrush}" />
                         </Trigger>
                         <Trigger SourceName="IconImage" Property="Source" Value="{x:Null}">
                             <Setter TargetName="IconImage" Property="Visibility" Value="Collapsed" />

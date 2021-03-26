@@ -39,8 +39,8 @@
 
     <!-- =============  MwiChild header  =============== -->
     <SolidColorBrush x:Key="Mwi.Child.IconBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=+180:100%:50%}" />
-    <SolidColorBrush x:Key="Mwi.WindowHeader.ForegroundBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}" Opacity="0.75"/>
-    <SolidColorBrush x:Key="Mwi.WindowHeader.MouseOver.ForegroundBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}"/>
+    <SolidColorBrush x:Key="Mwi.WindowHeader.ForegroundBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}"/>
+    <SolidColorBrush x:Key="Mwi.WindowHeader.Inactive.ForegroundBrush" Color="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}" Opacity="0.75"/>
 
     <!-- =============  MwiChild system menu  =============== -->
 
