@@ -65,7 +65,7 @@ namespace WpfInvestigate.ViewModels
             }
 
             CurrentTheme.ApplyTheme();
-            OnPropertiesChanged(nameof(CurrentTheme));
+            OnPropertiesChanged(nameof(CurrentTheme), nameof(AppColor));
         }
         #endregion
 
