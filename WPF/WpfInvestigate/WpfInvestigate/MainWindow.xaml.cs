@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Threading;
+using System.Windows.Media;
 using WpfInvestigate.Helpers;
 using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
@@ -89,5 +87,18 @@ namespace WpfInvestigate
         {
         }
 
+        private void TestButtonChangeStyle(object sender, RoutedEventArgs e)
+        {
+            var a1 = TestButton2.Foreground;
+            var styleRed = FindResource("StyleRed") as Style;
+            var styleYellow = FindResource("StyleYellow") as Style;
+            TestButton2.Style = Equals(TestButton2.Style, styleRed) ? styleYellow : styleRed;
+        }
+
+        private void TestButtonChangeForeground(object sender, RoutedEventArgs e)
+        {
+            // TestButton2.Foreground = new SolidColorBrush(Colors.Green);
+            TestButton2.SetCurrentValue(ForegroundProperty, new SolidColorBrush(Colors.Green));
+        }
     }
 }
