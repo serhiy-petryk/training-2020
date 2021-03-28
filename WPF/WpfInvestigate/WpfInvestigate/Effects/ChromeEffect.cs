@@ -113,11 +113,11 @@ namespace WpfInvestigate.Effects
                 return;
 
             if (!(control.Background is SolidColorBrush backgroundBrush && !backgroundBrush.IsSealed))
-                control.Background = new SolidColorBrush(newValues.Item1.Value);
+                control.SetCurrentValue(Control.BackgroundProperty, new SolidColorBrush(newValues.Item1.Value));
             if (!(control.Foreground is SolidColorBrush foregroundBrush && !foregroundBrush.IsSealed))
-                control.Foreground = new SolidColorBrush(newValues.Item2.Value);
+                control.SetCurrentValue(Control.ForegroundProperty, new SolidColorBrush(newValues.Item2.Value));
             if (!(control.BorderBrush is SolidColorBrush borderBrush && !borderBrush.IsSealed))
-                control.BorderBrush = new SolidColorBrush(newValues.Item3.Value);
+                control.SetCurrentValue(Control.BorderBrushProperty, new SolidColorBrush(newValues.Item3.Value));
 
             var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
             if (noAnimate)
