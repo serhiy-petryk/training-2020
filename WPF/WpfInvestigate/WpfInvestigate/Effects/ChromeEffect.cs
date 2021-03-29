@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 
@@ -97,40 +98,58 @@ namespace WpfInvestigate.Effects
                 new Tuple<bool, bool, bool>(control.IsMouseOver, control.IsEnabled, IsPressed(control)));
         }
 
-        private static void ChromeUpdate(object sender, EventArgs e)
+        private static async void ChromeUpdate(object sender, EventArgs e)
         {
             if (!(sender is Control control)) return;
 
-            var oldValues = new Tuple<Color?, Color?, Color?, double>((control.Background as SolidColorBrush)?.Color, (control.Foreground as SolidColorBrush)?.Color, (control.BorderBrush as SolidColorBrush)?.Color, control.Opacity);
-            var getBackgroundMethod = GetBackgroundMethod(control);
-            var newValues = GetNewColors(control, getBackgroundMethod);
-            if (Equals(oldValues, newValues) || !newValues.Item3.HasValue) return;
-
-            if (!(control.Background is SolidColorBrush backgroundBrush && !backgroundBrush.IsSealed))
-                control.SetCurrentValue(Control.BackgroundProperty, new SolidColorBrush(newValues.Item1.Value));
-            if (!(control.Foreground is SolidColorBrush foregroundBrush && !foregroundBrush.IsSealed))
-                control.SetCurrentValue(Control.ForegroundProperty, new SolidColorBrush(newValues.Item2.Value));
-            if (!(control.BorderBrush is SolidColorBrush borderBrush && !borderBrush.IsSealed))
-                control.SetCurrentValue(Control.BorderBrushProperty, new SolidColorBrush(newValues.Item3.Value));
-
-            var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
-            if (noAnimate)
+            var semaphore = control.Resources["semaphore"] as SemaphoreSlim;
+            if (semaphore == null)
             {
-                if (((SolidColorBrush)control.Background).Color != newValues.Item1.Value)
-                    ((SolidColorBrush)control.Background).Color = newValues.Item1.Value;
-                if (((SolidColorBrush)control.Foreground).Color != newValues.Item2.Value)
-                    ((SolidColorBrush)control.Foreground).Color = newValues.Item2.Value;
-                if (((SolidColorBrush)control.BorderBrush).Color != newValues.Item3.Value)
-                    ((SolidColorBrush)control.BorderBrush).Color = newValues.Item3.Value;
-                if (!Tips.AreEqual(control.Opacity, newValues.Item4))
-                    control.Opacity = newValues.Item4;
+                semaphore = new SemaphoreSlim(1, 1);
+                control.Resources["semaphore"] = semaphore;
             }
-            else
+
+            await semaphore.WaitAsync();
+
+            try
             {
-                control.Background.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation(((SolidColorBrush)control.Background).Color, newValues.Item1.Value, AnimationHelper.AnimationDuration));
-                control.Foreground.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation(((SolidColorBrush)control.Foreground).Color, newValues.Item2.Value, AnimationHelper.AnimationDuration));
-                control.BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation(((SolidColorBrush)control.BorderBrush).Color, newValues.Item3.Value, AnimationHelper.AnimationDuration));
-                control.BeginAnimation(UIElement.OpacityProperty, new DoubleAnimation(control.Opacity, newValues.Item4, AnimationHelper.AnimationDuration));
+                var oldValues = new Tuple<Color?, Color?, Color?, double>((control.Background as SolidColorBrush)?.Color, (control.Foreground as SolidColorBrush)?.Color, (control.BorderBrush as SolidColorBrush)?.Color, control.Opacity);
+                var getBackgroundMethod = GetBackgroundMethod(control);
+                var newValues = GetNewColors(control, getBackgroundMethod);
+                if (Equals(oldValues, newValues) || !newValues.Item3.HasValue) return;
+
+                if (!(control.Background is SolidColorBrush backgroundBrush && !backgroundBrush.IsSealed))
+                    control.SetCurrentValue(Control.BackgroundProperty, new SolidColorBrush(newValues.Item1.Value));
+                if (!(control.Foreground is SolidColorBrush foregroundBrush && !foregroundBrush.IsSealed))
+                    control.SetCurrentValue(Control.ForegroundProperty, new SolidColorBrush(newValues.Item2.Value));
+                if (!(control.BorderBrush is SolidColorBrush borderBrush && !borderBrush.IsSealed))
+                    control.SetCurrentValue(Control.BorderBrushProperty, new SolidColorBrush(newValues.Item3.Value));
+
+                var noAnimate = getBackgroundMethod == GetMonochrome || getBackgroundMethod == GetBichromeBackground;
+                if (noAnimate)
+                {
+                    if (((SolidColorBrush)control.Background).Color != newValues.Item1.Value)
+                        ((SolidColorBrush)control.Background).Color = newValues.Item1.Value;
+                    if (((SolidColorBrush)control.Foreground).Color != newValues.Item2.Value)
+                        ((SolidColorBrush)control.Foreground).Color = newValues.Item2.Value;
+                    if (((SolidColorBrush)control.BorderBrush).Color != newValues.Item3.Value)
+                        ((SolidColorBrush)control.BorderBrush).Color = newValues.Item3.Value;
+                    if (!Tips.AreEqual(control.Opacity, newValues.Item4))
+                        control.Opacity = newValues.Item4;
+                }
+                else
+                {
+                    await Task.WhenAll(
+                        control.Background.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush)control.Background).Color, newValues.Item1.Value),
+                        control.Foreground.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush)control.Foreground).Color, newValues.Item2.Value),
+                        control.BorderBrush.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush)control.BorderBrush).Color, newValues.Item3.Value),
+                        control.BeginAnimationAsync(UIElement.OpacityProperty, control.Opacity, newValues.Item4));
+
+                }
+            }
+            finally
+            {
+                semaphore.Release();
             }
         }
 
