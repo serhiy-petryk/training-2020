@@ -237,7 +237,7 @@
         </Setter>
         <Style.Resources>
             <Style TargetType="Path">
-                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                <Setter Property="Fill" Value="#FF535666"/>
             </Style>
         </Style.Resources>
     </Style>
