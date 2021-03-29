@@ -78,6 +78,7 @@
         <Setter Property="Width" Value="44"/>
         <Setter Property="Height" Value="29"/>
         <Setter Property="BorderThickness" Value="0"/>
+        <!--<Setter Property="Foreground" Value="Red"/>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -93,6 +94,7 @@
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=IsActive}" Value="False">
                 <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10}"/>
+                <!--<Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+10,+10/+70%,+10,40, +10,+10/+70%,+10,100, +25,+25/+75%,+10,100, +30,+30/+75%,+10,100"/>-->
             </DataTrigger>
         </Style.Triggers>
         <Style.Resources>

@@ -101,16 +101,10 @@ namespace WpfInvestigate.Effects
         {
             if (!(sender is Control control)) return;
 
-            // To prevent: the same property changes multiple times
-            var oldState = control.Resources["state"];
-            var newState = GetState(control);
-            if (Equals(oldState, newState)) return;
-            control.Resources["state"] = newState;
-
+            var oldValues = new Tuple<Color?, Color?, Color?, double>((control.Background as SolidColorBrush)?.Color, (control.Foreground as SolidColorBrush)?.Color, (control.BorderBrush as SolidColorBrush)?.Color, 1.0);
             var getBackgroundMethod = GetBackgroundMethod(control);
             var newValues = GetNewColors(control, getBackgroundMethod);
-            if (!newValues.Item3.HasValue) 
-                return;
+            if (Equals(oldValues, newValues) || !newValues.Item3.HasValue) return;
 
             if (!(control.Background is SolidColorBrush backgroundBrush && !backgroundBrush.IsSealed))
                 control.SetCurrentValue(Control.BackgroundProperty, new SolidColorBrush(newValues.Item1.Value));
