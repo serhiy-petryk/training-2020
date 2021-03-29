@@ -89,12 +89,12 @@
             </Setter.Value>
         </Setter>
         <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+70%,+0%,100, +15,+15/+75%,+0%,100, +20,+20/+75%,+0%,100"/>
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,60, +0%,+70%,+0%,100, +15,+15/+75%,+0%,100, +20,+20/+75%,+0%,100"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=IsActive}" Value="False">
                 <!--<Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding Source={StaticResource BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10}"/>-->
-                <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+10,+10/+70%,+10,40, +10,+10/+70%,+10,100, +25,+25/+75%,+10,100, +30,+30/+75%,+10,100"/>
+                <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+10,+10/+70%,+10,60, +10,+10/+70%,+10,100, +25,+25/+75%,+10,100, +30,+30/+75%,+10,100"/>
             </DataTrigger>
         </Style.Triggers>
         <Style.Resources>
@@ -126,7 +126,7 @@
 
     <!-- =======  CloseButton ===== -->
     <Style x:Key="Mwi.CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource Mwi.WindowCommonButtonStyle}">
-        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+70%,+0%,100, 0:100:+50%,0:100:+50%/+75%,+0%,100, 0:100:+35%,0:100:+35%/+75%,+0%,100"/>
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,60, +0%,+70%,+0%,100, 0:100:+50%,0:100:+50%/+75%,+0%,100, 0:100:+35%,0:100:+35%/+75%,+0%,100"/>
         <Setter Property="Content" Value="{StaticResource Mwi.CloseButtonContent}"/>
     </Style>
 

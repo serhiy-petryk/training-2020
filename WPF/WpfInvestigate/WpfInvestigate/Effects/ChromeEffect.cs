@@ -101,7 +101,7 @@ namespace WpfInvestigate.Effects
         {
             if (!(sender is Control control)) return;
 
-            var oldValues = new Tuple<Color?, Color?, Color?, double>((control.Background as SolidColorBrush)?.Color, (control.Foreground as SolidColorBrush)?.Color, (control.BorderBrush as SolidColorBrush)?.Color, 1.0);
+            var oldValues = new Tuple<Color?, Color?, Color?, double>((control.Background as SolidColorBrush)?.Color, (control.Foreground as SolidColorBrush)?.Color, (control.BorderBrush as SolidColorBrush)?.Color, control.Opacity);
             var getBackgroundMethod = GetBackgroundMethod(control);
             var newValues = GetNewColors(control, getBackgroundMethod);
             if (Equals(oldValues, newValues) || !newValues.Item3.HasValue) return;
