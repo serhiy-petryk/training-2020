@@ -49,11 +49,10 @@ namespace WpfInvestigate.Effects
 
         private static void AddClearButton(DatePicker dp)
         {
-            var button = Tips.GetVisualChildren(dp).FirstOrDefault(btn => btn is Button && ((Button)btn).Name == ClearButtonName) as Button;
-            if (button != null)
+            if (Tips.GetVisualChildren(dp).OfType<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName) != null)
                 return;
 
-            button = dp.Template.FindName("PART_Button", dp) as Button;
+            var button = dp.Template.FindName("PART_Button", dp) as Button;
             var grid = button.Parent as Grid;
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             var style = dp.FindResource("ClearBichromeButtonStyle") as Style;
