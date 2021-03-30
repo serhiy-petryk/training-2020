@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -34,14 +33,14 @@ namespace WpfInvestigate
                     topContentControl.LayoutTransform = FindResource("ScaleTransform") as ScaleTransform;
             }), DispatcherPriority.Normal);
 
-            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelInstancePropertyChanged;
+            /*MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelInstancePropertyChanged;
             OnMwiAppViewModelInstancePropertyChanged(null, new PropertyChangedEventArgs(nameof(MwiAppViewModel.CurrentTheme)));
 
             void OnMwiAppViewModelInstancePropertyChanged(object sender, PropertyChangedEventArgs args)
             {
                 if (args is PropertyChangedEventArgs e && e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
                     TestChild.BorderThickness = new Thickness(Equals(MwiAppViewModel.Instance.CurrentTheme.Id, "Windows7") ? 0 : 6);
-            }
+            }*/
         }
 
         private void MwiStartup_OnKeyDown(object sender, KeyEventArgs e)
