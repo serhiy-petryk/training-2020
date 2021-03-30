@@ -17,6 +17,16 @@ namespace WpfInvestigate.Helpers
 {
     public static class ControlHelper
     {
+        public static void SetCurrentValueOfObject(this DependencyObject d, DependencyProperty property, object newValue)
+        {
+            if (Equals(d.GetValue(property), newValue)) return;
+
+            d.SetCurrentValue(property, newValue);
+            if (Equals(d.GetValue(property), newValue)) return;
+
+            d.SetValue(property, newValue);
+        }
+        
         public static Size MeasureString(string candidate, Control fontControl)
         {
             var formattedText = new FormattedText(candidate, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,

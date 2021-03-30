@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Effects
 {
@@ -99,11 +100,11 @@ namespace WpfInvestigate.Effects
                 if (Equals(oldValues, newValues) || !newValues.Item3.HasValue) return;
 
                 if (!(control.Background is SolidColorBrush backgroundBrush && !backgroundBrush.IsSealed))
-                    control.SetCurrentValue(Control.BackgroundProperty, new SolidColorBrush(newValues.Item1.Value));
+                    control.SetCurrentValueOfObject(Control.BackgroundProperty, new SolidColorBrush(newValues.Item1.Value));
                 if (!(control.Foreground is SolidColorBrush foregroundBrush && !foregroundBrush.IsSealed))
-                    control.SetCurrentValue(Control.ForegroundProperty, new SolidColorBrush(newValues.Item2.Value));
+                    control.SetCurrentValueOfObject(Control.ForegroundProperty, new SolidColorBrush(newValues.Item2.Value));
                 if (!(control.BorderBrush is SolidColorBrush borderBrush && !borderBrush.IsSealed))
-                    control.SetCurrentValue(Control.BorderBrushProperty, new SolidColorBrush(newValues.Item3.Value));
+                    control.SetCurrentValueOfObject(Control.BorderBrushProperty, new SolidColorBrush(newValues.Item3.Value));
 
                 await Task.WhenAll(
                     control.Background.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush)control.Background).Color, newValues.Item1.Value),
