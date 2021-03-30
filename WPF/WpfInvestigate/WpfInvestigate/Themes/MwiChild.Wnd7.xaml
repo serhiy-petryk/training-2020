@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:common="clr-namespace:WpfInvestigate.Common">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiColors.Wnd7.xaml" />
@@ -9,6 +10,11 @@
 
     <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
     <system:Double x:Key="Mwi.Child.CornerEdgeWidth">16</system:Double>
+    <common:BindingProxy x:Key="Mwi.BaseColorProxy">
+        <common:BindingProxy.Value>
+            <Color>#FFBBD2EB</Color>
+        </common:BindingProxy.Value>
+    </common:BindingProxy>
 
     <!-- ============= Windows 7 layout ============ -->
     <system:Double x:Key="Mwi.Child.Header.Height">22</system:Double>
@@ -22,7 +28,7 @@
     <Thickness x:Key="Mwi.Child.MovingThumb.Margin">0</Thickness>
 
 <!-- ============= Windows 7 specific ============ -->
-    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="#FFBBD2EB" />
+    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value}" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="#FFD7E4F2"/>
     <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="Black" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="#FF4C4C4C" />
