@@ -231,22 +231,22 @@
             </Style>
 
             <Style x:Key="DigitButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource LightButtonBaseStyle}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SecondaryColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource SecondaryColor}"/>
             </Style>
             <Style x:Key="OperatorButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource LightButtonBaseStyle}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource InfoColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource InfoColor}"/>
             </Style>
             <Style x:Key="EqualButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource LightButtonBaseStyle}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SuccessColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource SuccessColor}"/>
             </Style>
             <Style x:Key="ClearButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource LightButtonBaseStyle}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource OrangeColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource OrangeColor}"/>
             </Style>
             <Style x:Key="PrecisionButtonStyle" TargetType="{x:Type controls:NumericBox}">
                 <Setter Property="BorderThickness" Value="2"/>
                 <Setter Property="Margin" Value="1 1 0 0"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="0"/>
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource PurpleColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource PurpleColor}"/>
             </Style>
         </Style.Resources>
     </Style>

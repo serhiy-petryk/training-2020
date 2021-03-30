@@ -46,20 +46,20 @@
                                      BorderThickness="1" BorderBrush="Gray" HorizontalContentAlignment="Center"/>
                 <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value" Width="50"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
-                                     effects:ChromeEffect.MonochromeAnimated="Aqua"
+                                     effects:ChromeEffect.Monochrome="Aqua"
                                      effects:CornerRadiusEffect.CornerRadius="2"
                                      Height="28" VisibleButtons="{x:Null}" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
-                                     effects:ChromeEffect.MonochromeAnimated="Aqua"
+                                     effects:ChromeEffect.Monochrome="Aqua"
                                      Height="28" VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
-                                     effects:ChromeEffect.MonochromeAnimated="{StaticResource WhiteColor}"
+                                     effects:ChromeEffect.Monochrome="{StaticResource WhiteColor}"
                                      Height="28" VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
-                                     effects:ChromeEffect.MonochromeAnimated="{StaticResource DarkColor}"
+                                     effects:ChromeEffect.Monochrome="{StaticResource DarkColor}"
                                      Height="28" VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True" Value="23"/>
                 <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
                                      IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"

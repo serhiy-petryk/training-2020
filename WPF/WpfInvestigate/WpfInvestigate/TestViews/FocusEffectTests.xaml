@@ -108,7 +108,7 @@
                 <WrapPanel Margin="5" Background="Gray" Height="90">
                     <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
                                 effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
-                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                                effects:ChromeEffect.Monochrome="#FF007BFF"
                                 effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
                                 effects:FocusVisualEffect.AlwaysShowFocus="True"
                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"
@@ -119,7 +119,7 @@
                     </Button>
                     <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
                                 effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
-                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                                effects:ChromeEffect.Monochrome="#FF007BFF"
                                 effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
                                 effects:FocusVisualEffect.AlwaysShowFocus="True"
                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource InnerFocusVisualStyle}"
@@ -130,7 +130,7 @@
                     </Button>
                     <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
                                 effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
-                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                                effects:ChromeEffect.Monochrome="#FF007BFF"
                                 effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
                                 effects:FocusVisualEffect.AlwaysShowFocus="True"
                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
@@ -141,7 +141,7 @@
                     </Button>
                     <Button Margin="4" Padding="4" Width="100" Height="40" Content="Focus Test" FontSize="16" BorderThickness="2"
                                 effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
-                                effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                                effects:ChromeEffect.Monochrome="#FF007BFF"
                                 effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
                                 effects:FocusVisualEffect.AlwaysShowFocus="True"
                                 ToolTip="AdjustedFocusVisualStyle">

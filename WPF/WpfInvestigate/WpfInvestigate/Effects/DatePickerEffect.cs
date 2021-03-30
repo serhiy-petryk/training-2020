@@ -56,7 +56,7 @@ namespace WpfInvestigate.Effects
             button = dp.Template.FindName("PART_Button", dp) as Button;
             var grid = button.Parent as Grid;
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-            var style = dp.FindResource("ClearBichromeAnimatedButtonStyle") as Style;
+            var style = dp.FindResource("ClearBichromeButtonStyle") as Style;
             var clearButton = new Button
             {
                 Name = ClearButtonName, Style = style, Width = 18, 

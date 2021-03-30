@@ -41,7 +41,7 @@
                     <Button Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30"
                         VerticalContentAlignment="Center"/>
 
-                    <Button Margin="5" Content="Test animated control" effects:ChromeEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
+                    <Button Margin="5" Content="Test animated control" effects:ChromeEffect.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
                         effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
                 </WrapPanel>
 
@@ -62,16 +62,6 @@
                                 IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
                                 effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
-                    <Grid Background="Black">
-                        <Button x:Name="MonochromeAnimatedButtonBlack" Margin="5" Content="Test animated control" effects:ChromeEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
-                                IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
-                                effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
-                    </Grid>
-                    <Grid Background="White">
-                        <Button x:Name="MonochromeAnimatedButtonWhite" Margin="5" Content="Test animated control" effects:ChromeEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
-                                IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
-                                effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
-                    </Grid>
                 </WrapPanel>
 
                 <WrapPanel Orientation="Horizontal">
@@ -89,16 +79,6 @@
                         <Button x:Name="BichromeButtonWhite" Width="140" Height="40" Content="Bichrome" FontWeight="Bold" BorderThickness="2" Margin="5"
                                 IsEnabled="{Binding ElementName=cbBichromeEnabled, Path=IsChecked}"
                                 effects:ChromeEffect.BichromeBackground="Blue" effects:ChromeEffect.BichromeForeground="Yellow"/>
-                    </Grid>
-                    <Grid Background="Black">
-                        <Button x:Name="BichromeAnimatedButtonBlack" Width="140" Height="40" Content="Bichrome Animated" FontWeight="Bold" BorderThickness="2" Margin="5"
-                                IsEnabled="{Binding ElementName=cbBichromeEnabled, Path=IsChecked}"
-                                effects:ChromeEffect.BichromeAnimatedBackground="Blue" effects:ChromeEffect.BichromeAnimatedForeground="Yellow"/>
-                    </Grid>
-                    <Grid Background="White">
-                        <Button x:Name="BichromeAnimatedButtonWhite" Width="140" Height="40" Content="Bichrome Animated" FontWeight="Bold" BorderThickness="2" Margin="5"
-                                IsEnabled="{Binding ElementName=cbBichromeEnabled, Path=IsChecked}"
-                                effects:ChromeEffect.BichromeAnimatedBackground="Blue" effects:ChromeEffect.BichromeAnimatedForeground="Yellow"/>
                     </Grid>
                 </WrapPanel>
 

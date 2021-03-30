@@ -16,7 +16,7 @@
                 <Setter Property="Padding" Value="0 1"/>
                 <Setter Property="Focusable" Value="True"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
                 <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:DialogMessage}, Path=(effects:FocusVisualEffect.AlwaysShowFocus)}"/>
                 <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:DialogMessage}, Path=FocusButtonStyle}"/>
@@ -60,7 +60,7 @@
                                                TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                                     <!-- Close button -->
                                     <Button Grid.Column="1" Margin="0 0 4 0" Width="20" Padding="2"
-                                            Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"
+                                            Style="{StaticResource ClearMonochromeButtonStyle}"
                                             HorizontalAlignment="Right" VerticalAlignment="Center"
                                             Focusable="True"
                                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"

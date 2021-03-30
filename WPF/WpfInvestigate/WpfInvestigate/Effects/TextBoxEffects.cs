@@ -116,13 +116,13 @@ namespace WpfInvestigate.Effects
                         Padding = new Thickness(0),
                         VerticalAlignment = VerticalAlignment.Stretch
                     };
-                    keyboardButton.SetBinding(ChromeEffect.BichromeAnimatedBackgroundProperty, new Binding
+                    keyboardButton.SetBinding(ChromeEffect.BichromeBackgroundProperty, new Binding
                     {
                         Source = textBox,
                         Path = new PropertyPath(Control.BackgroundProperty),
                         Converter = ColorHslBrush.Instance
                     });
-                    keyboardButton.SetBinding(ChromeEffect.BichromeAnimatedForegroundProperty, new Binding
+                    keyboardButton.SetBinding(ChromeEffect.BichromeForegroundProperty, new Binding
                     {
                         Source = textBox,
                         Path = new PropertyPath(Control.ForegroundProperty),
@@ -179,7 +179,7 @@ namespace WpfInvestigate.Effects
                     var clearButton = new Button
                     {
                         Name = ElementPrefix + "Clear",
-                        Style = Application.Current.FindResource("ClearBichromeAnimatedButtonStyle") as Style,
+                        Style = Application.Current.FindResource("ClearBichromeButtonStyle") as Style,
                         Width = 14,
                         Focusable = false,
                         Margin = new Thickness(0),

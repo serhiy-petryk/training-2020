@@ -185,15 +185,15 @@
 
                                 <ToggleButton x:Name="PART_ToggleButton" Grid.Column="2" Focusable="False" Width="18" Padding="1"
                                               IsThreeState="False" VerticalContentAlignment="Center" BorderThickness="0"
-                                              effects:ChromeEffect.BichromeAnimatedBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                              effects:ChromeEffect.BichromeAnimatedForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                              effects:ChromeEffect.BichromeBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                              effects:ChromeEffect.BichromeForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                               Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
                                               IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}"
                                               effects:IconEffect.Geometry="{StaticResource CalendarClockGeometry}" />
 
                                 <Button x:Name="PART_ClearButton" Grid.Column="3" Focusable="False" Width="14" Padding="2" BorderThickness="0"
                                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsClearButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                        Style="{StaticResource ClearBichromeAnimatedButtonStyle}" VerticalAlignment="Stretch"/>
+                                        Style="{StaticResource ClearBichromeButtonStyle}" VerticalAlignment="Stretch"/>
 
                                 <Popup x:Name="PART_Popup" Grid.Column="0" Grid.ColumnSpan="2"
                                        Focusable="False" SnapsToDevicePixels="True"
@@ -303,7 +303,7 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsEnabled" Value="False" />
-                                <Condition Property="effects:ChromeEffect.MonochromeAnimated" Value="{x:Null}"/>
+                                <Condition Property="effects:ChromeEffect.Monochrome" Value="{x:Null}"/>
                             </MultiTrigger.Conditions>
                             <Setter Property="Opacity" Value="0.5" />
                         </MultiTrigger>

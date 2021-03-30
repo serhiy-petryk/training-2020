@@ -75,7 +75,7 @@
                     <DatePicker Margin="5 0" Height="36" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"
                                 effects:DatePickerEffect.ClearButton="True"
                                 effects:DatePickerEffect.IsNullable="True"
-                                effects:ChromeEffect.MonochromeAnimated="GreenYellow"/>
+                                effects:ChromeEffect.Monochrome="GreenYellow"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="0 5 0 0">

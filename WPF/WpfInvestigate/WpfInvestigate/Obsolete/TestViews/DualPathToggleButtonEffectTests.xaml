@@ -170,8 +170,8 @@
                               effects:DoubleIconToggleButtonEffect.MarginOn="1 5 1 5"/>
 
                 <ToggleButton Margin="2 0" Width="26" Height="26" BorderThickness="1" BorderBrush="Red" Padding="1"
-                              effects:ChromeEffect.BichromeAnimatedBackground="Blue"
-                              effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
+                              effects:ChromeEffect.BichromeBackground="Blue"
+                              effects:ChromeEffect.BichromeForeground="Yellow"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               SnapsToDevicePixels="True"
@@ -180,8 +180,8 @@
                               effects:DoubleIconToggleButtonEffect.Width="24"/>
 
                 <ToggleButton Margin="2 0" Width="26" Height="26" BorderThickness="1" BorderBrush="Red" Padding="1"
-                              effects:ChromeEffect.BichromeAnimatedBackground="Blue"
-                              effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
+                              effects:ChromeEffect.BichromeBackground="Blue"
+                              effects:ChromeEffect.BichromeForeground="Yellow"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               SnapsToDevicePixels="True"
@@ -189,8 +189,8 @@
                               effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
 
                 <ToggleButton Margin="2 0" Height="26" Padding="1" BorderThickness="1" BorderBrush="Red"
-                              effects:ChromeEffect.BichromeAnimatedBackground="Blue"
-                              effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
+                              effects:ChromeEffect.BichromeBackground="Blue"
+                              effects:ChromeEffect.BichromeForeground="Yellow"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               SnapsToDevicePixels="False"
@@ -199,8 +199,8 @@
                               effects:DoubleIconToggleButtonEffect.Width="11"/>
 
                 <ToggleButton Margin="2 0" Height="26" BorderThickness="1" BorderBrush="Red" Padding="1"
-                              effects:ChromeEffect.BichromeAnimatedBackground="Blue"
-                              effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
+                              effects:ChromeEffect.BichromeBackground="Blue"
+                              effects:ChromeEffect.BichromeForeground="Yellow"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               SnapsToDevicePixels="True"
@@ -210,8 +210,8 @@
                               effects:DoubleIconToggleButtonEffect.MarginOn="2 6"/>
 
                 <ToggleButton Margin="2 0" Height="26" BorderThickness="1" BorderBrush="Red" Padding="1"
-                              effects:ChromeEffect.BichromeAnimatedBackground="Blue"
-                              effects:ChromeEffect.BichromeAnimatedForeground="Yellow"
+                              effects:ChromeEffect.BichromeBackground="Blue"
+                              effects:ChromeEffect.BichromeForeground="Yellow"
                               Focusable="False" IsThreeState="False"
                               ToolTip="Open/Close Task panel"
                               SnapsToDevicePixels="True"
@@ -242,8 +242,8 @@
                 <ToolBar Background="#FF8194AA" Foreground="Black" Padding="0" BorderThickness="0" ToolBarTray.IsLocked="True" Margin="-5,-2,-13,0" ClipToBounds="True" UseLayoutRounding="True" SnapsToDevicePixels="True">
                     <Label>ToolBarPanel</Label>
                     <Button Margin="0" Content="X" FontSize="12" FontWeight="Bold" BorderBrush="Red" BorderThickness="3"
-                            effects:ChromeEffect.BichromeAnimatedBackground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
-                            effects:ChromeEffect.BichromeAnimatedForeground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                            effects:ChromeEffect.BichromeBackground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
+                            effects:ChromeEffect.BichromeForeground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}}"/>
 
                     <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Height="26" Width="26" Margin="4 0"
                             Content="X" FontSize="12" FontWeight="Bold"/>
@@ -317,8 +317,8 @@
                                   effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                                   effects:DoubleIconToggleButtonEffect.MarginOff="3 10"
                                   effects:DoubleIconToggleButtonEffect.MarginOn="3 7"
-                                  effects:ChromeEffect.BichromeAnimatedBackground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                  effects:ChromeEffect.BichromeAnimatedForeground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                  effects:ChromeEffect.BichromeBackground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                  effects:ChromeEffect.BichromeForeground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}}"/>
 
                     <StackPanel Margin="2 0 0 0" Orientation="Horizontal">
                         <RepeatButton Template="{DynamicResource LeftUpDoubleButtonTemplate}" Style="{DynamicResource DoubleButtonStyle}"

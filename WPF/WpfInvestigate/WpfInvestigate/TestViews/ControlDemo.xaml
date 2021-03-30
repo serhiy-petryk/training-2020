@@ -64,7 +64,7 @@
                         <CheckBox Margin="0 0 5 0" Content="Content" IsThreeState="False" IsChecked="True" VerticalAlignment="Center"/>
 
                         <CheckBox Margin="0 0 5 0" Content="Monochrome" IsThreeState="False" IsChecked="True" VerticalAlignment="Center"
-                                  effects:ChromeEffect.MonochromeAnimated="Aqua"/>
+                                  effects:ChromeEffect.Monochrome="Aqua"/>
                     </WrapPanel>
 
                     <WrapPanel Orientation="Horizontal" Margin="0 0 0 5">
@@ -75,7 +75,7 @@
 
                         <ComboBox Margin="0 0 5 0" Width="120" Background="#FFD6EAFF" BorderBrush="#FF0069D6" Foreground="#FF0069D6" VerticalAlignment="Stretch"
                                   ItemsSource="{StaticResource Items}"
-                                  effects:ChromeEffect.MonochromeAnimated="Aqua"/>
+                                  effects:ChromeEffect.Monochrome="Aqua"/>
                     </WrapPanel>
 
                     <WrapPanel Orientation="Horizontal" Margin="0 0 0 5">

@@ -12,7 +12,7 @@
         <ResourceDictionary>
             <Style x:Key="BootstrapButton" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="Gray"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="Gray"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
                 <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
                 <Setter Property="effects:FocusVisualEffect.FocusControlStyle">
@@ -32,28 +32,28 @@
             </Style>
 
             <Style x:Key="PrimaryButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource PrimaryColor}"/>
             </Style>
             <Style x:Key="SecondaryButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SecondaryColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource SecondaryColor}"/>
             </Style>
             <Style x:Key="SuccessButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource SuccessColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource SuccessColor}"/>
             </Style>
             <Style x:Key="DangerButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource DangerColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource DangerColor}"/>
             </Style>
             <Style x:Key="WarningButton" BasedOn="{StaticResource BootstrapLightButton}" TargetType="{x:Type ButtonBase}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource WarningColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource WarningColor}"/>
             </Style>
             <Style x:Key="InfoButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource InfoColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource InfoColor}"/>
             </Style>
             <Style x:Key="LightButton" BasedOn="{StaticResource BootstrapLightButton}" TargetType="{x:Type ButtonBase}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource LightColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource LightColor}"/>
             </Style>
             <Style x:Key="DarkButton" BasedOn="{StaticResource BootstrapButton}" TargetType="{x:Type ButtonBase}">
-                <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{StaticResource DarkColor}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource DarkColor}"/>
             </Style>
 
         </ResourceDictionary>
@@ -98,7 +98,7 @@
                     <Button Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="Orange" BorderThickness="2" Width="100" Height="30"
                         VerticalContentAlignment="Center"/>
 
-                    <Button Margin="5" Content="Test animated control" effects:ChromeEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
+                    <Button Margin="5" Content="Test animated control" effects:ChromeEffect.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
                         effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
                 </WrapPanel>
 
@@ -120,12 +120,12 @@
                                 effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Background="Black">
-                        <Button x:Name="MonochromeAnimatedButtonBlack" Margin="5" Content="Test animated control" effects:ChromeEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
+                        <Button x:Name="MonochromeAnimatedButtonBlack" Margin="5" Content="Test animated control" effects:ChromeEffect.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
                                 IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
                                 effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Background="White">
-                        <Button x:Name="MonochromeAnimatedButtonWhite" Margin="5" Content="Test animated control" effects:ChromeEffect.MonochromeAnimated="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
+                        <Button x:Name="MonochromeAnimatedButtonWhite" Margin="5" Content="Test animated control" effects:ChromeEffect.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
                                 IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
                                 effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
                     </Grid>
@@ -150,23 +150,23 @@
                     <Grid Background="Black">
                         <Button x:Name="BichromeAnimatedButtonBlack" Width="140" Height="40" Content="Bichrome Animated" FontWeight="Bold" BorderThickness="2" Margin="5"
                                 IsEnabled="{Binding ElementName=cbBichromeEnabled, Path=IsChecked}"
-                                effects:ChromeEffect.BichromeAnimatedBackground="Blue" effects:ChromeEffect.BichromeAnimatedForeground="Yellow"/>
+                                effects:ChromeEffect.BichromeBackground="Blue" effects:ChromeEffect.BichromeForeground="Yellow"/>
                     </Grid>
                     <Grid Background="White">
                         <Button x:Name="BichromeAnimatedButtonWhite" Width="140" Height="40" Content="Bichrome Animated" FontWeight="Bold" BorderThickness="2" Margin="5"
                                 IsEnabled="{Binding ElementName=cbBichromeEnabled, Path=IsChecked}"
-                                effects:ChromeEffect.BichromeAnimatedBackground="Blue" effects:ChromeEffect.BichromeAnimatedForeground="Yellow"/>
+                                effects:ChromeEffect.BichromeBackground="Blue" effects:ChromeEffect.BichromeForeground="Yellow"/>
                     </Grid>
                 </WrapPanel>
 
                 <WrapPanel Orientation="Horizontal">
                     <Button Margin="4" Padding="4" Content="No chrome for click" FontSize="16" BorderThickness="0"
                             effects:CornerRadiusEffect.CornerRadius="4"
-                            effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                            effects:ChromeEffect.Monochrome="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100"/>
                     <Button Margin="4" Padding="4" Content="Test focus" FontSize="16" BorderThickness="2"
                             effects:CornerRadiusEffect.CornerRadius="4"
-                            effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                            effects:ChromeEffect.Monochrome="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+70,100, -7.5,100,+70,100, -10,100,-12.5,100"
                             effects:FocusVisualEffect.AlwaysShowFocus="True">
                         <effects:FocusVisualEffect.FocusControlStyle>
@@ -179,12 +179,12 @@
                             effects:FocusVisualEffect.AlwaysShowFocus="True"
                             effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
                             effects:CornerRadiusEffect.CornerRadius="14 1 18 8"
-                            effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                            effects:ChromeEffect.Monochrome="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"/>
 
                     <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
                             effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
-                            effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                            effects:ChromeEffect.Monochrome="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
                             effects:FocusVisualEffect.AlwaysShowFocus="True">
                         <Button.RenderTransform>
@@ -199,21 +199,21 @@
 
                     <Button Margin="4" Padding="4" Content="Corner Test" FontSize="16" BorderThickness="8"
                             effects:CornerRadiusEffect.CornerRadius="4 1 8 2"
-                            effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                            effects:ChromeEffect.Monochrome="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"
                             effects:FocusVisualEffect.AlwaysShowFocus="True"
                             effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
 
                     <Button Margin="4" Padding="4" Content="Corner Test" FontSize="16" BorderThickness="8"
                             effects:CornerRadiusEffect.CornerRadius="16 1 32 8"
-                            effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                            effects:ChromeEffect.Monochrome="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+50%,100, -7.5,100,-10,100, -10,100,-12.5,100"
                             effects:FocusVisualEffect.AlwaysShowFocus="True"
                             effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
 
                     <Button Margin="4" Padding="4" Content="Gradient Focus test" FontSize="16" BorderThickness="4"
                             effects:CornerRadiusEffect.CornerRadius="4"
-                            effects:ChromeEffect.MonochromeAnimated="#FF007BFF"
+                            effects:ChromeEffect.Monochrome="#FF007BFF"
                             effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,-10,100, -10,100,-12.5,100"
                             effects:FocusVisualEffect.AlwaysShowFocus="True">
                         <effects:FocusVisualEffect.FocusControlStyle>
@@ -247,31 +247,31 @@
                 <WrapPanel>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Bootstrap"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Blue"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource BlueColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource BlueColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Indigo"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource IndigoColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource IndigoColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Purple"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource PurpleColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource PurpleColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Pink"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource PinkColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource PinkColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Red"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource RedColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource RedColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Orange"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource OrangeColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource OrangeColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapLightButton}" Content="Yellow"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource YellowColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource YellowColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Green"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource GreenColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource GreenColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Teal"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource TealColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource TealColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Cyan"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource CyanColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource CyanColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapLightButton}" Content="White"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource WhiteColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource WhiteColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Gray"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource GrayColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource GrayColor}"/>
                     <Button Margin="4" Style="{StaticResource BootstrapButton}" Content="Gray Dark"
-                            effects:ChromeEffect.MonochromeAnimated="{StaticResource GrayDarkColor}"/>
+                            effects:ChromeEffect.Monochrome="{StaticResource GrayDarkColor}"/>
                 </WrapPanel>
             </StackPanel>
         </Grid>

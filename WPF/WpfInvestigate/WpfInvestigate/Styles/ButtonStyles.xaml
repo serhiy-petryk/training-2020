@@ -47,16 +47,16 @@
     </Style>
 
     <!-- Base colors are taken from parent control -->
-    <Style x:Key="ClearBichromeAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
-        <Setter Property="effects:ChromeEffect.BichromeAnimatedBackground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-        <Setter Property="effects:ChromeEffect.BichromeAnimatedForeground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+    <Style x:Key="ClearBichromeButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
+        <Setter Property="effects:ChromeEffect.BichromeBackground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.BichromeForeground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:IconEffect.Geometry" Value="{StaticResource CloseGeometry}"/>
     </Style>
 
     <!-- Base color is background of parent panel -->
-    <Style x:Key="ClearMonochromeAnimatedButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
+    <Style x:Key="ClearMonochromeButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource DefaultButtonBaseStyle}" x:Shared="False">
         <Setter Property="Width" Value="20"/>
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+0%,100, +0%,+50%,+50%,100,100"/>
         <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
         <Setter Property="effects:IconEffect.Geometry" Value="{StaticResource CloseGeometry}"/>
@@ -144,13 +144,13 @@
     <!-- Monochrome styles -->
     <Style x:Key="MonochromeButtonBaseStyle" BasedOn="{StaticResource DefaultButtonBaseStyle}" TargetType="{x:Type ButtonBase}">
         <Setter Property="BorderThickness" Value="3"/>
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="White"/>
-        <Setter Property="effects:ClickEffect.RippleColor" Value="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.MonochromeAnimated), Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=-50%}"/>
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="White"/>
+        <Setter Property="effects:ClickEffect.RippleColor" Value="{Binding RelativeSource={RelativeSource Self}, Path=(effects:ChromeEffect.Monochrome), Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=-50%}"/>
     </Style>
 
     <Style x:Key="MonochromeDropDownButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource DropDownButtonStyle}">
         <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="White"/>
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="White"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource NoPressedChromeMatrix}"/>
     </Style>
 
@@ -158,7 +158,7 @@
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="Padding" Value="2"/>
         <Setter Property="Background" Value="White"/>
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+70%,+0%,100, +0%,+75%,+50%,100"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -187,7 +187,7 @@
                                         Margin="0" Padding="{TemplateBinding Padding}" BorderThickness="0"
                                         Focusable="{TemplateBinding Focusable}"
                                         Style="{StaticResource DefaultButtonBaseStyle}"
-                                        effects:ChromeEffect.MonochromeAnimated="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                        effects:ChromeEffect.Monochrome="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                         effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
                                         effects:ClickEffect.RippleColor="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -205,7 +205,7 @@
                                               Focusable="{TemplateBinding Focusable}"
                                               Style="{StaticResource DefaultButtonBaseStyle}"
                                               UseLayoutRounding="True" SnapsToDevicePixels="True"
-                                              effects:ChromeEffect.MonochromeAnimated="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                              effects:ChromeEffect.Monochrome="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
                                               effects:ChromeEffect.ChromeMatrix="{StaticResource NoPressedChromeMatrix}"
                                               effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                                               effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
@@ -229,7 +229,7 @@
     <Style x:Key="MonochromeSplitButtonStyle_FixedBorderColor" TargetType="ToggleButton" BasedOn="{StaticResource MonochromeSplitButtonStyle}">
         <Setter Property="BorderBrush" Value="Gray"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{x:Null}"/>
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{x:Null}"/>
     </Style>
 
     <!-- =============== -->
@@ -240,7 +240,7 @@
         <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}}, Path=ActualWidth}"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="effects:ChromeEffect.MonochromeAnimated" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Panel}}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+70%,+0%,100, +25%,+25%/+75%,+25%/+50%,100, +60%,+60%/+75%,+60%/+20%,100"/>
         <Setter Property="Panel.ZIndex" Value="1"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
@@ -300,5 +300,5 @@
     </Style>
 
     <!-- ======================== -->
-    <!--<Style x:Key="MwiCloseButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource ClearBichromeAnimatedButtonStyle}" x:Shared="False"/>-->
+    <!--<Style x:Key="MwiCloseButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource ClearBichromeButtonStyle}" x:Shared="False"/>-->
 </ResourceDictionary>

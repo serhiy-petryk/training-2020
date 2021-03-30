@@ -48,15 +48,15 @@
                 <WrapPanel>
                     <Label Content="BichromeAnimatedClearButtonStyle"/>
                     <Button Style="{StaticResource ObsoleteMonochromeAnimatedClearButtonStyle}" Background="Blue" Width="40" Height="40" BorderBrush="Red"/>
-                    <Button Style="{StaticResource ClearBichromeAnimatedButtonStyle}" Width="40" Height="40" BorderBrush="Red"
-                            effects:ChromeEffect.BichromeAnimatedBackground="White"
-                            effects:ChromeEffect.BichromeAnimatedForeground="Blue"/>
+                    <Button Style="{StaticResource ClearBichromeButtonStyle}" Width="40" Height="40" BorderBrush="Red"
+                            effects:ChromeEffect.BichromeBackground="White"
+                            effects:ChromeEffect.BichromeForeground="Blue"/>
 
                     <Label Content="BiAnimatedButtonStyle"/>
                     <Button Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" Background="Blue" Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red"/>
                     <Button Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red"
-                            effects:ChromeEffect.BichromeAnimatedBackground="Blue"
-                            effects:ChromeEffect.BichromeAnimatedForeground="White"/>
+                            effects:ChromeEffect.BichromeBackground="Blue"
+                            effects:ChromeEffect.BichromeForeground="White"/>
 
                     <Label Content="disabled MonochromeAnimatedButtonStyle"/>
                     <Button Style="{StaticResource ObsoleteMonochromeAnimatedButtonStyle}" IsEnabled="False" Background="Blue" Width="40" Height="40" Content="X" FontSize="20" FontWeight="Bold" BorderBrush="Red"/>

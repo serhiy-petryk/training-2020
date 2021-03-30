@@ -77,7 +77,7 @@
                                     <Button Width="20" Margin="2" Padding="2"
                                             DockPanel.Dock="Bottom" HorizontalAlignment="Right"
                                             Command="ApplicationCommands.Close" CommandParameter="{Binding}"
-                                            Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"/>
+                                            Style="{StaticResource ClearMonochromeButtonStyle}"/>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
@@ -137,7 +137,7 @@
                                                 <Button Width="20" Margin="2" Padding="2"
                                                         DockPanel.Dock="Bottom" HorizontalAlignment="Right"
                                                         Command="ApplicationCommands.Close" CommandParameter="{Binding}"
-                                                        Style="{StaticResource ClearMonochromeAnimatedButtonStyle}"/>
+                                                        Style="{StaticResource ClearMonochromeButtonStyle}"/>
                                                 <ContentPresenter Content="{Binding}" />
                                             </DockPanel>
                                         </Border>

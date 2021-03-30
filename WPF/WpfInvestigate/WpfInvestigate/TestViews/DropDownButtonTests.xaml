@@ -96,7 +96,7 @@
 
                 <WrapPanel>
                     <ToggleButton x:Name="PopupButton" Margin="5" Content="DropDown button with Popup" IsThreeState="False"
-                              effects:ChromeEffect.MonochromeAnimated="Gainsboro"
+                              effects:ChromeEffect.Monochrome="Gainsboro"
                               IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}"/>
 
                     <Popup x:Name="PART_Popup"
@@ -111,7 +111,7 @@
                     </Popup>
 
                     <ToggleButton Margin="5" x:Name="MenuPopupButton" Content="Bad: DropDown button with MenuPopup" IsThreeState="False"
-                              effects:ChromeEffect.MonochromeAnimated="Gainsboro"
+                              effects:ChromeEffect.Monochrome="Gainsboro"
                               IsHitTestVisible="{Binding ElementName=PART_MenuPopup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}"/>
 
                     <Popup x:Name="PART_MenuPopup"
@@ -132,13 +132,13 @@
 
                     <ToggleButton Margin="5" Content="DropDown button with ContextMenu in Resources" IsThreeState="False" IsChecked="False"
                           Checked="OpenDropDownMenu"
-                          effects:ChromeEffect.MonochromeAnimated="Gainsboro"
+                          effects:ChromeEffect.Monochrome="Gainsboro"
                           Resources="{StaticResource PopupMenu}">
                     </ToggleButton>
 
                     <ToggleButton Margin="5" Content="DropDown button with ContextMenu in tag" IsThreeState="False" IsChecked="False"
                           Checked="OpenDropDownMenu"
-                          effects:ChromeEffect.MonochromeAnimated="Gainsboro">
+                          effects:ChromeEffect.Monochrome="Gainsboro">
                         <ToggleButton.Tag>
                             <ContextMenu StaysOpen="False">
                                 <MenuItem Header="Copy"/>
