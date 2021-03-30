@@ -71,8 +71,7 @@ namespace WpfInvestigate.Effects
 
         private static void OnElementPreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var element = sender as FrameworkElement;
-            if (element == null) return;
+            if (!(sender is FrameworkElement element)) return;
 
             var rippleColor = GetRippleColor(element);
             if (rippleColor.HasValue)
