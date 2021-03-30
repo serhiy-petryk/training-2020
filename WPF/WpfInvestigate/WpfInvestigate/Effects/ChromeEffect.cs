@@ -83,8 +83,7 @@ namespace WpfInvestigate.Effects
         {
             if (!(sender is Control control)) return;
 
-            var semaphore = control.Resources["semaphore"] as SemaphoreSlim;
-            if (semaphore == null)
+            if (!(control.Resources["semaphore"] is SemaphoreSlim semaphore))
             {
                 semaphore = new SemaphoreSlim(1, 1);
                 control.Resources["semaphore"] = semaphore;
@@ -95,8 +94,7 @@ namespace WpfInvestigate.Effects
             try
             {
                 var oldValues = new Tuple<Color?, Color?, Color?, double>((control.Background as SolidColorBrush)?.Color, (control.Foreground as SolidColorBrush)?.Color, (control.BorderBrush as SolidColorBrush)?.Color, control.Opacity);
-                var getBackgroundMethod = GetBackgroundMethod(control);
-                var newValues = GetNewColors(control, getBackgroundMethod);
+                var newValues = GetNewColors(control, GetBackgroundMethod(control));
                 if (Equals(oldValues, newValues) || !newValues.Item3.HasValue) return;
 
                 if (!(control.Background is SolidColorBrush backgroundBrush && !backgroundBrush.IsSealed))
