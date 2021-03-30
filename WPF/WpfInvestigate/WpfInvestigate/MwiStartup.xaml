@@ -54,7 +54,8 @@
                 <!-- Scale Slider -->
                 <Slider Grid.Column="1" x:Name="ScaleSlider" ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
                         Height="22" Width="100" Margin="2 0 0 0" VerticalAlignment="Bottom" Orientation="Horizontal"
-                        TickFrequency="0.5" Minimum="0.5" Maximum="4" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=ScaleValue, Mode=TwoWay}"
+                        TickFrequency="0.5" Minimum="0.5" Maximum="4" LargeChange="0.5"
+                        Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=ScaleValue, Mode=TwoWay}"
                         IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"/>
 
                 <Button Grid.Column="2" Width="18" Height="18" BorderThickness="0" Focusable="False" ToolTip="Reset zoom"
