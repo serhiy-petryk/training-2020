@@ -35,11 +35,4 @@
 
     <!-- Windows Menu -->
     <SolidColorBrush x:Key="Mwi.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
-
-    <!-- MwiChild -->
-    <SolidColorBrush x:Key="MwiChild.Button.BorderBrush" Color="#FF6A7A93" />
-    <SolidColorBrush x:Key="MwiChild.CloseButton.BorderBrush" Color="#FF431422" />
-    <SolidColorBrush x:Key="MwiChild.Button.Unfocused.BorderBrush" Color="#FFD1DBE5" />
-    <SolidColorBrush x:Key="MwiChild.Button.Unfocused.SubBorderBrush" Color="#FF838EA8" />
-
 </ResourceDictionary>

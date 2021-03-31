@@ -47,6 +47,11 @@
     <SolidColorBrush x:Key="Mwi.Child.FarBorderBrush" Color="#FF3FCEF2" />
 
     <!--  =====  Button colors  ===== -->
+    <SolidColorBrush x:Key="MwiChild.Button.BorderBrush" Color="#FF6A7A93" />
+    <SolidColorBrush x:Key="MwiChild.CloseButton.BorderBrush" Color="#FF431422" />
+    <SolidColorBrush x:Key="MwiChild.Button.Unfocused.BorderBrush" Color="#FFD1DBE5" />
+    <SolidColorBrush x:Key="MwiChild.Button.Unfocused.SubBorderBrush" Color="#FF838EA8" />
+
     <LinearGradientBrush x:Key="NormalSubBorderBackground" EndPoint="0,1">
         <GradientStop Color="#FFC3D4E7" Offset="0.0" />
         <GradientStop Color="#FFBED3E8" Offset="0.5" />
