@@ -63,7 +63,7 @@
                         <!-- Main border -->
                         <Border x:Name="BaseBorder" BorderThickness="1" CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}" 
                                 Margin="{DynamicResource Mwi.Child.Border.Margin}"
-                                Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="{DynamicResource Mwi.Child.BaseBorderBrush}">
+                                BorderBrush="{DynamicResource Mwi.Child.BaseBorderBrush}">
                             <Grid>
                                 <!-- Window 7 thick border -->
                                 <Border x:Name="DarkenBackground" Height="29" VerticalAlignment="Top"
@@ -178,8 +178,36 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
+                        <!-- Colors of Wnd10 theme, active -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsActive}" Value="True">
+                            <Setter TargetName="BaseBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualBaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                        </DataTrigger>
+
+                        <!-- Colors of Wnd10 theme, inactive -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsActive}" Value="False">
+                            <Setter TargetName="BaseBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualBaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10}"/>
+                        </DataTrigger>
+
+                        <!-- Colors of Wnd7 theme, active -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=DarkenBackground, Path=Visibility}" Value="Visible"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsActive}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="BaseBorder" Property="Background" Value="{DynamicResource Mwi.Child.BaseBackgroundBrush}"/>
+                        </MultiDataTrigger>
+
+                        <!-- Colors of Wnd7 theme, inactive -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=DarkenBackground, Path=Visibility}" Value="Visible"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsActive}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="BaseBorder" Property="Background" Value="{DynamicResource Mwi.Child.Unfocused.BaseBackgroundBrush}"/>
+                        </MultiDataTrigger>
+
                         <Trigger Property="IsActive" Value="False">
-                            <Setter TargetName="BaseBorder" Property="Background" Value="{DynamicResource Mwi.Child.Unfocused.BaseBackgroundBrush}" />
+                            <!--<Setter TargetName="BaseBorder" Property="Background" Value="{DynamicResource Mwi.Child.Unfocused.BaseBackgroundBrush}" />-->
                             <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{DynamicResource Mwi.Child.Unfocused.BaseBorderBrush}" />
                             <Setter TargetName="HighlightBackground" Property="Opacity" Value="0" />
                             <Setter TargetName="DarkenBackground" Property="Opacity" Value="0.5" />

@@ -104,7 +104,7 @@
                 <ContentControl Content="Mwi Child Test"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Title="Empty Window Using XAML and long header" />
+            <controls:MwiChild Title="Empty Window Using XAML and long header" BaseColor="Aqua" />
 
             <controls:MwiChild Position="100 100" Background="Gainsboro" BorderBrush="Orange">
                 <ContentControl Content="object Content"/>

@@ -21,7 +21,14 @@ namespace WpfInvestigate.ViewModels
             set => SetValue(ScaleValueProperty, value);
         }
         //=============================
-        public static readonly DependencyProperty AppColorProperty = DependencyProperty.Register(nameof(AppColor), typeof(Color), typeof(MwiAppViewModel), new UIPropertyMetadata(Colors.White));
+        public static readonly DependencyProperty AppColorProperty = DependencyProperty.Register(nameof(AppColor), typeof(Color), typeof(MwiAppViewModel), new UIPropertyMetadata(Colors.White, OnAppcolorChanged));
+
+        private static void OnAppcolorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var model = (MwiAppViewModel)d;
+            model.OnPropertiesChanged(nameof(AppColor));
+        }
+
         public Color AppColor
         {
             get => (Color)GetValue(AppColorProperty);

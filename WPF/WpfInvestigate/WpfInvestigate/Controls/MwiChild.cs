@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -8,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
@@ -52,7 +54,14 @@ namespace WpfInvestigate.Controls
 
             Loaded += OnMwiChildLoaded;
 
-            /* can't reproduce (2021-03-12): MwiAppViewModel.Instance.PropertyChanged += async (sender, args) =>
+            MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
+            {
+                if (ActualWidth > 0 && args is PropertyChangedEventArgs e && e.PropertyName == nameof(MwiAppViewModel.AppColor))
+                    OnPropertiesChanged(nameof(ActualBaseColor));
+            };
+
+            /* can't reproduce (2021-03-12):
+             MwiAppViewModel.Instance.PropertyChanged += async (sender, args) =>
             {
                 if (ActualWidth > 0 && args is PropertyChangedEventArgs e && e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
                 {
@@ -64,7 +73,7 @@ namespace WpfInvestigate.Controls
                 }
             };*/
 
-            void OnMwiChildLoaded(object sender, RoutedEventArgs e)
+             void OnMwiChildLoaded(object sender, RoutedEventArgs e)
             {
                 Loaded -= OnMwiChildLoaded;
                 if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
@@ -395,6 +404,20 @@ namespace WpfInvestigate.Controls
             get => (Buttons)GetValue(VisibleButtonsProperty);
             set => SetValue(VisibleButtonsProperty, value);
         }
+        //==============================
+        public static readonly DependencyProperty BaseColorProperty = DependencyProperty.Register("BaseColor", typeof(Color?), typeof(MwiChild), new FrameworkPropertyMetadata(null, OnBaseColorChanged));
+        public Color? BaseColor
+        {
+            get => (Color?)GetValue(BaseColorProperty);
+            set => SetValue(BaseColorProperty, value);
+        }
+        private static void OnBaseColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var mwiChild = (MwiChild)d;
+            mwiChild.OnPropertiesChanged(nameof(ActualBaseColor));
+        }
+
+        public Color ActualBaseColor => BaseColor ?? MwiAppViewModel.Instance.AppColor;
         #endregion
 
         private void UpdateUI() => OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),
