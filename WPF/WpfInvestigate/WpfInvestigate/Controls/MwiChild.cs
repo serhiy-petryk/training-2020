@@ -417,7 +417,8 @@ namespace WpfInvestigate.Controls
             mwiChild.OnPropertiesChanged(nameof(ActualBaseColor));
         }
 
-        public Color ActualBaseColor => BaseColor ?? MwiAppViewModel.Instance.AppColor;
+        public Color ActualBaseColor => MwiAppViewModel.Instance.CurrentTheme.Id == "Windows7" ? Common.ColorSpaces.ColorUtils.StringToColor("#FFBBD2EB") : BaseColor ?? MwiAppViewModel.Instance.AppColor;
+
         #endregion
 
         private void UpdateUI() => OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),

@@ -17,7 +17,7 @@
         <common:BindingProxy x:Key="MwiBaseColorProxy" Value="{DynamicResource Mwi.BaseColorProxy}"/>
     </Window.Resources>
 
-    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close">
+    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close" BaseColor="Orange">
         <controls:MwiChild.CommandBar>
             <samples:MwiCommandBarSample/>
         </controls:MwiChild.CommandBar>
@@ -72,8 +72,10 @@
                                     <Setter Property="Foreground" Value="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{Binding Source={StaticResource MwiBaseColorProxy}, Path=Value.Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15}"/>
-                                    <Setter Property="Foreground" Value="{Binding Source={StaticResource MwiBaseColorProxy}, Path=Value.Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15/+75%}"/>
+                                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualBaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15}"/>
+                                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualBaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15/+75%}"/>
+                                    <!--<Setter Property="Background" Value="{Binding Source={StaticResource MwiBaseColorProxy}, Path=Value.Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15}"/>
+                                    <Setter Property="Foreground" Value="{Binding Source={StaticResource MwiBaseColorProxy}, Path=Value.Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15/+75%}"/>-->
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -95,7 +97,7 @@
 
         </controls:MwiChild.RightHeaderBar>
 
-        <controls:MwiContainer x:Name="MwiContainer" Background="Beige">
+        <controls:MwiContainer x:Name="MwiContainer" Background="Red">
             <controls:MwiContainer.LeftPanel>
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>
