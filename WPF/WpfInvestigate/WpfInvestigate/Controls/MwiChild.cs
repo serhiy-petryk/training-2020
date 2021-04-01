@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Themes;
 using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
@@ -417,7 +418,7 @@ namespace WpfInvestigate.Controls
             mwiChild.OnPropertiesChanged(nameof(ActualBaseColor));
         }
 
-        public Color ActualBaseColor => MwiAppViewModel.Instance.CurrentTheme.Id == "Windows7" ? Common.ColorSpaces.ColorUtils.StringToColor("#FFBBD2EB") : BaseColor ?? MwiAppViewModel.Instance.AppColor;
+        public Color ActualBaseColor => MwiAppViewModel.Instance.CurrentTheme.Id == "Windows7" ? MwiThemeInfo.Wnd7BaseColor : BaseColor ?? MwiAppViewModel.Instance.AppColor;
 
         #endregion
 

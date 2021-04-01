@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Media;
+using WpfInvestigate.Common.ColorSpaces;
 
 namespace WpfInvestigate.Themes
 {
@@ -15,6 +17,8 @@ namespace WpfInvestigate.Themes
             new MwiThemeInfo("Windows10", null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.xaml"}),
             new MwiThemeInfo("Windows7", null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd7.xaml" })
         };
+
+        public static Color Wnd7BaseColor => ColorUtils.StringToColor("#FFBBD2EB");
 
         // ==============   Static section  ======================
         private static Dictionary<string, Assembly> _assemblyCache = new Dictionary<string, Assembly>();
