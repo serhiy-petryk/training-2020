@@ -38,7 +38,6 @@
     <SolidColorBrush x:Key="Mwi.Child.FarBorderBrush" Color="Transparent" />
 
     <!-- =============  MwiChild header  =============== -->
-    <SolidColorBrush x:Key="Mwi.Child.IconBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=+180:100%:50%}" />
     <SolidColorBrush x:Key="Mwi.Child.Header.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}"/>
     <SolidColorBrush x:Key="Mwi.Child.Header.Inactive.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10/+70%'}"/>
 

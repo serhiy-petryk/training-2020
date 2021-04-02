@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -50,9 +51,6 @@ namespace WpfInvestigate.Controls
             CmdClose = new RelayCommand(Close, _ => AllowClose);
 
             DataContext = this;
-
-            if (Icon == null) Icon = FindResource("DefaultIcon") as ImageSource;
-
             Loaded += OnMwiChildLoaded;
 
             MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
@@ -136,7 +134,7 @@ namespace WpfInvestigate.Controls
         }
 
         private Window _activatedHost;
-        protected override void OnVisualParentChanged(DependencyObject oldParent)
+        protected override async void OnVisualParentChanged(DependencyObject oldParent)
         {
             base.OnVisualParentChanged(oldParent);
 
@@ -150,16 +148,9 @@ namespace WpfInvestigate.Controls
 
             if (!IsWindowed) return;
 
+            await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Normal).Task;
             _activatedHost = Parent as Window;
-            if (Icon != null && _activatedHost.Icon == null)
-                _activatedHost.Icon = Icon;
-            else if (Icon == null && _activatedHost.Icon != null)
-                Icon = _activatedHost.Icon;
-            else if (Icon == null && _activatedHost.Icon == null)
-            {
-                Icon = FindResource("DefaultIcon") as ImageSource;
-                _activatedHost.Icon = FindResource("DefaultIcon") as ImageSource;
-            }
+            _activatedHost.Icon = (GetTemplateChild("IconImage") as Image)?.Source;
 
             if (!string.IsNullOrEmpty(Title) && string.IsNullOrEmpty(_activatedHost.Title))
                 _activatedHost.Title = Title;
@@ -186,6 +177,8 @@ namespace WpfInvestigate.Controls
                 {
                     wnd.Closed -= OnHostClosed;
                     wnd.KeyDown -= OnHostKeyDown;
+                    wnd.Activated -= OnWindowActivated;
+                    wnd.Deactivated -= OnWindowDeactivated;
                 }
             }
             void OnWindowActivated(object sender, EventArgs e) => Activate();

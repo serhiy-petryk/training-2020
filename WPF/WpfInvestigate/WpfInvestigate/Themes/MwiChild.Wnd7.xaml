@@ -159,7 +159,6 @@
     </LinearGradientBrush>
 
     <!-- =============  MwiChild header  =============== -->
-    <SolidColorBrush x:Key="Mwi.Child.IconBrush" Color="DodgerBlue" />
     <SolidColorBrush x:Key="Mwi.Child.Header.ForegroundBrush" Color="{x:Static SystemColors.ActiveCaptionTextColor}"/>
     <SolidColorBrush x:Key="Mwi.Child.Header.Inactive.ForegroundBrush" Color="{x:Static SystemColors.GrayTextColor}"/>
 
