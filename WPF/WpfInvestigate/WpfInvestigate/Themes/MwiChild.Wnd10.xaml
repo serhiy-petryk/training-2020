@@ -39,7 +39,7 @@
 
     <!-- =============  MwiChild header  =============== -->
     <SolidColorBrush x:Key="Mwi.Child.Header.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}"/>
-    <SolidColorBrush x:Key="Mwi.Child.Header.Inactive.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10/+70%'}"/>
+    <SolidColorBrush x:Key="Mwi.Child.Header.Unfocused.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10/+70%'}"/>
 
     <!-- =============  MwiChild system menu  =============== -->
 

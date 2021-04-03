@@ -160,7 +160,7 @@
 
     <!-- =============  MwiChild header  =============== -->
     <SolidColorBrush x:Key="Mwi.Child.Header.ForegroundBrush" Color="{x:Static SystemColors.ActiveCaptionTextColor}"/>
-    <SolidColorBrush x:Key="Mwi.Child.Header.Inactive.ForegroundBrush" Color="{x:Static SystemColors.GrayTextColor}"/>
+    <SolidColorBrush x:Key="Mwi.Child.Header.Unfocused.ForegroundBrush" Color="{x:Static SystemColors.GrayTextColor}"/>
 
     <!-- =============  MwiChild system menu  =============== -->
 

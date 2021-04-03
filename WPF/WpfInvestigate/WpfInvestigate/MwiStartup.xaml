@@ -40,7 +40,7 @@
                 <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding StringFormat=Zoom {0:P0}, ElementName=ScaleSlider, Path=Value}">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Foreground" Value="{DynamicResource Mwi.Child.Header.Inactive.ForegroundBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Mwi.Child.Header.Unfocused.ForegroundBrush}"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ElementName=ScaleSlider, Path=IsMouseOver}" Value="True">
                                     <!-- or <DataTrigger Binding="{Binding Path=Children[1].IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=StackPanel}}" Value="True">-->
