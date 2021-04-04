@@ -54,7 +54,7 @@ namespace WpfInvestigate.Controls
             if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
             Loaded += OnMwiChildLoaded;
             var dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(MwiChild));
-            dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(ActualBaseColor)));
+            dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
             Dispatcher.BeginInvoke(new Action(OnThemeChanged), DispatcherPriority.Normal);
 
             MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
@@ -64,12 +64,12 @@ namespace WpfInvestigate.Controls
                     if (e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
                         OnThemeChanged();
 
-                    //OnPropertiesChanged(nameof(ActualBaseColor));
+                    //OnPropertiesChanged(nameof(BaseColor));
                     if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
                     {
                         if (TryFindResource("Mwi.BaseColorProxy") is BindingProxy colorProxy)
-                            colorProxy.Value = ActualBaseColor;
-                        OnPropertiesChanged(nameof(ActualBaseColor));
+                            colorProxy.Value = BaseColor;
+                        OnPropertiesChanged(nameof(BaseColor));
                     }
                 }
             };
@@ -104,7 +104,7 @@ namespace WpfInvestigate.Controls
                 FillResources(this, f1);
 
             if (TryFindResource("Mwi.BaseColorProxy") is BindingProxy colorProxy)
-                colorProxy.Value = ActualBaseColor;
+                colorProxy.Value = BaseColor;
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
         {
@@ -323,7 +323,7 @@ namespace WpfInvestigate.Controls
         #region =============  Properties  =================
         public event EventHandler Closed;
         public MwiContainer MwiContainer { get; set; }
-        public Color ActualBaseColor
+        public Color BaseColor
         {
             get
             {

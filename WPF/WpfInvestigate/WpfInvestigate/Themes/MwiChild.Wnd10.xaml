@@ -88,7 +88,7 @@
             </Setter.Value>
         </Setter>
         <!--<Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}}"/>-->
-        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualBaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,60, +0%,+70%,+0%,100, +15,+15/+75%,+0%,100, +20,+20/+75%,+0%,100"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Style.Triggers>

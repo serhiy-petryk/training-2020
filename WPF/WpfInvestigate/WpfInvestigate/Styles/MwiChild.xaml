@@ -15,7 +15,7 @@
     <DrawingImage x:Key="Mwi.DefaultIcon" x:Shared="False">
         <DrawingImage.Drawing>
             <GeometryDrawing Geometry="{StaticResource DefaultIconGeometry}"
-                             Brush="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualBaseColor, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=+180:100%:50%}"/>
+                             Brush="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=BaseColor, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=+180:100%:50%}"/>
         </DrawingImage.Drawing>
     </DrawingImage>
 
