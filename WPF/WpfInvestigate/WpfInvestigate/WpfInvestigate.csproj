@@ -578,14 +578,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\MwiChild.Wnd10.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\MwiChild.Wnd7.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Themes\MwiColors.Wnd7.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
