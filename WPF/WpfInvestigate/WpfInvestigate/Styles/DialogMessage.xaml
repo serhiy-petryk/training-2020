@@ -16,13 +16,14 @@
                 <Setter Property="Padding" Value="0 1"/>
                 <Setter Property="Focusable" Value="True"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
-                <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
                 <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:DialogMessage}, Path=(effects:FocusVisualEffect.AlwaysShowFocus)}"/>
                 <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:DialogMessage}, Path=FocusButtonStyle}"/>
             </Style>
         </Style.Resources>
 
+        <Setter Property="Background" Value="#FFE2EBF4"/>
         <Setter Property="MinWidth" Value="100"/>
         <Setter Property="FontSize" Value="14" />
         <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
@@ -34,10 +35,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:DialogMessage">
                     <Border BorderThickness="2" Padding="0"
-                            BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
+                            BorderBrush="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
                         <Border BorderThickness="5 2 5 5"
-                                Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
+                                Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                BorderBrush="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
                             <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -49,14 +50,14 @@
                                 <!-- Insert before header for focusing on the first button in ButtonsArea (not 'Close' button) -->
                                 <Grid Grid.Row="2" x:Name="PART_ButtonsArea" Margin="0 5 0 0"/>
 
-                                <Grid Grid.Row="0" Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
+                                <Grid Grid.Row="0" Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Header text -->
                                     <TextBlock Grid.Column="0" Padding="0 5" VerticalAlignment="Top"
-                                               Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
+                                               Foreground="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
                                                Text="{Binding Caption}"
                                                TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                                     <!-- Close button -->
@@ -86,7 +87,7 @@
                                     <!-- Message -->
                                     <TextBox Grid.Column="1" Margin="8" Padding="0" BorderThickness="0" Background="Transparent"
                                              HorizontalAlignment="Left" VerticalAlignment="Center"
-                                             Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
+                                             Foreground="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
                                              TextWrapping="Wrap" Style="{StaticResource ReadOnlyTextBoxStyle}"
                                              FontSize="14" Text="{Binding MessageText, Mode=OneWay}"/>
                                 </Grid>

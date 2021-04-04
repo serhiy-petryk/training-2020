@@ -26,8 +26,6 @@ namespace WpfInvestigate.Controls
             FocusableProperty.OverrideMetadata(typeof(DialogMessage), new FrameworkPropertyMetadata(false));
         }
 
-        private static readonly Color _defaultBaseColor = ColorUtils.StringToColor("#FFE2EBF4");
-
         private static readonly string[] _iconColors = {"Primary", "Danger", "Danger", "Warning", "Info", "Success"};
 
         #region ============  Public Static Methods  =============
@@ -71,7 +69,7 @@ namespace WpfInvestigate.Controls
                 dialogMessage.Icon = Application.Current?.TryFindResource($"{icon.Value}Geometry") as Geometry;
                 dialogMessage.BaseIconColor = Application.Current?.TryFindResource(_iconColors[(int)icon] + "Color") as Color?;
                 if (dialogMessage.BaseIconColor.HasValue)
-                    dialogMessage.BaseColor = dialogMessage.BaseIconColor.Value;
+                    dialogMessage.Background = new SolidColorBrush(dialogMessage.BaseIconColor.Value);
             }
             if (buttons != null)
                 dialogMessage.Buttons = buttons;
@@ -91,7 +89,6 @@ namespace WpfInvestigate.Controls
         public string MessageText { get; set; }
         public string Caption { get; set; }
         public Geometry Icon { get; set; }
-        public Color BaseColor { get; set; } = _defaultBaseColor;
         public Color? BaseIconColor { get; set; }
         public bool IsCloseButtonVisible { get; set; } = true;
 
@@ -108,9 +105,9 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        public Color IconColor => BaseIconColor.HasValue && BaseIconColor.Value != BaseColor
+        public Color IconColor => BaseIconColor.HasValue && BaseIconColor.Value != Tips.GetActualBackgroundColor(this)
             ? BaseIconColor.Value
-            : (Color) ColorHslBrush.Instance.Convert(BaseIconColor ?? BaseColor, typeof(Color), "+70%", null);
+            : (Color) ColorHslBrush.Instance.Convert(BaseIconColor ?? Tips.GetActualBackgroundColor(this), typeof(Color), "+70%", null);
 
         private RelayCommand _cmdClickButton;
 
