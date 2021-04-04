@@ -17,7 +17,7 @@
         <common:BindingProxy x:Key="MwiBaseColorProxy" Value="{DynamicResource Mwi.BaseColorProxy}"/>
     </Window.Resources>
 
-    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close" BaseColor="Orange">
+    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close" Background="Orange">
         <controls:MwiChild.CommandBar>
             <samples:MwiCommandBarSample/>
         </controls:MwiChild.CommandBar>
@@ -106,9 +106,9 @@
                 <ContentControl Content="Mwi Child Test"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Title="Empty Window Using XAML and long header" BaseColor="LightBlue" />
+            <controls:MwiChild Title="Empty Window Using XAML and long header" Background="LightBlue" />
 
-            <controls:MwiChild Position="100 100" Background="Gainsboro" BorderBrush="Orange" BaseColor="LightGreen">
+            <controls:MwiChild Position="100 100" BorderBrush="Orange" Background="LightGreen">
                 <ContentControl Content="object Content"/>
                 <controls:MwiChild.Resources>
                     <Style TargetType="controls:MwiChild" BasedOn="{StaticResource {x:Type controls:MwiChild}}">

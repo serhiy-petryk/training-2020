@@ -53,6 +53,8 @@ namespace WpfInvestigate.Controls
             DataContext = this;
             if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
             Loaded += OnMwiChildLoaded;
+            var dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(MwiChild));
+            dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(ActualBaseColor)));
             Dispatcher.BeginInvoke(new Action(OnThemeChanged), DispatcherPriority.Normal);
 
             MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
@@ -321,6 +323,15 @@ namespace WpfInvestigate.Controls
         #region =============  Properties  =================
         public event EventHandler Closed;
         public MwiContainer MwiContainer { get; set; }
+        public Color ActualBaseColor
+        {
+            get
+            {
+                if (MwiAppViewModel.Instance.CurrentTheme.Id == "Windows7") return MwiThemeInfo.Wnd7BaseColor;
+                var backColor = Tips.GetColorFromBrush(Background);
+                return backColor == Colors.Transparent ? MwiAppViewModel.Instance.AppColor : backColor;
+            }
+        }
 
         //============  Buttons  ============
         public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;
@@ -429,21 +440,6 @@ namespace WpfInvestigate.Controls
             get => (Buttons)GetValue(VisibleButtonsProperty);
             set => SetValue(VisibleButtonsProperty, value);
         }
-        //==============================
-        public static readonly DependencyProperty BaseColorProperty = DependencyProperty.Register("BaseColor", typeof(Color?), typeof(MwiChild), new FrameworkPropertyMetadata(null, OnBaseColorChanged));
-        public Color? BaseColor
-        {
-            get => (Color?)GetValue(BaseColorProperty);
-            set => SetValue(BaseColorProperty, value);
-        }
-        private static void OnBaseColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var mwiChild = (MwiChild)d;
-            mwiChild.OnPropertiesChanged(nameof(ActualBaseColor));
-        }
-
-        public Color ActualBaseColor => MwiAppViewModel.Instance.CurrentTheme.Id == "Windows7" ? MwiThemeInfo.Wnd7BaseColor : BaseColor ?? MwiAppViewModel.Instance.AppColor;
-
         #endregion
 
         private void UpdateUI() => OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),
