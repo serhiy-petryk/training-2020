@@ -25,6 +25,8 @@
 
         <Setter Property="MinWidth" Value="100"/>
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
@@ -32,7 +34,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:DialogMessage">
-                    <Border BorderThickness="2" CornerRadius="2" Padding="0"
+                    <Border BorderThickness="2" Padding="0"
                             BorderBrush="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
                         <Border BorderThickness="5 2 5 5"
                                 Background="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"

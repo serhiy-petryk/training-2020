@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Common.ColorSpaces;
+using WpfInvestigate.Effects;
 using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
@@ -42,45 +43,27 @@ namespace WpfInvestigate.Controls
         /// <returns>Dialog result</returns>
         public static string ShowDialog(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true, FrameworkElement messageHost = null)
         {
-            var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
-            var content = new ResizingControl
-            {
-                Content = dialogMessage,
-                LimitPositionToPanelBounds = true
-            };
-
-            new DialogAdorner(messageHost).ShowContentDialog(content);
-            return dialogMessage.Result;
+            var resizingControl = CreateResizingControl(messageText, caption, icon, buttons, isCloseButtonVisible);
+            new DialogAdorner(messageHost).ShowContentDialog(resizingControl);
+            return ((DialogMessage)resizingControl.Content).Result;
         }
 
         public static async Task<string> ShowAsync(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true, FrameworkElement messageHost = null)
         {
-            var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
-            var content = new ResizingControl
-            {
-                Content = dialogMessage,
-                LimitPositionToPanelBounds = true
-            };
-
+            var resizingControl = CreateResizingControl(messageText, caption, icon, buttons, isCloseButtonVisible);
             var adorner = new DialogAdorner(messageHost);
-            adorner.ShowContent(content);
+            adorner.ShowContent(resizingControl);
             await adorner.WaitUntilClosed();
-            return dialogMessage.Result;
+            return ((DialogMessage)resizingControl.Content).Result;
         }
 
         public static void Show(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true, FrameworkElement messageHost = null)
         {
-            var dialogMessage = CreateDialogMessage(messageText, caption, icon, buttons, isCloseButtonVisible);
-            var content = new ResizingControl
-            {
-                Content = dialogMessage,
-                LimitPositionToPanelBounds = true
-            };
-
-            new DialogAdorner(messageHost).ShowContent(content);
+            var resizingControl = CreateResizingControl(messageText, caption, icon, buttons, isCloseButtonVisible);
+            new DialogAdorner(messageHost).ShowContent(resizingControl);
         }
 
-        private static DialogMessage CreateDialogMessage(string messageText, string caption, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
+        private static ResizingControl CreateResizingControl(string messageText, string caption, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true)
         {
             var dialogMessage = new DialogMessage { MessageText = messageText, Caption = caption, IsCloseButtonVisible = isCloseButtonVisible };
             if (icon != null)
@@ -93,7 +76,13 @@ namespace WpfInvestigate.Controls
             if (buttons != null)
                 dialogMessage.Buttons = buttons;
 
-            return dialogMessage;
+            var content = new ResizingControl
+            {
+                Content = dialogMessage,
+                LimitPositionToPanelBounds = true
+            };
+            CornerRadiusEffect.SetCornerRadius(content, CornerRadiusEffect.GetCornerRadius(dialogMessage));
+            return content;
         }
         #endregion
 
