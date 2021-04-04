@@ -52,11 +52,19 @@ namespace WpfInvestigate.Controls
 
             DataContext = this;
             Loaded += OnMwiChildLoaded;
+            Dispatcher.BeginInvoke(new Action(OnThemeChanged), DispatcherPriority.Normal);
 
             MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
             {
-                if (ActualWidth > 0 && args is PropertyChangedEventArgs e && e.PropertyName == nameof(MwiAppViewModel.AppColor))
-                    OnPropertiesChanged(nameof(ActualBaseColor));
+                if (ActualWidth > 0 && args is PropertyChangedEventArgs e)
+                {
+                    // if (e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
+                        OnThemeChanged();
+
+                    //OnPropertiesChanged(nameof(ActualBaseColor));
+                    // if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
+                        OnPropertiesChanged(nameof(ActualBaseColor));
+                }
             };
 
             /* can't reproduce (2021-03-12):
@@ -79,6 +87,24 @@ namespace WpfInvestigate.Controls
                     Position = MwiContainer.GetStartPositionForMwiChild(this);
                 AnimateShow();
             }
+        }
+
+        private void OnThemeChanged()
+        {
+            if (MwiAppViewModel.Instance.CurrentTheme == null) return;
+
+            foreach (var f1 in MwiAppViewModel.Instance.CurrentTheme.GetResources())
+                FillResources(this, f1);
+
+            if (TryFindResource("Mwi.BaseColorProxy") is BindingProxy colorProxy)
+                colorProxy.Value = ActualBaseColor;
+        }
+        private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
+        {
+            foreach (var rd in resources.MergedDictionaries)
+                FillResources(fe, rd);
+            foreach (var key in resources.Keys)
+                fe.Resources[key] = resources[key];
         }
 
         #region =============  Override methods  ====================

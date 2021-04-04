@@ -108,7 +108,7 @@
 
             <controls:MwiChild Title="Empty Window Using XAML and long header" BaseColor="LightBlue" />
 
-            <controls:MwiChild Position="100 100" Background="Gainsboro" BorderBrush="Orange">
+            <controls:MwiChild Position="100 100" Background="Gainsboro" BorderBrush="Orange" BaseColor="LightGreen">
                 <ContentControl Content="object Content"/>
                 <controls:MwiChild.Resources>
                     <Style TargetType="controls:MwiChild" BasedOn="{StaticResource {x:Type controls:MwiChild}}">

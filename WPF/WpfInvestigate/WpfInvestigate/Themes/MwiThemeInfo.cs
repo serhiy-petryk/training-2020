@@ -44,7 +44,6 @@ namespace WpfInvestigate.Themes
         public string Id { get; }
         private string _assemblyName;
         private string[] _uris;
-        private ResourceDictionary[] _resources = null;
         public MwiThemeInfo(string id, string assemblyName, string[] uris)
         {
             Id = id;
@@ -52,26 +51,18 @@ namespace WpfInvestigate.Themes
             _uris = uris;
         }
 
-        public void ApplyTheme()
+        public ResourceDictionary[] GetResources()
         {
-            if (!string.IsNullOrEmpty(_assemblyName) && _resources == null)
+            if (!string.IsNullOrEmpty(_assemblyName))
             {
                 var assembly = GetAssembly(_assemblyName);
                 var uris = _uris.Select(uri => new Uri("/" + assembly.GetName().Name + ";component/" + uri, UriKind.Relative));
-                _resources = uris.Select(uri => Application.LoadComponent(uri) as ResourceDictionary).ToArray();
+                return uris.Select(uri => Application.LoadComponent(uri) as ResourceDictionary).ToArray();
             }
-            else if (_resources == null && _uris != null)
-                _resources = _uris.Select(uri => new ResourceDictionary{Source = new Uri(uri, UriKind.RelativeOrAbsolute)}).ToArray();
-            else if (_resources == null && _uris == null)
-                _resources = new ResourceDictionary[0];
 
-            // Clear old themes and add new theme
-            // Application.Current.Resources.MergedDictionaries.Clear();
-            foreach (var rd in Application.Current.Resources.MergedDictionaries.Where(d => d.Source.OriginalString.Contains("Mwi")).ToArray())
-                Application.Current.Resources.MergedDictionaries.Remove(rd);
-
-            foreach (var r in _resources)
-                Application.Current.Resources.MergedDictionaries.Add(r);
+            if (_uris != null)
+                return _uris.Select(uri => new ResourceDictionary { Source = new Uri(uri, UriKind.RelativeOrAbsolute) }).ToArray();
+            return new ResourceDictionary[0];
         }
 
         public override string ToString() => Id;

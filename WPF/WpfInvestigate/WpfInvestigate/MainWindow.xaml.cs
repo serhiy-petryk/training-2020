@@ -98,7 +98,10 @@ namespace WpfInvestigate
         private void TestButtonChangeForeground(object sender, RoutedEventArgs e)
         {
             // TestButton2.Foreground = new SolidColorBrush(Colors.Green);
-            TestButton2.SetCurrentValue(ForegroundProperty, new SolidColorBrush(Colors.Green));
+            // TestButton2.SetCurrentValue(ForegroundProperty, new SolidColorBrush(Colors.Green));
+            var a1 = this.TryFindResource("TestBrush") as SolidColorBrush;
+            if (a1!= null)
+                Resources["TestBrush"]= new SolidColorBrush(Colors.Green);
         }
     }
 }

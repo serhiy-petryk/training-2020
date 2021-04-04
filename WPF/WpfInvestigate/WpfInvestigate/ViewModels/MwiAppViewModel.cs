@@ -70,7 +70,6 @@ namespace WpfInvestigate.ViewModels
                 CurrentTheme = MwiThemeInfo.Themes[newK];
             }
 
-            CurrentTheme.ApplyTheme();
             OnPropertiesChanged(nameof(CurrentTheme), nameof(AppColor));
         }
         #endregion
