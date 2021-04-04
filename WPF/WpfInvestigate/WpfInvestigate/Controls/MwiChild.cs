@@ -58,12 +58,16 @@ namespace WpfInvestigate.Controls
             {
                 if (ActualWidth > 0 && args is PropertyChangedEventArgs e)
                 {
-                    // if (e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
+                    if (e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
                         OnThemeChanged();
 
                     //OnPropertiesChanged(nameof(ActualBaseColor));
-                    // if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
+                    if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
+                    {
+                        if (TryFindResource("Mwi.BaseColorProxy") is BindingProxy colorProxy)
+                            colorProxy.Value = ActualBaseColor;
                         OnPropertiesChanged(nameof(ActualBaseColor));
+                    }
                 }
             };
 
