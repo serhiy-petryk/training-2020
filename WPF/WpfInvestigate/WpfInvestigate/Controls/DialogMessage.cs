@@ -50,7 +50,7 @@ namespace WpfInvestigate.Controls
         {
             var resizingControl = CreateResizingControl(messageText, caption, icon, buttons, isCloseButtonVisible);
             var adorner = new DialogAdorner(messageHost);
-            adorner.ShowContent(resizingControl);
+            await adorner.ShowContentAsync(resizingControl);
             await adorner.WaitUntilClosed();
             return ((DialogMessage)resizingControl.Content).Result;
         }
