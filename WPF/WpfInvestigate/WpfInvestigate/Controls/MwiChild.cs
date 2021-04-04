@@ -51,6 +51,7 @@ namespace WpfInvestigate.Controls
             CmdClose = new RelayCommand(Close, _ => AllowClose);
 
             DataContext = this;
+            if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
             Loaded += OnMwiChildLoaded;
             Dispatcher.BeginInvoke(new Action(OnThemeChanged), DispatcherPriority.Normal);
 
