@@ -30,7 +30,7 @@ namespace WpfInvestigate
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 if (TopControl.Template.FindName("ContentBorder", TopControl) is FrameworkElement topContentControl)
-                    topContentControl.LayoutTransform = FindResource("ScaleTransform") as ScaleTransform;
+                    topContentControl.LayoutTransform = FindResource("Mwi.ScaleTransform") as ScaleTransform;
             }), DispatcherPriority.Normal);
 
             /*MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelInstancePropertyChanged;

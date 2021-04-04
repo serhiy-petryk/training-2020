@@ -13,7 +13,6 @@
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/PopupResizeControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ResizingControl.xaml" />
 
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiCommon.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MwiContainer.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MwiChild.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MwiBar.xaml" />

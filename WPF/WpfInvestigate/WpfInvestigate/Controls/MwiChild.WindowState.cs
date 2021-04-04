@@ -76,7 +76,7 @@ namespace WpfInvestigate.Controls
                 Margin = new Thickness();
                 MwiContainer.MwiPanel.Children.Remove(this);
                 var wnd = new Window { Style = FindResource("HeadlessWindow") as Style, Content = this};
-                LayoutTransform = FindResource("ScaleTransform") as ScaleTransform;
+                LayoutTransform = FindResource("Mwi.ScaleTransform") as ScaleTransform;
                 wnd.Show();
                 Activate();
 

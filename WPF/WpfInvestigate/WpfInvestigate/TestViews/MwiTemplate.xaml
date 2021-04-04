@@ -40,6 +40,9 @@
                 AutoToolTipPrecision="2"/>
 
         <Grid Grid.Column="1" Background="Yellow">
+            <Grid.Resources>
+                <DropShadowEffect x:Key="Mwi.ShadowEffect" BlurRadius="8" Direction="330" Opacity="0.8" ShadowDepth="4" Color="Black" />
+            </Grid.Resources>
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>

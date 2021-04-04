@@ -5,7 +5,6 @@
                     xmlns:common="clr-namespace:WpfInvestigate.Common">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiCommon.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/ButtonStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -15,7 +14,7 @@
                 <Setter Property="Background" Value="{DynamicResource Mwi.TabItem.Thumbnail.BackgroundBrush}"/>
                 <Setter Property="BorderThickness" Value="4"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="LayoutTransform" Value="{StaticResource ScaleTransform}"/>
+                <Setter Property="LayoutTransform" Value="{StaticResource Mwi.ScaleTransform}"/>
                 <Setter Property="RenderTransform">
                     <Setter.Value>
                         <ScaleTransform ScaleX="0.7" CenterX="90" />

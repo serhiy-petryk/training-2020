@@ -6,7 +6,6 @@
                     xmlns:common="clr-namespace:WpfInvestigate.Common">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiCommon.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Mwi.Wnd7.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -56,6 +55,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MwiChild">
                     <Grid>
+                        <Grid.Resources>
+                            <DropShadowEffect x:Key="Mwi.ShadowEffect" BlurRadius="8" Direction="330" Opacity="0.8" ShadowDepth="4" Color="Black" />
+                        </Grid.Resources>
                         <!-- Shadow -->
                         <Border x:Name="ShadowBorder" Background="White" Effect="{StaticResource Mwi.ShadowEffect}"
                                 Margin="{DynamicResource Mwi.Child.Border.Margin}"
@@ -158,7 +160,7 @@
                                    Margin="{DynamicResource Mwi.Child.MovingThumb.Margin}" effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header}">
                                 <Thumb.Resources>
                                     <Style TargetType="ToolTip">
-                                        <Setter Property="LayoutTransform" Value="{StaticResource ScaleTransform}"/>
+                                        <Setter Property="LayoutTransform" Value="{StaticResource Mwi.ScaleTransform}"/>
                                     </Style>
                                 </Thumb.Resources>
                             </Thumb>
