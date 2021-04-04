@@ -23,6 +23,7 @@
         <Setter Property="MaxHeight" Value="2000"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>
         <Setter Property="UseLayoutRounding" Value="False"/>
         <Setter Property="SnapsToDevicePixels" Value="False"/>
         <Setter Property="Template">
