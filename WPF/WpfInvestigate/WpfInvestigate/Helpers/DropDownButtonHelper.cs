@@ -1,9 +1,6 @@
 ﻿using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Media;
-using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Helpers
 {
@@ -22,27 +19,7 @@ namespace WpfInvestigate.Helpers
                         cm.Placement = PlacementMode.Bottom;
                         cm.Closed += (senderClosed, eClosed) => ((ToggleButton) sender).IsChecked = false;
                     }
-
-                    var layoutTransform = new TransformGroup();
-                    var renderTransform = new TransformGroup();
-                    foreach (var element in Tips.GetVisualParents(button).OfType<FrameworkElement>().ToArray())
-                    {
-                        if (element.LayoutTransform != Transform.Identity)
-                            layoutTransform.Children.Add(element.LayoutTransform.CloneCurrentValue());
-                        if (element.RenderTransform != Transform.Identity)
-                            renderTransform.Children.Add(element.RenderTransform.CloneCurrentValue());
-                    }
-
-                    if (layoutTransform.Children.Count > 1)
-                        cm.LayoutTransform = layoutTransform;
-                    else if (layoutTransform.Children.Count == 1)
-                        cm.LayoutTransform = layoutTransform.Children[0];
-
-                    if (renderTransform.Children.Count > 1)
-                        cm.RenderTransform = renderTransform;
-                    else if (renderTransform.Children.Count == 1)
-                        cm.RenderTransform = renderTransform.Children[0];
-
+                    // cm.ApplyTransform(button);
                     cm.IsOpen = true;
                     return cm;
                 }

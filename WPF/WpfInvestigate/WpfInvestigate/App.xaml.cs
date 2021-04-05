@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Markup;
 using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
@@ -32,10 +33,25 @@ namespace WpfInvestigate
             MwiAppViewModel.Instance.ChangeTheme(MwiThemeInfo.Themes[0]);
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
+            EventManager.RegisterClassHandler(typeof(ToolTip), ToolTip.OpenedEvent, new RoutedEventHandler(OnToolTipOpened));
+            EventManager.RegisterClassHandler(typeof(ContextMenu), ContextMenu.OpenedEvent, new RoutedEventHandler(OnContextMenuOpened));
 
             SelectAllOnFocusForTextBox.ActivateGlobally();
 
             base.OnStartup(e);
+        }
+
+        private void OnContextMenuOpened(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is ContextMenu contextMenu)) return;
+            if (!(contextMenu.PlacementTarget is FrameworkElement owner)) return;
+            contextMenu.ApplyTransform(owner);
+        }
+        private void OnToolTipOpened(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is ToolTip toolTip)) return;
+            if (!(toolTip.PlacementTarget is FrameworkElement owner)) return;
+            toolTip.ApplyTransform(owner);
         }
     }
 }

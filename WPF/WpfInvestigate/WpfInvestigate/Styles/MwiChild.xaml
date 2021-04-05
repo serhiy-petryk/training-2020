@@ -21,10 +21,6 @@
 
     <Style TargetType="controls:MwiChild" x:Shared="False">
         <Style.Resources>
-            <Style TargetType="ToolTip">
-                <Setter Property="LayoutTransform" Value="{StaticResource Mwi.ScaleTransform}"/>
-            </Style>
-
             <Style x:Key="Mwi.Startup.WindowHeaderSeparator" TargetType="Separator" BasedOn="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}">
                 <Setter Property="Margin" Value="4" />
                 <Setter Property="Opacity" Value="0.5" />

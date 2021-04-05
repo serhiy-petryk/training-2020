@@ -26,7 +26,32 @@ namespace WpfInvestigate.Helpers
 
             d.SetValue(property, newValue);
         }
-        
+
+        public static void ApplyTransform(this FrameworkElement target, FrameworkElement source)
+        {
+            if (source == null || target == null) return;
+
+            var layoutTransform = new TransformGroup();
+            var renderTransform = new TransformGroup();
+            foreach (var element in source.GetVisualParents().OfType<FrameworkElement>().ToArray())
+            {
+                if (element.LayoutTransform != Transform.Identity)
+                    layoutTransform.Children.Add(element.LayoutTransform.CloneCurrentValue());
+                if (element.RenderTransform != Transform.Identity)
+                    renderTransform.Children.Add(element.RenderTransform.CloneCurrentValue());
+            }
+
+            if (layoutTransform.Children.Count > 1)
+                target.LayoutTransform = layoutTransform;
+            else if (layoutTransform.Children.Count == 1)
+                target.LayoutTransform = layoutTransform.Children[0];
+
+            if (renderTransform.Children.Count > 1)
+                target.RenderTransform = renderTransform;
+            else if (renderTransform.Children.Count == 1)
+                target.RenderTransform = renderTransform.Children[0];
+        }
+
         public static Size MeasureString(string candidate, Control fontControl)
         {
             var formattedText = new FormattedText(candidate, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
