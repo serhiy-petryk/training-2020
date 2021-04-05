@@ -13,10 +13,6 @@
         Style="{StaticResource HeadlessWindow}"
         KeyDown="MwiStartup_OnKeyDown">
 
-    <Window.Resources>
-        <common:BindingProxy x:Key="MwiBaseColorProxy" Value="{DynamicResource Mwi.BaseColorProxy}"/>
-    </Window.Resources>
-
     <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close" Background="Orange">
         <controls:MwiChild.CommandBar>
             <samples:MwiCommandBarSample/>

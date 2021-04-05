@@ -15,7 +15,6 @@
             <Setter Property="Opacity" Value="0"/>
             <Setter Property="Focusable" Value="False"/>
         </Style>
-
     </Window.Resources>
 
     <Grid>
