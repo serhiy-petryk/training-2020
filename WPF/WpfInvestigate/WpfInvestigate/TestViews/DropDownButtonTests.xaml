@@ -10,6 +10,9 @@
         Title="ToggleButtonAndPopup" Height="900" Width="1250">
 
     <Window.Resources>
+        <Geometry x:Key="Mwi.Container.MenuGeometry">M0 0 Z M24 24Z M4,6H20V8H4V6M4,11H20V13H4V11M4,16H20V18H4V16Z</Geometry>
+        <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M0 0 Z M24 24Z M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
+
         <ScaleTransform x:Key="ScaleTransform" CenterX="0" CenterY="0"
                         ScaleX="{Binding ElementName=uiScaleSlider, Path=Value}"
                         ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}" />
