@@ -23,7 +23,7 @@ namespace WpfInvestigate.Controls
                 cm.Items.Remove(a2);
 
             // Add current window tab items
-            var index = cm.Items.Cast<FrameworkElement>().TakeWhile(item => item.GetType() != typeof(Separator)).Count();
+            var index = cm.Items.Cast<FrameworkElement>().TakeWhile(item => item.Name != "StartWindowList").Count();
             foreach (MwiChild item in Children)
             {
                 cm.Items.Insert(++index, new MenuItem
