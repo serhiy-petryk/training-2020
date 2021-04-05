@@ -161,9 +161,6 @@ namespace WpfInvestigate.Controls
                     Dispatcher.InvokeAsync(new Action(() => element.IsEnabled = true), DispatcherPriority.Render); // nexttick action to prevent MoveThumb_OnDragDelta event
                 };
             }
-
-            if (GetTemplateChild("SystemMenuButton") is ToggleButton systemMenuButton)
-                systemMenuButton.Checked += (sender, args) => Helpers.DropDownButtonHelper.OpenDropDownMenu(sender);
         }
 
         private Window _activatedHost;

@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using WpfInvestigate.Common;
-using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.TestViews
 {
@@ -17,7 +16,6 @@ namespace WpfInvestigate.TestViews
         {
             InitializeComponent();
         }
-        private void OpenDropDownMenu(object sender, RoutedEventArgs e) => DropDownButtonHelper.OpenDropDownMenu(sender);
 
         private void SplitButton_OnClick(object sender, RoutedEventArgs e)
         {

@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using WpfInvestigate.Common;
-using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
@@ -14,31 +13,27 @@ namespace WpfInvestigate.Controls
     {
         public RelayCommand CmdSetLayout { get; }
 
-        private void OnWindowsMenuButtonCheckedChange(object sender, RoutedEventArgs e)
+        private void OnWindowsMenuButtonChecked(object sender, RoutedEventArgs e)
         {
             var button = (ToggleButton)sender;
-            if (button.IsChecked == true)
+            var cm = button.Resources.Values.OfType<ContextMenu>().First();
+
+            // Remove old window tab items
+            foreach (var a2 in cm.Items.Cast<FrameworkElement>().Where(a => a.DataContext is MwiChild).ToArray())
+                cm.Items.Remove(a2);
+
+            // Add current window tab items
+            var index = cm.Items.Cast<FrameworkElement>().TakeWhile(item => item.GetType() != typeof(Separator)).Count();
+            foreach (MwiChild item in Children)
             {
-                DropDownButtonHelper.OpenDropDownMenu(sender);
-                var cm = button.Resources.Values.OfType<ContextMenu>().First();
-
-                // Remove old window tab items
-                foreach (var a2 in cm.Items.Cast<FrameworkElement>().Where(a => a.DataContext is MwiChild).ToArray())
-                    cm.Items.Remove(a2);
-
-                // Add current window tab items
-                var index = cm.Items.Cast<FrameworkElement>().TakeWhile(item => item.GetType() != typeof(Separator)).Count();
-                foreach (MwiChild item in Children)
+                cm.Items.Insert(++index, new MenuItem
                 {
-                    cm.Items.Insert(++index, new MenuItem
-                    {
-                        Header = item.Title,
-                        IsChecked = item == ActiveMwiChild,
-                        Icon = new Image { Source = item.Icon },
-                        DataContext = item,
-                        Command = new RelayCommand((p) => item.Activate())
-                    });
-                }
+                    Header = item.Title,
+                    IsChecked = item == ActiveMwiChild,
+                    Icon = new Image { Source = item.Icon },
+                    DataContext = item,
+                    Command = new RelayCommand((p) => item.Activate())
+                });
             }
         }
 

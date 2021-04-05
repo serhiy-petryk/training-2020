@@ -116,10 +116,7 @@ namespace WpfInvestigate.Controls
                 leftPanelDragThumb.DragDelta += LeftPanel_OnDragDelta;
 
             if (GetTemplateChild("WindowsMenuButton") is ToggleButton windowsMenuButton)
-            {
-                windowsMenuButton.Checked += OnWindowsMenuButtonCheckedChange;
-                windowsMenuButton.Unchecked += OnWindowsMenuButtonCheckedChange;
-            }
+                windowsMenuButton.Checked += OnWindowsMenuButtonChecked;
 
             Children.CollectionChanged += OnChildrenCollectionChanged;
             OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));

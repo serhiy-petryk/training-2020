@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.TestViews
 {
@@ -12,7 +11,5 @@ namespace WpfInvestigate.TestViews
         {
             InitializeComponent();
         }
-
-        private void OpenDropDownMenu(object sender, RoutedEventArgs e) => DropDownButtonHelper.OpenDropDownMenu(sender);
     }
 }

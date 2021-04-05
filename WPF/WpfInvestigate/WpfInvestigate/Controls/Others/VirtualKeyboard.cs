@@ -9,7 +9,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using WpfInvestigate.Common;
 using WpfInvestigate.Common.ColorSpaces;
-using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
@@ -49,10 +48,6 @@ namespace WpfInvestigate.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            if (GetTemplateChild("PART_LanguageSelector") is ToggleButton languageSelector)
-                languageSelector.Checked += (sender, args) => DropDownButtonHelper.OpenDropDownMenu(sender);
-
             foreach (var button in Tips.GetVisualChildren(this).OfType<ButtonBase>().Where(a => a.DataContext is KeyModel))
                 button.Click += Key_OnClick;
         }

@@ -106,7 +106,6 @@
     <Compile Include="Effects\IconEffect.cs" />
     <Compile Include="Effects\TextBoxEffects.cs" />
     <Compile Include="Helpers\ControlHelper.cs" />
-    <Compile Include="Helpers\DropDownButtonHelper.cs" />
     <Compile Include="Effects\DoubleIconToggleButtonEffect.cs" />
     <Compile Include="Helpers\SelectAllOnFocusForTextBox.cs" />
     <Compile Include="Obsolete\FlatButton.xaml.cs">
@@ -627,6 +626,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Resource Include="Comments\DropDownButton.txt" />
     <Content Include="Comments\Layout.Investigate.txt" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
