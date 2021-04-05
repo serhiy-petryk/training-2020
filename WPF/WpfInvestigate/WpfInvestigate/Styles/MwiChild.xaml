@@ -6,6 +6,7 @@
                     xmlns:common="clr-namespace:WpfInvestigate.Common">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Mwi.Wnd7.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -20,6 +21,10 @@
 
     <Style TargetType="controls:MwiChild" x:Shared="False">
         <Style.Resources>
+            <Style TargetType="ToolTip">
+                <Setter Property="LayoutTransform" Value="{StaticResource Mwi.ScaleTransform}"/>
+            </Style>
+
             <Style x:Key="Mwi.Startup.WindowHeaderSeparator" TargetType="Separator" BasedOn="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}">
                 <Setter Property="Margin" Value="4" />
                 <Setter Property="Opacity" Value="0.5" />
@@ -157,13 +162,7 @@
                                        TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{TemplateBinding Title}"/>
                             <!-- Moving thumb -->
                             <Thumb Grid.Column="2" x:Name="MovingThumb" Focusable="False" Opacity="0" Cursor="SizeAll" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                   Margin="{DynamicResource Mwi.Child.MovingThumb.Margin}" effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header}">
-                                <Thumb.Resources>
-                                    <Style TargetType="ToolTip">
-                                        <Setter Property="LayoutTransform" Value="{StaticResource Mwi.ScaleTransform}"/>
-                                    </Style>
-                                </Thumb.Resources>
-                            </Thumb>
+                                   Margin="{DynamicResource Mwi.Child.MovingThumb.Margin}" effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header}"/>
 
                             <!-- Right header panel -->
                             <ContentPresenter Grid.Column="3" Content="{TemplateBinding RightHeaderBar}"/>
