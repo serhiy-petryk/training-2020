@@ -44,18 +44,18 @@
     <SolidColorBrush x:Key="Mwi.Child.FarBorderBrush" Color="#FF3FCEF2" />
 
     <!--  =====  Button colors  ===== -->
-    <SolidColorBrush x:Key="MwiChild.Button.BorderBrush" Color="#FF6A7A93" />
-    <SolidColorBrush x:Key="MwiChild.CloseButton.BorderBrush" Color="#FF431422" />
-    <SolidColorBrush x:Key="MwiChild.Button.Unfocused.BorderBrush" Color="#FFD1DBE5" />
-    <SolidColorBrush x:Key="MwiChild.Button.Unfocused.SubBorderBrush" Color="#FF838EA8" />
+    <SolidColorBrush x:Key="Mwi.ChildButton.BorderBrush" Color="#FF6A7A93" />
+    <SolidColorBrush x:Key="Mwi.ChildButton.CloseButton.BorderBrush" Color="#FF431422" />
+    <SolidColorBrush x:Key="Mwi.ChildButton.Unfocused.BorderBrush" Color="#FFD1DBE5" />
+    <SolidColorBrush x:Key="Mwi.ChildButton.Unfocused.SubBorderBrush" Color="#FF838EA8" />
 
-    <LinearGradientBrush x:Key="NormalSubBorderBackground" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.NormalSubBorderBackground" EndPoint="0,1">
         <GradientStop Color="#FFC3D4E7" Offset="0.0" />
         <GradientStop Color="#FFBED3E8" Offset="0.5" />
         <GradientStop Color="#FF98B1CC" Offset="0.5" />
         <GradientStop Color="#FFB7D0E9" Offset="1.0" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="CloseSubBorderBackground" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.CloseButton.CloseSubBorderBackground" EndPoint="0,1">
         <GradientStop Color="#FFE9A99C" Offset="0.0" />
         <GradientStop Color="#FFDF9487" Offset="0.5" />
         <GradientStop Color="#FFB8432C" Offset="0.5" />
@@ -68,92 +68,92 @@
         <GradientStop Color="#FFC8D5E4" Offset="0.5" />
         <GradientStop Color="#FFD9E7F4" Offset="1.0" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="CloseSubBorderBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.ClosedButoon.CloseSubBorderBrush" EndPoint="0,1">
         <GradientStop Color="#FFF4D3CC" Offset="0.0" />
         <GradientStop Color="#FFEDC4BD" Offset="0.5" />
         <GradientStop Color="#FFD99A8E" Offset="0.5" />
         <GradientStop Color="#FFECC6C0" Offset="1.0" />
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="NormalDownBackgroundBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.NormalDownBackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#FF7F9AAC" Offset="0.0" />
         <GradientStop Color="#FF5D778C" Offset="0.5" />
         <GradientStop Color="#FF203B52" Offset="0.5" />
         <GradientStop Color="#FF27C9C8" Offset="1.0" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="CloseDownBackgroundBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.ClosedButton.CloseDownBackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#FFCFA38B" Offset="0.0" />
         <GradientStop Color="#FFBE836A" Offset="0.5" />
         <GradientStop Color="#FF831800" Offset="0.5" />
         <GradientStop Color="#FFC4954C" Offset="1.0" />
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="NormalDownBorderBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.NormalDownBorderBrush" EndPoint="0,1">
         <GradientStop Color="#FFACBEC9" Offset="0.0" />
         <GradientStop Color="#FF90A2B1" Offset="0.5" />
         <GradientStop Color="#FF667888" Offset="0.5" />
         <GradientStop Color="#FF67E6E4" Offset="1.0" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="CloseDownBorderBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.ClosedButton.CloseDownBorderBrush" EndPoint="0,1">
         <GradientStop Color="#FFE6CFC3" Offset="0.0" />
         <GradientStop Color="#FFCCB0A5" Offset="0.5" />
         <GradientStop Color="#FFB28176" Offset="0.5" />
         <GradientStop Color="#FFF5EC6A" Offset="1.0" />
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="NormalUnfocusedBackgroundBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.NormalUnfocusedBackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#FFBDCBDA" Offset="0"/>
         <GradientStop Color="#FFCEDCEB" Offset="1"/>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="NormalOverBackgroundBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.NormalOverBackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#FFAAD5F3" Offset="0.0" />
         <GradientStop Color="#FF81C0EA" Offset="0.5" />
         <GradientStop Color="#FF2D73A3" Offset="0.5" />
         <GradientStop Color="#FF24C6EB" Offset="1.0" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="CloseOverBackgroundBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.CloseButton.CloseOverBackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#FFE9A99C" Offset="0.0" />
         <GradientStop Color="#FFFAA99A" Offset="0.5" />
         <GradientStop Color="#FFD22302" Offset="0.5" />
         <GradientStop Color="#FFE5934D" Offset="1.0" />
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="NormalOverBorderBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.NormalOverBorderBrush" EndPoint="0,1">
         <GradientStop Color="#FFD6EBFA" Offset="0.0" />
         <GradientStop Color="#FFBBDDF3" Offset="0.5" />
         <GradientStop Color="#FF8EB4CE" Offset="0.5" />
         <GradientStop Color="#FF85EFF9" Offset="1.0" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="CloseOverBorderBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.CloseButton.CloseOverBorderBrush" EndPoint="0,1">
         <GradientStop Color="#FFFDE4E0" Offset="0.0" />
         <GradientStop Color="#FFFDE4E0" Offset="0.5" />
         <GradientStop Color="#FFE78977" Offset="0.5" />
         <GradientStop Color="#FFFAEE6B" Offset="1.0" />
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="NormalDisabledBackgroundBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.NormalDisabledBackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#FFB5CAE1" Offset="0"/>
         <GradientStop Color="#FFB7D0E9" Offset="1"/>
         <GradientStop Color="#FFB5CCE5" Offset="0.5"/>
         <GradientStop Color="#FFA3BCD7" Offset="0.5"/>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="NormalDisabledBorderBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.NormalDisabledBorderBrush" EndPoint="0,1">
         <GradientStop Color="#FFC2D3E6" Offset="0"/>
         <GradientStop Color="#FFC9DDF0" Offset="1"/>
         <GradientStop Color="#FFC4D7EA" Offset="0.5"/>
         <GradientStop Color="#FFBBCEE3" Offset="0.5"/>
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="NormalDisabledSubBorderBrush" Color="#FF859BB5" />
+    <SolidColorBrush x:Key="Mwi.ChildButton.NormalDisabledSubBorderBrush" Color="#FF859BB5" />
 
-    <LinearGradientBrush x:Key="NormalDisabledFocusedBackgroundBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.NormalDisabledFocusedBackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#FFC4D2E0" Offset="0"/>
         <GradientStop Color="#FFD5E3F2" Offset="1"/>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="NormalDisabledFocusedBorderBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.ChildButton.NormalDisabledFocusedBorderBrush" EndPoint="0,1">
         <GradientStop Color="#FFD3DEE9" Offset="0"/>
         <GradientStop Color="#FFE2EDF7" Offset="1"/>
     </LinearGradientBrush>
@@ -180,41 +180,41 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Name="BaseBorder" CornerRadius="2" BorderThickness="1" BorderBrush="{StaticResource MwiChild.Button.BorderBrush}">
-                        <Border Name="Border" CornerRadius="2" BorderThickness="1" Background="{StaticResource NormalSubBorderBackground}" BorderBrush="{StaticResource NormalSubBorderBrush}">
+                    <Border Name="BaseBorder" CornerRadius="2" BorderThickness="1" BorderBrush="{StaticResource Mwi.ChildButton.BorderBrush}">
+                        <Border Name="Border" CornerRadius="2" BorderThickness="1" Background="{StaticResource Mwi.ChildButton.NormalSubBorderBackground}" BorderBrush="{StaticResource NormalSubBorderBrush}">
                             <ContentPresenter Content="{TemplateBinding Content}" />
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Name" Value="CloseButton">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource CloseSubBorderBackground}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource CloseSubBorderBrush}" />
-                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{StaticResource MwiChild.CloseButton.BorderBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource Mwi.ChildButton.CloseButton.CloseSubBorderBackground}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Mwi.ChildButton.ClosedButoon.CloseSubBorderBrush}" />
+                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{StaticResource Mwi.ChildButton.CloseButton.BorderBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource NormalDownBackgroundBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource NormalDownBorderBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource Mwi.ChildButton.NormalDownBackgroundBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Mwi.ChildButton.NormalDownBorderBrush}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="Name" Value="CloseButton" />
                                 <Condition Property="IsPressed" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource CloseDownBackgroundBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource CloseDownBorderBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource Mwi.ChildButton.ClosedButton.CloseDownBackgroundBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Mwi.ChildButton.ClosedButton.CloseDownBorderBrush}" />
                         </MultiTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=IsActive}" Value="False">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource NormalUnfocusedBackgroundBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource MwiChild.Button.Unfocused.BorderBrush}" />
-                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{StaticResource MwiChild.Button.Unfocused.SubBorderBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource Mwi.ChildButton.NormalUnfocusedBackgroundBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Mwi.ChildButton.Unfocused.BorderBrush}" />
+                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{StaticResource Mwi.ChildButton.Unfocused.SubBorderBrush}" />
                         </DataTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource NormalOverBackgroundBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource NormalOverBorderBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource Mwi.ChildButton.NormalOverBackgroundBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Mwi.ChildButton.NormalOverBorderBrush}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -222,21 +222,21 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource CloseOverBackgroundBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource CloseOverBorderBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource Mwi.ChildButton.CloseButton.CloseOverBackgroundBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Mwi.ChildButton.CloseButton.CloseOverBorderBrush}" />
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource NormalDisabledBackgroundBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource NormalDisabledBorderBrush}" />
-                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{StaticResource NormalDisabledSubBorderBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource Mwi.ChildButton.NormalDisabledBackgroundBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Mwi.ChildButton.NormalDisabledBorderBrush}" />
+                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{StaticResource Mwi.ChildButton.NormalDisabledSubBorderBrush}" />
                         </Trigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=IsActive}" Value="False" />
                                 <Condition Binding="{Binding IsEnabled}" Value="False" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource NormalDisabledFocusedBackgroundBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource NormalDisabledFocusedBorderBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource Mwi.ChildButton.NormalDisabledFocusedBackgroundBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Mwi.ChildButton.NormalDisabledFocusedBorderBrush}" />
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
