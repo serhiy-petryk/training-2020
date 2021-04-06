@@ -98,7 +98,7 @@ namespace WpfInvestigate.Controls
 
         private void OnThemeChanged()
         {
-            if (MwiAppViewModel.Instance.CurrentTheme == null) return;
+            if (MwiAppViewModel.Instance.CurrentTheme == null) return; // VS designer error
 
             foreach (var f1 in MwiAppViewModel.Instance.CurrentTheme.GetResources())
                 FillResources(this, f1);
