@@ -334,7 +334,7 @@
     </Style>
 
     <!-- ========================================== -->
-    <!-- =============  MwiContainer  ============= -->
+    <!-- ========  MwiContainer & MwiBar  ========= -->
     <!-- ========================================== -->
     <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{x:Static SystemColors.AppWorkspaceColor}"/>
     <SolidColorBrush x:Key="Mwi.Container.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>

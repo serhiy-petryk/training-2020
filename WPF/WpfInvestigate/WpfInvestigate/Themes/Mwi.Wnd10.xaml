@@ -124,7 +124,7 @@
     </Style>
 
     <!-- ========================================== -->
-    <!-- =============  MwiContainer  ============= -->
+    <!-- ========  MwiContainer & MwiBar  ========= -->
     <!-- ========================================== -->
     <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=10:+33%}"/>
     <SolidColorBrush x:Key="Mwi.Container.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
