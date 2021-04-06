@@ -6,10 +6,6 @@
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/MwiColors.Wnd7.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
     <system:Double x:Key="Mwi.Child.CornerEdgeWidth">16</system:Double>
     <common:BindingProxy x:Key="Mwi.BaseColorProxy" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
@@ -42,13 +38,6 @@
     <SolidColorBrush x:Key="Mwi.Child.Header.Unfocused.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10/+70%'}"/>
 
     <!-- =============  MwiChild system menu  =============== -->
-
-    <!-- =============  MwiContainer  =============== -->
-    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=10:+33%}"/>
-
-    <!-- =============  MwiBar  =============== -->
-    <!--<Color x:Key="Mwi.Bar.BackgroundColor">#FFD6EAFF</Color>-->
-    <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=20:+33%}"/>
 
     <!--  =====  Buttons  ===== -->
     <Viewbox x:Key="Mwi.DetachedButtonContent" Width="12" Height="12" x:Shared="False">
@@ -134,4 +123,31 @@
         <Setter Property="Content" Value="{StaticResource Mwi.CloseButtonContent}"/>
     </Style>
 
+    <!-- ========================================== -->
+    <!-- =============  MwiContainer  ============= -->
+    <!-- ========================================== -->
+    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=10:+33%}"/>
+    <SolidColorBrush x:Key="Mwi.Container.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
+    <!-- Windows Bar -->
+    <Color x:Key="Mwi.Bar.BackgroundColor">#FFD6EAFF</Color>
+    <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=20:+33%}"/>
+    <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100:50%'}"/>
+
+    <!-- Window BarItem -->
+    <SolidColorBrush x:Key="Mwi.BarItem.ForegroundBrush" Color="White"/>
+    <LinearGradientBrush x:Key="Mwi.BarItem.BackgroundBrush" EndPoint="0,1">
+        <GradientStop Color="#FFCCD3CC" Offset="0" />
+        <GradientStop Color="#FF8B9DB1" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Mwi.BarItem.Selected.BackgroundBrush" EndPoint="0,1">
+        <GradientStop Color="LightSkyBlue" Offset="0"/>
+        <GradientStop Color="#FF59BAF2" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Mwi.BarItem.MouseOver.BackgroundBrush" EndPoint="0,1">
+        <GradientStop Color="#FFD3B380" Offset="0"/>
+        <GradientStop Color="#FFEBCD77" Offset="1"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="Mwi.BarItem.BorderBrush" Color="#FF444444"/>
+    <SolidColorBrush x:Key="Mwi.BarItem.Thumbnail.BackgroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="Mwi.BarItem.DeleteButton.ForegroundBrush" Color="#FF444444"/>
 </ResourceDictionary>
