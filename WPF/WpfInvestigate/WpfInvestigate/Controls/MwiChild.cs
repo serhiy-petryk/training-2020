@@ -110,7 +110,7 @@ namespace WpfInvestigate.Controls
         {
             foreach (var rd in resources.MergedDictionaries)
                 FillResources(fe, rd);
-            foreach (var key in resources.Keys)
+            foreach (var key in resources.Keys.OfType<string>().Where(key => !key.StartsWith("Mwi.Container") && !key.StartsWith("Mwi.Bar")))
                 fe.Resources[key] = resources[key];
         }
 
