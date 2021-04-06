@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:samples="clr-namespace:WpfInvestigate.Samples"
+        xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels"
         mc:Ignorable="d"
         Title="MwiTests" Height="700" Width="1000"
         KeyDown="MwiTests_OnKeyDown">
@@ -45,7 +46,7 @@
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
-            <controls:MwiContainer x:Name="MwiContainer" Background="Beige">
+            <controls:MwiContainer x:Name="MwiContainer" Background="Beige" Theme="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme}">
                 <controls:MwiContainer.LeftPanel>
                     <samples:MwiLeftPanelSample/>
                 </controls:MwiContainer.LeftPanel>

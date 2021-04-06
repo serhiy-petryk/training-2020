@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Themes;
 using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
@@ -34,15 +35,13 @@ namespace WpfInvestigate.Controls
         {
             DataContext = this;
             CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
-            Dispatcher.BeginInvoke(new Action(OnThemeChanged), DispatcherPriority.Normal);
+            Dispatcher.BeginInvoke(new Action(() => OnThemeChanged(this, new DependencyPropertyChangedEventArgs(ThemeProperty, null, MwiAppViewModel.Instance.CurrentTheme))),
+                DispatcherPriority.Normal);
 
             MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
             {
                 if (ActualWidth > 0 && args is PropertyChangedEventArgs e)
                 {
-                    if (e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
-                        OnThemeChanged();
-
                     //OnPropertiesChanged(nameof(BaseColor));
                     if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
                     {
@@ -53,24 +52,6 @@ namespace WpfInvestigate.Controls
                 }
             };
         }
-        private void OnThemeChanged()
-        {
-            if (MwiAppViewModel.Instance.CurrentTheme == null) return; // VS designer error
-
-            foreach (var f1 in MwiAppViewModel.Instance.CurrentTheme.GetResources())
-                FillResources(this, f1);
-
-            //if (TryFindResource("Mwi.BaseColorProxy") is BindingProxy colorProxy)
-              //  colorProxy.Value = BaseColor;
-        }
-        private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
-        {
-            foreach (var rd in resources.MergedDictionaries)
-                FillResources(fe, rd);
-            foreach (var key in resources.Keys.OfType<string>().Where(key=> key.StartsWith("Mwi.Container") || key.StartsWith("Mwi.Bar")))
-                fe.Resources[key] = resources[key];
-        }
-
 
         private async void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -218,6 +199,35 @@ namespace WpfInvestigate.Controls
             ActiveMwiChild != null && ActiveMwiChild.WindowState == WindowState.Maximized
                 ? ScrollBarVisibility.Disabled
                 : ScrollBarVisibility.Auto;
+
+        //==============================
+        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
+            typeof(MwiThemeInfo), typeof(MwiContainer), new FrameworkPropertyMetadata(null, OnThemeChanged));
+
+        public MwiThemeInfo Theme
+        {
+            get => (MwiThemeInfo)GetValue(ThemeProperty);
+            set => SetValue(ThemeProperty, value);
+        }
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var container = (MwiContainer)d;
+            if (e.NewValue is MwiThemeInfo themeInfo)
+            {
+                foreach (var f1 in themeInfo.GetResources())
+                    FillResources(container, f1);
+
+                //if (TryFindResource("Mwi.BaseColorProxy") is BindingProxy colorProxy)
+                //  colorProxy.Value = BaseColor;
+            }
+        }
+        private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
+        {
+            foreach (var rd in resources.MergedDictionaries)
+                FillResources(fe, rd);
+            foreach (var key in resources.Keys.OfType<string>().Where(key => key.StartsWith("Mwi.Container") || key.StartsWith("Mwi.Bar")))
+                fe.Resources[key] = resources[key];
+        }
 
         //==============================
         public static readonly DependencyProperty MwiContainerProperty = DependencyProperty.RegisterAttached("MwiContainer", typeof(MwiContainer), typeof(MwiContainer));
