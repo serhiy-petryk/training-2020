@@ -35,6 +35,8 @@ namespace WpfInvestigate
             MwiAppViewModel.Instance.ChangeTheme(MwiThemeInfo.Themes[0]);
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
+
+            // global event handlers 
             EventManager.RegisterClassHandler(typeof(ToolTip), ToolTip.OpenedEvent, new RoutedEventHandler(OnToolTipOpened));
             EventManager.RegisterClassHandler(typeof(ContextMenu), ContextMenu.OpenedEvent, new RoutedEventHandler(OnContextMenuOpened));
             EventManager.RegisterClassHandler(typeof(ToggleButton), ToggleButton.CheckedEvent, new RoutedEventHandler(OnToggleButtonChecked));
@@ -57,7 +59,7 @@ namespace WpfInvestigate
             toolTip.ApplyTransform(owner);
         }
 
-        private static void OnToggleButtonChecked(object sender, RoutedEventArgs e)
+        private void OnToggleButtonChecked(object sender, RoutedEventArgs e)
         {
             if (sender is ToggleButton button && Equals(button.IsChecked, true))
             {
