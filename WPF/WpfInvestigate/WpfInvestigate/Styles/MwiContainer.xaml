@@ -101,7 +101,7 @@
                                                         <Setter Property="Stretch" Value="Fill" />
                                                     </Style>
                                                 </ContextMenu.Resources>
-                                                <MenuItem Header="Arrange Windows" IsEnabled="False" Foreground="{DynamicResource Mwi.WindowsMenu.ForegroundBrush}" />
+                                                <MenuItem Header="Arrange Windows" IsEnabled="False" Foreground="{DynamicResource Mwi.Container.WindowsMenu.ForegroundBrush}" />
                                                 <MenuItem Header="Tiles Horizontally" CommandParameter="TilesHorizontally" Style="{StaticResource WindowsMenuItemStyle}" Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M15,2v6H9  V2H15z M15,9v6H9V9H15z M2,2h6v6H2V2z M2,9h6v6H2V9z M2,22v-6h6v6H2z M9,22v-6h6v6H9z M22,22h-6v-6h6V22z M22,15h-6V9h6V15z M22,8  h-6V2h6V8z" />
                                                 <MenuItem Header="Tiles Vertically" CommandParameter="TilesVertically" Style="{StaticResource WindowsMenuItemStyle}" Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M15,2v6H9  V2H15z M15,9v6H9V9H15z M2,2h6v6H2V2z M2,9h6v6H2V9z M2,22v-6h6v6H2z M9,22v-6h6v6H9z M22,22h-6v-6h6V22z M22,15h-6V9h6V15z M22,8  h-6V2h6V8z" />
                                                 <MenuItem Header="Horizontal" CommandParameter="Horizontal" Style="{StaticResource WindowsMenuItemStyle}" Tag="M24,22.9V1.1C24,0.5,23.5,0,22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8C23.5,24,24,23.5,24,22.9z M2,2h20  v6H2V2z M2,9h20v6H2V9z M2,22v-6h20v6H2z" />

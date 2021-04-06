@@ -8,18 +8,18 @@
     <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100:50%'}"/>
 
     <!-- Window Tab -->
-    <SolidColorBrush x:Key="Mwi.TabItem.ForegroundBrush" Color="White"/>
-    <LinearGradientBrush x:Key="Mwi.TabItem.BackgroundBrush" EndPoint="0,1">
+    <SolidColorBrush x:Key="Mwi.BarItem.ForegroundBrush" Color="White"/>
+    <LinearGradientBrush x:Key="Mwi.BarItem.BackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#FFCCD3CC" Offset="0" />
         <GradientStop Color="#FF8B9DB1" Offset="1" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="Mwi.TabItem.Selected.BackgroundBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.BarItem.Selected.BackgroundBrush" EndPoint="0,1">
         <GradientStop Color="LightSkyBlue" Offset="0"/>
         <!--<GradientStop Color="SkyBlue" Offset="1"/>-->
         <!--<GradientStop Color="CornflowerBlue" Offset="1"/>-->
         <GradientStop Color="#FF59BAF2" Offset="1"/>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="Mwi.TabItem.MouseOver.BackgroundBrush" EndPoint="0,1">
+    <LinearGradientBrush x:Key="Mwi.BarItem.MouseOver.BackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#FFD3B380" Offset="0"/>
         <GradientStop Color="#FFEBCD77" Offset="1"/>
         <!--<GradientStop Color="#FFD3B380" Offset="0"/>
@@ -29,10 +29,10 @@
             <GradientStop Color="#FFEBC33D" Offset="0.5"/>
             <GradientStop Color="#FFC28D1D" Offset="1"/>-->
     </LinearGradientBrush>
-    <SolidColorBrush x:Key="Mwi.TabItem.BorderBrush" Color="#FF444444"/>
-    <SolidColorBrush x:Key="Mwi.TabItem.Thumbnail.BackgroundBrush" Color="White"/>
-    <SolidColorBrush x:Key="Mwi.TabItem.DeleteButton.ForegroundBrush" Color="#FF444444"/>
+    <SolidColorBrush x:Key="Mwi.BarItem.BorderBrush" Color="#FF444444"/>
+    <SolidColorBrush x:Key="Mwi.BarItem.Thumbnail.BackgroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="Mwi.BarItem.DeleteButton.ForegroundBrush" Color="#FF444444"/>
 
     <!-- Windows Menu -->
-    <SolidColorBrush x:Key="Mwi.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
+    <SolidColorBrush x:Key="Mwi.Container.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
 </ResourceDictionary>
