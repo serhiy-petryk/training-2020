@@ -155,7 +155,7 @@ namespace WpfInvestigate.Common
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string)
-                throw new Exception("Lovushka");
+                throw new Exception("Trap for string, .., etc");
 
             HSL hsl = null;
             Color? oldColor = null;
@@ -199,7 +199,7 @@ namespace WpfInvestigate.Common
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string)
-                throw new Exception("Lovushka");
+                throw new Exception("Trap for string, .., etc");
 
             LAB lab = null;
             if (value is Brush brush)
