@@ -132,13 +132,15 @@
                             </ScrollViewer>
 
                             <!-- Left Panel -->
-                            <Grid x:Name="LeftPanelContainer" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="{Binding ElementName=ScrollViewer, Path=ActualHeight}" Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" Visibility="Hidden" Margin="0">
+                            <Grid x:Name="LeftPanelContainer" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="{Binding ElementName=ScrollViewer, Path=ActualHeight}" Background="{DynamicResource Mwi.Container.LeftPanel.BackgroundBrush}" Visibility="Hidden" Margin="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <ContentControl Grid.Column="0" Content="{Binding LeftPanel}" />
-                                <Border Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="6" BorderThickness="0 0 1 0" Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="{DynamicResource Mwi.Child.BaseBorderBrush}" />
+                                <Border Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="6" BorderThickness="0 0 1 0"
+                                        Background="{DynamicResource Mwi.Container.LeftPanel.BackgroundBrush}"
+                                        BorderBrush="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}" />
                                 <Thumb Grid.Column="1" x:Name="LeftPanelDragThumb" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="6" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Cursor="SizeWE" Opacity="0" />
                             </Grid>
                         </Grid>
