@@ -10,7 +10,7 @@ namespace WpfInvestigate.ViewModels
     public class MwiAppViewModel: UIElement, INotifyPropertyChanged
     {
         #region ================  Static section  =====================
-        public static MwiAppViewModel Instance = new MwiAppViewModel();
+        public static MwiAppViewModel Instance = new MwiAppViewModel {CurrentTheme = MwiThemeInfo.Themes[0]};
         #endregion
 
         #region ================  Instance section  ====================
