@@ -93,7 +93,7 @@
 
         </controls:MwiChild.RightHeaderBar>
 
-        <controls:MwiContainer x:Name="MwiContainer" Background="Red" Theme="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme}">
+        <controls:MwiContainer x:Name="MwiContainer" Background="Red">
             <controls:MwiContainer.LeftPanel>
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>

@@ -46,7 +46,7 @@
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
-            <controls:MwiContainer x:Name="MwiContainer" Background="Beige" Theme="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme}">
+            <controls:MwiContainer x:Name="MwiContainer" Background="Beige">
                 <controls:MwiContainer.LeftPanel>
                     <samples:MwiLeftPanelSample/>
                 </controls:MwiContainer.LeftPanel>
