@@ -51,7 +51,6 @@ namespace WpfInvestigate.Controls
             CmdClose = new RelayCommand(Close, _ => AllowClose);
 
             DataContext = this;
-            if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
             Loaded += OnMwiChildLoaded;
             var dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(MwiChild));
             dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
@@ -66,6 +65,8 @@ namespace WpfInvestigate.Controls
                 }
             };
 
+            if (Icon == null) CreateDefaultIcon();
+
             /* can't reproduce (2021-03-12):
              MwiAppViewModel.Instance.PropertyChanged += async (sender, args) =>
             {
@@ -79,13 +80,20 @@ namespace WpfInvestigate.Controls
                 }
             };*/
 
-             void OnMwiChildLoaded(object sender, RoutedEventArgs e)
+            void OnMwiChildLoaded(object sender, RoutedEventArgs e)
             {
                 Loaded -= OnMwiChildLoaded;
                 if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
                     Position = MwiContainer.GetStartPositionForMwiChild(this);
                 AnimateShow();
             }
+        }
+
+        private async void CreateDefaultIcon()
+        {
+            // Delay because no fill color for some icons
+            await Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Input);
+            Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
         }
 
         #region =============  Override methods  ====================
