@@ -200,7 +200,7 @@ namespace WpfInvestigate.Controls
                 foreach (var f1 in themeInfo.GetResources())
                     FillResources(container, f1);
 
-                //if (TryFindResource("Mwi.BaseColorProxy") is BindingProxy colorProxy)
+                //if (TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
                 //  colorProxy.Value = BaseColor;
             }
         }
@@ -208,7 +208,7 @@ namespace WpfInvestigate.Controls
         {
             foreach (var rd in resources.MergedDictionaries)
                 FillResources(fe, rd);
-            foreach (var key in resources.Keys.OfType<string>().Where(key => key.StartsWith("Mwi.Container") || key.StartsWith("Mwi.Bar") || key == "Mwi.BaseColorProxy"))
+            foreach (var key in resources.Keys.OfType<string>().Where(key => key.StartsWith("Mwi.Container") || key.StartsWith("Mwi.Bar") || key.StartsWith("Mwi.Common")))
                 fe.Resources[key] = resources[key];
         }
 

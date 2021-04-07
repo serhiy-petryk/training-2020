@@ -67,7 +67,7 @@ namespace WpfInvestigate.Controls
                     //OnPropertiesChanged(nameof(BaseColor));
                     if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
                     {
-                        if (TryFindResource("Mwi.BaseColorProxy") is BindingProxy colorProxy)
+                        if (TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
                             colorProxy.Value = BaseColor;
                         OnPropertiesChanged(nameof(BaseColor));
                     }
@@ -103,7 +103,7 @@ namespace WpfInvestigate.Controls
             foreach (var f1 in MwiAppViewModel.Instance.CurrentTheme.GetResources())
                 FillResources(this, f1);
 
-            if (TryFindResource("Mwi.BaseColorProxy") is BindingProxy colorProxy)
+            if (TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
                 colorProxy.Value = BaseColor;
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)

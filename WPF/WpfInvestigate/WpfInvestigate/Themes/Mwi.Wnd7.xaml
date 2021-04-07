@@ -7,7 +7,7 @@
 
     <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
     <system:Double x:Key="Mwi.Child.CornerEdgeWidth">16</system:Double>
-    <common:BindingProxy x:Key="Mwi.BaseColorProxy" Value="{Binding Source={x:Static themes:MwiThemeInfo.Wnd7BaseColor}}"/>
+    <common:BindingProxy x:Key="Mwi.Common.BaseColorProxy" Value="{Binding Source={x:Static themes:MwiThemeInfo.Wnd7BaseColor}}"/>
 
     <!-- ============= Windows 7 layout ============ -->
     <system:Double x:Key="Mwi.Child.Header.Height">22</system:Double>
@@ -21,7 +21,7 @@
     <Thickness x:Key="Mwi.Child.MovingThumb.Margin">0</Thickness>
 
     <!-- ============= Windows 7 specific ============ -->
-    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value}" />
+    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value}" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="#FFD7E4F2"/>
     <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="Black" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="#FF4C4C4C" />
@@ -338,7 +338,7 @@
     <!-- ========================================== -->
     <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{x:Static SystemColors.AppWorkspaceColor}"/>
     <SolidColorBrush x:Key="Mwi.Container.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
-    <SolidColorBrush x:Key="Mwi.Container.LeftPanel.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value}"/>
+    <SolidColorBrush x:Key="Mwi.Container.LeftPanel.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value}"/>
     <!-- Windows Bar -->
     <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="#FFD6EAFF"/>
     <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100:50%'}"/>
