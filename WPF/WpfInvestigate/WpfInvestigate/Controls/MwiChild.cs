@@ -87,13 +87,12 @@ namespace WpfInvestigate.Controls
                     Position = MwiContainer.GetStartPositionForMwiChild(this);
                 AnimateShow();
             }
-        }
-
-        private async void CreateDefaultIcon()
-        {
-            // Delay because no fill color for some icons
-            await Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Input);
-            Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
+            async void CreateDefaultIcon()
+            {
+                // Delay because no fill color for some icons
+                await Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Input);
+                Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
+            }
         }
 
         #region =============  Override methods  ====================
