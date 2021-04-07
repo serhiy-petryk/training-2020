@@ -55,22 +55,14 @@ namespace WpfInvestigate.Controls
             Loaded += OnMwiChildLoaded;
             var dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(MwiChild));
             dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
-            Dispatcher.BeginInvoke(new Action(OnThemeChanged), DispatcherPriority.Normal);
 
             MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
             {
-                if (ActualWidth > 0 && args is PropertyChangedEventArgs e)
+                if (args.PropertyName == nameof(MwiAppViewModel.AppColor))
                 {
-                    if (e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
-                        OnThemeChanged();
-
-                    //OnPropertiesChanged(nameof(BaseColor));
-                    if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
-                    {
-                        if (TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
-                            colorProxy.Value = BaseColor;
-                        OnPropertiesChanged(nameof(BaseColor));
-                    }
+                    if (TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
+                        colorProxy.Value = BaseColor;
+                    OnPropertiesChanged(nameof(BaseColor));
                 }
             };
 
@@ -94,24 +86,6 @@ namespace WpfInvestigate.Controls
                     Position = MwiContainer.GetStartPositionForMwiChild(this);
                 AnimateShow();
             }
-        }
-
-        private void OnThemeChanged()
-        {
-            if (MwiAppViewModel.Instance.CurrentTheme == null) return; // VS designer error
-
-            foreach (var f1 in MwiAppViewModel.Instance.CurrentTheme.GetResources())
-                FillResources(this, f1);
-
-            if (TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
-                colorProxy.Value = BaseColor;
-        }
-        private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
-        {
-            foreach (var rd in resources.MergedDictionaries)
-                FillResources(fe, rd);
-            foreach (var key in resources.Keys.OfType<string>().Where(key => !key.StartsWith("Mwi.Container") && !key.StartsWith("Mwi.Bar")))
-                fe.Resources[key] = resources[key];
         }
 
         #region =============  Override methods  ====================
@@ -324,7 +298,7 @@ namespace WpfInvestigate.Controls
         {
             get
             {
-                if (MwiAppViewModel.Instance.CurrentTheme.Id == "Windows7") return MwiThemeInfo.Wnd7BaseColor;
+                if (Theme.Id == "Windows7") return MwiThemeInfo.Wnd7BaseColor;
                 var backColor = Tips.GetColorFromBrush(Background);
                 return backColor == Colors.Transparent ? MwiAppViewModel.Instance.AppColor : backColor;
             }
@@ -437,6 +411,35 @@ namespace WpfInvestigate.Controls
             get => (Buttons)GetValue(VisibleButtonsProperty);
             set => SetValue(VisibleButtonsProperty, value);
         }
+        //==============================
+        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
+            typeof(MwiThemeInfo), typeof(MwiChild), new FrameworkPropertyMetadata(null, OnThemeChanged));
+
+        public MwiThemeInfo Theme
+        {
+            get => (MwiThemeInfo)GetValue(ThemeProperty);
+            set => SetValue(ThemeProperty, value);
+        }
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var mwiChild = (MwiChild)d;
+            if (e.NewValue is MwiThemeInfo themeInfo)
+            {
+                foreach (var f1 in themeInfo.GetResources())
+                    FillResources(mwiChild, f1);
+
+                if (mwiChild.TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
+                    colorProxy.Value = mwiChild.BaseColor;
+            }
+        }
+        private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
+        {
+            foreach (var rd in resources.MergedDictionaries)
+                FillResources(fe, rd);
+            foreach (var key in resources.Keys.OfType<string>().Where(key => !key.StartsWith("Mwi.Container") && !key.StartsWith("Mwi.Bar")))
+                fe.Resources[key] = resources[key];
+        }
+
         #endregion
 
         private void UpdateUI() => OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),
