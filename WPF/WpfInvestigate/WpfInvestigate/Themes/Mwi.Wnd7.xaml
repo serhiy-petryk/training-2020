@@ -5,11 +5,11 @@
                     xmlns:themes="clr-namespace:WpfInvestigate.Themes"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
-    <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
-    <system:Double x:Key="Mwi.Child.CornerEdgeWidth">16</system:Double>
     <common:BindingProxy x:Key="Mwi.Common.BaseColorProxy" Value="{Binding Source={x:Static themes:MwiThemeInfo.Wnd7BaseColor}}"/>
 
     <!-- ============= Windows 7 layout ============ -->
+    <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
+    <system:Double x:Key="Mwi.Child.CornerEdgeWidth">16</system:Double>
     <system:Double x:Key="Mwi.Child.Header.Height">22</system:Double>
     <Visibility x:Key="Mwi.Child.ShadowBorder.Visibility">Collapsed</Visibility>
     <Visibility x:Key="Mwi.Child.SecondBorders.Visibility">Visible</Visibility>

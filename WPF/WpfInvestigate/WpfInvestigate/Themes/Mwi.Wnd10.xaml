@@ -6,11 +6,11 @@
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
-    <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
-    <system:Double x:Key="Mwi.Child.CornerEdgeWidth">16</system:Double>
     <common:BindingProxy x:Key="Mwi.Common.BaseColorProxy" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
 
     <!-- ============= Windows 10 layout ============ -->
+    <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
+    <system:Double x:Key="Mwi.Child.CornerEdgeWidth">16</system:Double>
     <system:Double x:Key="Mwi.Child.Header.Height">29</system:Double>
     <Visibility x:Key="Mwi.Child.ShadowBorder.Visibility">Visible</Visibility>
     <Visibility x:Key="Mwi.Child.SecondBorders.Visibility">Collapsed</Visibility>
