@@ -130,7 +130,6 @@
     <SolidColorBrush x:Key="Mwi.Container.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
     <SolidColorBrush x:Key="Mwi.Container.LeftPanel.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value}"/>
     <!-- Windows Bar -->
-    <Color x:Key="Mwi.Bar.BackgroundColor">#FFD6EAFF</Color>
     <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=20:+33%}"/>
     <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100:50%'}"/>
 

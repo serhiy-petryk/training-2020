@@ -12,7 +12,6 @@ using System.Windows.Markup;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Themes;
-using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
@@ -35,22 +34,6 @@ namespace WpfInvestigate.Controls
         {
             DataContext = this;
             CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
-            Dispatcher.BeginInvoke(new Action(() => OnThemeChanged(this, new DependencyPropertyChangedEventArgs(ThemeProperty, null, MwiAppViewModel.Instance.CurrentTheme))),
-                DispatcherPriority.Normal);
-
-            MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
-            {
-                if (ActualWidth > 0 && args is PropertyChangedEventArgs e)
-                {
-                    //OnPropertiesChanged(nameof(BaseColor));
-                    if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
-                    {
-                        // if (TryFindResource("Mwi.BaseColorProxy") is BindingProxy colorProxy)
-                           // colorProxy.Value = BaseColor;
-                        // OnPropertiesChanged(nameof(BaseColor));
-                    }
-                }
-            };
         }
 
         private async void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -225,7 +208,7 @@ namespace WpfInvestigate.Controls
         {
             foreach (var rd in resources.MergedDictionaries)
                 FillResources(fe, rd);
-            foreach (var key in resources.Keys.OfType<string>().Where(key => key.StartsWith("Mwi.Container") || key.StartsWith("Mwi.Bar")))
+            foreach (var key in resources.Keys.OfType<string>().Where(key => key.StartsWith("Mwi.Container") || key.StartsWith("Mwi.Bar") || key == "Mwi.BaseColorProxy"))
                 fe.Resources[key] = resources[key];
         }
 
