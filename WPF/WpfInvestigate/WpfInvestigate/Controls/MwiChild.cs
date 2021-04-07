@@ -65,7 +65,7 @@ namespace WpfInvestigate.Controls
                 }
             };
 
-            if (Icon == null) CreateDefaultIcon();
+            if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
 
             /* can't reproduce (2021-03-12):
              MwiAppViewModel.Instance.PropertyChanged += async (sender, args) =>
@@ -86,12 +86,6 @@ namespace WpfInvestigate.Controls
                 if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
                     Position = MwiContainer.GetStartPositionForMwiChild(this);
                 AnimateShow();
-            }
-            async void CreateDefaultIcon()
-            {
-                // Delay because no fill color for some icons
-                await Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Input);
-                Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
             }
         }
 
@@ -427,11 +421,14 @@ namespace WpfInvestigate.Controls
             get => (MwiThemeInfo)GetValue(ThemeProperty);
             set => SetValue(ThemeProperty, value);
         }
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static async void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var mwiChild = (MwiChild)d;
             if (e.NewValue is MwiThemeInfo themeInfo)
             {
+                // Delay because no fill color for some icons
+                await mwiChild.Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Normal);
+
                 foreach (var f1 in themeInfo.GetResources())
                     FillResources(mwiChild, f1);
 
