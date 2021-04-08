@@ -14,7 +14,7 @@
                 <Setter Property="Background" Value="{DynamicResource Mwi.BarItem.Thumbnail.BackgroundBrush}"/>
                 <Setter Property="BorderThickness" Value="4"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="LayoutTransform" Value="{StaticResource Mwi.ScaleTransform}"/>
+                <!--<Setter Property="LayoutTransform" Value="{StaticResource Mwi.ScaleTransform}"/>-->
                 <Setter Property="RenderTransform">
                     <Setter.Value>
                         <ScaleTransform ScaleX="0.7" CenterX="90" />
