@@ -150,7 +150,7 @@ namespace WpfInvestigate.Controls
         private void TabItem_OnLoaded(object sender, RoutedEventArgs e) =>
             ((TabItem) sender).BeginAnimation(OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDuration));
 
-        private void TabItem_OnMouseEnterOrLeave(object sender, MouseEventArgs e) => AnimateTabButton((TabItem)sender);
+        private void TabItem_OnMouseEnterOrLeave(object sender, MouseEventArgs e) => AnimateTabButton((TabItem) sender);
 
         private void TabItem_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -167,7 +167,7 @@ namespace WpfInvestigate.Controls
             e.Handled = true;
         }
 
-        private void TabItem_OnToolTipOpening(object sender, ToolTipEventArgs e) => ((MwiChild)((FrameworkElement)sender).DataContext).RefreshThumbnail();
+        private void TabItem_OnToolTipOpening(object sender, ToolTipEventArgs e) => ((MwiChild) ((FrameworkElement) sender).DataContext).RefreshThumbnail();
 
         private void TabToolTip_OnOpened(object sender, RoutedEventArgs e)
         {
