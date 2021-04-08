@@ -12,6 +12,7 @@ using System.Windows.Markup;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Themes;
+using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
@@ -34,6 +35,20 @@ namespace WpfInvestigate.Controls
         {
             DataContext = this;
             CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
+            // var dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(MwiContainer));
+            // dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
+
+            MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(MwiAppViewModel.AppColor))
+                {
+                    foreach (var f1 in Theme.GetResources())
+                        FillResources(this, f1);
+                    /*if (TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
+                        colorProxy.Value = BaseColor;
+                    OnPropertiesChanged(nameof(BaseColor));*/
+                }
+            };
         }
 
         private async void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -161,6 +176,15 @@ namespace WpfInvestigate.Controls
         public ScrollViewer ScrollViewer;
         public Grid MwiPanel;
         public ObservableCollection<object> Children { get; set; } = new ObservableCollection<object>(); // if define as ObservableCollection<MwiChild>: there are vs designer errors in test forms "A value of type 'MwiChild' cannot be added to a collection or dictionary of type 'ObservableCollection`1'"
+        /*public Color BaseColor
+        {
+            get
+            {
+                if (Theme.Id == "Windows7") return MwiThemeInfo.Wnd7BaseColor;
+                var backColor = Tips.GetColorFromBrush(Background);
+                return backColor == Colors.Transparent ? MwiAppViewModel.Instance.AppColor : backColor;
+            }
+        }*/
         internal IEnumerable<MwiChild> InternalWindows => Children.Cast<MwiChild>().Where(w => !w.IsWindowed);
         internal MwiChild GetTopChild(IEnumerable<object> items) => items.Cast<MwiChild>().OrderByDescending(Panel.GetZIndex).FirstOrDefault();
 
@@ -192,16 +216,17 @@ namespace WpfInvestigate.Controls
             get => (MwiThemeInfo)GetValue(ThemeProperty);
             set => SetValue(ThemeProperty, value);
         }
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static async void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var container = (MwiContainer)d;
             if (e.NewValue is MwiThemeInfo themeInfo)
             {
+                await container.Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Normal);
                 foreach (var f1 in themeInfo.GetResources())
                     FillResources(container, f1);
 
-                //if (TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
-                //  colorProxy.Value = BaseColor;
+                //if (container.TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
+                  // colorProxy.Value = container.BaseColor;
             }
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)

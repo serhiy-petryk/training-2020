@@ -130,14 +130,24 @@
     <SolidColorBrush x:Key="Mwi.Container.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
     <SolidColorBrush x:Key="Mwi.Container.LeftPanel.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value}"/>
     <!-- Windows Bar -->
-    <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=20:+33%}"/>
-    <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100:50%'}"/>
+    <!--<SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=20:+33%}"/>
+    <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100:50%'}"/>-->
+    <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value}"/>
+    <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+50%'}"/>
 
     <!-- Window BarItem -->
-    <SolidColorBrush x:Key="Mwi.BarItem.ForegroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="Mwi.BarItem.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+25%/+75%'}"/>
     <LinearGradientBrush x:Key="Mwi.BarItem.BackgroundBrush" EndPoint="0,1">
+        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10%'}" Offset="0" />
+        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+35%'}" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="xMwi.BarItem.BackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#FFCCD3CC" Offset="0" />
         <GradientStop Color="#FF8B9DB1" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="xMwi.BarItem.Selected.BackgroundBrush" EndPoint="0,1">
+        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+50%:+0%:+10%'}" Offset="0" />
+        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+50%:+0%:+35%'}" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="Mwi.BarItem.Selected.BackgroundBrush" EndPoint="0,1">
         <GradientStop Color="LightSkyBlue" Offset="0"/>
