@@ -266,7 +266,7 @@ namespace WpfInvestigate.Controls
             // Execute before minimized, collapsed or mouse over on tab button
             if ((WindowState != WindowState.Minimized || Thumbnail == null) && Visibility == Visibility.Visible)
             {
-                var bitmap = new RenderTargetBitmap(Convert.ToInt32(ActualWidth), Convert.ToInt32(ActualHeight), 96, 96, PixelFormats.Default);
+                var bitmap = new RenderTargetBitmap(Convert.ToInt32(ActualWidth), Convert.ToInt32(ActualHeight), 96, 96, PixelFormats.Pbgra32);
                 var drawingVisual = new DrawingVisual();
                 using (var context = drawingVisual.RenderOpen())
                 {
