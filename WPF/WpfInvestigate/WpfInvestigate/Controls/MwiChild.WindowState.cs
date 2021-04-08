@@ -18,7 +18,6 @@ namespace WpfInvestigate.Controls
         private Point _attachedPosition;
         private Point _detachedPosition;
         private WindowState? _beforeMinimizedState { get; set; } // Previous state of minimized window.
-        private ImageSource _thumbnailCache;
 
         //==========================
         private void ToggleMaximize(object p) => WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
@@ -26,7 +25,7 @@ namespace WpfInvestigate.Controls
         internal void ToggleMinimize(object obj)
         {
             if (WindowState != WindowState.Minimized)
-                CreateThumbnail();
+                RefreshThumbnail();
 
             if (IsWindowed)
             {

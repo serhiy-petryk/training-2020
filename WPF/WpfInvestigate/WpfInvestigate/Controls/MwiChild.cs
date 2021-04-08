@@ -257,15 +257,14 @@ namespace WpfInvestigate.Controls
         }
 
         #region ==============  Thumbnail  ===================
-        public void RefreshThumbnail() => OnPropertiesChanged(nameof(Thumbnail), nameof(ThumbnailWidth), nameof(ThumbnailHeight));
-        public ImageSource Thumbnail => CreateThumbnail();
+        public ImageSource Thumbnail { get; private set; }
         public double ThumbnailWidth => GetThumbnailSize().X;
         public double ThumbnailHeight => GetThumbnailSize().Y;
 
-        private ImageSource CreateThumbnail()
+        public void RefreshThumbnail()
         {
             // Execute before minimized, collapsed or mouse over on tab button
-            if ((WindowState != WindowState.Minimized || _thumbnailCache == null) && Visibility == Visibility.Visible)
+            if ((WindowState != WindowState.Minimized || Thumbnail == null) && Visibility == Visibility.Visible)
             {
                 var bitmap = new RenderTargetBitmap(Convert.ToInt32(ActualWidth), Convert.ToInt32(ActualHeight), 96, 96, PixelFormats.Default);
                 var drawingVisual = new DrawingVisual();
@@ -277,9 +276,9 @@ namespace WpfInvestigate.Controls
                 }
 
                 bitmap.Render(drawingVisual);
-                _thumbnailCache = bitmap;
+                Thumbnail = bitmap;
+                OnPropertiesChanged(nameof(Thumbnail), nameof(ThumbnailWidth), nameof(ThumbnailHeight));
             }
-            return _thumbnailCache;
         }
         private Point GetThumbnailSize()
         {
