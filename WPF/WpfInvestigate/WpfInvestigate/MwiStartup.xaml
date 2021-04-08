@@ -8,12 +8,14 @@
         xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
+        xmlns:wpfInvestigate="clr-namespace:WpfInvestigate"
         mc:Ignorable="d"
         Title="MwiStartup"
+        Background="Yellow"
         Style="{StaticResource HeadlessWindow}"
         KeyDown="MwiStartup_OnKeyDown">
 
-    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close">
+    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close" Background="{Binding RelativeSource={RelativeSource AncestorType=wpfInvestigate:MwiStartup}, Path=Background}">
         <controls:MwiChild.CommandBar>
             <samples:MwiCommandBarSample/>
         </controls:MwiChild.CommandBar>
@@ -93,7 +95,7 @@
 
         </controls:MwiChild.RightHeaderBar>
 
-        <controls:MwiContainer x:Name="MwiContainer" Background="Red">
+        <controls:MwiContainer x:Name="MwiContainer" Background="{Binding ElementName=TopControl, Path=Background}">
             <controls:MwiContainer.LeftPanel>
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>

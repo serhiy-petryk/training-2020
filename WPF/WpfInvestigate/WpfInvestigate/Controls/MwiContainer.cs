@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Themes;
@@ -35,19 +36,13 @@ namespace WpfInvestigate.Controls
         {
             DataContext = this;
             CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
-            // var dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(MwiContainer));
-            // dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
+            var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
+            dpd.AddValueChanged(this, (sender, args) => UpdateResources(true));
 
             MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
             {
                 if (args.PropertyName == nameof(MwiAppViewModel.AppColor))
-                {
-                    foreach (var f1 in Theme.GetResources())
-                        FillResources(this, f1);
-                    /*if (TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
-                        colorProxy.Value = BaseColor;
-                    OnPropertiesChanged(nameof(BaseColor));*/
-                }
+                    UpdateResources(true);
             };
         }
 
@@ -176,7 +171,11 @@ namespace WpfInvestigate.Controls
         public ScrollViewer ScrollViewer;
         public Grid MwiPanel;
         public ObservableCollection<object> Children { get; set; } = new ObservableCollection<object>(); // if define as ObservableCollection<MwiChild>: there are vs designer errors in test forms "A value of type 'MwiChild' cannot be added to a collection or dictionary of type 'ObservableCollection`1'"
-        /*public Color BaseColor
+
+        internal IEnumerable<MwiChild> InternalWindows => Children.Cast<MwiChild>().Where(w => !w.IsWindowed);
+        internal MwiChild GetTopChild(IEnumerable<object> items) => items.Cast<MwiChild>().OrderByDescending(Panel.GetZIndex).FirstOrDefault();
+
+        private Color BaseColor
         {
             get
             {
@@ -184,9 +183,7 @@ namespace WpfInvestigate.Controls
                 var backColor = Tips.GetColorFromBrush(Background);
                 return backColor == Colors.Transparent ? MwiAppViewModel.Instance.AppColor : backColor;
             }
-        }*/
-        internal IEnumerable<MwiChild> InternalWindows => Children.Cast<MwiChild>().Where(w => !w.IsWindowed);
-        internal MwiChild GetTopChild(IEnumerable<object> items) => items.Cast<MwiChild>().OrderByDescending(Panel.GetZIndex).FirstOrDefault();
+        }
 
         // Offset for new window.
         private double _windowOffset = -WINDOW_OFFSET_STEP;
@@ -219,21 +216,24 @@ namespace WpfInvestigate.Controls
         private static async void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var container = (MwiContainer)d;
-            if (e.NewValue is MwiThemeInfo themeInfo)
-            {
-                await container.Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Normal);
-                foreach (var f1 in themeInfo.GetResources())
-                    FillResources(container, f1);
+            await container.Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Normal);
+            container.UpdateResources(false);
+        }
+        private void UpdateResources(bool onlyColor)
+        {
+            if (!onlyColor && Theme != null)
+                foreach (var f1 in Theme.GetResources())
+                    FillResources(this, f1);
 
-                //if (container.TryFindResource("Mwi.Common.BaseColorProxy") is BindingProxy colorProxy)
-                  // colorProxy.Value = container.BaseColor;
-            }
+            if (TryFindResource("Mwi.Container.BaseColorProxy") is BindingProxy colorProxy)
+                colorProxy.Value = BaseColor;
+            (GetTemplateChild("WindowsBar") as MwiBar)?.UpdateTabItems();
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
         {
             foreach (var rd in resources.MergedDictionaries)
                 FillResources(fe, rd);
-            foreach (var key in resources.Keys.OfType<string>().Where(key => key.StartsWith("Mwi.Container") || key.StartsWith("Mwi.Bar") || key.StartsWith("Mwi.Common")))
+            foreach (var key in resources.Keys.OfType<string>().Where(key => key.StartsWith("Mwi.Container") || key.StartsWith("Mwi.Bar")))
                 fe.Resources[key] = resources[key];
         }
 

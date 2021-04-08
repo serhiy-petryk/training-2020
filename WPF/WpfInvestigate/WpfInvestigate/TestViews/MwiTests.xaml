@@ -46,16 +46,16 @@
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
-            <controls:MwiContainer x:Name="MwiContainer" Background="Beige">
+            <controls:MwiContainer x:Name="MwiContainer">
                 <controls:MwiContainer.LeftPanel>
                     <samples:MwiLeftPanelSample/>
                 </controls:MwiContainer.LeftPanel>
 
-                <controls:MwiChild Position="50 50" Title="Title" Height="150">
+                <controls:MwiChild Position="50 50" Title="Title" Height="150" Background="Yellow">
                     <ContentControl Content="Mwi Child Test"/>
                 </controls:MwiChild>
 
-                <controls:MwiChild Position="100 100">
+                <!--<controls:MwiChild Position="100 100">
                     <ContentControl Content="object Content"/>
                 </controls:MwiChild>
 
@@ -110,7 +110,7 @@
                             <Button Height="20" Click="OnTestClick" Content="Test click"/>
                         </StackPanel>
                     </ScrollViewer>
-                </controls:MwiChild>
+                </controls:MwiChild>-->
 
             </controls:MwiContainer>
         </Grid>

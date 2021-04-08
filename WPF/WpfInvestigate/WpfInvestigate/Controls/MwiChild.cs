@@ -52,7 +52,7 @@ namespace WpfInvestigate.Controls
 
             DataContext = this;
             Loaded += OnMwiChildLoaded;
-            var dpd = DependencyPropertyDescriptor.FromProperty(Control.BackgroundProperty, typeof(MwiChild));
+            var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
             dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
 
             MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>

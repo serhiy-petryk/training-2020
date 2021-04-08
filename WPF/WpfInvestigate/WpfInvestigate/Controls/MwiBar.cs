@@ -110,6 +110,12 @@ namespace WpfInvestigate.Controls
             }
         }
 
+        internal void UpdateTabItems()
+        {
+            foreach (var item in this.GetVisualChildren().OfType<TabItem>())
+                AnimateTabButton(item);
+        }
+
         #region ==============  Tab item  ==============
         private void TabItem_AttachEvents(TabItem item, bool onlyDetach)
         {
@@ -182,7 +188,8 @@ namespace WpfInvestigate.Controls
             else
                 newBrush = TryFindResource("Mwi.BarItem.BackgroundBrush") as LinearGradientBrush;
 
-            tabItem.SetCurrentValue(BackgroundProperty, AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background));
+            if (newBrush != null)
+                tabItem.SetCurrentValue(BackgroundProperty, AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background));
         }
         #endregion
 

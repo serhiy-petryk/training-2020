@@ -126,13 +126,14 @@
     <!-- ========================================== -->
     <!-- ========  MwiContainer & MwiBar  ========= -->
     <!-- ========================================== -->
-    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=10:+33%}"/>
+    <common:BindingProxy x:Key="Mwi.Container.BaseColorProxy" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
+    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Container.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=10:+33%}"/>
     <SolidColorBrush x:Key="Mwi.Container.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
-    <SolidColorBrush x:Key="Mwi.Container.LeftPanel.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value}"/>
+    <SolidColorBrush x:Key="Mwi.Container.LeftPanel.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Container.BaseColorProxy}, Path=Value}"/>
     <!-- Windows Bar -->
-    <!--<SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=20:+33%}"/>
+    <!--<SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Container.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=20:+33%}"/>
     <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100:50%'}"/>-->
-    <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value}"/>
+    <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Container.BaseColorProxy}, Path=Value}"/>
     <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+50%'}"/>
 
     <!-- Window BarItem -->
