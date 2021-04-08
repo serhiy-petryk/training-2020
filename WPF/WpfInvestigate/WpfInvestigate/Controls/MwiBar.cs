@@ -167,7 +167,7 @@ namespace WpfInvestigate.Controls
         {
             var toolTip = (ToolTip)sender;
             var tabTextBlock = Tips.GetVisualChildren(toolTip.PlacementTarget).OfType<TextBlock>().First();
-            toolTip.Tag = Tips.IsTextTrimmed(tabTextBlock) ? "1" : null;
+            toolTip.SetCurrentValue(TagProperty, Tips.IsTextTrimmed(tabTextBlock) ? "1" : null);
         }
 
         private void AnimateTabButton(TabItem tabItem)
@@ -182,7 +182,7 @@ namespace WpfInvestigate.Controls
             else
                 newBrush = TryFindResource("Mwi.BarItem.BackgroundBrush") as LinearGradientBrush;
 
-            tabItem.Background = AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background);
+            tabItem.SetCurrentValue(BackgroundProperty, AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background));
         }
         #endregion
 
