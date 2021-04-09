@@ -11,34 +11,29 @@
 
     <Style TargetType="controls:MwiContainer">
         <Style.Resources>
-            <ResourceDictionary>
-                <!-- For VS designer -->
-                <!--<ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Mwi.Wnd7.xaml" />
-                </ResourceDictionary.MergedDictionaries>-->
+            <!-- 'Mwi.Bar.BackgroundBrush': To suppress output window errors (System.Windows.Data Error: 40) in output window of Visual Studio  -->
+            <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="Transparent"/>
+            <Geometry x:Key="Mwi.Container.MenuGeometry">M0 0 Z M24 24Z M4,6H20V8H4V6M4,11H20V13H4V11M4,16H20V18H4V16Z</Geometry>
+            <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M0 0 Z M24 24Z M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
 
-                <Geometry x:Key="Mwi.Container.MenuGeometry">M0 0 Z M24 24Z M4,6H20V8H4V6M4,11H20V13H4V11M4,16H20V18H4V16Z</Geometry>
-                <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M0 0 Z M24 24Z M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
-
-                <Style TargetType="MenuItem" x:Key="WindowsMenuItemStyle">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="MenuItem">
-                                <MenuItem Header="{TemplateBinding Header}" Command="{Binding CmdSetLayout}"
-                                          CommandParameter="{TemplateBinding CommandParameter}">
-                                    <MenuItem.Icon>
-                                        <Viewbox Width="16" Height="16">
-                                            <Path x:Name="AA" Width="24" Height="24"
-                                                  Fill="{Binding RelativeSource={RelativeSource AncestorType=Control}, Path=Foreground}"
-                                                  Data="{TemplateBinding Tag, Converter={x:Static common:StringToGeometryConverter.Instance}}"/>
-                                        </Viewbox>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ResourceDictionary>
+            <Style TargetType="MenuItem" x:Key="WindowsMenuItemStyle">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="MenuItem">
+                            <MenuItem Header="{TemplateBinding Header}" Command="{Binding CmdSetLayout}"
+                                      CommandParameter="{TemplateBinding CommandParameter}">
+                                <MenuItem.Icon>
+                                    <Viewbox Width="16" Height="16">
+                                        <Path x:Name="AA" Width="24" Height="24"
+                                              Fill="{Binding RelativeSource={RelativeSource AncestorType=Control}, Path=Foreground}"
+                                              Data="{TemplateBinding Tag, Converter={x:Static common:StringToGeometryConverter.Instance}}"/>
+                                    </Viewbox>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </Style.Resources>
 
         <!--<Setter Property="MinWidth" Value="50"/>
