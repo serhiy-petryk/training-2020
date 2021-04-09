@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Common
 {
@@ -45,7 +46,7 @@ namespace WpfInvestigate.Common
 
             if (Equals(from, to))
             {
-                ((DependencyObject)element).SetValue(property, to);
+                ((DependencyObject)element).SetCurrentValueOfObject(property, to);
                 return Task.FromResult(true);
             }
 
@@ -81,7 +82,7 @@ namespace WpfInvestigate.Common
             else
                 animation.Completed += (s, e) =>
                 {
-                    ((DependencyObject)element).SetValue(property, endValue);
+                    ((DependencyObject)element).SetCurrentValueOfObject(property, endValue);
                     tcs.SetResult(true);
                 };
 

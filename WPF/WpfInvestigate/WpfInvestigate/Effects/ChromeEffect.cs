@@ -53,23 +53,34 @@ namespace WpfInvestigate.Effects
             dpdIsMouseOver.RemoveValueChanged(control, ChromeUpdate);
             var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
             dpdIsEnabled.RemoveValueChanged(control, ChromeUpdate);
-
-
-            var state = GetState(control);
-            if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
-                return;
-
-            control.PreviewMouseLeftButtonDown += ChromeUpdate;
-            control.PreviewMouseLeftButtonUp += ChromeUpdate;
-            dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
-            dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
+            var dpdStyle = DependencyPropertyDescriptor.FromProperty(FrameworkElement.StyleProperty, typeof(FrameworkElement));
+            dpdStyle.RemoveValueChanged(control, OnStyleChanged);
+            dpdStyle.AddValueChanged(control, OnStyleChanged);
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
+                var state = GetState(control);
+                if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
+                    return;
+
+                control.PreviewMouseLeftButtonDown += ChromeUpdate;
+                control.PreviewMouseLeftButtonUp += ChromeUpdate;
+                dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
+                dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
+
                 if (control.Style == null && Application.Current.TryFindResource("DefaultButtonBaseStyle") is Style style && style.TargetType.IsInstanceOfType(control))
                     control.Style = style;
                 ChromeUpdate(control, null);
             }, DispatcherPriority.Loaded);
+        }
+
+        private static void OnStyleChanged(object sender, EventArgs e)
+        {
+            var control = (Control) sender;
+            control.SetCurrentValueOfObject(Control.BackgroundProperty, null);
+            control.SetCurrentValueOfObject(Control.ForegroundProperty, null);
+            control.SetCurrentValueOfObject(Control.BorderBrushProperty, null);
+            control.SetCurrentValueOfObject(UIElement.OpacityProperty, 1.0);
         }
 
         private static Tuple<Color?, Color?, Color?, bool, bool, bool> GetState(Control control)
@@ -95,7 +106,7 @@ namespace WpfInvestigate.Effects
             {
                 var oldValues = new Tuple<Color?, Color?, Color?, double>((control.Background as SolidColorBrush)?.Color, (control.Foreground as SolidColorBrush)?.Color, (control.BorderBrush as SolidColorBrush)?.Color, control.Opacity);
                 var newValues = GetNewColors(control, GetBackgroundMethod(control));
-                if (Equals(oldValues, newValues) || !newValues.Item3.HasValue) return;
+                if (newValues == null || Equals(oldValues, newValues) || !newValues.Item3.HasValue) return;
 
                 if (!(control.Background is SolidColorBrush backgroundBrush && !backgroundBrush.IsSealed))
                     control.SetCurrentValueOfObject(Control.BackgroundProperty, new SolidColorBrush(newValues.Item1.Value));
@@ -118,6 +129,8 @@ namespace WpfInvestigate.Effects
 
         private static Tuple<Color?, Color?, Color?, double> GetNewColors(Control control, Func<DependencyObject, Color?> getBackgroundMethod)
         {
+            if (getBackgroundMethod == null) return null;
+
             var isPressed = IsPressed(control);
             if (isPressed && ClickEffect.GetRippleColor(control).HasValue)
                 return new Tuple<Color?, Color?, Color?, double>(null, null,  null, 1.0);
@@ -185,7 +198,8 @@ namespace WpfInvestigate.Effects
         private static Func<DependencyObject, Color?> GetBackgroundMethod(Control control)
         {
             if (GetMonochrome(control) != null) return GetMonochrome;
-            return GetBichromeBackground;
+            if (GetBichromeBackground(control) != null && GetBichromeForeground(control) != null) return GetBichromeBackground;
+            return null;
         }
 
         private static bool IsPressed(Control control) => control.IsMouseOver && Mouse.LeftButton == MouseButtonState.Pressed;
