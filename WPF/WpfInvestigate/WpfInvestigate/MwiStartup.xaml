@@ -8,14 +8,16 @@
         xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
-        xmlns:wpfInvestigate="clr-namespace:WpfInvestigate"
         mc:Ignorable="d"
         Title="MwiStartup"
-        Background="Yellow"
         Style="{StaticResource HeadlessWindow}"
         KeyDown="MwiStartup_OnKeyDown">
 
-    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close" Background="{Binding RelativeSource={RelativeSource AncestorType=wpfInvestigate:MwiStartup}, Path=Background}">
+    <Window.Resources>
+        <SolidColorBrush x:Key="MwiStartupBackground" Color="Yellow"/>
+    </Window.Resources>
+
+    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close" Background="{StaticResource MwiStartupBackground}">
         <controls:MwiChild.CommandBar>
             <samples:MwiCommandBarSample/>
         </controls:MwiChild.CommandBar>
