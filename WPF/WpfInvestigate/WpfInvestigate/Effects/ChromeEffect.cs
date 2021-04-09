@@ -77,10 +77,10 @@ namespace WpfInvestigate.Effects
         private static void OnStyleChanged(object sender, EventArgs e)
         {
             var control = (Control) sender;
-            control.SetCurrentValueOfObject(Control.BackgroundProperty, null);
-            control.SetCurrentValueOfObject(Control.ForegroundProperty, null);
-            control.SetCurrentValueOfObject(Control.BorderBrushProperty, null);
-            control.SetCurrentValueOfObject(UIElement.OpacityProperty, 1.0);
+            control.SetCurrentValueSmart(Control.BackgroundProperty, null);
+            control.SetCurrentValueSmart(Control.ForegroundProperty, null);
+            control.SetCurrentValueSmart(Control.BorderBrushProperty, null);
+            control.SetCurrentValueSmart(UIElement.OpacityProperty, 1.0);
         }
 
         private static Tuple<Color?, Color?, Color?, bool, bool, bool> GetState(Control control)
@@ -109,11 +109,11 @@ namespace WpfInvestigate.Effects
                 if (newValues == null || Equals(oldValues, newValues) || !newValues.Item3.HasValue) return;
 
                 if (!(control.Background is SolidColorBrush backgroundBrush && !backgroundBrush.IsSealed))
-                    control.SetCurrentValueOfObject(Control.BackgroundProperty, new SolidColorBrush(newValues.Item1.Value));
+                    control.SetCurrentValueSmart(Control.BackgroundProperty, new SolidColorBrush(newValues.Item1.Value));
                 if (!(control.Foreground is SolidColorBrush foregroundBrush && !foregroundBrush.IsSealed))
-                    control.SetCurrentValueOfObject(Control.ForegroundProperty, new SolidColorBrush(newValues.Item2.Value));
+                    control.SetCurrentValueSmart(Control.ForegroundProperty, new SolidColorBrush(newValues.Item2.Value));
                 if (!(control.BorderBrush is SolidColorBrush borderBrush && !borderBrush.IsSealed))
-                    control.SetCurrentValueOfObject(Control.BorderBrushProperty, new SolidColorBrush(newValues.Item3.Value));
+                    control.SetCurrentValueSmart(Control.BorderBrushProperty, new SolidColorBrush(newValues.Item3.Value));
 
                 await Task.WhenAll(
                     control.Background.BeginAnimationAsync(SolidColorBrush.ColorProperty, ((SolidColorBrush)control.Background).Color, newValues.Item1.Value),

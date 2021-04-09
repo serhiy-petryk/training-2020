@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
@@ -173,7 +174,7 @@ namespace WpfInvestigate.Controls
         {
             var toolTip = (ToolTip)sender;
             var tabTextBlock = Tips.GetVisualChildren(toolTip.PlacementTarget).OfType<TextBlock>().First();
-            toolTip.SetCurrentValue(TagProperty, Tips.IsTextTrimmed(tabTextBlock) ? "1" : null);
+            toolTip.SetCurrentValueSmart(TagProperty, Tips.IsTextTrimmed(tabTextBlock) ? "1" : null);
         }
 
         private void AnimateTabButton(TabItem tabItem)
@@ -189,7 +190,7 @@ namespace WpfInvestigate.Controls
                 newBrush = TryFindResource("Mwi.BarItem.BackgroundBrush") as LinearGradientBrush;
 
             if (newBrush != null)
-                tabItem.SetCurrentValue(BackgroundProperty, AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background));
+                tabItem.SetCurrentValueSmart(BackgroundProperty, AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background));
         }
         #endregion
 

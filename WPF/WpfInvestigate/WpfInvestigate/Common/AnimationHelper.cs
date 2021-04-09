@@ -46,7 +46,7 @@ namespace WpfInvestigate.Common
 
             if (Equals(from, to))
             {
-                ((DependencyObject)element).SetCurrentValueOfObject(property, to);
+                ((DependencyObject)element).SetCurrentValueSmart(property, to);
                 return Task.FromResult(true);
             }
 
@@ -82,7 +82,7 @@ namespace WpfInvestigate.Common
             else
                 animation.Completed += (s, e) =>
                 {
-                    ((DependencyObject)element).SetCurrentValueOfObject(property, endValue);
+                    ((DependencyObject)element).SetCurrentValueSmart(property, endValue);
                     tcs.SetResult(true);
                 };
 

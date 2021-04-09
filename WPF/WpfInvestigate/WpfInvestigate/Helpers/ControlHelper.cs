@@ -17,7 +17,7 @@ namespace WpfInvestigate.Helpers
 {
     public static class ControlHelper
     {
-        public static void SetCurrentValueOfObject(this DependencyObject d, DependencyProperty property, object newValue)
+        public static void SetCurrentValueSmart(this DependencyObject d, DependencyProperty property, object newValue)
         {
             if (Equals(d.GetValue(property), newValue)) return;
 
