@@ -18,6 +18,16 @@ namespace WpfInvestigate.Samples
             InitializeComponent();
         }
 
+        private void AddSimplestWindow_OnClick(object sender, RoutedEventArgs e)
+        {
+            Container.Children.Add(new MwiChild
+            {
+                Title = "Title",
+                Content = "Simplest window"
+            });
+            Container.HideLeftPanel();
+        }
+
         private void AddExampleWindow_OnClick(object sender, RoutedEventArgs e)
         {
             Container.Children.Add(new MwiChild
