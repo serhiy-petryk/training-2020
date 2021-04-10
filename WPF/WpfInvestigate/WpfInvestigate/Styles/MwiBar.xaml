@@ -48,7 +48,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Image Grid.Column="0" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Source="{Binding Icon}" Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                    <Image Grid.Column="0" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 0 0 0" Source="{Binding Icon}" Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Title}" Margin="5 2 4 0" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
                                     <Button Grid.Column="2" x:Name="DeleteTabButton" Width="20" Height="20" Focusable="False" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Command="{Binding CmdClose}">
                                         <Path Stroke="{DynamicResource Mwi.BarItem.DeleteButton.ForegroundBrush}" StrokeThickness="1.5" Data="M 0 0 L 8 8 M 0 8 L 8 0" Width="8" Height="8" />

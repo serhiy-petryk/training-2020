@@ -272,8 +272,8 @@
     </Style>
 
     <!-- =======  MinimizeButton ===== -->
-    <Image x:Key="Mwi.MinimizeButtonImage" Width="11" Height="5" Margin="0,3,0,0" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Minimize.png" x:Shared="False"/>
-    <Image x:Key="Mwi.MinimizeDisabledButtonImage" Width="11" Height="5" Margin="0,3,0,0" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Minimize.Disabled.png" x:Shared="False"/>
+    <Image x:Key="Mwi.MinimizeButtonImage" Width="11" Height="5" Margin="0 3 0 0" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Minimize.png" x:Shared="False"/>
+    <Image x:Key="Mwi.MinimizeDisabledButtonImage" Width="11" Height="5" Margin="0 3 0 0" Source="pack://application:,,,/WpfInvestigate;component/Resources/Mwi.Wnd7/Minimize.Disabled.png" x:Shared="False"/>
     <Style x:Key="Mwi.MinimizeButtonStyle" TargetType="Button" BasedOn="{StaticResource Mwi.WindowCommonButtonStyle}">
         <Setter Property="Content" Value="{StaticResource Mwi.MinimizeButtonImage}"/>
         <Style.Triggers>
