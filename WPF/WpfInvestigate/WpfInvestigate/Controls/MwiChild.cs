@@ -258,8 +258,7 @@ namespace WpfInvestigate.Controls
 
         #region ==============  Thumbnail  ===================
         public ImageSource Thumbnail { get; private set; }
-        public double ThumbnailWidth => GetThumbnailSize().X;
-        public double ThumbnailHeight => GetThumbnailSize().Y;
+        public double ThumbnailWidth => GetThumbnailWidth();
 
         public void RefreshThumbnail()
         {
@@ -277,17 +276,17 @@ namespace WpfInvestigate.Controls
 
                 bitmap.Render(drawingVisual);
                 Thumbnail = bitmap;
-                OnPropertiesChanged(nameof(Thumbnail), nameof(ThumbnailWidth), nameof(ThumbnailHeight));
+                OnPropertiesChanged(nameof(Thumbnail), nameof(ThumbnailWidth));
             }
         }
-        private Point GetThumbnailSize()
+        private double GetThumbnailWidth()
         {
             const double MAX_THUMBNAIL_SIZE = 180;
             var width = Thumbnail?.Width ?? 0;
             var height = Thumbnail?.Height ?? 0;
             var maxSize = Math.Max(width, height);
             var factor = maxSize > MAX_THUMBNAIL_SIZE ? MAX_THUMBNAIL_SIZE / maxSize : 1;
-            return new Point(width * factor, height * factor);
+            return width * factor;
         }
         #endregion
 
