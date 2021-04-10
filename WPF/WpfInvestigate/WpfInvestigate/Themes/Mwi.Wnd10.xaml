@@ -6,7 +6,7 @@
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
-    <common:BindingProxy x:Key="Mwi.Common.BaseColorProxy" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
+    <common:BindingProxy x:Key="Mwi.Child.BaseColorProxy" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
 
     <!-- ============= Windows 10 layout ============ -->
     <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
@@ -22,10 +22,10 @@
     <Thickness x:Key="Mwi.Child.MovingThumb.Margin">0 6 0 0</Thickness>
 
     <!-- ============= Windows 10 specific ============ -->
-    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value}"/>
-    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10}"/>
-    <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+65%}" />
-    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}" />
+    <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{Binding Source={StaticResource Mwi.Child.BaseColorProxy}, Path=Value}"/>
+    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="{Binding Source={StaticResource Mwi.Child.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10}"/>
+    <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="{Binding Source={StaticResource Mwi.Child.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+65%}" />
+    <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="{Binding Source={StaticResource Mwi.Child.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}" />
 
     <!-- =======  Not used for Windows 10  ========== -->
     <!--<SolidColorBrush x:Key="Mwi.Child.DarkenBackgroundBrush" Color="Transparent" />
@@ -34,8 +34,8 @@
     <SolidColorBrush x:Key="Mwi.Child.FarBorderBrush" Color="Transparent" />-->
 
     <!-- =============  MwiChild header  =============== -->
-    <SolidColorBrush x:Key="Mwi.Child.Header.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}"/>
-    <SolidColorBrush x:Key="Mwi.Child.Header.Unfocused.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.Common.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10/+70%'}"/>
+    <SolidColorBrush x:Key="Mwi.Child.Header.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.Child.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}"/>
+    <SolidColorBrush x:Key="Mwi.Child.Header.Unfocused.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.Child.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10/+70%'}"/>
 
     <!-- =============  MwiChild system menu  =============== -->
 
