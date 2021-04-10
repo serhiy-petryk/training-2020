@@ -96,7 +96,7 @@ namespace WpfInvestigate.Controls
                 {
                     if (mwiChild.Visibility != Visibility.Hidden)
                     {
-                        var temp = mwiChild.Thumbnail; // update thumbnail
+                        mwiChild.RefreshThumbnail();
                         mwiChild.Visibility = Visibility.Hidden;
                     }
                 }
