@@ -61,6 +61,7 @@
         <Setter Property="UseLayoutRounding" Value="True"/>
         <!--<Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />-->
         <Setter Property="Foreground" Value="#FF535666"/>
+        <Setter Property="Opacity" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">

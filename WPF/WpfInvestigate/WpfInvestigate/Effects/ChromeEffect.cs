@@ -54,33 +54,22 @@ namespace WpfInvestigate.Effects
             var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
             dpdIsEnabled.RemoveValueChanged(control, ChromeUpdate);
             var dpdStyle = DependencyPropertyDescriptor.FromProperty(FrameworkElement.StyleProperty, typeof(FrameworkElement));
-            dpdStyle.RemoveValueChanged(control, OnStyleChanged);
-            dpdStyle.AddValueChanged(control, OnStyleChanged);
+
+            var state = GetState(control);
+            if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
+                return;
+
+            control.PreviewMouseLeftButtonDown += ChromeUpdate;
+            control.PreviewMouseLeftButtonUp += ChromeUpdate;
+            dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
+            dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                var state = GetState(control);
-                if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
-                    return;
-
-                control.PreviewMouseLeftButtonDown += ChromeUpdate;
-                control.PreviewMouseLeftButtonUp += ChromeUpdate;
-                dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
-                dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
-
                 if (control.Style == null && Application.Current.TryFindResource("DefaultButtonBaseStyle") is Style style && style.TargetType.IsInstanceOfType(control))
                     control.Style = style;
                 ChromeUpdate(control, null);
             }, DispatcherPriority.Loaded);
-        }
-
-        private static void OnStyleChanged(object sender, EventArgs e)
-        {
-            var control = (Control) sender;
-            control.SetCurrentValueSmart(Control.BackgroundProperty, null);
-            control.SetCurrentValueSmart(Control.ForegroundProperty, null);
-            control.SetCurrentValueSmart(Control.BorderBrushProperty, null);
-            control.SetCurrentValueSmart(UIElement.OpacityProperty, 1.0);
         }
 
         private static Tuple<Color?, Color?, Color?, bool, bool, bool> GetState(Control control)
