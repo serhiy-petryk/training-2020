@@ -176,6 +176,7 @@
                     <samples:MwiStatusBarSample/>
                 </controls:MwiChild.StatusBar>
             </controls:MwiChild>
+
         </controls:MwiContainer>
     </controls:MwiChild>
 </Window>
