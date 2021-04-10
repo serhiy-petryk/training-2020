@@ -297,7 +297,7 @@ namespace WpfInvestigate.Controls
         {
             get
             {
-                if (Theme.Id == "Windows7") return MwiThemeInfo.Wnd7BaseColor;
+                if (Theme?.Id == "Windows7") return MwiThemeInfo.Wnd7BaseColor;
                 var backColor = Tips.GetColorFromBrush(Background);
                 return backColor == Colors.Transparent ? MwiAppViewModel.Instance.AppColor : backColor;
             }
