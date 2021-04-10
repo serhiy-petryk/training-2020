@@ -53,6 +53,8 @@
         <Setter Property="MinWidth" Value="150"/>
         <Setter Property="MinHeight" Value="50"/>
         <Setter Property="Theme" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme}"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MwiChild">
