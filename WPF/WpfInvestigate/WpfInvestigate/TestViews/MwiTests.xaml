@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:samples="clr-namespace:WpfInvestigate.Samples"
-        xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels"
+        xmlns:common="clr-namespace:WpfInvestigate.Common"
         mc:Ignorable="d"
         Title="MwiTests" Height="700" Width="1000"
         KeyDown="MwiTests_OnKeyDown">
@@ -51,8 +51,49 @@
                     <samples:MwiLeftPanelSample/>
                 </controls:MwiContainer.LeftPanel>
 
-                <controls:MwiChild Position="50 50" Title="Title" Height="150" Background="Yellow">
-                    <ContentControl Content="Mwi Child Test"/>
+                <controls:MwiChild Position="25 25" Title="Indigo" Height="150" Background="{StaticResource IndigoBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: IndigoBrush"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="300 25" Title="Primary" Height="150" Background="{StaticResource PrimaryBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: primary"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="575 25" Title="Title" Height="150" Background="{StaticResource SecondaryBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: secondary"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="300 200" Title="Title" Height="150" Background="{StaticResource SuccessBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: Success"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="25 200" Title="Title" Height="150" Background="{StaticResource DangerBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: Danger"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="575 200" Title="Title" Height="150" Background="{StaticResource WarningBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: Warning"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="25 400" Title="Title" Height="150" Background="{StaticResource InfoBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: Info"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="300 400" Title="Title" Height="150" Background="{StaticResource LightBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: LightBrush"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="575 400" Title="Title" Height="150" Background="{StaticResource DarkBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: DarkBrush"/>
                 </controls:MwiChild>
 
                 <!--<controls:MwiChild Position="100 100">
