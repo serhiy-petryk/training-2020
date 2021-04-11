@@ -171,7 +171,8 @@ namespace WpfInvestigate.Common
             if (oldColor.HasValue)
                 hsl = new HSL(new RGB(oldColor.Value));
 
-            if (hsl != null)
+            if (hsl != null && !(parameter is string p1 && string.IsNullOrEmpty(p1)))
+            // if (hsl != null)
             {
                 if (parameter is string p)
                     hsl = ColorConverterHelper.ModifyHsl(hsl, p, _noSplit);
