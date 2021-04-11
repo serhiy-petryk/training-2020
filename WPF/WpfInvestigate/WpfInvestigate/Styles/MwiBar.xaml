@@ -39,8 +39,8 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabItem">
-                            <Border BorderThickness="1" BorderBrush="{DynamicResource Mwi.BarItem.BorderBrush}" CornerRadius="2 0 0 2" Margin="1 0 0 0" Background="{TemplateBinding Background}"
-                                    UseLayoutRounding="True">
+                            <Border Margin="1 0 0 0" BorderThickness="1" CornerRadius="2 0 0 2" UseLayoutRounding="True"
+                                    BorderBrush="{DynamicResource Mwi.BarItem.BorderBrush}" Background="{TemplateBinding Background}">
                                 <Grid MaxWidth="240">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
