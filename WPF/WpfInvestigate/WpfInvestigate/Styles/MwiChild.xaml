@@ -117,8 +117,8 @@
 
                         <Thumb x:Name="ResizeTopLeft" Width="{DynamicResource Mwi.Child.CornerEdgeWidth}" Height="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
                         <Thumb x:Name="ResizeTopRight" Width="{DynamicResource Mwi.Child.CornerEdgeWidth}" Height="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeBottomLeft" Width="{DynamicResource Mwi.Child.CornerEdgeWidth}" Height="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
                         <Thumb x:Name="ResizeBottomRight" Width="{DynamicResource Mwi.Child.CornerEdgeWidth}" Height="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottomLeft" Width="{DynamicResource Mwi.Child.CornerEdgeWidth}" Height="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
 
                         <Grid x:Name="HeaderGrid" VerticalAlignment="Top" Height="{DynamicResource Mwi.Child.Header.Height}" Margin="{DynamicResource Mwi.Child.Header.Margin}">
                             <Grid.ColumnDefinitions>

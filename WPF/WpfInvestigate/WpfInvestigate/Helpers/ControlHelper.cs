@@ -202,8 +202,8 @@ namespace WpfInvestigate.Helpers
             // Normalizing the corner radius
             if (cornerRadius.TopLeft < Tolerance) cornerRadius.TopLeft = 0.0;
             if (cornerRadius.TopRight < Tolerance) cornerRadius.TopRight = 0.0;
-            if (cornerRadius.BottomLeft < Tolerance) cornerRadius.BottomLeft = 0.0;
             if (cornerRadius.BottomRight < Tolerance) cornerRadius.BottomRight = 0.0;
+            if (cornerRadius.BottomLeft < Tolerance) cornerRadius.BottomLeft = 0.0;
 
             // Taking the border thickness into account
             var leftHalf = thickness.Left * 0.5;

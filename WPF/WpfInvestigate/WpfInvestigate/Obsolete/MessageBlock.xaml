@@ -108,8 +108,8 @@
                         <Thumb x:Name="ResizeBottom" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
                         <Thumb x:Name="ResizeTopLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
                         <Thumb x:Name="ResizeTopRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
-                        <Thumb x:Name="ResizeBottomLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
                         <Thumb x:Name="ResizeBottomRight" Width="16" Height="7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottomLeft" Width="16" Height="7" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
