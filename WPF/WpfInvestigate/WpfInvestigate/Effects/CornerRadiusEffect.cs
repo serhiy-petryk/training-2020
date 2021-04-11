@@ -29,12 +29,11 @@ namespace WpfInvestigate.Effects
 
             // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
             element.Dispatcher.InvokeAsync(() => UpdateBorders(element, null), DispatcherPriority.ContextIdle);
-
         }
 
         private static void UpdateBorders(object sender, EventArgs e)
         {
-            if (!(sender is FrameworkElement element)) return;
+            if (!(sender is FrameworkElement element && element.IsLoaded)) return;
             var newRadius = GetCornerRadius(element);
             foreach (var border in ControlHelper.GetMainElements<Border>(element))
             {
