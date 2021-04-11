@@ -42,7 +42,7 @@ namespace WpfInvestigate.Effects
                 var radius = new CornerRadius(
                     GetCornerWidth(newRadius.TopLeft, borderSize.Top, borderSize.Left),
                     GetCornerWidth(newRadius.TopRight, borderSize.Top, borderSize.Right),
-                    GetCornerWidth(newRadius.BottomLeft, borderSize.Bottom, borderSize.Right),
+                    GetCornerWidth(newRadius.BottomRight, borderSize.Bottom, borderSize.Right),
                     GetCornerWidth(newRadius.BottomLeft, borderSize.Bottom, borderSize.Left));
 
                 border.CornerRadius = radius;
