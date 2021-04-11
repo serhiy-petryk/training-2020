@@ -44,7 +44,7 @@ namespace WpfInvestigate.Common
         {
             if (element == null || property == null || from == null || to == null) throw new NullReferenceException();
 
-            if (Equals(from, to))
+            if (Equals(from, to) || Equals(from,  Colors.Transparent) || Equals(to, Colors.Transparent))
             {
                 ((DependencyObject)element).SetCurrentValueSmart(property, to);
                 return Task.FromResult(true);
