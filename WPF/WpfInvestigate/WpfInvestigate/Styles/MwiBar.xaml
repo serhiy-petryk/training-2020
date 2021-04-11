@@ -35,12 +35,12 @@
             </Style>
 
             <Style TargetType="TabItem">
-                <Setter Property="Foreground" Value="{DynamicResource Mwi.BarItem.ForegroundBrush}" />
                 <Setter Property="Background" Value="{DynamicResource Mwi.BarItem.BackgroundBrush}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabItem">
-                            <Border BorderThickness="1" BorderBrush="{DynamicResource Mwi.BarItem.BorderBrush}" CornerRadius="2 0 0 2" Margin="1 0 0 0" Background="{TemplateBinding Background}">
+                            <Border BorderThickness="1" BorderBrush="{DynamicResource Mwi.BarItem.BorderBrush}" CornerRadius="2 0 0 2" Margin="1 0 0 0" Background="{TemplateBinding Background}"
+                                    UseLayoutRounding="True">
                                 <Grid MaxWidth="240">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -49,7 +49,8 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Image Grid.Column="0" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 0 0 0" Source="{Binding Icon}" Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding Title}" Margin="5 2 4 0" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Title}" Margin="5 2 4 0" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"
+                                               Foreground="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"/>
                                     <Button Grid.Column="2" x:Name="DeleteTabButton" Width="20" Height="20" Focusable="False" BorderThickness="0"
                                             DataContext="{DynamicResource Mwi.Bar.BackgroundBrush}"
                                             effects:ChromeEffect.Monochrome="{Binding Color}"

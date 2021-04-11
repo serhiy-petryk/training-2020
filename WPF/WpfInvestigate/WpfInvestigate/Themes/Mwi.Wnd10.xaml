@@ -132,7 +132,6 @@
     <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+50%'}"/>
 
     <!-- Window BarItem -->
-    <SolidColorBrush x:Key="Mwi.BarItem.ForegroundBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+25%/+75%'}"/>
     <LinearGradientBrush x:Key="Mwi.BarItem.BackgroundBrush" EndPoint="0,1">
         <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10%'}" Offset="0" />
         <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+35%'}" Offset="1" />
@@ -142,8 +141,8 @@
         <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+35%:+35%:+35%'}" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="Mwi.BarItem.MouseOver.BackgroundBrush" EndPoint="0,1">
-        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+15%/+10%'}" Offset="0" />
-        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+15%/+25%'}" Offset="1" />
+        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10%/+10'}" Offset="0" />
+        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10%/+25'}" Offset="1" />
     </LinearGradientBrush>
     <SolidColorBrush x:Key="Mwi.BarItem.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10%/+50%'}"/>
     <SolidColorBrush x:Key="Mwi.BarItem.Thumbnail.BackgroundBrush" Color="White"/>

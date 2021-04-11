@@ -346,7 +346,6 @@
     <SolidColorBrush x:Key="Mwi.Bar.BorderBrush" Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='100:50%'}"/>
 
     <!-- Window BarItem -->
-    <SolidColorBrush x:Key="Mwi.BarItem.ForegroundBrush" Color="White"/>
     <LinearGradientBrush x:Key="Mwi.BarItem.BackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#FFCCD3CC" Offset="0" />
         <GradientStop Color="#FF8B9DB1" Offset="1" />
