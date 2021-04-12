@@ -51,7 +51,7 @@ namespace WpfInvestigate.Controls
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Input).Task;
+                    await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Normal).Task;
                     foreach (var o in e.NewItems)
                     {
                         var mwiChild = o as MwiChild;
