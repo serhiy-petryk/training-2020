@@ -96,6 +96,7 @@ namespace WpfInvestigate.Controls
             if (_isDetaching) return;
             MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
             Theme = null;
+            DataContext = null;
         }
 
         #region =============  Override methods  ====================
