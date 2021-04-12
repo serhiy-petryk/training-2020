@@ -124,7 +124,7 @@
     <!-- ========  MwiContainer & MwiBar  ========= -->
     <!-- ========================================== -->
     <common:BindingProxy x:Key="Mwi.Container.BaseColorProxy" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
-    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Container.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=10:+33%}"/>
+    <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Container.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=30:+30%}"/>
     <SolidColorBrush x:Key="Mwi.Container.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
     <SolidColorBrush x:Key="Mwi.Container.LeftPanel.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Container.BaseColorProxy}, Path=Value}"/>
     <!-- Windows Bar -->
