@@ -55,15 +55,8 @@ namespace WpfInvestigate.Controls
             var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
             dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
 
-            MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(MwiAppViewModel.AppColor))
-                {
-                    if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
-                        colorProxy.Value = BaseColor;
-                    OnPropertiesChanged(nameof(BaseColor));
-                }
-            };
+            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
+            Unloaded += OnMwiContainerUnloaded;
 
             if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
 
@@ -87,6 +80,21 @@ namespace WpfInvestigate.Controls
                     Position = MwiContainer.GetStartPositionForMwiChild(this);
                 AnimateShow();
             }
+        }
+
+        private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
+            {
+                if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
+                    colorProxy.Value = BaseColor;
+                OnPropertiesChanged(nameof(BaseColor));
+            }
+        }
+        private void OnMwiContainerUnloaded(object sender, RoutedEventArgs e)
+        {
+            MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+            Theme = null;
         }
 
         #region =============  Override methods  ====================
@@ -421,9 +429,9 @@ namespace WpfInvestigate.Controls
         }
         private static async void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var mwiChild = (MwiChild)d;
             if (e.NewValue is MwiThemeInfo themeInfo)
             {
+                var mwiChild = (MwiChild)d;
                 // Delay because no fill color for some icons
                 await mwiChild.Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Normal);
 

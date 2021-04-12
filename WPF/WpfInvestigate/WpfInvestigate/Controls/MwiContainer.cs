@@ -24,6 +24,8 @@ namespace WpfInvestigate.Controls
     public partial class MwiContainer: ContentControl, INotifyPropertyChanged
     {
         const int WINDOW_OFFSET_STEP = 25;
+        private static int controlId = 0;
+        internal int _controlId = controlId++;
 
         static MwiContainer()
         {
@@ -39,11 +41,20 @@ namespace WpfInvestigate.Controls
             var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
             dpd.AddValueChanged(this, (sender, args) => UpdateResources(true));
 
-            MwiAppViewModel.Instance.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(MwiAppViewModel.AppColor))
-                    UpdateResources(true);
-            };
+            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
+            Unloaded += OnMwiContainerUnloaded;
+        }
+
+        private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
+                UpdateResources(true);
+        }
+
+        private void OnMwiContainerUnloaded(object sender, RoutedEventArgs e)
+        {
+            MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+            Theme = null;
         }
 
         private async void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -180,7 +191,7 @@ namespace WpfInvestigate.Controls
         {
             get
             {
-                if (Theme.Id == "Windows7") return MwiThemeInfo.Wnd7BaseColor;
+                if (Theme?.Id == "Windows7") return MwiThemeInfo.Wnd7BaseColor;
                 var backColor = Tips.GetColorFromBrush(Background);
                 return backColor == Colors.Transparent ? MwiAppViewModel.Instance.AppColor : backColor;
             }
@@ -216,9 +227,12 @@ namespace WpfInvestigate.Controls
         }
         private static async void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var container = (MwiContainer)d;
-            await container.Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Normal);
-            container.UpdateResources(false);
+            if (e.NewValue is MwiThemeInfo)
+            {
+                var container = (MwiContainer)d;
+                await container.Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Normal);
+                container.UpdateResources(false);
+            }
         }
         private void UpdateResources(bool onlyColor)
         {

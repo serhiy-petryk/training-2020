@@ -7,8 +7,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
-using WpfInvestigate.Themes;
-using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate
 {
