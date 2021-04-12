@@ -8,6 +8,7 @@
         xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
+        xmlns:themes="clr-namespace:WpfInvestigate.Themes"
         mc:Ignorable="d"
         Title="MwiStartup"
         Style="{StaticResource HeadlessWindow}"
@@ -102,13 +103,13 @@
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>
 
-            <controls:MwiChild x:Name="TestChild" Position="50 50" Title="Title" Height="150" BorderBrush="Orange" Background="Gainsboro">
+            <controls:MwiChild x:Name="TestChild" Title="Title" Height="150" BorderBrush="Orange" Background="Gainsboro">
                 <ContentControl Content="Mwi Child Test"/>
             </controls:MwiChild>
 
             <controls:MwiChild Title="Empty Window Using XAML and long header" Background="LightBlue" />
 
-            <controls:MwiChild Position="100 100" BorderBrush="Orange" Background="LightGreen">
+            <controls:MwiChild BorderBrush="Orange" Background="LightGreen">
                 <ContentControl Content="object Content"/>
                 <controls:MwiChild.Resources>
                     <Style TargetType="controls:MwiChild" BasedOn="{StaticResource {x:Type controls:MwiChild}}">
@@ -122,7 +123,7 @@
                 </controls:MwiChild.Resources>
             </controls:MwiChild>
 
-            <controls:MwiChild Position="200 200" Height="150">
+            <controls:MwiChild Height="150">
                 <controls:MwiChild.CommandBar>
                     <samples:MwiCommandBarSample/>
                 </controls:MwiChild.CommandBar>
@@ -133,7 +134,7 @@
                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Position="250 250" Title="Long long very long Title very long very long" Height="150">
+            <controls:MwiChild Title="Long long very long Title very long very long" Height="150">
                 <controls:MwiChild.CommandBar>
                     <samples:MwiCommandBarSample/>
                 </controls:MwiChild.CommandBar>
@@ -146,14 +147,18 @@
                 </StackPanel>
             </controls:MwiChild>
 
-            <controls:MwiChild Position="300 300" Title="Title" Resizable="False">
+            <controls:MwiChild Title="Title" Resizable="False">
                 <controls:MwiChild.StatusBar>
                     <samples:MwiStatusBarSample/>
                 </controls:MwiChild.StatusBar>
                 <TextBlock Text="Not resizable" Background="Yellow"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Title="Window Using XAML" Position="20 170" Icon="pack://application:,,,/WpfInvestigate;component/Resources/OriginalLogo.png" Height="350" x:Name="Test2">
+            <controls:MwiChild Position="600 25" Title="Fixed Windows 7 Theme" Height="150" Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[2]}" >
+                <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=Title}"/>
+            </controls:MwiChild>
+
+            <controls:MwiChild Title="Window Using XAML" Icon="pack://application:,,,/WpfInvestigate;component/Resources/OriginalLogo.png" Height="350" x:Name="Test2">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdDisableDetach}">Disable Detach</Button>
