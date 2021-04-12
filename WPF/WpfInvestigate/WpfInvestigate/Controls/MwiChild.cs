@@ -93,6 +93,7 @@ namespace WpfInvestigate.Controls
         }
         private void OnMwiContainerUnloaded(object sender, RoutedEventArgs e)
         {
+            if (_isDetaching) return;
             MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
             Theme = null;
         }
