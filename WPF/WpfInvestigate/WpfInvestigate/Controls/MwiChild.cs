@@ -427,19 +427,20 @@ namespace WpfInvestigate.Controls
             get => (MwiThemeInfo)GetValue(ThemeProperty);
             set => SetValue(ThemeProperty, value);
         }
-        private static async void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue is MwiThemeInfo themeInfo)
             {
                 var mwiChild = (MwiChild)d;
                 // Delay because no fill color for some icons
-                await mwiChild.Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Normal);
+                mwiChild.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    foreach (var f1 in themeInfo.GetResources())
+                        FillResources(mwiChild, f1);
 
-                foreach (var f1 in themeInfo.GetResources())
-                    FillResources(mwiChild, f1);
-
-                if (mwiChild.TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
-                    colorProxy.Value = mwiChild.BaseColor;
+                    if (mwiChild.TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
+                        colorProxy.Value = mwiChild.BaseColor;
+                }), DispatcherPriority.Normal);
             }
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
