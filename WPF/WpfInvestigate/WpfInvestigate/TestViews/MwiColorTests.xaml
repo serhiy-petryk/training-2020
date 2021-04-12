@@ -12,25 +12,25 @@
         <ControlTemplate x:Key="Test" TargetType="UserControl">
             <controls:MwiChild Background="{TemplateBinding Background}" Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Margin="10" Width="350" Height="200">
                 <controls:MwiContainer Background="{TemplateBinding Background}">
-                    <controls:MwiChild Position="0 0" Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                    <controls:MwiChild Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
                                            Background="{TemplateBinding Background}"
                                            Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
                         <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"/>
                     </controls:MwiChild>
 
-                    <controls:MwiChild Position="10 10" Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                    <controls:MwiChild Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
                                        Background="{TemplateBinding Background}"
                                        Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
                         <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"/>
                     </controls:MwiChild>
 
-                    <controls:MwiChild Position="20 20" Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                    <controls:MwiChild Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
                                        Background="{TemplateBinding Background}"
                                        Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
                         <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"/>
                     </controls:MwiChild>
 
-                    <controls:MwiChild Position="30 30" Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                    <controls:MwiChild Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
                                        Background="{TemplateBinding Background}"
                                        Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
                         <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"/>
