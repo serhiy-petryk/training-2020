@@ -93,6 +93,7 @@
                 <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
                     <Label>Ready:</Label>
                     <Button x:Name="MwiStartup" Width="200" Margin="0 5" Content="Mwi Startup" Click="MwiStartup_OnClick"/>
+                    <Button x:Name="MwiColorTests" Width="200" Margin="0 5" Content="Mwi color test" Click="MwiColorTests_OnClick"/>
                     <Button x:Name="MwiTests" Width="200" Margin="0 5" Content="Mwi test" Click="MwiTests_OnClick"/>
                     <Button x:Name="ResizingControlTests" Width="200" Margin="0 5" Content="Ready: ResizingControlTests" Click="ResizingControlTests_OnClick"/>
                     <Button x:Name="ObjectEditorTest" Margin="5" Content="Ready: ObjectEditor" Click="ObjectEditorTest_OnClick"/>

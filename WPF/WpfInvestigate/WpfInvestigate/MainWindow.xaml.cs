@@ -49,6 +49,8 @@ namespace WpfInvestigate
         }
 
         private void MwiStartup_OnClick(object sender, RoutedEventArgs e) => new MwiStartup().Show();
+        private void MwiColorTests_OnClick(object sender, RoutedEventArgs e) => new MwiColorTests().Show();
+        private void MwiTests_OnClick(object sender, RoutedEventArgs e) => new MwiTests().Show();
         private void ResizingControlTests_OnClick(object sender, RoutedEventArgs e) => new ResizingControlTests().Show();
         private void TimePickerTest_OnClick(object sender, RoutedEventArgs e) => new TimePickerTests().Show();
         private void ObjectEditorTest_OnClick(object sender, RoutedEventArgs e) => new ObjectEditorTests().Show();
@@ -80,7 +82,6 @@ namespace WpfInvestigate
 
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
         private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
-        private void MwiTests_OnClick(object sender, RoutedEventArgs e) => new MwiTests().Show();
         private void MwiTemplate_OnClick(object sender, RoutedEventArgs e) => new MwiTemplate().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
@@ -101,5 +102,6 @@ namespace WpfInvestigate
             if (a1!= null)
                 Resources["TestBrush"]= new SolidColorBrush(Colors.Green);
         }
+
     }
 }

@@ -51,6 +51,7 @@ namespace WpfInvestigate.Controls
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
+                    await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Input).Task;
                     foreach (var o in e.NewItems)
                     {
                         var mwiChild = o as MwiChild;
@@ -58,7 +59,7 @@ namespace WpfInvestigate.Controls
                             throw new Exception($"All children of MwiContainer object have to be MwiChild type but it is '{o.GetType().Name}' type");
 
                         mwiChild.MwiContainer = this;
-                        await mwiChild.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Normal).Task;
+                        // await mwiChild.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Normal).Task;
                         if (mwiChild.Parent is Grid parent)  // remove VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first
                             parent.Children.Remove(mwiChild);
                         MwiPanel.Children.Add(mwiChild);
