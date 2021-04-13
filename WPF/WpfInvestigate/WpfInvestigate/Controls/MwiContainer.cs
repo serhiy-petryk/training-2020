@@ -107,10 +107,10 @@ namespace WpfInvestigate.Controls
             {
                 if (maximizedFlag)
                 {
-                    if (mwiChild.Visibility != Visibility.Hidden)
+                    if (mwiChild.Visibility != Visibility.Collapsed)
                     {
                         mwiChild.RefreshThumbnail();
-                        mwiChild.Visibility = Visibility.Hidden;
+                        mwiChild.Visibility = Visibility.Collapsed;
                     }
                 }
                 else
