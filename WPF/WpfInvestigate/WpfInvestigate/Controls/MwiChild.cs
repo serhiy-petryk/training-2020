@@ -51,12 +51,12 @@ namespace WpfInvestigate.Controls
             CmdClose = new RelayCommand(Close, _ => AllowClose);
 
             DataContext = this;
-            Loaded += OnMwiChildLoaded;
+            Loaded += OnLoaded;
             var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
             dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
 
             MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
-            Unloaded += OnMwiContainerUnloaded;
+            Unloaded += OnUnloaded;
 
             if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
 
@@ -73,9 +73,9 @@ namespace WpfInvestigate.Controls
                 }
             };*/
 
-            void OnMwiChildLoaded(object sender, RoutedEventArgs e)
+            void OnLoaded(object sender, RoutedEventArgs e)
             {
-                Loaded -= OnMwiChildLoaded;
+                Loaded -= OnLoaded;
                 if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
                     Position = MwiContainer.GetStartPositionForMwiChild(this);
                 AnimateShow();
@@ -91,7 +91,7 @@ namespace WpfInvestigate.Controls
                 OnPropertiesChanged(nameof(BaseColor));
             }
         }
-        private void OnMwiContainerUnloaded(object sender, RoutedEventArgs e)
+        private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             if (_isDetaching) return;
             MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;

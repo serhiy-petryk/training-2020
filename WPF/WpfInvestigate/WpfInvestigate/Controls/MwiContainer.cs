@@ -42,7 +42,7 @@ namespace WpfInvestigate.Controls
             dpd.AddValueChanged(this, (sender, args) => UpdateResources(true));
 
             MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
-            Unloaded += OnMwiContainerUnloaded;
+            Unloaded += OnUnloaded;
         }
 
         private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -51,10 +51,11 @@ namespace WpfInvestigate.Controls
                 UpdateResources(true);
         }
 
-        private void OnMwiContainerUnloaded(object sender, RoutedEventArgs e)
+        private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
             Theme = null;
+            DataContext = null;
         }
 
         private async void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -225,13 +226,12 @@ namespace WpfInvestigate.Controls
             get => (MwiThemeInfo)GetValue(ThemeProperty);
             set => SetValue(ThemeProperty, value);
         }
-        private static async void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue is MwiThemeInfo)
             {
                 var container = (MwiContainer)d;
-                await container.Dispatcher.BeginInvoke(new Action(() => { }), DispatcherPriority.Normal);
-                container.UpdateResources(false);
+                container.Dispatcher.BeginInvoke(new Action(() => { container.UpdateResources(false); }), DispatcherPriority.Normal);
             }
         }
         private void UpdateResources(bool onlyColor)
