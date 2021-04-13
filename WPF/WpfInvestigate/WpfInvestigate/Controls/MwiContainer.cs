@@ -92,7 +92,7 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private Point GetStartPositionForMwiChild(MwiChild mwiChild)
+        internal Point GetStartPositionForMwiChild(MwiChild mwiChild)
         {
             _windowOffset += WINDOW_OFFSET_STEP;
             if ((_windowOffset + mwiChild.ActualWidth > MwiPanel.ActualWidth) || (_windowOffset + mwiChild.ActualHeight > MwiPanel.ActualHeight))
@@ -231,7 +231,8 @@ namespace WpfInvestigate.Controls
             if (e.NewValue is MwiThemeInfo)
             {
                 var container = (MwiContainer)d;
-                container.Dispatcher.BeginInvoke(new Action(() => { container.UpdateResources(false); }), DispatcherPriority.Normal);
+                // container.Dispatcher.BeginInvoke(new Action(() => { container.UpdateResources(false); }), DispatcherPriority.Normal);
+                container.UpdateResources(false);
             }
         }
         private void UpdateResources(bool onlyColor)

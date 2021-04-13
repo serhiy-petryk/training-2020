@@ -76,6 +76,8 @@ namespace WpfInvestigate.Controls
             void OnLoaded(object sender, RoutedEventArgs e)
             {
                 Loaded -= OnLoaded;
+                //if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
+                  //  Position = MwiContainer.GetStartPositionForMwiChild(this);
                 AnimateShow();
             }
         }
@@ -440,7 +442,7 @@ namespace WpfInvestigate.Controls
 
                     if (mwiChild.TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
                         colorProxy.Value = mwiChild.BaseColor;
-                }), DispatcherPriority.Normal);
+                 }), DispatcherPriority.Normal);
             }
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
