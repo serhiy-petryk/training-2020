@@ -69,11 +69,11 @@ namespace WpfInvestigate.Controls
                         var mwiChild = o as MwiChild;
                         if (mwiChild == null)
                             throw new Exception($"All children of MwiContainer object have to be MwiChild type but it is '{o.GetType().Name}' type");
-
                         mwiChild.MwiContainer = this;
-                        // await mwiChild.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Normal).Task;
                         if (mwiChild.Parent is Grid parent)  // remove VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first
                             parent.Children.Remove(mwiChild);
+                        if (mwiChild.Position.X < 0 || mwiChild.Position.Y < 0)
+                            mwiChild.Position = GetStartPositionForMwiChild(mwiChild);
                         MwiPanel.Children.Add(mwiChild);
                         mwiChild.Activate();
                     }
@@ -92,7 +92,7 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        internal Point GetStartPositionForMwiChild(MwiChild mwiChild)
+        private Point GetStartPositionForMwiChild(MwiChild mwiChild)
         {
             _windowOffset += WINDOW_OFFSET_STEP;
             if ((_windowOffset + mwiChild.ActualWidth > MwiPanel.ActualWidth) || (_windowOffset + mwiChild.ActualHeight > MwiPanel.ActualHeight))

@@ -76,8 +76,6 @@ namespace WpfInvestigate.Controls
             void OnLoaded(object sender, RoutedEventArgs e)
             {
                 Loaded -= OnLoaded;
-                if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
-                    Position = MwiContainer.GetStartPositionForMwiChild(this);
                 AnimateShow();
             }
         }
