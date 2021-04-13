@@ -3,11 +3,11 @@
 namespace WpfInvestigate.TestViews
 {
     /// <summary>
-    /// Interaction logic for MwiColorTests.xaml
+    /// Interaction logic for MwiBootstrapColorTests.xaml
     /// </summary>
-    public partial class MwiColorTests : Window
+    public partial class MwiBootstrapColorTests : Window
     {
-        public MwiColorTests()
+        public MwiBootstrapColorTests()
         {
             InitializeComponent();
         }

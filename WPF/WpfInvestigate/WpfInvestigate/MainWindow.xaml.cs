@@ -49,7 +49,7 @@ namespace WpfInvestigate
         }
 
         private void MwiStartup_OnClick(object sender, RoutedEventArgs e) => new MwiStartup().Show();
-        private void MwiColorTests_OnClick(object sender, RoutedEventArgs e) => new MwiColorTests().Show();
+        private void MwiBootstrapColorTests_OnClick(object sender, RoutedEventArgs e) => new MwiBootstrapColorTests().Show();
         private void MwiTests_OnClick(object sender, RoutedEventArgs e) => new MwiTests().Show();
         private void ResizingControlTests_OnClick(object sender, RoutedEventArgs e) => new ResizingControlTests().Show();
         private void TimePickerTest_OnClick(object sender, RoutedEventArgs e) => new TimePickerTests().Show();
