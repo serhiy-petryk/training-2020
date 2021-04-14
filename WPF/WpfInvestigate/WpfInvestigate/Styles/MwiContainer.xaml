@@ -20,11 +20,11 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="MenuItem">
-                            <MenuItem Header="{TemplateBinding Header}" Command="{Binding CmdSetLayout}"
+                            <MenuItem Header="{TemplateBinding Header}" Command="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiContainer}, Path=CmdSetLayout}"
                                       CommandParameter="{TemplateBinding CommandParameter}">
                                 <MenuItem.Icon>
                                     <Viewbox Width="16" Height="16">
-                                        <Path x:Name="AA" Width="24" Height="24"
+                                        <Path Width="24" Height="24"
                                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Control}, Path=Foreground}"
                                               Data="{TemplateBinding Tag, Converter={x:Static common:StringToGeometryConverter.Instance}}"/>
                                     </Viewbox>
