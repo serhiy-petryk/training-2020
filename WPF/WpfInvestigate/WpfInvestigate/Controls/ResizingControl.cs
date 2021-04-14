@@ -138,7 +138,7 @@ namespace WpfInvestigate.Controls
         {
             base.OnVisualParentChanged(oldParent);
 
-            if (Parent is Window wnd && Position == new Point(-1, -1) && !wnd.IsLoaded)
+            if (Parent is Window wnd && !Position.HasValue && !wnd.IsLoaded)
                 wnd.LocationChanged += OnWindowLocationChanged;
 
             void OnWindowLocationChanged(object sender, EventArgs e)
@@ -332,18 +332,17 @@ namespace WpfInvestigate.Controls
             set => SetValue(ResizableProperty, value);
         }
         //=========================
-        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Point), typeof(ResizingControl), new FrameworkPropertyMetadata(new Point(-1, -1), OnPositionValueChanged));
-        public Point Position
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Point?), typeof(ResizingControl), new FrameworkPropertyMetadata(null, OnPositionValueChanged));
+        public Point? Position
         {
-            get => (Point)GetValue(PositionProperty);
+            get => (Point?)GetValue(PositionProperty);
             set => SetValue(PositionProperty, value);
         }
         private static void OnPositionValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if ((Point)e.NewValue == (Point)e.OldValue) return;
+            if (Equals(e.NewValue, e.OldValue) || !(e.NewValue is Point newPosition)) return;
 
             var resizingControl = (ResizingControl)d;
-            var newPosition = (Point)e.NewValue;
             if (resizingControl.Parent is Window wnd)
             {
                 var newTop = Math.Min(SystemParameters.PrimaryScreenHeight, newPosition.Y);

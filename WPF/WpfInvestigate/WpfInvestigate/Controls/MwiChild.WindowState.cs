@@ -89,7 +89,7 @@ namespace WpfInvestigate.Controls
                 _detachedPosition = new Point(
                     SystemParameters.WorkArea.X + Math.Max(0, (SystemParameters.WorkArea.Width - _lastNormalSize.Width * _scale.X) / 2),
                     SystemParameters.WorkArea.Y + Math.Max(0, (SystemParameters.WorkArea.Height - _lastNormalSize.Height * _scale.Y) / 2));
-                Position = new Point(-1, -1); // Reset position (need for maximized window or when positions before and after detach are equal)
+                Position = null; // Reset position (need for maximized window or when positions before and after detach are equal)
             }
 
             OnWindowStateValueChanged(this, new DependencyPropertyChangedEventArgs(WindowStateProperty, WindowState, WindowState));

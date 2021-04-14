@@ -50,7 +50,7 @@ namespace WpfInvestigate.Common
                 return Task.FromResult(true);
             }
 
-            var pType = property.PropertyType;
+            var pType = Tips.GetNotNullableType(property.PropertyType);
             if (!pType.IsInstanceOfType(from))
                 throw new Exception("BeginAnimationAsync error. Data type of 'from' parameter doesn't match property.PropertyType.");
             if (!pType.IsInstanceOfType(to))

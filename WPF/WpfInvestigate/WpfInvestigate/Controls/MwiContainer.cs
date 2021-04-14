@@ -58,12 +58,11 @@ namespace WpfInvestigate.Controls
             DataContext = null;
         }
 
-        private async void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Normal).Task;
                     foreach (var o in e.NewItems)
                     {
                         var mwiChild = o as MwiChild;
@@ -72,7 +71,7 @@ namespace WpfInvestigate.Controls
                         mwiChild.MwiContainer = this;
                         if (mwiChild.Parent is Grid parent)  // remove VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first
                             parent.Children.Remove(mwiChild);
-                        if (mwiChild.Position.X < 0 || mwiChild.Position.Y < 0)
+                        if (!mwiChild.Position.HasValue)
                             mwiChild.Position = GetStartPositionForMwiChild(mwiChild);
                         MwiPanel.Children.Add(mwiChild);
                         mwiChild.Activate();
@@ -143,7 +142,7 @@ namespace WpfInvestigate.Controls
                 windowsMenuButton.Checked += OnWindowsMenuButtonChecked;
 
             Children.CollectionChanged += OnChildrenCollectionChanged;
-            OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
+            // OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
             Unloaded += OnMwiContainerUnloaded;
 
             if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
@@ -152,6 +151,12 @@ namespace WpfInvestigate.Controls
                 wnd.Deactivated += OnWindowDeactivated;
             }
 
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
+            }), DispatcherPriority.Background);
+
+            // =======================
             void OnWindowActivated(object sender, EventArgs e)
             {
                 if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
