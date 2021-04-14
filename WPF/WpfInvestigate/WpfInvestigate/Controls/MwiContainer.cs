@@ -154,7 +154,7 @@ namespace WpfInvestigate.Controls
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
-            }), DispatcherPriority.Background);
+            }), DispatcherPriority.Normal);
 
             // =======================
             void OnWindowActivated(object sender, EventArgs e)
