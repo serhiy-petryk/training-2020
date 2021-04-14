@@ -91,7 +91,7 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        internal Point GetStartPositionForMwiChild(MwiChild mwiChild)
+        private Point GetStartPositionForMwiChild(MwiChild mwiChild)
         {
             _windowOffset += WINDOW_OFFSET_STEP;
             if ((_windowOffset + mwiChild.ActualWidth > MwiPanel.ActualWidth) || (_windowOffset + mwiChild.ActualHeight > MwiPanel.ActualHeight))
@@ -142,7 +142,6 @@ namespace WpfInvestigate.Controls
                 windowsMenuButton.Checked += OnWindowsMenuButtonChecked;
 
             Children.CollectionChanged += OnChildrenCollectionChanged;
-            // OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
             Unloaded += OnMwiContainerUnloaded;
 
             if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
@@ -154,7 +153,8 @@ namespace WpfInvestigate.Controls
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
-            }), DispatcherPriority.Normal);
+            }), DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal);
+            // To fix VS correct view of MwiStartup: DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal)
 
             // =======================
             void OnWindowActivated(object sender, EventArgs e)
