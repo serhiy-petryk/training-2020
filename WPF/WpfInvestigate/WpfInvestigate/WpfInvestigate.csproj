@@ -188,6 +188,9 @@
     <Compile Include="MwiStartup.xaml.cs">
       <DependentUpon>MwiStartup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\MemoryLeakInvestigation.xaml.cs">
+      <DependentUpon>MemoryLeakInvestigation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\MwiBootstrapColorTests.xaml.cs">
       <DependentUpon>MwiBootstrapColorTests.xaml</DependentUpon>
     </Compile>
@@ -455,6 +458,10 @@
     <Page Include="MwiStartup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\MemoryLeakInvestigation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestViews\MwiBootstrapColorTests.xaml">
       <SubType>Designer</SubType>

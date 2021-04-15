@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
 using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
@@ -85,6 +86,8 @@ namespace WpfInvestigate
         private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
         private void MwiTemplate_OnClick(object sender, RoutedEventArgs e) => new MwiTemplate().Show();
 
+        private void MemoryLeakInvestigation_OnClick(object sender, RoutedEventArgs e) => new MemoryLeakInvestigation().Show();
+
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
         }
@@ -112,6 +115,8 @@ namespace WpfInvestigate
             //
             var a1 = GC.GetTotalMemory(true);
             Debug.Print($"Memory usage: {a1.ToString("N0")}");
+            // Tips.ClearAllBindings(WpfInvestigate.TestViews.MwiBootstrapColorTests.Instance);
         }
+
     }
 }
