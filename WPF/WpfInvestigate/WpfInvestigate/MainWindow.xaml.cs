@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -103,5 +104,14 @@ namespace WpfInvestigate
                 Resources["TestBrush"]= new SolidColorBrush(Colors.Green);
         }
 
+        private void MemoryUsageOnClick(object sender, RoutedEventArgs e)
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            //
+            var a1 = GC.GetTotalMemory(true);
+            Debug.Print($"Memory usage: {a1.ToString("N0")}");
+        }
     }
 }

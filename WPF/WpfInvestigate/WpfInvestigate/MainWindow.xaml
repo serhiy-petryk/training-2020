@@ -86,6 +86,7 @@
                         <Button x:Name="TestButton2" Style="{DynamicResource StyleRed}" Foreground="{DynamicResource TestBrush}" Content="AAA"/>
                         <Button Content="Change style" Click="TestButtonChangeStyle"/>
                         <Button Content="Change foreground" Click="TestButtonChangeForeground"/>
+                        <Button Content="Memory usage" Click="MemoryUsageOnClick"/>
                     </WrapPanel>
 
                 </StackPanel>
