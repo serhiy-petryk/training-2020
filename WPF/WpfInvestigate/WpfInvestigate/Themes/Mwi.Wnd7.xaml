@@ -20,11 +20,13 @@
     <Thickness x:Key="Mwi.Child.Header.Margin">7 7 7 0</Thickness>
     <Thickness x:Key="Mwi.Child.MovingThumb.Margin">0</Thickness>
 
-    <!-- ============= Windows 7 specific ============ -->
+    <!-- ============= Windows 7 colors ============ -->
     <SolidColorBrush x:Key="Mwi.Child.BaseBackgroundBrush" Color="{Binding Source={StaticResource Mwi.Child.BaseColorProxy}, Path=Value}" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBackgroundBrush" Color="#FFD7E4F2"/>
     <SolidColorBrush x:Key="Mwi.Child.BaseBorderBrush" Color="Black" />
     <SolidColorBrush x:Key="Mwi.Child.Unfocused.BaseBorderBrush" Color="#FF4C4C4C" />
+    <SolidColorBrush x:Key="Mwi.Child.Header.ForegroundBrush" Color="{x:Static SystemColors.ActiveCaptionTextColor}"/>
+    <SolidColorBrush x:Key="Mwi.Child.Header.Unfocused.ForegroundBrush" Color="{x:Static SystemColors.GrayTextColor}"/>
 
     <LinearGradientBrush x:Key="Mwi.Child.DarkenBackgroundBrush" EndPoint="0,1">
         <GradientStop Color="#20000000" Offset="0.0" />
@@ -44,12 +46,6 @@
     <SolidColorBrush x:Key="MwiChild.CloseButton.BorderBrush" Color="#FF431422" />
     <SolidColorBrush x:Key="MwiChild.Button.Unfocused.BorderBrush" Color="#FFD1DBE5" />
     <SolidColorBrush x:Key="MwiChild.Button.Unfocused.SubBorderBrush" Color="#FF838EA8" />
-
-    <!-- =============  MwiChild header  =============== -->
-    <SolidColorBrush x:Key="Mwi.Child.Header.ForegroundBrush" Color="{x:Static SystemColors.ActiveCaptionTextColor}"/>
-    <SolidColorBrush x:Key="Mwi.Child.Header.Unfocused.ForegroundBrush" Color="{x:Static SystemColors.GrayTextColor}"/>
-
-    <!-- =============  MwiChild system menu  =============== -->
 
     <!--  =====  Buttons  ===== -->
     <!-- =================================== -->
