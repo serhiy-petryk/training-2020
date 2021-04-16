@@ -43,21 +43,12 @@ namespace WpfInvestigate.Controls
             dpd.AddValueChanged(this, (sender, args) => UpdateResources(true));
 
             MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
-            // Unloaded += OnUnloaded;
         }
 
         private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
                 UpdateResources(true);
-        }
-
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-            // this.ClearAllBindings();
-            Theme = null;
-            DataContext = null;
         }
 
         private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -144,7 +135,7 @@ namespace WpfInvestigate.Controls
                 windowsMenuButton.Checked += OnWindowsMenuButtonChecked;
 
             Children.CollectionChanged += OnChildrenCollectionChanged;
-            Unloaded += OnMwiContainerUnloaded;
+            Unloaded += OnUnloaded;
 
             if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
             {
@@ -169,9 +160,9 @@ namespace WpfInvestigate.Controls
                 if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
                     ActiveMwiChild.IsActive = false;
             }
-            void OnMwiContainerUnloaded(object sender, RoutedEventArgs e)
+            void OnUnloaded(object sender, RoutedEventArgs e)
             {
-                Unloaded -= OnMwiContainerUnloaded;
+                Unloaded -= OnUnloaded;
                 foreach (var mwiChild in Children.Cast<MwiChild>().Where(c=>c.IsWindowed))
                     ((Window) mwiChild.Parent).Close();
 
