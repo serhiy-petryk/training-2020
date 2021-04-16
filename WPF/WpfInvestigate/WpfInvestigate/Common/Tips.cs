@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -48,7 +47,7 @@ namespace WpfInvestigate.Common
             return HitTestResultBehavior.Continue;
         }
 
-        #region ===========  Element tree  ================
+        #region ===========  Visual tree  ================
         public static IEnumerable<DependencyObject> GetVisualParents(this DependencyObject current)
         {
             while (current != null)
@@ -70,28 +69,6 @@ namespace WpfInvestigate.Common
             }
         }
 
-        private static Dictionary<Type, List<FieldInfo>> _dpOfTypeCache = new Dictionary<Type, List<FieldInfo>>();
-        public static void UpdateAllBindings(this DependencyObject target)
-        // based on 'H.B.' comment in https://stackoverflow.com/questions/5023025/is-there-a-way-to-get-all-bindingexpression-objects-for-a-window
-        {
-            foreach (var child in (new [] {target}).Union(GetVisualChildren(target)))
-            {
-                var type = child.GetType();
-                if (!_dpOfTypeCache.ContainsKey(type))
-                {
-                    var propertiesDp = new List<FieldInfo>();
-                    var currentType = type;
-                    while (currentType != typeof(object))
-                    {
-                        propertiesDp.AddRange(currentType.GetFields().Where(x => x.FieldType == typeof(DependencyProperty)));
-                        currentType = currentType.BaseType;
-                    }
-                    _dpOfTypeCache[type] = propertiesDp;
-                }
-
-                _dpOfTypeCache[type].ForEach(dp => BindingOperations.GetBindingExpression(child, dp.GetValue(child) as DependencyProperty)?.UpdateTarget());
-            }
-        }
         #endregion =============================
 
         #region =============  Colors  =============

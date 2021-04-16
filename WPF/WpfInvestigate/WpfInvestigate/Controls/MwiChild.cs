@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 using WpfInvestigate.Themes;
 using WpfInvestigate.ViewModels;
 
@@ -53,7 +54,8 @@ namespace WpfInvestigate.Controls
             DataContext = this;
             Loaded += OnLoaded;
             var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
-            dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
+            // dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
+            dpd.AddValueChanged(this, OnBackgroundChanged);
 
             MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
             Unloaded += OnUnloaded;
@@ -82,6 +84,11 @@ namespace WpfInvestigate.Controls
             }
         }
 
+        private void OnBackgroundChanged(object sender, EventArgs e)
+        {
+            OnPropertiesChanged(nameof(BaseColor));
+        }
+
         private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
@@ -94,7 +101,11 @@ namespace WpfInvestigate.Controls
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             if (_isDetaching) return;
+            var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
+            dpd.RemoveValueChanged(this, OnBackgroundChanged);
             MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+            BindingHelper.ClearAllBindings(this);
+            // this.ClearAllBindings();
             Theme = null;
             DataContext = null;
         }

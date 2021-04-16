@@ -12,6 +12,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 using WpfInvestigate.Themes;
 using WpfInvestigate.ViewModels;
 
@@ -42,7 +43,7 @@ namespace WpfInvestigate.Controls
             dpd.AddValueChanged(this, (sender, args) => UpdateResources(true));
 
             MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
-            Unloaded += OnUnloaded;
+            // Unloaded += OnUnloaded;
         }
 
         private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -54,6 +55,7 @@ namespace WpfInvestigate.Controls
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+            // this.ClearAllBindings();
             Theme = null;
             DataContext = null;
         }
@@ -172,6 +174,18 @@ namespace WpfInvestigate.Controls
                 Unloaded -= OnMwiContainerUnloaded;
                 foreach (var mwiChild in Children.Cast<MwiChild>().Where(c=>c.IsWindowed))
                     ((Window) mwiChild.Parent).Close();
+
+                while (Children.Count > 0)
+                {
+                    ((MwiChild) Children[0]).Close(null);
+                    Children.RemoveAt(0);
+                }
+
+                MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+                BindingHelper.ClearAllBindings(this);
+                // this.ClearAllBindings();
+                Theme = null;
+                DataContext = null;
             }
         }
 

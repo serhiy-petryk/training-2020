@@ -23,6 +23,18 @@ namespace WpfInvestigate.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MwiBar), new FrameworkPropertyMetadata(typeof(MwiBar)));
         }
 
+        public MwiBar()
+        {
+            Unloaded += OnUnloaded;
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            Unloaded -= OnUnloaded;
+            if (_scrollViewer != null) _scrollViewer.ScrollChanged -= TabScrollViewer_OnScrollChanged;
+            BindingHelper.ClearAllBindings(this);
+        }
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
