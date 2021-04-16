@@ -44,6 +44,7 @@ namespace WpfInvestigate.TestViews
                 LimitPositionToPanelBounds = true,
                 ToolTip = "Width/Height=150"
             };
+            control.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e1) => GridPanel.Children.Remove(control)));
             GridPanel.Children.Add(control);
         }
 
