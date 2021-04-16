@@ -164,10 +164,11 @@ namespace WpfInvestigate.Controls
             foreach (var mwiChild in windows)
             {
                 _windowOffset += WINDOW_OFFSET_STEP;
-                if ((_windowOffset + newWidth > MwiPanel.ActualWidth) || (_windowOffset + newHeight > MwiPanel.ActualHeight))
+                if ((_windowOffset + mwiChild.ActualWidth > MwiPanel.ActualWidth) || (_windowOffset + mwiChild.ActualHeight > MwiPanel.ActualHeight))
                     _windowOffset = 0;
 
-                SetSizeForChild(mwiChild, _windowOffset, _windowOffset, newWidth, newHeight);
+                // SetSizeForChild(mwiChild, _windowOffset, _windowOffset, newWidth, newHeight);
+                SetSizeForChild(mwiChild, _windowOffset, _windowOffset, mwiChild.ActualWidth, mwiChild.ActualHeight);
                 Panel.SetZIndex(mwiChild, ++ResizingControl.ZIndexCount);
             }
             windows[windows.Count - 1].Activate();
