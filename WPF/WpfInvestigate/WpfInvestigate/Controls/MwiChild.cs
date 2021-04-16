@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -100,6 +101,7 @@ namespace WpfInvestigate.Controls
         }
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
+            // Debug.Print($"MwiChild. Unloaded: {this.IsElementDisposing()}, {_controlId}");
             if (_isDetaching) return;
             var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
             dpd.RemoveValueChanged(this, OnBackgroundChanged);
@@ -259,6 +261,8 @@ namespace WpfInvestigate.Controls
 
         public async void Close(object obj)
         {
+            // Debug.Print($"MwiChild.Close: {_controlId}, {this.IsElementDisposing()}");
+
             var cmdCloseBinding = CommandBindings.OfType<CommandBinding>().FirstOrDefault(c => Equals(c.Command, ApplicationCommands.Close));
             if (cmdCloseBinding == null)
                 await AnimateHide();
@@ -275,6 +279,8 @@ namespace WpfInvestigate.Controls
             MwiContainer?.Children.Remove(this);
 
             Closed?.Invoke(this, EventArgs.Empty);
+
+            // Dispatcher.Invoke(new Action(() => RaiseEvent(new RoutedEventArgs(UnloadedEvent))), DispatcherPriority.ApplicationIdle);
         }
 
         #region ==============  Thumbnail  ===================

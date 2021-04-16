@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -162,6 +163,7 @@ namespace WpfInvestigate.Controls
             }
             void OnUnloaded(object sender, RoutedEventArgs e)
             {
+                // Debug.Print($"MwiContainer. Unloaded: {this.IsElementDisposing()}, {_controlId}");
                 Unloaded -= OnUnloaded;
                 foreach (var mwiChild in Children.Cast<MwiChild>().Where(c=>c.IsWindowed))
                     ((Window) mwiChild.Parent).Close();

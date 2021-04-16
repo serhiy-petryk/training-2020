@@ -11,6 +11,12 @@ namespace WpfInvestigate.Helpers
 {
     public static class BindingHelper
     {
+        public static bool IsElementDisposing(this FrameworkElement fe)
+        {
+            var wnd = Window.GetWindow(fe);
+            return !fe.IsLoaded && !fe.IsVisible && (fe.Parent == null || (wnd != null && !wnd.IsLoaded && !wnd.IsVisible));
+        }
+
         private static Dictionary<Type, List<FieldInfo>> _dpOfTypeCache = new Dictionary<Type, List<FieldInfo>>();
         public static void UpdateAllBindings(this DependencyObject target)
         // based on 'H.B.' comment in https://stackoverflow.com/questions/5023025/is-there-a-way-to-get-all-bindingexpression-objects-for-a-window
