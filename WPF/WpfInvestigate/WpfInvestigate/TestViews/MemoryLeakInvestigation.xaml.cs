@@ -20,7 +20,7 @@ namespace WpfInvestigate.TestViews
             // BindingOperations.ClearAllBindings(MwiBootstrapColorTests.Instance);
             // Tips.ClearAllBindings(Button);
             if (MwiBootstrapColorTests.Instance != null)
-                BindingHelper.ClearAllBindings(MwiBootstrapColorTests.Instance);
+                CleanerHelper.ClearAllBindings(MwiBootstrapColorTests.Instance);
         }
     }
 }

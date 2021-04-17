@@ -109,6 +109,13 @@ namespace WpfInvestigate
 
         private void MemoryUsageOnClick(object sender, RoutedEventArgs e)
         {
+            var o = new object();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            o = null;
+
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();

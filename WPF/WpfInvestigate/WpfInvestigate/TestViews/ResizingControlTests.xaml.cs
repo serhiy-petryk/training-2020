@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfInvestigate.Controls;
@@ -32,6 +34,46 @@ namespace WpfInvestigate.TestViews
             };
             resizingControl3.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e) => GridPanel.Children.Remove(resizingControl3)));
             GridPanel.Children.Add(resizingControl3);
+        }
+
+        private async void Automate_OnClick(object sender, RoutedEventArgs e)
+        {
+            for (var k = 0; k < 5; k++)
+                await Automate_Step(k);
+        }
+
+        private async Task Automate_Step(int step)
+        {
+            var control = new ResizingControl
+            {
+                Content = new ResizableSample { Width = double.NaN, Height = double.NaN },
+                Width = 150,
+                Height = 150,
+                LimitPositionToPanelBounds = true,
+                ToolTip = "Width/Height=150"
+            };
+            control.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e1) => GridPanel.Children.Remove(control)));
+            GridPanel.Children.Add(control);
+
+            await Task.Delay(1000);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            var a11 = GC.GetTotalMemory(true);
+
+            // control.CommandBindings[0].Command.Execute(null);
+            GridPanel.Children.Remove(control);
+
+            await Task.Delay(1000);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            var a12 = GC.GetTotalMemory(true);
+
+            Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
         }
 
         private void AddContent_OnClick(object sender, RoutedEventArgs e)
@@ -246,5 +288,6 @@ namespace WpfInvestigate.TestViews
             window.Show();
 
         }
+
     }
 }

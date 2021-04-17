@@ -12,7 +12,7 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    public class ResizingControl : ContentControl, INotifyPropertyChanged
+    public partial class ResizingControl : ContentControl, INotifyPropertyChanged
     {
         private static int controlId = 0;
         private int _controlId = controlId ++;
@@ -24,22 +24,25 @@ namespace WpfInvestigate.Controls
             FocusableProperty.OverrideMetadata(typeof(ResizingControl), new FrameworkPropertyMetadata(true));
         }
 
-        public ResizingControl()
-        {
-            DataContext = this;
-        }
-
         public const string MovingThumbName = "MovingThumb";
         internal static int ZIndexCount = 1;
         public bool LimitPositionToPanelBounds { get; set; } = false;
         public bool IsWindowed => Parent is Window;
         protected Grid HostPanel => VisualTreeHelper.GetParent(this) as Grid;
 
+        public ResizingControl()
+        {
+            DataContext = this;
+            Loaded += OnLoaded;
+        }
+
         protected override void OnContentChanged(object oldContent, object newContent)
         {
             base.OnContentChanged(oldContent, newContent);
+            AddContentChangedEvents(oldContent, true);
+            AddContentChangedEvents(newContent);
 
-            var dpdWidth = DependencyPropertyDescriptor.FromProperty(WidthProperty, typeof(FrameworkElement));
+            /*var dpdWidth = DependencyPropertyDescriptor.FromProperty(WidthProperty, typeof(FrameworkElement));
             var dpdHeight = DependencyPropertyDescriptor.FromProperty(HeightProperty, typeof(FrameworkElement));
 
             if (oldContent is FrameworkElement m_oldContent)
@@ -82,7 +85,7 @@ namespace WpfInvestigate.Controls
                 var content = (FrameworkElement)sender;
                 if (!double.IsNaN(content.Width))
                 {
-                    var resizingControl = Tips.GetVisualParents(content).OfType<ResizingControl>().FirstOrDefault();
+                    var resizingControl = content.GetVisualParents().OfType<ResizingControl>().FirstOrDefault();
                     resizingControl.Width = content.Width;
                     content.Dispatcher.InvokeAsync(() => content.Width = double.NaN, DispatcherPriority.Render);
                 }
@@ -92,7 +95,7 @@ namespace WpfInvestigate.Controls
                 var content = (FrameworkElement)sender;
                 if (!double.IsNaN(content.Height))
                 {
-                    var resizingControl = Tips.GetVisualParents(content).OfType<ResizingControl>().FirstOrDefault();
+                    var resizingControl = content.GetVisualParents().OfType<ResizingControl>().FirstOrDefault();
                     resizingControl.Height = content.Height;
                     content.Dispatcher.InvokeAsync(() => content.Height = double.NaN, DispatcherPriority.Render);
                 }
@@ -102,10 +105,10 @@ namespace WpfInvestigate.Controls
                 var content = (FrameworkElement)sender;
                 content.Loaded -= OnContentLoaded;
                 MovingThumb = MovingThumb ?? content.GetVisualChildren().OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
-            }
+            }*/
         }
 
-        public override void OnApplyTemplate()
+        /*public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
@@ -114,10 +117,10 @@ namespace WpfInvestigate.Controls
 
             if (Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault() is ScrollViewer sv && !Equals(sv.Resources["State"], "Activated"))
             {
-                sv.Resources["State"] = "Activated";
+                // sv.Resources["State"] = "Activated";
                 sv.ScrollChanged += ScrollViewer_OnScrollChanged;
             }
-        }
+        }*/
         private void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             var sv = (ScrollViewer)sender;
@@ -137,15 +140,7 @@ namespace WpfInvestigate.Controls
         protected override void OnVisualParentChanged(DependencyObject oldParent)
         {
             base.OnVisualParentChanged(oldParent);
-
-            if (Parent is Window wnd && !Position.HasValue && !wnd.IsLoaded)
-                wnd.LocationChanged += OnWindowLocationChanged;
-
-            void OnWindowLocationChanged(object sender, EventArgs e)
-            {
-                wnd.LocationChanged -= OnWindowLocationChanged;
-                Position = new Point(wnd.Left, wnd.Top);
-            }
+            AddVisualParentChangedEvents();
         }
 
         #region ==========  Focus  ============
@@ -202,7 +197,7 @@ namespace WpfInvestigate.Controls
             Position = new Point(newX, newY);
             e.Handled = true;
 
-            var sv = Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault();
+            var sv = HostPanel.GetVisualParents().OfType<ScrollViewer>().FirstOrDefault();
             if (sv != null)
             {
                 // Smooth scrolling

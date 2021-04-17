@@ -106,7 +106,7 @@ namespace WpfInvestigate.Controls
             var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
             dpd.RemoveValueChanged(this, OnBackgroundChanged);
             MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-            BindingHelper.ClearAllBindings(this);
+            CleanerHelper.ClearAllBindings(this);
             // this.ClearAllBindings();
             Theme = null;
             DataContext = null;

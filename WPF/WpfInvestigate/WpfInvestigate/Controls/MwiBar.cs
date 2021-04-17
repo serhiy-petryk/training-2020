@@ -32,7 +32,7 @@ namespace WpfInvestigate.Controls
         {
             Unloaded -= OnUnloaded;
             if (_scrollViewer != null) _scrollViewer.ScrollChanged -= TabScrollViewer_OnScrollChanged;
-            BindingHelper.ClearAllBindings(this);
+            CleanerHelper.ClearAllBindings(this);
         }
 
         public override void OnApplyTemplate()
