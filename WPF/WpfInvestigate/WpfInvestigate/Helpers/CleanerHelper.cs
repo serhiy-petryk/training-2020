@@ -30,7 +30,7 @@ namespace WpfInvestigate.Helpers
             var elements = GetVChildren(d).Union(new[] { d }).ToArray();
 
             foreach (var element in elements)
-                element.ClearAllBindings();
+                element.ClearAllBindings(true);
 
             ClearElements(elements);
 
@@ -51,9 +51,6 @@ namespace WpfInvestigate.Helpers
 
             foreach (var element in elements.OfType<FrameworkElement>())
                 ClearResources(element.Resources);
-
-            foreach (var element in elements)
-                element.ClearAllBindings();
         }
 
         private static void RemoveChild(DependencyObject parent, UIElement child)

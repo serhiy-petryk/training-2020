@@ -27,7 +27,6 @@ namespace WpfInvestigate.Controls
         private static Dictionary<Type, List<PropertyInfo>> _piCache = new Dictionary<Type, List<PropertyInfo>>();
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            Loaded -= OnLoaded;
             if (CleanerHelper.IsElementDisposing(this))
             {
                 Unloaded -= OnUnloaded;
