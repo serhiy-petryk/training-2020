@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
+        xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         mc:Ignorable="d"
         Title="MwiBootstrapColorTests" Height="700" Width="1000">
 
@@ -13,12 +14,18 @@
             <controls:MwiChild Background="{TemplateBinding Background}" Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Margin="10" Width="400" Height="200">
                 <controls:MwiContainer Background="{TemplateBinding Background}" Height="300">
                     <controls:MwiContainer.LeftPanel>
-                        <ContentControl Content="Left panel"/>
+                        <!--<ContentControl Content="Left panel"/>-->
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                            <Button Content="Add window" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                    Click="OnAddWindowClick"
+                                    effects:CornerRadiusEffect.CornerRadius="3"
+                                    effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25}"/>
+                        </ScrollViewer>
                     </controls:MwiContainer.LeftPanel>
 
                     <controls:MwiChild Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
-                                           Background="{TemplateBinding Background}"
-                                           Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                                       Background="{TemplateBinding Background}"
+                                       Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
                         <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"/>
                     </controls:MwiChild>
 
@@ -71,28 +78,28 @@
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-            <WrapPanel VerticalAlignment="Top" Orientation="Horizontal">
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource PrimaryBrush}" Tag="Primary" />
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource SecondaryBrush}" Tag="Secondary" />
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource SuccessBrush}" Tag="Success" />
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource DangerBrush}" Tag="Danger" />
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource WarningBrush}" Tag="Warning" />
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource InfoBrush}" Tag="Info" />
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource LightBrush}" Tag="Light" />
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource DarkBrush}" Tag="Dark" />
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource BlueBrush}" Tag="Blue"/>
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource IndigoBrush}" Tag="Indigo"/>
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource PurpleBrush}" Tag="Purple"/>
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource PinkBrush}" Tag="Pink"/>
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource OrangeBrush}" Tag="Orange"/>
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource YellowBrush}" Tag="Yellow"/>
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource GreenBrush}" Tag="Green"/>
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource TealBrush}" Tag="Teal"/>
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource CyanBrush}" Tag="Cyan"/>
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource WhiteBrush}" Tag="White"/>
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource GrayBrush}" Tag="Gray"/>
-                <UserControl Template="{StaticResource Test}" Background="{StaticResource GrayDarkBrush}" Tag="GrayDark"/>
-            </WrapPanel>
+                <WrapPanel VerticalAlignment="Top" Orientation="Horizontal">
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource PrimaryBrush}" Tag="Primary" />
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource SecondaryBrush}" Tag="Secondary" />
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource SuccessBrush}" Tag="Success" />
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource DangerBrush}" Tag="Danger" />
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource WarningBrush}" Tag="Warning" />
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource InfoBrush}" Tag="Info" />
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource LightBrush}" Tag="Light" />
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource DarkBrush}" Tag="Dark" />
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource BlueBrush}" Tag="Blue"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource IndigoBrush}" Tag="Indigo"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource PurpleBrush}" Tag="Purple"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource PinkBrush}" Tag="Pink"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource OrangeBrush}" Tag="Orange"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource YellowBrush}" Tag="Yellow"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource GreenBrush}" Tag="Green"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource TealBrush}" Tag="Teal"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource CyanBrush}" Tag="Cyan"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource WhiteBrush}" Tag="White"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource GrayBrush}" Tag="Gray"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource GrayDarkBrush}" Tag="GrayDark"/>
+                </WrapPanel>
             </ScrollViewer>
         </Grid>
     </Grid>
