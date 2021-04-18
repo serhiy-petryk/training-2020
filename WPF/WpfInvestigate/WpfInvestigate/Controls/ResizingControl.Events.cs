@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -17,7 +18,6 @@ namespace WpfInvestigate.Controls
     {
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            Loaded -= OnLoaded;
             Unloaded -= OnUnloaded;
             Unloaded += OnUnloaded;
             AddLoadedEvents();
@@ -29,6 +29,8 @@ namespace WpfInvestigate.Controls
         {
             if (CleanerHelper.IsElementDisposing(this))
             {
+                // Debug.Print($"ResizingControl. Dispose: {_controlId}");
+                Loaded -= OnLoaded;
                 Unloaded -= OnUnloaded;
 
                 MovingThumb = null; // clear event subscriber
