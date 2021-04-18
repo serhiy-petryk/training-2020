@@ -14,10 +14,16 @@
             <controls:MwiChild Background="{TemplateBinding Background}" Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Margin="10" Width="400" Height="200">
                 <controls:MwiContainer Background="{TemplateBinding Background}" Height="300">
                     <controls:MwiContainer.LeftPanel>
-                        <Button Content="Add window" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top"
-                                Click="OnAddWindowClick"
-                                effects:CornerRadiusEffect.CornerRadius="3"
-                                effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25}"/>
+                        <StackPanel Orientation="Vertical">
+                            <Button Content="Add window" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                    Click="OnAddWindowClick"
+                                    effects:CornerRadiusEffect.CornerRadius="3"
+                                    effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25}"/>
+                            <Button Content="Run Test" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                    Click="OnRunTestClick"
+                                    effects:CornerRadiusEffect.CornerRadius="3"
+                                    effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25}"/>
+                        </StackPanel>
                     </controls:MwiContainer.LeftPanel>
 
                     <controls:MwiChild Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
