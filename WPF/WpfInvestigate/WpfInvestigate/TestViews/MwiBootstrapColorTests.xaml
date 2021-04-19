@@ -11,8 +11,8 @@
 
     <Window.Resources>
         <ControlTemplate x:Key="Test" TargetType="UserControl">
-            <controls:MwiChild Background="{TemplateBinding Background}" Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Margin="10" Width="400" Height="200">
-                <controls:MwiContainer Background="{TemplateBinding Background}" Height="300">
+            <controls:MwiChild Background="{TemplateBinding Background}" Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Margin="10" Width="400" Height="300">
+                <controls:MwiContainer Background="{TemplateBinding Background}">
                     <controls:MwiContainer.LeftPanel>
                         <StackPanel Orientation="Vertical">
                             <Button Content="Add window" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top"
