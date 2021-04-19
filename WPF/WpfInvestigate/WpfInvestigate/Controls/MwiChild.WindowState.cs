@@ -49,14 +49,12 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private bool _isDetaching = false;
         private async void ToggleDetach(object obj)
         {
             if (MwiContainer == null) return;
 
             if (WindowState == WindowState.Normal) SaveActualRectangle();
 
-            _isDetaching = true;
             var dpd = DependencyPropertyDescriptor.FromProperty(MwiAppViewModel.ScaleValueProperty, typeof(MwiAppViewModel));
             dpd.RemoveValueChanged(MwiAppViewModel.Instance, OnScaleValueChanged);
 
@@ -95,7 +93,6 @@ namespace WpfInvestigate.Controls
             OnPropertiesChanged(nameof(IsWindowed));
             // BeginAnimation(OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDuration));
             await this.BeginAnimationAsync(OpacityProperty, 0.0, 1.0);
-            _isDetaching = false;
         }
 
         private void OnScaleValueChanged(object sender, EventArgs e)

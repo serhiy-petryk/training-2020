@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -10,7 +9,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
-using WpfInvestigate.Helpers;
 using WpfInvestigate.Themes;
 using WpfInvestigate.ViewModels;
 
@@ -53,12 +51,13 @@ namespace WpfInvestigate.Controls
 
             DataContext = this;
             Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
+
             var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
             // dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
             dpd.AddValueChanged(this, OnBackgroundChanged);
 
             MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
-            Unloaded += OnUnloaded;
 
             if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
 
@@ -75,13 +74,14 @@ namespace WpfInvestigate.Controls
                 }
             };*/
 
-            void OnLoaded(object sender, RoutedEventArgs e)
+            /*void OnLoaded(object sender, RoutedEventArgs e)
             {
                 Loaded -= OnLoaded;
                 //if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
                   //  Position = MwiContainer.GetStartPositionForMwiChild(this);
                 AnimateShow();
-            }
+            }*/
+            // Dispatcher.BeginInvoke(new Action(() => AnimateShow()), DispatcherPriority.Loaded);
         }
 
         private void OnBackgroundChanged(object sender, EventArgs e)
@@ -98,19 +98,6 @@ namespace WpfInvestigate.Controls
                 OnPropertiesChanged(nameof(BaseColor));
             }
         }
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            // Debug.Print($"MwiChild. Unloaded: {this.IsElementDisposing()}, {_controlId}");
-            if (_isDetaching) return;
-            var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
-            dpd.RemoveValueChanged(this, OnBackgroundChanged);
-            MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-            CleanerHelper.ClearAllBindings(this);
-            // this.ClearAllBindings();
-            Theme = null;
-            DataContext = null;
-        }
-
         #region =============  Override methods  ====================
         private static bool _isActivating = false;
         public override void Activate() => Activate(true);
@@ -143,29 +130,40 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        public override void OnApplyTemplate()
+        /*public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            AddOnApplyTemplateEvents();
+            return;
+
+            // Debug.Print($"MwiChild. OnApplyTemplate: {_controlId}");
+            if (MovingThumb != null)
+            {
+                MovingThumb.MouseDoubleClick -= OnMovingThumbMouseDoubleClick;
+                MovingThumb = null;
+            }
 
             if (GetTemplateChild("MovingThumb") is Thumb movingThumb)
             {
                 MovingThumb = movingThumb;
-                movingThumb.MouseDoubleClick += (sender, args) =>
-                {
-                    var element = (FrameworkElement)sender;
-                    element.IsEnabled = false;
-                    ToggleMaximize(null);
-                    Dispatcher.InvokeAsync(new Action(() => element.IsEnabled = true), DispatcherPriority.Render); // nexttick action to prevent MoveThumb_OnDragDelta event
-                };
+                movingThumb.MouseDoubleClick += OnMovingThumbMouseDoubleClick;
             }
-        }
+
+            void OnMovingThumbMouseDoubleClick(object sender, MouseButtonEventArgs e)
+            {
+                var element = (FrameworkElement)sender;
+                element.IsEnabled = false;
+                ToggleMaximize(null);
+                Dispatcher.InvokeAsync(new Action(() => element.IsEnabled = true), DispatcherPriority.Render); // nexttick action to prevent MoveThumb_OnDragDelta event
+            }
+        }*/
 
         private Window _activatedHost;
         protected override async void OnVisualParentChanged(DependencyObject oldParent)
         {
             base.OnVisualParentChanged(oldParent);
-
-            if (_activatedHost != null)
+            AddVisualParentChangedEvents();
+            /*if (_activatedHost != null)
             {
                 _activatedHost.Activated -= OnWindowActivated;
                 _activatedHost.Deactivated -= OnWindowDeactivated;
@@ -209,7 +207,7 @@ namespace WpfInvestigate.Controls
                 }
             }
             void OnWindowActivated(object sender, EventArgs e) => Activate();
-            void OnWindowDeactivated(object sender, EventArgs e) => IsActive = false;
+            void OnWindowDeactivated(object sender, EventArgs e) => IsActive = false;*/
         }
         #endregion
 
@@ -336,12 +334,12 @@ namespace WpfInvestigate.Controls
         public bool IsDetachButtonVisible => (VisibleButtons & Buttons.Detach) == Buttons.Detach;
 
         //============  Commands  =============
-        public RelayCommand CmdDetach { get; }
-        public RelayCommand CmdMinimize { get; }
-        public RelayCommand CmdMaximize { get; }
-        public RelayCommand SysCmdMaximize { get; }
-        public RelayCommand SysCmdRestore { get; }
-        public RelayCommand CmdClose { get; }
+        public RelayCommand CmdDetach { get; private set; }
+        public RelayCommand CmdMinimize { get; private set; }
+        public RelayCommand CmdMaximize { get; private set; }
+        public RelayCommand SysCmdMaximize { get; private set; }
+        public RelayCommand SysCmdRestore { get; private set; }
+        public RelayCommand CmdClose { get; private set; }
         //=========================
         public static readonly DependencyProperty AllowDetachProperty = DependencyProperty.Register(nameof(AllowDetach), typeof(bool), typeof(MwiChild), new FrameworkPropertyMetadata(true));
         public bool AllowDetach

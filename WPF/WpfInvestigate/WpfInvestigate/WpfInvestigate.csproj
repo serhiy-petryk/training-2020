@@ -83,6 +83,7 @@
     <Compile Include="Controls\MwiBar.cs" />
     <Compile Include="Controls\MwiChild.Animation.cs" />
     <Compile Include="Controls\MwiChild.cs" />
+    <Compile Include="Controls\MwiChild.Events.cs" />
     <Compile Include="Controls\MwiChild.WindowState.cs" />
     <Compile Include="Controls\MwiContainer.cs" />
     <Compile Include="Controls\MwiContainer.LeftPanel.cs" />
