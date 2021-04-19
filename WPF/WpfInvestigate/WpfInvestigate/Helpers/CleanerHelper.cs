@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
 using WpfInvestigate.Common;
@@ -26,6 +27,9 @@ namespace WpfInvestigate.Helpers
         // todo: add collections & recursive objects (see resources)
         public static void CleanDependencyObject(this DependencyObject d)
         {
+            CleanDependencyObjectSave(d);
+            return;
+
             // todo: add collections & recursive objects (see resources)
             var elements = GetVChildren(d).Union(new[] { d }).ToArray();
 
@@ -53,11 +57,49 @@ namespace WpfInvestigate.Helpers
                 ClearResources(element.Resources);
         }
 
+        private static void CleanDependencyObjectSave(DependencyObject d)
+        {
+            // todo: add collections & recursive objects (see resources)
+            var elements = GetVChildren(d).Union(new[] { d }).ToArray();
+
+            // foreach (var element in elements)
+               // element.ClearAllBindings(false);
+            // foreach (var element in elements)
+               // BindingOperations.ClearAllBindings(element);
+
+            ClearElements(elements); // !! Very important
+            /*foreach (var element in elements.OfType<FrameworkElement>())
+                element.Style = null;
+            foreach (var element in elements.OfType<Control>())
+                element.Template = null;*/
+
+            foreach (var element in elements.OfType<UIElement>())
+            {
+                element.CommandBindings.Clear();
+                element.InputBindings.Clear();
+                if (element is FrameworkElement fe)
+                    fe.Triggers.Clear();
+            }
+
+            foreach (var element in elements.OfType<UIElement>())
+            {
+                var p = VisualTreeHelper.GetParent(element);
+                if (p != null)
+                    RemoveChild(p, element);
+            }
+
+            foreach (var element in elements.OfType<FrameworkElement>())
+                ClearResources(element.Resources);
+        }
+
         private static void RemoveChild(DependencyObject parent, UIElement child)
         {
             if (parent is Panel panel)
             {
-                panel.Children.Remove(child);
+                if (panel.IsItemsHost)
+                    Debug.Print($"RemoveChild. Panel. IsItemsHost");
+                else
+                    panel.Children.Remove(child);
                 return;
             }
             if (parent is Decorator decorator)
@@ -75,7 +117,38 @@ namespace WpfInvestigate.Helpers
                 if (Equals(contentControl.Content, child)) contentControl.Content = null;
                 return;
             }
+            if (parent is ItemsPresenter itemsPresenter)
+            {
+                return;
+            }
+            if (parent is ContainerVisual container)
+            {
+                container.Children.Remove(child);
+                return;
+            }
+            if (parent is Menu menu)
+            {
+                if (menu.Items.Contains(child))
+                    menu.Items.Remove(child);
+                return;
+            }
+            if (parent is MenuItem menuItem)
+            {
+                if (menuItem.Items.Contains(child))
+                    menuItem.Items.Remove(child);
+                return;
+            }
+            if (parent is Slider || parent is Separator)
+            {
+                return;
+            }
+            if (parent.GetType().Namespace == "System.Windows.Controls.Primitives")
+            {
+                return;
+            }
 
+            Debug.Print($"RemoveChild: {parent.GetType()}");
+            return;
             throw new Exception($"RemoveChildis not defined for {parent.GetType().Name} type of parent");
         }
 
@@ -84,7 +157,7 @@ namespace WpfInvestigate.Helpers
             if (rd.MergedDictionaries.Count != 0)
                 Debug.Print($"Merged: {rd.MergedDictionaries.Count}");
             if (rd.Count > 0)
-                Debug.Print($"RD: {rd.MergedDictionaries.Count}");
+                Debug.Print($"RD: {rd.Count}");
 
             foreach (var child in rd.MergedDictionaries)
                 ClearResources(child);
@@ -123,14 +196,16 @@ namespace WpfInvestigate.Helpers
                 }
             }
 
-            foreach (var element in elements)
+            foreach (var element in elements.Where(e=> e.GetType() != typeof(Track)))
             {
                 var type = element.GetType();
                 _fiCache[type].ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
                 _piCache[type].Where(pi => pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
                 {
                     if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
-                        pi.SetValue(element, null);
+                        //  if (!(pi.Name == "DecreaseRepeatButton" || pi.Name == "IncreaseRepeatButton"))
+                        if (!(pi.Name == "Language"))
+                            pi.SetValue(element, null);
                 });
             }
         }

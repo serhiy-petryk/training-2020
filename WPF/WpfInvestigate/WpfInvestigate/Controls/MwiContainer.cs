@@ -164,13 +164,17 @@ namespace WpfInvestigate.Controls
             {
                 // Debug.Print($"MwiContainer. Unloaded: {this.IsElementDisposing()}, {_controlId}");
                 Unloaded -= OnUnloaded;
-                foreach (var mwiChild in Children.Cast<MwiChild>().Where(c=>c.IsWindowed))
-                    ((Window) mwiChild.Parent).Close();
 
-                while (Children.Count > 0)
+                if (Children != null)
                 {
-                    ((MwiChild) Children[0]).Close(null);
-                    Children.RemoveAt(0);
+                    foreach (var mwiChild in Children.Cast<MwiChild>().Where(c => c.IsWindowed))
+                        ((Window) mwiChild.Parent).Close();
+
+                    while (Children.Count > 0)
+                    {
+                        ((MwiChild) Children[0]).Close(null);
+                        Children.RemoveAt(0);
+                    }
                 }
 
                 MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
