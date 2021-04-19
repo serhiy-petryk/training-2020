@@ -18,8 +18,6 @@ namespace WpfInvestigate.Controls
     {
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            Unloaded -= OnUnloaded;
-            Unloaded += OnUnloaded;
             AddLoadedEvents();
         }
 

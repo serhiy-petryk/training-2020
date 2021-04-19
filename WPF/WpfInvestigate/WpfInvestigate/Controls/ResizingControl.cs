@@ -32,6 +32,7 @@ namespace WpfInvestigate.Controls
         {
             DataContext = this;
             Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
         }
 
         protected override void OnContentChanged(object oldContent, object newContent)
