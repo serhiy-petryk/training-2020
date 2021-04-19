@@ -178,7 +178,8 @@ namespace WpfInvestigate.Controls
                 }
 
                 MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-                CleanerHelper.ClearAllBindings(this);
+                this.CleanDependencyObject();
+                // CleanerHelper.ClearAllBindings(this);
                 // this.ClearAllBindings();
                 Theme = null;
                 DataContext = null;

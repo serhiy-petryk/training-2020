@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Helpers
@@ -60,12 +61,18 @@ namespace WpfInvestigate.Helpers
         private static void CleanDependencyObjectSave(DependencyObject d)
         {
             // todo: add collections & recursive objects (see resources)
-            var elements = GetVChildren(d).Union(new[] { d }).ToArray();
+            // var elements = GetVChildren(d).Union(new[] { d }).ToArray();
+            var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
 
-            // foreach (var element in elements)
-               // element.ClearAllBindings(false);
-            // foreach (var element in elements)
-               // BindingOperations.ClearAllBindings(element);
+            foreach (var element in elements)
+            {
+                foreach (var o in GetPropertiesForCleaner(element.GetType()).Where(p=> typeof(DependencyObject).IsAssignableFrom(p.PropertyType)).Select(p=> (DependencyObject)p.GetValue(element)))
+                {
+                    if (o != null)
+                        BindingOperations.ClearAllBindings(o);
+                }
+                BindingOperations.ClearAllBindings(element);
+            }
 
             ClearElements(elements); // !! Very important
             /*foreach (var element in elements.OfType<FrameworkElement>())
@@ -166,48 +173,57 @@ namespace WpfInvestigate.Helpers
 
         private static void ClearElements(DependencyObject[] elements)
         {
-            foreach (var element in elements)
+            foreach (var element in elements.Where(e => e.GetType() != typeof(Track)))
             {
                 var type = element.GetType();
-                if (!_fiCache.ContainsKey(type))
+                GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
+                GetPropertiesForCleaner(type).Where(pi => pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
                 {
-                    var fieldInfos = new List<FieldInfo>();
-                    var currentType = type;
-                    while (currentType != typeof(object))
-                    {
-                        fieldInfos.AddRange(currentType.GetFields()
-                            .Where(x => !x.IsStatic && !x.IsInitOnly && x.IsPublic && !x.FieldType.IsValueType));
-                        currentType = currentType.BaseType;
-                    }
-
-                    _fiCache[type] = fieldInfos;
-                }
-
-                if (!_piCache.ContainsKey(type)) { 
-                    var propertyInfos = new List<PropertyInfo>();
-                    var currentType = type;
-                    while (currentType != typeof(object))
-                    {
-                        propertyInfos.AddRange(currentType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                            .Where(x => x.CanWrite && !x.PropertyType.IsValueType));
-                        currentType = currentType.BaseType;
-                    }
-                    _piCache[type] = propertyInfos;
-                }
-            }
-
-            foreach (var element in elements.Where(e=> e.GetType() != typeof(Track)))
-            {
-                var type = element.GetType();
-                _fiCache[type].ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
-                _piCache[type].Where(pi => pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
-                {
+                    // if (!(pi.PropertyType == typeof(string)))
                     if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
-                        //  if (!(pi.Name == "DecreaseRepeatButton" || pi.Name == "IncreaseRepeatButton"))
-                        if (!(pi.Name == "Language"))
+                    {
+                        if (!(pi.Name == "Language" || pi.Name == "Title") && pi.GetValue(element) != null)
                             pi.SetValue(element, null);
+                    }
                 });
             }
+        }
+
+        private static List<PropertyInfo> GetPropertiesForCleaner(Type type)
+        {
+            if (!_piCache.ContainsKey(type))
+            {
+                var propertyInfos = new List<PropertyInfo>();
+                var currentType = type;
+                while (currentType != typeof(object))
+                {
+                    propertyInfos.AddRange(currentType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                        .Where(x => x.CanWrite && !x.PropertyType.IsValueType));
+                    currentType = currentType.BaseType;
+                }
+                _piCache[type] = propertyInfos;
+            }
+
+            return _piCache[type];
+        }
+
+        private static List<FieldInfo> GetFieldInfoForCleaner(Type type)
+        {
+            if (!_fiCache.ContainsKey(type))
+            {
+                var fieldInfos = new List<FieldInfo>();
+                var currentType = type;
+                while (currentType != typeof(object))
+                {
+                    fieldInfos.AddRange(currentType.GetFields()
+                        .Where(x => !x.IsStatic && !x.IsInitOnly && x.IsPublic && !x.FieldType.IsValueType));
+                    currentType = currentType.BaseType;
+                }
+
+                _fiCache[type] = fieldInfos;
+            }
+
+            return _fiCache[type];
         }
 
         private static IEnumerable<DependencyObject> GetVChildren(DependencyObject current)
@@ -242,8 +258,8 @@ namespace WpfInvestigate.Helpers
             }
 
             return;*/
-
-            foreach (var child in (new[] { target }).Union(Tips.GetVisualChildren(target)))
+            var aa = target is Visual || target is Visual3D ? (new[] {target}).Union(target.GetVisualChildren()) : new[] {target};
+            foreach (var child in aa)
             {
                 var fiOfDp = GetFieldInfosOfDp(child.GetType());
                 fiOfDp.ForEach(dp =>

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -124,5 +125,35 @@ namespace WpfInvestigate
             // Tips.ClearAllBindings(WpfInvestigate.TestViews.MwiBootstrapColorTests.Instance);
         }
 
+        private async void OnMwiContainerMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            for (var k = 0; k < 5; k++)
+                await MwiContainerMemoryTestStep(k);
+        }
+        private async Task MwiContainerMemoryTestStep(int step)
+        {
+            var wnd = new MwiBootstrapColorTests();
+            wnd.Show();
+
+            await Task.Delay(1000);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            var a11 = GC.GetTotalMemory(true);
+
+            wnd.Close();
+
+            await Task.Delay(1000);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            var a12 = GC.GetTotalMemory(true);
+
+            Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
+
+        }
     }
 }

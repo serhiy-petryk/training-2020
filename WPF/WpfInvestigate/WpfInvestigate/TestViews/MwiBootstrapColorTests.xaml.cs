@@ -8,6 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.TestViews
 {
@@ -88,6 +89,18 @@ namespace WpfInvestigate.TestViews
             var a12 = GC.GetTotalMemory(true);
 
             Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.IsElementDisposing())
+            {
+                // BindingOperations.ClearAllBindings(this);
+                //foreach(var child in Tips.GetVisualChildren(this))
+                  //  BindingOperations.ClearAllBindings(this);
+                // BindingOperations.ClearAllBindings(MainGrid.LayoutTransform);
+                this.CleanDependencyObject();
+            }
         }
     }
 }
