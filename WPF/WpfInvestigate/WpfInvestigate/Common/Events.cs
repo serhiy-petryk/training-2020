@@ -1,12 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
+using System.Windows;
 
 namespace WpfInvestigate.Common
 {
     public static class Events
     {
+        public static void RemoveAllRoutedEventHandlers(UIElement element)
+        {
+            // Based on Douglas comment in https://stackoverflow.com/questions/9434817/how-to-remove-all-click-event-handlers
+
+            // Get the EventHandlersStore instance which holds event handlers for the specified element.
+            // The EventHandlersStore class is declared as internal.
+            var eventHandlersStoreProperty = typeof(UIElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic);
+            var eventHandlersStore = eventHandlersStoreProperty.GetValue(element, null);
+            if (eventHandlersStore == null) return;
+
+            var type = element.GetType();
+            var types = new List<Type>{type};
+            while (type != typeof(UIElement))
+            {
+                type = type.BaseType;
+                types.Add(type);
+            }
+
+            foreach(var re in EventManager.GetRoutedEvents().OfType<RoutedEvent>().Where(e=> types.Contains(e.OwnerType)))
+            {
+                var getRoutedEventHandlers = eventHandlersStore.GetType().GetMethod("GetRoutedEventHandlers", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                var routedEventHandlers = (RoutedEventHandlerInfo[])getRoutedEventHandlers.Invoke(eventHandlersStore, new object[] { re });
+                if (routedEventHandlers != null)
+                {
+                    foreach (var reHandler in routedEventHandlers)
+                    {
+                        Debug.Print($"RemoveEventHandler. {element.GetType().Name}, {re.Name}, {(element is FrameworkElement fe ? fe.Name : null)}");
+                        // element.RemoveHandler(re, reHandler.Handler);
+                    }
+                }
+            }
+        }
 
         public static void RemoveAllEventSubsriptions(object target)
         {
@@ -124,12 +159,12 @@ namespace WpfInvestigate.Common
                         foreach (Delegate d in dd)
                         {
                             string s = d.Method.Name;
-                            if (d.Target == subcriber) ei.RemoveEventHandler(target, d);
+                            if (d.Target == subcriber)
+                                ei.RemoveEventHandler(target, d);
                         }
                     }
                 }
             }
         }
-
     }
 }

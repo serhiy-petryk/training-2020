@@ -91,6 +91,10 @@
                         <Button Content="MwiContainer Memory test" Click="OnMwiContainerMemoryTestClick"/>
                     </WrapPanel>
 
+                    <WrapPanel>
+                        <Button x:Name="TestButton3" Click="TestButton3_OnClick" Content="Test button 2"/>
+                    </WrapPanel>
+
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">

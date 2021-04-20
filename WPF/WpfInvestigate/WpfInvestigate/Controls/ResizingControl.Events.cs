@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -36,6 +35,13 @@ namespace WpfInvestigate.Controls
                 AddVisualParentChangedEvents(true);
                 AddContentChangedEvents(true);
 
+                /*var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+                foreach (var element in elements)
+                {
+                    if (element is UIElement uiElement)
+                        Events.RemoveAllRoutedEventHandlers(uiElement);
+                    // Events.RemoveAllEventSubsriptions(element);
+                }*/
                 this.CleanDependencyObject();
             }
         }

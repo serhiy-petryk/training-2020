@@ -102,8 +102,11 @@ namespace WpfInvestigate.TestViews
                 /*var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                 foreach (var element in elements)
                 {
+                    if (element is UIElement uiElement)
+                        Events.RemoveAllRoutedEventHandlers(uiElement);
                     Events.RemoveAllEventSubsriptions(element);
                 }*/
+                // Debug.Print($"MwiBootstrapColorTests. Unloaded");
                 this.CleanDependencyObject();
             }
         }
@@ -113,7 +116,9 @@ namespace WpfInvestigate.TestViews
             var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
             foreach (var element in elements)
             {
-                Events.RemoveAllEventSubsriptions(element);
+                if (element is UIElement uiElement)
+                    Events.RemoveAllRoutedEventHandlers(uiElement);
+                // Events.RemoveAllEventSubsriptions(element);
             }
         }
     }

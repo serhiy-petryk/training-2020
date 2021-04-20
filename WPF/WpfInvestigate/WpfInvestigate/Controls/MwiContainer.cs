@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -205,6 +204,13 @@ namespace WpfInvestigate.Controls
                         wnd2.Deactivated -= OnWindowDeactivated;
                     }
 
+                    /*var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+                    foreach (var element in elements)
+                    {
+                        if (element is UIElement uiElement)
+                            Events.RemoveAllRoutedEventHandlers(uiElement);
+                        // Events.RemoveAllEventSubsriptions(element);
+                    }*/
                     this.CleanDependencyObject();
                 }
             }

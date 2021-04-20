@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
 using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
@@ -155,6 +156,33 @@ namespace WpfInvestigate
             Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
 
             await Task.Delay(1000);
+        }
+
+        private void TestButton3_OnClick(object sender, RoutedEventArgs e)
+        {
+            TestButton3.Unloaded += TestButton3_Unloaded;
+            TestButton3.Click += TestButton3_Click;
+            TestButton3.Click += (o, args) => Debug.Print($"AAAAAA");
+            // Events.RemoveAllRoutedEventHandlers(TestButton3);
+            Events.RemoveAllEventSubsriptions(this);
+            Debug.Print($"TestButton3_OnClick");
+            // Events.RemoveAllEventSubsriptions(sender);
+            /*EventInfo[] eis = TestButton3.GetType().GetEvents(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            var aa1 = GetRoutedEventHandlers(TestButton3, ButtonBase.ClickEvent);
+            TestButton3.RemoveHandler(ButtonBase.ClickEvent, aa1[0].Handler);
+            TestButton3.RemoveHandler(ButtonBase.ClickEvent, aa1[1].Handler);
+            TestButton3.RemoveHandler(ButtonBase.ClickEvent, aa1[2].Handler);
+            var aa2 = EventManager.GetRoutedEventsForOwner(TestButton3.GetType());*/
+        }
+
+        private void TestButton3_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.Print($"Click");
+        }
+
+        private void TestButton3_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Debug.Print($"Unloaded");
         }
     }
 }

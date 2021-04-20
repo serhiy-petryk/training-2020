@@ -37,6 +37,13 @@ namespace WpfInvestigate.Controls
                 AddLoadedEvents(true);
                 AddVisualParentChangedEvents(true);
 
+                /*var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+                foreach (var element in elements)
+                {
+                    if (element is UIElement uiElement)
+                        Events.RemoveAllRoutedEventHandlers(uiElement);
+                    // Events.RemoveAllEventSubsriptions(element);
+                }*/
                 this.CleanDependencyObject();
             }
         }
