@@ -40,10 +40,10 @@ namespace WpfInvestigate.Controls
         {
             DataContext = this;
             CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
-            var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
+            /*var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
             dpd.AddValueChanged(this, (sender, args) => UpdateResources(true));
 
-            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
+            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;*/
         }
 
         private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -136,6 +136,10 @@ namespace WpfInvestigate.Controls
                 windowsMenuButton.Checked += OnWindowsMenuButtonChecked;
 
             Children.CollectionChanged += OnChildrenCollectionChanged;
+            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
+            var dpdBackground = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
+            dpdBackground.AddValueChanged(this, OnBackgroundChanged);
+
             Unloaded += OnUnloaded;
 
             if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
@@ -151,6 +155,7 @@ namespace WpfInvestigate.Controls
             // To fix VS correct view of MwiStartup: DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal)
 
             // =======================
+            void OnBackgroundChanged(object sender, EventArgs e) => UpdateResources(true);
             void OnWindowActivated(object sender, EventArgs e)
             {
                 if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
@@ -178,9 +183,28 @@ namespace WpfInvestigate.Controls
                             ((MwiChild) Children[0]).Close(null);
                             Children.RemoveAt(0);
                         }
+                        Children.CollectionChanged -= OnChildrenCollectionChanged;
                     }
 
+                    if (_leftPanelButton != null)
+                    {
+                        _leftPanelButton.Checked -= LeftPanelButton_OnCheckedChanged;
+                        _leftPanelButton.Unchecked -= LeftPanelButton_OnCheckedChanged;
+                    }
+                    if (GetTemplateChild("LeftPanelDragThumb") is Thumb leftPanelDragThumb2)
+                        leftPanelDragThumb2.DragDelta -= LeftPanel_OnDragDelta;
+                    if (GetTemplateChild("WindowsMenuButton") is ToggleButton windowsMenuButton2)
+                        windowsMenuButton2.Checked -= OnWindowsMenuButtonChecked;
+
                     MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+                    dpdBackground.RemoveValueChanged(this, OnBackgroundChanged);
+
+                    if (Window.GetWindow(this) is Window wnd2) // need to check because an error in VS wpf designer
+                    {
+                        wnd2.Activated -= OnWindowActivated;
+                        wnd2.Deactivated -= OnWindowDeactivated;
+                    }
+
                     this.CleanDependencyObject();
                 }
             }
