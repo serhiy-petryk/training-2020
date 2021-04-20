@@ -273,7 +273,7 @@ namespace WpfInvestigate.Controls
                 BindingOperations.ClearBinding(this, HeightProperty);
             }
             if (IsWindowed) ((Window)Parent).Close();
-            MwiContainer?.Children.Remove(this);
+            MwiContainer?.Children?.Remove(this);
 
             Closed?.Invoke(this, EventArgs.Empty);
 
