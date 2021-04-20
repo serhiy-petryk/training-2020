@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -146,7 +147,7 @@ namespace WpfInvestigate.Controls
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
-            }), DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal);
+            }), DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Send);
             // To fix VS correct view of MwiStartup: DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal)
 
             // =======================
@@ -162,27 +163,26 @@ namespace WpfInvestigate.Controls
             }
             void OnUnloaded(object sender, RoutedEventArgs e)
             {
-                // Debug.Print($"MwiContainer. Unloaded: {this.IsElementDisposing()}, {_controlId}");
-                Unloaded -= OnUnloaded;
-
-                if (Children != null)
+                if (this.IsElementDisposing())
                 {
-                    foreach (var mwiChild in Children.Cast<MwiChild>().Where(c => c.IsWindowed))
-                        ((Window) mwiChild.Parent).Close();
+                    // Debug.Print($"MwiContainer. Unloaded: {this.IsElementDisposing()}, {_controlId}");
+                    Unloaded -= OnUnloaded;
 
-                    while (Children.Count > 0)
+                    if (Children != null)
                     {
-                        ((MwiChild) Children[0]).Close(null);
-                        Children.RemoveAt(0);
-                    }
-                }
+                        foreach (var mwiChild in Children.Cast<MwiChild>().Where(c => c.IsWindowed))
+                            ((Window) mwiChild.Parent).Close();
 
-                MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-                this.CleanDependencyObject();
-                // CleanerHelper.ClearAllBindings(this);
-                // this.ClearAllBindings();
-                Theme = null;
-                DataContext = null;
+                        while (Children.Count > 0)
+                        {
+                            ((MwiChild) Children[0]).Close(null);
+                            Children.RemoveAt(0);
+                        }
+                    }
+
+                    MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+                    this.CleanDependencyObject();
+                }
             }
         }
 

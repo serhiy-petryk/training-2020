@@ -154,6 +154,7 @@ namespace WpfInvestigate
 
             Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
 
+            await Task.Delay(1000);
         }
     }
 }

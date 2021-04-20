@@ -64,6 +64,11 @@ namespace WpfInvestigate.Helpers
             // var elements = GetVChildren(d).Union(new[] { d }).ToArray();
             var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
 
+            /*foreach (var element in elements)
+            {
+                Events.RemoveAllEventSubsriptions(element);
+            }*/
+
             foreach (var element in elements)
             {
                 foreach (var o in GetPropertiesForCleaner(element.GetType()).Where(p=> typeof(DependencyObject).IsAssignableFrom(p.PropertyType)).Select(p=> (DependencyObject)p.GetValue(element)))

@@ -97,9 +97,23 @@ namespace WpfInvestigate.TestViews
             {
                 // BindingOperations.ClearAllBindings(this);
                 //foreach(var child in Tips.GetVisualChildren(this))
-                  //  BindingOperations.ClearAllBindings(this);
+                //  BindingOperations.ClearAllBindings(this);
                 // BindingOperations.ClearAllBindings(MainGrid.LayoutTransform);
+                /*var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+                foreach (var element in elements)
+                {
+                    Events.RemoveAllEventSubsriptions(element);
+                }*/
                 this.CleanDependencyObject();
+            }
+        }
+
+        private void OnTestClick(object sender, RoutedEventArgs e)
+        {
+            var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+            foreach (var element in elements)
+            {
+                Events.RemoveAllEventSubsriptions(element);
             }
         }
     }

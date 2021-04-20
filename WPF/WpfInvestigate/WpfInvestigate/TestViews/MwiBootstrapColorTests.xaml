@@ -83,6 +83,7 @@
             </Grid.LayoutTransform>
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                 <WrapPanel VerticalAlignment="Top" Orientation="Horizontal">
+                    <Button Content="Test" Click="OnTestClick"/>
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource PrimaryBrush}" Tag="Primary" />
                     <!--<UserControl Template="{StaticResource Test}" Background="{StaticResource SecondaryBrush}" Tag="Secondary" />
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource SuccessBrush}" Tag="Success" />
