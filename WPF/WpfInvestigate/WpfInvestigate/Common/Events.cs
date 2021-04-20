@@ -10,6 +10,7 @@ namespace WpfInvestigate.Common
 {
     public static class Events
     {
+        private static int handlerCount = 0;
         public static void RemoveAllRoutedEventHandlers(UIElement element)
         {
             // Based on Douglas comment in https://stackoverflow.com/questions/9434817/how-to-remove-all-click-event-handlers
@@ -28,7 +29,17 @@ namespace WpfInvestigate.Common
                 types.Add(type);
             }
 
-            foreach(var re in EventManager.GetRoutedEvents().OfType<RoutedEvent>().Where(e=> types.Contains(e.OwnerType)))
+            /*PropertyInfo pi = typeof(UIElement).GetProperty("Events",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            EventHandlerList list = (EventHandlerList)pi.GetValue(element, null);
+
+            var ei1 = typeof(UIElement).GetEvent("PreviewMouseLeftButtonDown");
+            var a11 = eventHandlersStore.GetType().GetMethod("GetRoutedEventHandlers", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            var a12 = (RoutedEventHandlerInfo[])a11.Invoke(eventHandlersStore, new object[] { ei1 });
+
+            var ei2 = typeof(UIElement).GetEvent("IsHitTestVisibleChanged");*/
+
+            foreach (var re in EventManager.GetRoutedEvents().OfType<RoutedEvent>().Where(e=> types.Contains(e.OwnerType)))
             {
                 var getRoutedEventHandlers = eventHandlersStore.GetType().GetMethod("GetRoutedEventHandlers", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                 var routedEventHandlers = (RoutedEventHandlerInfo[])getRoutedEventHandlers.Invoke(eventHandlersStore, new object[] { re });
@@ -36,7 +47,7 @@ namespace WpfInvestigate.Common
                 {
                     foreach (var reHandler in routedEventHandlers)
                     {
-                        Debug.Print($"RemoveEventHandler. {element.GetType().Name}, {re.Name}, {(element is FrameworkElement fe ? fe.Name : null)}");
+                        Debug.Print($"RemoveEventHandler. {handlerCount++}: {element.GetType().Name}, {re.Name}, {(element is FrameworkElement fe ? fe.Name : null)}");
                         // element.RemoveHandler(re, reHandler.Handler);
                     }
                 }

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -160,19 +162,47 @@ namespace WpfInvestigate
 
         private void TestButton3_OnClick(object sender, RoutedEventArgs e)
         {
-            TestButton3.Unloaded += TestButton3_Unloaded;
-            TestButton3.Click += TestButton3_Click;
-            TestButton3.Click += (o, args) => Debug.Print($"AAAAAA");
-            // Events.RemoveAllRoutedEventHandlers(TestButton3);
-            Events.RemoveAllEventSubsriptions(this);
-            Debug.Print($"TestButton3_OnClick");
-            // Events.RemoveAllEventSubsriptions(sender);
-            /*EventInfo[] eis = TestButton3.GetType().GetEvents(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            var aa1 = GetRoutedEventHandlers(TestButton3, ButtonBase.ClickEvent);
-            TestButton3.RemoveHandler(ButtonBase.ClickEvent, aa1[0].Handler);
-            TestButton3.RemoveHandler(ButtonBase.ClickEvent, aa1[1].Handler);
-            TestButton3.RemoveHandler(ButtonBase.ClickEvent, aa1[2].Handler);
-            var aa2 = EventManager.GetRoutedEventsForOwner(TestButton3.GetType());*/
+            //TestButton3.Unloaded += TestButton3_Unloaded;
+            //TestButton3.Click += TestButton3_Click;
+            //TestButton3.Click += (o, args) => Debug.Print($"AAAAAA");
+            TestButton3.IsHitTestVisibleChanged += TestButton3_IsHitTestVisibleChanged;
+            TestButton3.IsHitTestVisibleChanged += (o, args) => Debug.Print($"XXX");
+
+            var eventHandlersStoreProperty = typeof(UIElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic);
+            var eventHandlersStore = eventHandlersStoreProperty.GetValue(TestButton3, null);
+            if (eventHandlersStore == null) return;
+
+            var fiEntries = eventHandlersStore.GetType().GetField("_entries", BindingFlags.NonPublic | BindingFlags.Instance);
+            var entries = fiEntries.GetValue(eventHandlersStore);
+            var piCount = entries.GetType().GetProperty("Count", BindingFlags.Public | BindingFlags.Instance);
+            var count = (int)piCount.GetValue(entries);
+            var miGetKeyValue = entries.GetType().GetMethod("GetKeyValuePair", BindingFlags.Public | BindingFlags.Instance);
+            var values = new List<Tuple<int, object>>();
+            for (var k = 0; k < count; k++)
+            {
+                var args = new object[] {k, null, null};
+                miGetKeyValue.Invoke(entries, args);
+                values.Add(new Tuple<int, object>((int)args[1], args[2]));
+            }
+
+            var t1 = Tips.TryGetType("System.Windows.GlobalEventManager");
+            var fi = t1.GetField("_globalIndexToEventMap", BindingFlags.Static | BindingFlags.NonPublic);
+            var o1 = fi.GetValue(null) as ArrayList;
+            // this.EventHandlersStoreRemove(UIElement.IsHitTestVisibleChangedKey, value);
+
+            var aa1 = values[4].Item2 as DependencyPropertyChangedEventHandler;
+            var aa2 = aa1.GetInvocationList();
+
+            var mi = typeof(UIElement).GetMethod("EventHandlersStoreRemove", BindingFlags.NonPublic | BindingFlags.Instance);
+            mi.Invoke(TestButton3, new[] { o1[values[4].Item1], aa2[0] });
+            mi.Invoke(TestButton3, new[] { o1[values[4].Item1], aa2[1] });
+
+
+        }
+
+        private void TestButton3_IsHitTestVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Debug.Print($"TestButton3_IsHitTestVisibleChanged");
         }
 
         private void TestButton3_Click(object sender, RoutedEventArgs e)

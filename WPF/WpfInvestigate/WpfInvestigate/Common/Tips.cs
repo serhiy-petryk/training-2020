@@ -145,6 +145,59 @@ namespace WpfInvestigate.Common
             return method.MakeGenericMethod(type).Invoke(null, null);
         }
         private static T GetDefaultGeneric<T>() => default(T);
+
+        //==================
+        public static Type TryGetType(string typeName)
+        {
+            Type t = Type.GetType(typeName, false, false);
+            if (t != null) return t;
+            int i = typeName.IndexOf(",", StringComparison.Ordinal);
+            string name = typeName;
+            string assemblyName = null;
+            if (i >= 0)
+            {
+                name = typeName.Substring(0, i).Trim();
+                assemblyName = typeName.Substring(i + 1).Trim();
+            }
+
+            List<string> ss = new List<string>();
+            Assembly[] aLoaded = Thread.GetDomain().GetAssemblies();
+            // Searching from last loaded (A few copies of one assembly can be in Design Mode)
+            for (int i1 = (aLoaded.Length - 1); i1 >= 0; i1--)
+            {
+                Assembly a = aLoaded[i1];
+                string assemblyKey = a.GetName().Name;
+                if (!ss.Contains(assemblyKey))
+                {
+                    t = TryGetTypeFromAssembly(name, assemblyName, a);
+                    if (t != null) return t;
+                    //          ss.Add(assemblyKey);
+                }
+            }
+            /*      foreach (Assembly a in aLoaded) {
+                    string assemblyKey  =a.GetName().Name;
+                    if (!ss.Contains(assemblyKey)) {
+                      t = TryGetTypeFromAssembly(name, assemblyName, a);
+                      if (t != null) return t;
+                      ss.Add(assemblyKey);
+                    }
+                  }*/
+            return null;
+        }
+
+        private static Type TryGetTypeFromAssembly(string userTypeName, string userAssemblyName, Assembly assembly)
+        {
+            if (String.IsNullOrEmpty(userTypeName)) return null;
+            string assName = assembly.GetName().Name;
+            if (String.IsNullOrEmpty(userAssemblyName) || assName == userAssemblyName || assName.StartsWith(userAssemblyName + ","))
+            {
+                Type type = assembly.GetType(userTypeName, false, false);
+                if (type != null) return type;
+            }
+            return null;
+        }
+
+
         #endregion
     }
 }
