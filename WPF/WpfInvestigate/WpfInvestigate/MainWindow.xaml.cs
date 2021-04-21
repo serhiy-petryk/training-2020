@@ -17,14 +17,16 @@ using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
 using WpfInvestigate.Temp;
 using WpfInvestigate.TestViews;
+using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow: INotifyPropertyChanged
     {
+        public string TestProperty { get; set; } = "AAA";
         public MainWindow()
         {
             InitializeComponent();
@@ -33,6 +35,9 @@ namespace WpfInvestigate
             cbCulture.SelectedValue = Thread.CurrentThread.CurrentUICulture;
 
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
+
+            OnPropertiesChanged(nameof(TestProperty));
+            // MwiAppViewModel.Instance.PropertyChanged += TestEventHandler;
         }
 
         private static string[] _cultures = { "", "sq-AL", "uk-UA", "en-US", "km-KH", "yo-NG" };
@@ -161,10 +166,16 @@ namespace WpfInvestigate
             await Task.Delay(1000);
         }
 
+        private void TestEventHandler(object sender, PropertyChangedEventArgs e)
+        {
+        }
+
         private void TestButton3_OnClick(object sender, RoutedEventArgs e)
         {
             var zz1 = EventManager.GetRoutedEvents();
-
+            Events.RemoveAllEventSubsriptions(this);
+            Events.RemoveAllEventSubsriptions(MwiAppViewModel.Instance);
+            //MwiAppViewModel.Instance
             Debug.Print($"TestButton3_OnClick");
             // var x1 = DependencyObjectHelper.GetDependencyPropertiesForType(typeof(Type));
             // var x2 = DependencyObjectHelper.GetDependencyPropertiesForType(typeof(Button));
@@ -183,11 +194,6 @@ namespace WpfInvestigate
 
             EventHelper.RemoveDependencyPropertyEventHandlers(TestButton3);
             EventHelper.RemovePropertyChangeEventHandlers(TestButton3);
-
-            var xx1 = Events.GetDependencyProperties(TestButton3);
-            var xx2 = Events.EnumerateDependencyProperties(TestButton3);
-            var xx3 = TestButton3.GetType().GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
-                .Where(f => f.FieldType == typeof(DependencyProperty)).Select(fieldInfo => fieldInfo.GetValue(null) as DependencyProperty);
 
             //==========  DependencyPropertyDescriptor  ========
             var piProperty = dpd.GetType().GetProperty("Property", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -245,5 +251,14 @@ namespace WpfInvestigate
         {
             Debug.Print($"Unloaded");
         }
+        #region =================  INotifyPropertyChanged  ==================
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
     }
 }
