@@ -168,9 +168,18 @@ namespace WpfInvestigate
             //TestButton3.Click += (o, args) => Debug.Print($"AAAAAA");
             TestButton3.IsHitTestVisibleChanged += TestButton3_IsHitTestVisibleChanged;
             TestButton3.IsHitTestVisibleChanged += (o, args) => Debug.Print($"XXX");
-            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            var dpd1 = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpd1.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd1.Name}"));
+            dpd1.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd1.Name}"));
+
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.EffectProperty, typeof(UIElement));
             dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd.Name}"));
             dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd.Name}"));
+
+            var xx1 = Events.GetDependencyProperties(TestButton3);
+            var xx2 = Events.EnumerateDependencyProperties(TestButton3);
+            var xx3 = TestButton3.GetType().GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+                .Where(f => f.FieldType == typeof(DependencyProperty)).Select(fieldInfo => fieldInfo.GetValue(null) as DependencyProperty);
 
             //==========  DependencyPropertyDescriptor  ========
             var piProperty = dpd.GetType().GetProperty("Property", BindingFlags.NonPublic | BindingFlags.Instance);

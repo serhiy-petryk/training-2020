@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Markup.Primitives;
 
 namespace WpfInvestigate.Common
 {
@@ -176,6 +178,71 @@ namespace WpfInvestigate.Common
                     }
                 }
             }
+        }
+
+        //========================================
+        // https://stackoverflow.com/questions/4794071/how-to-enumerate-all-dependency-properties-of-control
+        public static IEnumerable<DependencyProperty> EnumerateDependencyProperties(this DependencyObject obj)
+        {
+            if (obj != null)
+            {
+                var lve = obj.GetLocalValueEnumerator();
+                while (lve.MoveNext())
+                    yield return lve.Current.Property;
+            }
+        }
+        // https://social.msdn.microsoft.com/Forums/vstudio/en-US/d47114a7-b182-485c-b1dd-1078ddd42be9/enumerate-bindings?forum=wpf
+        public static IEnumerable<Binding> EnumerateBindings(DependencyObject obj)
+        {
+            if (obj != null)
+            {
+                var lve = obj.GetLocalValueEnumerator();
+                while (lve.MoveNext())
+                {
+                    var entry = lve.Current;
+                    if (BindingOperations.IsDataBound(obj, entry.Property))
+                    {
+                        var binding = (entry.Value as BindingExpression)?.ParentBinding;
+                        yield return binding;
+                    }
+                }
+            }
+        }
+
+        public static List<DependencyProperty> GetDependencyProperties(Object element)
+        {
+            List<DependencyProperty> properties = new List<DependencyProperty>();
+            MarkupObject markupObject = MarkupWriter.GetMarkupObjectFor(element);
+            if (markupObject != null)
+            {
+                foreach (MarkupProperty mp in markupObject.Properties)
+                {
+                    if (mp.DependencyProperty != null)
+                    {
+                        properties.Add(mp.DependencyProperty);
+                    }
+                }
+            }
+
+            return properties;
+        }
+
+        public static List<DependencyProperty> GetAttachedProperties(Object element)
+        {
+            List<DependencyProperty> attachedProperties = new List<DependencyProperty>();
+            MarkupObject markupObject = MarkupWriter.GetMarkupObjectFor(element);
+            if (markupObject != null)
+            {
+                foreach (MarkupProperty mp in markupObject.Properties)
+                {
+                    if (mp.IsAttached)
+                    {
+                        attachedProperties.Add(mp.DependencyProperty);
+                    }
+                }
+            }
+
+            return attachedProperties;
         }
     }
 }
