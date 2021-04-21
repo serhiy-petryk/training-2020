@@ -172,7 +172,7 @@ namespace WpfInvestigate.Controls
                     // Debug.Print($"MwiContainer. Unloaded: {this.IsElementDisposing()}, {_controlId}");
                     Unloaded -= OnUnloaded;
 
-                    if (Children != null)
+                    /*if (Children != null)
                     {
                         foreach (var mwiChild in Children.Cast<MwiChild>().Where(c => c.IsWindowed))
                             ((Window) mwiChild.Parent).Close();
@@ -202,15 +202,15 @@ namespace WpfInvestigate.Controls
                     {
                         wnd2.Activated -= OnWindowActivated;
                         wnd2.Deactivated -= OnWindowDeactivated;
-                    }
+                    }*/
 
-                    /*var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+                    var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                     foreach (var element in elements)
                     {
                         if (element is UIElement uiElement)
-                            Events.RemoveAllRoutedEventHandlers(uiElement);
-                        // Events.RemoveAllEventSubsriptions(element);
-                    }*/
+                            Events.xxRemoveAllRoutedEventHandlers(uiElement);
+                        Events.RemoveAllEventSubsriptions(element);
+                    }
                     this.CleanDependencyObject();
                 }
             }

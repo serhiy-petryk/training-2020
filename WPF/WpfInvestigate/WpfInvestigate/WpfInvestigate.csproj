@@ -92,7 +92,7 @@
     <Compile Include="Controls\ResizingControl.Events.cs" />
     <Compile Include="Effects\TextBlockEffects.cs" />
     <Compile Include="Helpers\CleanerHelper.cs" />
-    <Compile Include="Helpers\DependencyObjectHelper.cs" />
+    <Compile Include="Helpers\EventHelper.cs" />
     <Compile Include="Obsolete\DialogItems.cs" />
     <Compile Include="Controls\DialogMessage.cs" />
     <Compile Include="Controls\Others\VirtualKeyboard.cs" />

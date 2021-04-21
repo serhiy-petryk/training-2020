@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
+using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
 using WpfInvestigate.ViewModels;
 
@@ -27,7 +29,7 @@ namespace WpfInvestigate.Controls
                 // Debug.Print($"MwiChild. Unloaded: {this.IsElementDisposing()}, {_controlId}");
                 Loaded -= OnLoaded;
                 Unloaded -= OnUnloaded;
-                var dpdBackground = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
+                /*var dpdBackground = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
                 dpdBackground.RemoveValueChanged(this, OnBackgroundChanged);
                 var dpdScaleValue = DependencyPropertyDescriptor.FromProperty(MwiAppViewModel.ScaleValueProperty, typeof(MwiAppViewModel));
                 dpdScaleValue.RemoveValueChanged(MwiAppViewModel.Instance, OnScaleValueChanged);
@@ -35,15 +37,15 @@ namespace WpfInvestigate.Controls
                 MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
 
                 AddLoadedEvents(true);
-                AddVisualParentChangedEvents(true);
+                AddVisualParentChangedEvents(true);*/
 
-                /*var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+                var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                 foreach (var element in elements)
                 {
                     if (element is UIElement uiElement)
-                        Events.RemoveAllRoutedEventHandlers(uiElement);
-                    // Events.RemoveAllEventSubsriptions(element);
-                }*/
+                        Events.xxRemoveAllRoutedEventHandlers(uiElement);
+                    Events.RemoveAllEventSubsriptions(element);
+                }
                 this.CleanDependencyObject();
             }
         }

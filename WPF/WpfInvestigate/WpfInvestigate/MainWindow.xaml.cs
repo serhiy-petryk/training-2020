@@ -163,6 +163,11 @@ namespace WpfInvestigate
 
         private void TestButton3_OnClick(object sender, RoutedEventArgs e)
         {
+            var zz1 = EventManager.GetRoutedEvents();
+
+            Debug.Print($"TestButton3_OnClick");
+            // var x1 = DependencyObjectHelper.GetDependencyPropertiesForType(typeof(Type));
+            // var x2 = DependencyObjectHelper.GetDependencyPropertiesForType(typeof(Button));
             //TestButton3.Unloaded += TestButton3_Unloaded;
             //TestButton3.Click += TestButton3_Click;
             //TestButton3.Click += (o, args) => Debug.Print($"AAAAAA");
@@ -175,6 +180,9 @@ namespace WpfInvestigate
             var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.EffectProperty, typeof(UIElement));
             dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd.Name}"));
             dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd.Name}"));
+
+            EventHelper.RemoveDependencyPropertyEventHandlers(TestButton3);
+            EventHelper.RemovePropertyChangeEventHandlers(TestButton3);
 
             var xx1 = Events.GetDependencyProperties(TestButton3);
             var xx2 = Events.EnumerateDependencyProperties(TestButton3);
@@ -216,7 +224,7 @@ namespace WpfInvestigate
             var fi = t1.GetField("_globalIndexToEventMap", BindingFlags.Static | BindingFlags.NonPublic);
             var o1 = fi.GetValue(null) as ArrayList;
             // this.EventHandlersStoreRemove(UIElement.IsHitTestVisibleChangedKey, value);
-
+            return;
             var aa1 = values[4].Item2 as DependencyPropertyChangedEventHandler;
 
             var mi = typeof(UIElement).GetMethod("EventHandlersStoreRemove", BindingFlags.NonPublic | BindingFlags.Instance);

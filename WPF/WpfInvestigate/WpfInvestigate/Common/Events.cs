@@ -13,7 +13,7 @@ namespace WpfInvestigate.Common
     public static class Events
     {
         private static int handlerCount = 0;
-        public static void RemoveAllRoutedEventHandlers(UIElement element)
+        public static void xxRemoveAllRoutedEventHandlers(UIElement element)
         {
             // Based on Douglas comment in https://stackoverflow.com/questions/9434817/how-to-remove-all-click-event-handlers
 
