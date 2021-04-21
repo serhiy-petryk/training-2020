@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -167,7 +168,24 @@ namespace WpfInvestigate
             //TestButton3.Click += (o, args) => Debug.Print($"AAAAAA");
             TestButton3.IsHitTestVisibleChanged += TestButton3_IsHitTestVisibleChanged;
             TestButton3.IsHitTestVisibleChanged += (o, args) => Debug.Print($"XXX");
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd.Name}"));
+            dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd.Name}"));
 
+            //==========  DependencyPropertyDescriptor  ========
+            var piProperty = dpd.GetType().GetProperty("Property", BindingFlags.NonPublic | BindingFlags.Instance);
+            var property = piProperty.GetValue(dpd);
+            var fiTrackers = property.GetType().GetField("_trackers", BindingFlags.Instance | BindingFlags.NonPublic);
+            var trackers = fiTrackers.GetValue(property) as IDictionary;
+            if (trackers.Contains(TestButton3))
+            {
+                var a1 = trackers[TestButton3];
+                var fiChanged = a1.GetType().GetField("Changed", BindingFlags.Instance | BindingFlags.NonPublic);
+                var changed = fiChanged.GetValue(a1) as EventHandler;
+                dpd.RemoveValueChanged(TestButton3, changed);
+            }
+
+            //==========  DependencyPropertyChangedEventHandler  ========
             var eventHandlersStoreProperty = typeof(UIElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic);
             var eventHandlersStore = eventHandlersStoreProperty.GetValue(TestButton3, null);
             if (eventHandlersStore == null) return;
@@ -191,13 +209,9 @@ namespace WpfInvestigate
             // this.EventHandlersStoreRemove(UIElement.IsHitTestVisibleChangedKey, value);
 
             var aa1 = values[4].Item2 as DependencyPropertyChangedEventHandler;
-            var aa2 = aa1.GetInvocationList();
 
             var mi = typeof(UIElement).GetMethod("EventHandlersStoreRemove", BindingFlags.NonPublic | BindingFlags.Instance);
-            mi.Invoke(TestButton3, new[] { o1[values[4].Item1], aa2[0] });
-            mi.Invoke(TestButton3, new[] { o1[values[4].Item1], aa2[1] });
-
-
+            mi.Invoke(TestButton3, new[] { o1[values[4].Item1], aa1 });
         }
 
         private void TestButton3_IsHitTestVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
