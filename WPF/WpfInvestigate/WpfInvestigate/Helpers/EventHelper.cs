@@ -86,12 +86,12 @@ namespace WpfInvestigate.Helpers
                     else
                         throw new NotImplementedException($"RemovePropertyChangeEventHandlers not implemented yet for FrugalObjectList where EventPrivateKey is " + $" {eventPrivateKey.GetType().Name}");
                 }
-                else if (a1.Item2 is DependencyPropertyChangedEventHandler changedEventHandler)
+                else if (a1.Item2 is Delegate _delegate)
                 {
                     var eventPrivateKey = GetEventByGlobalIndex(a1.Item1);
                     if (eventPrivateKey != null)
                     {
-                        // Debug.Print($"RemovePropertyChangeEventHandlers2. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {changedEventHandler.Method.Name}");
+                        // Debug.Print($"RemovePropertyChangeEventHandlers2. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {_delegate.Method.Name}");
                         _miEventHandlersStoreRemove.Invoke(o, new[] {eventPrivateKey, a1.Item2});
                     }
                 }
