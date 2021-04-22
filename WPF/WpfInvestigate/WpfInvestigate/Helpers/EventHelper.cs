@@ -13,10 +13,15 @@ namespace WpfInvestigate.Helpers
 {
     public static class EventHelper
     {
+        public static void RemoveWpfEventHandlers(object o)
+        {
+            RemovePropertyChangeEventHandlers(o); // routed events
+            RemoveDependencyPropertyEventHandlers(o); // dpd.RemoveValueChanged
+        }
+
         private static Dictionary<Type, DependencyPropertyDescriptor[]> _dpdOfType = new Dictionary<Type, DependencyPropertyDescriptor[]>();
 
         // RemovePropertyChangeEventHandlers
-        private static PropertyInfo _piEventHandlersStore = typeof(UIElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic);
         private static FieldInfo _fiEntriesOfEventHandlersStore;
         private static PropertyInfo _piCountOfEntries;
         private static MethodInfo _miGetKeyValuePairOfEntries;
@@ -33,9 +38,10 @@ namespace WpfInvestigate.Helpers
 
         public static void RemovePropertyChangeEventHandlers(object o)
         {
-            if (!(o is UIElement)) return;
-
-            var eventHandlersStore = _piEventHandlersStore.GetValue(o, null);
+            if (o == null) return;
+            var piEventHandlersStore = o.GetType().GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (piEventHandlersStore == null) return;
+            var eventHandlersStore = piEventHandlersStore.GetValue(o, null);
             if (eventHandlersStore == null) return;
 
             if (_fiEntriesOfEventHandlersStore == null)
@@ -63,12 +69,19 @@ namespace WpfInvestigate.Helpers
                     var eventPrivateKey = GetEventByGlobalIndex(a1.Item1);
                     if (eventPrivateKey is RoutedEvent routedEvent && o is UIElement uiElement)
                     {
-                        if (_miToArrayOfFrugalObjectList == null)
-                            _miToArrayOfFrugalObjectList = a1.Item2.GetType()
-                                .GetMethod("ToArray", BindingFlags.Instance | BindingFlags.Public);
-                        var handlerInfos = _miToArrayOfFrugalObjectList.Invoke(a1.Item2, null) as RoutedEventHandlerInfo[];
-                        foreach (var handlerInfo in handlerInfos)
-                            uiElement.RemoveHandler(routedEvent, handlerInfo.Handler);
+                        if (routedEvent.Name != "Unloaded")
+                        {
+                            if (_miToArrayOfFrugalObjectList == null)
+                                _miToArrayOfFrugalObjectList = a1.Item2.GetType()
+                                    .GetMethod("ToArray", BindingFlags.Instance | BindingFlags.Public);
+                            var handlerInfos =
+                                _miToArrayOfFrugalObjectList.Invoke(a1.Item2, null) as RoutedEventHandlerInfo[];
+                            foreach (var handlerInfo in handlerInfos)
+                            {
+                                // Debug.Print($"RemovePropertyChangeEventHandlers. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {routedEvent.Name}");
+                                uiElement.RemoveHandler(routedEvent, handlerInfo.Handler);
+                            }
+                        }
                     }
                     else
                         throw new NotImplementedException($"RemovePropertyChangeEventHandlers not implemented yet for FrugalObjectList where EventPrivateKey is " + $" {eventPrivateKey.GetType().Name}");
@@ -77,7 +90,10 @@ namespace WpfInvestigate.Helpers
                 {
                     var eventPrivateKey = GetEventByGlobalIndex(a1.Item1);
                     if (eventPrivateKey != null)
+                    {
+                        Debug.Print($"RemovePropertyChangeEventHandlers2. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {changedEventHandler.Method.Name}");
                         _miEventHandlersStoreRemove.Invoke(o, new[] {eventPrivateKey, a1.Item2});
+                    }
                 }
                 else
                     throw new NotImplementedException($"RemovePropertyChangeEventHandlers not implemented yet for {a1.Item2.GetType().Name}");
@@ -90,7 +106,7 @@ namespace WpfInvestigate.Helpers
             {
                 if (_globalEventManagerType == null)
                     _globalEventManagerType = Tips.TryGetType("System.Windows.GlobalEventManager");
-                //if (_globalEventManagerType == null) return null;
+                if (_globalEventManagerType == null) return null;
 
                 if (_globalIndexToEventMapOfGlobalEventManager == null)
                     _globalIndexToEventMapOfGlobalEventManager = _globalEventManagerType.GetField("_globalIndexToEventMap", BindingFlags.Static | BindingFlags.NonPublic);
@@ -98,8 +114,6 @@ namespace WpfInvestigate.Helpers
             }
 
             return _globalIndexOfEvents.Count < globalIndex ? null : _globalIndexOfEvents[globalIndex];
-
-            // DependencyPropertyChangedEventHandler
         }
 
         public static void RemoveDependencyPropertyEventHandlers(object o)
@@ -115,7 +129,7 @@ namespace WpfInvestigate.Helpers
                     var trackers = _fiTrackersOfProperty.GetValue(property) as IDictionary;
                     if (trackers != null && trackers.Contains(o))
                     {
-                        Debug.Print($"RemoveDP: {type.Name}, {dpd.Name}");
+                        Debug.Print($"RemoveDPD: {type.Name}, {dpd.Name}");
                         var tracker = trackers[o];
                         if (_fiChangedHandlerOfTrackers == null)
                             _fiChangedHandlerOfTrackers = tracker.GetType().GetField("Changed", BindingFlags.Instance | BindingFlags.NonPublic);

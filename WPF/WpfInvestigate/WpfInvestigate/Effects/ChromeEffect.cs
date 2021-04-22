@@ -81,7 +81,7 @@ namespace WpfInvestigate.Effects
                 /*if (control.Name == "DetachedButton")
                 {
                     Debug.Print($"DetachedButton. Handler list");
-                    Events.RemoveAllRoutedEventHandlers(control);
+                EventHelper.RemoveWpfEventHandlers(element);
                 }*/
             }, DispatcherPriority.Loaded);
         }

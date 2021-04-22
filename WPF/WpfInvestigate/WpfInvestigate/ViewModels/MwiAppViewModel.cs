@@ -7,7 +7,7 @@ using WpfInvestigate.Themes;
 
 namespace WpfInvestigate.ViewModels
 {
-    public class MwiAppViewModel: UIElement, INotifyPropertyChanged
+    public class MwiAppViewModel: DependencyObject, INotifyPropertyChanged
     {
         #region ================  Static section  =====================
         public static MwiAppViewModel Instance = new MwiAppViewModel {CurrentTheme = MwiThemeInfo.Themes[0]};

@@ -93,6 +93,7 @@
 
                     <WrapPanel>
                         <Button x:Name="TestButton3" Click="TestButton3_OnClick" Content="Test button 2"/>
+                        <Button x:Name="TestButton4" Content="as{Binding TestProperty}" Click="ButtonBase_OnClick"/>
                     </WrapPanel>
 
                 </StackPanel>

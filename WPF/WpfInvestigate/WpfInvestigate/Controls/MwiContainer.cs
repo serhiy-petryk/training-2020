@@ -207,8 +207,7 @@ namespace WpfInvestigate.Controls
                     var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                     foreach (var element in elements)
                     {
-                        if (element is UIElement uiElement)
-                            Events.xxRemoveAllRoutedEventHandlers(uiElement);
+                        EventHelper.RemoveWpfEventHandlers(element);
                         Events.RemoveAllEventSubsriptions(element);
                     }
                     this.CleanDependencyObject();

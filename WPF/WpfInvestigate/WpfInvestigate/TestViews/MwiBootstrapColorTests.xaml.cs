@@ -59,7 +59,7 @@ namespace WpfInvestigate.TestViews
 
             var mwiChild = new MwiChild { Title = userControl.Tag.ToString() };
             var b1 = new Binding { Path = new PropertyPath("Background"), Source = userControl };
-            mwiChild.SetBinding(BackgroundProperty, b1);
+            //mwiChild.SetBinding(BackgroundProperty, b1);
             var b2 = new Binding
             {
                 Path = new PropertyPath("Background"),
@@ -102,8 +102,7 @@ namespace WpfInvestigate.TestViews
                 /*var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                 foreach (var element in elements)
                 {
-                    if (element is UIElement uiElement)
-                        Events.RemoveAllRoutedEventHandlers(uiElement);
+                EventHelper.RemoveWpfEventHandlers(element);
                     Events.RemoveAllEventSubsriptions(element);
                 }*/
                 // Debug.Print($"MwiBootstrapColorTests. Unloaded");
@@ -116,9 +115,8 @@ namespace WpfInvestigate.TestViews
             var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
             foreach (var element in elements)
             {
-                if (element is UIElement uiElement)
-                    Events.RemoveAllRoutedEventHandlers(uiElement);
-                // Events.RemoveAllEventSubsriptions(element);
+                EventHelper.RemoveWpfEventHandlers(element);
+                Events.RemoveAllEventSubsriptions(element);
             }
         }
     }

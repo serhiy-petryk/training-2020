@@ -24,9 +24,8 @@ namespace WpfInvestigate
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow: INotifyPropertyChanged
+    public partial class MainWindow
     {
-        public string TestProperty { get; set; } = "AAA";
         public MainWindow()
         {
             InitializeComponent();
@@ -36,8 +35,7 @@ namespace WpfInvestigate
 
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
 
-            OnPropertiesChanged(nameof(TestProperty));
-            // MwiAppViewModel.Instance.PropertyChanged += TestEventHandler;
+            MwiAppViewModel.Instance.PropertyChanged += TestEventHandler;
         }
 
         private static string[] _cultures = { "", "sq-AL", "uk-UA", "en-US", "km-KH", "yo-NG" };
@@ -172,69 +170,32 @@ namespace WpfInvestigate
 
         private void TestButton3_OnClick(object sender, RoutedEventArgs e)
         {
-            var zz1 = EventManager.GetRoutedEvents();
-            Events.RemoveAllEventSubsriptions(this);
-            Events.RemoveAllEventSubsriptions(MwiAppViewModel.Instance);
-            //MwiAppViewModel.Instance
+            var dpd = DependencyPropertyDescriptor.FromProperty(MwiAppViewModel.AppColorProperty, typeof(MwiAppViewModel));
+            dpd.AddValueChanged(MwiAppViewModel.Instance, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd.Name}"));
+            dpd.AddValueChanged(MwiAppViewModel.Instance, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd.Name}"));
+
             Debug.Print($"TestButton3_OnClick");
-            // var x1 = DependencyObjectHelper.GetDependencyPropertiesForType(typeof(Type));
-            // var x2 = DependencyObjectHelper.GetDependencyPropertiesForType(typeof(Button));
-            //TestButton3.Unloaded += TestButton3_Unloaded;
-            //TestButton3.Click += TestButton3_Click;
-            //TestButton3.Click += (o, args) => Debug.Print($"AAAAAA");
+
             TestButton3.IsHitTestVisibleChanged += TestButton3_IsHitTestVisibleChanged;
             TestButton3.IsHitTestVisibleChanged += (o, args) => Debug.Print($"XXX");
-            var dpd1 = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            TestButton3.Unloaded += (sender2, args) => Debug.Print($"Unload");
+            TestButton3.Unloaded += (sender2, args) => Debug.Print($"Unload");
+            /*var dpd1 = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
             dpd1.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd1.Name}"));
             dpd1.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd1.Name}"));
 
             var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.EffectProperty, typeof(UIElement));
             dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd.Name}"));
-            dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd.Name}"));
+            dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd.Name}"));*/
 
+            Debug.Print($"===========  Button3  ===============");
             EventHelper.RemoveDependencyPropertyEventHandlers(TestButton3);
             EventHelper.RemovePropertyChangeEventHandlers(TestButton3);
 
-            //==========  DependencyPropertyDescriptor  ========
-            var piProperty = dpd.GetType().GetProperty("Property", BindingFlags.NonPublic | BindingFlags.Instance);
-            var property = piProperty.GetValue(dpd);
-            var fiTrackers = property.GetType().GetField("_trackers", BindingFlags.Instance | BindingFlags.NonPublic);
-            var trackers = fiTrackers.GetValue(property) as IDictionary;
-            if (trackers.Contains(TestButton3))
-            {
-                var a1 = trackers[TestButton3];
-                var fiChanged = a1.GetType().GetField("Changed", BindingFlags.Instance | BindingFlags.NonPublic);
-                var changed = fiChanged.GetValue(a1) as EventHandler;
-                dpd.RemoveValueChanged(TestButton3, changed);
-            }
-
-            //==========  DependencyPropertyChangedEventHandler  ========
-            var eventHandlersStoreProperty = typeof(UIElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic);
-            var eventHandlersStore = eventHandlersStoreProperty.GetValue(TestButton3, null);
-            if (eventHandlersStore == null) return;
-
-            var fiEntries = eventHandlersStore.GetType().GetField("_entries", BindingFlags.NonPublic | BindingFlags.Instance);
-            var entries = fiEntries.GetValue(eventHandlersStore);
-            var piCount = entries.GetType().GetProperty("Count", BindingFlags.Public | BindingFlags.Instance);
-            var count = (int)piCount.GetValue(entries);
-            var miGetKeyValue = entries.GetType().GetMethod("GetKeyValuePair", BindingFlags.Public | BindingFlags.Instance);
-            var values = new List<Tuple<int, object>>();
-            for (var k = 0; k < count; k++)
-            {
-                var args = new object[] {k, null, null};
-                miGetKeyValue.Invoke(entries, args);
-                values.Add(new Tuple<int, object>((int)args[1], args[2]));
-            }
-
-            var t1 = Tips.TryGetType("System.Windows.GlobalEventManager");
-            var fi = t1.GetField("_globalIndexToEventMap", BindingFlags.Static | BindingFlags.NonPublic);
-            var o1 = fi.GetValue(null) as ArrayList;
-            // this.EventHandlersStoreRemove(UIElement.IsHitTestVisibleChangedKey, value);
-            return;
-            var aa1 = values[4].Item2 as DependencyPropertyChangedEventHandler;
-
-            var mi = typeof(UIElement).GetMethod("EventHandlersStoreRemove", BindingFlags.NonPublic | BindingFlags.Instance);
-            mi.Invoke(TestButton3, new[] { o1[values[4].Item1], aa1 });
+            Debug.Print($"===========  Button4  ===============");
+            EventHelper.RemoveDependencyPropertyEventHandlers(TestButton4);
+            EventHelper.RemovePropertyChangeEventHandlers(TestButton4);
+            Debug.Print($"===========  end  ===============");
         }
 
         private void TestButton3_IsHitTestVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -242,23 +203,15 @@ namespace WpfInvestigate
             Debug.Print($"TestButton3_IsHitTestVisibleChanged");
         }
 
-        private void TestButton3_Click(object sender, RoutedEventArgs e)
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            Debug.Print($"Click");
+            /*var propertyInfo = typeof(PropertyChangedEventManager).GetProperty("CurrentManager",
+                BindingFlags.Static | BindingFlags.NonPublic);
+            var pm = propertyInfo.GetValue(null);*/
+             // Events.RemoveAllEventSubsriptions(this);
+             // Events.RemoveEventSubsriptions(MwiAppViewModel.Instance, this);
+            EventHelper.RemoveDependencyPropertyEventHandlers(MwiAppViewModel.Instance);
+            // EventHelper.RemovePropertyChangeEventHandlers(MwiAppViewModel.Instance);
         }
-
-        private void TestButton3_Unloaded(object sender, RoutedEventArgs e)
-        {
-            Debug.Print($"Unloaded");
-        }
-        #region =================  INotifyPropertyChanged  ==================
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertiesChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
-
     }
 }

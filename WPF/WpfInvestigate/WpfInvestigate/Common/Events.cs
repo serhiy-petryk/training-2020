@@ -2,60 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup.Primitives;
 
 namespace WpfInvestigate.Common
 {
     public static class Events
     {
-        private static int handlerCount = 0;
-        public static void xxRemoveAllRoutedEventHandlers(UIElement element)
-        {
-            // Based on Douglas comment in https://stackoverflow.com/questions/9434817/how-to-remove-all-click-event-handlers
-
-            // Get the EventHandlersStore instance which holds event handlers for the specified element.
-            // The EventHandlersStore class is declared as internal.
-            var eventHandlersStoreProperty = typeof(UIElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic);
-            var eventHandlersStore = eventHandlersStoreProperty.GetValue(element, null);
-            if (eventHandlersStore == null) return;
-
-            var type = element.GetType();
-            var types = new List<Type>{type};
-            while (type != typeof(UIElement))
-            {
-                type = type.BaseType;
-                types.Add(type);
-            }
-
-            /*PropertyInfo pi = typeof(UIElement).GetProperty("Events",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            EventHandlerList list = (EventHandlerList)pi.GetValue(element, null);
-
-            var ei1 = typeof(UIElement).GetEvent("PreviewMouseLeftButtonDown");
-            var a11 = eventHandlersStore.GetType().GetMethod("GetRoutedEventHandlers", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            var a12 = (RoutedEventHandlerInfo[])a11.Invoke(eventHandlersStore, new object[] { ei1 });
-
-            var ei2 = typeof(UIElement).GetEvent("IsHitTestVisibleChanged");*/
-
-            foreach (var re in EventManager.GetRoutedEvents().OfType<RoutedEvent>().Where(e=> types.Contains(e.OwnerType)))
-            {
-                var getRoutedEventHandlers = eventHandlersStore.GetType().GetMethod("GetRoutedEventHandlers", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                var routedEventHandlers = (RoutedEventHandlerInfo[])getRoutedEventHandlers.Invoke(eventHandlersStore, new object[] { re });
-                if (routedEventHandlers != null)
-                {
-                    foreach (var reHandler in routedEventHandlers)
-                    {
-                        // Debug.Print($"RemoveEventHandler. {handlerCount++}: {element.GetType().Name}, {re.Name}, {(element is FrameworkElement fe ? fe.Name : null)}");
-                        // element.RemoveHandler(re, reHandler.Handler);
-                    }
-                }
-            }
-        }
-
         public static void RemoveAllEventSubsriptions(object target)
         {
             RemoveEventSubsriptions(target, null);
@@ -164,7 +116,7 @@ namespace WpfInvestigate.Common
                         foreach (Delegate d in dd)
                         {
                             string s = d.Method.Name;
-                            Debug.Print($"RemoveDelegates: {target.GetType()}, {s}");
+                            // Debug.Print($"RemoveDelegates: {target.GetType()}, {s}");
                             ei.RemoveEventHandler(target, d);
                         }
                     }
@@ -174,7 +126,10 @@ namespace WpfInvestigate.Common
                         {
                             string s = d.Method.Name;
                             if (d.Target == subcriber)
+                            {
+                                // Debug.Print($"RemoveDelegates: {target.GetType()}, {s}, {subcriber}");
                                 ei.RemoveEventHandler(target, d);
+                            }
                         }
                     }
                 }
