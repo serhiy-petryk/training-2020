@@ -106,7 +106,21 @@ namespace WpfInvestigate.TestViews
                     Events.RemoveAllEventSubsriptions(element);
                 }*/
                 // Debug.Print($"MwiBootstrapColorTests. Unloaded");
+                Unloaded -= OnUnloaded;
+
+                Debug.Print($"Test. OnUnloaded. {CleanerHelper.ClearCount}");
+
+                var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+                foreach (var element in elements)
+                {
+                    EventHelper.RemoveWpfEventHandlers(element);
+                    Events.RemoveAllEventSubsriptions(element);
+                }
+
                 this.CleanDependencyObject();
+
+                Debug.Print($"Clear count: {CleanerHelper.ClearCount}");
+                // CleanerHelper.ClearCount = 0;
             }
         }
 

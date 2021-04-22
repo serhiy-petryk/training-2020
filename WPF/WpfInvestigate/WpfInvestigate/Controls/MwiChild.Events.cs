@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,6 +40,7 @@ namespace WpfInvestigate.Controls
                 AddLoadedEvents(true);
                 AddVisualParentChangedEvents(true);*/
 
+                Debug.Print($"MwiChild. OnUnloaded: {_controlId}, {CleanerHelper.ClearCount}");
                 var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                 foreach (var element in elements)
                 {

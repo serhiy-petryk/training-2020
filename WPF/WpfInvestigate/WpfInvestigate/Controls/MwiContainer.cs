@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -204,6 +205,7 @@ namespace WpfInvestigate.Controls
                         wnd2.Deactivated -= OnWindowDeactivated;
                     }*/
 
+                    Debug.Print($"MwiContainer. OnUnloaded: {_controlId}");
                     var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                     foreach (var element in elements)
                     {
@@ -211,6 +213,7 @@ namespace WpfInvestigate.Controls
                         Events.RemoveAllEventSubsriptions(element);
                     }
                     this.CleanDependencyObject();
+                    Debug.Print($"MwiContainer. End of OnUnloaded: {_controlId}, {CleanerHelper.ClearCount}");
                 }
             }
         }
