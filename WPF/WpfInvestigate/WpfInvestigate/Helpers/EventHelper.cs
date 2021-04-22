@@ -91,7 +91,7 @@ namespace WpfInvestigate.Helpers
                     var eventPrivateKey = GetEventByGlobalIndex(a1.Item1);
                     if (eventPrivateKey != null)
                     {
-                        Debug.Print($"RemovePropertyChangeEventHandlers2. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {changedEventHandler.Method.Name}");
+                        // Debug.Print($"RemovePropertyChangeEventHandlers2. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {changedEventHandler.Method.Name}");
                         _miEventHandlersStoreRemove.Invoke(o, new[] {eventPrivateKey, a1.Item2});
                     }
                 }
@@ -129,7 +129,7 @@ namespace WpfInvestigate.Helpers
                     var trackers = _fiTrackersOfProperty.GetValue(property) as IDictionary;
                     if (trackers != null && trackers.Contains(o))
                     {
-                        Debug.Print($"RemoveDPD: {type.Name}, {dpd.Name}");
+                        // Debug.Print($"RemoveDPD: {type.Name}, {dpd.Name}");
                         var tracker = trackers[o];
                         if (_fiChangedHandlerOfTrackers == null)
                             _fiChangedHandlerOfTrackers = tracker.GetType().GetField("Changed", BindingFlags.Instance | BindingFlags.NonPublic);

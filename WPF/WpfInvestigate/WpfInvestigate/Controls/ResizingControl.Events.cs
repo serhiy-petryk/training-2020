@@ -27,20 +27,20 @@ namespace WpfInvestigate.Controls
             if (CleanerHelper.IsElementDisposing(this))
             {
                 // Debug.Print($"ResizingControl. Dispose: {_controlId}");
-                Loaded -= OnLoaded;
+                // Loaded -= OnLoaded;
                 Unloaded -= OnUnloaded;
 
-                MovingThumb = null; // clear event subscriber
-                AddLoadedEvents(true);
+                // MovingThumb = null; // clear event subscriber
+                /*AddLoadedEvents(true);
                 AddVisualParentChangedEvents(true);
-                AddContentChangedEvents(true);
+                AddContentChangedEvents(true);*/
 
-                /*var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+                var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                 foreach (var element in elements)
                 {
-                EventHelper.RemoveWpfEventHandlers(element);
-                    // Events.RemoveAllEventSubsriptions(element);
-                }*/
+                    EventHelper.RemoveWpfEventHandlers(element);
+                    // not need: Events.RemoveAllEventSubsriptions(element);
+                }
                 this.CleanDependencyObject();
             }
         }
