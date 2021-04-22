@@ -59,7 +59,7 @@ namespace WpfInvestigate.TestViews
 
             var mwiChild = new MwiChild { Title = userControl.Tag.ToString() };
             var b1 = new Binding { Path = new PropertyPath("Background"), Source = userControl };
-            //mwiChild.SetBinding(BackgroundProperty, b1);
+            mwiChild.SetBinding(BackgroundProperty, b1);
             var b2 = new Binding
             {
                 Path = new PropertyPath("Background"),
