@@ -242,7 +242,7 @@ namespace WpfInvestigate.Helpers
             GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
             GetPropertiesForCleaner(type).Where(pi => pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
             {
-                // if (!(pi.PropertyType == typeof(string)))
+                // no effect: if (!(pi.PropertyType == typeof(string)))
                 if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
                 {
                     if (!(pi.Name == "Language" || pi.Name == "Title") && pi.GetValue(element) != null)
