@@ -28,7 +28,7 @@ namespace WpfInvestigate.Controls
             if (this.IsElementDisposing())
             {
                 // Debug.Print($"MwiChild. Unloaded: {this.IsElementDisposing()}, {_controlId}");
-                Loaded -= OnLoaded;
+                // Loaded -= OnLoaded;
                 Unloaded -= OnUnloaded;
                 /*var dpdBackground = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
                 dpdBackground.RemoveValueChanged(this, OnBackgroundChanged);
@@ -40,7 +40,7 @@ namespace WpfInvestigate.Controls
                 AddLoadedEvents(true);
                 AddVisualParentChangedEvents(true);*/
 
-                Debug.Print($"MwiChild. OnUnloaded: {_controlId}, {CleanerHelper.ClearCount}");
+                // Debug.Print($"MwiChild. OnUnloaded: {_controlId}, {CleanerHelper.ClearCount}");
                 var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                 foreach (var element in elements)
                 {

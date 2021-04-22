@@ -151,7 +151,7 @@ namespace WpfInvestigate.Controls
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children));
-            }), DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Send);
+            }), DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal);
             // To fix VS correct view of MwiStartup: DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal)
 
             // =======================
@@ -184,9 +184,9 @@ namespace WpfInvestigate.Controls
                             Children.RemoveAt(0);
                         }
                         Children.CollectionChanged -= OnChildrenCollectionChanged;
-                    }
+                    }*/
 
-                    if (_leftPanelButton != null)
+                    /* if (_leftPanelButton != null)
                     {
                         _leftPanelButton.Checked -= LeftPanelButton_OnCheckedChanged;
                         _leftPanelButton.Unchecked -= LeftPanelButton_OnCheckedChanged;
@@ -196,7 +196,6 @@ namespace WpfInvestigate.Controls
                     if (GetTemplateChild("WindowsMenuButton") is ToggleButton windowsMenuButton2)
                         windowsMenuButton2.Checked -= OnWindowsMenuButtonChecked;
 
-                    MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
                     dpdBackground.RemoveValueChanged(this, OnBackgroundChanged);
 
                     if (Window.GetWindow(this) is Window wnd2) // need to check because an error in VS wpf designer
@@ -212,7 +211,10 @@ namespace WpfInvestigate.Controls
                         EventHelper.RemoveWpfEventHandlers(element);
                         Events.RemoveAllEventSubsriptions(element);
                     }
+                    MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+
                     this.CleanDependencyObject();
+
                     Debug.Print($"MwiContainer. End of OnUnloaded: {_controlId}, {CleanerHelper.ClearCount}");
                 }
             }

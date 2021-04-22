@@ -47,6 +47,7 @@ namespace WpfInvestigate.TestViews
 
         private async void OnRunTestClick(object sender, RoutedEventArgs e)
         {
+            Debug.Print($"Run Tests"); // !!! Debug.Print decrease memory leak on ~25%
             for (var k = 0; k < 5; k++)
                 await StepOfTest(sender, k);
         }
