@@ -28,21 +28,8 @@ namespace WpfInvestigate.Controls
             // !!! Called twice (as MwiChild and as ResizingControl
             if (this.IsElementDisposing())
             {
-                // Debug.Print($"MwiChild. Unloaded: {this.IsElementDisposing()}, {_controlId}");
-                // Loaded -= OnLoaded;
                 Unloaded -= OnUnloaded;
-                /*var dpdBackground = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
-                dpdBackground.RemoveValueChanged(this, OnBackgroundChanged);
-                var dpdScaleValue = DependencyPropertyDescriptor.FromProperty(MwiAppViewModel.ScaleValueProperty, typeof(MwiAppViewModel));
-                dpdScaleValue.RemoveValueChanged(MwiAppViewModel.Instance, OnScaleValueChanged);
-
-                MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-
-                AddLoadedEvents(true);
-                AddVisualParentChangedEvents(true);*/
-
                 var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
-                // Debug.Print($"MwiChild. OnUnloaded: {_controlId}, elements: {elements.Length}, clear count: {CleanerHelper.ClearCount}");
                 this.CleanDependencyObject();
                 foreach (var element in elements)
                 {

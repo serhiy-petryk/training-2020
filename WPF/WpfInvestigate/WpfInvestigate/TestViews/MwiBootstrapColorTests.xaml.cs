@@ -101,23 +101,8 @@ namespace WpfInvestigate.TestViews
         {
             if (this.IsElementDisposing())
             {
-                // BindingOperations.ClearAllBindings(this);
-                //foreach(var child in Tips.GetVisualChildren(this))
-                //  BindingOperations.ClearAllBindings(this);
-                // BindingOperations.ClearAllBindings(MainGrid.LayoutTransform);
-                /*var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
-                foreach (var element in elements)
-                {
-                EventHelper.RemoveWpfEventHandlers(element);
-                    Events.RemoveAllEventSubsriptions(element);
-                }*/
-                // Debug.Print($"MwiBootstrapColorTests. Unloaded");
                 Unloaded -= OnUnloaded;
-
-                // Debug.Print($"Test. OnUnloaded. {CleanerHelper.ClearCount}");
-
                 var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
-
                 this.CleanDependencyObject();
 
                 foreach (var element in elements)
@@ -125,13 +110,6 @@ namespace WpfInvestigate.TestViews
                     EventHelper.RemoveWpfEventHandlers(element);
                     Events.RemoveAllEventSubsriptions(element);
                 }
-
-                // Debug.Print($"Clear count: {CleanerHelper.ClearCount}");
-                // CleanerHelper.ClearCount = 0;
-                var aa = CleanerHelper._aa;
-                var aa1 = CleanerHelper._aa1;
-                var aa2 = CleanerHelper._aa2;
-                var aa3 = CleanerHelper._aa3;
             }
         }
 

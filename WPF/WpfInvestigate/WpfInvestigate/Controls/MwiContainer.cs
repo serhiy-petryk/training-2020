@@ -170,7 +170,6 @@ namespace WpfInvestigate.Controls
             {
                 if (this.IsElementDisposing())
                 {
-                    // Debug.Print($"MwiContainer. Unloaded: {this.IsElementDisposing()}, {_controlId}");
                     Unloaded -= OnUnloaded;
 
                     if (Children != null)
@@ -186,36 +185,14 @@ namespace WpfInvestigate.Controls
                         Children.CollectionChanged -= OnChildrenCollectionChanged;
                     }
 
-                    /* if (_leftPanelButton != null)
-                    {
-                        _leftPanelButton.Checked -= LeftPanelButton_OnCheckedChanged;
-                        _leftPanelButton.Unchecked -= LeftPanelButton_OnCheckedChanged;
-                    }
-                    if (GetTemplateChild("LeftPanelDragThumb") is Thumb leftPanelDragThumb2)
-                        leftPanelDragThumb2.DragDelta -= LeftPanel_OnDragDelta;
-                    if (GetTemplateChild("WindowsMenuButton") is ToggleButton windowsMenuButton2)
-                        windowsMenuButton2.Checked -= OnWindowsMenuButtonChecked;
-
-                    dpdBackground.RemoveValueChanged(this, OnBackgroundChanged);
-
-                    if (Window.GetWindow(this) is Window wnd2) // need to check because an error in VS wpf designer
-                    {
-                        wnd2.Activated -= OnWindowActivated;
-                        wnd2.Deactivated -= OnWindowDeactivated;
-                    }*/
-
-                    // Debug.Print($"MwiContainer. OnUnloaded: {_controlId}");
                     var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
-
                     this.CleanDependencyObject();
-
                     foreach (var element in elements)
                     {
                         EventHelper.RemoveWpfEventHandlers(element);
                         Events.RemoveAllEventSubsriptions(element);
                     }
                     MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-                    // Debug.Print($"MwiContainer. End of OnUnloaded: {_controlId}, {CleanerHelper.ClearCount}");
                 }
             }
         }

@@ -27,15 +27,7 @@ namespace WpfInvestigate.Controls
         {
             if (CleanerHelper.IsElementDisposing(this))
             {
-                // Debug.Print($"ResizingControl. Dispose: {_controlId}");
-                // Loaded -= OnLoaded;
                 Unloaded -= OnUnloaded;
-
-                // MovingThumb = null; // clear event subscriber
-                /*AddLoadedEvents(true);
-                AddVisualParentChangedEvents(true);
-                AddContentChangedEvents(true);*/
-
                 var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                 this.CleanDependencyObject();
                 foreach (var element in elements)

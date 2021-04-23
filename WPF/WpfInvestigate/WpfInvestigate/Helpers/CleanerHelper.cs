@@ -249,7 +249,6 @@ namespace WpfInvestigate.Helpers
 
             ClearCount++;
             var type = element.GetType();
-            // GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
             GetPropertiesForCleaner(type).Where(pi => !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
             {
                 // no effect: if (!(pi.PropertyType == typeof(string)))
@@ -276,6 +275,7 @@ namespace WpfInvestigate.Helpers
                     }
                 }
             });
+            // errors in Wpf control logic: GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
         }
 
         private static List<PropertyInfo> GetPropertiesForCleaner(Type type)

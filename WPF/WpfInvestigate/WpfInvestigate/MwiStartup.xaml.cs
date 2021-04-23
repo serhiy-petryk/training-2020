@@ -183,12 +183,6 @@ namespace WpfInvestigate
                 Unloaded -= OnUnloaded;
                 var elements = (new[] {this}).Union(this.GetVisualChildren()).ToArray();
                 this.CleanDependencyObject();
-
-                MwiContainer = null;
-                ScaleSlider = null;
-                Test2 = null;
-                TopControl = null;
-
                 foreach (var element in elements)
                 {
                     EventHelper.RemoveWpfEventHandlers(element);
