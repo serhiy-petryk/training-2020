@@ -17,7 +17,7 @@ namespace WpfInvestigate.Helpers
         void OnUnloaded(object sender, RoutedEventArgs e);
     }
 
-    public static class CleanerHelper
+    public static class UnloadingHelper
     {
         public static bool AutomaticUnloading(this IAutomaticUnloading item)
         {
