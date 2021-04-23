@@ -59,13 +59,14 @@ namespace WpfInvestigate.Helpers
                 ClearResources(element.Resources);
         }
 
+        public static Dictionary<Type, int> _aa = new Dictionary<Type, int>();
         private static void CleanDependencyObject2(DependencyObject d)
         {
             // todo: add collections & recursive objects (see resources)
             // var elements = GetVChildren(d).Union(new[] { d }).ToArray();
 
-            if (d is FrameworkElement fe && fe.Resources.Contains("Cleaned"))
-                return;
+            //if (d is FrameworkElement fe && fe.Resources.Contains("Cleaned"))
+              //  return;
 
             var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
 
@@ -79,9 +80,17 @@ namespace WpfInvestigate.Helpers
                 foreach (var o in GetPropertiesForCleaner(element.GetType()).Where(p => typeof(DependencyObject).IsAssignableFrom(p.PropertyType)).Select(p => (DependencyObject)p.GetValue(element)))
                 {
                     if (o != null)
+                    {
+                        // Debug.Print($"ClearAllBindings: {o}, {element.GetType().Name}");
                         BindingOperations.ClearAllBindings(o);
+                    }
                 }
                 BindingOperations.ClearAllBindings(element);
+
+                /*var key = element.GetType();
+                if (!_aa.ContainsKey(key))
+                    _aa.Add(key, 0);
+                _aa[key]++;*/
 
                 ClearElement(element); // !! Very important
 
@@ -92,16 +101,14 @@ namespace WpfInvestigate.Helpers
                     if (element is FrameworkElement fe2)
                         fe2.Triggers.Clear();
 
-                    /*var p = VisualTreeHelper.GetParent(uIElement);
+                    // !!! Important
+                    var p = VisualTreeHelper.GetParent(uIElement);
                     if (p != null)
-                        RemoveChild(p, uIElement);*/
+                        RemoveChild(p, uIElement);
                 }
 
                 if (element is FrameworkElement fe3)
-                {
                     ClearResources(fe3.Resources);
-                    fe3.Resources.Add("Cleaned", null);
-                }
             }
         }
 
@@ -233,20 +240,40 @@ namespace WpfInvestigate.Helpers
                 ClearElement(element);
         }
 
+        public static Dictionary<Type, int> _aa1 = new Dictionary<Type, int>();
+        public static Dictionary<Tuple<Type, Type>, int> _aa2 = new Dictionary<Tuple<Type, Type>, int>();
+        public static Dictionary<Tuple<string, Type>, int> _aa3 = new Dictionary<Tuple<string, Type>, int>();
         private static void ClearElement(DependencyObject element)
         {
             if (element is Track) return;
 
             ClearCount++;
             var type = element.GetType();
-            GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
-            GetPropertiesForCleaner(type).Where(pi => pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
+            // GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
+            GetPropertiesForCleaner(type).Where(pi => !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
             {
                 // no effect: if (!(pi.PropertyType == typeof(string)))
                 if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
                 {
                     if (!(pi.Name == "Language" || pi.Name == "Title") && pi.GetValue(element) != null)
+                    {
+                        /*var key = pi.PropertyType;
+                        if (!_aa1.ContainsKey(key))
+                            _aa1.Add(key, 0);
+                        _aa1[key]++;
+
+                        var key2 = new Tuple<Type, Type>(element.GetType(), pi.PropertyType);
+                        if (!_aa2.ContainsKey(key2))
+                            _aa2.Add(key2, 0);
+                        _aa2[key2]++;
+
+                        var key3 = new Tuple<string, Type>(pi.Name, pi.PropertyType);
+                        if (!_aa3.ContainsKey(key3))
+                            _aa3.Add(key3, 0);
+                        _aa3[key3]++;*/
+
                         pi.SetValue(element, null);
+                    }
                 }
             });
         }
@@ -259,8 +286,7 @@ namespace WpfInvestigate.Helpers
                 var currentType = type;
                 while (currentType != typeof(object))
                 {
-                    propertyInfos.AddRange(currentType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                        .Where(x => x.CanWrite && !x.PropertyType.IsValueType));
+                    propertyInfos.AddRange(currentType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(x => x.CanWrite));
                     currentType = currentType.BaseType;
                 }
                 _piCache[type] = propertyInfos;

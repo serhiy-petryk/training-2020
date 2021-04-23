@@ -43,12 +43,12 @@ namespace WpfInvestigate.Controls
 
                 var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                 // Debug.Print($"MwiChild. OnUnloaded: {_controlId}, elements: {elements.Length}, clear count: {CleanerHelper.ClearCount}");
+                this.CleanDependencyObject();
                 foreach (var element in elements)
                 {
                     EventHelper.RemoveWpfEventHandlers(element);
                     Events.RemoveAllEventSubsriptions(element);
                 }
-                this.CleanDependencyObject();
             }
         }
 

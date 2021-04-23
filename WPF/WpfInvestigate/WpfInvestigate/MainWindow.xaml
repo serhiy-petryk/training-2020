@@ -89,6 +89,7 @@
                         <Button Content="Change foreground" Click="TestButtonChangeForeground"/>
                         <Button Content="Memory usage" Click="MemoryUsageOnClick"/>
                         <Button Content="MwiContainer Memory test" Click="OnMwiContainerMemoryTestClick"/>
+                        <Button Content="MwiStartup Memory test" Click="OnMwiStartupMemoryTestClick"/>
                     </WrapPanel>
 
                     <WrapPanel>

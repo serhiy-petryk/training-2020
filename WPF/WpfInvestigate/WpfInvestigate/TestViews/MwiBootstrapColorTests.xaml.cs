@@ -50,6 +50,11 @@ namespace WpfInvestigate.TestViews
             Debug.Print($"Run Tests"); // !!! Debug.Print decrease memory leak on ~25%
             for (var k = 0; k < 5; k++)
                 await StepOfTest(sender, k);
+
+            var aa = CleanerHelper._aa;
+            var aa1 = CleanerHelper._aa1;
+            var aa2 = CleanerHelper._aa2;
+            var aa3 = CleanerHelper._aa3;
         }
 
         private async Task StepOfTest(object sender, int step)
@@ -109,24 +114,31 @@ namespace WpfInvestigate.TestViews
                 // Debug.Print($"MwiBootstrapColorTests. Unloaded");
                 Unloaded -= OnUnloaded;
 
-                Debug.Print($"Test. OnUnloaded. {CleanerHelper.ClearCount}");
+                // Debug.Print($"Test. OnUnloaded. {CleanerHelper.ClearCount}");
 
                 var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+
+                this.CleanDependencyObject();
+
                 foreach (var element in elements)
                 {
                     EventHelper.RemoveWpfEventHandlers(element);
                     Events.RemoveAllEventSubsriptions(element);
                 }
 
-                this.CleanDependencyObject();
-
-                Debug.Print($"Clear count: {CleanerHelper.ClearCount}");
+                // Debug.Print($"Clear count: {CleanerHelper.ClearCount}");
                 // CleanerHelper.ClearCount = 0;
+                var aa = CleanerHelper._aa;
+                var aa1 = CleanerHelper._aa1;
+                var aa2 = CleanerHelper._aa2;
+                var aa3 = CleanerHelper._aa3;
             }
         }
 
         private void OnTestClick(object sender, RoutedEventArgs e)
         {
+            var aa1 = this.GetVisualChildren().OfType<MwiChild>().ToArray();
+            var aa2 = aa1[3].GetVisualChildren().OfType<MwiChild>().ToArray();
             var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
             foreach (var element in elements)
             {

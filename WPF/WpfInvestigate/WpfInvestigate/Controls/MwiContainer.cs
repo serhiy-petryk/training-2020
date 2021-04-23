@@ -204,18 +204,18 @@ namespace WpfInvestigate.Controls
                         wnd2.Deactivated -= OnWindowDeactivated;
                     }*/
 
-                    Debug.Print($"MwiContainer. OnUnloaded: {_controlId}");
+                    // Debug.Print($"MwiContainer. OnUnloaded: {_controlId}");
                     var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+
+                    this.CleanDependencyObject();
+
                     foreach (var element in elements)
                     {
                         EventHelper.RemoveWpfEventHandlers(element);
                         Events.RemoveAllEventSubsriptions(element);
                     }
                     MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-
-                    this.CleanDependencyObject();
-
-                    Debug.Print($"MwiContainer. End of OnUnloaded: {_controlId}, {CleanerHelper.ClearCount}");
+                    // Debug.Print($"MwiContainer. End of OnUnloaded: {_controlId}, {CleanerHelper.ClearCount}");
                 }
             }
         }

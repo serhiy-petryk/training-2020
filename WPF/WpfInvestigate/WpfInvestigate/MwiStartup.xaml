@@ -12,7 +12,8 @@
         mc:Ignorable="d"
         Title="MwiStartup"
         Style="{StaticResource HeadlessWindow}"
-        KeyDown="MwiStartup_OnKeyDown">
+        KeyDown="MwiStartup_OnKeyDown"
+        Unloaded="OnUnloaded">
 
     <Window.Resources>
         <SolidColorBrush x:Key="MwiStartupBackground" Color="Yellow"/>

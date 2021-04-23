@@ -213,5 +213,38 @@ namespace WpfInvestigate
             EventHelper.RemoveDependencyPropertyEventHandlers(MwiAppViewModel.Instance);
             // EventHelper.RemovePropertyChangeEventHandlers(MwiAppViewModel.Instance);
         }
+
+        private async void OnMwiStartupMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            for (var k = 0; k < 5; k++)
+                await MwiStartupMemoryTestStep(k);
+        }
+        private async Task MwiStartupMemoryTestStep(int step)
+        {
+            var wnd = new MwiStartup();
+            wnd.Show();
+
+            await Task.Delay(1000);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            var a11 = GC.GetTotalMemory(true);
+
+            wnd.Close();
+
+            await Task.Delay(1000);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            var a12 = GC.GetTotalMemory(true);
+
+            Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
+
+            await Task.Delay(1000);
+        }
+
     }
 }
