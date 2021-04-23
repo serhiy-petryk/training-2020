@@ -1,7 +1,7 @@
-﻿using System;
+﻿// Old code (2010 year): VS2005
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 
 namespace WpfInvestigate.Common
