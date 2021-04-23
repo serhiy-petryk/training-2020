@@ -23,8 +23,9 @@ namespace WpfInvestigate.Controls
                 AnimateShow();
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
+        protected override void OnUnloaded(object sender, RoutedEventArgs e)
         {
+            // !!! Called twice (as MwiChild and as ResizingControl
             if (this.IsElementDisposing())
             {
                 // Debug.Print($"MwiChild. Unloaded: {this.IsElementDisposing()}, {_controlId}");
@@ -40,7 +41,7 @@ namespace WpfInvestigate.Controls
                 AddLoadedEvents(true);
                 AddVisualParentChangedEvents(true);*/
 
-                // Debug.Print($"MwiChild. OnUnloaded: {_controlId}, {CleanerHelper.ClearCount}");
+                // Debug.Print($"MwiChild. OnUnloaded: {_controlId}, clear count: {CleanerHelper.ClearCount}");
                 var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                 foreach (var element in elements)
                 {

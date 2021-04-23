@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -22,7 +23,7 @@ namespace WpfInvestigate.Controls
 
         private static Dictionary<Type, List<FieldInfo>> _fiCache = new Dictionary<Type, List<FieldInfo>>();
         private static Dictionary<Type, List<PropertyInfo>> _piCache = new Dictionary<Type, List<PropertyInfo>>();
-        private void OnUnloaded(object sender, RoutedEventArgs e)
+        protected virtual void OnUnloaded(object sender, RoutedEventArgs e)
         {
             if (CleanerHelper.IsElementDisposing(this))
             {
