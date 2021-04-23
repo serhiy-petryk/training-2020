@@ -41,8 +41,8 @@ namespace WpfInvestigate.Controls
                 AddLoadedEvents(true);
                 AddVisualParentChangedEvents(true);*/
 
-                // Debug.Print($"MwiChild. OnUnloaded: {_controlId}, clear count: {CleanerHelper.ClearCount}");
                 var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
+                // Debug.Print($"MwiChild. OnUnloaded: {_controlId}, elements: {elements.Length}, clear count: {CleanerHelper.ClearCount}");
                 foreach (var element in elements)
                 {
                     EventHelper.RemoveWpfEventHandlers(element);
