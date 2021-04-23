@@ -47,14 +47,13 @@ namespace WpfInvestigate.Helpers
                     if (element is FrameworkElement fe2)
                         fe2.Triggers.Clear();
 
-                    // !!! Important
-                    var p = VisualTreeHelper.GetParent(uIElement);
-                    if (p != null)
-                        RemoveChild(p, uIElement);
+                    if (VisualTreeHelper.GetParent(uIElement) is DependencyObject _do)
+                        RemoveChild(_do, uIElement); // !!! Important
                 }
 
-                if (element is FrameworkElement fe3)
-                    ClearResources(fe3.Resources);
+                // not need => it's cleared in ClearElement method:
+                // if (element is FrameworkElement fe3)
+                //   ClearResources(fe3.Resources);
             }
         }
 
@@ -113,7 +112,7 @@ namespace WpfInvestigate.Helpers
                 return;
             }
 
-            Debug.Print($"RemoveChild: {parent.GetType()}");
+            Debug.Print($"RemoveChild not defined for : {parent.GetType()} type of parent");
             return;
             throw new Exception($"RemoveChildis not defined for {parent.GetType().Name} type of parent");
         }
