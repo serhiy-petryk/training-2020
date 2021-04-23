@@ -12,13 +12,19 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Helpers
 {
+    public interface IAutomaticUnloading
+    {
+        void OnUnloaded(object sender, RoutedEventArgs e);
+    }
+
     public static class CleanerHelper
     {
-        public static bool AutomaticUnloading(this FrameworkElement fe, RoutedEventHandler unloadedEventHandler)
+        public static bool AutomaticUnloading(this IAutomaticUnloading item)
         {
+            var fe = item as FrameworkElement;
             if (!fe.IsElementDisposing()) return false;
 
-            fe.Unloaded -= unloadedEventHandler;
+            fe.Unloaded -=  item.OnUnloaded;
             fe.CleanDependencyObject();
             return true;
         }

@@ -7,10 +7,11 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
-    public partial class ResizingControl : ContentControl, INotifyPropertyChanged
+    public partial class ResizingControl : ContentControl, INotifyPropertyChanged, IAutomaticUnloading
     {
         private static int controlId = 0;
         private int _controlId = controlId ++;

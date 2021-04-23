@@ -16,7 +16,7 @@ namespace WpfInvestigate
     /// <summary>
     /// Interaction logic for MwiStartup.xaml
     /// </summary>
-    public partial class MwiStartup
+    public partial class MwiStartup: IAutomaticUnloading
     {
         public RelayCommand CmdScaleSliderReset { get; private set; }
 
@@ -176,14 +176,6 @@ namespace WpfInvestigate
             }
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            this.AutomaticUnloading(OnUnloaded);
-            /*if (this.IsElementDisposing())
-            {
-                Unloaded -= OnUnloaded;
-                this.CleanDependencyObject();
-            }*/
-        }
+        public void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading();
     }
 }

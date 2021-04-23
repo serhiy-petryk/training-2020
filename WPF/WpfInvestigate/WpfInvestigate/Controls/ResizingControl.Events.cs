@@ -22,15 +22,8 @@ namespace WpfInvestigate.Controls
 
         private static Dictionary<Type, List<FieldInfo>> _fiCache = new Dictionary<Type, List<FieldInfo>>();
         private static Dictionary<Type, List<PropertyInfo>> _piCache = new Dictionary<Type, List<PropertyInfo>>();
-        protected virtual void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            this.AutomaticUnloading(OnUnloaded);
-            /*if (CleanerHelper.IsElementDisposing(this))
-            {
-                Unloaded -= OnUnloaded;
-                this.CleanDependencyObject();
-            }*/
-        }
+
+        public virtual void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading();
 
         private void AddLoadedEvents(bool onlyRemove = false)
         {

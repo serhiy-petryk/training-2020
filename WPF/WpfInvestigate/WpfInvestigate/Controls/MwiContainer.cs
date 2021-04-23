@@ -22,7 +22,7 @@ namespace WpfInvestigate.Controls
     /// Interaction logic for MwiContainer.xaml
     /// </summary>
     [ContentProperty("Children")]
-    public partial class MwiContainer: ContentControl, INotifyPropertyChanged
+    public partial class MwiContainer: ContentControl, INotifyPropertyChanged, IAutomaticUnloading
     {
         const int WINDOW_OFFSET_STEP = 25;
         private static int controlId = 0;
@@ -165,48 +165,26 @@ namespace WpfInvestigate.Controls
                 if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
                     ActiveMwiChild.IsActive = false;
             }
-            void OnUnloaded(object sender, RoutedEventArgs e)
+        }
+
+        public void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.AutomaticUnloading())
             {
-                if (this.AutomaticUnloading(OnUnloaded))
+                MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+
+                if (Children != null)
                 {
-                    MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+                    foreach (var mwiChild in Children.Cast<MwiChild>().Where(c => c.IsWindowed))
+                        ((Window)mwiChild.Parent).Close();
 
-                    if (Children != null)
+                    while (Children.Count > 0)
                     {
-                        foreach (var mwiChild in Children.Cast<MwiChild>().Where(c => c.IsWindowed))
-                            ((Window)mwiChild.Parent).Close();
-
-                        while (Children.Count > 0)
-                        {
-                            ((MwiChild)Children[0]).Close(null);
-                            Children.RemoveAt(0);
-                        }
-                        Children.CollectionChanged -= OnChildrenCollectionChanged;
+                        ((MwiChild)Children[0]).Close(null);
+                        Children.RemoveAt(0);
                     }
+                    Children.CollectionChanged -= OnChildrenCollectionChanged;
                 }
-
-                /*if (this.IsElementDisposing())
-                {
-                    Unloaded -= OnUnloaded;
-
-                    this.CleanDependencyObject();
-
-                    MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-
-                    if (Children != null)
-                    {
-                        foreach (var mwiChild in Children.Cast<MwiChild>().Where(c => c.IsWindowed))
-                            ((Window)mwiChild.Parent).Close();
-
-                        while (Children.Count > 0)
-                        {
-                            ((MwiChild)Children[0]).Close(null);
-                            Children.RemoveAt(0);
-                        }
-                        Children.CollectionChanged -= OnChildrenCollectionChanged;
-                    }
-
-                }*/
             }
         }
 

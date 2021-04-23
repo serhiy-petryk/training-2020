@@ -15,7 +15,7 @@ namespace WpfInvestigate.TestViews
     /// <summary>
     /// Interaction logic for MwiBootstrapColorTests.xaml
     /// </summary>
-    public partial class MwiBootstrapColorTests : Window
+    public partial class MwiBootstrapColorTests : Window, IAutomaticUnloading
     {
         public MwiBootstrapColorTests()
         {
@@ -92,15 +92,7 @@ namespace WpfInvestigate.TestViews
             Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            this.AutomaticUnloading(OnUnloaded);
-            /*if (this.IsElementDisposing())
-            {
-                Unloaded -= OnUnloaded;
-                this.CleanDependencyObject();
-            }*/
-        }
+        public void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading();
 
         private void OnTestClick(object sender, RoutedEventArgs e)
         {

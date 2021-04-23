@@ -18,15 +18,10 @@ namespace WpfInvestigate.Controls
                 AnimateShow();
         }
 
-        protected override void OnUnloaded(object sender, RoutedEventArgs e)
+        public override void OnUnloaded(object sender, RoutedEventArgs e)
         {
             // !!! Called twice (as MwiChild and as ResizingControl
-            this.AutomaticUnloading(OnUnloaded);
-            /*if (this.IsElementDisposing())
-            {
-                Unloaded -= OnUnloaded;
-                this.CleanDependencyObject();
-            }*/
+            this.AutomaticUnloading();
         }
 
         private void AddLoadedEvents(bool onlyRemove = false)
