@@ -178,11 +178,12 @@ namespace WpfInvestigate
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            if (this.IsElementDisposing())
+            this.AutomaticUnloading(OnUnloaded);
+            /*if (this.IsElementDisposing())
             {
                 Unloaded -= OnUnloaded;
                 this.CleanDependencyObject();
-            }
+            }*/
         }
     }
 }

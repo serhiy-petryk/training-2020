@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -168,7 +167,25 @@ namespace WpfInvestigate.Controls
             }
             void OnUnloaded(object sender, RoutedEventArgs e)
             {
-                if (this.IsElementDisposing())
+                if (this.AutomaticUnloading(OnUnloaded))
+                {
+                    MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+
+                    if (Children != null)
+                    {
+                        foreach (var mwiChild in Children.Cast<MwiChild>().Where(c => c.IsWindowed))
+                            ((Window)mwiChild.Parent).Close();
+
+                        while (Children.Count > 0)
+                        {
+                            ((MwiChild)Children[0]).Close(null);
+                            Children.RemoveAt(0);
+                        }
+                        Children.CollectionChanged -= OnChildrenCollectionChanged;
+                    }
+                }
+
+                /*if (this.IsElementDisposing())
                 {
                     Unloaded -= OnUnloaded;
 
@@ -189,7 +206,7 @@ namespace WpfInvestigate.Controls
                         Children.CollectionChanged -= OnChildrenCollectionChanged;
                     }
 
-                }
+                }*/
             }
         }
 

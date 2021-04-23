@@ -15,7 +15,16 @@ namespace WpfInvestigate.Helpers
 {
     public static class CleanerHelper
     {
-        public static bool IsElementDisposing(this FrameworkElement fe)
+        public static bool AutomaticUnloading(this FrameworkElement fe, RoutedEventHandler unloadedEventHandler)
+        {
+            if (!fe.IsElementDisposing()) return false;
+
+            fe.Unloaded -= unloadedEventHandler;
+            fe.CleanDependencyObject();
+            return true;
+        }
+
+        private static bool IsElementDisposing(this FrameworkElement fe)
         {
             var wnd = Window.GetWindow(fe);
             return !fe.IsLoaded && !fe.IsVisible && (wnd == null || fe.Parent == null || (wnd != null && !wnd.IsLoaded && !wnd.IsVisible));
@@ -26,7 +35,7 @@ namespace WpfInvestigate.Helpers
         private static Dictionary<Type, List<PropertyInfo>> _piCache = new Dictionary<Type, List<PropertyInfo>>();
 
         // todo: add collections & recursive objects (see resources)
-        public static void CleanDependencyObject(this DependencyObject d)
+        private static void CleanDependencyObject(this DependencyObject d)
         {
             // todo: add collections & recursive objects (see resources)
             var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
@@ -190,68 +199,5 @@ namespace WpfInvestigate.Helpers
 
         #endregion
 
-        private static Dictionary<Type, List<FieldInfo>> _fiOfDpCache = new Dictionary<Type, List<FieldInfo>>();
-        public static void UpdateAllBindings(this DependencyObject target)
-        // based on 'H.B.' comment in https://stackoverflow.com/questions/5023025/is-there-a-way-to-get-all-bindingexpression-objects-for-a-window
-        {
-            foreach (var child in (new[] { target }).Union(Tips.GetVisualChildren(target)))
-            {
-                var fiOfDp = GetFieldInfosOfDp(child.GetType());
-                fiOfDp.ForEach(dp => BindingOperations.GetBindingExpression(child, dp.GetValue(child) as DependencyProperty)?.UpdateTarget());
-            }
-        }
-        public static void ClearAllBindings(this DependencyObject target, bool hardMethod = false)
-        // based on 'H.B.' comment in https://stackoverflow.com/questions/5023025/is-there-a-way-to-get-all-bindingexpression-objects-for-a-window
-        {
-            /*foreach (var child in (new[] {target}).Union(Tips.GetVisualChildren(target)))
-            {
-                BindingOperations.ClearAllBindings(child);
-            }
-
-            return;*/
-            var aa = target is Visual || target is Visual3D ? (new[] {target}).Union(target.GetVisualChildren()) : new[] {target};
-            foreach (var child in aa)
-            {
-                var fiOfDp = GetFieldInfosOfDp(child.GetType());
-                fiOfDp.ForEach(dp =>
-                {
-                    var dp1 = dp.GetValue(child) as DependencyProperty;
-                    var a1 = BindingOperations.GetBinding(child, dp1);
-                    if (a1 != null)
-                    {
-                        // Debug.Print($"ClearBinding: {_clearCount++}, {child}, {(child is FrameworkElement ? ((FrameworkElement)child).Name : null)}, {dp1.Name}, {a1.Path.Path}, {child.GetValue(dp1)}");
-                        BindingOperations.ClearBinding(child, dp1);
-                        var a2 = BindingOperations.GetBinding(child, dp1);
-                        if (a2 != null)
-                        {
-                            if (!hardMethod)
-                                child.SetValue(dp1, child.GetValue(dp1));
-                            else
-                                child.SetValue(dp1, GetDefaultValue(dp1.PropertyType));
-                            // Debug.Print($"ClearBinding: {_clearCount++}, {child}, {(child is FrameworkElement ? ((FrameworkElement)child).Name : null)}, {dp1.Name}, {a1.Path.Path}, {child.GetValue(dp1)}");
-                        }
-                    }
-                });
-            }
-        }
-
-        private static object GetDefaultValue(Type t) => t.IsValueType ? Activator.CreateInstance(t) : null;
-
-        private static List<FieldInfo> GetFieldInfosOfDp(Type type)
-        {
-            if (!_fiOfDpCache.ContainsKey(type))
-            {
-                var propertiesDp = new List<FieldInfo>();
-                var currentType = type;
-                while (currentType != typeof(object))
-                {
-                    propertiesDp.AddRange(currentType.GetFields().Where(x => x.FieldType == typeof(DependencyProperty)));
-                    currentType = currentType.BaseType;
-                }
-                _fiOfDpCache[type] = propertiesDp;
-            }
-
-            return _fiOfDpCache[type];
-        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -25,11 +24,12 @@ namespace WpfInvestigate.Controls
         private static Dictionary<Type, List<PropertyInfo>> _piCache = new Dictionary<Type, List<PropertyInfo>>();
         protected virtual void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            if (CleanerHelper.IsElementDisposing(this))
+            this.AutomaticUnloading(OnUnloaded);
+            /*if (CleanerHelper.IsElementDisposing(this))
             {
                 Unloaded -= OnUnloaded;
                 this.CleanDependencyObject();
-            }
+            }*/
         }
 
         private void AddLoadedEvents(bool onlyRemove = false)

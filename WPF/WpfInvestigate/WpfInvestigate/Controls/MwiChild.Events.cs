@@ -1,15 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
-using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
-using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
@@ -26,11 +21,12 @@ namespace WpfInvestigate.Controls
         protected override void OnUnloaded(object sender, RoutedEventArgs e)
         {
             // !!! Called twice (as MwiChild and as ResizingControl
-            if (this.IsElementDisposing())
+            this.AutomaticUnloading(OnUnloaded);
+            /*if (this.IsElementDisposing())
             {
                 Unloaded -= OnUnloaded;
                 this.CleanDependencyObject();
-            }
+            }*/
         }
 
         private void AddLoadedEvents(bool onlyRemove = false)

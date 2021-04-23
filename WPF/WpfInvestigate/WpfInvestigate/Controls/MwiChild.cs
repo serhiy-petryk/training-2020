@@ -258,8 +258,6 @@ namespace WpfInvestigate.Controls
 
         public async void Close(object obj)
         {
-            // Debug.Print($"MwiChild.Close: {_controlId}, {this.IsElementDisposing()}");
-
             var cmdCloseBinding = CommandBindings.OfType<CommandBinding>().FirstOrDefault(c => Equals(c.Command, ApplicationCommands.Close));
             if (cmdCloseBinding == null)
                 await AnimateHide();
