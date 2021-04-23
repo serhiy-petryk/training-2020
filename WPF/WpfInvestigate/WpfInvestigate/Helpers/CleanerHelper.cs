@@ -28,69 +28,15 @@ namespace WpfInvestigate.Helpers
         // todo: add collections & recursive objects (see resources)
         public static void CleanDependencyObject(this DependencyObject d)
         {
-            CleanDependencyObject2(d);
-            // CleanDependencyObjectSave(d);
-            return;
-
             // todo: add collections & recursive objects (see resources)
-            var elements = GetVChildren(d).Union(new[] { d }).ToArray();
-
-            foreach (var element in elements)
-                element.ClearAllBindings(true);
-
-            ClearElements(elements);
-
-            foreach (var element in elements.OfType<UIElement>())
-            {
-                element.CommandBindings.Clear();
-                element.InputBindings.Clear();
-                if (element is FrameworkElement fe)
-                    fe.Triggers.Clear();
-            }
-
-            foreach (var element in elements.OfType<UIElement>())
-            {
-                var p = VisualTreeHelper.GetParent(element);
-                if (p != null)
-                    RemoveChild(p, element);
-            }
-
-            foreach (var element in elements.OfType<FrameworkElement>())
-                ClearResources(element.Resources);
-        }
-
-        public static Dictionary<Type, int> _aa = new Dictionary<Type, int>();
-        private static void CleanDependencyObject2(DependencyObject d)
-        {
-            // todo: add collections & recursive objects (see resources)
-            // var elements = GetVChildren(d).Union(new[] { d }).ToArray();
-
-            //if (d is FrameworkElement fe && fe.Resources.Contains("Cleaned"))
-              //  return;
-
             var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
 
-            /*foreach (var element in elements)
-            {
-                Events.RemoveAllEventSubsriptions(element);
-            }*/
-
             foreach (var element in elements)
             {
-                foreach (var o in GetPropertiesForCleaner(element.GetType()).Where(p => typeof(DependencyObject).IsAssignableFrom(p.PropertyType)).Select(p => (DependencyObject)p.GetValue(element)))
-                {
-                    if (o != null)
-                    {
-                        // Debug.Print($"ClearAllBindings: {o}, {element.GetType().Name}");
-                        BindingOperations.ClearAllBindings(o);
-                    }
-                }
-                BindingOperations.ClearAllBindings(element);
+                foreach (var o in GetPropertiesForCleaner(element.GetType()).Where(p => typeof(DependencyObject).IsAssignableFrom(p.PropertyType)).Select(p => (DependencyObject)p.GetValue(element)).Where(p => p != null))
+                    BindingOperations.ClearAllBindings(o);
 
-                /*var key = element.GetType();
-                if (!_aa.ContainsKey(key))
-                    _aa.Add(key, 0);
-                _aa[key]++;*/
+                BindingOperations.ClearAllBindings(element);
 
                 ClearElement(element); // !! Very important
 
@@ -109,55 +55,6 @@ namespace WpfInvestigate.Helpers
 
                 if (element is FrameworkElement fe3)
                     ClearResources(fe3.Resources);
-            }
-        }
-
-        private static void CleanDependencyObjectSave(DependencyObject d)
-        {
-            // todo: add collections & recursive objects (see resources)
-            // var elements = GetVChildren(d).Union(new[] { d }).ToArray();
-            var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
-
-            /*foreach (var element in elements)
-            {
-                Events.RemoveAllEventSubsriptions(element);
-            }*/
-
-            foreach (var element in elements)
-            {
-                foreach (var o in GetPropertiesForCleaner(element.GetType()).Where(p => typeof(DependencyObject).IsAssignableFrom(p.PropertyType)).Select(p => (DependencyObject)p.GetValue(element)))
-                {
-                    if (o != null)
-                        BindingOperations.ClearAllBindings(o);
-                }
-                BindingOperations.ClearAllBindings(element);
-            }
-
-            ClearElements(elements); // !! Very important
-            /*foreach (var element in elements.OfType<FrameworkElement>())
-                element.Style = null;
-            foreach (var element in elements.OfType<Control>())
-                element.Template = null;*/
-
-            foreach (var element in elements.OfType<UIElement>())
-            {
-                element.CommandBindings.Clear();
-                element.InputBindings.Clear();
-                if (element is FrameworkElement fe)
-                    fe.Triggers.Clear();
-            }
-
-            foreach (var element in elements.OfType<UIElement>())
-            {
-                var p = VisualTreeHelper.GetParent(element);
-                if (p != null)
-                    RemoveChild(p, element);
-            }
-
-            foreach (var element in elements.OfType<FrameworkElement>())
-            {
-                ClearResources(element.Resources);
-                // element.Resources.Add("Disposed", true);
             }
         }
 
@@ -233,21 +130,10 @@ namespace WpfInvestigate.Helpers
             rd.Clear();
         }
 
-        public static int ClearCount = 0;
-        private static void ClearElements(DependencyObject[] elements)
-        {
-            foreach (var element in elements.Where(e => e.GetType() != typeof(Track)))
-                ClearElement(element);
-        }
-
-        public static Dictionary<Type, int> _aa1 = new Dictionary<Type, int>();
-        public static Dictionary<Tuple<Type, Type>, int> _aa2 = new Dictionary<Tuple<Type, Type>, int>();
-        public static Dictionary<Tuple<string, Type>, int> _aa3 = new Dictionary<Tuple<string, Type>, int>();
         private static void ClearElement(DependencyObject element)
         {
             if (element is Track) return;
 
-            ClearCount++;
             var type = element.GetType();
             GetPropertiesForCleaner(type).Where(pi => !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
             {
@@ -255,24 +141,7 @@ namespace WpfInvestigate.Helpers
                 if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
                 {
                     if (!(pi.Name == "Language" || pi.Name == "Title") && pi.GetValue(element) != null)
-                    {
-                        /*var key = pi.PropertyType;
-                        if (!_aa1.ContainsKey(key))
-                            _aa1.Add(key, 0);
-                        _aa1[key]++;
-
-                        var key2 = new Tuple<Type, Type>(element.GetType(), pi.PropertyType);
-                        if (!_aa2.ContainsKey(key2))
-                            _aa2.Add(key2, 0);
-                        _aa2[key2]++;
-
-                        var key3 = new Tuple<string, Type>(pi.Name, pi.PropertyType);
-                        if (!_aa3.ContainsKey(key3))
-                            _aa3.Add(key3, 0);
-                        _aa3[key3]++;*/
-
                         pi.SetValue(element, null);
-                    }
                 }
             });
             // errors in Wpf control logic: GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
@@ -314,17 +183,6 @@ namespace WpfInvestigate.Helpers
             return _fiCache[type];
         }
 
-        private static IEnumerable<DependencyObject> GetVChildren(DependencyObject current)
-        {
-            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
-            {
-                var child = VisualTreeHelper.GetChild(current, i);
-
-                foreach (var childOfChild in GetVChildren(child))
-                    yield return childOfChild;
-                yield return child;
-            }
-        }
         #endregion
 
         private static Dictionary<Type, List<FieldInfo>> _fiOfDpCache = new Dictionary<Type, List<FieldInfo>>();

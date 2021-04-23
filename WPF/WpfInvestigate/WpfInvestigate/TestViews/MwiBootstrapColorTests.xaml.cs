@@ -50,11 +50,6 @@ namespace WpfInvestigate.TestViews
             Debug.Print($"Run Tests"); // !!! Debug.Print decrease memory leak on ~25%
             for (var k = 0; k < 5; k++)
                 await StepOfTest(sender, k);
-
-            var aa = CleanerHelper._aa;
-            var aa1 = CleanerHelper._aa1;
-            var aa2 = CleanerHelper._aa2;
-            var aa3 = CleanerHelper._aa3;
         }
 
         private async Task StepOfTest(object sender, int step)
