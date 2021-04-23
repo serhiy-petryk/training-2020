@@ -172,27 +172,23 @@ namespace WpfInvestigate.Controls
                 {
                     Unloaded -= OnUnloaded;
 
+                    this.CleanDependencyObject();
+
+                    MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+
                     if (Children != null)
                     {
                         foreach (var mwiChild in Children.Cast<MwiChild>().Where(c => c.IsWindowed))
-                            ((Window) mwiChild.Parent).Close();
+                            ((Window)mwiChild.Parent).Close();
 
                         while (Children.Count > 0)
                         {
-                            ((MwiChild) Children[0]).Close(null);
+                            ((MwiChild)Children[0]).Close(null);
                             Children.RemoveAt(0);
                         }
                         Children.CollectionChanged -= OnChildrenCollectionChanged;
                     }
 
-                    var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
-                    this.CleanDependencyObject();
-                    foreach (var element in elements)
-                    {
-                        EventHelper.RemoveWpfEventHandlers(element);
-                        Events.RemoveAllEventSubsriptions(element);
-                    }
-                    MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
                 }
             }
         }

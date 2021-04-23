@@ -28,13 +28,7 @@ namespace WpfInvestigate.Controls
             if (CleanerHelper.IsElementDisposing(this))
             {
                 Unloaded -= OnUnloaded;
-                var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                 this.CleanDependencyObject();
-                foreach (var element in elements)
-                {
-                    EventHelper.RemoveWpfEventHandlers(element);
-                    // not need: Events.RemoveAllEventSubsriptions(element);
-                }
             }
         }
 

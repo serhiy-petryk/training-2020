@@ -55,6 +55,12 @@ namespace WpfInvestigate.Helpers
                 // if (element is FrameworkElement fe3)
                 //   ClearResources(fe3.Resources);
             }
+
+            foreach (var element in elements)
+            {
+                EventHelper.RemoveWpfEventHandlers(element);
+                Events.RemoveAllEventSubsriptions(element);
+            }
         }
 
         private static void RemoveChild(DependencyObject parent, UIElement child)

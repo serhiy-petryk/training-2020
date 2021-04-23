@@ -29,13 +29,7 @@ namespace WpfInvestigate.Controls
             if (this.IsElementDisposing())
             {
                 Unloaded -= OnUnloaded;
-                var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
                 this.CleanDependencyObject();
-                foreach (var element in elements)
-                {
-                    EventHelper.RemoveWpfEventHandlers(element);
-                    Events.RemoveAllEventSubsriptions(element);
-                }
             }
         }
 
