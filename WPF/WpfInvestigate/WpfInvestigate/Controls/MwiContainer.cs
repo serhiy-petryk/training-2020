@@ -78,7 +78,7 @@ namespace WpfInvestigate.Controls
 
                     GetTopChild(Children)?.Activate(false);
                     InvalidateLayout();
-                    
+
                     break;
 
                 default: throw new Exception("Please, check code");
@@ -173,7 +173,7 @@ namespace WpfInvestigate.Controls
                     // Debug.Print($"MwiContainer. Unloaded: {this.IsElementDisposing()}, {_controlId}");
                     Unloaded -= OnUnloaded;
 
-                    /*if (Children != null)
+                    if (Children != null)
                     {
                         foreach (var mwiChild in Children.Cast<MwiChild>().Where(c => c.IsWindowed))
                             ((Window) mwiChild.Parent).Close();
@@ -184,7 +184,7 @@ namespace WpfInvestigate.Controls
                             Children.RemoveAt(0);
                         }
                         Children.CollectionChanged -= OnChildrenCollectionChanged;
-                    }*/
+                    }
 
                     /* if (_leftPanelButton != null)
                     {
@@ -233,7 +233,7 @@ namespace WpfInvestigate.Controls
         #region =======  Properties  =========
         public ScrollViewer ScrollViewer;
         public Grid MwiPanel;
-        public ObservableCollection<object> Children { get; set; } = new ObservableCollection<object>(); // if define as ObservableCollection<MwiChild>: there are vs designer errors in test forms "A value of type 'MwiChild' cannot be added to a collection or dictionary of type 'ObservableCollection`1'"
+        public ObservableCollection<object> Children { get; } = new ObservableCollection<object>(); // if define as ObservableCollection<MwiChild>: there are vs designer errors in test forms "A value of type 'MwiChild' cannot be added to a collection or dictionary of type 'ObservableCollection`1'"
 
         internal IEnumerable<MwiChild> InternalWindows => Children.Cast<MwiChild>().Where(w => !w.IsWindowed);
         internal MwiChild GetTopChild(IEnumerable<object> items) => items.Cast<MwiChild>().OrderByDescending(Panel.GetZIndex).FirstOrDefault();
