@@ -44,7 +44,8 @@ namespace WpfInvestigate.Helpers
         private static void CleanDependencyObject(this DependencyObject d)
         {
             // todo: add collections & recursive objects (see resources)
-            var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
+            //var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
+            var elements = GetVChildren(d).Union(new[] { d }).ToArray();
 
             foreach (var element in elements)
             {
@@ -71,10 +72,6 @@ namespace WpfInvestigate.Helpers
                     if (VisualTreeHelper.GetParent(uIElement) is DependencyObject _do)
                         RemoveChild(_do, uIElement); // !!! Important
                 }
-
-                // not need => it's cleared in ClearElement method:
-                // if (element is FrameworkElement fe3)
-                //   ClearResources(fe3.Resources);
             }
 
             foreach (var element in elements)
@@ -89,7 +86,9 @@ namespace WpfInvestigate.Helpers
             if (parent is Panel panel)
             {
                 if (panel.IsItemsHost)
-                    Debug.Print($"RemoveChild. Panel. IsItemsHost");
+                {
+                    // Debug.Print($"RemoveChild. Panel. IsItemsHost");
+                }
                 else
                     panel.Children.Remove(child);
                 return;
@@ -213,5 +212,18 @@ namespace WpfInvestigate.Helpers
             return _fiCache[type];
         }
         #endregion
+
+        private static IEnumerable<DependencyObject> GetVChildren(DependencyObject current)
+        {
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
+            {
+                var child = VisualTreeHelper.GetChild(current, i);
+
+                foreach (var childOfChild in GetVChildren(child))
+                    yield return childOfChild;
+                yield return child;
+            }
+        }
+
     }
 }
