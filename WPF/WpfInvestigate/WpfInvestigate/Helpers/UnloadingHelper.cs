@@ -51,6 +51,8 @@ namespace WpfInvestigate.Helpers
             foreach (var element in elements)
             {
                 BindingOperations.ClearAllBindings(element);
+                EventHelper.RemoveWpfEventHandlers(element);
+                Events.RemoveAllEventSubsriptions(element);
 
                 GetPropertiesForCleaner(element.GetType()).ForEach(pi =>
                 {
@@ -64,9 +66,6 @@ namespace WpfInvestigate.Helpers
                     else if (value is ResourceDictionary rd)
                         ClearResources(rd);
                 });
-
-                EventHelper.RemoveWpfEventHandlers(element);
-                Events.RemoveAllEventSubsriptions(element);
 
                 ClearElement(element); // !! Very important
 
@@ -164,7 +163,11 @@ namespace WpfInvestigate.Helpers
             foreach (var item in rd.OfType<DictionaryEntry>())
             {
                 if (item.Value is DependencyObject d)
+                {
                     BindingOperations.ClearAllBindings(d);
+                    // EventHelper.RemoveWpfEventHandlers(d);
+                    // Events.RemoveAllEventSubsriptions(d);
+                }
             }
             rd.Clear();
         }

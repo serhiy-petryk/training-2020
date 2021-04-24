@@ -22,8 +22,12 @@ namespace WpfInvestigate.Common
 
             newBrush = newBrush.Clone();
             for (var k = 0; k < newBrush.GradientStops.Count; k++)
-                newBrush.GradientStops[k].BeginAnimation(GradientStop.ColorProperty,
-                    new ColorAnimation(oldBrush.GradientStops[k].Color, newBrush.GradientStops[k].Color, AnimationDuration));
+            {
+                var a = new ColorAnimation(oldBrush.GradientStops[k].Color, newBrush.GradientStops[k].Color, AnimationDuration);
+                // a.Freeze();
+                newBrush.GradientStops[k].BeginAnimation(GradientStop.ColorProperty, a);
+            }
+
             return newBrush;
         }
 
@@ -86,7 +90,7 @@ namespace WpfInvestigate.Common
                     tcs.SetResult(true);
                 };
 
-            animation.Freeze(); // one time animation
+            // animation.Freeze(); // one time animation
             element.BeginAnimation(property, animation);
             return tcs.Task;
         }
