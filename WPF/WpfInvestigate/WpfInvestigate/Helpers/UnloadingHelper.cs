@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Helpers
@@ -26,7 +27,7 @@ namespace WpfInvestigate.Helpers
             if (!fe.IsElementDisposing()) return false;
 
             fe.Unloaded -=  item.OnUnloaded;
-            fe.CleanDependencyObject();
+            CleanDependencyObject(fe);
             return true;
         }
 
@@ -41,11 +42,11 @@ namespace WpfInvestigate.Helpers
         private static Dictionary<Type, List<PropertyInfo>> _piCache = new Dictionary<Type, List<PropertyInfo>>();
 
         // todo: add collections & recursive objects (see resources)
-        private static void CleanDependencyObject(this DependencyObject d)
+        private static void CleanDependencyObject(DependencyObject d)
         {
             // todo: add collections & recursive objects (see resources)
             //var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
-            var elements = GetVChildren(d).Union(new[] { d }).ToArray();
+            var elements = d is Visual || d is Visual3D ? GetVChildren(d).Union(new[] { d }).ToArray() : new [] {d};
 
             foreach (var element in elements)
             {
@@ -56,7 +57,7 @@ namespace WpfInvestigate.Helpers
                     var value = pi.GetValue(element);
                     if (value is DependencyObject d1)
                         BindingOperations.ClearAllBindings(d1);
-                    if (value is ResourceDictionary rd)
+                    else if (value is ResourceDictionary rd)
                         ClearResources(rd);
                 });
 
@@ -163,7 +164,7 @@ namespace WpfInvestigate.Helpers
 
         private static void ClearElement(DependencyObject element)
         {
-            if (element is Track) return;
+            if (element is Track || (element is Freezable freezable && freezable.IsFrozen)) return;
 
             GetPropertiesForCleaner(element.GetType()).Where(pi => !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
             {
