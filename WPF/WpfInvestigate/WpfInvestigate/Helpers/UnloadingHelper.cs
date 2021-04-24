@@ -56,10 +56,17 @@ namespace WpfInvestigate.Helpers
                 {
                     var value = pi.GetValue(element);
                     if (value is DependencyObject d1)
+                    {
                         BindingOperations.ClearAllBindings(d1);
+                        EventHelper.RemoveWpfEventHandlers(d1);
+                        Events.RemoveAllEventSubsriptions(d1);
+                    }
                     else if (value is ResourceDictionary rd)
                         ClearResources(rd);
                 });
+
+                EventHelper.RemoveWpfEventHandlers(element);
+                Events.RemoveAllEventSubsriptions(element);
 
                 ClearElement(element); // !! Very important
 
@@ -75,11 +82,11 @@ namespace WpfInvestigate.Helpers
                 }
             }
 
-            foreach (var element in elements)
+            /*foreach (var element in elements)
             {
                 EventHelper.RemoveWpfEventHandlers(element);
                 Events.RemoveAllEventSubsriptions(element);
-            }
+            }*/
         }
 
         private static void RemoveChild(DependencyObject parent, UIElement child)
