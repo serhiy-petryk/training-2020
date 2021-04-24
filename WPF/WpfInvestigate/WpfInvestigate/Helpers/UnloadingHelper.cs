@@ -171,7 +171,8 @@ namespace WpfInvestigate.Helpers
                     // Events.RemoveAllEventSubsriptions(d);
                 }
             }
-            rd.Clear();
+            if (!rd.IsReadOnly)
+                rd.Clear();
         }
 
         private static void ClearElement(DependencyObject element)
