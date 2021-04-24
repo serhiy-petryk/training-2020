@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -47,10 +48,16 @@ namespace WpfInvestigate.Helpers
 
             foreach (var element in elements)
             {
-                foreach (var o in GetPropertiesForCleaner(element.GetType()).Where(p => typeof(DependencyObject).IsAssignableFrom(p.PropertyType)).Select(p => (DependencyObject)p.GetValue(element)).Where(p => p != null))
-                    BindingOperations.ClearAllBindings(o);
-
                 BindingOperations.ClearAllBindings(element);
+
+                GetPropertiesForCleaner(element.GetType()).ForEach(pi =>
+                {
+                    var value = pi.GetValue(element);
+                    if (value is DependencyObject d1)
+                        BindingOperations.ClearAllBindings(d1);
+                    if (value is ResourceDictionary rd)
+                        ClearResources(rd);
+                });
 
                 ClearElement(element); // !! Very important
 
@@ -139,13 +146,19 @@ namespace WpfInvestigate.Helpers
 
         private static void ClearResources(ResourceDictionary rd)
         {
-            if (rd.MergedDictionaries.Count != 0)
+            /*if (rd.MergedDictionaries.Count != 0)
                 Debug.Print($"Merged: {rd.MergedDictionaries.Count}");
             if (rd.Count > 0)
-                Debug.Print($"RD: {rd.Count}");
+                Debug.Print($"RD: {rd.Count}");*/
 
             foreach (var child in rd.MergedDictionaries)
                 ClearResources(child);
+
+            foreach (var item in rd.OfType<DictionaryEntry>())
+            {
+                if (item.Value is DependencyObject d)
+                    BindingOperations.ClearAllBindings(d);
+            }
             rd.Clear();
         }
 
@@ -153,8 +166,7 @@ namespace WpfInvestigate.Helpers
         {
             if (element is Track) return;
 
-            var type = element.GetType();
-            GetPropertiesForCleaner(type).Where(pi => !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
+            GetPropertiesForCleaner(element.GetType()).Where(pi => !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
             {
                 // no effect: if (!(pi.PropertyType == typeof(string)))
                 if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
@@ -191,8 +203,7 @@ namespace WpfInvestigate.Helpers
                 var currentType = type;
                 while (currentType != typeof(object))
                 {
-                    fieldInfos.AddRange(currentType.GetFields()
-                        .Where(x => !x.IsStatic && !x.IsInitOnly && x.IsPublic && !x.FieldType.IsValueType));
+                    fieldInfos.AddRange(currentType.GetFields().Where(x => !x.IsStatic && !x.IsInitOnly && x.IsPublic && !x.FieldType.IsValueType));
                     currentType = currentType.BaseType;
                 }
 
