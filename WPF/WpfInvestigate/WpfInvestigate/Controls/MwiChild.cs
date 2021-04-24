@@ -53,12 +53,6 @@ namespace WpfInvestigate.Controls
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
 
-            var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
-            // dpd.AddValueChanged(this, (sender, args) => OnPropertiesChanged(nameof(BaseColor)));
-            dpd.AddValueChanged(this, OnBackgroundChanged);
-
-            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
-
             if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
 
             /* can't reproduce (2021-03-12):

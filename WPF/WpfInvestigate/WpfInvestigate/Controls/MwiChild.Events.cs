@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WpfInvestigate.Helpers;
+using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
@@ -21,7 +23,8 @@ namespace WpfInvestigate.Controls
         public override void OnUnloaded(object sender, RoutedEventArgs e)
         {
             // !!! Called twice (as MwiChild and as ResizingControl
-            this.AutomaticUnloading();
+            if (this.AutomaticUnloading())
+                MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
         }
 
         private void AddLoadedEvents(bool onlyRemove = false)
@@ -29,11 +32,18 @@ namespace WpfInvestigate.Controls
             if (MovingThumb != null)
                 MovingThumb.MouseDoubleClick -= OnMovingThumbMouseDoubleClick;
 
+            MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+            var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
+            dpd.RemoveValueChanged(this, OnBackgroundChanged);
+
             if (onlyRemove)
             {
                 MovingThumb = null;
                 return;
             }
+
+            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
+            dpd.AddValueChanged(this, OnBackgroundChanged);
 
             if (GetTemplateChild("MovingThumb") is Thumb movingThumb)
             {
