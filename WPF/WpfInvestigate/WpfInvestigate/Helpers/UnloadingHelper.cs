@@ -71,9 +71,11 @@ namespace WpfInvestigate.Helpers
 
                 if (element is UIElement uIElement)
                 {
-                    uIElement.CommandBindings.Clear();
-                    uIElement.InputBindings.Clear();
-                    if (element is FrameworkElement fe2)
+                    if (uIElement.CommandBindings.Count > 0)
+                        uIElement.CommandBindings.Clear();
+                    if (uIElement.InputBindings.Count > 0)
+                        uIElement.InputBindings.Clear();
+                    if (element is FrameworkElement fe2 && fe2.Triggers.Count > 0)
                         fe2.Triggers.Clear();
 
                     if (VisualTreeHelper.GetParent(uIElement) is DependencyObject _do)
