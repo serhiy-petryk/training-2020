@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Helpers
@@ -28,6 +29,7 @@ namespace WpfInvestigate.Helpers
         private static FieldInfo _globalIndexToEventMapOfGlobalEventManager;
         private static ArrayList _globalIndexOfEvents;
         private static MethodInfo _miEventHandlersStoreRemove = typeof(UIElement).GetMethod("EventHandlersStoreRemove", BindingFlags.NonPublic | BindingFlags.Instance);
+        // private static MethodInfo _miEventHandlersStoreRemoveOfTimeline = typeof(Timeline).GetMethod("RemoveEventHandler", BindingFlags.NonPublic | BindingFlags.Instance);
         private static MethodInfo _miToArrayOfFrugalObjectList;
 
         // RemoveDependencyPropertyEventHandlers
@@ -39,7 +41,12 @@ namespace WpfInvestigate.Helpers
         {
             if (o == null) return;
             var piEventHandlersStore = o.GetType().GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (piEventHandlersStore == null) return;
+            if (piEventHandlersStore == null)
+            {
+                /*piEventHandlersStore = o.GetType().GetProperty("InternalEventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                if (piEventHandlersStore == null)*/
+                    return;
+            }
             var eventHandlersStore = piEventHandlersStore.GetValue(o, null);
             if (eventHandlersStore == null) return;
 
@@ -90,7 +97,10 @@ namespace WpfInvestigate.Helpers
                     var eventPrivateKey = GetEventByGlobalIndex(a1.Item1);
                     if (eventPrivateKey != null)
                     {
-                        // Debug.Print($"RemovePropertyChangeEventHandlers2. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {_delegate.Method.Name}");
+                        /*if (o is Timeline)
+                            _miEventHandlersStoreRemoveOfTimeline.Invoke(o, new[] { eventPrivateKey, a1.Item2 });
+                        else 
+                        // Debug.Print($"RemovePropertyChangeEventHandlers2. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {_delegate.Method.Name}");*/
                         _miEventHandlersStoreRemove.Invoke(o, new[] {eventPrivateKey, a1.Item2});
                     }
                 }
