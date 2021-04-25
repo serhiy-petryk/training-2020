@@ -19,7 +19,7 @@ namespace WpfInvestigate.Helpers
     {
         public static void SetCurrentValueSmart(this DependencyObject d, DependencyProperty property, object newValue)
         {
-            if (Equals(d.GetValue(property), newValue)) return;
+            if (Equals(d.GetValue(property), newValue) || property.ReadOnly) return;
 
             d.SetCurrentValue(property, newValue);
             if (Equals(d.GetValue(property), newValue)) return;
