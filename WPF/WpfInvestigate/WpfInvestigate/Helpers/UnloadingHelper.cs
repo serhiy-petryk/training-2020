@@ -59,7 +59,7 @@ namespace WpfInvestigate.Helpers
                     var value = pi.GetValue(element);
                     if (value is DependencyObject d1)
                     {
-                        BindingOperations.ClearAllBindings(d1);
+                        BindingOperations.ClearAllBindings(d1); // !! Important. Remove error on MwiStartup test (Layout transform)
                         EventHelper.RemoveWpfEventHandlers(d1);
                         Events.RemoveAllEventSubsriptions(d1);
                     }
@@ -71,12 +71,12 @@ namespace WpfInvestigate.Helpers
 
                 if (element is UIElement uIElement)
                 {
-                    if (uIElement.CommandBindings.Count > 0)
+                    /*if (uIElement.CommandBindings.Count > 0)
                         uIElement.CommandBindings.Clear();
                     if (uIElement.InputBindings.Count > 0)
                         uIElement.InputBindings.Clear();
                     if (element is FrameworkElement fe2 && fe2.Triggers.Count > 0)
-                        fe2.Triggers.Clear();
+                        fe2.Triggers.Clear();*/
 
                     if (VisualTreeHelper.GetParent(uIElement) is DependencyObject _do)
                         RemoveChild(_do, uIElement); // !!! Important
