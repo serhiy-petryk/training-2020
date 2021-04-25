@@ -24,7 +24,7 @@ namespace WpfInvestigate.Common
             for (var k = 0; k < newBrush.GradientStops.Count; k++)
             {
                 var a = new ColorAnimation(oldBrush.GradientStops[k].Color, newBrush.GradientStops[k].Color, AnimationDuration);
-                // a.Freeze();
+                a.Freeze();
                 newBrush.GradientStops[k].BeginAnimation(GradientStop.ColorProperty, a);
             }
 
@@ -81,19 +81,30 @@ namespace WpfInvestigate.Common
             // state in constructor == animation cancel action
             // var tcs = new TaskCompletionSource<bool>(new Action(() => element.BeginAnimation(property, null)));
             var tcs = new TaskCompletionSource<bool>();
-            if (endValue == null)
-                animation.Completed += (s, e) => tcs.SetResult(true);
-            else
-                animation.Completed += (s, e) =>
-                {
+            animation.Completed += (s, e) =>
+            {
+                if (endValue != null)
                     ((DependencyObject)element).SetCurrentValueSmart(property, endValue);
-                    tcs.SetResult(true);
-                };
-
-            // animation.Freeze(); // one time animation
+                tcs.SetResult(true);
+                tcs.Task.Dispose();
+            };
+            animation.Freeze(); // one time animation
+            // animation.Completed += OnAnimationCompleted;
             element.BeginAnimation(property, animation);
             return tcs.Task;
+
+            /*void OnAnimationCompleted(object sender, EventArgs e)
+            {
+                // animation.Completed -= OnAnimationCompleted;
+                EventHelper.RemovePropertyChangeEventHandlers(animation);
+                if (endValue != null)
+                    ((DependencyObject)element).SetCurrentValueSmart(property, endValue);
+                tcs.SetResult(true);
+
+                // EventHelper.RemovePropertyChangeEventHandlers(animation);
+            }*/
         }
+
         #endregion
     }
     #endregion 
