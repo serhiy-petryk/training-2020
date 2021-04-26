@@ -180,7 +180,7 @@ namespace WpfInvestigate.Controls
 
         private void AnimateTabButton(TabItem tabItem)
         {
-            if (tabItem == null) return; // For VS designer
+            if (tabItem == null || tabItem.IsElementDisposing()) return; // For VS designer
 
             LinearGradientBrush newBrush;
             if (tabItem.IsSelected)
