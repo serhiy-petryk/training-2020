@@ -1,12 +1,13 @@
-﻿// Old code (2010 year): VS2005
+﻿// Old code (2010 year): VS2005, Windows Form
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace WpfInvestigate.Common
+namespace WpfInvestigate.Helpers
 {
-    public static class Events
+    public static class EventHelperOld
     {
         public static void RemoveAllEventSubsriptions(object target)
         {

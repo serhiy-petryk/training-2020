@@ -43,7 +43,7 @@ namespace WpfInvestigate.Helpers
                 {
                     BindingOperations.ClearAllBindings(d);
                     EventHelper.RemoveWpfEventHandlers(d); // ???
-                    Events.RemoveAllEventSubsriptions(d); // ???
+                    EventHelperOld.RemoveAllEventSubsriptions(d); // ???
                 }
             }
             if (!rd.IsReadOnly)
@@ -72,7 +72,7 @@ namespace WpfInvestigate.Helpers
             {
                 BindingOperations.ClearAllBindings(element);
                 EventHelper.RemoveWpfEventHandlers(element);
-                Events.RemoveAllEventSubsriptions(element);
+                EventHelperOld.RemoveAllEventSubsriptions(element);
 
                 GetPropertiesForCleaner(element.GetType()).ForEach(pi =>
                 {
@@ -81,7 +81,7 @@ namespace WpfInvestigate.Helpers
                     {
                         BindingOperations.ClearAllBindings(d1); // !! Important. Remove error on MwiStartup test (Layout transform)
                         EventHelper.RemoveWpfEventHandlers(d1);
-                        Events.RemoveAllEventSubsriptions(d1);
+                        EventHelperOld.RemoveAllEventSubsriptions(d1);
                     }
                     else if (value is ResourceDictionary rd)
                         ClearResources(rd);
@@ -158,7 +158,7 @@ namespace WpfInvestigate.Helpers
                     menuItem.Items.Remove(child);
                 return;
             }
-            if (parent is Slider || parent is Separator || parent is TabControl)
+            if (parent is Slider || parent is Separator || parent is TabControl || parent is TextBox)
             {
                 return;
             }
