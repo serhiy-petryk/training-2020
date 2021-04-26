@@ -10,7 +10,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Helpers
 {
@@ -27,7 +26,12 @@ namespace WpfInvestigate.Helpers
             if (!fe.IsElementDisposing()) return false;
 
             if (fe is IAutomaticUnloading autoUnloadingItem)
+            {
                 fe.Unloaded -= autoUnloadingItem.OnUnloaded;
+                if (fe.Resources.Contains("Unloaded"))
+                    return true;
+            }
+
             CleanDependencyObject(fe);
             return true;
         }
@@ -101,13 +105,10 @@ namespace WpfInvestigate.Helpers
                     if (VisualTreeHelper.GetParent(uIElement) is DependencyObject _do)
                         RemoveChild(_do, uIElement); // !!! Important
                 }
-            }
 
-            /*foreach (var element in elements)
-            {
-                EventHelper.RemoveWpfEventHandlers(element);
-                Events.RemoveAllEventSubsriptions(element);
-            }*/
+                if (element is IAutomaticUnloading && element is FrameworkElement fe)
+                    fe.Resources.Add("Unloaded", null);
+            }
         }
 
         private static void RemoveChild(DependencyObject parent, UIElement child)
