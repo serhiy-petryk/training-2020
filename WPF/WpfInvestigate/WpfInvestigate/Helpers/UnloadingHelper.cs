@@ -205,24 +205,6 @@ namespace WpfInvestigate.Helpers
             return _piCache[type];
         }
 
-        private static List<FieldInfo> GetFieldInfoForCleaner(Type type)
-        {
-            if (!_fiCache.ContainsKey(type))
-            {
-                var fieldInfos = new List<FieldInfo>();
-                var currentType = type;
-                while (currentType != typeof(object))
-                {
-                    fieldInfos.AddRange(currentType.GetFields().Where(x => !x.IsStatic && !x.IsInitOnly && x.IsPublic && !x.FieldType.IsValueType));
-                    currentType = currentType.BaseType;
-                }
-
-                _fiCache[type] = fieldInfos;
-            }
-
-            return _fiCache[type];
-        }
-
         private static IEnumerable<DependencyObject> GetVChildren(DependencyObject current)
         {
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
