@@ -22,12 +22,12 @@ namespace WpfInvestigate.Helpers
     public static class UnloadingHelper
     {
         #region ========  Public section  =========
-        public static bool AutomaticUnloading(this IAutomaticUnloading item)
+        public static bool AutomaticUnloading(this FrameworkElement fe)
         {
-            var fe = item as FrameworkElement;
             if (!fe.IsElementDisposing()) return false;
 
-            fe.Unloaded -=  item.OnUnloaded;
+            if (fe is IAutomaticUnloading autoUnloadingItem)
+                fe.Unloaded -= autoUnloadingItem.OnUnloaded;
             CleanDependencyObject(fe);
             return true;
         }
