@@ -141,7 +141,7 @@ namespace WpfInvestigate.Controls
 
             if (onlyDetach) return;
 
-            item.Unloaded += (sender, args) => 
+            item.Unloaded += OnTabItemUnloaded;
             item.PreviewMouseLeftButtonDown += TabItem_OnPreviewMouseLeftButtonDown;
             item.Loaded += OnTabItemLoaded;
             item.MouseEnter += OnTabItemMouseEnterOrLeave;
