@@ -28,13 +28,6 @@ namespace WpfInvestigate.Controls
             Unloaded += OnUnloaded;
         }
 
-        /*private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            Unloaded -= OnUnloaded;
-            if (_scrollViewer != null) _scrollViewer.ScrollChanged -= TabScrollViewer_OnScrollChanged;
-            BindingHelper.ClearAllBindings(this);
-        }*/
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -138,33 +131,37 @@ namespace WpfInvestigate.Controls
 
             item.Unloaded -= OnTabItemUnloaded;
             item.PreviewMouseLeftButtonDown -= TabItem_OnPreviewMouseLeftButtonDown;
-            item.Loaded -= TabItem_OnLoaded;
-            item.MouseEnter -= TabItem_OnMouseEnterOrLeave;
-            item.MouseLeave -= TabItem_OnMouseEnterOrLeave;
+            item.Loaded -= OnTabItemLoaded;
+            item.MouseEnter -= OnTabItemMouseEnterOrLeave;
+            item.MouseLeave -= OnTabItemMouseEnterOrLeave;
             if (child != null)
-                child.ToolTipOpening -= TabItem_OnToolTipOpening;
+                child.ToolTipOpening -= OnTabItemToolTipOpening;
             if (child != null && child.ToolTip is ToolTip childToolTip1)
-                childToolTip1.Opened -= TabToolTip_OnOpened;
+                childToolTip1.Opened -= OnTabItemToolTipOnOpened;
 
             if (onlyDetach) return;
 
-            item.Unloaded += OnTabItemUnloaded;
+            item.Unloaded += (sender, args) => 
             item.PreviewMouseLeftButtonDown += TabItem_OnPreviewMouseLeftButtonDown;
-            item.Loaded += TabItem_OnLoaded;
-            item.MouseEnter += TabItem_OnMouseEnterOrLeave;
-            item.MouseLeave += TabItem_OnMouseEnterOrLeave;
+            item.Loaded += OnTabItemLoaded;
+            item.MouseEnter += OnTabItemMouseEnterOrLeave;
+            item.MouseLeave += OnTabItemMouseEnterOrLeave;
             if (child != null)
-                child.ToolTipOpening += TabItem_OnToolTipOpening;
+                child.ToolTipOpening += OnTabItemToolTipOpening;
             if (child != null && child.ToolTip is ToolTip childToolTip)
-                childToolTip.Opened += TabToolTip_OnOpened;
+                childToolTip.Opened += OnTabItemToolTipOnOpened;
 
-            void OnTabItemUnloaded(object sender, RoutedEventArgs e) => TabItem_AttachEvents(sender as TabItem, true);
+            void OnTabItemUnloaded(object sender, RoutedEventArgs e) => ((TabItem) sender).AutomaticUnloading();
+            void OnTabItemLoaded(object sender, RoutedEventArgs e) => ((TabItem)sender).BeginAnimation(OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDuration));
+            void OnTabItemMouseEnterOrLeave(object sender, MouseEventArgs e) => AnimateTabButton((TabItem)sender);
+            void OnTabItemToolTipOpening(object sender, ToolTipEventArgs e) => ((MwiChild)((FrameworkElement)sender).DataContext).RefreshThumbnail();
+            void OnTabItemToolTipOnOpened(object sender, RoutedEventArgs e)
+            {
+                var toolTip = (ToolTip)sender;
+                var tabTextBlock = Tips.GetVisualChildren(toolTip.PlacementTarget).OfType<TextBlock>().First();
+                toolTip.SetCurrentValueSmart(TagProperty, Tips.IsTextTrimmed(tabTextBlock) ? "1" : null);
+            }
         }
-
-        private void TabItem_OnLoaded(object sender, RoutedEventArgs e) =>
-            ((TabItem) sender).BeginAnimation(OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDuration));
-
-        private void TabItem_OnMouseEnterOrLeave(object sender, MouseEventArgs e) => AnimateTabButton((TabItem) sender);
 
         private void TabItem_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -179,15 +176,6 @@ namespace WpfInvestigate.Controls
                 mwiChild?.Activate();
 
             e.Handled = true;
-        }
-
-        private void TabItem_OnToolTipOpening(object sender, ToolTipEventArgs e) => ((MwiChild) ((FrameworkElement) sender).DataContext).RefreshThumbnail();
-
-        private void TabToolTip_OnOpened(object sender, RoutedEventArgs e)
-        {
-            var toolTip = (ToolTip) sender;
-            var tabTextBlock = Tips.GetVisualChildren(toolTip.PlacementTarget).OfType<TextBlock>().First();
-            toolTip.SetCurrentValueSmart(TagProperty, Tips.IsTextTrimmed(tabTextBlock) ? "1" : null);
         }
 
         private void AnimateTabButton(TabItem tabItem)
@@ -209,23 +197,14 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #region ===========  INotifyPropertyChanged  ==============
-
         public event PropertyChangedEventHandler PropertyChanged;
-
         private void OnPropertiesChanged(params string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         #endregion
 
-        public void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            if (this.AutomaticUnloading())
-            {
-                if (_scrollViewer != null) _scrollViewer.ScrollChanged -= TabScrollViewer_OnScrollChanged;
-            }
-        }
+        public void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading();
     }
 }
