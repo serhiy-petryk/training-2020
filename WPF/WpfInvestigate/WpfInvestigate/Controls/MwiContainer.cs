@@ -256,8 +256,11 @@ namespace WpfInvestigate.Controls
         private void UpdateResources(bool onlyColor)
         {
             if (!onlyColor && Theme != null)
+            {
+                UnloadingHelper.ClearResources(Resources);
                 foreach (var f1 in Theme.GetResources())
                     FillResources(this, f1);
+            }
 
             if (TryFindResource("Mwi.Container.BaseColorProxy") is BindingProxy colorProxy)
                 colorProxy.Value = BaseColor;

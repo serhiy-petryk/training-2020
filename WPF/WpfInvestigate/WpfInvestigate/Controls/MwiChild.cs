@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 using WpfInvestigate.Themes;
 using WpfInvestigate.ViewModels;
 
@@ -443,6 +444,7 @@ namespace WpfInvestigate.Controls
                 // Delay because no fill color for some icons
                 mwiChild.Dispatcher.BeginInvoke(new Action(() =>
                 {
+                    UnloadingHelper.ClearResources(mwiChild.Resources);
                     foreach (var f1 in themeInfo.GetResources())
                         FillResources(mwiChild, f1);
 

@@ -21,6 +21,7 @@ namespace WpfInvestigate.Helpers
 
     public static class UnloadingHelper
     {
+        #region ========  Public section  =========
         public static bool AutomaticUnloading(this IAutomaticUnloading item)
         {
             var fe = item as FrameworkElement;
@@ -31,6 +32,26 @@ namespace WpfInvestigate.Helpers
             return true;
         }
 
+        public static void ClearResources(ResourceDictionary rd)
+        {
+            foreach (var child in rd.MergedDictionaries)
+                ClearResources(child);
+
+            foreach (var item in rd.OfType<DictionaryEntry>())
+            {
+                if (item.Value is DependencyObject d)
+                {
+                    BindingOperations.ClearAllBindings(d);
+                    EventHelper.RemoveWpfEventHandlers(d); // ???
+                    Events.RemoveAllEventSubsriptions(d); // ???
+                }
+            }
+            if (!rd.IsReadOnly)
+                rd.Clear();
+        }
+        #endregion
+
+        #region ========  Private section  =========
         private static bool IsElementDisposing(this FrameworkElement fe)
         {
             var wnd = Window.GetWindow(fe);
@@ -152,29 +173,6 @@ namespace WpfInvestigate.Helpers
             throw new Exception($"RemoveChildis not defined for {parent.GetType().Name} type of parent");
         }
 
-        private static void ClearResources(ResourceDictionary rd)
-        {
-            /*if (rd.MergedDictionaries.Count != 0)
-                Debug.Print($"Merged: {rd.MergedDictionaries.Count}");
-            if (rd.Count > 0)
-                Debug.Print($"RD: {rd.Count}");*/
-
-            foreach (var child in rd.MergedDictionaries)
-                ClearResources(child);
-
-            foreach (var item in rd.OfType<DictionaryEntry>())
-            {
-                if (item.Value is DependencyObject d)
-                {
-                    BindingOperations.ClearAllBindings(d);
-                    // EventHelper.RemoveWpfEventHandlers(d);
-                    // Events.RemoveAllEventSubsriptions(d);
-                }
-            }
-            if (!rd.IsReadOnly)
-                rd.Clear();
-        }
-
         private static void ClearElement(DependencyObject element)
         {
             if (element is Track || (element is Freezable freezable && freezable.IsFrozen)) return;
@@ -238,6 +236,6 @@ namespace WpfInvestigate.Helpers
                 yield return child;
             }
         }
-
+        #endregion
     }
 }
