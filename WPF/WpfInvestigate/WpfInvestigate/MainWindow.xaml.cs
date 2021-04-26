@@ -223,10 +223,10 @@ namespace WpfInvestigate
 
             await Task.Delay(1000);
 
-            GC.Collect();
+            /*GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
-            var a11 = GC.GetTotalMemory(true);
+            var a11 = GC.GetTotalMemory(true);*/
 
             wnd.Close();
 
@@ -238,7 +238,8 @@ namespace WpfInvestigate
 
             var a12 = GC.GetTotalMemory(true);
 
-            Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
+            // Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
+            Debug.Print($"Test{step}: {a12:N0}");
 
             await Task.Delay(1000);
         }
