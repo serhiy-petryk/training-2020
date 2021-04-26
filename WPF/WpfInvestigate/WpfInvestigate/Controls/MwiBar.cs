@@ -151,14 +151,18 @@ namespace WpfInvestigate.Controls
             if (child != null && child.ToolTip is ToolTip childToolTip)
                 childToolTip.Opened += OnTabItemToolTipOnOpened;
 
-            void OnTabItemUnloaded(object sender, RoutedEventArgs e) => ((TabItem) sender).AutomaticUnloading();
+            void OnTabItemUnloaded(object sender, RoutedEventArgs e)
+            {
+                if (((TabItem)sender).AutomaticUnloading())
+                    ((TabItem)sender).Unloaded -= OnTabItemUnloaded;
+            }
             void OnTabItemLoaded(object sender, RoutedEventArgs e) => ((TabItem)sender).BeginAnimation(OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDuration));
             void OnTabItemMouseEnterOrLeave(object sender, MouseEventArgs e) => AnimateTabButton((TabItem)sender);
             void OnTabItemToolTipOpening(object sender, ToolTipEventArgs e) => ((MwiChild)((FrameworkElement)sender).DataContext).RefreshThumbnail();
             void OnTabItemToolTipOnOpened(object sender, RoutedEventArgs e)
             {
                 var toolTip = (ToolTip)sender;
-                var tabTextBlock = Tips.GetVisualChildren(toolTip.PlacementTarget).OfType<TextBlock>().First();
+                var tabTextBlock = toolTip.PlacementTarget.GetVisualChildren().OfType<TextBlock>().First();
                 toolTip.SetCurrentValueSmart(TagProperty, Tips.IsTextTrimmed(tabTextBlock) ? "1" : null);
             }
         }

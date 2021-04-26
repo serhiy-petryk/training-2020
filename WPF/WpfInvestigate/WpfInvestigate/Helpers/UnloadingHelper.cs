@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using WpfInvestigate.Common;
+using WpfInvestigate.Controls;
 
 namespace WpfInvestigate.Helpers
 {
@@ -39,7 +40,7 @@ namespace WpfInvestigate.Helpers
 
             foreach (var item in rd.OfType<DictionaryEntry>())
             {
-                if (item.Value is DependencyObject d)
+                if (item.Value is DependencyObject d && !(d is IAutomaticUnloading))
                 {
                     BindingOperations.ClearAllBindings(d);
                     EventHelper.RemoveWpfEventHandlers(d); // ???
@@ -49,14 +50,13 @@ namespace WpfInvestigate.Helpers
             if (!rd.IsReadOnly)
                 rd.Clear();
         }
-        #endregion
-
-        #region ========  Private section  =========
-        private static bool IsElementDisposing(this FrameworkElement fe)
+        public static bool IsElementDisposing(this FrameworkElement fe)
         {
             var wnd = Window.GetWindow(fe);
             return !fe.IsLoaded && !fe.IsVisible && (wnd == null || fe.Parent == null || (wnd != null && !wnd.IsLoaded && !wnd.IsVisible));
         }
+
+        #endregion
 
         #region ===========  Dependency Object cleaner  ===============
         private static Dictionary<Type, List<FieldInfo>> _fiCache = new Dictionary<Type, List<FieldInfo>>();
@@ -78,7 +78,7 @@ namespace WpfInvestigate.Helpers
                 GetPropertiesForCleaner(element.GetType()).ForEach(pi =>
                 {
                     var value = pi.GetValue(element);
-                    if (value is DependencyObject d1)
+                    if (value is DependencyObject d1 && !(value is IAutomaticUnloading))
                     {
                         BindingOperations.ClearAllBindings(d1); // !! Important. Remove error on MwiStartup test (Layout transform)
                         EventHelper.RemoveWpfEventHandlers(d1);
@@ -223,7 +223,6 @@ namespace WpfInvestigate.Helpers
 
             return _fiCache[type];
         }
-        #endregion
 
         private static IEnumerable<DependencyObject> GetVChildren(DependencyObject current)
         {
