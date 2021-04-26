@@ -16,7 +16,7 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for MwiBar.xaml
     /// </summary>
-    public class MwiBar : TabControl, INotifyPropertyChanged
+    public class MwiBar : TabControl, INotifyPropertyChanged, IAutomaticUnloading
     {
         static MwiBar()
         {
@@ -28,12 +28,12 @@ namespace WpfInvestigate.Controls
             Unloaded += OnUnloaded;
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
+        /*private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             Unloaded -= OnUnloaded;
             if (_scrollViewer != null) _scrollViewer.ScrollChanged -= TabScrollViewer_OnScrollChanged;
             BindingHelper.ClearAllBindings(this);
-        }
+        }*/
 
         public override void OnApplyTemplate()
         {
@@ -58,10 +58,10 @@ namespace WpfInvestigate.Controls
             }
 
             foreach (var a1 in e.RemovedItems)
-                Dispatcher.InvokeAsync(() => AnimateTabButton((TabItem)ItemContainerGenerator.ContainerFromItem(a1)), DispatcherPriority.ContextIdle);
+                Dispatcher.InvokeAsync(() => AnimateTabButton((TabItem) ItemContainerGenerator.ContainerFromItem(a1)), DispatcherPriority.ContextIdle);
 
             foreach (var a1 in e.AddedItems)
-                Dispatcher.InvokeAsync(() => AnimateTabButton((TabItem)ItemContainerGenerator.ContainerFromItem(a1)), DispatcherPriority.ContextIdle);
+                Dispatcher.InvokeAsync(() => AnimateTabButton((TabItem) ItemContainerGenerator.ContainerFromItem(a1)), DispatcherPriority.ContextIdle);
         }
 
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
@@ -89,7 +89,6 @@ namespace WpfInvestigate.Controls
 
         public bool CanScrollLeft => _scrollableWidth >= Tips.SCREEN_TOLERANCE && !Tips.AreEqual(_horizontalOffset, 0);
         public bool CanScrollRight => _scrollableWidth >= Tips.SCREEN_TOLERANCE && !Tips.AreEqual(_horizontalOffset + _viewportWidth, _extentWidth);
-
         public Visibility ScrollButtonVisibility =>
             _scrollableWidth < (Tips.SCREEN_TOLERANCE + (_doubleButtonGrid.IsVisible ? _doubleButtonGrid.ActualWidth + _doubleButtonGrid.Margin.Left + _doubleButtonGrid.Margin.Right : 0))
                 ? Visibility.Collapsed : Visibility.Visible;
@@ -100,12 +99,13 @@ namespace WpfInvestigate.Controls
         private double _viewportWidth;
         private double _extentWidth;
         private double _horizontalOffset;
+
         private void TabScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            var newScrollableWidth = ((ScrollViewer)sender).ScrollableWidth;
-            var newViewportWidth = ((ScrollViewer)sender).ViewportWidth;
-            var newExtentWidth = ((ScrollViewer)sender).ExtentWidth;
-            var newHorizontalOffset = ((ScrollViewer)sender).HorizontalOffset;
+            var newScrollableWidth = ((ScrollViewer) sender).ScrollableWidth;
+            var newViewportWidth = ((ScrollViewer) sender).ViewportWidth;
+            var newExtentWidth = ((ScrollViewer) sender).ExtentWidth;
+            var newHorizontalOffset = ((ScrollViewer) sender).HorizontalOffset;
             if (!Tips.AreEqual(_scrollableWidth, newScrollableWidth) || !Tips.AreEqual(_viewportWidth, newViewportWidth) || !Tips.AreEqual(_extentWidth, newExtentWidth) || !Tips.AreEqual(_horizontalOffset, newHorizontalOffset))
             {
                 var oldCanScrollLeft = CanScrollLeft;
@@ -130,6 +130,7 @@ namespace WpfInvestigate.Controls
         }
 
         #region ==============  Tab item  ==============
+
         private void TabItem_AttachEvents(TabItem item, bool onlyDetach)
         {
             if (item == null) return;
@@ -167,8 +168,8 @@ namespace WpfInvestigate.Controls
 
         private void TabItem_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var mwiChild = ((FrameworkElement)sender).DataContext as MwiChild;
-            var element = (FrameworkElement)Mouse.DirectlyOver;
+            var mwiChild = ((FrameworkElement) sender).DataContext as MwiChild;
+            var element = (FrameworkElement) Mouse.DirectlyOver;
             while (element != null && element.Name != "DeleteTabButton")
                 element = VisualTreeHelper.GetParent(element) as FrameworkElement;
 
@@ -184,7 +185,7 @@ namespace WpfInvestigate.Controls
 
         private void TabToolTip_OnOpened(object sender, RoutedEventArgs e)
         {
-            var toolTip = (ToolTip)sender;
+            var toolTip = (ToolTip) sender;
             var tabTextBlock = Tips.GetVisualChildren(toolTip.PlacementTarget).OfType<TextBlock>().First();
             toolTip.SetCurrentValueSmart(TagProperty, Tips.IsTextTrimmed(tabTextBlock) ? "1" : null);
         }
@@ -202,17 +203,29 @@ namespace WpfInvestigate.Controls
                 newBrush = TryFindResource("Mwi.BarItem.BackgroundBrush") as LinearGradientBrush;
 
             if (newBrush != null)
-                tabItem.SetCurrentValueSmart(BackgroundProperty, AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush)tabItem.Background));
+                tabItem.SetCurrentValueSmart(BackgroundProperty, AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush) tabItem.Background));
         }
+
         #endregion
 
         #region ===========  INotifyPropertyChanged  ==============
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void OnPropertiesChanged(params string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         #endregion
+
+        public void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.AutomaticUnloading())
+            {
+                if (_scrollViewer != null) _scrollViewer.ScrollChanged -= TabScrollViewer_OnScrollChanged;
+            }
+        }
     }
 }

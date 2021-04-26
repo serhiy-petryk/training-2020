@@ -159,7 +159,7 @@ namespace WpfInvestigate.Helpers
                     menuItem.Items.Remove(child);
                 return;
             }
-            if (parent is Slider || parent is Separator)
+            if (parent is Slider || parent is Separator || parent is TabControl)
             {
                 return;
             }
