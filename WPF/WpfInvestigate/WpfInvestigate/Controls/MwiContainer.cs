@@ -62,7 +62,7 @@ namespace WpfInvestigate.Controls
                         if (mwiChild == null)
                             throw new Exception($"All children of MwiContainer object have to be MwiChild type but it is '{o.GetType().Name}' type");
                         mwiChild.MwiContainer = this;
-                        if (mwiChild.Parent is Grid parent)  // remove VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first
+                        if (mwiChild.Parent is Grid parent)  // suppress VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first
                             parent.Children.Remove(mwiChild);
                         if (!mwiChild.Position.HasValue)
                             mwiChild.Position = GetStartPositionForMwiChild(mwiChild);

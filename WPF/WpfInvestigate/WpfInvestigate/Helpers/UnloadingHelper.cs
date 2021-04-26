@@ -14,11 +14,6 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Helpers
 {
-    [AttributeUsage(AttributeTargets.Property)]
-    public class DoNotClearOnUnload : Attribute
-    {
-    }
-
     public interface IAutomaticUnloading
     {
         void OnUnloaded(object sender, RoutedEventArgs e);
@@ -79,7 +74,7 @@ namespace WpfInvestigate.Helpers
                 EventHelper.RemoveWpfEventHandlers(element);
                 Events.RemoveAllEventSubsriptions(element);
 
-                GetPropertiesForCleaner(element.GetType()).Where(pi=> !pi.IsDefined(typeof(DoNotClearOnUnload))).ToList().ForEach(pi =>
+                GetPropertiesForCleaner(element.GetType()).ForEach(pi =>
                 {
                     var value = pi.GetValue(element);
                     if (value is DependencyObject d1)

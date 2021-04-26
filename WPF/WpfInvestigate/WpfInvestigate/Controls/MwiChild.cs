@@ -310,8 +310,7 @@ namespace WpfInvestigate.Controls
         #region =============  Properties  =================
         public event EventHandler Closed;
 
-        [DoNotClearOnUnload]
-        public MwiContainer MwiContainer { get; set; }
+        public MwiContainer MwiContainer; // !! Must be field, not property => important for clearing when unloaded
         public Color BaseColor
         {
             get
