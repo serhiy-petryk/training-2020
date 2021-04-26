@@ -309,6 +309,8 @@ namespace WpfInvestigate.Controls
 
         #region =============  Properties  =================
         public event EventHandler Closed;
+
+        [DoNotClearOnUnload]
         public MwiContainer MwiContainer { get; set; }
         public Color BaseColor
         {

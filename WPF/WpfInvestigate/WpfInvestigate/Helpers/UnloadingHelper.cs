@@ -11,10 +11,14 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using WpfInvestigate.Common;
-using WpfInvestigate.Controls;
 
 namespace WpfInvestigate.Helpers
 {
+    [AttributeUsage(AttributeTargets.Property)]
+    public class DoNotClearOnUnload : Attribute
+    {
+    }
+
     public interface IAutomaticUnloading
     {
         void OnUnloaded(object sender, RoutedEventArgs e);
@@ -75,10 +79,10 @@ namespace WpfInvestigate.Helpers
                 EventHelper.RemoveWpfEventHandlers(element);
                 Events.RemoveAllEventSubsriptions(element);
 
-                GetPropertiesForCleaner(element.GetType()).ForEach(pi =>
+                GetPropertiesForCleaner(element.GetType()).Where(pi=> !pi.IsDefined(typeof(DoNotClearOnUnload))).ToList().ForEach(pi =>
                 {
                     var value = pi.GetValue(element);
-                    if (value is DependencyObject d1 && !(value is IAutomaticUnloading))
+                    if (value is DependencyObject d1)
                     {
                         BindingOperations.ClearAllBindings(d1); // !! Important. Remove error on MwiStartup test (Layout transform)
                         EventHelper.RemoveWpfEventHandlers(d1);
