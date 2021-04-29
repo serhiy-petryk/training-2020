@@ -112,13 +112,15 @@ namespace WpfInvestigate.Helpers
                 if (handler != null)
                 {
                     Delegate[] dd = handler.GetInvocationList();
+                    var miRemove = ei.GetRemoveMethod() ?? ei.GetRemoveMethod(true);
                     if (subcriber == null)
                     {
                         foreach (Delegate d in dd)
                         {
                             string s = d.Method.Name;
                             // Debug.Print($"RemoveDelegates: {target.GetType()}, {s}");
-                            ei.RemoveEventHandler(target, d);
+                            miRemove.Invoke(target, new object[] { d });
+                            // ei.RemoveEventHandler(target, d);
                         }
                     }
                     else
@@ -129,7 +131,8 @@ namespace WpfInvestigate.Helpers
                             if (d.Target == subcriber)
                             {
                                 // Debug.Print($"RemoveDelegates: {target.GetType()}, {s}, {subcriber}");
-                                ei.RemoveEventHandler(target, d);
+                                miRemove.Invoke(target, new object[] { d });
+                                // ei.RemoveEventHandler(target, d);
                             }
                         }
                     }
