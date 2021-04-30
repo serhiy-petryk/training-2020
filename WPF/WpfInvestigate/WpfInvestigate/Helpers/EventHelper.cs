@@ -16,11 +16,11 @@ namespace WpfInvestigate.Helpers
         {
             RemovePropertyChangeEventHandlers(o); // routed events
             RemoveDependencyPropertyEventHandlers(o); // dpd.RemoveValueChanged
+            RemoveSimpleEventSubsriptions(o);
         }
 
-        private static Dictionary<Type, DependencyPropertyDescriptor[]> _dpdOfType = new Dictionary<Type, DependencyPropertyDescriptor[]>();
-
-        // RemovePropertyChangeEventHandlers
+        #region =========  RemovePropertyChangeEventHandlers  ========
+        // private static Dictionary<Type, PropertyInfo> _piEventHandlersStoreCache = new Dictionary<Type, PropertyInfo>();
         private static FieldInfo _fiEntriesOfEventHandlersStore;
         private static PropertyInfo _piCountOfEntries;
         private static MethodInfo _miGetKeyValuePairOfEntries;
@@ -30,15 +30,14 @@ namespace WpfInvestigate.Helpers
         private static MethodInfo _miEventHandlersStoreRemove = typeof(UIElement).GetMethod("EventHandlersStoreRemove", BindingFlags.NonPublic | BindingFlags.Instance);
         // private static MethodInfo _miEventHandlersStoreRemoveOfTimeline = typeof(Timeline).GetMethod("RemoveEventHandler", BindingFlags.NonPublic | BindingFlags.Instance);
         private static MethodInfo _miToArrayOfFrugalObjectList;
-
-        // RemoveDependencyPropertyEventHandlers
-        private static PropertyInfo _piPropertyOfDpd = typeof(DependencyPropertyDescriptor).GetProperty("Property", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static FieldInfo _fiTrackersOfProperty = null;
-        private static FieldInfo _fiChangedHandlerOfTrackers = null;
-
         public static void RemovePropertyChangeEventHandlers(object o)
         {
             if (o == null) return;
+
+            /*var type = o.GetType();
+            if (!_piEventHandlersStoreCache.ContainsKey(type))
+                _piEventHandlersStoreCache.Add(type, type.GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public));
+            var piEventHandlersStore = _piEventHandlersStoreCache[type];*/
             var piEventHandlersStore = o.GetType().GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             if (piEventHandlersStore == null)
             {
@@ -46,6 +45,7 @@ namespace WpfInvestigate.Helpers
                 if (piEventHandlersStore == null)*/
                     return;
             }
+
             var eventHandlersStore = piEventHandlersStore.GetValue(o, null);
             if (eventHandlersStore == null) return;
 
@@ -123,7 +123,13 @@ namespace WpfInvestigate.Helpers
 
             return _globalIndexOfEvents.Count < globalIndex ? null : _globalIndexOfEvents[globalIndex];
         }
+        #endregion
 
+        #region =========  RemoveDependencyPropertyEventHandlers  ========
+        private static Dictionary<Type, DependencyPropertyDescriptor[]> _dpdOfType = new Dictionary<Type, DependencyPropertyDescriptor[]>();
+        private static PropertyInfo _piPropertyOfDpd = typeof(DependencyPropertyDescriptor).GetProperty("Property", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static FieldInfo _fiTrackersOfProperty = null;
+        private static FieldInfo _fiChangedHandlerOfTrackers = null;
         public static void RemoveDependencyPropertyEventHandlers(object o)
         {
             var type = o.GetType();
@@ -144,7 +150,6 @@ namespace WpfInvestigate.Helpers
                         var changed = _fiChangedHandlerOfTrackers.GetValue(tracker) as EventHandler;
                         dpd.RemoveValueChanged(o, changed);
                     }
-                    
                 }
                 type = type.BaseType;
             }
@@ -158,5 +163,30 @@ namespace WpfInvestigate.Helpers
                     .Select(fieldInfo => DependencyPropertyDescriptor.FromProperty(fieldInfo.GetValue(null) as DependencyProperty, type)).ToArray();
             return _dpdOfType[type];
         }
+        #endregion
+
+        #region =========  RemoveSimpleEventSubsriptions  ========
+        // Based on my old code (2010 year): VS2005, Windows Form
+        public static void RemoveSimpleEventSubsriptions(object target)
+        {
+            var eis = target.GetType().GetEvents(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+            foreach (var ei in eis)
+            {
+                var fi = ei.DeclaringType?.GetField(ei.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                if (!(fi is null) && fi.GetValue(target) is Delegate handler)
+                {
+                    var miRemove = ei.GetRemoveMethod() ?? ei.GetRemoveMethod(true);
+                    foreach (var d in handler.GetInvocationList())
+                    {
+                        // string s = d.Method.Name;
+                        // Debug.Print($"RemoveDelegates: {target.GetType()}, {s}, {ei.Name}");
+                        miRemove.Invoke(target, new object[] { d });
+                        // ei.RemoveEventHandler(target, d);
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }

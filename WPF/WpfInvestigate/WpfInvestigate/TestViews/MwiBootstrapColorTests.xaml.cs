@@ -102,7 +102,6 @@ namespace WpfInvestigate.TestViews
             foreach (var element in elements)
             {
                 EventHelper.RemoveWpfEventHandlers(element);
-                EventHelperOld.RemoveAllEventSubsriptions(element);
             }
         }
     }

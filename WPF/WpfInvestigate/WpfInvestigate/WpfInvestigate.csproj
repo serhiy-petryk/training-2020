@@ -71,7 +71,6 @@
     <Compile Include="Common\ColorConverters.cs" />
     <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\DataTypeMetadata.cs" />
-    <Compile Include="Helpers\EventHelperOld.cs" />
     <Compile Include="Common\INotifyPropertyChangedAbstract.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Controls\AdornerControl.cs" />

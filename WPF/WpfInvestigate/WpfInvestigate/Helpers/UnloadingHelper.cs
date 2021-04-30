@@ -22,7 +22,8 @@ namespace WpfInvestigate.Helpers
 
             if (onUnloadedEventHandler != null)
                 fe.Unloaded -= onUnloadedEventHandler;
-            CleanDependencyObject(fe);
+            // if (!fe.Resources.Contains("Unloaded"))
+                CleanDependencyObject(fe);
             return true;
         }
 
@@ -37,7 +38,6 @@ namespace WpfInvestigate.Helpers
                 {
                     BindingOperations.ClearAllBindings(d);
                     EventHelper.RemoveWpfEventHandlers(d); // ???
-                    EventHelperOld.RemoveAllEventSubsriptions(d); // ???
                 }
             }
             if (!rd.IsReadOnly)
@@ -70,7 +70,6 @@ namespace WpfInvestigate.Helpers
 
                 BindingOperations.ClearAllBindings(element);
                 EventHelper.RemoveWpfEventHandlers(element);
-                EventHelperOld.RemoveAllEventSubsriptions(element);
 
                 foreach (var pi in GetPropertiesForCleaner(element.GetType()))
                 {
@@ -79,7 +78,6 @@ namespace WpfInvestigate.Helpers
                     {
                         BindingOperations.ClearAllBindings(d1); // !! Important. Remove error on MwiStartup test (Layout transform)
                         EventHelper.RemoveWpfEventHandlers(d1);
-                        EventHelperOld.RemoveAllEventSubsriptions(d1);
                     }
                     else if (value is ResourceDictionary rd)
                         ClearResources(rd);
@@ -104,6 +102,9 @@ namespace WpfInvestigate.Helpers
                     if (VisualTreeHelper.GetParent(uIElement) is DependencyObject _do)
                         RemoveChild(_do, uIElement); // !!! Important
                 }
+
+                //if (element is FrameworkElement fe)
+                  //  fe.Resources.Add("Unloaded", null);
             }
         }
 
