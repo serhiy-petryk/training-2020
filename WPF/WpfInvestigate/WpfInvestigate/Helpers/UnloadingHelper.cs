@@ -62,8 +62,6 @@ namespace WpfInvestigate.Helpers
         #endregion
 
         #region ===========  Dependency Object cleaner  ===============
-        private static Dictionary<Type, List<PropertyInfo>> _piCache = new Dictionary<Type, List<PropertyInfo>>();
-
         // todo: add collections & recursive objects (see resources)
         private static void CleanDependencyObject(DependencyObject d)
         {
@@ -77,7 +75,7 @@ namespace WpfInvestigate.Helpers
                 EventHelper.RemoveWpfEventHandlers(element);
                 EventHelperOld.RemoveAllEventSubsriptions(element);
 
-                GetPropertiesForCleaner(element.GetType()).ForEach(pi =>
+                foreach (var pi in GetPropertiesForCleaner(element.GetType()))
                 {
                     var value = pi.GetValue(element);
                     if (value is DependencyObject d1)
@@ -93,7 +91,7 @@ namespace WpfInvestigate.Helpers
                         EventHelper.RemoveWpfEventHandlers(c);
                         EventHelperOld.RemoveAllEventSubsriptions(c);
                     }*/
-                });
+                }
 
                 ClearElement(element); // !! Very important
 
@@ -193,22 +191,7 @@ namespace WpfInvestigate.Helpers
             // errors in Wpf control logic: GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
         }
 
-        private static List<PropertyInfo> GetPropertiesForCleaner(Type type)
-        {
-            if (!_piCache.ContainsKey(type))
-            {
-                var propertyInfos = new List<PropertyInfo>();
-                var currentType = type;
-                while (currentType != typeof(object))
-                {
-                    propertyInfos.AddRange(currentType.GetProperties(BindingFlags.Public | BindingFlags.Instance));
-                    currentType = currentType.BaseType;
-                }
-                _piCache[type] = propertyInfos;
-            }
-
-            return _piCache[type];
-        }
+        private static PropertyInfo[] GetPropertiesForCleaner(Type type) => type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
 
         private static IEnumerable<DependencyObject> GetVChildren(DependencyObject current)
         {
