@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
+using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
 using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
@@ -235,6 +240,11 @@ namespace WpfInvestigate
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
+            CleanupWeakEventTable();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            CleanupWeakEventTable();
 
             var a12 = GC.GetTotalMemory(true);
 
@@ -244,5 +254,93 @@ namespace WpfInvestigate
             await Task.Delay(1000);
         }
 
+
+        private Hashtable weakRefDataCopy;
+        private Hashtable weakRefDataCopy2;
+        private void OnSaveWeakRefsClick(object sender, RoutedEventArgs e)
+        {
+            var t = Tips.TryGetType("MS.Internal.WeakEventTable");
+            // var pi = t.GetProperty("CurrentWeakEventTable", BindingFlags.NonPublic | BindingFlags.Static);
+            var fi = t.GetField("_currentTable", BindingFlags.NonPublic | BindingFlags.Static);
+            var fiData = t.GetField("_dataTable", BindingFlags.NonPublic | BindingFlags.Instance);
+            var fiEventName = t.GetField("_eventNameTable", BindingFlags.NonPublic | BindingFlags.Instance);
+            var fiManager = t.GetField("_managerTable", BindingFlags.NonPublic | BindingFlags.Instance);
+            var table = fi.GetValue(null);
+            var data = fiData.GetValue(table) as Hashtable;
+            var eventName = fiEventName.GetValue(table) as Hashtable;
+            var mamager = fiManager.GetValue(table) as Hashtable;
+            if (weakRefDataCopy == null)
+                weakRefDataCopy = data.Clone() as Hashtable;
+            Debug.Print($"Weak Data: {data.Count}");
+        }
+
+        private void OnCompareWeakRefsClick(object sender, RoutedEventArgs e)
+        {
+            var t = Tips.TryGetType("MS.Internal.WeakEventTable");
+            // var pi = t.GetProperty("CurrentWeakEventTable", BindingFlags.NonPublic | BindingFlags.Static);
+            var fi = t.GetField("_currentTable", BindingFlags.NonPublic | BindingFlags.Static);
+            var fiData = t.GetField("_dataTable", BindingFlags.NonPublic | BindingFlags.Instance);
+            var fiEventName = t.GetField("_eventNameTable", BindingFlags.NonPublic | BindingFlags.Instance);
+            var fiManager = t.GetField("_managerTable", BindingFlags.NonPublic | BindingFlags.Instance);
+            var table = fi.GetValue(null);
+            var data = fiData.GetValue(table) as Hashtable;
+            var eventName = fiEventName.GetValue(table) as Hashtable;
+            var mamager = fiManager.GetValue(table) as Hashtable;
+            var temp = data.Clone() as Hashtable;
+
+            var diffKeys = temp.Keys.OfType<object>().Except(weakRefDataCopy.Keys.OfType<object>()).ToList();
+            var diffData = new Hashtable();
+            foreach (var key in temp.Keys)
+            {
+                if (diffKeys.Contains(key))
+                    diffData.Add(key, temp[key]);
+            }
+            var aa1 = diffKeys.Select(a => a.GetType());
+            var aa2 = diffKeys.Select(a=> GetStringOfEventKey(a)).ToList();
+            var aa3 = aa2.GroupBy(a => a).Select(a => new { Key = a.Key, Count = a.Count() });
+            // foreach(var a1 in diffKeys)
+            //  data.Remove(a1);
+            Debug.Print($"New WeakRefs: {diffKeys.Count}");
+        }
+
+        private string GetStringOfEventKey(object eventKey)
+        {
+            var o = GetValuesOfEventKey(eventKey);
+            return $"{o.Item1.GetType().Name}, {(o.Item2 == null ? "Null" : o.Item2.GetType().Name)}";
+        }
+        private Tuple<object, object> GetValuesOfEventKey(object eventKey)
+        {
+            var t = eventKey.GetType();
+            var piManager = t.GetProperty("Manager", BindingFlags.Instance | BindingFlags.NonPublic);
+            var piSource = t.GetProperty("Source", BindingFlags.Instance | BindingFlags.NonPublic);
+            var manager = piManager.GetValue(eventKey);
+            var source = piSource.GetValue(eventKey);
+            return new Tuple<object, object>(manager, source);
+        }
+
+        private void OnCleanupWeakRefTableClick(object sender, RoutedEventArgs e)
+        {
+            CleanupWeakEventTable();
+        }
+        private void CleanupWeakEventTable()
+        {
+            var t = Tips.TryGetType("MS.Internal.WeakEventTable");
+            // var t = typeof(BindingOperations);
+            var mi = t.GetMethod("Cleanup", BindingFlags.NonPublic | BindingFlags.Static);
+            mi.Invoke(null, null);
+        }
+
+        private void OnGetInfoClick(object sender, RoutedEventArgs e)
+        {
+            var a12 = GC.GetTotalMemory(true);
+            Debug.Print($"Memory usage: {a12:N0}");
+
+            var t = Tips.TryGetType("MS.Internal.WeakEventTable");
+            var fi = t.GetField("_currentTable", BindingFlags.NonPublic | BindingFlags.Static);
+            var fiData = t.GetField("_dataTable", BindingFlags.NonPublic | BindingFlags.Instance);
+            var table = fi.GetValue(null);
+            var data = fiData.GetValue(table) as Hashtable;
+            Debug.Print($"Weak refs: {data.Count}");
+        }
     }
 }

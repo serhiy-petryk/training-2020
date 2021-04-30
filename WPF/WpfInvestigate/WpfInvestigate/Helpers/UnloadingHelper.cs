@@ -89,6 +89,11 @@ namespace WpfInvestigate.Helpers
                     }
                     else if (value is ResourceDictionary rd)
                         ClearResources(rd);
+                    /*else if (value is ICollection c)
+                    {
+                        EventHelper.RemoveWpfEventHandlers(c);
+                        EventHelperOld.RemoveAllEventSubsriptions(c);
+                    }*/
                 });
 
                 ClearElement(element); // !! Very important
@@ -177,7 +182,7 @@ namespace WpfInvestigate.Helpers
         {
             if (element is Track || (element is Freezable freezable && freezable.IsFrozen)) return;
 
-            GetPropertiesForCleaner(element.GetType()).Where(pi => !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
+            GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
             {
                 // no effect: if (!(pi.PropertyType == typeof(string)))
                 if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
@@ -197,7 +202,7 @@ namespace WpfInvestigate.Helpers
                 var currentType = type;
                 while (currentType != typeof(object))
                 {
-                    propertyInfos.AddRange(currentType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(x => x.CanWrite));
+                    propertyInfos.AddRange(currentType.GetProperties(BindingFlags.Public | BindingFlags.Instance));
                     currentType = currentType.BaseType;
                 }
                 _piCache[type] = propertyInfos;
