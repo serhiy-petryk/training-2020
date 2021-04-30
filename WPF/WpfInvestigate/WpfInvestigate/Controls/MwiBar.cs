@@ -33,8 +33,8 @@ namespace WpfInvestigate.Controls
             base.OnApplyTemplate();
 
             _doubleButtonGrid = GetTemplateChild("DoubleButtonGrid") as Grid;
-            _scrollViewer = GetTemplateChild("PART_ScrollViewer") as ScrollViewer;
-            if (_scrollViewer != null) _scrollViewer.ScrollChanged += TabScrollViewer_OnScrollChanged;
+            if (GetTemplateChild("PART_ScrollViewer") is ScrollViewer scrollViewer)
+                scrollViewer.ScrollChanged += TabScrollViewer_OnScrollChanged;
         }
 
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
@@ -87,7 +87,6 @@ namespace WpfInvestigate.Controls
                 ? Visibility.Collapsed : Visibility.Visible;
 
         private Grid _doubleButtonGrid;
-        private ScrollViewer _scrollViewer;
         private double _scrollableWidth;
         private double _viewportWidth;
         private double _extentWidth;
