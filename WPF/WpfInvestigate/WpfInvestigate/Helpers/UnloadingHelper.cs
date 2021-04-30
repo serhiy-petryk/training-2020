@@ -62,7 +62,6 @@ namespace WpfInvestigate.Helpers
         #endregion
 
         #region ===========  Dependency Object cleaner  ===============
-        private static Dictionary<Type, List<FieldInfo>> _fiCache = new Dictionary<Type, List<FieldInfo>>();
         private static Dictionary<Type, List<PropertyInfo>> _piCache = new Dictionary<Type, List<PropertyInfo>>();
 
         // todo: add collections & recursive objects (see resources)
