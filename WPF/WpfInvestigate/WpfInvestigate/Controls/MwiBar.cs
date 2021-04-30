@@ -16,7 +16,7 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for MwiBar.xaml
     /// </summary>
-    public class MwiBar : TabControl, INotifyPropertyChanged, IAutomaticUnloading
+    public class MwiBar : TabControl, INotifyPropertyChanged
     {
         static MwiBar()
         {
@@ -152,7 +152,7 @@ namespace WpfInvestigate.Controls
 
             void OnTabItemUnloaded(object sender, RoutedEventArgs e)
             {
-                if (((TabItem)sender).AutomaticUnloading())
+                if (((TabItem)sender).AutomaticUnloading(null))
                     ((TabItem)sender).Unloaded -= OnTabItemUnloaded;
             }
             void OnTabItemLoaded(object sender, RoutedEventArgs e) => ((TabItem)sender).BeginAnimation(OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDuration));
@@ -208,6 +208,6 @@ namespace WpfInvestigate.Controls
         }
         #endregion
 
-        public void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading();
+        public void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
     }
 }

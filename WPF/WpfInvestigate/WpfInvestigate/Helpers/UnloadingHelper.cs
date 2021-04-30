@@ -13,25 +13,15 @@ using System.Windows.Media.Media3D;
 
 namespace WpfInvestigate.Helpers
 {
-    public interface IAutomaticUnloading
-    {
-        void OnUnloaded(object sender, RoutedEventArgs e);
-    }
-
     public static class UnloadingHelper
     {
         #region ========  Public section  =========
-        public static bool AutomaticUnloading(this FrameworkElement fe)
+        public static bool AutomaticUnloading(this FrameworkElement fe, RoutedEventHandler onUnloadedEventHandler)
         {
             if (!fe.IsElementDisposing()) return false;
 
-            if (fe is IAutomaticUnloading autoUnloadingItem)
-            {
-                fe.Unloaded -= autoUnloadingItem.OnUnloaded;
-                if (fe.Resources.Contains("Unloaded"))
-                    return true;
-            }
-
+            if (onUnloadedEventHandler != null)
+                fe.Unloaded -= onUnloadedEventHandler;
             CleanDependencyObject(fe);
             return true;
         }
@@ -43,7 +33,7 @@ namespace WpfInvestigate.Helpers
 
             foreach (var item in rd.OfType<DictionaryEntry>())
             {
-                if (item.Value is DependencyObject d && !(d is IAutomaticUnloading))
+                if (item.Value is DependencyObject d)
                 {
                     BindingOperations.ClearAllBindings(d);
                     EventHelper.RemoveWpfEventHandlers(d); // ???
@@ -62,6 +52,9 @@ namespace WpfInvestigate.Helpers
         #endregion
 
         #region ===========  Dependency Object cleaner  ===============
+
+        private static int _itemCount = 0;
+        private static int _stepCount = 0;
         // todo: add collections & recursive objects (see resources)
         private static void CleanDependencyObject(DependencyObject d)
         {
@@ -69,8 +62,12 @@ namespace WpfInvestigate.Helpers
             //var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
             var elements = d is Visual || d is Visual3D ? GetVChildren(d).Union(new[] { d }).ToArray() : new [] {d};
 
+            // _itemCount += elements.Length;
+            // Debug.Print($"Clean: {d.GetType().Name}, items: {_itemCount}, steps: {++_stepCount}");
+
             foreach (var element in elements)
             {
+
                 BindingOperations.ClearAllBindings(element);
                 EventHelper.RemoveWpfEventHandlers(element);
                 EventHelperOld.RemoveAllEventSubsriptions(element);
@@ -107,9 +104,6 @@ namespace WpfInvestigate.Helpers
                     if (VisualTreeHelper.GetParent(uIElement) is DependencyObject _do)
                         RemoveChild(_do, uIElement); // !!! Important
                 }
-
-                if (element is IAutomaticUnloading && element is FrameworkElement fe)
-                    fe.Resources.Add("Unloaded", null);
             }
         }
 

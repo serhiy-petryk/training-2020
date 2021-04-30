@@ -22,7 +22,7 @@ namespace WpfInvestigate.Controls
     /// Interaction logic for MwiContainer.xaml
     /// </summary>
     [ContentProperty("Children")]
-    public partial class MwiContainer: ContentControl, INotifyPropertyChanged, IAutomaticUnloading
+    public partial class MwiContainer: ContentControl, INotifyPropertyChanged
     {
         const int WINDOW_OFFSET_STEP = 25;
         private static int controlId = 0;
@@ -169,7 +169,7 @@ namespace WpfInvestigate.Controls
 
         public void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            if (this.AutomaticUnloading())
+            if (this.AutomaticUnloading(OnUnloaded))
             {
                 MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
 

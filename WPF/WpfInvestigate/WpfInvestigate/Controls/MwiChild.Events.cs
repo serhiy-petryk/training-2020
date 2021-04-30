@@ -23,7 +23,7 @@ namespace WpfInvestigate.Controls
         public override void OnUnloaded(object sender, RoutedEventArgs e)
         {
             // !!! Called twice (as MwiChild and as ResizingControl
-            if (this.AutomaticUnloading())
+            if (this.AutomaticUnloading(OnUnloaded))
                 MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
         }
 

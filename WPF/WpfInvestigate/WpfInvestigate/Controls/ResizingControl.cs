@@ -11,7 +11,7 @@ using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
-    public partial class ResizingControl : ContentControl, INotifyPropertyChanged, IAutomaticUnloading
+    public partial class ResizingControl : ContentControl, INotifyPropertyChanged
     {
         private static int controlId = 0;
         private int _controlId = controlId ++;
