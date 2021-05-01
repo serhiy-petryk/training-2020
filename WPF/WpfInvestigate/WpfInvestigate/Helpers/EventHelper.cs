@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Helpers
@@ -20,7 +21,15 @@ namespace WpfInvestigate.Helpers
         }
 
         #region =========  RemovePropertyChangeEventHandlers  ========
-        // private static Dictionary<Type, PropertyInfo> _piEventHandlersStoreCache = new Dictionary<Type, PropertyInfo>();
+        private static Dictionary<Type, PropertyInfo> _piEventHandlersStoreCache = new Dictionary<Type, PropertyInfo>
+        {
+            { typeof(UIElement), typeof(UIElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
+            { typeof(UIElement3D), typeof(UIElement3D).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
+            { typeof(ContentElement), typeof(ContentElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
+            { typeof(Timeline), typeof(Timeline).GetProperty("InternalEventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
+            { typeof(Style), typeof(Style).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
+            { typeof(FrameworkTemplate), typeof(FrameworkTemplate).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) }
+        };
         private static FieldInfo _fiEntriesOfEventHandlersStore;
         private static PropertyInfo _piCountOfEntries;
         private static MethodInfo _miGetKeyValuePairOfEntries;
@@ -34,18 +43,15 @@ namespace WpfInvestigate.Helpers
         {
             if (o == null) return;
 
-            /*var type = o.GetType();
-            if (!_piEventHandlersStoreCache.ContainsKey(type))
-                _piEventHandlersStoreCache.Add(type, type.GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public));
-            var piEventHandlersStore = _piEventHandlersStoreCache[type];*/
-            var piEventHandlersStore = o.GetType().GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            var type = o.GetType();
+            var piEventHandlersStore = _piEventHandlersStoreCache.Where(kvp=> kvp.Key.IsAssignableFrom(type)).Select(kvp=> kvp.Value).FirstOrDefault();
             if (piEventHandlersStore == null)
-            {
-                /*piEventHandlersStore = o.GetType().GetProperty("InternalEventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                if (piEventHandlersStore == null)*/
-                    return;
-            }
+                return;
 
+            if (o is Style)
+            {
+
+            }
             var eventHandlersStore = piEventHandlersStore.GetValue(o, null);
             if (eventHandlersStore == null) return;
 
