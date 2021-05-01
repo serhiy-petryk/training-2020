@@ -104,6 +104,10 @@
                         <Button x:Name="GetInfo" Click="OnGetInfoClick" Content="Get info"/>
                     </WrapPanel>
 
+                    <WrapPanel Margin="5">
+                        <Button x:Name="UpdateProperties" Click="OnUpdatePropertiesClick" Content="Update Properties"/>
+                    </WrapPanel>
+
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">

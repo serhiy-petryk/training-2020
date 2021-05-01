@@ -10,8 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
@@ -248,8 +246,8 @@ namespace WpfInvestigate
 
             var a12 = GC.GetTotalMemory(true);
 
-            // Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
             Debug.Print($"Test{step}: {a12:N0}");
+            // Debug.Print($"Test{step}: {a12:N0}, {EventHelper._cnt1}, {EventHelper._cnt2}, {EventHelper._cnt3}, {EventHelper._cnt4}");
 
             await Task.Delay(1000);
         }
@@ -341,6 +339,15 @@ namespace WpfInvestigate
             var table = fi.GetValue(null);
             var data = fiData.GetValue(table) as Hashtable;
             Debug.Print($"Weak refs: {data.Count}");
+        }
+
+        private void OnUpdatePropertiesClick(object sender, RoutedEventArgs e)
+        {
+            PropertyInvestigation.UpdateProperties();
+            var aa1 = PropertyInvestigation.pis;
+            var aa2 = PropertyInvestigation.pds;
+            var aa3 = PropertyInvestigation.dps;
+            var aa4 = PropertyInvestigation.dpds;
         }
     }
 }

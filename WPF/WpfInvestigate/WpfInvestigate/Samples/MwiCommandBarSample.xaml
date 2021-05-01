@@ -14,7 +14,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0">Command Bar</TextBlock>
-        <!--<Button Grid.Column="0" Margin="100 0 0 0" Width="100">Test button</Button>-->
+        <Button Grid.Column="0" Margin="100 0 0 0" Width="100" Content="Test button" Click="OnTestButtonClick"/>
         <TextBlock Grid.Column="1">The right side of Command Bar</TextBlock>
     </Grid>
 </UserControl>
