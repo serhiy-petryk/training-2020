@@ -67,7 +67,6 @@ namespace WpfInvestigate.Helpers
 
             foreach (var element in elements)
             {
-
                 BindingOperations.ClearAllBindings(element);
                 EventHelper.RemoveWpfEventHandlers(element);
 
@@ -172,8 +171,16 @@ namespace WpfInvestigate.Helpers
 
         private static void ClearElement(DependencyObject element)
         {
-            if (element is Track || (element is Freezable freezable && freezable.IsFrozen)) return;
 
+            /*var localValueEnumerator = element.GetLocalValueEnumerator();
+            while (localValueEnumerator.MoveNext())
+            {
+                var current = localValueEnumerator.Current;
+                if (!current.Property.ReadOnly)
+                    element.ClearValue(current.Property);
+            }
+            return;*/
+            if (element is Track || element.IsSealed) return;
             GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
             {
                 // no effect: if (!(pi.PropertyType == typeof(string)))
