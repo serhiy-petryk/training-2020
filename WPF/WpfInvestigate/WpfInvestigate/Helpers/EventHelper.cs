@@ -21,22 +21,34 @@ namespace WpfInvestigate.Helpers
         }
 
         #region =========  RemovePropertyChangeEventHandlers  ========
-        private static Dictionary<Type, PropertyInfo> _piEventHandlersStore = new Dictionary<Type, PropertyInfo>
-        {
-            { typeof(UIElement), typeof(UIElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
-            { typeof(UIElement3D), typeof(UIElement3D).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
-            { typeof(ContentElement), typeof(ContentElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
-            { typeof(Timeline), typeof(Timeline).GetProperty("InternalEventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
-            { typeof(Style), typeof(Style).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
-            { typeof(FrameworkTemplate), typeof(FrameworkTemplate).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) }
-        };
+        private static Dictionary<Type, Tuple<PropertyInfo, MethodInfo>> _eventHandlersStoreData =
+            new Dictionary<Type, Tuple<PropertyInfo, MethodInfo>>
+            {
+                { typeof(UIElement), new Tuple<PropertyInfo, MethodInfo>(
+                    typeof(UIElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic),
+                    typeof(UIElement).GetMethod("EventHandlersStoreRemove", BindingFlags.Instance | BindingFlags.NonPublic)) },
+                { typeof(UIElement3D), new Tuple<PropertyInfo, MethodInfo>(
+                    typeof(UIElement3D).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic),
+                    typeof(UIElement3D).GetMethod("EventHandlersStoreRemove", BindingFlags.Instance | BindingFlags.NonPublic)) },
+                { typeof(ContentElement), new Tuple<PropertyInfo, MethodInfo>(
+                    typeof(ContentElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic),
+                    typeof(ContentElement).GetMethod("EventHandlersStoreRemove", BindingFlags.Instance | BindingFlags.NonPublic)) },
+                { typeof(Timeline), new Tuple<PropertyInfo, MethodInfo>(
+                    typeof(Timeline).GetProperty("InternalEventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic),
+                    typeof(Timeline).GetMethod("RemoveEventHandler", BindingFlags.Instance | BindingFlags.NonPublic)) },
+                //{ typeof(UIElement3D), typeof(UIElement3D).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
+                //{ typeof(ContentElement), typeof(ContentElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
+                //{ typeof(Timeline), typeof(Timeline).GetProperty("InternalEventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
+                //{ typeof(Style), typeof(Style).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
+                //{ typeof(FrameworkTemplate), typeof(FrameworkTemplate).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) }
+            };
         private static FieldInfo _fiEntriesOfEventHandlersStore;
         private static PropertyInfo _piCountOfEntries;
         private static MethodInfo _miGetKeyValuePairOfEntries;
         private static Type _globalEventManagerType;
         private static FieldInfo _globalIndexToEventMapOfGlobalEventManager;
         private static ArrayList _globalIndexOfEvents;
-        private static MethodInfo _miEventHandlersStoreRemove = typeof(UIElement).GetMethod("EventHandlersStoreRemove", BindingFlags.NonPublic | BindingFlags.Instance);
+        // private static MethodInfo _miEventHandlersStoreRemove = typeof(UIElement).GetMethod("EventHandlersStoreRemove", BindingFlags.NonPublic | BindingFlags.Instance);
         // private static MethodInfo _miEventHandlersStoreRemoveOfTimeline = typeof(Timeline).GetMethod("RemoveEventHandler", BindingFlags.NonPublic | BindingFlags.Instance);
         private static MethodInfo _miToArrayOfFrugalObjectList;
         public static void RemovePropertyChangeEventHandlers(object o)
@@ -44,15 +56,11 @@ namespace WpfInvestigate.Helpers
             if (o == null) return;
 
             var type = o.GetType();
-            var piEventHandlersStore = _piEventHandlersStore.Where(kvp=> kvp.Key.IsAssignableFrom(type)).Select(kvp=> kvp.Value).FirstOrDefault();
-            if (piEventHandlersStore == null)
+            var eventHandlersStoreData = _eventHandlersStoreData.Where(kvp=> kvp.Key.IsAssignableFrom(type)).Select(kvp=> kvp.Value).FirstOrDefault();
+            if (eventHandlersStoreData == null)
                 return;
 
-            if (o is Style)
-            {
-
-            }
-            var eventHandlersStore = piEventHandlersStore.GetValue(o, null);
+            var eventHandlersStore = eventHandlersStoreData.Item1.GetValue(o, null);
             if (eventHandlersStore == null) return;
 
             if (_fiEntriesOfEventHandlersStore == null)
@@ -83,10 +91,8 @@ namespace WpfInvestigate.Helpers
                         if (routedEvent.Name != "Unloaded")
                         {
                             if (_miToArrayOfFrugalObjectList == null)
-                                _miToArrayOfFrugalObjectList = a1.Item2.GetType()
-                                    .GetMethod("ToArray", BindingFlags.Instance | BindingFlags.Public);
-                            var handlerInfos =
-                                _miToArrayOfFrugalObjectList.Invoke(a1.Item2, null) as RoutedEventHandlerInfo[];
+                                _miToArrayOfFrugalObjectList = a1.Item2.GetType().GetMethod("ToArray", BindingFlags.Instance | BindingFlags.Public);
+                            var handlerInfos = _miToArrayOfFrugalObjectList.Invoke(a1.Item2, null) as RoutedEventHandlerInfo[];
                             foreach (var handlerInfo in handlerInfos)
                             {
                                 // Debug.Print($"RemovePropertyChangeEventHandlers. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {routedEvent.Name}");
@@ -106,7 +112,7 @@ namespace WpfInvestigate.Helpers
                             _miEventHandlersStoreRemoveOfTimeline.Invoke(o, new[] { eventPrivateKey, a1.Item2 });
                         else 
                         // Debug.Print($"RemovePropertyChangeEventHandlers2. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {_delegate.Method.Name}");*/
-                        _miEventHandlersStoreRemove.Invoke(o, new[] {eventPrivateKey, a1.Item2});
+                        eventHandlersStoreData.Item2.Invoke(o, new[] {eventPrivateKey, a1.Item2});
                     }
                 }
                 else
