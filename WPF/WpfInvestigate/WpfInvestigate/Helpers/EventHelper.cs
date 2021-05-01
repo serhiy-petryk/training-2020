@@ -21,7 +21,7 @@ namespace WpfInvestigate.Helpers
         }
 
         #region =========  RemovePropertyChangeEventHandlers  ========
-        private static Dictionary<Type, PropertyInfo> _piEventHandlersStoreCache = new Dictionary<Type, PropertyInfo>
+        private static Dictionary<Type, PropertyInfo> _piEventHandlersStore = new Dictionary<Type, PropertyInfo>
         {
             { typeof(UIElement), typeof(UIElement).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
             { typeof(UIElement3D), typeof(UIElement3D).GetProperty("EventHandlersStore", BindingFlags.Instance | BindingFlags.NonPublic) },
@@ -44,7 +44,7 @@ namespace WpfInvestigate.Helpers
             if (o == null) return;
 
             var type = o.GetType();
-            var piEventHandlersStore = _piEventHandlersStoreCache.Where(kvp=> kvp.Key.IsAssignableFrom(type)).Select(kvp=> kvp.Value).FirstOrDefault();
+            var piEventHandlersStore = _piEventHandlersStore.Where(kvp=> kvp.Key.IsAssignableFrom(type)).Select(kvp=> kvp.Value).FirstOrDefault();
             if (piEventHandlersStore == null)
                 return;
 
