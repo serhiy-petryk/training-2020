@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,9 +31,6 @@ namespace WpfInvestigate.Effects
             if (d is FrameworkElement element)
             {
                 ClearEvents(element);
-                // element.SizeChanged -= Element_ChangeFocus;
-                var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
-                // dpd.RemoveValueChanged(element, OnElementFocusChanged);*/
 
                 if (e.NewValue is Style)
                 {
@@ -43,19 +39,12 @@ namespace WpfInvestigate.Effects
 
                     Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                     {
-                        // Debug.Print($"OnFocusControlStyleChanged: {element.GetType().Name}, {(UnloadingHelper.IsElementDisposing(element))}");
                         if (!UnloadingHelper.IsElementDisposing(element))
                         {
                             element.SizeChanged += Element_ChangeFocus;
-                            // PropertyChangeNotifier.AddDependencyPropertyChangedHandler(element, UIElement.IsKeyboardFocusWithinProperty, OnElementFocusChanged);
+                            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
                             dpd.AddValueChanged(element, OnElementFocusChanged);
                             element.Unloaded += Element_Unloaded;
-                            /*if (!Equals(element.Tag, "XXX"))
-                            {
-                                var notifier = new PropertyChangeNotifier(element, UIElement.IsKeyboardFocusWithinProperty);
-                                notifier.ValueChanged += OnElementFocusChanged;
-                                element.Tag = "XXX";
-                            }*/
                         }
                     }, DispatcherPriority.Background);
                 }
@@ -84,8 +73,6 @@ namespace WpfInvestigate.Effects
         {
             var element = (FrameworkElement)sender;
             var isFocused = element.IsKeyboardFocusWithin;
-
-            // Debug.Print($"Element_ChangeFocus: {element.GetType()}");
 
             if (isFocused)
             {
