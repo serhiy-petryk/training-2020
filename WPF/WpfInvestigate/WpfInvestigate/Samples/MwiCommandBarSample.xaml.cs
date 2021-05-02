@@ -18,7 +18,7 @@ namespace WpfInvestigate.Samples
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
             var a1 = this.GetVisualParents().OfType<MwiStartup>().FirstOrDefault();
-            PropertyInvestigation.UpdateProperties(a1);
+            PropertyInvestigation.UpdateProperties3(a1);
         }
     }
 }

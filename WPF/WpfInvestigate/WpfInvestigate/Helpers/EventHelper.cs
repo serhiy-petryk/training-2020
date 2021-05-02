@@ -13,6 +13,11 @@ namespace WpfInvestigate.Helpers
 {
     public static class EventHelper
     {
+        public static int _cnt1;
+        public static int _cnt2;
+        public static int _cnt3;
+        public static int _cnt4;
+
         public static void RemoveWpfEventHandlers(object o)
         {
             RemovePropertyChangeEventHandlers(o); // routed events
@@ -97,6 +102,7 @@ namespace WpfInvestigate.Helpers
                             {
                                 // Debug.Print($"RemovePropertyChangeEventHandlers. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {routedEvent.Name}");
                                 uiElement.RemoveHandler(routedEvent, handlerInfo.Handler);
+                                _cnt1++;
                             }
                         }
                     }
@@ -113,6 +119,7 @@ namespace WpfInvestigate.Helpers
                         else 
                         // Debug.Print($"RemovePropertyChangeEventHandlers2. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {_delegate.Method.Name}");*/
                         eventHandlersStoreData.Item2.Invoke(o, new[] {eventPrivateKey, a1.Item2});
+                        _cnt2++;
                     }
                 }
                 else
@@ -161,6 +168,7 @@ namespace WpfInvestigate.Helpers
                             _fiChangedHandlerOfTrackers = tracker.GetType().GetField("Changed", BindingFlags.Instance | BindingFlags.NonPublic);
                         var changed = _fiChangedHandlerOfTrackers.GetValue(tracker) as EventHandler;
                         dpd.RemoveValueChanged(o, changed);
+                        _cnt3++;
                     }
                 }
                 type = type.BaseType;
@@ -195,6 +203,7 @@ namespace WpfInvestigate.Helpers
                         // Debug.Print($"RemoveDelegates: {target.GetType()}, {s}, {ei.Name}");
                         miRemove.Invoke(target, new object[] { d });
                         // ei.RemoveEventHandler(target, d);
+                        _cnt4++;
                     }
                 }
             }

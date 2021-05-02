@@ -97,6 +97,7 @@ namespace WpfInvestigate
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
+            var aa1 = TypeHelper.GetAttachedProperties(typeof(Button), sender as Button);
         }
 
         private void TestButtonChangeStyle(object sender, RoutedEventArgs e)
@@ -341,6 +342,7 @@ namespace WpfInvestigate
             Debug.Print($"Weak refs: {data.Count}");
         }
 
+        private static Attribute[] _attrs = { new PropertyFilterAttribute(PropertyFilterOptions.All) };
         private void OnUpdatePropertiesClick(object sender, RoutedEventArgs e)
         {
             PropertyInvestigation.UpdateProperties();
@@ -348,6 +350,29 @@ namespace WpfInvestigate
             var aa2 = PropertyInvestigation.pds;
             var aa3 = PropertyInvestigation.dps;
             var aa4 = PropertyInvestigation.dpds;
+            var aa5 = PropertyInvestigation.lves;
+
+            Debug.Print($"Button props: {aa2[typeof(Button)].Count}");
+
+            var pp = TypeDescriptor.GetProperties(typeof(MwiAppViewModel), _attrs);
+            var pp2 = TypeDescriptor.GetProperties(typeof(MwiAppViewModel));
+        }
+
+        private void OnTestForPropertiesClick(object sender, RoutedEventArgs e)
+        {
+            var aa1 = PropertyInvestigation.pis;
+            var aa2 = PropertyInvestigation.pds;
+            var aa3 = PropertyInvestigation.dps;
+            var aa4 = PropertyInvestigation.dpds;
+
+            var aa11 = aa1[typeof(Button)].Select(a => a.Name).ToArray();
+            var aa21 = aa2[typeof(Button)].Select(a => a.Name).ToArray();
+            var a21 = aa21.Except(aa11).ToArray();
+            var a22 = aa11.Except(aa21).ToArray();
+
+            var aa31 = aa3[typeof(Button)].Select(a => a.Name).ToArray();
+            var a31 = aa31.Except(aa11).ToArray();
+            var a32 = aa11.Except(aa31).ToArray();
         }
     }
 }

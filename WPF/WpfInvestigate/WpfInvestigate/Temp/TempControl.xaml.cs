@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
+using WpfInvestigate.Controls;
+using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Temp
 {
@@ -10,6 +13,14 @@ namespace WpfInvestigate.Temp
         public TempControl()
         {
             InitializeComponent();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            DialogMessage.Show(
+                "Message text Message text Message text Message text Message text Message text",
+                "Caption of Message block", DialogMessage.DialogMessageIcon.Success, new[] { "OK", "Cancel" }, true,
+                MwiAppViewModel.Instance.DialogHost);
         }
     }
 }

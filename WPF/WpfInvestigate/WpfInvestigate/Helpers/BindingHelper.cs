@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -12,6 +13,38 @@ namespace WpfInvestigate.Helpers
 {
     public static class BindingHelper
     {
+        public static void ClearAllProperties(DependencyObject target)
+        {
+            var localValueEnumerator = target.GetLocalValueEnumerator();
+            while (localValueEnumerator.MoveNext())
+            {
+                var current = localValueEnumerator.Current;
+                target.ClearValue(current.Property);
+            }
+        }
+
+        public static void ClearAllBindings(DependencyObject target)
+        {
+            if (target == null)
+            {
+                throw new ArgumentNullException("target");
+            }
+            LocalValueEnumerator localValueEnumerator = target.GetLocalValueEnumerator();
+            ArrayList arrayList = new ArrayList(8);
+            while (localValueEnumerator.MoveNext())
+            {
+                LocalValueEntry current = localValueEnumerator.Current;
+                if (BindingOperations.IsDataBound(target, current.Property))
+                {
+                    arrayList.Add(current.Property);
+                }
+            }
+            for (int i = 0; i < arrayList.Count; i++)
+            {
+                target.ClearValue((DependencyProperty)arrayList[i]);
+            }
+        }
+        // ====================
         private static Dictionary<Type, List<FieldInfo>> _fiOfDpCache = new Dictionary<Type, List<FieldInfo>>();
         public static void UpdateAllBindings(this DependencyObject target)
         // based on 'H.B.' comment in https://stackoverflow.com/questions/5023025/is-there-a-way-to-get-all-bindingexpression-objects-for-a-window

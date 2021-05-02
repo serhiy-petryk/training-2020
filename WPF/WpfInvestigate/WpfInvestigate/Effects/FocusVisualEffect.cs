@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Effects
 {
@@ -30,8 +31,8 @@ namespace WpfInvestigate.Effects
             if (d is FrameworkElement element)
             {
                 element.SizeChanged -= Element_ChangeFocus;
-                var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
-                dpd.RemoveValueChanged(element, OnElementFocusChanged);
+                // var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+                // dpd.RemoveValueChanged(element, OnElementFocusChanged);
 
                 if (e.NewValue is Style)
                 {
@@ -41,7 +42,10 @@ namespace WpfInvestigate.Effects
                     Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                     {
                         element.SizeChanged += Element_ChangeFocus;
-                        dpd.AddValueChanged(element, OnElementFocusChanged);
+                        // dpd.AddValueChanged(element, OnElementFocusChanged);
+                        WeakReference wr = new WeakReference(element);
+                        var notifier = new PropertyChangeNotifier(element, UIElement.IsKeyboardFocusWithinProperty);
+                        notifier.ValueChanged += OnElementFocusChanged;
                     }, DispatcherPriority.Background);
                 }
             }
