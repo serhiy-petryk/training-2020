@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,9 +31,10 @@ namespace WpfInvestigate.Effects
         {
             if (d is FrameworkElement element)
             {
-                element.SizeChanged -= Element_ChangeFocus;
-                // var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
-                // dpd.RemoveValueChanged(element, OnElementFocusChanged);
+                ClearEvents(element);
+                // element.SizeChanged -= Element_ChangeFocus;
+                var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+                // dpd.RemoveValueChanged(element, OnElementFocusChanged);*/
 
                 if (e.NewValue is Style)
                 {
@@ -41,22 +43,49 @@ namespace WpfInvestigate.Effects
 
                     Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                     {
-                        element.SizeChanged += Element_ChangeFocus;
-                        // dpd.AddValueChanged(element, OnElementFocusChanged);
-                        WeakReference wr = new WeakReference(element);
-                        var notifier = new PropertyChangeNotifier(element, UIElement.IsKeyboardFocusWithinProperty);
-                        notifier.ValueChanged += OnElementFocusChanged;
+                        // Debug.Print($"OnFocusControlStyleChanged: {element.GetType().Name}, {(UnloadingHelper.IsElementDisposing(element))}");
+                        if (!UnloadingHelper.IsElementDisposing(element))
+                        {
+                            element.SizeChanged += Element_ChangeFocus;
+                            // PropertyChangeNotifier.AddDependencyPropertyChangedHandler(element, UIElement.IsKeyboardFocusWithinProperty, OnElementFocusChanged);
+                            dpd.AddValueChanged(element, OnElementFocusChanged);
+                            element.Unloaded += Element_Unloaded;
+                            /*if (!Equals(element.Tag, "XXX"))
+                            {
+                                var notifier = new PropertyChangeNotifier(element, UIElement.IsKeyboardFocusWithinProperty);
+                                notifier.ValueChanged += OnElementFocusChanged;
+                                element.Tag = "XXX";
+                            }*/
+                        }
                     }, DispatcherPriority.Background);
                 }
             }
         }
         #endregion
+
+        private static void ClearEvents(FrameworkElement element)
+        {
+            element.SizeChanged -= Element_ChangeFocus;
+            element.Unloaded -= Element_Unloaded;
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+            dpd.RemoveValueChanged(element, OnElementFocusChanged);
+        }
+
+        private static void Element_Unloaded(object sender, RoutedEventArgs e)
+        {
+            var fe = (FrameworkElement) sender;
+            if (UnloadingHelper.IsElementDisposing(fe))
+                ClearEvents(fe);
+        }
+
         private static void OnElementFocusChanged(object sender, EventArgs e) => Element_ChangeFocus(sender, null);
 
         private static void Element_ChangeFocus(object sender, SizeChangedEventArgs e)
         {
             var element = (FrameworkElement)sender;
             var isFocused = element.IsKeyboardFocusWithin;
+
+            // Debug.Print($"Element_ChangeFocus: {element.GetType()}");
 
             if (isFocused)
             {
