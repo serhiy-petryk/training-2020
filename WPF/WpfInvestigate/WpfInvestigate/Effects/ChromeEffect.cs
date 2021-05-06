@@ -118,7 +118,13 @@ namespace WpfInvestigate.Effects
             }
             finally
             {
-                semaphore.Release();
+                try
+                {
+                    semaphore.Release();
+                }
+                catch (ObjectDisposedException ode)
+                {
+                }
             }
         }
 
