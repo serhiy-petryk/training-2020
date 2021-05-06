@@ -31,17 +31,38 @@ namespace WpfInvestigate.Helpers
         public static Tuple<PropertyDescriptor, DependencyPropertyDescriptor>[] GetPropertyInfos(Type type)
         {
             if (!_propertiesCache.ContainsKey(type))
+            {
+                var o = Activator.CreateInstance(type);
                 _propertiesCache.Add(type,
-                    TypeDescriptor.GetProperties(type, _attrs).OfType<PropertyDescriptor>().Select(a =>
-                        new Tuple<PropertyDescriptor, DependencyPropertyDescriptor>(a, DependencyPropertyDescriptor.FromProperty(a))).ToArray());
+                    TypeDescriptor.GetProperties(o, _attrs).OfType<PropertyDescriptor>().Select(a =>
+                        new Tuple<PropertyDescriptor, DependencyPropertyDescriptor>(a,
+                            DependencyPropertyDescriptor.FromProperty(a))).ToArray());
+            }
+
             // TypeDescriptor.GetProperties(type, attrs).OfType<PropertyDescriptor>().ToArray();
             return _propertiesCache[type];
         }
+
+        public static DependencyPropertyDescriptor[] GetAttachedProperties(Type type)
+        {
+            var o = new ContainerVisual();
+            var aa1 = TypeDescriptor.GetProperties(o, _attrs).OfType<PropertyDescriptor>()
+                .Select(a =>
+                    new Tuple<PropertyDescriptor, DependencyPropertyDescriptor>(a,
+                        DependencyPropertyDescriptor.FromProperty(a))).ToArray();
+            var aa2 = aa1.Where(a => a.Item2 != null && a.Item2.Name.Contains("."))
+                .Select(a => a.Item2.DependencyProperty).ToArray();
+            var aa3 = aa2.Select(a => DependencyPropertyDescriptor.FromProperty(a, type))
+                .Where(a => a.Name.Contains(".") && a.Name == "FocusVisualEffect.FocusControlStyle").ToArray();
+            return aa3;
+        }
+
         public static DependencyPropertyDescriptor[] GetAttachedProperties(Type type, DependencyObject o2)
         {
             var o = new ContainerVisual();
             var aa1 = TypeDescriptor.GetProperties(o, _attrs).OfType<PropertyDescriptor>()
                 .Select(a => new Tuple<PropertyDescriptor, DependencyPropertyDescriptor>(a, DependencyPropertyDescriptor.FromProperty(a))).ToArray();
+            var aa2 = aa1.Where(a => a.Item2!=null && a.Item2.Name.Contains(".")).Select(a => a.Item2.DependencyProperty).ToArray();
 
             var lve = new List<LocalValueEntry>();
             var localValueEnumerator = o.GetLocalValueEnumerator();

@@ -26,6 +26,29 @@ namespace WpfInvestigate.Effects
         public static Style GetFocusControlStyle(DependencyObject obj) => (Style)obj.GetValue(FocusControlStyleProperty);
         public static void SetFocusControlStyle(DependencyObject obj, Style value) => obj.SetValue(FocusControlStyleProperty, value);
 
+        private static void OnFocusControlStyleChangedTest(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is FrameworkElement element)
+            {
+                element.SizeChanged -= Element_ChangeFocus;
+                var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+                dpd.RemoveValueChanged(element, OnElementFocusChanged);
+
+                if (e.NewValue is Style)
+                {
+                    if (element.FocusVisualStyle != null)
+                        element.FocusVisualStyle = null;
+
+                    Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+                    {
+                        // Debug.Print($"Focus: {element.GetType().Name}, {element.Name}");
+                        element.SizeChanged += Element_ChangeFocus;
+                        dpd.AddValueChanged(element, OnElementFocusChanged);
+                    }, DispatcherPriority.Background);
+                }
+            }
+        }
+
         private static void OnFocusControlStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is FrameworkElement element)
@@ -63,6 +86,7 @@ namespace WpfInvestigate.Effects
         private static void Element_Unloaded(object sender, RoutedEventArgs e)
         {
             var fe = (FrameworkElement) sender;
+            // Debug.Print($"Focus.Unloaded: {fe.GetType().Name}, {fe.Name}, {(UnloadingHelper.IsElementDisposing(fe))}");
             if (UnloadingHelper.IsElementDisposing(fe))
                 ClearEvents(fe);
         }

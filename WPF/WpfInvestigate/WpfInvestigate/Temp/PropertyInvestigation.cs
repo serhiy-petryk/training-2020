@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace WpfInvestigate.Temp

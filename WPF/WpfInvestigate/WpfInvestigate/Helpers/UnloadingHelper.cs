@@ -3,13 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
 
 namespace WpfInvestigate.Helpers
 {
@@ -23,7 +20,7 @@ namespace WpfInvestigate.Helpers
             if (onUnloadedEventHandler != null)
                 fe.Unloaded -= onUnloadedEventHandler;
             // if (!fe.Resources.Contains("Unloaded"))
-                CleanDependencyObject(fe);
+            CleanDependencyObject(fe);
             return true;
         }
 
@@ -34,11 +31,15 @@ namespace WpfInvestigate.Helpers
 
             foreach (var item in rd.OfType<DictionaryEntry>())
             {
+                if (item.Value is IDisposable disposable)
+                    disposable.Dispose();
+
                 if (item.Value is DependencyObject d)
                 {
                     BindingOperations.ClearAllBindings(d);
                     EventHelper.RemoveWpfEventHandlers(d); // ???
                 }
+
             }
             if (!rd.IsReadOnly)
                 rd.Clear();
@@ -56,16 +57,72 @@ namespace WpfInvestigate.Helpers
         private static int _itemCount = 0;
         private static int _stepCount = 0;
         // todo: add collections & recursive objects (see resources)
-        private static void CleanDependencyObject(DependencyObject d)
+        private static void CleanDependencyObject(UIElement d)
         {
-            TypeHelper.CheckNewProperties();
+            // TypeHelper.CheckNewProperties();
 
             // todo: add collections & recursive objects (see resources)
             //var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
-            var elements = d is Visual || d is Visual3D ? GetVChildren(d).Union(new[] { d }).ToArray() : new [] {d};
+            var elements = GetVChildren(d).Union(new[] { d }).ToArray();
 
             // _itemCount += elements.Length;
             // Debug.Print($"Clean: {d.GetType().Name}, items: {_itemCount}, steps: {++_stepCount}");
+
+
+            /*EventHelper.RemoveDPDEvents(elements);
+
+            foreach (var element in elements)
+            {
+                BindingOperations.ClearAllBindings(element);
+                EventHelper.RemoveWpfEventHandlers(element);
+
+                if (element is FrameworkElement fe)
+                    ClearResources(fe.Resources);
+
+                if (element is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is DependencyObject _do)
+                    RemoveChild(_do, uiElement); // !!! Important
+            }*/
+
+            // EventHelper.RemoveDPDEvents(elements);
+
+            /*var aa1 = elements.Where(a => a is IDisposable).ToArray();
+            if (aa1.Length > 0)
+            {
+
+            }*/
+
+            //var sw = new Stopwatch();
+            //sw.Start();
+
+            foreach (var element in elements)
+                BindingOperations.ClearAllBindings(element);
+            //var d1 = sw.ElapsedMilliseconds;
+            //sw.Restart();
+
+            foreach (var element in elements)
+                EventHelper.RemoveWpfEventHandlers(element);
+            //var d2 = sw.ElapsedMilliseconds;
+            //sw.Restart();
+
+            foreach (var fe in elements.OfType<FrameworkElement>())
+            {
+                ClearResources(fe.Resources);
+                // fe.Resources.Clear();
+            }
+            //var d3 = sw.ElapsedMilliseconds;
+            //sw.Restart();
+
+            foreach (var uiElement in elements.OfType<UIElement>())
+            {
+                if (VisualTreeHelper.GetParent(uiElement) is DependencyObject _do)
+                    RemoveChild(_do, uiElement); // !!! Important
+            }
+            //var d4 = sw.ElapsedMilliseconds;
+            //sw.Stop();
+
+            // Debug.Print($"SW: {d1}, {d2}, {d3}, {d4}");
+
+            /*return;
 
             foreach (var element in elements)
             {
@@ -77,28 +134,28 @@ namespace WpfInvestigate.Helpers
                     var value = pi.GetValue(element);
                     if (value is DependencyObject d1)
                     {
-                        BindingOperations.ClearAllBindings(d1); // !! Important. Remove error on MwiStartup test (Layout transform)
-                        EventHelper.RemoveWpfEventHandlers(d1);
+                        // BindingOperations.ClearAllBindings(d1); // !! Important. Remove error on MwiStartup test (Layout transform)
+                        // EventHelper.RemoveWpfEventHandlers(d1);
                     }
                     else if (value is ResourceDictionary rd)
                         ClearResources(rd);
-                    /*else if (value is ICollection c)
+                    //else if (value is ICollection c)
                     {
-                        EventHelper.RemoveWpfEventHandlers(c);
-                        EventHelperOld.RemoveAllEventSubsriptions(c);
-                    }*/
+                       // EventHelper.RemoveWpfEventHandlers(c);
+                        //EventHelperOld.RemoveAllEventSubsriptions(c);
+                    }
                 }
 
-                ClearElement(element); // !! Very important
+                // ClearElement(element); // !! Very important
 
                 if (element is UIElement uIElement)
                 {
-                    /*if (uIElement.CommandBindings.Count > 0)
-                        uIElement.CommandBindings.Clear();
-                    if (uIElement.InputBindings.Count > 0)
-                        uIElement.InputBindings.Clear();
-                    if (element is FrameworkElement fe2 && fe2.Triggers.Count > 0)
-                        fe2.Triggers.Clear();*/
+                    //if (uIElement.CommandBindings.Count > 0)
+                      //  uIElement.CommandBindings.Clear();
+                    //if (uIElement.InputBindings.Count > 0)
+                      //  uIElement.InputBindings.Clear();
+                    //if (element is FrameworkElement fe2 && fe2.Triggers.Count > 0)
+                      //  fe2.Triggers.Clear();
 
                     if (VisualTreeHelper.GetParent(uIElement) is DependencyObject _do)
                         RemoveChild(_do, uIElement); // !!! Important
@@ -106,18 +163,14 @@ namespace WpfInvestigate.Helpers
 
                 //if (element is FrameworkElement fe)
                   //  fe.Resources.Add("Unloaded", null);
-            }
+            }*/
         }
 
         private static void RemoveChild(DependencyObject parent, UIElement child)
         {
             if (parent is Panel panel)
             {
-                if (panel.IsItemsHost)
-                {
-                    // Debug.Print($"RemoveChild. Panel. IsItemsHost");
-                }
-                else
+                if (!panel.IsItemsHost)
                     panel.Children.Remove(child);
                 return;
             }
@@ -134,10 +187,6 @@ namespace WpfInvestigate.Helpers
             if (parent is ContentControl contentControl)
             {
                 if (Equals(contentControl.Content, child)) contentControl.Content = null;
-                return;
-            }
-            if (parent is ItemsPresenter itemsPresenter)
-            {
                 return;
             }
             if (parent is ContainerVisual container)
@@ -157,7 +206,7 @@ namespace WpfInvestigate.Helpers
                     menuItem.Items.Remove(child);
                 return;
             }
-            if (parent is Slider || parent is Separator || parent is TabControl || parent is TextBox)
+            if (parent is Slider || parent is Separator || parent is TabControl || parent is TextBox || parent is ItemsPresenter)
             {
                 return;
             }
@@ -170,32 +219,6 @@ namespace WpfInvestigate.Helpers
             return;
             throw new Exception($"RemoveChildis not defined for {parent.GetType().Name} type of parent");
         }
-
-        private static void ClearElement(DependencyObject element)
-        {
-
-            /*var localValueEnumerator = element.GetLocalValueEnumerator();
-            while (localValueEnumerator.MoveNext())
-            {
-                var current = localValueEnumerator.Current;
-                if (!current.Property.ReadOnly)
-                    element.ClearValue(current.Property);
-            }
-            return;*/
-            if (element is Track || element.IsSealed) return;
-            GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
-            {
-                // no effect: if (!(pi.PropertyType == typeof(string)))
-                if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
-                {
-                    if (!(pi.Name == "Language" || pi.Name == "Title") && pi.GetValue(element) != null)
-                        pi.SetValue(element, null);
-                }
-            });
-            // errors in Wpf control logic: GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
-        }
-
-        private static PropertyInfo[] GetPropertiesForCleaner(Type type) => type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
 
         private static IEnumerable<DependencyObject> GetVChildren(DependencyObject current)
         {
