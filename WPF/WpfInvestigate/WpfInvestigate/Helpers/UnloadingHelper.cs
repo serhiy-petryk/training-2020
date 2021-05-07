@@ -3,10 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+using WpfInvestigate.Common;
+using WpfInvestigate.Controls;
+using WpfInvestigate.Themes;
 
 namespace WpfInvestigate.Helpers
 {
@@ -20,7 +27,7 @@ namespace WpfInvestigate.Helpers
             if (onUnloadedEventHandler != null)
                 fe.Unloaded -= onUnloadedEventHandler;
             // if (!fe.Resources.Contains("Unloaded"))
-            CleanDependencyObject(fe);
+                CleanDependencyObject(fe);
             return true;
         }
 
@@ -69,29 +76,46 @@ namespace WpfInvestigate.Helpers
             // Debug.Print($"Clean: {d.GetType().Name}, items: {_itemCount}, steps: {++_stepCount}");
 
 
-            /*EventHelper.RemoveDPDEvents(elements);
+            // EventHelper.RemoveDPDEvents(elements);
 
             foreach (var element in elements)
             {
                 BindingOperations.ClearAllBindings(element);
                 EventHelper.RemoveWpfEventHandlers(element);
 
-                if (element is FrameworkElement fe)
-                    ClearResources(fe.Resources);
+                /*// foreach (var pi in GetPropertiesForCleaner(element.GetType()))
+                foreach (var pi in GetPropertiesForCleaner(element.GetType()).Where(a => a.Name != "TemplatedParent" && a.Name != "Parent" && a.Name != "Content" && a.Name != "DataContext"))
+                {
+                    var value = pi.GetValue(element);
+                    if (value is DependencyObject d1)
+                    {
+                        BindingOperations.ClearAllBindings(d1); // !! Important. Remove error on MwiStartup test (Layout transform)
+                        EventHelper.RemoveWpfEventHandlers(d1);
+                    }
+                    else if (value is ResourceDictionary rd)
+                        ClearResources(rd);
+                    //else if (value is ICollection c)
+                    {
+                        // EventHelper.RemoveWpfEventHandlers(c);
+                        //EventHelperOld.RemoveAllEventSubsriptions(c);
+                    }
+                }*/
+
+                ClearElement(element);
 
                 if (element is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is DependencyObject _do)
                     RemoveChild(_do, uiElement); // !!! Important
-            }*/
+
+                if (element is FrameworkElement fe)
+                {
+                    ClearResources(fe.Resources);
+                    fe.Resources.Add("Unloaded", null);
+                }
+            }
 
             // EventHelper.RemoveDPDEvents(elements);
 
-            /*var aa1 = elements.Where(a => a is IDisposable).ToArray();
-            if (aa1.Length > 0)
-            {
-
-            }*/
-
-            //var sw = new Stopwatch();
+            /*//var sw = new Stopwatch();
             //sw.Start();
 
             foreach (var element in elements)
@@ -117,10 +141,17 @@ namespace WpfInvestigate.Helpers
                 if (VisualTreeHelper.GetParent(uiElement) is DependencyObject _do)
                     RemoveChild(_do, uiElement); // !!! Important
             }
+
+            foreach (var fe in elements.OfType<FrameworkElement>())
+                fe.Resources.Add("Unloaded", null);
+
+            //if (element is FrameworkElement fe)
+            //  fe.Resources.Add("Unloaded", null);
+
             //var d4 = sw.ElapsedMilliseconds;
             //sw.Stop();
 
-            // Debug.Print($"SW: {d1}, {d2}, {d3}, {d4}");
+            // Debug.Print($"SW: {d1}, {d2}, {d3}, {d4}");*/
 
             /*return;
 
@@ -232,5 +263,145 @@ namespace WpfInvestigate.Helpers
             }
         }
         #endregion
+
+        private static PropertyInfo[] GetPropertiesForCleaner(Type type) => type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+
+        private static void ClearElement2(DependencyObject element)
+        {
+
+            /*var localValueEnumerator = element.GetLocalValueEnumerator();
+            while (localValueEnumerator.MoveNext())
+            {
+                var current = localValueEnumerator.Current;
+                if (!current.Property.ReadOnly)
+                    element.ClearValue(current.Property);
+            }
+            return;*/
+            if (element is Track || element.IsSealed) return;
+            GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
+            {
+                // no effect: if (!(pi.PropertyType == typeof(string)))
+                if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
+                {
+                    if (!(pi.Name == "Language" || pi.Name == "Title") && pi.GetValue(element) != null)
+                        pi.SetValue(element, null);
+                }
+            });
+            // errors in Wpf control logic: GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
+        }
+
+        public static Dictionary<PropertyInfo, int> AAA = new Dictionary<PropertyInfo, int>();
+        private static void ClearElement3(DependencyObject element)
+        {
+            // if (!(element is MwiChild)) return;
+            /*var localValueEnumerator = element.GetLocalValueEnumerator();
+            while (localValueEnumerator.MoveNext())
+            {
+                var current = localValueEnumerator.Current;
+                if (!current.Property.ReadOnly && typeof(ICommand).IsAssignableFrom(current.Property.PropertyType))
+                {
+                    // if (!(current.Property.Name == "Language" || current.Property.Name == "Title") && element.GetValue(current.Property) != null)
+                    element.SetValue(current.Property, null);
+                    // element.ClearValue(current.Property);
+                }
+            }
+            return;*/
+            if (element is Track || element.IsSealed) return;
+            GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
+            {
+                // no effect: if (!(pi.PropertyType == typeof(string)))
+                if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
+                {
+                    if (!(pi.Name == "Language" || pi.Name == "Title") && pi.GetValue(element) != null)
+                    {
+                        if (typeof(ICommand).IsAssignableFrom(pi.PropertyType))
+                        {
+                            pi.SetValue(element, null);
+                        }
+                    }
+                }
+            });
+        }
+
+        private static void ClearElement_ICommand(DependencyObject element)
+        {
+            if (element.IsSealed) return;
+
+            foreach (var pi in GetPropertiesForCleaner(element.GetType()))
+                if (typeof(ICommand).IsAssignableFrom(pi.PropertyType))
+                    pi.SetValue(element, null);
+        }
+
+        private static void ClearElement_DataContext(DependencyObject element)
+        {
+            if (element.IsSealed) return;
+
+            if (element.GetType().GetProperty("DataContext") is PropertyInfo pi)
+                pi.SetValue(element, null);
+        }
+
+        private static void ClearElement_Enumerator(DependencyObject element)
+        {
+            if (element.IsSealed) return;
+
+            var localValueEnumerator = element.GetLocalValueEnumerator();
+            while (localValueEnumerator.MoveNext())
+            {
+                var current = localValueEnumerator.Current;
+                if (!current.Property.ReadOnly)
+                    element.ClearValue(current.Property);
+                // if (current.Value is DependencyObject d)
+                //  d.ClearAllBindings();
+            }
+        }
+
+        private static void ClearElement_Test(DependencyObject element)
+        {
+            // if (element is Track || element.IsSealed) return;
+            if (element.IsSealed) return;
+
+            foreach (var pi in GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(string)))
+                if (pi.GetValue(element) is object o)
+                {
+                    if (o is ICommand) // 26 new weakrefs
+                        pi.SetValue(element, null);
+                    if (o is Animatable) // 2 new weakrefs
+                        pi.SetValue(element, null);
+                    else if (o is ControlTemplate) // 3 new weakrefs
+                        pi.SetValue(element, null);
+                    //else if (o is Style)
+                    //  pi.SetValue(element, null);
+                    //else if (pi.Name == "Content" || pi.Name == "DataContext" || pi.Name == "ToolTip")
+                    //  pi.SetValue(element, null);
+                    /*else if (o is FrameworkElement)
+                        pi.SetValue(element, null);
+                    else if (o is UIElement)
+                        pi.SetValue(element, null);
+                    else if (o is ResourceDictionary)
+                        pi.SetValue(element, null);
+                    else if (o is IEnumerable)
+                        pi.SetValue(element, null);*/
+                    else if (o is MwiThemeInfo)
+                        pi.SetValue(element, null);
+                    else
+                    {
+                        if (!AAA.ContainsKey(pi))
+                            AAA.Add(pi, 0);
+                        AAA[pi]++;
+                        // pi.SetValue(element, null);
+                    }
+
+                }
+        }
+
+        private static void ClearElement(DependencyObject element)
+        {
+            if (element.IsSealed) return;
+
+            // ClearElement_DataContext(element);
+            // ClearElement_Enumerator(element);  // 11 new weakrefs
+            ClearElement_Test(element); // 3 new weakrefs
+        }
+
     }
 }
