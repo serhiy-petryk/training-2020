@@ -9,37 +9,45 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using WpfInvestigate.Controls;
 
 namespace WpfInvestigate.Helpers
 {
     public static class UnloadingHelper
     {
         #region ========  Public section  =========
-        public static bool AutomaticUnloading(this FrameworkElement fe, RoutedEventHandler onUnloadedEventHandler)
+        public static bool AutomaticUnloading(this FrameworkElement fe, RoutedEventHandler onUnloadedEventHandler, bool log = false)
         {
             if (!fe.IsElementDisposing()) return false;
 
             if (onUnloadedEventHandler != null)
                 fe.Unloaded -= onUnloadedEventHandler;
             if (!fe.Resources.Contains("Unloaded"))
-                CleanDependencyObject(fe);
+                CleanDependencyObject(fe, log);
+
             return true;
         }
 
-        public static void ClearResources(ResourceDictionary rd)
+        public static void ClearResources(ResourceDictionary rd, bool log = false)
         {
             foreach (var child in rd.MergedDictionaries)
-                ClearResources(child);
+                ClearResources(child, log);
 
             foreach (var item in rd.OfType<DictionaryEntry>())
             {
                 if (item.Value is IDisposable disposable)
+                {
+                    if (log)
+                        Debug.Print($"ClearResources.Disposable. {disposable.GetType().Name}, {GetName(disposable)}");
                     disposable.Dispose();
+                }
 
                 if (item.Value is DependencyObject d)
                 {
+                    if (log)
+                        Debug.Print($"ClearResources. {d.GetType().Name}, {GetName(d)}");
                     BindingOperations.ClearAllBindings(d);
-                    EventHelper.RemoveWpfEventHandlers(d); // ???
+                    EventHelper.RemoveWpfEventHandlers(d, log); // ???
                 }
 
             }
@@ -59,7 +67,7 @@ namespace WpfInvestigate.Helpers
         private static int _itemCount = 0;
         private static int _stepCount = 0;
         // todo: add collections & recursive objects (see resources)
-        private static void CleanDependencyObject(UIElement d)
+        private static void CleanDependencyObject(UIElement d, bool log = false)
         {
             // todo: add collections & recursive objects (see resources)
             //var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
@@ -73,8 +81,11 @@ namespace WpfInvestigate.Helpers
 
             foreach (var element in elements)
             {
+                if (log)
+                    Debug.Print($"!!!!! CLEAN {element.GetType().Name}, {GetName(element)} !!!!");
+
                 BindingOperations.ClearAllBindings(element);
-                EventHelper.RemoveWpfEventHandlers(element);
+                EventHelper.RemoveWpfEventHandlers(element, log);
 
                 /*// foreach (var pi in GetPropertiesForCleaner(element.GetType()))
                 foreach (var pi in GetPropertiesForCleaner(element.GetType()).Where(a => a.Name != "TemplatedParent" && a.Name != "Parent" && a.Name != "Content" && a.Name != "DataContext"))
@@ -94,14 +105,14 @@ namespace WpfInvestigate.Helpers
                     }
                 }*/
 
-                ClearElement(element);
+                ClearElement(element, log);
 
                 if (element is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is DependencyObject o)
-                    RemoveChild(o, uiElement); // !!! Important
+                    RemoveChild(o, uiElement, log); // !!! Important
 
                 if (element is FrameworkElement fe)
                 {
-                    ClearResources(fe.Resources);
+                    ClearResources(fe.Resources, log);
                     fe.Resources.Add("Unloaded", null);
                 }
             }
@@ -190,12 +201,17 @@ namespace WpfInvestigate.Helpers
             }*/
         }
 
-        private static void RemoveChild(DependencyObject parent, UIElement child)
+        private static void RemoveChild(DependencyObject parent, UIElement child, bool log = false)
         {
             if (parent is Panel panel)
             {
                 if (!panel.IsItemsHost)
+                {
+                    if (log)
+                        Debug.Print($"RemoveChild. Parent: {parent.GetType().Name}, {GetName(parent)}. Child: {child.GetType().Name}, {GetName(child)}");
                     panel.Children.Remove(child);
+                }
+
                 return;
             }
             /* if (parent is Decorator decorator)
@@ -259,7 +275,7 @@ namespace WpfInvestigate.Helpers
 
         private static PropertyInfo[] GetPropertiesForCleaner(Type type) => type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
 
-        private static void ClearElement(DependencyObject element)
+        private static void ClearElement(DependencyObject element, bool log = false)
         {
             if (element.IsSealed) return;
 
@@ -267,8 +283,14 @@ namespace WpfInvestigate.Helpers
             {
                 var value = pi.GetValue(element);
                 if (value != null && (value is ICommand || value is ControlTemplate || value is Style || pi.Name == "DataContext"))
+                {
+                    if (log)
+                        Debug.Print($"ClearElement: {element.GetType().Name}, {GetName(element)}, {pi.Name}. Value: {value.GetType().Name}, {GetName(value)}");
                     pi.SetValue(element, null);
+                }
             }
         }
+
+        private static string GetName(object o) => o is FrameworkElement fe ? fe.Name : null;
     }
 }
