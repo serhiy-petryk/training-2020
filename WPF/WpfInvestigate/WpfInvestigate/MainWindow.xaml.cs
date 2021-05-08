@@ -97,7 +97,6 @@ namespace WpfInvestigate
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
-            var aa1 = TypeHelper.GetAttachedProperties(typeof(Button), sender as Button);
         }
 
         private void TestButtonChangeStyle(object sender, RoutedEventArgs e)

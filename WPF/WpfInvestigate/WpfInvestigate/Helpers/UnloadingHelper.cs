@@ -61,8 +61,6 @@ namespace WpfInvestigate.Helpers
         // todo: add collections & recursive objects (see resources)
         private static void CleanDependencyObject(UIElement d)
         {
-            // TypeHelper.CheckNewProperties();
-
             // todo: add collections & recursive objects (see resources)
             //var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
             var elements = GetVChildren(d).Union(new[] { d }).ToArray();

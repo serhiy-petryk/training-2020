@@ -145,54 +145,6 @@ namespace WpfInvestigate.Helpers
         #endregion
 
         #region =========  RemoveDependencyPropertyEventHandlers  ========
-        // private static List<PropertyDescriptor> _pds;
-        private static FieldInfo _fiTrackers;
-        private static FieldInfo _fiObjectOfTracker;
-        private static FieldInfo _fiPropertyOfTracker;
-        private static FieldInfo _fiChangedOfTracker;
-
-        public static void RemoveDPDEvents(DependencyObject[] elements)
-        {
-            var propertyChangeTrackers = new List<object>();
-            var tt = new Dictionary<Type, int>();
-            foreach (var element in elements)
-            {
-                var type = element.GetType();
-                if (tt.ContainsKey(type)) continue;
-
-                var pp1 = TypeHelper.GetPropertyInfos(type);
-                tt.Add(type, pp1.Length);
-
-                foreach (var aa1 in pp1.Where(p => p.Item2 != null))
-                {
-                    if (_fiTrackers == null)
-                        _fiTrackers = aa1.Item1.GetType().GetField("_trackers", BindingFlags.NonPublic | BindingFlags.Instance);
-                    var trackers = _fiTrackers.GetValue(aa1.Item1);
-                    if (trackers != null)
-                        propertyChangeTrackers.AddRange(((IDictionary) trackers).Values.OfType<object>());
-                }
-            }
-
-            var aa2 = propertyChangeTrackers.Distinct().ToArray();
-            foreach (var a2 in aa2)
-            {
-                if (_fiObjectOfTracker == null)
-                {
-                    _fiObjectOfTracker = a2.GetType().GetField("_object", BindingFlags.NonPublic | BindingFlags.Instance);
-                    _fiPropertyOfTracker = a2.GetType().GetField("_property", BindingFlags.NonPublic | BindingFlags.Instance);
-                    _fiChangedOfTracker = a2.GetType().GetField("Changed", BindingFlags.NonPublic | BindingFlags.Instance);
-                }
-
-                var d = _fiObjectOfTracker.GetValue(a2) as DependencyObject;
-                var p = _fiPropertyOfTracker.GetValue(a2) as DependencyProperty;
-                var dpd = DependencyPropertyDescriptor.FromProperty(p, d.GetType());
-                var changed = _fiChangedOfTracker.GetValue(a2) as EventHandler;
-
-                dpd.RemoveValueChanged(d, changed);
-            }
-        }
-
-        //==========================
         private static Dictionary<Type, DependencyPropertyDescriptor[]> _dpdOfType = new Dictionary<Type, DependencyPropertyDescriptor[]>();
         private static PropertyInfo _piPropertyOfDpd = typeof(DependencyPropertyDescriptor).GetProperty("Property", BindingFlags.NonPublic | BindingFlags.Instance);
         private static FieldInfo _fiTrackersOfProperty = null;
