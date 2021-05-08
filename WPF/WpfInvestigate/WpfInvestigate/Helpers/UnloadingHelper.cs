@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -99,8 +98,8 @@ namespace WpfInvestigate.Helpers
 
                 ClearElement(element);
 
-                if (element is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is DependencyObject _do)
-                    RemoveChild(_do, uiElement); // !!! Important
+                if (element is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is DependencyObject o)
+                    RemoveChild(o, uiElement); // !!! Important
 
                 if (element is FrameworkElement fe)
                 {
@@ -201,7 +200,7 @@ namespace WpfInvestigate.Helpers
                     panel.Children.Remove(child);
                 return;
             }
-            if (parent is Decorator decorator)
+            /* if (parent is Decorator decorator)
             {
                 if (Equals(decorator.Child, child)) decorator.Child = null;
                 return;
@@ -242,7 +241,7 @@ namespace WpfInvestigate.Helpers
                 return;
             }
 
-            Debug.Print($"RemoveChild not defined for : {parent.GetType()} type of parent");
+            Debug.Print($"RemoveChild not defined for : {parent.GetType()} type of parent");*/
             return;
             throw new Exception($"RemoveChildis not defined for {parent.GetType().Name} type of parent");
         }
@@ -261,30 +260,6 @@ namespace WpfInvestigate.Helpers
         #endregion
 
         private static PropertyInfo[] GetPropertiesForCleaner(Type type) => type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
-
-        private static void ClearElement2(DependencyObject element)
-        {
-
-            /*var localValueEnumerator = element.GetLocalValueEnumerator();
-            while (localValueEnumerator.MoveNext())
-            {
-                var current = localValueEnumerator.Current;
-                if (!current.Property.ReadOnly)
-                    element.ClearValue(current.Property);
-            }
-            return;*/
-            if (element is Track || element.IsSealed) return;
-            GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
-            {
-                // no effect: if (!(pi.PropertyType == typeof(string)))
-                if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
-                {
-                    if (!(pi.Name == "Language" || pi.Name == "Title") && pi.GetValue(element) != null)
-                        pi.SetValue(element, null);
-                }
-            });
-            // errors in Wpf control logic: GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
-        }
 
         private static void ClearElement(DependencyObject element)
         {
