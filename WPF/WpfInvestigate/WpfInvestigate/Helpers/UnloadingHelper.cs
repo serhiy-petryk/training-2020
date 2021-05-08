@@ -290,11 +290,10 @@ namespace WpfInvestigate.Helpers
         {
             if (element.IsSealed) return;
 
-            foreach (var pi in GetPropertiesForCleaner(element.GetType()).Where(pi =>
-                pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(string)))
+            foreach (var pi in GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(string)))
             {
                 var value = pi.GetValue(element);
-                if (value != null && (value is ICommand || value is ControlTemplate || pi.Name == "DataContext"))
+                if (value != null && (value is ICommand || value is ControlTemplate || value is Style || pi.Name == "DataContext"))
                     pi.SetValue(element, null);
             }
         }
