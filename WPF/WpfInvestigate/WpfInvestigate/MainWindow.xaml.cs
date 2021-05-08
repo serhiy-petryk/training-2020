@@ -300,7 +300,6 @@ namespace WpfInvestigate
             // foreach(var a1 in diffKeys)
             //  data.Remove(a1);
             Debug.Print($"New WeakRefs: {diffKeys.Count}");
-            var xx1 = UnloadingHelper.AAA;
         }
 
         private string GetStringOfEventKey(object eventKey)

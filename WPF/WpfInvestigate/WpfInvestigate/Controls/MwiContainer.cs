@@ -171,11 +171,9 @@ namespace WpfInvestigate.Controls
         {
             if (this.AutomaticUnloading(OnUnloaded))
             {
-                MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-
                 if (Children != null)
                 {
-                    foreach (var mwiChild in Children.Cast<MwiChild>().Where(c => c.IsWindowed))
+                    foreach (var mwiChild in Children.OfType<MwiChild>().Where(c => c.IsWindowed))
                         ((Window)mwiChild.Parent).Close();
 
                     while (Children.Count > 0)
@@ -185,6 +183,8 @@ namespace WpfInvestigate.Controls
                     }
                     Children.CollectionChanged -= OnChildrenCollectionChanged;
                 }
+                MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+                Theme = null;
             }
         }
 

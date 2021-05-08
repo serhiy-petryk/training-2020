@@ -176,6 +176,12 @@ namespace WpfInvestigate
             }
         }
 
-        public void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
+        public void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.AutomaticUnloading(OnUnloaded))
+            {
+                Icon = null;
+            }
+        }
     }
 }
