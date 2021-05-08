@@ -47,16 +47,7 @@ namespace WpfInvestigate.Effects
         {
             if (!(d is Control control)) return;
 
-            /*if (control.Name == "DetachedButton")
-                Debug.Print($"DetachedButton.OnChromeChanged. Clear");*/
-
-            control.PreviewMouseLeftButtonDown -= ChromeUpdate;
-            control.PreviewMouseLeftButtonUp -= ChromeUpdate;
-            var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-            dpdIsMouseOver.RemoveValueChanged(control, ChromeUpdate);
-            var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-            dpdIsEnabled.RemoveValueChanged(control, ChromeUpdate);
-            var dpdStyle = DependencyPropertyDescriptor.FromProperty(FrameworkElement.StyleProperty, typeof(FrameworkElement));
+            ClearEvents(control);
 
             var state = GetState(control);
             if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
@@ -68,14 +59,35 @@ namespace WpfInvestigate.Effects
                 {
                     control.PreviewMouseLeftButtonDown += ChromeUpdate;
                     control.PreviewMouseLeftButtonUp += ChromeUpdate;
+                    var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
                     dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
+                    var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
                     dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
+                    control.Unloaded += OnControlUnloaded;
 
                     if (control.Style == null && Application.Current.TryFindResource("DefaultButtonBaseStyle") is Style style && style.TargetType.IsInstanceOfType(control))
                         control.Style = style;
                     ChromeUpdate(control, null);
                 }
             }, DispatcherPriority.Loaded);
+        }
+
+        private static void ClearEvents(Control control)
+        {
+            control.Unloaded -= OnControlUnloaded;
+            control.PreviewMouseLeftButtonDown -= ChromeUpdate;
+            control.PreviewMouseLeftButtonUp -= ChromeUpdate;
+            var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpdIsMouseOver.RemoveValueChanged(control, ChromeUpdate);
+            var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
+            dpdIsEnabled.RemoveValueChanged(control, ChromeUpdate);
+        }
+
+        private static void OnControlUnloaded(object sender, RoutedEventArgs e)
+        {
+            var control = (Control)sender;
+            if (control.IsElementDisposing())
+                ClearEvents(control);
         }
 
         private static Tuple<Color?, Color?, Color?, bool, bool, bool> GetState(Control control)
