@@ -26,6 +26,7 @@ namespace WpfInvestigate.Controls
             if (this.AutomaticUnloading(OnUnloaded))
             {
                 MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+                MovingThumb = null;
                 Theme = null;
                 Icon = null;
             }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -96,8 +97,10 @@ namespace WpfInvestigate.Helpers
 
                 ClearElement(element);
 
-                if (element is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is DependencyObject o)
-                    RemoveChild(o, uiElement); // !!! Important
+                //if (element is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is DependencyObject o)
+                  //  RemoveChild(o, uiElement); // !!! Important
+                if (element is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is Panel panel && !panel.IsItemsHost)
+                    panel.Children.Remove(uiElement);
 
                 if (element is FrameworkElement fe)
                 {
@@ -257,18 +260,21 @@ namespace WpfInvestigate.Helpers
         }
         #endregion
 
-        private static PropertyInfo[] GetPropertiesForCleaner(Type type) => type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
-
         private static void ClearElement(DependencyObject element)
         {
             if (element.IsSealed) return;
 
-            foreach (var pi in GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(string)))
+            //if (element is Panel panel && !panel.IsItemsHost && panel.Children.Count != 0)
+               // panel.Children.Clear();
+
+            foreach (var pi in element.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
+                .Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(string)))
             {
                 var value = pi.GetValue(element);
-                if (value != null && (value is ICommand || value is ControlTemplate || value is Style || pi.Name == "DataContext"))
+                if (value != null && (value is ICommand || value is ControlTemplate || value is Style || value is ResourceDictionary || pi.Name == "DataContext" || pi.Name == "Content" || pi.Name == "Command" || pi.Name == "CommandTarget" || pi.Name == "CommandParameter"))
                     pi.SetValue(element, null);
             }
         }
+
     }
 }

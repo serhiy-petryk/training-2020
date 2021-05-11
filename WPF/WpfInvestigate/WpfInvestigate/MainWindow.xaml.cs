@@ -270,6 +270,7 @@ namespace WpfInvestigate
             if (weakRefDataCopy == null)
                 weakRefDataCopy = data.Clone() as Hashtable;
             Debug.Print($"Weak Data: {data.Count}");
+            // var aa1 = UnloadingHelper.AAA;
         }
 
         private void OnCompareWeakRefsClick(object sender, RoutedEventArgs e)

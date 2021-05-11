@@ -92,7 +92,13 @@ namespace WpfInvestigate.TestViews
             Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
         }
 
-        public void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
+        public void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.IsElementDisposing())
+                MainGrid.LayoutTransform.ClearAllBindings();
+
+            this.AutomaticUnloading(OnUnloaded);
+        }
 
         private void OnTestClick(object sender, RoutedEventArgs e)
         {
