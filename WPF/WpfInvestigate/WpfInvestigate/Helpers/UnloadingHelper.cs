@@ -21,7 +21,7 @@ namespace WpfInvestigate.Helpers
             if (onUnloadedEventHandler != null)
                 fe.Unloaded -= onUnloadedEventHandler;
             if (!fe.Resources.Contains("Unloaded"))
-                CleanDependencyObject(fe);
+                ClearElementWithChild(fe);
             return true;
         }
 
@@ -30,12 +30,12 @@ namespace WpfInvestigate.Helpers
             foreach (var child in rd.MergedDictionaries)
                 ClearResources(child);
 
-            foreach (var item in rd.OfType<DictionaryEntry>())
+            foreach (var value in rd.Values)
             {
-                if (item.Value is IDisposable disposable)
+                if (value is IDisposable disposable)
                     disposable.Dispose();
 
-                if (item.Value is DependencyObject d)
+                if (value is DependencyObject d)
                 {
                     BindingOperations.ClearAllBindings(d);
                     EventHelper.RemoveWpfEventHandlers(d); // ???
@@ -54,20 +54,9 @@ namespace WpfInvestigate.Helpers
         #endregion
 
         #region ===========  Dependency Object cleaner  ===============
-
-        private static int _itemCount = 0;
-        private static int _stepCount = 0;
-        // todo: add collections & recursive objects (see resources)
-        private static void CleanDependencyObject(UIElement d)
+        private static void ClearElementWithChild(UIElement d)
         {
-            // todo: add collections & recursive objects (see resources)
-            //var elements = (new[] { d }).Union(d.GetVisualChildren()).ToArray();
-            var elements = GetVChildren(d).Union(new[] { d }).ToArray();
-
-            // _itemCount += elements.Length;
-            // Debug.Print($"Clean: {d.GetType().Name}, items: {_itemCount}, steps: {++_stepCount}");
-
-            foreach (var element in elements)
+            foreach (var element in GetVChildren(d).Union(new[] { d }).ToArray())
             {
                 BindingOperations.ClearAllBindings(element);
                 EventHelper.RemoveWpfEventHandlers(element);
@@ -82,6 +71,7 @@ namespace WpfInvestigate.Helpers
                     ClearResources(fe.Resources);
                     fe.Resources.Add("Unloaded", null);
                 }
+
             }
         }
 
@@ -101,12 +91,12 @@ namespace WpfInvestigate.Helpers
         {
             if (element.IsSealed) return;
 
-            GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(string)).ToList().ForEach(pi =>
+            foreach (var pi in GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(string)))
             {
                 var value = pi.GetValue(element);
                 if (value != null && (value is ICommand || value is ControlTemplate || value is Style || value is ResourceDictionary || pi.Name == "DataContext" || pi.Name == "Content" || pi.Name == "Command" || pi.Name == "CommandTarget" || pi.Name == "CommandParameter"))
                     pi.SetValue(element, null);
-            });
+            }
         }
 
         private static PropertyInfo[] GetPropertiesForCleaner(Type type) => type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
