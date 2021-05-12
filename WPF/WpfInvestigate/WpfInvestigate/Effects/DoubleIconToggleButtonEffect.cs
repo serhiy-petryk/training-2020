@@ -96,19 +96,12 @@ namespace WpfInvestigate.Effects
                 viewbox.RenderTransform = new ScaleTransform(1, 1);
             viewbox.RenderTransformOrigin = new Point(0.5, 0.5);
 
-            var newGeometry = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb);
-            var newMargin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb);
-            var tasks = new List<Task>
-            {
-                viewbox.BeginFrameAnimationAsync(FrameworkElement.MarginProperty, newMargin),
-                path.BeginFrameAnimationAsync(Path.DataProperty, newGeometry),
-                viewbox.RenderTransform.BeginAnimationAsync(ScaleTransform.ScaleXProperty, 1.0, 0.0)
-            };
-            await Task.WhenAll(tasks.ToArray());
-
+            await viewbox.RenderTransform.BeginAnimationAsync(ScaleTransform.ScaleXProperty, 1.0, 0.0);
+            path.Data = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb);
+            viewbox.Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb);
             await viewbox.RenderTransform.BeginAnimationAsync(ScaleTransform.ScaleXProperty, 0.0, 1.0);
         }
 
-        private static Viewbox GetViewbox(ToggleButton tb) => Tips.GetVisualChildren(tb).OfType<Viewbox>().FirstOrDefault(vb => vb.Resources["IconViewBox"] is bool);
+        private static Viewbox GetViewbox(ToggleButton tb) => tb.GetVisualChildren().OfType<Viewbox>().FirstOrDefault(vb => vb.Resources["IconViewBox"] is bool);
     }
 }
