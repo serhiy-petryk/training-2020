@@ -39,7 +39,7 @@ namespace WpfInvestigate.Effects
 
                     Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                     {
-                        if (!UnloadingHelper.IsElementDisposing(element))
+                        if (!element.IsElementDisposing())
                         {
                             element.SizeChanged += Element_ChangeFocus;
                             var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));

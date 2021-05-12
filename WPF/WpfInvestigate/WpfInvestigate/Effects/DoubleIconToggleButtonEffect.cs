@@ -67,13 +67,16 @@ namespace WpfInvestigate.Effects
                 {
                     if ((!(tb.Content is FrameworkElement) || GetViewbox(tb) == null) && GetGeometryOn(tb) != Geometry.Empty && GetGeometryOff(tb) != Geometry.Empty)
                     {
-                        Init(tb);
                         tb.Checked -= OnToggleButtonCheckChanged;
                         tb.Unchecked -= OnToggleButtonCheckChanged;
-                        tb.Checked += OnToggleButtonCheckChanged;
-                        tb.Unchecked += OnToggleButtonCheckChanged;
+                        if (!tb.IsElementDisposing())
+                        {
+                            Init(tb);
+                            tb.Checked += OnToggleButtonCheckChanged;
+                            tb.Unchecked += OnToggleButtonCheckChanged;
+                        }
                     }
-                }, DispatcherPriority.Background);
+                }, DispatcherPriority.Loaded);
             }
         }
 

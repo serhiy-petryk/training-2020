@@ -24,11 +24,17 @@ namespace WpfInvestigate.Effects
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
             dpd.RemoveValueChanged(element, UpdateBorders);
 
-            element.SizeChanged += UpdateBorders;
-            dpd.AddValueChanged(element, UpdateBorders);
 
             // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
-            element.Dispatcher.InvokeAsync(() => UpdateBorders(element, null), DispatcherPriority.ContextIdle);
+            element.Dispatcher.InvokeAsync(() =>
+            {
+                if (!element.IsElementDisposing())
+                {
+                    element.SizeChanged += UpdateBorders;
+                    dpd.AddValueChanged(element, UpdateBorders);
+                    UpdateBorders(element, null);
+                }
+            }, DispatcherPriority.ContextIdle);
         }
 
         private static void UpdateBorders(object sender, EventArgs e)

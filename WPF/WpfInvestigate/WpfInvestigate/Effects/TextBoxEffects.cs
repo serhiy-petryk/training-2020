@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Effects
 {
@@ -45,7 +46,11 @@ namespace WpfInvestigate.Effects
             }
 
             RemoveButtons(textBox);
-            Dispatcher.CurrentDispatcher.InvokeAsync(() => AddButtons(textBox), DispatcherPriority.Loaded);
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+            {
+                if (!textBox.IsElementDisposing())
+                    AddButtons(textBox);
+            }, DispatcherPriority.Loaded);
 
         }
 

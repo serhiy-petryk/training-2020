@@ -42,14 +42,14 @@ namespace WpfInvestigate.Effects
             {
                 RemoveClearButton(dp);
 
-                if ((bool)e.NewValue)
+                if ((bool)e.NewValue && !dp.IsElementDisposing())
                     AddClearButton(dp);
             }, DispatcherPriority.Loaded);
         }
 
         private static void AddClearButton(DatePicker dp)
         {
-            if (Tips.GetVisualChildren(dp).OfType<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName) != null)
+            if (dp.GetVisualChildren().OfType<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName) != null)
                 return;
 
             var button = dp.Template.FindName("PART_Button", dp) as Button;
@@ -121,14 +121,17 @@ namespace WpfInvestigate.Effects
                 var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
                 dpdEnd.RemoveValueChanged(dp, OnChangeDateLimit);
 
-                if (e.NewValue == null)
-                    return;
+                //if (e.NewValue == null)
+                    //return;
 
-                dp.SelectedDateChanged += OnSelectedDateChanged;
-                dpdStart.AddValueChanged(dp, OnChangeDateLimit);
-                dpdEnd.AddValueChanged(dp, OnChangeDateLimit);
+                if (!dp.IsElementDisposing())
+                {
+                    dp.SelectedDateChanged += OnSelectedDateChanged;
+                    dpdStart.AddValueChanged(dp, OnChangeDateLimit);
+                    dpdEnd.AddValueChanged(dp, OnChangeDateLimit);
 
-                CheckDatePicker(dp);
+                    CheckDatePicker(dp);
+                }
             }, DispatcherPriority.Loaded);
         }
 

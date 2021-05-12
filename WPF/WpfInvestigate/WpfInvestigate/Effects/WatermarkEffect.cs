@@ -37,7 +37,7 @@ namespace WpfInvestigate.Effects
             {
                 Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                 {
-                    var txtBox = fe as TextBox ?? Tips.GetVisualChildren(fe).FirstOrDefault(c => c is TextBox) as TextBox;
+                    var txtBox = fe as TextBox ?? fe.GetVisualChildren().FirstOrDefault(c => c is TextBox) as TextBox;
                     if (txtBox != null)
                     {
                         txtBox.Dispatcher.InvokeAsync(() => TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None)), DispatcherPriority.Background);
@@ -45,13 +45,17 @@ namespace WpfInvestigate.Effects
                         txtBox.GotFocus -= ControlBox_ChangeFocus;
                         txtBox.LostFocus -= ControlBox_ChangeFocus;
 
-                        txtBox.TextChanged += TxtBox_TextChanged;
-                        txtBox.GotFocus += ControlBox_ChangeFocus;
-                        txtBox.LostFocus += ControlBox_ChangeFocus;
+                        if (!txtBox.IsElementDisposing())
+                        {
+                            txtBox.TextChanged += TxtBox_TextChanged;
+                            txtBox.GotFocus += ControlBox_ChangeFocus;
+                            txtBox.LostFocus += ControlBox_ChangeFocus;
+                        }
+
                         return;
                     }
 
-                    var pswBox = fe as PasswordBox ?? Tips.GetVisualChildren(fe).FirstOrDefault(c => c is PasswordBox) as PasswordBox;
+                    var pswBox = fe as PasswordBox ?? fe.GetVisualChildren().FirstOrDefault(c => c is PasswordBox) as PasswordBox;
                     if (pswBox != null)
                     {
                         pswBox.Dispatcher.InvokeAsync(() => ControlBox_ChangeFocus(pswBox, new RoutedEventArgs()), DispatcherPriority.Background);
@@ -59,9 +63,12 @@ namespace WpfInvestigate.Effects
                         pswBox.GotFocus -= ControlBox_ChangeFocus;
                         pswBox.LostFocus -= ControlBox_ChangeFocus;
 
-                        pswBox.PasswordChanged += ControlBox_ChangeFocus;
-                        pswBox.GotFocus += ControlBox_ChangeFocus;
-                        pswBox.LostFocus += ControlBox_ChangeFocus;
+                        if (!pswBox.IsElementDisposing())
+                        {
+                            pswBox.PasswordChanged += ControlBox_ChangeFocus;
+                            pswBox.GotFocus += ControlBox_ChangeFocus;
+                            pswBox.LostFocus += ControlBox_ChangeFocus;
+                        }
                         return;
                     }
 

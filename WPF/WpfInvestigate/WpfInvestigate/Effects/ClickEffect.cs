@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Effects
 {
@@ -43,20 +44,24 @@ namespace WpfInvestigate.Effects
                     fe.PreviewMouseLeftButtonDown -= OnElementPreviewMouseLeftButtonDown;
                     fe.PreviewMouseLeftButtonUp -= OnElementPreviewMouseLeftButtonUp;
 
-                    fe.PreviewMouseLeftButtonDown += OnElementPreviewMouseLeftButtonDown;
-                    fe.PreviewMouseLeftButtonUp += OnElementPreviewMouseLeftButtonUp;
-
-                    // Suppress 'Pressed' VisualState for ripple FlatButton
-                    foreach (var o in Tips.GetVisualChildren(fe).OfType<FrameworkElement>())
+                    if (!fe.IsElementDisposing())
                     {
-                        var groups = VisualStateManager.GetVisualStateGroups(o);
-                        if (groups != null)
-                            foreach (var visualGroup in groups?.OfType<VisualStateGroup>())
-                            {
-                                var state = visualGroup.States.Cast<VisualState>().FirstOrDefault(v => v.Name == "Pressed");
-                                if (state != null)
-                                    visualGroup.States.Remove(state);
-                            }
+                        fe.PreviewMouseLeftButtonDown += OnElementPreviewMouseLeftButtonDown;
+                        fe.PreviewMouseLeftButtonUp += OnElementPreviewMouseLeftButtonUp;
+
+                        // Suppress 'Pressed' VisualState for ripple FlatButton
+                        foreach (var o in Tips.GetVisualChildren(fe).OfType<FrameworkElement>())
+                        {
+                            var groups = VisualStateManager.GetVisualStateGroups(o);
+                            if (groups != null)
+                                foreach (var visualGroup in groups.OfType<VisualStateGroup>())
+                                {
+                                    var state = visualGroup.States.Cast<VisualState>()
+                                        .FirstOrDefault(v => v.Name == "Pressed");
+                                    if (state != null)
+                                        visualGroup.States.Remove(state);
+                                }
+                        }
                     }
                 }, DispatcherPriority.Loaded);
             }
