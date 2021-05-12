@@ -34,7 +34,7 @@ namespace WpfInvestigate.Effects
                     dpd.AddValueChanged(element, UpdateBorders);
                     UpdateBorders(element, null);
                 }
-            }, DispatcherPriority.ContextIdle);
+            }, DispatcherPriority.Loaded);
         }
 
         private static void UpdateBorders(object sender, EventArgs e)
