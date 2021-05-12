@@ -44,9 +44,9 @@ namespace WpfInvestigate.Controls
         {
             var button = (ToggleButton)sender;
 
-            var a1 = new DoubleAnimation(MwiPanel.Opacity, 0.875, AnimationHelper.AnimationDuration);
-            a1.BeginTime = AnimationHelper.AnimationDuration.TimeSpan;
-
+            // bad view of LeftPanelButton animation when MwiPanel.Opacity is animated simultaneously with LeftPanelButton animation
+            // var a1 = new DoubleAnimation(MwiPanel.Opacity, 0.875, AnimationHelper.AnimationDuration);
+            // a1.BeginTime = AnimationHelper.AnimationDuration.TimeSpan;
             if (button.IsChecked == true)
             {
                 _leftPanelContainer.Visibility = Visibility.Visible;
@@ -54,7 +54,8 @@ namespace WpfInvestigate.Controls
                     _leftPanelContainer.BeginAnimationAsync(WidthProperty, 0.0, _leftPanelContainer.ActualWidth),
                     _leftPanelContainer.BeginAnimationAsync(OpacityProperty, 0.5, 1.0)
                 );
-                MwiPanel.BeginAnimation(OpacityProperty, a1);
+                MwiPanel.Opacity = 0.875;
+                // MwiPanel.BeginAnimation(OpacityProperty, a1);
             }
             else
             {
@@ -66,8 +67,9 @@ namespace WpfInvestigate.Controls
 
                 _leftPanelContainer.Visibility = Visibility.Hidden;
                 _leftPanelContainer.Width = lastLeftPanelWidth;
-                a1.To = 1.0;
-                MwiPanel.BeginAnimation(OpacityProperty, a1);
+                MwiPanel.Opacity = 1.0;
+                // a1.To = 1.0;
+                // MwiPanel.BeginAnimation(OpacityProperty, a1);
             }
         }
 
