@@ -43,23 +43,31 @@ namespace WpfInvestigate.Controls
         private async void LeftPanelButton_OnCheckedChanged(object sender, RoutedEventArgs e)
         {
             var button = (ToggleButton)sender;
+
+            var a1 = new DoubleAnimation(MwiPanel.Opacity, 0.875, AnimationHelper.AnimationDuration);
+            a1.BeginTime = AnimationHelper.AnimationDuration.TimeSpan;
+
             if (button.IsChecked == true)
             {
                 _leftPanelContainer.Visibility = Visibility.Visible;
-                _leftPanelContainer.BeginAnimation(WidthProperty, new DoubleAnimation(0, _leftPanelContainer.ActualWidth, AnimationHelper.AnimationDuration, FillBehavior.Stop));
-                _leftPanelContainer.BeginAnimation(OpacityProperty, new DoubleAnimation(0.5, 1, AnimationHelper.AnimationDuration));
-                MwiPanel.BeginAnimation(OpacityProperty, new DoubleAnimation(1.0, 0.75, AnimationHelper.AnimationDuration));
+                await Task.WhenAll(
+                    _leftPanelContainer.BeginAnimationAsync(WidthProperty, 0.0, _leftPanelContainer.ActualWidth),
+                    _leftPanelContainer.BeginAnimationAsync(OpacityProperty, 0.5, 1.0)
+                );
+                MwiPanel.BeginAnimation(OpacityProperty, a1);
             }
             else
             {
                 var lastLeftPanelWidth = _leftPanelContainer.ActualWidth;
                 await Task.WhenAll(
                     _leftPanelContainer.BeginAnimationAsync(WidthProperty, _leftPanelContainer.ActualWidth, 0.0),
-                    _leftPanelContainer.BeginAnimationAsync(OpacityProperty,  _leftPanelContainer.Opacity, 0.5),
-                    MwiPanel.BeginAnimationAsync(OpacityProperty, MwiPanel.Opacity, 1.0));
+                    _leftPanelContainer.BeginAnimationAsync(OpacityProperty, _leftPanelContainer.Opacity, 0.5)
+                );
 
                 _leftPanelContainer.Visibility = Visibility.Hidden;
                 _leftPanelContainer.Width = lastLeftPanelWidth;
+                a1.To = 1.0;
+                MwiPanel.BeginAnimation(OpacityProperty, a1);
             }
         }
 
