@@ -121,11 +121,11 @@ namespace WpfInvestigate.Controls
             ScrollViewer = GetTemplateChild("ScrollViewer") as ScrollViewer;
             MwiPanel = GetTemplateChild("MwiPanel") as Grid;
             _leftPanelContainer = GetTemplateChild("LeftPanelContainer") as Grid;
-            _leftPanelButton = GetTemplateChild("LeftPanelButton") as ToggleButton;
-            if (_leftPanelButton != null)
+
+            if (GetTemplateChild("LeftPanelButton") is ToggleButton leftPanelButton)
             {
-                _leftPanelButton.Checked += LeftPanelButton_OnCheckedChanged;
-                _leftPanelButton.Unchecked += LeftPanelButton_OnCheckedChanged;
+                leftPanelButton.Checked += LeftPanelButton_OnCheckedChanged;
+                leftPanelButton.Unchecked += LeftPanelButton_OnCheckedChanged;
             }
 
             if (GetTemplateChild("LeftPanelDragThumb") is Thumb leftPanelDragThumb)
