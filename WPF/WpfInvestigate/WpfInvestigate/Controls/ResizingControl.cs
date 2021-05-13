@@ -120,7 +120,7 @@ namespace WpfInvestigate.Controls
                 sv.ScrollChanged += ScrollViewer_OnScrollChanged;
             }
         }*/
-        private void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
+        private static void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             var sv = (ScrollViewer)sender;
             // If unnecessary scrollbars are visible -> remove them

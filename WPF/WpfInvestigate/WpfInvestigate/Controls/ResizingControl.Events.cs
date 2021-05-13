@@ -26,7 +26,9 @@ namespace WpfInvestigate.Controls
         public virtual void OnUnloaded(object sender, RoutedEventArgs e)
         {
             if (this.AutomaticUnloading(OnUnloaded))
+            {
                 MovingThumb = null;
+            }
         }
 
         private void AddLoadedEvents(bool onlyRemove = false)
@@ -34,16 +36,16 @@ namespace WpfInvestigate.Controls
             foreach (var thumb in this.GetVisualChildren().OfType<Thumb>().Where(t => t.Name.StartsWith("Resize")))
                 thumb.DragDelta -= ResizeThumb_OnDragDelta;
 
-            if (HostPanel.GetVisualParents().OfType<ScrollViewer>().FirstOrDefault() is ScrollViewer sv && !Equals(sv.Resources["State"], "Activated"))
-                sv.ScrollChanged -= ScrollViewer_OnScrollChanged;
-
             if (onlyRemove) return;
 
             foreach (var thumb in this.GetVisualChildren().OfType<Thumb>().Where(t => t.Name.StartsWith("Resize")))
                 thumb.DragDelta += ResizeThumb_OnDragDelta;
 
-            if (HostPanel.GetVisualParents().OfType<ScrollViewer>().FirstOrDefault() is ScrollViewer sv1 && !Equals(sv1.Resources["State"], "Activated"))
-                sv1.ScrollChanged += ScrollViewer_OnScrollChanged;
+            if (HostPanel.GetVisualParents().OfType<ScrollViewer>().FirstOrDefault() is ScrollViewer sv && !Equals(sv.Resources["State"], "Activated"))
+            {
+                sv.Resources.Add("State", "Activated");
+                sv.ScrollChanged += ScrollViewer_OnScrollChanged;
+            }
         }
 
         private void AddVisualParentChangedEvents(bool onlyRemove = false)

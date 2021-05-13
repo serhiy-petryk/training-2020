@@ -25,8 +25,8 @@ namespace WpfInvestigate.Controls
             // !!! Called twice (as MwiChild and as ResizingControl
             if (this.AutomaticUnloading(OnUnloaded))
             {
+                base.OnUnloaded(sender, e);
                 MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-                MovingThumb = null;
                 Theme = null;
                 Icon = null;
             }
