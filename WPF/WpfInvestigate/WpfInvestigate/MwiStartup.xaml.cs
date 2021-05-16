@@ -180,6 +180,7 @@ namespace WpfInvestigate
         {
             if (this.AutomaticUnloading(OnUnloaded))
             {
+                TestMwi = null;
                 Icon = null;
             }
         }
