@@ -99,8 +99,7 @@ namespace WpfInvestigate.Helpers
         {
             if (element.IsSealed) return;
 
-            foreach (var pi in element.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
-                .Where(pi => !pi.PropertyType.IsValueType && pi.PropertyType != typeof(string)))
+            foreach (var pi in GetPropertiesForCleaner(element.GetType()).Where(pi => !pi.PropertyType.IsValueType && pi.PropertyType != typeof(string)))
             {
                 var value = pi.GetValue(element);
 
@@ -114,6 +113,8 @@ namespace WpfInvestigate.Helpers
                     EventHelper.RemoveWpfEventHandlers(value);
             }
         }
+
+        private static PropertyInfo[] GetPropertiesForCleaner(Type type) => type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
         #endregion
     }
 }
