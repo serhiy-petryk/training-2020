@@ -63,19 +63,16 @@ namespace WpfInvestigate.Helpers
 
                 ClearElement(element);
 
-                if (element is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is Panel panel && !panel.IsItemsHost)
+                var uiElement = element as UIElement;
+
+                if (uiElement != null && VisualTreeHelper.GetParent(uiElement) is Panel panel && !panel.IsItemsHost)
                     panel.Children.Remove(uiElement);
 
-                if (d.CommandBindings.Count > 0)
+                if (uiElement != null && uiElement.CommandBindings.Count > 0)
                 {
-                    foreach (CommandBinding cb in d.CommandBindings)
-                    {
+                    foreach (CommandBinding cb in uiElement.CommandBindings)
                         EventHelper.RemoveWpfEventHandlers(cb);
-                        // EventHelper.RemoveWpfEventHandlers(cb);
-                        // EventHelper.RemoveWpfEventHandlers(cb.Command);
-                    }
-
-                    d.CommandBindings.Clear();
+                    uiElement.CommandBindings.Clear();
                 }
 
                 if (element is FrameworkElement fe)
@@ -83,7 +80,6 @@ namespace WpfInvestigate.Helpers
                     ClearResources(fe.Resources);
                     fe.Resources.Add("Unloaded", null);
                 }
-
             }
         }
 
