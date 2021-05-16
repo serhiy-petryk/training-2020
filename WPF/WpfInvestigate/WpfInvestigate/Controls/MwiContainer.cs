@@ -184,6 +184,10 @@ namespace WpfInvestigate.Controls
                     Children.CollectionChanged -= OnChildrenCollectionChanged;
                 }
                 MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+                _leftPanelButton = null;
+                _leftPanelContainer = null;
+                ScrollViewer = null;
+                MwiPanel = null;
                 Theme = null;
             }
         }

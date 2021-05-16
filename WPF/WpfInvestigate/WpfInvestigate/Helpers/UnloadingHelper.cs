@@ -22,7 +22,7 @@ namespace WpfInvestigate.Helpers
             if (onUnloadedEventHandler != null)
                 fe.Unloaded -= onUnloadedEventHandler;
             if (!fe.Resources.Contains("Unloaded"))
-                ClearElementWithChild(fe);
+                UnloadElement(fe);
             return true;
         }
 
@@ -54,16 +54,16 @@ namespace WpfInvestigate.Helpers
         #endregion
 
         #region ===========  Dependency Object cleaner  ===============
-        private static void ClearElementWithChild(UIElement d)
+        private static void UnloadElement(FrameworkElement element)
         {
-            foreach (var element in GetVChildren(d).Union(new[] { d }).ToArray())
+            foreach (var o in GetVChildren(element).Union(new[] { element }).ToArray())
             {
-                BindingOperations.ClearAllBindings(element);
-                EventHelper.RemoveWpfEventHandlers(element);
+                BindingOperations.ClearAllBindings(o);
+                EventHelper.RemoveWpfEventHandlers(o);
 
-                ClearElement(element);
+                ClearElement(o);
 
-                var uiElement = element as UIElement;
+                var uiElement = o as UIElement;
 
                 if (uiElement != null && VisualTreeHelper.GetParent(uiElement) is Panel panel && !panel.IsItemsHost)
                     panel.Children.Remove(uiElement);
@@ -75,7 +75,7 @@ namespace WpfInvestigate.Helpers
                     uiElement.CommandBindings.Clear();
                 }
 
-                if (element is FrameworkElement fe)
+                if (o is FrameworkElement fe)
                 {
                     ClearResources(fe.Resources);
                     fe.Resources.Add("Unloaded", null);
@@ -104,7 +104,10 @@ namespace WpfInvestigate.Helpers
             {
                 var value = pi.GetValue(element);
 
-                if (value != null && pi.CanWrite && (value is ICommand || value is ControlTemplate || value is Style || value is ResourceDictionary || pi.Name == "DataContext" || pi.Name == "Content" || pi.Name == "Command" || pi.Name == "CommandTarget"))
+                if (value != null && pi.CanWrite && (value is ICommand || value is ControlTemplate ||
+                                                     value is Style || value is ResourceDictionary ||
+                                                     pi.Name == "DataContext" || pi.Name == "Content" ||
+                                                     pi.Name == "Command" || pi.Name == "CommandTarget"))
                     pi.SetValue(element, null);
 
                 if (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged)
