@@ -222,14 +222,15 @@ namespace WpfInvestigate.Helpers
                 if (ei.Item2.GetValue(target) is Delegate handler)
                 {
                     var miRemove = ei.Item1.GetRemoveMethod() ?? ei.Item1.GetRemoveMethod(true);
-                    foreach (var d in handler.GetInvocationList())
+                    miRemove.Invoke(target, new object[] { handler });
+                    /*foreach (var d in handler.GetInvocationList())
                     {
                         // string s = d.Method.Name;
                         // Debug.Print($"RemoveDelegates: {target.GetType()}, {s}, {ei.Name}");
                         miRemove.Invoke(target, new object[] { d });
                         // ei.RemoveEventHandler(target, d);
                         _cnt4++;
-                    }
+                    }*/
                 }
             }
         }

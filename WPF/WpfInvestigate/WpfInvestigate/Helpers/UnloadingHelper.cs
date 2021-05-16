@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -40,7 +41,6 @@ namespace WpfInvestigate.Helpers
                     BindingOperations.ClearAllBindings(d);
                     EventHelper.RemoveWpfEventHandlers(d); // ???
                 }
-
             }
             if (!rd.IsReadOnly)
                 rd.Clear();
@@ -65,6 +65,18 @@ namespace WpfInvestigate.Helpers
 
                 if (element is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is Panel panel && !panel.IsItemsHost)
                     panel.Children.Remove(uiElement);
+
+                if (d.CommandBindings.Count > 0)
+                {
+                    foreach (CommandBinding cb in d.CommandBindings)
+                    {
+                        EventHelper.RemoveWpfEventHandlers(cb);
+                        // EventHelper.RemoveWpfEventHandlers(cb);
+                        // EventHelper.RemoveWpfEventHandlers(cb.Command);
+                    }
+
+                    d.CommandBindings.Clear();
+                }
 
                 if (element is FrameworkElement fe)
                 {
@@ -91,15 +103,18 @@ namespace WpfInvestigate.Helpers
         {
             if (element.IsSealed) return;
 
-            foreach (var pi in GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(string)))
+            foreach (var pi in element.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
+                .Where(pi => !pi.PropertyType.IsValueType && pi.PropertyType != typeof(string)))
             {
                 var value = pi.GetValue(element);
-                if (value != null && (value is ICommand || value is ControlTemplate || value is Style || value is ResourceDictionary || pi.Name == "DataContext" || pi.Name == "Content" || pi.Name == "Command" || pi.Name == "CommandTarget" || pi.Name == "CommandParameter"))
+
+                if (value != null && pi.CanWrite && (value is ICommand || value is ControlTemplate || value is Style || value is ResourceDictionary || pi.Name == "DataContext" || pi.Name == "Content" || pi.Name == "Command" || pi.Name == "CommandTarget"))
                     pi.SetValue(element, null);
+
+                if (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged)
+                    EventHelper.RemoveWpfEventHandlers(value);
             }
         }
-
-        private static PropertyInfo[] GetPropertiesForCleaner(Type type) => type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
         #endregion
     }
 }
