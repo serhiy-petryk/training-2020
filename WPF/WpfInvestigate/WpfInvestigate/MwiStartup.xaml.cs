@@ -61,8 +61,7 @@ namespace WpfInvestigate
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            if (MwiContainer.Children != null)
-                TestMwi = MwiContainer.Children.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
+            TestMwi = MwiContainer.Children?.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
         }
 
         private int cnt = 0;
