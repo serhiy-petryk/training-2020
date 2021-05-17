@@ -151,34 +151,28 @@ namespace WpfInvestigate.Helpers
         private static FieldInfo _fiChangedHandlerOfTrackers = null;
         public static void RemoveDependencyPropertyEventHandlers(object o)
         {
-            var type = o.GetType();
-            while (type != typeof(Visual) && type != typeof(object))
+            foreach (var dpd in GetDependencyPropertyDescriptorsForType(o))
             {
-                foreach (var dpd in GetDependencyPropertyDescriptorsForType(type))
+                var property = _piPropertyOfDpd.GetValue(dpd);
+                if (_fiTrackersOfProperty == null)
+                    _fiTrackersOfProperty = property.GetType().GetField("_trackers", BindingFlags.Instance | BindingFlags.NonPublic);
+                var trackers = _fiTrackersOfProperty.GetValue(property) as IDictionary;
+                if (trackers != null && trackers.Contains(o))
                 {
-                    var property = _piPropertyOfDpd.GetValue(dpd);
-                    if (_fiTrackersOfProperty == null)
-                        _fiTrackersOfProperty = property.GetType().GetField("_trackers", BindingFlags.Instance | BindingFlags.NonPublic);
-                    var trackers = _fiTrackersOfProperty.GetValue(property) as IDictionary;
-                    if (trackers != null && trackers.Contains(o))
-                    {
-                        // Debug.Print($"RemoveDPD: {type.Name}, {dpd.Name}");
-                        var tracker = trackers[o];
-                        if (_fiChangedHandlerOfTrackers == null)
-                            _fiChangedHandlerOfTrackers = tracker.GetType().GetField("Changed", BindingFlags.Instance | BindingFlags.NonPublic);
-                        var changed = _fiChangedHandlerOfTrackers.GetValue(tracker) as EventHandler;
-                        dpd.RemoveValueChanged(o, changed);
-                        _cnt3++;
-                    }
+                    // Debug.Print($"RemoveDPD: {type.Name}, {dpd.Name}");
+                    var tracker = trackers[o];
+                    if (_fiChangedHandlerOfTrackers == null)
+                        _fiChangedHandlerOfTrackers = tracker.GetType().GetField("Changed", BindingFlags.Instance | BindingFlags.NonPublic);
+                    var changed = _fiChangedHandlerOfTrackers.GetValue(tracker) as EventHandler;
+                    dpd.RemoveValueChanged(o, changed);
+                    _cnt3++;
                 }
-                type = type.BaseType;
             }
         }
 
         private static Attribute[] _attrs = { new PropertyFilterAttribute(PropertyFilterOptions.All) };
-        private static DependencyPropertyDescriptor[] GetDependencyPropertyDescriptorsForTypeNew(object o)
+        private static DependencyPropertyDescriptor[] GetDependencyPropertyDescriptorsForType(object o)
         {
-            // Need to check: give all properties for type 
             var type = o.GetType();
             if (!_dpdOfType.ContainsKey(type))
             {
@@ -188,14 +182,6 @@ namespace WpfInvestigate.Helpers
                 // Debug.Print($"DPD: {type.Name}");
             }
 
-            return _dpdOfType[type];
-        }
-        private static DependencyPropertyDescriptor[] GetDependencyPropertyDescriptorsForType(Type type)
-        {
-            if (!_dpdOfType.ContainsKey(type))
-                _dpdOfType[type] = type.GetFields(BindingFlags.Public | BindingFlags.Static)
-                    .Where(f => f.FieldType == typeof(DependencyProperty))
-                    .Select(fieldInfo => DependencyPropertyDescriptor.FromProperty(fieldInfo.GetValue(null) as DependencyProperty, type)).ToArray();
             return _dpdOfType[type];
         }
         #endregion
