@@ -63,17 +63,15 @@ namespace WpfInvestigate.Helpers
 
                 ClearElement(o);
 
-                var uiElement = o as UIElement;
-
-                if (uiElement != null && VisualTreeHelper.GetParent(uiElement) is Panel panel && !panel.IsItemsHost)
+                if (o is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is Panel panel && !panel.IsItemsHost)
                     panel.Children.Remove(uiElement);
 
-                if (uiElement != null && uiElement.CommandBindings.Count > 0)
+                /*if (uiElement != null && uiElement.CommandBindings.Count > 0)
                 {
-                    foreach (CommandBinding cb in uiElement.CommandBindings)
-                        EventHelper.RemoveWpfEventHandlers(cb);
+                    //foreach (CommandBinding cb in uiElement.CommandBindings)
+                      //  EventHelper.RemoveWpfEventHandlers(cb);
                     uiElement.CommandBindings.Clear();
-                }
+                }*/
 
                 if (o is FrameworkElement fe)
                 {
@@ -109,8 +107,8 @@ namespace WpfInvestigate.Helpers
                                                      pi.Name == "Command" || pi.Name == "CommandTarget"))
                     pi.SetValue(element, null);
 
-                if (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged)
-                    EventHelper.RemoveWpfEventHandlers(value);
+                //if (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged)
+                  //  EventHelper.RemoveWpfEventHandlers(value);
             }
         }
 
