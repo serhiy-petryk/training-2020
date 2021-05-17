@@ -40,9 +40,11 @@ namespace WpfInvestigate.Controls
             DataContext = this;
             CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
             /*var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
-            dpd.AddValueChanged(this, (sender, args) => UpdateResources(true));
+            dpd.AddValueChanged(this, (sender, args) => UpdateResources(true));*/
 
-            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;*/
+            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
+            Children.CollectionChanged += OnChildrenCollectionChanged;
+            Unloaded += OnUnloaded;
         }
 
         private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -62,12 +64,15 @@ namespace WpfInvestigate.Controls
                         if (mwiChild == null)
                             throw new Exception($"All children of MwiContainer object have to be MwiChild type but it is '{o.GetType().Name}' type");
                         mwiChild.MwiContainer = this;
-                        if (mwiChild.Parent is Grid parent)  // suppress VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first
-                            parent.Children.Remove(mwiChild);
-                        if (!mwiChild.Position.HasValue)
-                            mwiChild.Position = GetStartPositionForMwiChild(mwiChild);
-                        MwiPanel.Children.Add(mwiChild);
-                        mwiChild.Activate();
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            if (mwiChild.Parent is Grid parent)  // suppress VS designer error: InvalidOperationException: Specified element is already the logical child of another element. Disconnect it first
+                                parent.Children.Remove(mwiChild);
+                            if (!mwiChild.Position.HasValue)
+                                mwiChild.Position = GetStartPositionForMwiChild(mwiChild);
+                            MwiPanel.Children.Add(mwiChild);
+                            mwiChild.Activate();
+                        }), DispatcherPriority.Input);
                     }
                     break;
 
@@ -80,7 +85,11 @@ namespace WpfInvestigate.Controls
 
                     break;
 
-                default: throw new Exception("Please, check code");
+                case NotifyCollectionChangedAction.Reset:  // only for correct view of VS designer
+                    Loaded += (o, args) => OnChildrenCollectionChanged(o, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, ((MwiContainer)o).Children));
+                    break;
+
+                default: throw new Exception($"Please, check code for {e.Action} action. New items: {e.NewItems}. OldItems: {e.OldItems}");
             }
         }
 
@@ -134,12 +143,9 @@ namespace WpfInvestigate.Controls
             if (GetTemplateChild("WindowsMenuButton") is ToggleButton windowsMenuButton)
                 windowsMenuButton.Checked += OnWindowsMenuButtonChecked;
 
-            Children.CollectionChanged += OnChildrenCollectionChanged;
-            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
+            // Children.CollectionChanged += OnChildrenCollectionChanged;
             var dpdBackground = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
             dpdBackground.AddValueChanged(this, OnBackgroundChanged);
-
-            Unloaded += OnUnloaded;
 
             if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
             {
@@ -147,7 +153,7 @@ namespace WpfInvestigate.Controls
                 wnd.Deactivated += OnWindowDeactivated;
             }
 
-            Dispatcher.BeginInvoke(new Action(() => OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children))), DispatcherPriority.Input);
+            // Dispatcher.BeginInvoke(new Action(() => OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children))), DispatcherPriority.Background);
             // To fix VS correct view of MwiStartup: DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal)
 
             // =======================
