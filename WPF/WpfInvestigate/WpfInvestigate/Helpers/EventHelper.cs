@@ -12,11 +12,6 @@ namespace WpfInvestigate.Helpers
 {
     public static class EventHelper
     {
-        public static int _cnt1;
-        public static int _cnt2;
-        public static int _cnt3;
-        public static int _cnt4;
-
         public static void RemoveWpfEventHandlers(object o)
         {
             RemovePropertyChangeEventHandlers(o); // routed events
@@ -101,7 +96,6 @@ namespace WpfInvestigate.Helpers
                             {
                                 // Debug.Print($"RemovePropertyChangeEventHandlers. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {routedEvent.Name}");
                                 uiElement.RemoveHandler(routedEvent, handlerInfo.Handler);
-                                _cnt1++;
                             }
                         }
                     }
@@ -118,7 +112,6 @@ namespace WpfInvestigate.Helpers
                         //else 
                         // Debug.Print($"RemovePropertyChangeEventHandlers2. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {_delegate.Method.Name}");
                         eventHandlersStoreData.Item2.Invoke(o, new[] {eventPrivateKey, a1.Item2});
-                        _cnt2++;
                     }
                 }
                 else
@@ -150,7 +143,7 @@ namespace WpfInvestigate.Helpers
         private static FieldInfo _fiChangedHandlerOfTrackers = null;
         public static void RemoveDependencyPropertyEventHandlers(object o)
         {
-            foreach (var dpd in GetDependencyPropertyDescriptorsForType(o))
+            foreach (var dpd in GetDependencyPropertyDescriptorsForType(o.GetType()))
             {
                 var property = _piPropertyOfDpd.GetValue(dpd);
                 if (_fiTrackersOfProperty == null)
@@ -164,23 +157,16 @@ namespace WpfInvestigate.Helpers
                         _fiChangedHandlerOfTrackers = tracker.GetType().GetField("Changed", BindingFlags.Instance | BindingFlags.NonPublic);
                     var changed = _fiChangedHandlerOfTrackers.GetValue(tracker) as EventHandler;
                     dpd.RemoveValueChanged(o, changed);
-                    _cnt3++;
                 }
             }
         }
 
-        private static Attribute[] _attrs = { new PropertyFilterAttribute(PropertyFilterOptions.All) };
-        private static DependencyPropertyDescriptor[] GetDependencyPropertyDescriptorsForType(object o)
+        private static readonly Attribute[] _attrs = { new PropertyFilterAttribute(PropertyFilterOptions.All) };
+        private static DependencyPropertyDescriptor[] GetDependencyPropertyDescriptorsForType(Type type)
         {
-            var type = o.GetType();
             if (!_dpdOfType.ContainsKey(type))
-            {
-                _dpdOfType.Add(type,
-                    TypeDescriptor.GetProperties(type, _attrs).OfType<PropertyDescriptor>().Select(a =>
-                        DependencyPropertyDescriptor.FromProperty(a)).Where(a => a != null).ToArray());
-                // Debug.Print($"DPD: {type.Name}");
-            }
-
+                _dpdOfType.Add(type, TypeDescriptor.GetProperties(type, _attrs).OfType<PropertyDescriptor>()
+                    .Select(a => DependencyPropertyDescriptor.FromProperty(a)).Where(a => a != null).ToArray());
             return _dpdOfType[type];
         }
         #endregion
@@ -214,7 +200,6 @@ namespace WpfInvestigate.Helpers
                         // Debug.Print($"RemoveDelegates: {target.GetType()}, {s}, {ei.Name}");
                         miRemove.Invoke(target, new object[] { d });
                         // ei.RemoveEventHandler(target, d);
-                        _cnt4++;
                     }*/
                 }
             }
