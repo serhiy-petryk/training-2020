@@ -70,9 +70,9 @@ namespace WpfInvestigate.Controls
                                 parent.Children.Remove(mwiChild);
                             if (!mwiChild.Position.HasValue)
                                 mwiChild.Position = GetStartPositionForMwiChild(mwiChild);
-                            MwiPanel.Children.Add(mwiChild);
+                            MwiPanel?.Children.Add(mwiChild);
                             mwiChild.Activate();
-                        }), DispatcherPriority.Input);
+                        }), DispatcherPriority.Background);
                     }
                     break;
 
@@ -86,7 +86,6 @@ namespace WpfInvestigate.Controls
                     break;
 
                 case NotifyCollectionChangedAction.Reset:  // only for correct view in VS designer
-                    Loaded += (o, args) => OnChildrenCollectionChanged(o, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, ((MwiContainer)o).Children));
                     break;
 
                 default: throw new Exception($"Please, check code for {e.Action} action. New items: {e.NewItems}. OldItems: {e.OldItems}");
@@ -95,6 +94,8 @@ namespace WpfInvestigate.Controls
 
         private Point GetStartPositionForMwiChild(MwiChild mwiChild)
         {
+            if (MwiPanel == null) return new Point();
+
             _windowOffset += WINDOW_OFFSET_STEP;
             if ((_windowOffset + mwiChild.ActualWidth > MwiPanel.ActualWidth) || (_windowOffset + mwiChild.ActualHeight > MwiPanel.ActualHeight))
                 _windowOffset = 0;
@@ -153,6 +154,8 @@ namespace WpfInvestigate.Controls
                 wnd.Deactivated += OnWindowDeactivated;
             }
 
+            if (DesignerProperties.GetIsInDesignMode(this)) // only for correct view in VS designer
+                Dispatcher.BeginInvoke(new Action(() => OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children))), DispatcherPriority.Background);
             // Dispatcher.BeginInvoke(new Action(() => OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children))), DispatcherPriority.Background);
             // To fix VS correct view of MwiStartup: DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal)
 
