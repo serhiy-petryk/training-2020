@@ -85,7 +85,7 @@ namespace WpfInvestigate.Controls
 
                     break;
 
-                case NotifyCollectionChangedAction.Reset:  // only for correct view of VS designer
+                case NotifyCollectionChangedAction.Reset:  // only for correct view in VS designer
                     Loaded += (o, args) => OnChildrenCollectionChanged(o, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, ((MwiContainer)o).Children));
                     break;
 
