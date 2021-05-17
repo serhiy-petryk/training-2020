@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using WpfInvestigate.Common;
 
