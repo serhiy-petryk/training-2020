@@ -23,7 +23,6 @@ namespace WpfInvestigate
         public MwiStartup()
         {
             InitializeComponent();
-            DataContext = this;
             CmdScaleSliderReset = new RelayCommand(p => ScaleSlider.Value = 1.0);
 
             // TopControl.RestoreRectFromSetting();

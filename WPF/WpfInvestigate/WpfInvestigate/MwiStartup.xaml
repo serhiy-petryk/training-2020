@@ -9,6 +9,7 @@
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:themes="clr-namespace:WpfInvestigate.Themes"
+        xmlns:wpfInvestigate="clr-namespace:WpfInvestigate"
         mc:Ignorable="d"
         Title="MwiStartup"
         Style="{StaticResource HeadlessWindow}"
@@ -61,7 +62,7 @@
                         IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"/>
 
                 <Button Grid.Column="2" Width="18" Height="18" BorderThickness="0" Focusable="False" ToolTip="Reset zoom"
-                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=CmdScaleSliderReset}"
+                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wpfInvestigate:MwiStartup}, Path=CmdScaleSliderReset}"
                         effects:CornerRadiusEffect.CornerRadius="3">
                     <Viewbox Width="10" Height="10">
                         <Path Width="13" Height="13" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Data="F1 M0 0 H1 L13 12 V13 H12 L0 1Z M13 0 V1 L1 13 H0 V12 L12 0Z"/>
