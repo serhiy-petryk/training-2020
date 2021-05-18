@@ -195,7 +195,7 @@
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource CloseDownBackgroundBrush}" />
                             <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource CloseDownBorderBrush}" />
                         </MultiTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=IsActive}" Value="False">
+                        <DataTrigger Binding="{Binding IsActive}" Value="False">
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource NormalUnfocusedBackgroundBrush}" />
                             <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource MwiChild.Button.Unfocused.BorderBrush}" />
                             <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{StaticResource MwiChild.Button.Unfocused.SubBorderBrush}" />
@@ -224,8 +224,8 @@
                         </Trigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=IsActive}" Value="False" />
-                                <Condition Binding="{Binding IsEnabled}" Value="False" />
+                                <Condition Binding="{Binding IsActive}" Value="False" />
+                                <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource NormalDisabledFocusedBackgroundBrush}" />
                             <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource NormalDisabledFocusedBorderBrush}" />
@@ -247,7 +247,7 @@
         <Viewbox.Style>
             <Style TargetType="Viewbox">
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding DataContext.IsWindowed}" Value="True">
+                    <DataTrigger Binding="{Binding IsWindowed}" Value="True">
                         <Setter Property="RenderTransform">
                             <Setter.Value>
                                 <RotateTransform CenterX="5.5" CenterY="5.5" Angle="90" />
@@ -289,7 +289,7 @@
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding DataContext.WindowState}" Value="{x:Static WindowState.Maximized}" />
+                    <Condition Binding="{Binding WindowState}" Value="{x:Static WindowState.Maximized}" />
                     <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="true"/>
                 </MultiDataTrigger.Conditions>
                 <MultiDataTrigger.Setters>
@@ -298,7 +298,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding DataContext.WindowState}" Value="{x:Static WindowState.Normal}" />
+                    <Condition Binding="{Binding WindowState}" Value="{x:Static WindowState.Normal}" />
                     <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
                 </MultiDataTrigger.Conditions>
                 <MultiDataTrigger.Setters>
@@ -307,7 +307,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding DataContext.WindowState}" Value="{x:Static WindowState.Maximized}" />
+                    <Condition Binding="{Binding WindowState}" Value="{x:Static WindowState.Maximized}" />
                     <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
                 </MultiDataTrigger.Conditions>
                 <MultiDataTrigger.Setters>

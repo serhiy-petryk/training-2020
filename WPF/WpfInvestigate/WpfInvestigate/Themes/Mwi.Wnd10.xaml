@@ -41,7 +41,7 @@
         <Viewbox.Style>
             <Style TargetType="Viewbox">
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding DataContext.IsWindowed}" Value="True">
+                    <DataTrigger Binding="{Binding IsWindowed}" Value="True">
                         <Setter Property="RenderTransform">
                             <Setter.Value>
                                 <RotateTransform CenterX="6" CenterY="6" Angle="90" />
@@ -75,11 +75,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,60, +0%,+70%,+0%,100, +15,+15/+75%,+0%,100, +20,+20/+75%,+0%,100"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=IsActive}" Value="False">
+            <DataTrigger Binding="{Binding IsActive}" Value="False">
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+10,+10/+70%,+10,60, +10,+10/+70%,+10,100, +25,+25/+75%,+10,100, +30,+30/+75%,+10,100"/>
             </DataTrigger>
         </Style.Triggers>
@@ -104,7 +104,7 @@
     <Style x:Key="Mwi.MaximizeButtonStyle" TargetType="Button" BasedOn="{StaticResource Mwi.WindowCommonButtonStyle}">
         <Setter Property="Content" Value="{StaticResource Mwi.MaximizeButtonContent}"/>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding DataContext.WindowState}" Value="{x:Static WindowState.Maximized}">
+            <DataTrigger Binding="{Binding WindowState}" Value="{x:Static WindowState.Maximized}">
                 <Setter Property="Content" Value="{StaticResource Mwi.RestoreButtonContent}"/>
             </DataTrigger>
         </Style.Triggers>

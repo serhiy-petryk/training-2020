@@ -50,7 +50,7 @@ namespace WpfInvestigate.Controls
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
             CmdClose = new RelayCommand(Close, _ => AllowClose);
 
-            DataContext = this;
+            // DataContext = this;
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
 
