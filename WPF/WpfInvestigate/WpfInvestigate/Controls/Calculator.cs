@@ -28,7 +28,6 @@ namespace WpfInvestigate.Controls
 
         public Calculator()
         {
-            DataContext = this;
             ClickCommand = new RelayCommand(ButtonClickHandler);
             Culture = Tips.CurrentCulture;
         }
