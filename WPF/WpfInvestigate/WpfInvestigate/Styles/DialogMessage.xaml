@@ -16,7 +16,7 @@
                 <Setter Property="Padding" Value="0 1"/>
                 <Setter Property="Focusable" Value="True"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="2"/>
-                <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:DialogMessage}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                 <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+0%,40, +0%,+50%,+50%,100, +15%,+15%/+50%,+15%/+50%,100"/>
                 <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:DialogMessage}, Path=(effects:FocusVisualEffect.AlwaysShowFocus)}"/>
                 <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:DialogMessage}, Path=FocusButtonStyle}"/>
@@ -35,10 +35,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:DialogMessage">
                     <Border BorderThickness="2" Padding="0"
-                            BorderBrush="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
+                            BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
                         <Border BorderThickness="5 2 5 5"
-                                Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}}"
-                                BorderBrush="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
                             <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -50,15 +50,15 @@
                                 <!-- Insert before header for focusing on the first button in ButtonsArea (not 'Close' button) -->
                                 <Grid Grid.Row="2" x:Name="PART_ButtonsArea" Margin="0 5 0 0"/>
 
-                                <Grid Grid.Row="0" Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
+                                <Grid Grid.Row="0" Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Header text -->
                                     <TextBlock Grid.Column="0" Padding="0 5" VerticalAlignment="Top"
-                                               Foreground="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
-                                               Text="{Binding Caption}"
+                                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
+                                               Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Caption}"
                                                TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                                     <!-- Close button -->
                                     <Button Grid.Column="1" Margin="0 0 4 0" Width="20" Padding="2"
@@ -66,7 +66,7 @@
                                             HorizontalAlignment="Right" VerticalAlignment="Center"
                                             Focusable="True"
                                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
-                                            Command="ApplicationCommands.Close" CommandParameter="{Binding}"
+                                            Command="ApplicationCommands.Close" CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                             effects:FocusVisualEffect.AlwaysShowFocus="{TemplateBinding effects:FocusVisualEffect.AlwaysShowFocus}"
                                             effects:FocusVisualEffect.FocusControlStyle="{TemplateBinding FocusButtonStyle}"/>
 
@@ -81,15 +81,16 @@
                                     </Grid.ColumnDefinitions>
                                     <!-- Left icon -->
                                     <Viewbox Grid.Column="0" Width="24" Margin="8 0 0 0"
-                                             Visibility="{Binding Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
-                                        <Path Stretch="Uniform" Data="{Binding Icon}" Fill="{Binding IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                        <Path Stretch="Uniform" Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon}"
+                                              Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                     </Viewbox>
                                     <!-- Message -->
                                     <TextBox Grid.Column="1" Margin="8" Padding="0" BorderThickness="0" Background="Transparent"
                                              HorizontalAlignment="Left" VerticalAlignment="Center"
-                                             Foreground="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
+                                             Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
                                              TextWrapping="Wrap" Style="{StaticResource ReadOnlyTextBoxStyle}"
-                                             FontSize="14" Text="{Binding MessageText, Mode=OneWay}"/>
+                                             FontSize="14" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MessageText, Mode=OneWay}"/>
                                 </Grid>
                             </Grid>
                         </Border>
