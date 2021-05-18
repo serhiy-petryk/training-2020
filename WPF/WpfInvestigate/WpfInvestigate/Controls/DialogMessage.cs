@@ -112,7 +112,6 @@ namespace WpfInvestigate.Controls
 
         private DialogMessage()
         {
-            // DataContext = this;
             _cmdClickButton = new RelayCommand(OnButtonClick);
         }
 
