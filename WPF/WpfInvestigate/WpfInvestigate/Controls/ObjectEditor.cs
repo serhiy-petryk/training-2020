@@ -21,7 +21,6 @@ namespace WpfInvestigate.Controls
         }
         public ObjectEditor()
         {
-            DataContext = this;
             if (Equals(ValueDataType, ValueDataTypeProperty.DefaultMetadata.DefaultValue))
                 OnValueDataTypeChanged(this, new DependencyPropertyChangedEventArgs(ValueDataTypeProperty, ValueDataType, ValueDataType));
         }

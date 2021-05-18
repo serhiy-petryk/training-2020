@@ -26,7 +26,7 @@
                          effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
                          effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
                          effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
-                         Text="{Binding RelativeSource={RelativeSource AncestorType=controls:ObjectEditor}, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
+                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
             </ControlTemplate>
 
             <ControlTemplate x:Key="CheckBox" TargetType="controls:ObjectEditor">
@@ -40,7 +40,7 @@
                               TabIndex="{TemplateBinding TabIndex}" IsTabStop="True"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               IsThreeState="{TemplateBinding IsNullable}"
-                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType=controls:ObjectEditor}, Path=Value}">
+                              IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value}">
                         <TextBox Margin="0 -1 0 0" Padding="3 0 0 0" IsReadOnly="True" BorderThickness="0"
                                  Background="Transparent" Foreground="{TemplateBinding Foreground}"
                                  Text="{TemplateBinding effects:WatermarkEffect.Watermark}"
@@ -61,10 +61,10 @@
                                      IsNullable="{TemplateBinding IsNullable}"
                                      effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
                                      effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
-                                     MinValue="{Binding RelativeSource={RelativeSource AncestorType=controls:ObjectEditor}, Path=NumericMinValue}"
-                                     MaxValue="{Binding RelativeSource={RelativeSource AncestorType=controls:ObjectEditor}, Path=NumericMaxValue}"
-                                     DecimalPlaces="{Binding RelativeSource={RelativeSource AncestorType=controls:ObjectEditor}, Path=Metadata.DecimalPlaces}"
-                                     Value="{Binding RelativeSource={RelativeSource AncestorType=controls:ObjectEditor}, Path=Value, Converter={x:Static common:ChangeTypeConverter.Instance}}"/>
+                                     MinValue="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NumericMinValue}"
+                                     MaxValue="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NumericMaxValue}"
+                                     DecimalPlaces="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Metadata.DecimalPlaces}"
+                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Converter={x:Static common:ChangeTypeConverter.Instance}}"/>
             </ControlTemplate>
 
             <ControlTemplate x:Key="DatePicker" TargetType="controls:ObjectEditor">
@@ -81,7 +81,7 @@
                             effects:DatePickerEffect.ClearButton="True"
                             effects:DatePickerEffect.IsNullable="{TemplateBinding IsNullable}"
                             effects:DatePickerEffect.HideInnerBorders="True"
-                            SelectedDate="{Binding RelativeSource={RelativeSource AncestorType=controls:ObjectEditor}, Path=Value}">
+                            SelectedDate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value}">
                 </DatePicker>
             </ControlTemplate>
 
@@ -97,7 +97,7 @@
                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                          effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
                                          effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
-                                         SelectedDateTime="{Binding RelativeSource={RelativeSource AncestorType=controls:ObjectEditor}, Path=Value, Mode=TwoWay}"/>
+                                         SelectedDateTime="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
             </ControlTemplate>
 
             <ControlTemplate x:Key="TimePicker" TargetType="controls:ObjectEditor">
@@ -112,7 +112,7 @@
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      effects:WatermarkEffect.Watermark="{TemplateBinding effects:WatermarkEffect.Watermark}"
                                      effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
-                                     SelectedTime="{Binding RelativeSource={RelativeSource AncestorType=controls:ObjectEditor}, Path=Value}"/>
+                                     SelectedTime="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value}"/>
             </ControlTemplate>
 
         </Style.Resources>
