@@ -43,7 +43,7 @@
                           FontWeight="{TemplateBinding FontWeight}" Command="{TemplateBinding Command}" InputGestureText="{TemplateBinding InputGestureText}">
                     <MenuItem.Icon>
                         <Viewbox Width="8" Height="8">
-                            <Path Width="10" Height="10" Fill="Black" Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag, Converter={x:Static common:StringToGeometryConverter.Instance}}"/>
+                            <Path Width="10" Height="10" Fill="Black" Data="{Binding Tag, Converter={x:Static common:StringToGeometryConverter.Instance}}"/>
                         </Viewbox>
                     </MenuItem.Icon>
                 </MenuItem>
@@ -55,6 +55,7 @@
         <Setter Property="Theme" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme}"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="DataContext" Value="{Binding RelativeSource={RelativeSource Self}}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MwiChild">
@@ -102,11 +103,11 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <!-- Command bar -->
-                                <ContentControl Grid.Row="0" Content="{Binding CommandBar}"/>
+                                <ContentControl Grid.Row="0" Content="{TemplateBinding CommandBar}"/>
                                 <!-- Window content -->
-                                <ContentControl Grid.Row="1" x:Name="Content" Content="{Binding Content}" />
+                                <ContentControl Grid.Row="1" x:Name="Content" Content="{TemplateBinding Content}" />
                                 <!-- Status bar -->
-                                <ContentPresenter Grid.Row="2" Content="{Binding StatusBar}"/>
+                                <ContentPresenter Grid.Row="2" Content="{TemplateBinding StatusBar}"/>
                             </Grid>
                         </Border>
 
