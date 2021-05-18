@@ -46,7 +46,6 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>-->
         <Setter Property="Theme" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme}"/>
-        <Setter Property="DataContext" Value="{Binding RelativeSource={RelativeSource Self}}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MwiContainer">
@@ -83,8 +82,7 @@
                                                   effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
 
                                     <!-- Window tab control -->
-                                    <controls:MwiBar Grid.Column="1" x:Name="WindowsBar" Margin="0" ItemsSource="{Binding Children}"
-                                                     SelectedItem="{Binding ActiveMwiChild}"/>
+                                    <controls:MwiBar Grid.Column="1" x:Name="WindowsBar" ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Children}" SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActiveMwiChild}" Margin="0"/>
 
                                     <!-- Windows Menu Button -->
                                     <ToggleButton Grid.Column="2" x:Name="WindowsMenuButton" Margin="0" Focusable="False" IsThreeState="False"
@@ -145,7 +143,7 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <ContentControl Grid.Column="0" Content="{TemplateBinding LeftPanel}" />
+                                <ContentControl Grid.Column="0" Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LeftPanel}" />
                                 <Border Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="6" BorderThickness="0 0 1 0"
                                         Background="{DynamicResource Mwi.Container.LeftPanel.BackgroundBrush}"
                                         BorderBrush="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}" />
