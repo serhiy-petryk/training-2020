@@ -26,8 +26,6 @@ namespace WpfInvestigate.Controls
 
         public VirtualKeyboard()
         {
-            DataContext = this;
-
             AvailableKeyboardLayouts = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures)
                 .Where(a => KeyModel.KeyDefinition.LanguageDefinitions.Keys.Contains(a.IetfLanguageTag.ToUpper())).OrderBy(a => a.DisplayName)
                 .Select(a => new LanguageModel(a.IetfLanguageTag)).ToArray();

@@ -12,9 +12,7 @@
 
     <Style TargetType="{x:Type local:VirtualKeyboard}">
         <Style.Resources>
-
             <common:MathConverter x:Key="MathConverter" />
-
             <Style x:Key="LanguageContextMenuStyle" TargetType="{x:Type ContextMenu}">
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -254,6 +252,7 @@
         <Setter Property="FontFamily" Value="Verdana"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="DataContext" Value="{Binding RelativeSource={RelativeSource Self}}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:VirtualKeyboard}">
