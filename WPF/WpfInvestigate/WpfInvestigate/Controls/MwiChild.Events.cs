@@ -3,7 +3,9 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Helpers;
 using WpfInvestigate.ViewModels;
@@ -28,6 +30,8 @@ namespace WpfInvestigate.Controls
                 base.OnUnloaded(sender, e);
                 MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
                 Theme = null;
+                if (Icon is DrawingImage image && image.Drawing != null)
+                    BindingOperations.ClearAllBindings(image.Drawing);
                 Icon = null;
             }
         }

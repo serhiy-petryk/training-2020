@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -105,8 +108,14 @@ namespace WpfInvestigate.Helpers
                                                      pi.Name == "Command" || pi.Name == "CommandTarget"))
                     pi.SetValue(element, null);
 
-                //if (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged)
-                  //  EventHelper.RemoveWpfEventHandlers(value);
+                if (pi.Name != "TemplatedParent" && pi.Name != "Parent" && pi.Name != "Content" && pi.Name != "DataContext" && (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged))
+                    EventHelper.RemoveWpfEventHandlers(value);
+
+                if (value is IItemContainerGenerator itemContainerGenerator)
+                {
+                    EventHelper.RemoveWpfEventHandlers(value);
+                    itemContainerGenerator.RemoveAll();
+                }
             }
         }
 

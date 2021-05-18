@@ -267,7 +267,7 @@ namespace WpfInvestigate
             var data = fiData.GetValue(table) as Hashtable;
             var eventName = fiEventName.GetValue(table) as Hashtable;
             var mamager = fiManager.GetValue(table) as Hashtable;
-            if (weakRefDataCopy == null)
+            // if (weakRefDataCopy == null)
                 weakRefDataCopy = data.Clone() as Hashtable;
             Debug.Print($"Weak Data: {data.Count}");
             // var aa1 = UnloadingHelper.AAA;

@@ -32,15 +32,6 @@ namespace WpfInvestigate
                 if (TopControl.Template.FindName("ContentBorder", TopControl) is FrameworkElement topContentControl)
                     topContentControl.LayoutTransform = FindResource("Mwi.ScaleTransform") as ScaleTransform;
             }), DispatcherPriority.Normal);
-
-            /*MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelInstancePropertyChanged;
-            OnMwiAppViewModelInstancePropertyChanged(null, new PropertyChangedEventArgs(nameof(MwiAppViewModel.CurrentTheme)));
-
-            void OnMwiAppViewModelInstancePropertyChanged(object sender, PropertyChangedEventArgs args)
-            {
-                if (args is PropertyChangedEventArgs e && e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
-                    TestChild.BorderThickness = new Thickness(Equals(MwiAppViewModel.Instance.CurrentTheme.Id, "Windows7") ? 0 : 6);
-            }*/
         }
 
         private void MwiStartup_OnKeyDown(object sender, KeyEventArgs e)
@@ -206,8 +197,16 @@ namespace WpfInvestigate
         {
             if (this.AutomaticUnloading(OnUnloaded))
             {
-                TestMwi = null;
+                if (TestMwi != null)
+                {
+                    TestMwi.DataContext = null;
+                    TestMwi = null;
+                }
+
                 Icon = null;
+                TopControl = null;
+                ScaleSlider = null;
+                MwiContainer = null;
             }
         }
     }
