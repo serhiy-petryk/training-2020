@@ -55,12 +55,15 @@ namespace WpfInvestigate
 
         // =============  Specific properties && methods  ============
 
-        private static MwiChild TestMwi;
+        private MwiChild TestMwi;
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             TestMwi = MwiContainer.Children?.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
+
+            if (TestMwi != null && TestMwi.Content is FrameworkElement fe)
+                fe.DataContext = new TestViewModel(TestMwi);
         }
 
         private int cnt = 0;
@@ -113,58 +116,83 @@ namespace WpfInvestigate
         }
 
         //============  Test window  =============
-        public RelayCommand CmdDisableDetach { get; private set; } = new RelayCommand(o => TestMwi.AllowDetach = false);
-        public RelayCommand CmdEnableDetach { get; private set; } = new RelayCommand(o => TestMwi.AllowDetach = true);
-        public RelayCommand CmdDisableMinimize { get; private set; } = new RelayCommand(o => TestMwi.AllowMinimize = false);
-        public RelayCommand CmdEnableMinimize { get; private set; } = new RelayCommand(o => TestMwi.AllowMinimize = true);
-        public RelayCommand CmdDisableMaximize { get; private set; } = new RelayCommand(o => TestMwi.AllowMaximize = false);
-        public RelayCommand CmdEnableMaximize { get; private set; } = new RelayCommand(o => TestMwi.AllowMaximize = true);
-        public RelayCommand CmdDisableClose { get; private set; } = new RelayCommand(o => TestMwi.AllowClose = false);
-        public RelayCommand CmdEnableClose { get; private set; } = new RelayCommand(o => TestMwi.AllowClose = true);
 
-        public RelayCommand CmdHideIcon { get; private set; } = new RelayCommand(o =>
+        #region ========  Subclass TestViewModel  ===========
+        public class TestViewModel
         {
-            if (TestMwi.Icon != null)
+            private MwiChild _owner;
+            public RelayCommand CmdDisableDetach { get; private set; }
+            public RelayCommand CmdEnableDetach { get; private set; }
+            public RelayCommand CmdDisableMinimize { get; private set; }
+            public RelayCommand CmdEnableMinimize { get; private set; }
+            public RelayCommand CmdDisableMaximize { get; private set; }
+            public RelayCommand CmdEnableMaximize { get; private set; }
+            public RelayCommand CmdDisableClose { get; private set; }
+            public RelayCommand CmdEnableClose { get; private set; }
+            public RelayCommand CmdHideIcon { get; private set; }
+            public RelayCommand CmdShowIcon { get; private set; }
+            public RelayCommand CmdChangeTitle { get; private set; }
+            public RelayCommand CmdOpenDialog { get; private set; }
+            public RelayCommand CmdShowMessage { get; private set; }
+            public TestViewModel(MwiChild owner)
             {
-                TestMwi.Tag = TestMwi.Icon;
-                TestMwi.Icon = null;
+                _owner = owner;
+
+                CmdDisableDetach = new RelayCommand(o => _owner.AllowDetach = false);
+                CmdEnableDetach = new RelayCommand(o => _owner.AllowDetach = true);
+                CmdDisableMinimize = new RelayCommand(o => _owner.AllowMinimize = false);
+                CmdEnableMinimize = new RelayCommand(o => _owner.AllowMinimize = true);
+                CmdDisableMaximize = new RelayCommand(o => _owner.AllowMaximize = false);
+                CmdEnableMaximize = new RelayCommand(o => _owner.AllowMaximize = true);
+                CmdDisableClose = new RelayCommand(o => _owner.AllowClose = false);
+                CmdEnableClose = new RelayCommand(o => _owner.AllowClose = true);
+
+                CmdHideIcon = new RelayCommand(o =>
+                {
+                    if (_owner.Icon != null)
+                    {
+                        _owner.Tag = _owner.Icon;
+                        _owner.Icon = null;
+                    }
+                });
+
+                CmdShowIcon = new RelayCommand(o =>
+                {
+                    if (_owner.Tag is ImageSource tag)
+                        _owner.Icon = tag;
+                });
+
+                CmdChangeTitle = new RelayCommand(o => _owner.Title = "New " + _owner.Title);
+
+                CmdOpenDialog = new RelayCommand(o =>
+                {
+                    var content = new MwiChild
+                    {
+                        Content = new MwiExampleControl(),
+                        LimitPositionToPanelBounds = true,
+                        VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
+                        Title = "Dialog window",
+                        Width = 300,
+                        Height = 200,
+                        IsActive = true
+                    };
+                    var adorner = new DialogAdorner(MwiAppViewModel.Instance.DialogHost) { CloseOnClickBackground = true };
+                    adorner.ShowContentDialog(content);
+                });
+
+                CmdShowMessage = new RelayCommand(o =>
+                {
+                    var result = DialogMessage.ShowDialog(
+                        "Message text Message text Message text Message text Message text Message text",
+                        "Caption of Message block", DialogMessage.DialogMessageIcon.Success, new[] { "OK", "Cancel" }, true,
+                        MwiAppViewModel.Instance.DialogHost);
+
+                    DialogMessage.ShowDialog($"You pressed '{result ?? "X"}' button", null,
+                        DialogMessage.DialogMessageIcon.Info, new[] { "OK" }, true, MwiAppViewModel.Instance.DialogHost);
+                });
             }
-        });
-
-        public RelayCommand CmdShowIcon { get; private set; } = new RelayCommand(o =>
-        {
-            if (TestMwi.Tag is ImageSource tag)
-                TestMwi.Icon = tag;
-        });
-
-        public RelayCommand CmdChangeTitle { get; private set; } = new RelayCommand(o => TestMwi.Title = "New " + TestMwi.Title);
-
-        public RelayCommand CmdOpenDialog { get; private set; } = new RelayCommand(o =>
-        {
-            var content = new MwiChild
-            {
-                Content = new MwiExampleControl(),
-                LimitPositionToPanelBounds = true,
-                VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
-                Title = "Dialog window",
-                Width = 300,
-                Height = 200,
-                IsActive = true
-            };
-            var adorner = new DialogAdorner(MwiAppViewModel.Instance.DialogHost) {CloseOnClickBackground = true};
-            adorner.ShowContentDialog(content);
-        });
-
-        public RelayCommand CmdShowMessage { get; private set; } = new RelayCommand(o =>
-        {
-            var result = DialogMessage.ShowDialog(
-                "Message text Message text Message text Message text Message text Message text",
-                "Caption of Message block", DialogMessage.DialogMessageIcon.Success, new[] {"OK", "Cancel"}, true,
-                MwiAppViewModel.Instance.DialogHost);
-
-            DialogMessage.ShowDialog($"You pressed '{result ?? "X"}' button", null,
-                DialogMessage.DialogMessageIcon.Info, new[] {"OK"}, true, MwiAppViewModel.Instance.DialogHost);
-        });
+        }
+        #endregion
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
