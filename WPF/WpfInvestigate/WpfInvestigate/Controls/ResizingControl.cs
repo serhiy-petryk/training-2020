@@ -30,7 +30,7 @@ namespace WpfInvestigate.Controls
 
         public ResizingControl()
         {
-            DataContext = this;
+            // DataContext = this;
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
         }
