@@ -37,7 +37,7 @@ namespace WpfInvestigate.Controls
 
         public MwiContainer()
         {
-            DataContext = this;
+            // DataContext = this;
             CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
             /*var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
             dpd.AddValueChanged(this, (sender, args) => UpdateResources(true));*/

@@ -82,7 +82,7 @@
                                                   effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
 
                                     <!-- Window tab control -->
-                                    <controls:MwiBar Grid.Column="1" x:Name="WindowsBar" ItemsSource="{Binding Children}" SelectedItem="{Binding ActiveMwiChild}" Margin="0"/>
+                                    <controls:MwiBar Grid.Column="1" x:Name="WindowsBar" ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Children}" SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActiveMwiChild}" Margin="0"/>
 
                                     <!-- Windows Menu Button -->
                                     <ToggleButton Grid.Column="2" x:Name="WindowsMenuButton" Margin="0" Focusable="False" IsThreeState="False"
@@ -143,7 +143,7 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <ContentControl Grid.Column="0" Content="{Binding LeftPanel}" />
+                                <ContentControl Grid.Column="0" Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LeftPanel}" />
                                 <Border Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="6" BorderThickness="0 0 1 0"
                                         Background="{DynamicResource Mwi.Container.LeftPanel.BackgroundBrush}"
                                         BorderBrush="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}" />
