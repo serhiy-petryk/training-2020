@@ -94,21 +94,15 @@ namespace WpfInvestigate.TestViews
 
         public void OnUnloaded(object sender, RoutedEventArgs e)
         {
+            // need to clear bindings to prevent an error in AutomaticUnloading.ClearElement
             if (this.IsElementDisposing())
-                MainGrid.LayoutTransform.ClearAllBindings();
+                BindingOperations.ClearAllBindings(MainGrid.LayoutTransform);
 
             this.AutomaticUnloading(OnUnloaded);
         }
 
         private void OnTestClick(object sender, RoutedEventArgs e)
         {
-            var aa1 = this.GetVisualChildren().OfType<MwiChild>().ToArray();
-            var aa2 = aa1[3].GetVisualChildren().OfType<MwiChild>().ToArray();
-            var elements = (new[] { this }).Union(this.GetVisualChildren()).ToArray();
-            foreach (var element in elements)
-            {
-                EventHelper.RemoveWpfEventHandlers(element);
-            }
         }
     }
 }
