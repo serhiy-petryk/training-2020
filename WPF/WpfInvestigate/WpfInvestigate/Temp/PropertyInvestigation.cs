@@ -37,7 +37,7 @@ namespace WpfInvestigate.Temp
             var rootList = root == null ? Application.Current.Windows.OfType<Window>().ToArray() : new[] { root };
             foreach (var item in rootList)
             {
-                var elements = GetVChildren(item).Union(new[] { item }).ToArray();
+                var elements = GetVChildren(item).ToArray();
                 elementsCount += elements.Length;
                 Debug.Print($"Elements count: {elements.Length}");
                 foreach (var element in elements)
@@ -90,7 +90,7 @@ namespace WpfInvestigate.Temp
             var rootList = root == null ? Application.Current.Windows.OfType<Window>().ToArray() : new[] { root };
             foreach (var item in rootList)
             {
-                var elements = GetVChildren(item).Union(new[] { item }).ToArray();
+                var elements = GetVChildren(item).ToArray();
                 elementsCount += elements.Length;
                 Debug.Print($"Elements count: {elements.Length}");
                 foreach (var element in elements)
@@ -152,7 +152,7 @@ namespace WpfInvestigate.Temp
             var rootList = root == null ? Application.Current.Windows.OfType<Window>().ToArray() : new[] {root};
             foreach (var item in rootList)
             {
-                var elements = GetVChildren(item).Union(new[] { item }).ToArray();
+                var elements = GetVChildren(item).ToArray();
                 elementCount += elements.Length;
                 Debug.Print($"Elements count: {elements.Length}");
                 foreach (var element in elements)
@@ -280,8 +280,8 @@ namespace WpfInvestigate.Temp
 
                 foreach (var childOfChild in GetVChildren(child))
                     yield return childOfChild;
-                yield return child;
             }
+            yield return current;
         }
     }
 }
