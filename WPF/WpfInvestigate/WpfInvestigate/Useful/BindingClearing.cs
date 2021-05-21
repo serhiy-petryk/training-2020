@@ -8,10 +8,11 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Useful
 {
-    public static class BindingHelper
+    public static class BindingClearing
     {
         private static Dictionary<Type, List<DependencyProperty>> _propertiesCacheObj = new Dictionary<Type, List<DependencyProperty>>();
         private static Dictionary<Type, List<DependencyProperty>> _propertiesCacheType = new Dictionary<Type, List<DependencyProperty>>();
