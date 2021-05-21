@@ -1,7 +1,8 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using WpfInvestigate.Common;
-using WpfInvestigate.Temp;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Samples
 {
@@ -17,8 +18,6 @@ namespace WpfInvestigate.Samples
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
-            var a1 = this.GetVisualParents().OfType<MwiStartup>().FirstOrDefault();
-            PropertyInvestigation.UpdateProperties3(a1);
         }
     }
 }
