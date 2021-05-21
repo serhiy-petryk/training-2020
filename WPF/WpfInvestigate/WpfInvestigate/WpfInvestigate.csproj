@@ -90,7 +90,7 @@
     <Compile Include="Controls\MwiContainer.WindowsMenu.cs" />
     <Compile Include="Controls\ResizingControl.Events.cs" />
     <Compile Include="Effects\TextBlockEffects.cs" />
-    <Compile Include="Helpers\BindingHelper.cs" />
+    <Compile Include="Useful\BindingHelper.cs" />
     <Compile Include="Helpers\UnloadingHelper.cs" />
     <Compile Include="Helpers\EventHelper.cs" />
     <Compile Include="Obsolete\DialogItems.cs" />
