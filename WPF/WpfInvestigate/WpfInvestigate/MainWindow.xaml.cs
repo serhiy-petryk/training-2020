@@ -190,11 +190,11 @@ namespace WpfInvestigate
 
             Debug.Print($"===========  Button3  ===============");
             EventHelper.RemoveDependencyPropertyEventHandlers(TestButton3);
-            EventHelper.RemovePropertyChangeEventHandlers(TestButton3);
+            EventHelper.RemoveRoutedEventHandlers(TestButton3);
 
             Debug.Print($"===========  Button4  ===============");
             EventHelper.RemoveDependencyPropertyEventHandlers(TestButton4);
-            EventHelper.RemovePropertyChangeEventHandlers(TestButton4);
+            EventHelper.RemoveRoutedEventHandlers(TestButton4);
             Debug.Print($"===========  end  ===============");
         }
 

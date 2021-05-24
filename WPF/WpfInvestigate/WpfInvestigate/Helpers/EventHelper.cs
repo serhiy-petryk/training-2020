@@ -15,17 +15,17 @@ namespace WpfInvestigate.Helpers
     {
         public static void RemoveWpfEventHandlers(object o)
         {
-            RemovePropertyChangeEventHandlers(o); // routed events
+            RemoveRoutedEventHandlers(o); // routed events
             RemoveDependencyPropertyEventHandlers(o); // dpd.RemoveValueChanged
-            RemoveSimpleEventSubsriptions(o);
+            RemoveEventSubscriptions(o);
         }
 
         public static List<string> LogEvent(object o, int level)
         {
             var log = new List<string>();
-            RemovePropertyChangeEventHandlers(o, log); // routed events
+            RemoveRoutedEventHandlers(o, log); // routed events
             RemoveDependencyPropertyEventHandlers(o, log); // dpd.RemoveValueChanged
-            RemoveSimpleEventSubsriptions(o, log);
+            RemoveEventSubscriptions(o, log);
             var pis = o.GetType().GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).ToArray();
             var localLog = new List<string>();
             foreach (var pi in pis.Where(p=> !p.PropertyType.IsValueType))
@@ -35,9 +35,9 @@ namespace WpfInvestigate.Helpers
                     var o2 = pi.GetValue(o);
                     if (o2 != null && !(o2 is Dispatcher))
                     {
-                        RemovePropertyChangeEventHandlers(o2, localLog); // routed events
+                        RemoveRoutedEventHandlers(o2, localLog); // routed events
                         RemoveDependencyPropertyEventHandlers(o2, localLog); // dpd.RemoveValueChanged
-                        RemoveSimpleEventSubsriptions(o2, localLog);
+                        RemoveEventSubscriptions(o2, localLog);
                     }
                 }
             }
@@ -82,7 +82,7 @@ namespace WpfInvestigate.Helpers
         // private static MethodInfo _miEventHandlersStoreRemove = typeof(UIElement).GetMethod("EventHandlersStoreRemove", BindingFlags.NonPublic | BindingFlags.Instance);
         // private static MethodInfo _miEventHandlersStoreRemoveOfTimeline = typeof(Timeline).GetMethod("RemoveEventHandler", BindingFlags.NonPublic | BindingFlags.Instance);
         private static MethodInfo _miToArrayOfFrugalObjectList;
-        public static void RemovePropertyChangeEventHandlers(object o, List<string> log = null)
+        public static void RemoveRoutedEventHandlers(object o, List<string> log = null)
         {
             if (o == null) return;
 
@@ -213,7 +213,7 @@ namespace WpfInvestigate.Helpers
         #region =========  RemoveSimpleEventSubsriptions  ========
         // Based on my old code (2010 year): VS2005, Windows Form
         private static Dictionary<Type, Tuple<EventInfo, FieldInfo>[]> _simpleIventInfoCache = new Dictionary<Type, Tuple<EventInfo, FieldInfo>[]>();
-        public static void RemoveSimpleEventSubsriptions(object target, List<string> log = null)
+        public static void RemoveEventSubscriptions(object target, List<string> log = null)
         {
             var type = target.GetType();
             if (!_simpleIventInfoCache.ContainsKey(type))
