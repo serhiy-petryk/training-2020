@@ -6,7 +6,8 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:samples="clr-namespace:WpfInvestigate.Samples"
         mc:Ignorable="d"
-        Title="ResizingControl" Height="700" Width="1100" Background="AntiqueWhite">
+        Title="ResizingControl" Height="700" Width="1100" Background="AntiqueWhite"
+        Unloaded="OnUnloaded">
 
     <Grid Margin="10 40 20 30">
         <Grid.ColumnDefinitions>

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfInvestigate.Controls;
+using WpfInvestigate.Helpers;
 using WpfInvestigate.Samples;
 
 namespace WpfInvestigate.TestViews
@@ -289,5 +290,6 @@ namespace WpfInvestigate.TestViews
 
         }
 
+        private void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
     }
 }

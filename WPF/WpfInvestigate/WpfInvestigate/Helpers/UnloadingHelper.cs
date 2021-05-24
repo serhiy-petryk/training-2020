@@ -64,12 +64,13 @@ namespace WpfInvestigate.Helpers
         private static void UnloadElement(DependencyObject d)
         {
             // Debug.Print($"UnloadElement: {a1}");
-            foreach (var o in GetVChildren(d).ToArray())
+            var elements = GetVChildren(d).ToArray();
+            foreach (var o in elements)
             {
                 // EventLog.AddRange(EventHelper.LogEvent(o, 0));
                 // BindingOperations.ClearAllBindings(o);
                 // BindingHelper.ClearAllBindingsOfObject(o, true);
-                EventHelper.RemoveWpfEventHandlers(o);
+                // EventHelper.RemoveWpfEventHandlers(o);
 
                 ClearElement(o);
 
@@ -97,8 +98,14 @@ namespace WpfInvestigate.Helpers
                     // fe.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
                     fe.Resources.Add("Unloaded", null);
                 }
-                // EventLog.AddRange(EventHelper.LogEvent(o, 0));
+
+                EventHelper.RemoveWpfEventHandlers(o);
             }
+
+            /*foreach (var o in elements)
+            {
+                EventLog.AddRange(EventHelper.LogEvent(o, 0));
+            }*/
         }
 
         private static IEnumerable<DependencyObject> GetVChildren(DependencyObject current)

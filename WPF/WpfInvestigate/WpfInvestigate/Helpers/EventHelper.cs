@@ -126,10 +126,13 @@ namespace WpfInvestigate.Helpers
                             var handlerInfos = _miToArrayOfFrugalObjectList.Invoke(a1.Item2, null) as RoutedEventHandlerInfo[];
                             foreach (var handlerInfo in handlerInfos)
                             {
-                                if (log != null) log.Add($"RoutedEvent: {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {routedEvent.Name}");
+                                if (log != null)
+                                    log.Add($"RoutedEvent: {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {routedEvent.Name}");
                                 else
-                                    // Debug.Print($"RemovePropertyChangeEventHandlers. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {routedEvent.Name}");
+                                {
+                                    // Debug.Print($"Remove RoutedEvent: {o.GetType().Name}, {(o is FrameworkElement fe3 ? fe3.Name : null)}, {routedEvent.Name}");
                                     uiElement.RemoveHandler(routedEvent, handlerInfo.Handler);
+                                }
                             }
                         }
                     }
@@ -185,7 +188,8 @@ namespace WpfInvestigate.Helpers
                 var trackers = _fiTrackersOfProperty.GetValue(property) as IDictionary;
                 if (trackers != null && trackers.Contains(o))
                 {
-                    if (log != null) log.Add($"DPD: {o.GetType().Name}, {dpd.Name}");
+                    if (log != null)
+                        log.Add($"DPD: {o.GetType().Name}, {dpd.Name}");
                     else
                     {
                         // Debug.Print($"RemoveDPD: {type.Name}, {dpd.Name}");
@@ -232,7 +236,11 @@ namespace WpfInvestigate.Helpers
                 if (ei.Item2.GetValue(target) is Delegate handler)
                 {
                     var miRemove = ei.Item1.GetRemoveMethod() ?? ei.Item1.GetRemoveMethod(true);
-                    if (log != null) log.Add($"Delegate: {target.GetType()}, {ei.Item2.Name}");
+                    if (log != null)
+                    {
+                        if (ei.Item1.EventHandlerType.Name != "HighlightChangedEventHandler")
+                            log.Add($"Delegate: {target.GetType()}, {ei.Item2.Name}");
+                    }
                     else 
                     miRemove.Invoke(target, new object[] { handler });
                     /*foreach (var d in handler.GetInvocationList())
