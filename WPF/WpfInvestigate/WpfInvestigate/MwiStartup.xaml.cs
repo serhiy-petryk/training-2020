@@ -16,7 +16,7 @@ namespace WpfInvestigate
     /// <summary>
     /// Interaction logic for MwiStartup.xaml
     /// </summary>
-    public partial class MwiStartup
+    public partial class MwiStartup: IDisposable
     {
         public RelayCommand CmdScaleSliderReset { get; private set; }
 
@@ -193,21 +193,19 @@ namespace WpfInvestigate
             }
         }
 
-        public void OnUnloaded(object sender, RoutedEventArgs e)
+        public void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
+        public void Dispose()
         {
-            if (this.AutomaticUnloading(OnUnloaded))
+            if (TestMwi != null)
             {
-                if (TestMwi != null)
-                {
-                    TestMwi.DataContext = null;
-                    TestMwi = null;
-                }
-
-                Icon = null;
-                TopControl = null;
-                ScaleSlider = null;
-                MwiContainer = null;
+                TestMwi.DataContext = null;
+                TestMwi = null;
             }
+
+            Icon = null;
+            TopControl = null;
+            ScaleSlider = null;
+            MwiContainer = null;
         }
     }
 }

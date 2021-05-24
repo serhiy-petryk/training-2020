@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -22,14 +23,6 @@ namespace WpfInvestigate.Controls
 
         private static Dictionary<Type, List<FieldInfo>> _fiCache = new Dictionary<Type, List<FieldInfo>>();
         private static Dictionary<Type, List<PropertyInfo>> _piCache = new Dictionary<Type, List<PropertyInfo>>();
-
-        public virtual void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            if (this.AutomaticUnloading(OnUnloaded))
-            {
-                MovingThumb = null;
-            }
-        }
 
         private void AddLoadedEvents(bool onlyRemove = false)
         {
@@ -137,5 +130,11 @@ namespace WpfInvestigate.Controls
 
         }
 
+        public virtual void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
+        public virtual void Dispose()
+        {
+            // Debug.Print($"ResizingControl.Dispose: {_controlId}");
+            MovingThumb = null;
+        }
     }
 }

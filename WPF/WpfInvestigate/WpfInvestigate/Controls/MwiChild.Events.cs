@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -22,18 +23,16 @@ namespace WpfInvestigate.Controls
                 AnimateShow();
         }
 
-        public override void OnUnloaded(object sender, RoutedEventArgs e)
+        public override void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
+        public override void Dispose()
         {
-            // !!! Called twice (as MwiChild and as ResizingControl
-            if (this.AutomaticUnloading(OnUnloaded))
-            {
-                base.OnUnloaded(sender, e);
-                MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-                Theme = null;
-                if (Icon is DrawingImage image && image.Drawing != null)
-                    BindingOperations.ClearAllBindings(image.Drawing);
-                Icon = null;
-            }
+            // Debug.Print($"MwiChild.Dispose: {_controlId}");
+            base.Dispose();
+            MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+            Theme = null;
+            if (Icon is DrawingImage image && image.Drawing != null)
+                BindingOperations.ClearAllBindings(image.Drawing);
+            Icon = null;
         }
 
         private void AddLoadedEvents(bool onlyRemove = false)

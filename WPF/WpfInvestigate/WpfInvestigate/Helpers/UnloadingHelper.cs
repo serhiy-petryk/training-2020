@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Threading;
 
 namespace WpfInvestigate.Helpers
 {
     public static class UnloadingHelper
     {
+        public static List<string> EventLog = new List<string>();
         #region ========  Public section  =========
         public static bool AutomaticUnloading(this FrameworkElement fe, RoutedEventHandler onUnloadedEventHandler)
         {
@@ -27,7 +24,8 @@ namespace WpfInvestigate.Helpers
                 fe.Unloaded -= onUnloadedEventHandler;
             if (!fe.Resources.Contains("Unloaded"))
             {
-                fe.Dispatcher.BeginInvoke(new Action(() => UnloadElement(fe)), DispatcherPriority.Normal); // ? Closing is faster
+                EventLog.Clear();
+                // fe.Dispatcher.BeginInvoke(new Action(() => UnloadElement(fe)), DispatcherPriority.Normal); // ? Closing is faster but many WeakRefs
                 UnloadElement(fe);
             }
 
@@ -68,6 +66,7 @@ namespace WpfInvestigate.Helpers
             // Debug.Print($"UnloadElement: {a1}");
             foreach (var o in GetVChildren(d).ToArray())
             {
+                // EventLog.AddRange(EventHelper.LogEvent(o, 0));
                 // BindingOperations.ClearAllBindings(o);
                 // BindingHelper.ClearAllBindingsOfObject(o, true);
                 EventHelper.RemoveWpfEventHandlers(o);
@@ -75,11 +74,11 @@ namespace WpfInvestigate.Helpers
                 ClearElement(o);
 
                 if (o is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is Panel panel && !panel.IsItemsHost)
-                  panel.Children.Remove(uiElement);
+                    panel.Children.Remove(uiElement);
                 /*if (o is UIElement uiElement)
                 {
                     if (VisualTreeHelper.GetParent(uiElement) is DependencyObject _do)
-                        RemoveChild(_do, uiElement); // !!! Important
+                        RemoveChildFull(_do, uiElement); // !!! Important
                 }*/
 
                 /*if (uiElement != null && uiElement.CommandBindings.Count > 0)
@@ -89,11 +88,16 @@ namespace WpfInvestigate.Helpers
                     uiElement.CommandBindings.Clear();
                 }*/
 
+                if (o is IDisposable disposable)
+                    disposable.Dispose();
+
                 if (o is FrameworkElement fe)
                 {
                     // ClearResources(fe.Resources);
+                    // fe.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
                     fe.Resources.Add("Unloaded", null);
                 }
+                // EventLog.AddRange(EventHelper.LogEvent(o, 0));
             }
         }
 
@@ -119,12 +123,31 @@ namespace WpfInvestigate.Helpers
             {
                 var value = pi.GetValue(element);
 
+                /*if (value is ItemCollection items)
+                {
+                    // Debug.Print($"items");
+                    // items.Clear();
+                    var fi = typeof(ItemCollection).GetField("_internalView", BindingFlags.Instance | BindingFlags.NonPublic);
+                    var o2 = fi.GetValue(value);
+                    if (o2 != null)
+                        EventHelper.RemoveWpfEventHandlers(o2);
+                }
+
+                if (value is CollectionView cView)
+                {
+                    cView.SortDescriptions.Clear();
+                    cView.GroupDescriptions.Clear();
+                    cView.DetachFromSourceCollection();
+                    EventHelper.RemoveWpfEventHandlers(cView.SortDescriptions);
+                    EventHelper.RemoveWpfEventHandlers(cView.GroupDescriptions);
+                }*/
+
+                if (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged)
+                    // if (value != null)
+                    EventHelper.RemoveWpfEventHandlers(value);
+
                 if (value is ResourceDictionary rd)
                     ClearResources(rd);
-
-                 // if (value != null)
-//                    if (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged)
-                //   EventHelper.RemoveWpfEventHandlers(value);
 
                 if (value != null && pi.CanWrite && (value is ICommand || value is ControlTemplate ||
                                                      value is Style || value is ResourceDictionary ||
@@ -132,14 +155,42 @@ namespace WpfInvestigate.Helpers
                                                      pi.Name == "Command" || pi.Name == "CommandTarget" || pi.Name == "ItemsPanel"))
                     pi.SetValue(element, null);
 
+                /*if (value is ItemCollection)
+                {
+                    // Debug.Print($"items");
+                    // items.Clear();
+                    //var fi = typeof(ItemCollection).GetField("_internalView", BindingFlags.Instance | BindingFlags.NonPublic);
+                    //EventHelper.RemoveWpfEventHandlers(value);
+                    //var o2 = fi.GetValue(value);
+                    //if (o2 != null)
+                      //  EventHelper.RemoveWpfEventHandlers(o2);
+                    //fi.SetValue(value, null);
+                    //if (pi.CanWrite)
+                      //  pi.SetValue(element, null);
+                    var pis = typeof(ItemCollection)
+                        .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Where(
+                            pi2 => typeof(INotifyPropertyChanged).IsAssignableFrom(pi2.PropertyType) ||
+                                   typeof(INotifyCollectionChanged).IsAssignableFrom(pi2.PropertyType)).ToArray();
+                    foreach (var pi3 in pis)
+                    {
+                        var value3 = pi3.GetValue(value);
+                        if (value3 != null)
+                        {
+                            EventHelper.RemoveWpfEventHandlers(value3);
+                            if (pi.CanWrite)
+                                pi.SetValue(value, null);
+                        }
+                    }
+                }*/
+
                 //if (value != null && pi.CanWrite)
-                  //  pi.SetValue(element, null);
+                //  pi.SetValue(element, null);
 
                 // if (pi.Name != "TemplatedParent" && pi.Name != "Parent" && pi.Name != "Content" && pi.Name != "DataContext" && (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged))
                 //  EventHelper.RemoveWpfEventHandlers(value);
 
                 //if (value != null)
-                  //  EventHelper.RemoveWpfEventHandlers(value);
+                //  EventHelper.RemoveWpfEventHandlers(value);
 
                 /*if (value is IItemContainerGenerator itemContainerGenerator)
                 {
@@ -165,7 +216,7 @@ namespace WpfInvestigate.Helpers
         private static PropertyInfo[] GetPropertiesForCleaner(Type type) => type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
         #endregion
 
-        private static void RemoveChildFull(DependencyObject parent, UIElement child)
+        /* private static void RemoveChildFull(DependencyObject parent, UIElement child)
         {
             if (parent is Panel panel)
             {
@@ -225,19 +276,11 @@ namespace WpfInvestigate.Helpers
             Debug.Print($"RemoveChild not defined for : {parent.GetType()} type of parent");
             return;
             throw new Exception($"RemoveChildis not defined for {parent.GetType().Name} type of parent");
-        }
+        }*/
 
-        private static void ClearElementFull(DependencyObject element)
+        /*private static void ClearElementFull(DependencyObject element)
         {
 
-            /*var localValueEnumerator = element.GetLocalValueEnumerator();
-            while (localValueEnumerator.MoveNext())
-            {
-                var current = localValueEnumerator.Current;
-                if (!current.Property.ReadOnly)
-                    element.ClearValue(current.Property);
-            }
-            return;*/
             if (element is Track || element.IsSealed) return;
             GetPropertiesForCleaner(element.GetType()).Where(pi => pi.CanWrite && !pi.PropertyType.IsValueType && pi.PropertyType != typeof(FontFamily)).ToList().ForEach(pi =>
             {
@@ -245,6 +288,10 @@ namespace WpfInvestigate.Helpers
                 if (!(pi.PropertyType == typeof(string) && string.IsNullOrEmpty((string)pi.GetValue(element))))
                 {
                     var value = pi.GetValue(element);
+                    
+                    if (value is ResourceDictionary rd)
+                        ClearResources(rd);
+
                     if (!(pi.Name == "Language" || pi.Name == "Title") && value != null)
                         pi.SetValue(element, null);
 
@@ -256,7 +303,7 @@ namespace WpfInvestigate.Helpers
                 }
             });
             // errors in Wpf control logic: GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
-        }
+        }*/
 
     }
 }

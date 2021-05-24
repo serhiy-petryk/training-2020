@@ -10,7 +10,7 @@ using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Controls
 {
-    public partial class ResizingControl : ContentControl, INotifyPropertyChanged
+    public partial class ResizingControl : ContentControl, INotifyPropertyChanged, IDisposable
     {
         private static int controlId = 0;
         private int _controlId = controlId ++;

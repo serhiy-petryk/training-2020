@@ -22,7 +22,7 @@ namespace WpfInvestigate.Controls
     /// Interaction logic for MwiContainer.xaml
     /// </summary>
     [ContentProperty("Children")]
-    public partial class MwiContainer: ContentControl, INotifyPropertyChanged
+    public partial class MwiContainer: ContentControl, INotifyPropertyChanged, IDisposable
     {
         const int WINDOW_OFFSET_STEP = 25;
         private static int controlId = 0;
@@ -172,29 +172,27 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        public void OnUnloaded(object sender, RoutedEventArgs e)
+        public void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
+        public void Dispose()
         {
-            if (this.AutomaticUnloading(OnUnloaded))
+            if (Children != null)
             {
-                if (Children != null)
-                {
-                    foreach (var mwiChild in Children.OfType<MwiChild>().Where(c => c.IsWindowed))
-                        ((Window)mwiChild.Parent).Close();
+                foreach (var mwiChild in Children.OfType<MwiChild>().Where(c => c.IsWindowed))
+                    ((Window)mwiChild.Parent).Close();
 
-                    while (Children.Count > 0)
-                    {
-                        ((MwiChild)Children[0]).Close(null);
-                        Children.RemoveAt(0);
-                    }
-                    Children.CollectionChanged -= OnChildrenCollectionChanged;
+                while (Children.Count > 0)
+                {
+                    ((MwiChild)Children[0]).Close(null);
+                    Children.RemoveAt(0);
                 }
-                MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-                _leftPanelButton = null;
-                _leftPanelContainer = null;
-                ScrollViewer = null;
-                MwiPanel = null;
-                Theme = null;
+                Children.CollectionChanged -= OnChildrenCollectionChanged;
             }
+            MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+            _leftPanelButton = null;
+            _leftPanelContainer = null;
+            ScrollViewer = null;
+            MwiPanel = null;
+            Theme = null;
         }
 
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -297,5 +295,6 @@ namespace WpfInvestigate.Controls
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
     }
 }
