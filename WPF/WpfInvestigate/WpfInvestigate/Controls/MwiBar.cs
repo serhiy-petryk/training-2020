@@ -153,7 +153,7 @@ namespace WpfInvestigate.Controls
             void OnTabItemUnloaded(object sender, RoutedEventArgs e) => ((TabItem) sender).AutomaticUnloading(OnTabItemUnloaded);
             void OnTabItemLoaded(object sender, RoutedEventArgs e) => ((TabItem)sender).BeginAnimation(OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDuration));
             void OnTabItemMouseEnterOrLeave(object sender, MouseEventArgs e) => AnimateTabButton((TabItem)sender);
-            void OnTabItemToolTipOpening(object sender, ToolTipEventArgs e) => ((MwiChild)((FrameworkElement)sender).DataContext).RefreshThumbnail();
+            void OnTabItemToolTipOpening(object sender, ToolTipEventArgs e) => ((MwiChild)((FrameworkElement)sender).DataContext)?.RefreshThumbnail();
             void OnTabItemToolTipOnOpened(object sender, RoutedEventArgs e)
             {
                 var toolTip = (ToolTip)sender;
