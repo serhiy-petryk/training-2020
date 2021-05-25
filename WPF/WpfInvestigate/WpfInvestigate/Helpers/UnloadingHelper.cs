@@ -41,7 +41,7 @@ namespace WpfInvestigate.Helpers
             {
                 if (value is DependencyObject d)
                 {
-                    EventHelper.RemoveWpfEventHandlers(d); // ??? No events
+                    EventHelper.RemoveWpfEventHandlers(d); // ??? No events. Check theme changed in MwiContainer/MwiChild
                     // ClearElement(d);
                 }
 
@@ -96,8 +96,8 @@ namespace WpfInvestigate.Helpers
                 }
             }
 
-            //foreach (var o in elements)
-              // EventLog.AddRange(EventHelper.LogEvent(o, 0));
+            // foreach (var o in elements)
+               // EventLog.AddRange(EventHelper.LogEvent(o, 0));
         }
 
         private static IEnumerable<DependencyObject> GetVChildren(DependencyObject current)

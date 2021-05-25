@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -8,7 +9,7 @@ namespace WpfInvestigate.Helpers
 {
     public static partial class EventHelper
     {
-        public static List<string> LogEvent(object o, int maxLevel, int currentLevel = 0)
+        public static List<string> LogEvent(object o, int maxLevel, int currentLevel = 0, string prefix = null)
         {
             var log = new List<string>();
             RemoveRoutedEventHandlers(o, log); // routed events
@@ -41,6 +42,15 @@ namespace WpfInvestigate.Helpers
                             if (maxLevel > currentLevel && !piType.IsValueType && piType != typeof(string) && piType.Name != "RuntimeType")
                                 LogEvent(o2, maxLevel, currentLevel + 1);
                         }
+
+                        if (o2 is ResourceDictionary rd)
+                        {
+                            if (rd.Count != 1)
+                            {
+
+                            }
+                            LogResources(rd, maxLevel, currentLevel);
+                        }
                     }
                 }
 
@@ -64,11 +74,24 @@ namespace WpfInvestigate.Helpers
 
             if (localLog.Count > 0)
             {
-                log.Add($"PROPERTIES. {o.GetType().Name}");
+                log.Add($"{prefix} PROPERTIES. {o.GetType().Name}");
                 log.AddRange(localLog);
             }
 
             return log;
         }
+
+        public static void LogResources(ResourceDictionary rd, int maxLevel, int currentLevel)
+        {
+            foreach (var child in rd.MergedDictionaries)
+                LogResources(child, maxLevel, currentLevel);
+
+            foreach (var value in rd.Values)
+            {
+                if (value != null) 
+                    LogEvent(value, maxLevel, currentLevel, "RD");
+            }
+        }
+
     }
 }
