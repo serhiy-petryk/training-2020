@@ -91,13 +91,13 @@ namespace WpfInvestigate.Helpers
 
                 if (o is FrameworkElement fe)
                 {
-                    // ClearResources(fe.Resources);
+                    ClearResources(fe.Resources);
                     fe.Resources.Add("Unloaded", null);
                 }
             }
 
-            /*foreach (var o in elements)
-               EventLog.AddRange(EventHelper.LogEvent(o, 1));*/
+            //foreach (var o in elements)
+              // EventLog.AddRange(EventHelper.LogEvent(o, 0));
         }
 
         private static IEnumerable<DependencyObject> GetVChildren(DependencyObject current)
@@ -145,7 +145,7 @@ namespace WpfInvestigate.Helpers
                 if (value != null && pi.CanWrite && (value is ICommand || value is ControlTemplate ||
                                                      value is Style || value is ResourceDictionary ||
                                                      pi.Name == "DataContext" || pi.Name == "Content" ||
-                                                     pi.Name == "Command" || pi.Name == "CommandTarget" || pi.Name == "ItemsPanel"))
+                                                     pi.Name == "Command" || pi.Name == "CommandTarget"))
                     pi.SetValue(element, null);
 
                 if (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged)
@@ -161,8 +161,8 @@ namespace WpfInvestigate.Helpers
                         EventHelper.RemoveWpfEventHandlers(o2);
                 }
 
-                if (value is ResourceDictionary rd)
-                    ClearResources(rd);
+                // if (value is ResourceDictionary rd)
+                   // ClearResources(rd);
 
                 //if (value != null && pi.Name == "DataContext" && value is IDisposable disposable && element != value)
                 //   disposable.Dispose();
