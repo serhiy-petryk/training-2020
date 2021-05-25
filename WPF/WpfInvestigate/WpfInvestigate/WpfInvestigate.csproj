@@ -91,6 +91,7 @@
     <Compile Include="Controls\ResizingControl.Events.cs" />
     <Compile Include="Effects\TextBlockEffects.cs" />
     <Compile Include="Helpers\BindingHelper.cs" />
+    <Compile Include="Helpers\EventHelper.Log.cs" />
     <Compile Include="Useful\BindingClearing.cs" />
     <Compile Include="Helpers\UnloadingHelper.cs" />
     <Compile Include="Helpers\EventHelper.cs" />

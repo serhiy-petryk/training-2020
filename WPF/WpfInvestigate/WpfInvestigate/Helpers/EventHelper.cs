@@ -6,49 +6,17 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Helpers
 {
-    public static class EventHelper
+    public static partial class EventHelper
     {
         public static void RemoveWpfEventHandlers(object o)
         {
             RemoveRoutedEventHandlers(o); // routed events
             RemoveDependencyPropertyEventHandlers(o); // dpd.RemoveValueChanged
             RemoveEventSubscriptions(o);
-        }
-
-        public static List<string> LogEvent(object o, int level)
-        {
-            var log = new List<string>();
-            RemoveRoutedEventHandlers(o, log); // routed events
-            RemoveDependencyPropertyEventHandlers(o, log); // dpd.RemoveValueChanged
-            RemoveEventSubscriptions(o, log);
-            var pis = o.GetType().GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).ToArray();
-            var localLog = new List<string>();
-            foreach (var pi in pis.Where(p=> !p.PropertyType.IsValueType))
-            {
-                if (pi.Name != "TempDefinitions" && pi.Name!= "DefinitionIndices" && pi.Name != "RoundingErrors")
-                {
-                    var o2 = pi.GetValue(o);
-                    if (o2 != null && !(o2 is Dispatcher))
-                    {
-                        RemoveRoutedEventHandlers(o2, localLog); // routed events
-                        RemoveDependencyPropertyEventHandlers(o2, localLog); // dpd.RemoveValueChanged
-                        RemoveEventSubscriptions(o2, localLog);
-                    }
-                }
-            }
-
-            if (localLog.Count > 0)
-            {
-                log.Add($"PROPERTIES. {o.GetType().Name}");
-                log.AddRange(localLog);
-            }
-
-            return log;
         }
 
         #region =========  RemovePropertyChangeEventHandlers  ========
@@ -148,7 +116,10 @@ namespace WpfInvestigate.Helpers
                           //  _miEventHandlersStoreRemoveOfTimeline.Invoke(o, new[] { eventPrivateKey, a1.Item2 });
                         //else 
                         // Debug.Print($"RemovePropertyChangeEventHandlers2. {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {_delegate.Method.Name}");
-                        eventHandlersStoreData.Item2.Invoke(o, new[] {eventPrivateKey, a1.Item2});
+                        if (log!=null)
+                            log.Add($"RoutedEvent2: {o.GetType().Name}, {(o is FrameworkElement fe ? fe.Name : null)}, {_delegate.Method.Name}");
+                        else
+                            eventHandlersStoreData.Item2.Invoke(o, new[] { eventPrivateKey, a1.Item2 });
                     }
                 }
                 else
