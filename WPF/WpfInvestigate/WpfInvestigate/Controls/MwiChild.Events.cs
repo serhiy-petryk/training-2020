@@ -23,16 +23,22 @@ namespace WpfInvestigate.Controls
                 AnimateShow();
         }
 
-        public override void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
-        public override void Dispose()
+        private bool _unloaded = false;
+        public override void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            // Debug.Print($"MwiChild.Dispose: {_controlId}");
-            base.Dispose();
-            MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-            Theme = null;
-            if (Icon is DrawingImage image && image.Drawing != null)
-                BindingOperations.ClearAllBindings(image.Drawing);
-            Icon = null;
+            if (!_unloaded)
+            {
+                _unloaded = true;
+                if (this.AutomaticUnloading(OnUnloaded))
+                {
+                    base.OnUnloaded(sender, e);
+                    MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+                    Theme = null;
+                    if (Icon is DrawingImage image && image.Drawing != null)
+                        BindingOperations.ClearAllBindings(image.Drawing);
+                    Icon = null;
+                }
+            }
         }
 
         private void AddLoadedEvents(bool onlyRemove = false)

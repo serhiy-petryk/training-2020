@@ -127,14 +127,12 @@ namespace WpfInvestigate.Controls
                 content1.Loaded -= OnContentLoaded;
                 MovingThumb = MovingThumb ?? content1.GetVisualChildren().OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
             }
-
         }
 
-        public virtual void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
-        public virtual void Dispose()
+        public virtual void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            // Debug.Print($"ResizingControl.Dispose: {_controlId}");
-            MovingThumb = null;
+            if (this.AutomaticUnloading(OnUnloaded))
+                MovingThumb = null;
         }
     }
 }
