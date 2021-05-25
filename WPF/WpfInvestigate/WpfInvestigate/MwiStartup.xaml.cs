@@ -1,9 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -18,7 +16,7 @@ namespace WpfInvestigate
     /// <summary>
     /// Interaction logic for MwiStartup.xaml
     /// </summary>
-    public partial class MwiStartup: IDisposable
+    public partial class MwiStartup
     {
         public RelayCommand CmdScaleSliderReset { get; private set; }
 
@@ -209,21 +207,20 @@ namespace WpfInvestigate
                 if (TestMwi != null && TestMwi.Content is FrameworkElement fe && fe.DataContext is TestViewModel vm)
                     vm.Dispose();
             }
-            this.AutomaticUnloading(OnUnloaded);
-        }
 
-        public void Dispose()
-        {
-            if (TestMwi != null)
+            if (this.AutomaticUnloading(OnUnloaded))
             {
-                TestMwi.DataContext = null;
-                TestMwi = null;
-            }
+                if (TestMwi != null)
+                {
+                    TestMwi.DataContext = null;
+                    TestMwi = null;
+                }
 
-            Icon = null;
-            TopControl = null;
-            ScaleSlider = null;
-            MwiContainer = null;
+                Icon = null;
+                TopControl = null;
+                ScaleSlider = null;
+                MwiContainer = null;
+            }
         }
     }
 }
