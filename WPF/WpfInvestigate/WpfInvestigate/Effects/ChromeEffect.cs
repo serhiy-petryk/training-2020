@@ -98,7 +98,7 @@ namespace WpfInvestigate.Effects
                 control.IsMouseOver, control.IsEnabled, IsPressed(control));
         }
 
-        private static FieldInfo fiSemaphoreLock;
+        private static readonly FieldInfo _fiSemaphoreLock= typeof(SemaphoreSlim).GetField("m_lockObj", BindingFlags.Instance | BindingFlags.NonPublic);
         private static async void ChromeUpdate(object sender, EventArgs e)
         {
             if (!(sender is Control control)) return;
@@ -132,10 +132,7 @@ namespace WpfInvestigate.Effects
             }
             finally
             {
-                if (fiSemaphoreLock == null)
-                    fiSemaphoreLock = typeof(SemaphoreSlim).GetField("m_lockObj", BindingFlags.Instance | BindingFlags.NonPublic);
-                var semaphoreLock = fiSemaphoreLock.GetValue(semaphore);
-                if (semaphoreLock != null) // not disposed: can be disposed when element is unloading (see UnloadingHelper)
+                if (_fiSemaphoreLock.GetValue(semaphore) != null) // not disposed: can be disposed when element is unloading (see UnloadingHelper)
                     semaphore.Release();
             }
         }
