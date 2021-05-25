@@ -105,7 +105,7 @@ namespace WpfInvestigate.Helpers
                         }
                     }
                     else
-                        throw new NotImplementedException($"RemovePropertyChangeEventHandlers not implemented yet for FrugalObjectList where EventPrivateKey is " + $" {eventPrivateKey.GetType().Name}");
+                        throw new NotImplementedException($"RemoveRoutedEventHandlers not implemented yet for FrugalObjectList where EventPrivateKey is " + $" {eventPrivateKey.GetType().Name}");
                 }
                 /*else if (a1.Item2 is Delegate _delegate)
                 {
@@ -166,8 +166,7 @@ namespace WpfInvestigate.Helpers
                         // Debug.Print($"RemoveDPD: {type.Name}, {dpd.Name}");
                         var tracker = trackers[o];
                         if (_fiChangedHandlerOfTrackers == null)
-                            _fiChangedHandlerOfTrackers = tracker.GetType().GetField("Changed",
-                                BindingFlags.Instance | BindingFlags.NonPublic);
+                            _fiChangedHandlerOfTrackers = tracker.GetType().GetField("Changed", BindingFlags.Instance | BindingFlags.NonPublic);
                         var changed = _fiChangedHandlerOfTrackers.GetValue(tracker) as EventHandler;
                         dpd.RemoveValueChanged(o, changed);
                     }
