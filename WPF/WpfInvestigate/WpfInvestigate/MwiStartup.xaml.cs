@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -58,7 +60,6 @@ namespace WpfInvestigate
         }
 
         private int cnt = 0;
-
         private void AddChild_OnClick(object sender, RoutedEventArgs e)
         {
             MwiContainer.Children.Add(new MwiChild
@@ -109,7 +110,7 @@ namespace WpfInvestigate
         //============  Test window  =============
 
         #region ========  Subclass TestViewModel  ===========
-        public class TestViewModel
+        public class TestViewModel: DependencyObject, IDisposable
         {
             private MwiChild _owner;
             public RelayCommand CmdDisableDetach { get; private set; }
@@ -182,6 +183,14 @@ namespace WpfInvestigate
                         DialogMessage.DialogMessageIcon.Info, new[] { "OK" }, true, MwiAppViewModel.Instance.DialogHost);
                 });
             }
+
+            public void Dispose()
+            {
+                _owner = null;
+                 UnloadingHelper.ClearElement(this);
+                 EventHelper.RemoveWpfEventHandlers(this);
+               // UnloadingHelper.UnloadElement(this);
+            }
         }
         #endregion
 
@@ -193,7 +202,16 @@ namespace WpfInvestigate
             }
         }
 
-        public void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
+        public void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.IsElementDisposing())
+            {
+                if (TestMwi != null && TestMwi.Content is FrameworkElement fe && fe.DataContext is TestViewModel vm)
+                    vm.Dispose();
+            }
+            this.AutomaticUnloading(OnUnloaded);
+        }
+
         public void Dispose()
         {
             if (TestMwi != null)

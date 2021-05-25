@@ -128,7 +128,10 @@ namespace WpfInvestigate
             GC.Collect();
             //
             var a1 = GC.GetTotalMemory(true);
-            Debug.Print($"Memory usage: {a1.ToString("N0")}");
+            if (Debugger.IsAttached)
+                Debug.Print($"Memory usage: {a1.ToString("N0")}");
+            else
+                MessageBox.Show($"Memory usage: {a1.ToString("N0")}");
             // Tips.ClearAllBindings(WpfInvestigate.TestViews.MwiBootstrapColorTests.Instance);
         }
 
@@ -271,6 +274,9 @@ namespace WpfInvestigate
                 weakRefDataCopy = data.Clone() as Hashtable;
             Debug.Print($"Weak Data: {data.Count}");
             // var aa1 = UnloadingHelper.AAA;
+
+            Debug.Print($"ClearLog");
+            UnloadingHelper.EventLog.Clear();
         }
 
         private void OnCompareWeakRefsClick(object sender, RoutedEventArgs e)
@@ -300,7 +306,10 @@ namespace WpfInvestigate
             // foreach(var a1 in diffKeys)
             //  data.Remove(a1);
             var log = UnloadingHelper.EventLog;
-            Debug.Print($"New WeakRefs: {diffKeys.Count}, {log.Count}");
+            if (Debugger.IsAttached)
+                Debug.Print($"New WeakRefs: {diffKeys.Count}, {log.Count}");
+            else
+                MessageBox.Show($"New WeakRefs: {diffKeys.Count}, {log.Count}");
         }
 
         private string GetStringOfEventKey(object eventKey)

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -24,7 +25,6 @@ namespace WpfInvestigate.Helpers
                 fe.Unloaded -= onUnloadedEventHandler;
             if (!fe.Resources.Contains("Unloaded"))
             {
-                EventLog.Clear();
                 // fe.Dispatcher.BeginInvoke(new Action(() => UnloadElement(fe)), DispatcherPriority.Normal); // ? Closing is faster but many WeakRefs
                 UnloadElement(fe);
             }
@@ -32,7 +32,6 @@ namespace WpfInvestigate.Helpers
             return true;
         }
 
-        // public static Dictionary<Type, int> RD = new Dictionary<Type, int>();
         public static void ClearResources(ResourceDictionary rd)
         {
             foreach (var child in rd.MergedDictionaries)
@@ -42,7 +41,7 @@ namespace WpfInvestigate.Helpers
             {
                 if (value is DependencyObject d)
                 {
-                    EventHelper.RemoveWpfEventHandlers(d); // ???
+                    EventHelper.RemoveWpfEventHandlers(d); // ??? No events
                     // ClearElement(d);
                 }
 
@@ -61,21 +60,17 @@ namespace WpfInvestigate.Helpers
         #endregion
 
         #region ===========  Dependency Object cleaner  ===============
+        private static PropertyInfo piSelectedItemsImpl = typeof(Selector).GetProperty("SelectedItemsImpl", BindingFlags.Instance | BindingFlags.NonPublic);
         private static void UnloadElement(DependencyObject d)
         {
-            // Debug.Print($"UnloadElement: {a1}");
             var elements = GetVChildren(d).ToArray();
             foreach (var o in elements)
             {
-                // EventLog.AddRange(EventHelper.LogEvent(o, 0));
-                // BindingOperations.ClearAllBindings(o);
-                // BindingHelper.ClearAllBindingsOfObject(o, true);
-                // EventHelper.RemoveWpfEventHandlers(o);
-
                 ClearElement(o);
 
                 if (o is UIElement uiElement && VisualTreeHelper.GetParent(uiElement) is Panel panel && !panel.IsItemsHost)
                     panel.Children.Remove(uiElement);
+
                 /*if (o is UIElement uiElement)
                 {
                     if (VisualTreeHelper.GetParent(uiElement) is DependencyObject _do)
@@ -89,23 +84,20 @@ namespace WpfInvestigate.Helpers
                     uiElement.CommandBindings.Clear();
                 }*/
 
+                EventHelper.RemoveWpfEventHandlers(o);
+
                 if (o is IDisposable disposable)
                     disposable.Dispose();
 
                 if (o is FrameworkElement fe)
                 {
                     // ClearResources(fe.Resources);
-                    // fe.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
                     fe.Resources.Add("Unloaded", null);
                 }
-
-                EventHelper.RemoveWpfEventHandlers(o);
             }
 
             /*foreach (var o in elements)
-            {
-                EventLog.AddRange(EventHelper.LogEvent(o, 0));
-            }*/
+               EventLog.AddRange(EventHelper.LogEvent(o, 1));*/
         }
 
         private static IEnumerable<DependencyObject> GetVChildren(DependencyObject current)
@@ -122,7 +114,7 @@ namespace WpfInvestigate.Helpers
             yield return current;
         }
 
-        private static void ClearElement(DependencyObject element)
+        public static void ClearElement(DependencyObject element)
         {
             if (element.IsSealed) return;
 
@@ -149,18 +141,31 @@ namespace WpfInvestigate.Helpers
                     EventHelper.RemoveWpfEventHandlers(cView.GroupDescriptions);
                 }*/
 
-                if (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged)
-                    // if (value != null)
-                    EventHelper.RemoveWpfEventHandlers(value);
-
-                if (value is ResourceDictionary rd)
-                    ClearResources(rd);
 
                 if (value != null && pi.CanWrite && (value is ICommand || value is ControlTemplate ||
                                                      value is Style || value is ResourceDictionary ||
                                                      pi.Name == "DataContext" || pi.Name == "Content" ||
                                                      pi.Name == "Command" || pi.Name == "CommandTarget" || pi.Name == "ItemsPanel"))
                     pi.SetValue(element, null);
+
+                if (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged)
+                    // if (value != null)
+                    EventHelper.RemoveWpfEventHandlers(value);
+
+                if (value is ItemsControl itemsControl)
+                    EventHelper.RemoveWpfEventHandlers(itemsControl.ItemContainerGenerator);
+                if (value is Selector)
+                {
+                    var o2 = piSelectedItemsImpl.GetValue(value);
+                    if (o2 != null)
+                        EventHelper.RemoveWpfEventHandlers(o2);
+                }
+
+                if (value is ResourceDictionary rd)
+                    ClearResources(rd);
+
+                //if (value != null && pi.Name == "DataContext" && value is IDisposable disposable && element != value)
+                //   disposable.Dispose();
 
                 /*if (value is ItemCollection)
                 {
@@ -194,7 +199,7 @@ namespace WpfInvestigate.Helpers
                 //  pi.SetValue(element, null);
 
                 // if (pi.Name != "TemplatedParent" && pi.Name != "Parent" && pi.Name != "Content" && pi.Name != "DataContext" && (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged))
-                //  EventHelper.RemoveWpfEventHandlers(value);
+                // EventHelper.RemoveWpfEventHandlers(value);
 
                 //if (value != null)
                 //  EventHelper.RemoveWpfEventHandlers(value);
@@ -311,6 +316,5 @@ namespace WpfInvestigate.Helpers
             });
             // errors in Wpf control logic: GetFieldInfoForCleaner(type).ForEach(fieldInfo => { fieldInfo.SetValue(element, null); });
         }*/
-
     }
 }
