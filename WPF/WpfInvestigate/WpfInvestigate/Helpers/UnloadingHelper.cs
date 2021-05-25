@@ -141,11 +141,9 @@ namespace WpfInvestigate.Helpers
                     EventHelper.RemoveWpfEventHandlers(cView.GroupDescriptions);
                 }*/
 
-
                 if (value != null && pi.CanWrite && (value is ICommand || value is ControlTemplate ||
                                                      value is Style || value is ResourceDictionary ||
-                                                     pi.Name == "DataContext" || pi.Name == "Content" ||
-                                                     pi.Name == "Command" || pi.Name == "CommandTarget"))
+                                                     pi.Name == "Content"))
                     pi.SetValue(element, null);
 
                 if (value is ICommand || value is INotifyPropertyChanged || value is INotifyCollectionChanged)
