@@ -41,17 +41,19 @@ namespace WpfInvestigate.Controls
         public static string ShowDialog(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true, FrameworkElement messageHost = null)
         {
             var resizingControl = CreateResizingControl(messageText, caption, icon, buttons, isCloseButtonVisible);
+            var dialog = (DialogMessage)resizingControl.Content;
             new DialogAdorner(messageHost).ShowContentDialog(resizingControl);
-            return ((DialogMessage)resizingControl.Content).Result;
+            return dialog.Result;
         }
 
         public static async Task<string> ShowAsync(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true, FrameworkElement messageHost = null)
         {
             var resizingControl = CreateResizingControl(messageText, caption, icon, buttons, isCloseButtonVisible);
             var adorner = new DialogAdorner(messageHost);
+            var dialog = (DialogMessage)resizingControl.Content;
             await adorner.ShowContentAsync(resizingControl);
             await adorner.WaitUntilClosed();
-            return ((DialogMessage)resizingControl.Content).Result;
+            return dialog.Result;
         }
 
         public static void Show(string messageText, string caption = null, DialogMessageIcon? icon = null, string[] buttons = null, bool isCloseButtonVisible = true, FrameworkElement messageHost = null)
