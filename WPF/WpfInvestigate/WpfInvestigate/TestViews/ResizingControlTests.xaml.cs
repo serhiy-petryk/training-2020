@@ -190,7 +190,7 @@ namespace WpfInvestigate.TestViews
         private async void MessageAsync_OnClick(object sender, RoutedEventArgs e)
         {
             var result = await DialogMessage.ShowAsync("Test message", "Caption",
-                DialogMessage.DialogMessageIcon.Question, new[] { "OK", "CancelX", "Right", "Left" });
+                DialogMessage.DialogMessageIcon.Question, new[] { "OK", "Cancel", "Right", "Left" });
             Debug.Print($"MessageAsync: {result}");
         }
 
