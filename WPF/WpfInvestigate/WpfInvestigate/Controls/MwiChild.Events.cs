@@ -57,6 +57,7 @@ namespace WpfInvestigate.Controls
 
             MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
             dpd.AddValueChanged(this, OnBackgroundChanged);
+            OnBackgroundChanged(this, null);
 
             if (GetTemplateChild("MovingThumb") is Thumb movingThumb)
             {
