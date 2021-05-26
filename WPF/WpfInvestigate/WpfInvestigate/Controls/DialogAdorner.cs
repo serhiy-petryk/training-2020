@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Controls
 {
@@ -119,6 +120,8 @@ namespace WpfInvestigate.Controls
 
             await content.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Loaded).Task;
 
+            ControlHelper.SetFocus(content);
+
             var left = Math.Round(Math.Max(0, (Child.ActualWidth - content.ActualWidth) / 2));
             var top = Math.Round(Math.Max(0, (Child.ActualHeight - content.ActualHeight) / 2));
             content.Margin = new Thickness(left, 0, 0, 0);
@@ -126,7 +129,11 @@ namespace WpfInvestigate.Controls
             await content.BeginAnimationAsync(MarginProperty, new Thickness(left, 0, 0, 0), new Thickness(left, top, 0, 0), AnimationHelper.AnimationDurationSlow);
         }
 
-        public async void ShowContent(FrameworkElement content) => await ShowContentAsync(content);
+        public async void ShowContent(FrameworkElement content)
+        {
+            await ShowContentAsync(content);
+            ControlHelper.SetFocus(content);
+        }
 
         public void ShowContentDialog(FrameworkElement content)
         {
