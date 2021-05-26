@@ -55,6 +55,7 @@ namespace WpfInvestigate.TestViews
             };
             control.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e1) => GridPanel.Children.Remove(control)));
             GridPanel.Children.Add(control);
+            ControlHelper.SetFocus(control);
 
             await Task.Delay(1000);
 
@@ -89,6 +90,7 @@ namespace WpfInvestigate.TestViews
             };
             control.CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, (s, e1) => GridPanel.Children.Remove(control)));
             GridPanel.Children.Add(control);
+            ControlHelper.SetFocus(control);
         }
 
         private void AddWindowPanelSync_OnClick(object sender, RoutedEventArgs e)
@@ -152,12 +154,7 @@ namespace WpfInvestigate.TestViews
                 ToolTip = "Content3 Width/Height=200/250"
             };
 
-            content1.Opacity = 1.0;
-            content2.Opacity = 1.0;
-
-            await a1.ShowContentAsync(content1);
             a1.ShowContent(content3);
-            a1.ShowContent(content2);
             await a1.WaitUntilClosed();
 
             Debug.Print($"AddWindowPanelAsync_OnClick method finished");

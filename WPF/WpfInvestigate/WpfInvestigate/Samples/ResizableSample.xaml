@@ -21,7 +21,9 @@
 
                         <TextBlock Grid.Row="0" Padding="0" Background="GreenYellow" Text="Header" VerticalAlignment="Stretch"/>
                         <Thumb Grid.Row="0" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"/>
-                        <Button Grid.Row="0" Content="X" HorizontalAlignment="Right" Command="ApplicationCommands.Close"/>
+                        <Button Grid.Row="0" Content="X" HorizontalAlignment="Right" Command="ApplicationCommands.Close"
+                                effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>
 
                         <!--<TextBlock Grid.Row="1" Margin="10 10 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Dialog contents 0 1 2 3 4" TextWrapping="NoWrap" />-->
                         <TextBox Grid.Row="1" Margin="10 10 0 0" Background="Transparent" BorderThickness="0"

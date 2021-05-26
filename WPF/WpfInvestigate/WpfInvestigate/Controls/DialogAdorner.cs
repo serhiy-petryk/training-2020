@@ -44,6 +44,8 @@ namespace WpfInvestigate.Controls
 
             if (adorner._panel.Children.Count == 0)
                 RemoveAdorner(adorner);
+            else if (adorner._panel.Children[adorner._panel.Children.Count - 1] is UIElement element)
+                ControlHelper.SetFocus(element);
         });
         #endregion
 
