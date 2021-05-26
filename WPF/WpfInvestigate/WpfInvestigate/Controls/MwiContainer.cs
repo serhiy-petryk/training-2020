@@ -266,7 +266,7 @@ namespace WpfInvestigate.Controls
         {
             if (!onlyColor && Theme != null)
             {
-                UnloadingHelper.ClearResources(Resources);
+                // UnloadingHelper.ClearResources(Resources);
                 foreach (var f1 in Theme.GetResources())
                     FillResources(this, f1);
             }
