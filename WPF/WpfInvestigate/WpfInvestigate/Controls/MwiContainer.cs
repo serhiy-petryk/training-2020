@@ -71,7 +71,7 @@ namespace WpfInvestigate.Controls
                                 mwiChild.Position = GetStartPositionForMwiChild(mwiChild);
                             MwiPanel?.Children.Add(mwiChild);
                             mwiChild.Activate();
-                        }), DispatcherPriority.Render);
+                        }), DispatcherPriority.Background);
                     }
                     break;
 

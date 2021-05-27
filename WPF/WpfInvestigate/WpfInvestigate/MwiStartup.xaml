@@ -170,8 +170,7 @@
                 <ContentControl Content="Fixed Windows 10 Theme. Bootstrap Primary color" Foreground="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Title="Window Using XAML" Icon="pack://application:,,,/WpfInvestigate;component/Resources/OriginalLogo.png" Height="350"
-                               Background="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiContainer}, Path=Background}">
+            <controls:MwiChild Title="Window Using XAML" Icon="pack://application:,,,/WpfInvestigate;component/Resources/OriginalLogo.png" Height="350">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <Button Height="20" Command="{Binding CmdDisableDetach}">Disable Detach</Button>
