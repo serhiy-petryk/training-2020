@@ -1,9 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:common="clr-namespace:WpfLib.Common;assembly=WpfLib"
+                    xmlns:viewModels="clr-namespace:WpfLib.ViewModels;assembly=WpfLib">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfLib;component/Themes/Mwi.Wnd10.WithBorders.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Color x:Key="Mwi.Child.BaseBackgroundColor">LightBlue</Color>
+    <!--<Color x:Key="Mwi.Child.BaseBackgroundColor">LightBlue</Color>-->
+    <Color x:Key="TestColor">LightBlue</Color>
+    <common:BindingProxy x:Key="Mwi.Child.BaseColorProxy" Value="{StaticResource TestColor}"/>
+
 </ResourceDictionary>
