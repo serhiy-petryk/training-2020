@@ -1,10 +1,8 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
-using WpfInvestigate.Helpers;
 
 namespace WpfInvestigate.Samples
 {

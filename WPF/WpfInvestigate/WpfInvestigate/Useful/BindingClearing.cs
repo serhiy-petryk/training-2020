@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using WpfInvestigate.Common;
 
 namespace WpfInvestigate.Useful
 {
