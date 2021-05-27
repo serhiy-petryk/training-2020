@@ -380,7 +380,7 @@ namespace WpfInvestigate.Controls
 
                     if (mwiChild.TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
                         colorProxy.Value = mwiChild.BaseColor;
-                 }), DispatcherPriority.Normal);
+                 }), DispatcherPriority.Render);
             }
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
