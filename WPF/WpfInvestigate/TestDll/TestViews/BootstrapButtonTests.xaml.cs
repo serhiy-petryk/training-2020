@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using WpfInvestigate.Effects;
+using WpfLib.Effects;
 
 namespace TestDll.TestViews
 {
@@ -17,7 +17,7 @@ namespace TestDll.TestViews
         private void Monochrome_ChangeColor_OnClick(object sender, RoutedEventArgs e)
         {
             _hue = (_hue + 30) % 360;
-            var color = new WpfInvestigate.Common.ColorSpaces.HSL(_hue / 360.0, 1, 0.4).RGB.Color;
+            var color = new WpfLib.Common.ColorSpaces.HSL(_hue / 360.0, 1, 0.4).RGB.Color;
             ChromeEffect.SetMonochrome(MonochromeButtonWhite, color);
             ChromeEffect.SetMonochrome(MonochromeButtonBlack, color);
         }
@@ -25,7 +25,7 @@ namespace TestDll.TestViews
         private void Bichrome_ChangeColor_OnClick(object sender, RoutedEventArgs e)
         {
             _hue = (_hue + 30) % 360;
-            var color = new WpfInvestigate.Common.ColorSpaces.HSL(_hue / 360.0, 1, 0.4).RGB.Color;
+            var color = new WpfLib.Common.ColorSpaces.HSL(_hue / 360.0, 1, 0.4).RGB.Color;
             ChromeEffect.SetBichromeBackground(BichromeButtonWhite, color);
             ChromeEffect.SetBichromeBackground(BichromeButtonBlack, color);
         }

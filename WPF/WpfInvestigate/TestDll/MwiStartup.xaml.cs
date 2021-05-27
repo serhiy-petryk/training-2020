@@ -5,10 +5,10 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using WpfInvestigate.Common;
-using WpfInvestigate.Controls;
-using WpfInvestigate.Samples;
-using WpfInvestigate.ViewModels;
+using WpfLib.Common;
+using WpfLib.Controls;
+using WpfLib.Samples;
+using WpfLib.ViewModels;
 
 namespace TestDll
 {

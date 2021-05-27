@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:WpfInvestigate.Controls;assembly=WpfInvestigate"
-        xmlns:samples="clr-namespace:WpfInvestigate.Samples;assembly=WpfInvestigate"
-        xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels;assembly=WpfInvestigate"
+        xmlns:controls="clr-namespace:WpfLib.Controls;assembly=WpfLib"
+        xmlns:samples="clr-namespace:WpfLib.Samples;assembly=WpfLib"
+        xmlns:viewModels="clr-namespace:WpfLib.ViewModels;assembly=WpfLib"
         mc:Ignorable="d"
         Title="MwiStartup"
         Style="{StaticResource HeadlessWindow}"
@@ -127,7 +127,7 @@
                 <TextBlock Text="Not resizable" Background="Yellow"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Title="Window Using XAML" Position="20 170" Icon="pack://application:,,,/WpfInvestigate;component/Resources/OriginalLogo.png" Height="350" x:Name="Test2">
+            <controls:MwiChild Title="Window Using XAML" Position="20 170" Icon="pack://application:,,,/WpfLib;component/Resources/OriginalLogo.png" Height="350" x:Name="Test2">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdDisableDetach}">Disable Detach</Button>

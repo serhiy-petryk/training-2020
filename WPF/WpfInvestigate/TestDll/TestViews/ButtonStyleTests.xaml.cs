@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using WpfInvestigate.Common;
+using WpfLib.Common;
 
 namespace TestDll.TestViews
 {

@@ -20,7 +20,7 @@ namespace TestDll
             cbCulture.ItemsSource = CultureInfos;
             cbCulture.SelectedValue = Thread.CurrentThread.CurrentUICulture;
 
-            WpfInvestigate.Helpers.ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
+            WpfLib.Helpers.ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
         }
 
         private static string[] _cultures = { "", "sq-AL", "uk-UA", "en-US", "km-KH", "yo-NG" };

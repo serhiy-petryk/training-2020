@@ -6,8 +6,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Mwi.Wnd7.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/WpfLib;component/Themes/Mwi.Wnd7.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/WpfLib;component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
