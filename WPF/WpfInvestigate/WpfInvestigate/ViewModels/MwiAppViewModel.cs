@@ -21,9 +21,9 @@ namespace WpfInvestigate.ViewModels
             set => SetValue(ScaleValueProperty, value);
         }
         //=============================
-        public static readonly DependencyProperty AppColorProperty = DependencyProperty.Register(nameof(AppColor), typeof(Color), typeof(MwiAppViewModel), new UIPropertyMetadata(Colors.White, OnAppcolorChanged));
+        public static readonly DependencyProperty AppColorProperty = DependencyProperty.Register(nameof(AppColor), typeof(Color), typeof(MwiAppViewModel), new UIPropertyMetadata(Colors.Yellow, OnAppColorChanged));
 
-        private static void OnAppcolorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnAppColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var model = (MwiAppViewModel)d;
             model.OnPropertiesChanged(nameof(AppColor));
@@ -70,7 +70,7 @@ namespace WpfInvestigate.ViewModels
                 CurrentTheme = MwiThemeInfo.Themes[newK];
             }
 
-            OnPropertiesChanged(nameof(CurrentTheme), nameof(AppColor));
+            UpdateUI();
         }
         #endregion
 
@@ -82,6 +82,9 @@ namespace WpfInvestigate.ViewModels
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public void UpdateUI() => OnPropertiesChanged(nameof(CurrentTheme), nameof(AppColor));
+
         #endregion
     }
 }

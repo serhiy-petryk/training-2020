@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 using WpfInvestigate.Themes;
 using WpfInvestigate.ViewModels;
 
@@ -81,8 +82,7 @@ namespace WpfInvestigate.Controls
 
         private void OnBackgroundChanged(object sender, EventArgs e)
         {
-            if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
-                colorProxy.Value = BaseColor;
+            MwiAppViewModel.Instance.UpdateUI();
             OnPropertiesChanged(nameof(BaseColor));
         }
 
@@ -246,6 +246,8 @@ namespace WpfInvestigate.Controls
             {
                 if (Theme?.Id == "Windows7") return MwiThemeInfo.Wnd7BaseColor;
                 var backColor = Tips.GetColorFromBrush(Background);
+                if (backColor == Colors.Transparent && MwiContainer != null)
+                    backColor = Tips.GetColorFromBrush(MwiContainer.Background);
                 return backColor == Colors.Transparent ? MwiAppViewModel.Instance.AppColor : backColor;
             }
         }
