@@ -6,12 +6,12 @@
         xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels;assembly=WpfInvestigate"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls;assembly=WpfInvestigate"
         xmlns:samples="clr-namespace:WpfInvestigate.Samples;assembly=WpfInvestigate"
-        xmlns:WpfInvestigate="clr-namespace:WpfInvestigate;assembly=WpfInvestigate"
+        xmlns:testDll="clr-namespace:TestDll"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects;assembly=WpfInvestigate"
         xmlns:themes="clr-namespace:WpfInvestigate.Themes;assembly=WpfInvestigate"
         xmlns:common="clr-namespace:WpfInvestigate.Common;assembly=WpfInvestigate"
         mc:Ignorable="d"
-        Title="MwiStartup"
+        Title="Test DLL MwiStartup"
         Style="{StaticResource HeadlessWindow}"
         KeyDown="MwiStartup_OnKeyDown"
         Unloaded="OnUnloaded">
@@ -62,7 +62,7 @@
                         IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"/>
 
                 <Button Grid.Column="2" Width="18" Height="18" BorderThickness="0" Focusable="False" ToolTip="Reset zoom"
-                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=WpfInvestigate:MwiStartup}, Path=CmdScaleSliderReset}"
+                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=testDll:MwiStartup}, Path=CmdScaleSliderReset}"
                         effects:CornerRadiusEffect.CornerRadius="3">
                     <Viewbox Width="10" Height="10">
                         <Path Width="13" Height="13" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Data="F1 M0 0 H1 L13 12 V13 H12 L0 1Z M13 0 V1 L1 13 H0 V12 L12 0Z"/>
