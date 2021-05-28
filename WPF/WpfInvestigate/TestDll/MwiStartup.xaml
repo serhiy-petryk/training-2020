@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:WpfLib.ViewModels;assembly=WpfLib"
-        xmlns:controls="clr-namespace:WpfLib.Controls;assembly=WpfLib"
-        xmlns:samples="clr-namespace:WpfLib.Samples;assembly=WpfLib"
-        xmlns:wpfLib="clr-namespace:WpfLib;assembly=WpfLib"
-        xmlns:effects="clr-namespace:WpfLib.Effects;assembly=WpfLib"
-        xmlns:themes="clr-namespace:WpfLib.Themes;assembly=WpfLib"
-        xmlns:common="clr-namespace:WpfLib.Common;assembly=WpfLib"
+        xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels;assembly=WpfInvestigate"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls;assembly=WpfInvestigate"
+        xmlns:samples="clr-namespace:WpfInvestigate.Samples;assembly=WpfInvestigate"
+        xmlns:WpfInvestigate="clr-namespace:WpfInvestigate;assembly=WpfInvestigate"
+        xmlns:effects="clr-namespace:WpfInvestigate.Effects;assembly=WpfInvestigate"
+        xmlns:themes="clr-namespace:WpfInvestigate.Themes;assembly=WpfInvestigate"
+        xmlns:common="clr-namespace:WpfInvestigate.Common;assembly=WpfInvestigate"
         mc:Ignorable="d"
         Title="MwiStartup"
         Style="{StaticResource HeadlessWindow}"
@@ -62,7 +62,7 @@
                         IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"/>
 
                 <Button Grid.Column="2" Width="18" Height="18" BorderThickness="0" Focusable="False" ToolTip="Reset zoom"
-                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wpfLib:MwiStartup}, Path=CmdScaleSliderReset}"
+                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=WpfInvestigate:MwiStartup}, Path=CmdScaleSliderReset}"
                         effects:CornerRadiusEffect.CornerRadius="3">
                     <Viewbox Width="10" Height="10">
                         <Path Width="13" Height="13" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Data="F1 M0 0 H1 L13 12 V13 H12 L0 1Z M13 0 V1 L1 13 H0 V12 L12 0Z"/>
@@ -160,7 +160,7 @@
                 <TextBlock Text="Not resizable" Background="Yellow"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Position="600 25" Title="Fixed Windows 7 Theme" Height="150" Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[2]}" >
+            <controls:MwiChild Position="600 25" Title="Fixed Windows 7 Theme" Height="150" Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[3]}" >
                 <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=Title}"/>
             </controls:MwiChild>
 
@@ -170,7 +170,7 @@
                 <ContentControl Content="Fixed Windows 10 Theme. Bootstrap Primary color" Foreground="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Title="Window Using XAML" Icon="pack://application:,,,/WpfLib;component/Resources/OriginalLogo.png" Height="350">
+            <controls:MwiChild Title="Window Using XAML" Icon="pack://application:,,,/WpfInvestigate;component/Resources/OriginalLogo.png" Height="350">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <Button Height="20" Command="{Binding CmdDisableDetach}">Disable Detach</Button>

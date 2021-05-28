@@ -6,11 +6,11 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using WpfLib.Common;
-using WpfLib.Controls;
-using WpfLib.Helpers;
-using WpfLib.Samples;
-using WpfLib.ViewModels;
+using WpfInvestigate.Common;
+using WpfInvestigate.Controls;
+using WpfInvestigate.Helpers;
+using WpfInvestigate.Samples;
+using WpfInvestigate.ViewModels;
 
 namespace TestDll
 {

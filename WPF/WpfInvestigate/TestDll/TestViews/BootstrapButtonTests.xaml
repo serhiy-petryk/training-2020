@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:effects="clr-namespace:WpfLib.Effects;assembly=WpfLib"
-        xmlns:common="clr-namespace:WpfLib.Common;assembly=WpfLib"
+        xmlns:effects="clr-namespace:WpfInvestigate.Effects;assembly=WpfInvestigate"
+        xmlns:common="clr-namespace:WpfInvestigate.Common;assembly=WpfInvestigate"
         mc:Ignorable="d"
         Title="BootstrapButtonTests" Height="600" Width="900">
 
