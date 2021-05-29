@@ -161,9 +161,9 @@ namespace WpfInvestigate.Controls
                 if (Equals(tc.SelectedItem, BootstrapItem))
                     data = GetBootstrapColors();
                 else if (Equals(tc.SelectedItem, KnownColorsByColorItem))
-                    data = ColorUtils.KnownColors.OrderBy(kvp => GetSortNumberForColor(kvp.Value));
+                    data = ColorUtils.GetKnownColors(false).OrderBy(kvp => GetSortNumberForColor(kvp.Value));
                 else if (Equals(tc.SelectedItem, KnownColorsByNameItem))
-                    data = ColorUtils.KnownColors.OrderBy(kvp => kvp.Key);
+                    data = ColorUtils.GetKnownColors(false).OrderBy(kvp => kvp.Key);
 
                 if (data != null)
                     foreach (var kvp in data.Where(kvp=> kvp.Value != Colors.Transparent))

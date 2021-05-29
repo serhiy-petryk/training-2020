@@ -31,29 +31,34 @@ namespace WpfInvestigate.Common.ColorSpaces
     public static class ColorUtils
     {
         private static Dictionary<string, Color> _knownColors;
+        private static Dictionary<string, Color> _uniqueKnownColors;
         /// <summary>
         /// 141 known colors from System.Windows.Media.KnownColor enumeration
         /// I don't want to use System.Drawing.KnownColor because I need to add additional assembly to my project
         /// </summary>
-        public static Dictionary<string, Color> KnownColors
+        public static Dictionary<string, Color> GetKnownColors(bool onlyUnique)
         {
-            get
+            if (_knownColors == null)
             {
-                if (_knownColors == null)
+                if (_uniqueKnownColors == null)
                 {
+                    _uniqueKnownColors = new Dictionary<string, Color>();
                     _knownColors = new Dictionary<string, Color>();
                     if (AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).FirstOrDefault(t => t.Namespace == "System.Windows.Media" && t.Name == "KnownColor") is Type type)
                     {
-                        var nameList = Enum.GetValues(type).OfType<object>().Skip(1).Select(a => a.ToString()).OrderBy(a => a).ToList();
-                        nameList.AddRange(new[] { "Cyan", "Aqua", "Fuchsia", "Magenta" });// repeating color values: name may be skipped
+                        var nameList = Enum.GetValues(type).OfType<object>().Skip(1).Select(a => a.ToString()).ToList();
+                        foreach (var colorName in nameList)
+                            if (!_uniqueKnownColors.ContainsKey(colorName))
+                                _uniqueKnownColors.Add(colorName, StringToColor(colorName));
+                        nameList.AddRange(new[] { "Cyan", "Aqua", "Fuchsia", "Magenta" });// some names of repeating colors are absent in nameList
                         foreach (var colorName in nameList)
                             if (!_knownColors.ContainsKey(colorName))
                                 _knownColors.Add(colorName, StringToColor(colorName));
                     }
                 }
-
-                return _knownColors;
             }
+
+            return onlyUnique ? _uniqueKnownColors : _knownColors;
         }
 
         public static Color StringToColor(string hexStringOfColor) => (Color)ColorConverter.ConvertFromString(hexStringOfColor);
