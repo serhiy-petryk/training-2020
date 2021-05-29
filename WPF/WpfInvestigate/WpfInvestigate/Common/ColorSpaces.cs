@@ -19,8 +19,10 @@ yCbCR (BT601, BT709, BT2020 standards): the YCbCr/YPbCb/YPrCr representation:
  */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Media;
 
 namespace WpfInvestigate.Common.ColorSpaces
@@ -28,7 +30,7 @@ namespace WpfInvestigate.Common.ColorSpaces
     #region  ================  Color Utilities  =================
     public static class ColorUtils
     {
-        /*private static Dictionary<string, Color> _knownColors;
+        private static Dictionary<string, Color> _knownColors;
         /// <summary>
         /// 141 known colors from System.Windows.Media.KnownColor enumeration
         /// I don't want to use System.Drawing.KnownColor because I need to add additional assembly to my project
@@ -52,7 +54,7 @@ namespace WpfInvestigate.Common.ColorSpaces
 
                 return _knownColors;
             }
-        }*/
+        }
 
         public static Color StringToColor(string hexStringOfColor) => (Color)ColorConverter.ConvertFromString(hexStringOfColor);
 

@@ -10,7 +10,9 @@
 //      - middle size with scroll: color boxes of known colors (140 items)
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +20,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
+using WpfInvestigate.Common.ColorSpaces;
+using WpfInvestigate.Effects;
 
 namespace WpfInvestigate.Controls
 {
@@ -146,5 +150,87 @@ namespace WpfInvestigate.Controls
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        private void OnTabControlSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var tc = (TabControl) sender;
+            var selectedItem = tc.SelectedItem as TabItem;
+            if ((selectedItem?.Content as ScrollViewer)?.Content is WrapPanel panel && panel.Children.Count == 0)
+            {
+                IEnumerable<KeyValuePair<string, Color>> data = null;
+                if (Equals(tc.SelectedItem, BootstrapItem))
+                    data = GetBootstrapColors();
+                else if (Equals(tc.SelectedItem, KnownColorsByColorItem))
+                    data = ColorUtils.KnownColors.OrderBy(kvp => GetSortNumberForColor(kvp.Value));
+                else if (Equals(tc.SelectedItem, KnownColorsByNameItem))
+                    data = ColorUtils.KnownColors.OrderBy(kvp => kvp.Key);
+
+                if (data != null)
+                    foreach (var kvp in data.Where(kvp=> kvp.Value != Colors.Transparent))
+                    {
+                        var content = new TextBox
+                        {
+                            BorderThickness = new Thickness(0),
+                            Margin = new Thickness(0),
+                            Padding = new Thickness(0),
+                            IsReadOnly = true,
+                            Text = GetColorLabel(kvp),
+                            Background = Brushes.Transparent,
+                            Foreground = new SolidColorBrush(ColorUtils.GetForegroundColor(kvp.Value)),
+                            IsHitTestVisible = false
+                        };
+                        var btn = new Button
+                        {
+                            Width = 140,
+                            Padding = new Thickness(2),
+                            Margin = new Thickness(2),
+                            BorderThickness = new Thickness(2),
+                            HorizontalContentAlignment = HorizontalAlignment.Center,
+                            VerticalContentAlignment = VerticalAlignment.Center,
+                            Content = content
+                        };
+                        CornerRadiusEffect.SetCornerRadius(btn, new CornerRadius(2));
+                        ChromeEffect.SetMonochrome(btn, kvp.Value);
+                        ChromeEffect.SetChromeMatrix(btn, "+0%,+70%,+0%,40, +0%,+75%,+0%,100, +0%,+75%,+35%,100");
+                        btn.Click += (o, args) => VM.CurrentColor = ((SolidColorBrush)((Button)o).Background).Color;
+                        panel.Children.Add(btn);
+                    }
+            }
+        }
+
+        private static string GetColorLabel(KeyValuePair<string, Color> kvp)
+        {
+            var s1 = string.Concat(kvp.Key.Select(x => Char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' ');
+            var rgb = new RGB(kvp.Value);
+            var hsl = new HSL(rgb);
+
+            return $"{s1}{Environment.NewLine}{rgb.Color}{Environment.NewLine}HSL: {Math.Round(hsl.Hue)}, {Math.Round(hsl.Saturation)}, {Math.Round(hsl.Lightness)}";
+        }
+
+        private static int GetSortNumberForColor(Color color)
+        {
+            var hsl = new HSL(new RGB(color));
+            return Convert.ToInt32(hsl.Hue) * 36000 + Convert.ToInt32(hsl.Saturation) * 100 + Convert.ToInt32(hsl.Lightness);
+        }
+
+
+        private static Dictionary<string, Color> GetBootstrapColors()
+        {
+            string[] bootstrapColorNames =
+            {
+                "PrimaryColor", "SecondaryColor", "SuccessColor", "DangerColor", "WarningColor", "InfoColor", "LightColor",
+                "DarkColor", "BlueColor", "IndigoColor", "PurpleColor", "PinkColor", "RedColor", "OrangeColor",
+                "YellowColor", "GreenColor", "TealColor", "CyanColor", "WhiteColor", "GrayColor", "GrayDarkColor"
+            };
+            var result = new Dictionary<string, Color>();
+            foreach (var name in bootstrapColorNames)
+                result.Add(name.Remove(name.Length - 5), (Color)Application.Current.Resources[name]);
+            return result;
+        }
+
+        private void AAB_OnClick(object sender, RoutedEventArgs e)
+        {
+            Debug.Print($"Click");
+        }
     }
 }
