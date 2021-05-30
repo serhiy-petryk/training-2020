@@ -160,13 +160,13 @@
                 <TextBlock Text="Not resizable" Background="Yellow"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Position="600 25" Title="Fixed Windows 7 Theme" Height="150" Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[3]}" >
+            <controls:MwiChild Position="600 25" Title="Fixed Windows 7 Theme" Height="150" Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows7]}" >
                 <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=Title}"/>
             </controls:MwiChild>
 
             <controls:MwiChild Position="600 225" Title="Fixed Windows 10 Theme" Height="150"
                                Background="{StaticResource PrimaryBrush}"
-                               Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[1]}" >
+                               Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10]}" >
                 <ContentControl Content="Fixed Windows 10 Theme. Bootstrap Primary color" Foreground="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
             </controls:MwiChild>
 

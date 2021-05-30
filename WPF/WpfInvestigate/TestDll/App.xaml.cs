@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
 using WpfInvestigate.Themes;
@@ -29,9 +30,8 @@ namespace TestDll
             var a3 = CultureInfo.DefaultThreadCurrentCulture;
             var a4 = CultureInfo.DefaultThreadCurrentUICulture;
 
-            MwiThemeInfo.Themes.Insert(0, new MwiThemeInfo("Test dll theme", null, new[] { $"pack://application:,,,/TestDll;component/Themes/Mwi.TestTheme.xaml" }));
-
-            MwiAppViewModel.Instance.ChangeTheme(MwiThemeInfo.Themes[0]);
+            MwiThemeInfo.Themes.Add("TestTheme", new MwiThemeInfo("Test dll theme", Colors.LightBlue, null, MwiThemeInfo.Themes["Windows10"].GetUris()));
+            MwiAppViewModel.Instance.ChangeTheme(MwiThemeInfo.Themes["TestTheme"]);
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
 

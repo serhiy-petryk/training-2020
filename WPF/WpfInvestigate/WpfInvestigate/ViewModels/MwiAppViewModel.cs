@@ -59,19 +59,14 @@ namespace WpfInvestigate.ViewModels
             CmdChangeTheme = new RelayCommand(o => ChangeTheme(null));
         }
 
-        public void ChangeTheme(string themeId)
+        public void ChangeTheme(MwiThemeInfo newTheme)
         {
-            if (themeId != null && MwiThemeInfo.Themes.ContainsKey(themeId))
-                CurrentTheme = MwiThemeInfo.Themes[themeId];
+            if (newTheme != null)
+                CurrentTheme = newTheme;
             else if (CurrentTheme == null)
                 CurrentTheme = MwiThemeInfo.Themes.Values.FirstOrDefault();
             else
-            {
-                var keys = MwiThemeInfo.Themes.Keys.ToList();
-                var k = keys.IndexOf(CurrentTheme.Id);
-                var newK = k >= 0 && k + 1 < MwiThemeInfo.Themes.Count ? k + 1 : 0;
-                CurrentTheme = MwiThemeInfo.Themes[keys[newK]];
-            }
+                CurrentTheme = MwiThemeInfo.Themes.Values.SkipWhile(a => a != CurrentTheme).Skip(1).FirstOrDefault() ?? MwiThemeInfo.Themes.Values.FirstOrDefault();
 
             UpdateUI();
         }

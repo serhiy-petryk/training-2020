@@ -67,6 +67,8 @@ namespace WpfInvestigate.Themes
             return new ResourceDictionary[0];
         }
 
+        public string[] GetUris() => (string[])_uris.Clone();
+
         public override string ToString() => Id;
     }
 }
