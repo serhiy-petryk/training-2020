@@ -13,7 +13,7 @@ using WpfInvestigate.Common.ColorSpaces;
 namespace WpfInvestigate.Controls
 {
     // ColorControl ViewModel for DataTemplate
-    public class ColorControlViewModel : INotifyPropertyChangedAbstract
+    public class ColorControlViewModel : NotifyPropertyChangedAbstract
     {
         internal enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
         internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
@@ -250,7 +250,7 @@ namespace WpfInvestigate.Controls
 
         #region ===================  SUBCLASSES  ========================
         #region ==============  Hue/SaturationAndValue Sliders  ============
-        public class XYSlider : INotifyPropertyChangedAbstract
+        public class XYSlider : NotifyPropertyChangedAbstract
         {
             protected string Id { get; }
             public double xValue { get; private set; }
@@ -350,7 +350,7 @@ namespace WpfInvestigate.Controls
         #endregion
 
         #region ==============  ColorToneBox  =======================
-        public class ColorToneBox : INotifyPropertyChangedAbstract
+        public class ColorToneBox : NotifyPropertyChangedAbstract
         {
             private readonly ColorControlViewModel _owner;
             public int GridColumn { get; }
