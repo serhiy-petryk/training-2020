@@ -89,9 +89,15 @@
     <Compile Include="Controls\MwiContainer.LeftPanel.cs" />
     <Compile Include="Controls\MwiContainer.WindowsMenu.cs" />
     <Compile Include="Controls\ResizingControl.Events.cs" />
+    <Compile Include="Controls\ThemeSelector.xaml.cs">
+      <DependentUpon>ThemeSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Effects\TextBlockEffects.cs" />
     <Compile Include="Helpers\BindingHelper.cs" />
     <Compile Include="Helpers\EventHelper.Log.cs" />
+    <Compile Include="TestViews\ThemeSelectorTest.xaml.cs">
+      <DependentUpon>ThemeSelectorTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Useful\BindingClearing.cs" />
     <Compile Include="Helpers\UnloadingHelper.cs" />
     <Compile Include="Helpers\EventHelper.cs" />
@@ -286,6 +292,10 @@
     </Compile>
     <Compile Include="Themes\MwiThemeInfo.cs" />
     <Compile Include="ViewModels\MwiAppViewModel.cs" />
+    <Page Include="Controls\ThemeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Obsolete\ForObsolete.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -564,6 +574,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestViews\DropDownButtonTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestViews\ThemeSelectorTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
