@@ -69,6 +69,6 @@ namespace WpfInvestigate.Themes
 
         public string[] GetUris() => (string[])_uris.Clone();
 
-        public override string ToString() => Id;
+        public override string ToString() => Name;
     }
 }

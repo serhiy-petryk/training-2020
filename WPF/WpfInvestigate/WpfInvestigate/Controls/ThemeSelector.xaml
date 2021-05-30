@@ -7,10 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <StackPanel Orientation="Vertical">
-        <RadioButton GroupName="Theme" Margin="2">Windows 7</RadioButton>
-        <RadioButton GroupName="Theme" Margin="2">Windows 10</RadioButton>
-        <RadioButton GroupName="Theme" Margin="2">Windows 10 with borders</RadioButton>
+    <DockPanel Background="Yellow">
+        <StackPanel DockPanel.Dock="Top" x:Name="ThemeList" Orientation="Vertical"/>
         <local:ColorControl Margin="2 10 2 2"></local:ColorControl>
-    </StackPanel>
+    </DockPanel>
 </UserControl>
