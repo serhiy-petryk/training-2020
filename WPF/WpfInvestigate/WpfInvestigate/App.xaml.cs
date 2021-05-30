@@ -30,8 +30,6 @@ namespace WpfInvestigate
             var a3 = CultureInfo.DefaultThreadCurrentCulture;
             var a4 = CultureInfo.DefaultThreadCurrentUICulture;
 
-            // MwiAppViewModel.Instance.ChangeTheme(MwiThemeInfo.Themes[0]);
-
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
 
             // global event handlers 

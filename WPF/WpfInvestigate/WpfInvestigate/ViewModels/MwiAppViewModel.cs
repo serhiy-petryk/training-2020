@@ -10,7 +10,7 @@ namespace WpfInvestigate.ViewModels
     public class MwiAppViewModel: DependencyObject, INotifyPropertyChanged
     {
         #region ================  Static section  =====================
-        public static MwiAppViewModel Instance = new MwiAppViewModel {CurrentTheme = MwiThemeInfo.Themes[0]};
+        public static MwiAppViewModel Instance = new MwiAppViewModel {CurrentTheme = MwiThemeInfo.Themes["Windows10-2"] };
         #endregion
 
         #region ================  Instance section  ====================
@@ -59,15 +59,18 @@ namespace WpfInvestigate.ViewModels
             CmdChangeTheme = new RelayCommand(o => ChangeTheme(null));
         }
 
-        public void ChangeTheme(MwiThemeInfo theme)
+        public void ChangeTheme(string themeId)
         {
-            var oldTheme = CurrentTheme;
-            CurrentTheme = theme;
-            if (CurrentTheme == null)
+            if (themeId != null && MwiThemeInfo.Themes.ContainsKey(themeId))
+                CurrentTheme = MwiThemeInfo.Themes[themeId];
+            else if (CurrentTheme == null)
+                CurrentTheme = MwiThemeInfo.Themes.Values.FirstOrDefault();
+            else
             {
-                var k = MwiThemeInfo.Themes.IndexOf(oldTheme);
+                var keys = MwiThemeInfo.Themes.Keys.ToList();
+                var k = keys.IndexOf(CurrentTheme.Id);
                 var newK = k >= 0 && k + 1 < MwiThemeInfo.Themes.Count ? k + 1 : 0;
-                CurrentTheme = MwiThemeInfo.Themes[newK];
+                CurrentTheme = MwiThemeInfo.Themes[keys[newK]];
             }
 
             UpdateUI();

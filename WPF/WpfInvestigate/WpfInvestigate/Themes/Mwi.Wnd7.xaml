@@ -5,7 +5,7 @@
                     xmlns:themes="clr-namespace:WpfInvestigate.Themes"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
-    <common:BindingProxy x:Key="Mwi.Child.BaseColorProxy" Value="{Binding Source={x:Static themes:MwiThemeInfo.Wnd7BaseColor}}"/>
+    <common:BindingProxy x:Key="Mwi.Child.BaseColorProxy" Value="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows7].FixedColor}"/>
 
     <!-- ============= Windows 7 layout ============ -->
     <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
@@ -333,7 +333,7 @@
     <!-- ========================================== -->
     <!-- ========  MwiContainer & MwiBar  ========= -->
     <!-- ========================================== -->
-    <common:BindingProxy x:Key="Mwi.Container.BaseColorProxy" Value="{Binding Source={x:Static themes:MwiThemeInfo.Wnd7BaseColor}}"/>
+    <common:BindingProxy x:Key="Mwi.Container.BaseColorProxy" Value="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows7].FixedColor}"/>
     <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{x:Static SystemColors.AppWorkspaceColor}"/>
     <SolidColorBrush x:Key="Mwi.Container.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
     <SolidColorBrush x:Key="Mwi.Container.LeftPanel.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Container.BaseColorProxy}, Path=Value}"/>
