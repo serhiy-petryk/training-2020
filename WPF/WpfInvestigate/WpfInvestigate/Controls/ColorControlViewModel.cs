@@ -48,11 +48,11 @@ namespace WpfInvestigate.Controls
             Sliders = new[]
             {
                 new ColorComponent("RGB_R", this, 0, 255, null,
-                    (k) => Color.FromRgb(Convert.ToByte(255 * k), CurrentColor.G, CurrentColor.B)),
+                    (k) => Color.FromRgb(Convert.ToByte(255 * k), Color.G, Color.B)),
                 new ColorComponent("RGB_G", this, 0, 255, null,
-                    (k) => Color.FromRgb(CurrentColor.R, Convert.ToByte(255 * k), CurrentColor.B)),
+                    (k) => Color.FromRgb(Color.R, Convert.ToByte(255 * k), Color.B)),
                 new ColorComponent("RGB_B", this, 0, 255, null,
-                    (k) => Color.FromRgb(CurrentColor.R, CurrentColor.G, Convert.ToByte(255 * k))),
+                    (k) => Color.FromRgb(Color.R, Color.G, Convert.ToByte(255 * k))),
                 new ColorComponent("HSL_H", this, 0, 360, "°",
                     (k) => new HSL(k / 100.0, HSL_S.SpaceValue, HSL_L.SpaceValue).RGB.Color),
                 new ColorComponent("HSL_S", this, 0, 100, "%",
@@ -94,29 +94,19 @@ namespace WpfInvestigate.Controls
         }
 
         #region  ==============  Public Properties  ================
-        public Color Color // Original color
-        {
-            get => Color.FromArgb(Convert.ToByte((1.0 - _oldColorData[_oldColorData.Length - 1]) * 255),
-                Convert.ToByte(_oldColorData[0] * 255), Convert.ToByte(_oldColorData[1] * 255), Convert.ToByte(_oldColorData[2] * 255));
-            set
-            {
-                CurrentColor = value;
-                SaveColor();
-            }
-        }
-
-        public Color CurrentColor
+        public Color Color
         {
             get => Color.FromArgb(Convert.ToByte((1 - AlphaSlider.yValue) * 255), Convert.ToByte(RGB_R.Value),
                 Convert.ToByte(RGB_G.Value), Convert.ToByte(RGB_B.Value));
             set
             {
-                _isUpdating = true;
+                // _isUpdating = true;
                 AlphaSlider.SetProperties(0, 1.0 - value.A / 255.0);
+                // _isUpdating = false;
                 RGB_R.Value = value.R;
                 RGB_G.Value = value.G;
-                _isUpdating = false;
                 RGB_B.Value = value.B;
+                OnPropertiesChanged(nameof(Color));
             }
         }
 
@@ -128,10 +118,10 @@ namespace WpfInvestigate.Controls
         }
         public SolidColorBrush HueBrush => GetCacheBrush(0, new HSV(HSV_H.SpaceValue, 1, 1).RGB.Color);
         public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorUtils.GetForegroundColor(Color));
-        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorUtils.GetForegroundColor(CurrentColor));
+        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorUtils.GetForegroundColor(Color));
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, Color.FromRgb(Color.R, Color.G, Color.B));
-        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, Color.FromRgb(CurrentColor.R, CurrentColor.G, CurrentColor.B));
-        public double CurrentColorGrayLevel => ColorUtils.GetGrayLevel(new RGB(CurrentColor)) * 100;
+        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, Color.FromRgb(Color.R, Color.G, Color.B));
+        public double CurrentColorGrayLevel => ColorUtils.GetGrayLevel(new RGB(Color)) * 100;
         #endregion
 
         #region ==============  Update Values/UI  ===============
@@ -213,38 +203,11 @@ namespace WpfInvestigate.Controls
 
             Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
+                OnPropertiesChanged(nameof(Color), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
                     nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColorGrayLevel));
                 foreach (var tone in Tones)
                     tone.UpdateUI();
             }, DispatcherPriority.ContextIdle);
-        }
-        #endregion
-
-        #region ===========  Save & Restore color  =================
-
-        private const int ComponentNumber = 15;
-        private double[] _savedColorData = new double[ComponentNumber + 1];
-        private double[] _oldColorData = new double[ComponentNumber + 1];
-
-        internal void SaveColor()
-        {
-            _oldColorData.CopyTo(_savedColorData, 0);
-            for (var k = 0; k < ComponentNumber; k++)
-                _oldColorData[k] = ((ColorComponent)Sliders[k]).SpaceValue;
-            _oldColorData[ComponentNumber] = AlphaSlider.yValue;
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
-        }
-        internal void RestoreColor()
-        {
-            _savedColorData.CopyTo(_oldColorData, 0);
-            for (var k = 0; k < ComponentNumber; k++)
-                ((ColorComponent)Sliders[k]).SetSpaceValue(_oldColorData[k]);
-            AlphaSlider.SetProperties(0, _oldColorData[ComponentNumber]);
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
-
-            HueSlider.SetProperties(0, HSV_H.SpaceValue, false);
-            SaturationAndValueSlider.SetProperties(HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue, true);
         }
         #endregion
 
@@ -395,7 +358,7 @@ namespace WpfInvestigate.Controls
             }
 
             public void SetCurrentColor() =>
-                _owner.CurrentColor = GetBackgroundHSL().RGB.GetColor(1 - _owner.AlphaSlider.yValue);
+                _owner.Color = GetBackgroundHSL().RGB.GetColor(1 - _owner.AlphaSlider.yValue);
 
             private HSL GetBackgroundHSL()
             {

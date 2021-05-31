@@ -48,7 +48,6 @@ namespace WpfInvestigate.Controls
 
         private void OnApplyButtonClick(object sender, RoutedEventArgs e)
         {
-            ColorControl.SaveColor();
             if (MwiAppViewModel.Instance.AppColor != ColorControl.Color)
                 MwiAppViewModel.Instance.AppColor = ColorControl.Color;
 

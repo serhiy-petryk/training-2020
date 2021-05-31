@@ -16,11 +16,14 @@ namespace WpfInvestigate.TestViews
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            ColorControl.SaveColor();
+            // ColorControl.SaveColor();
             MwiAppViewModel.Instance.AppColor = ColorControl.Color;
         }
 
-        private void RestoreButton_Click(object sender, RoutedEventArgs e) => ColorControl.RestoreColor();
+        private void RestoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            // ColorControl.RestoreColor();
+        }
 
         private void ChangeColorButton_Click(object sender, RoutedEventArgs e)
         {

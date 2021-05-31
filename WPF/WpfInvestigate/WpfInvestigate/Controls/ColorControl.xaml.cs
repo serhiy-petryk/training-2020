@@ -33,7 +33,7 @@ namespace WpfInvestigate.Controls
         public ColorControl()
         {
             InitializeComponent();
-            SaveColor();
+            VM.PropertyChanged += (sender, args) => OnPropertiesChanged(nameof(Color));
         }
 
         #region  ==============  User UI  ===========
@@ -46,18 +46,6 @@ namespace WpfInvestigate.Controls
                 VM.Color = value;
                 OnPropertiesChanged(nameof(Color));
             }
-        }
-
-        public void SaveColor()
-        {
-            VM.SaveColor();
-            OnPropertiesChanged(nameof(Color));
-        }
-
-        public void RestoreColor()
-        {
-            VM.RestoreColor();
-            OnPropertiesChanged(nameof(Color));
         }
         #endregion
 
@@ -191,7 +179,7 @@ namespace WpfInvestigate.Controls
                         CornerRadiusEffect.SetCornerRadius(btn, new CornerRadius(2));
                         ChromeEffect.SetMonochrome(btn, kvp.Value);
                         ChromeEffect.SetChromeMatrix(btn, "+0%,+70%,+0%,40, +0%,+75%,+0%,100, +0%,+75%,+35%,100");
-                        btn.Click += (o, args) => VM.CurrentColor = ((SolidColorBrush)((Button)o).Background).Color;
+                        btn.Click += (o, args) => VM.Color = ((SolidColorBrush)((Button)o).Background).Color;
                         panel.Children.Add(btn);
                     }
             }

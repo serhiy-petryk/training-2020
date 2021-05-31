@@ -269,14 +269,14 @@
                                     <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
                                     <Rectangle>
                                         <Rectangle.Fill>
-                                            <SolidColorBrush Color="{Binding CurrentColor}"/>
+                                            <SolidColorBrush Color="{Binding Color}"/>
                                         </Rectangle.Fill>
                                     </Rectangle>
                                     <TextBox Margin="0" Padding="0" BorderThickness="1" FontWeight="Bold"
                                              HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" 
                                              BorderBrush="{Binding CurrentColor_ForegroundBrush}"
                                              Background="{Binding CurrentColorWithoutAlphaBrush}" Foreground="{Binding CurrentColor_ForegroundBrush}"
-                                             Text="{Binding CurrentColor}"/>
+                                             Text="{Binding Color}"/>
                                 </Grid>
 
                                 <controls:LabelBox Grid.Row="0" Grid.Column="2" Style="{StaticResource Label}" Text="{Binding Path=CurrentColorGrayLevel, Mode=OneWay, StringFormat=Gray level: {0:F1}%}" TextAlignment="Center"/>
