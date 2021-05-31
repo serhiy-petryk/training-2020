@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Threading;
 using WpfInvestigate.Themes;
 using WpfInvestigate.ViewModels;
 
@@ -8,7 +11,7 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for ThemeSelector.xaml
     /// </summary>
-    public partial class ThemeSelector : UserControl
+    public partial class ThemeSelector
     {
         public ThemeSelector()
         {
@@ -19,29 +22,15 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
 
-            ThemeList.Children.Clear();
-            foreach (var theme in MwiThemeInfo.Themes)
-            {
-                var btn = new RadioButton{GroupName = "Theme", Content = theme.Value, IsChecked = theme.Value == MwiAppViewModel.Instance.CurrentTheme, Margin = new Thickness(2), IsThreeState = false};
-                btn.Checked += OnRadioButtonChecked;
-                ThemeList.Children.Add(btn);
-            }
-
-            OnRadioButtonChecked(null, null);
+            ThemeList.ItemsSource = MwiThemeInfo.Themes.Values;
+            ThemeList.SelectedItem = MwiAppViewModel.Instance.CurrentTheme;
 
             ColorControl.Color = MwiAppViewModel.Instance.AppColor;
         }
 
-        private void OnRadioButtonChecked(object sender, RoutedEventArgs e)
+        private void ThemeList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            foreach (RadioButton btn in ThemeList.Children)
-            {
-                var theme = (MwiThemeInfo)btn.Content;
-                if (Equals(btn.IsChecked, true))
-                {
-                    ColorControl.IsEnabled = theme.FixedColor == null;
-                }
-            }
+            ColorControl.IsEnabled = ((MwiThemeInfo)ThemeList.SelectedItem).FixedColor == null;
         }
     }
 }

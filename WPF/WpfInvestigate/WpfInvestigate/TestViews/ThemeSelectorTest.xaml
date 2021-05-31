@@ -34,7 +34,9 @@
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
 
-            <controls:ThemeSelector Margin="10"></controls:ThemeSelector>
+            <controls:MwiChild Title="Theme Selector" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <controls:ThemeSelector Margin="0"></controls:ThemeSelector>
+            </controls:MwiChild>
 
         </Grid>
     </Grid>
