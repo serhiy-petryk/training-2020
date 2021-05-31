@@ -18,7 +18,7 @@ namespace WpfInvestigate.Controls
                 this.BeginAnimationAsync(OpacityProperty, fromOpacity, toOpacity)
             };
 
-            Position = new Point(to.X, to.Y);
+            Position = ActualPosition; // to allow maximize ThemeSelector dialog
             return Task.WhenAll(tasks.ToArray());
         }
 
