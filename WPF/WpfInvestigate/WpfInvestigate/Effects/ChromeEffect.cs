@@ -54,9 +54,10 @@ namespace WpfInvestigate.Effects
             if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
                 return;
 
+            var isInitialized = control.IsInitialized;
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                if (!UnloadingHelper.IsElementDisposing(control))
+                if (!isInitialized || !control.IsElementDisposing())
                 {
                     control.PreviewMouseLeftButtonDown += ChromeUpdate;
                     control.PreviewMouseLeftButtonUp += ChromeUpdate;

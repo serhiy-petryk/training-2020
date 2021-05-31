@@ -25,10 +25,11 @@ namespace WpfInvestigate.Effects
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
             dpd.RemoveValueChanged(element, UpdateBorders);
 
+            var isInitialized = element.IsInitialized;
             // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
             element.Dispatcher.InvokeAsync(() =>
             {
-                if (!element.IsElementDisposing())
+                if (!isInitialized || !element.IsElementDisposing())
                 {
                     element.SizeChanged += UpdateBorders;
                     element.Loaded += UpdateBorders;
