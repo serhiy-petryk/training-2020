@@ -94,6 +94,18 @@ namespace WpfInvestigate.Controls
         }
 
         #region  ==============  Public Properties  ================
+
+        private bool _isAlphaSliderVisible;
+        public bool IsAlphaSliderVisible
+        {
+            get => _isAlphaSliderVisible;
+            set
+            {
+                _isAlphaSliderVisible = value;
+                OnPropertiesChanged(nameof(IsAlphaSliderVisible));
+            }
+        }
+
         public Color Color
         {
             get => Color.FromArgb(Convert.ToByte((1 - AlphaSlider.yValue) * 255), Convert.ToByte(RGB_R.Value),

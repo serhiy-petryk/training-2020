@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.TestViews
 {
@@ -12,17 +11,6 @@ namespace WpfInvestigate.TestViews
         public ColorControlTests()
         {
             InitializeComponent();
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            // ColorControl.SaveColor();
-            MwiAppViewModel.Instance.AppColor = ColorControl.Color;
-        }
-
-        private void RestoreButton_Click(object sender, RoutedEventArgs e)
-        {
-            // ColorControl.RestoreColor();
         }
 
         private void ChangeColorButton_Click(object sender, RoutedEventArgs e)

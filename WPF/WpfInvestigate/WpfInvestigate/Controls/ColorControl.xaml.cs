@@ -11,8 +11,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,7 +23,7 @@ using WpfInvestigate.Effects;
 
 namespace WpfInvestigate.Controls
 {
-    public partial class ColorControl : UserControl, INotifyPropertyChanged
+    public partial class ColorControl
     {
         private ColorControlViewModel VM => (ColorControlViewModel)DataContext;
 
@@ -33,21 +31,12 @@ namespace WpfInvestigate.Controls
         public ColorControl()
         {
             InitializeComponent();
-            VM.PropertyChanged += (sender, args) => OnPropertiesChanged(nameof(Color));
-        }
-
-        #region  ==============  User UI  ===========
-        /// <summary>Original color</summary>
-        public Color Color
-        {
-            get => VM.Color;
-            set
+            VM.PropertyChanged += (sender, args) =>
             {
-                VM.Color = value;
-                OnPropertiesChanged(nameof(Color));
-            }
+                Color = VM.Color;
+                IsAlphaSliderVisible = VM.IsAlphaSliderVisible;
+            };
         }
-        #endregion
 
         #region ==============  Event handlers  ====================
 
@@ -129,15 +118,7 @@ namespace WpfInvestigate.Controls
         }
         #endregion
 
-        #region ===========  INotifyPropertyChanged  ===============
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertiesChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
-
+        #region ==============  Color tabs   ===============
         private void OnTabControlSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var tc = (TabControl) sender;
@@ -200,7 +181,6 @@ namespace WpfInvestigate.Controls
             return Convert.ToInt32(hsl.Hue) * 36000 + Convert.ToInt32(hsl.Saturation) * 100 + Convert.ToInt32(hsl.Lightness);
         }
 
-
         private static Dictionary<string, Color> GetBootstrapColors()
         {
             string[] bootstrapColorNames =
@@ -214,10 +194,38 @@ namespace WpfInvestigate.Controls
                 result.Add(name.Remove(name.Length - 5), (Color)Application.Current.Resources[name]);
             return result;
         }
+        #endregion
 
-        private void AAB_OnClick(object sender, RoutedEventArgs e)
+        #region ==============  Dependency Properties  ===============
+        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register("Color",
+            typeof(Color), typeof(ColorControl), new FrameworkPropertyMetadata(Colors.White, OnColorChanged));
+
+        public Color Color
         {
-            Debug.Print($"Click");
+            get => (Color)GetValue(ColorProperty);
+            set => SetValue(ColorProperty, value);
         }
+        private static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorControl cc && e.NewValue is Color color && cc.VM.Color != color)
+                cc.VM.Color = color;
+        }
+        //====================
+        public static readonly DependencyProperty IsAlphaSliderVisibleProperty = DependencyProperty.Register("IsAlphaSliderVisible",
+            typeof(bool), typeof(ColorControl), new FrameworkPropertyMetadata(false, IsAlphaSliderVisibleChanged));
+
+        private static void IsAlphaSliderVisibleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorControl cc && e.NewValue is bool value && cc.VM.IsAlphaSliderVisible != value)
+                cc.VM.IsAlphaSliderVisible = value;
+        }
+
+        public bool IsAlphaSliderVisible
+        {
+            get => (bool)GetValue(IsAlphaSliderVisibleProperty);
+            set => SetValue(IsAlphaSliderVisibleProperty, value);
+        }
+
+        #endregion
     }
 }

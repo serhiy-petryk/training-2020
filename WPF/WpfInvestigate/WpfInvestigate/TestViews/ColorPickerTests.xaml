@@ -6,6 +6,7 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
+        xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels"
         mc:Ignorable="d"
         Title="ColorControlTests" Height="600" Width="700">
 
@@ -100,16 +101,21 @@
                             <SolidColorBrush x:Name="Brush" Color="{Binding ElementName=ColorControl, Path=Color, Mode=TwoWay}"/>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Button Content="Save Color" Margin="5" Height="24" Click="SaveButton_Click" HorizontalAlignment="Left"/>
-                    <Button Content="Restore Color" Margin="2" Height="34" Click="RestoreButton_Click" HorizontalAlignment="Left"/>
                     <Button Content="Change Color" Margin="2" Height="34" Click="ChangeColorButton_Click" HorizontalAlignment="Left"/>
+
                     <TextBlock Margin="10 0 2 0" VerticalAlignment="Center">IsEnabled?</TextBlock>
-                    <CheckBox x:Name="IsEnabledFlag" IsThreeState="False" VerticalAlignment="Center" IsChecked="True"></CheckBox>
+                    <CheckBox x:Name="IsEnabledFlag" IsThreeState="False" VerticalAlignment="Center" IsChecked="True"/>
+
+                    <TextBlock Margin="10 0 2 0" VerticalAlignment="Center">IsAlphaSliderVisible?</TextBlock>
+                    <CheckBox x:Name="IsAlphaSliderVisible" IsThreeState="False" VerticalAlignment="Center" IsChecked="True"/>
                 </WrapPanel>
             </Grid>
 
             <!-- =============== -->
-            <controls:ColorControl x:Name="ColorControl" Grid.Row="1" Color="#CCFF8040" IsEnabled="{Binding ElementName=IsEnabledFlag, Path=IsChecked, Mode=TwoWay}"/>
+            <controls:ColorControl x:Name="ColorControl" Grid.Row="1"
+                                   Color="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor, Mode=TwoWay}"
+                                   IsEnabled="{Binding ElementName=IsEnabledFlag, Path=IsChecked, Mode=TwoWay}"
+                                   IsAlphaSliderVisible="{Binding ElementName=IsAlphaSliderVisible, Path=IsChecked, Mode=TwoWay}"/>
         </Grid>
 
     </Grid>
