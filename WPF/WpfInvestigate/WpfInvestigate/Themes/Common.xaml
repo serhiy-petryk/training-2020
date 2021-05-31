@@ -159,12 +159,6 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ReadOnlyTextBoxStyle" TargetType="{x:Type TextBox}">
-        <Setter Property="IsReadOnly" Value="True"/>
-        <Setter Property="Focusable" Value="True"/>
-        <Setter Property="IsTabStop" Value="False"/>
-    </Style>
-
     <!-- To hide inner borders of date picker: call ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true); -->
     <Style TargetType="DatePicker">
         <Setter Property="VerticalContentAlignment" Value="Center"/>

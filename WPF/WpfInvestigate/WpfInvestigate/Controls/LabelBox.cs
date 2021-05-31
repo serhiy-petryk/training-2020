@@ -25,6 +25,8 @@ namespace WpfInvestigate.Controls
         public LabelBox()
         {
             IsReadOnly = true;
+            Focusable = true;
+            IsTabStop = false;
         }
     }
 }

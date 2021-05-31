@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:effects="clr-namespace:WpfInvestigate.Effects"
+             xmlns:controls="clr-namespace:WpfInvestigate.Controls"
              mc:Ignorable="d"
              MinWidth="120" MinHeight="110" Focusable="True" BorderBrush="YellowGreen" BorderThickness="12"
              SnapsToDevicePixels="True" UseLayoutRounding="True">
@@ -26,9 +27,9 @@
                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>
 
                         <!--<TextBlock Grid.Row="1" Margin="10 10 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Dialog contents 0 1 2 3 4" TextWrapping="NoWrap" />-->
-                        <TextBox Grid.Row="1" Margin="10 10 0 0" Background="Transparent" BorderThickness="0"
-                                 HorizontalAlignment="Center" VerticalAlignment="Top" Text="Dialog contents 0 1 2 3 4"
-                                 TextWrapping="Wrap" Style="{StaticResource ReadOnlyTextBoxStyle}"/>
+                        <controls:LabelBox Grid.Row="1" Margin="10 10 0 0" Background="Transparent" BorderThickness="0"
+                                           HorizontalAlignment="Center" VerticalAlignment="Top" Text="Dialog contents 0 1 2 3 4"
+                                           TextWrapping="Wrap"/>
                         <Button Grid.Row="1" Width="75" Margin="10 0 0 10" Focusable="True" HorizontalAlignment="Center" VerticalAlignment="Bottom" Command="ApplicationCommands.Close" Content="Close"
                                 effects:FocusVisualEffect.AlwaysShowFocus="True"
                                 effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>

@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects"
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
-                    xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete">
+                    xmlns:obsolete="clr-namespace:WpfInvestigate.Obsolete"
+                    xmlns:controls="clr-namespace:WpfInvestigate.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Common.xaml" />
@@ -92,11 +93,10 @@
                                             <Path Stretch="Uniform" Data="{Binding Icon}" Fill="{Binding IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                         </Viewbox>
                                         <!-- Message -->
-                                        <TextBox Grid.Column="1" Padding="0" BorderThickness="0" Background="Transparent"
-                                                 Margin="8" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                 Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
-                                                 Text="{Binding MessageText, Mode=OneWay}"
-                                                 Style="{StaticResource ReadOnlyTextBoxStyle}"/>
+                                        <controls:LabelBox Grid.Column="1" Padding="0" BorderThickness="0" Background="Transparent"
+                                                           Margin="8" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                           Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
+                                                           Text="{Binding MessageText, Mode=OneWay}"/>
                                     </Grid>
                                 </Grid>
                             </Border>

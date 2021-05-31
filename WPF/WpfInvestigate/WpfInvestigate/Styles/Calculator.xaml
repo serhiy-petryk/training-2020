@@ -123,32 +123,29 @@
                                         <RowDefinition Height="3*"/>
                                     </Grid.RowDefinitions>
                                     <Viewbox Grid.Row="0" HorizontalAlignment="Right">
-                                        <TextBox x:Name="History" Margin="1 0" Padding="0"
-                                                 Style="{StaticResource ReadOnlyTextBoxStyle}"
-                                                 BorderThickness="0" Background="Transparent" Opacity="0.7"
-                                                 TextAlignment="Right" VerticalContentAlignment="Center"
-                                                 Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%/+75%, Mode=OneWay}"
-                                                 Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=StatusText, Mode=OneWay}" />
+                                        <controls:LabelBox x:Name="History" Margin="1 0" Padding="0"
+                                                           BorderThickness="0" Background="Transparent" Opacity="0.7"
+                                                           TextAlignment="Right" VerticalContentAlignment="Center"
+                                                           Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%/+75%, Mode=OneWay}"
+                                                           Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=StatusText, Mode=OneWay}" />
                                     </Viewbox>
 
                                     <Viewbox Grid.Row="1" HorizontalAlignment="Right"
                                              Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
-                                        <TextBox x:Name="PART_Indicator" Margin="1 0" Padding="0"
-                                                 Style="{StaticResource ReadOnlyTextBoxStyle}"
-                                                 BorderThickness="0" Background="Transparent"
-                                                 TextAlignment="Right" TextWrapping="WrapWithOverflow"
-                                                 VerticalContentAlignment="Center"
-                                                 Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%/+75%, Mode=OneWay}"
-                                                 FontFamily="Consolas"
-                                                 Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndicatorText, Mode=OneWay}"/>
+                                        <controls:LabelBox x:Name="PART_Indicator" Margin="1 0" Padding="0"
+                                                           BorderThickness="0" Background="Transparent"
+                                                           TextAlignment="Right" TextWrapping="WrapWithOverflow"
+                                                           VerticalContentAlignment="Center"
+                                                           Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%/+75%, Mode=OneWay}"
+                                                           FontFamily="Consolas"
+                                                           Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndicatorText, Mode=OneWay}"/>
                                     </Viewbox>
 
                                     <Viewbox Grid.Row="1" HorizontalAlignment="Right">
-                                        <TextBox Margin="1" Padding="0" BorderThickness="0"
-                                                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                                                 Background="Transparent" Foreground="Red" FontWeight="SemiBold"
-                                                 Style="{StaticResource ReadOnlyTextBoxStyle}"
-                                                 Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Mode=OneWay}" />
+                                        <controls:LabelBox Margin="1" Padding="0" BorderThickness="0"
+                                                           HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                                           Background="Transparent" Foreground="Red" FontWeight="SemiBold"
+                                                           Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Mode=OneWay}" />
                                     </Viewbox>
                                 </Grid>
                             </Border>
