@@ -27,7 +27,7 @@ namespace WpfInvestigate.TestViews
             var mwiChild = new MwiChild
             {
                 Content = themeSelector,
-                Width = 700,
+                Width = 765,
                 Height = 600,
                 LimitPositionToPanelBounds = true,
                 Title = "Theme Selector",

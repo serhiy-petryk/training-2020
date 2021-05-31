@@ -105,12 +105,5 @@ namespace WpfInvestigate.Controls
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
-        // ================  TEMP  ================
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            var btn = (Button) sender;
-            var a1 = btn.GetVisualParents().OfType<MwiChild>().ToArray();
-        }
     }
 }
