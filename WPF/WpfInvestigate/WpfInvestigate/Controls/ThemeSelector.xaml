@@ -9,6 +9,6 @@
 
     <DockPanel Background="Yellow">
         <StackPanel DockPanel.Dock="Top" x:Name="ThemeList" Orientation="Vertical"/>
-        <local:ColorControl Margin="2 10 2 2"></local:ColorControl>
+        <local:ColorControl x:Name="ColorControl" Margin="2 10 2 2"></local:ColorControl>
     </DockPanel>
 </UserControl>

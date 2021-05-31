@@ -102,11 +102,13 @@
                     <Button Content="Save Color" Margin="5" Height="24" Click="SaveButton_Click" HorizontalAlignment="Left"/>
                     <Button Content="Restore Color" Margin="2" Height="34" Click="RestoreButton_Click" HorizontalAlignment="Left"/>
                     <Button Content="Change Color" Margin="2" Height="34" Click="ChangeColorButton_Click" HorizontalAlignment="Left"/>
+                    <TextBlock Margin="10 0 2 0" VerticalAlignment="Center">IsEnabled?</TextBlock>
+                    <CheckBox x:Name="IsEnabledFlag" IsThreeState="False" VerticalAlignment="Center" IsChecked="True"></CheckBox>
                 </WrapPanel>
             </Grid>
 
             <!-- =============== -->
-            <controls:ColorControl x:Name="ColorControl" Grid.Row="1" Color="#CCFF8040"/>
+            <controls:ColorControl x:Name="ColorControl" Grid.Row="1" Color="#CCFF8040" IsEnabled="{Binding ElementName=IsEnabledFlag, Path=IsChecked, Mode=TwoWay}"/>
         </Grid>
 
     </Grid>

@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DialogAdorner.cs" />
+    <Compile Include="Controls\LabelBox.cs" />
     <Compile Include="Controls\MwiBar.cs" />
     <Compile Include="Controls\MwiChild.Animation.cs" />
     <Compile Include="Controls\MwiChild.cs" />
