@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
 using WpfInvestigate.Themes;
 using WpfInvestigate.ViewModels;
 
@@ -39,10 +37,29 @@ namespace WpfInvestigate.Controls
         {
             foreach (RadioButton btn in ThemeList.Children)
             {
-                var theme = (MwiThemeInfo)btn.Content;
                 if (Equals(btn.IsChecked, true))
                 {
+                    var theme = (MwiThemeInfo)btn.Content;
                     ColorControl.IsEnabled = theme.FixedColor == null;
+                    break;
+                }
+            }
+        }
+
+        private void OnApplyButtonClick(object sender, RoutedEventArgs e)
+        {
+            ColorControl.SaveColor();
+            if (MwiAppViewModel.Instance.AppColor != ColorControl.Color)
+                MwiAppViewModel.Instance.AppColor = ColorControl.Color;
+
+            foreach (RadioButton btn in ThemeList.Children)
+            {
+                if (Equals(btn.IsChecked, true))
+                {
+                    var newTheme = (MwiThemeInfo) btn.Content;
+                    if (newTheme != MwiAppViewModel.Instance.CurrentTheme)
+                        MwiAppViewModel.Instance.ChangeTheme(newTheme);
+                    break;
                 }
             }
         }

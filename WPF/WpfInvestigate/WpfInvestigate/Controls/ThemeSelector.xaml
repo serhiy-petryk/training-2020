@@ -17,7 +17,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" x:Name="ThemeList" Orientation="Vertical" Margin="2 2 10 2"/>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Apply and Close" Height="30" Width="100" Margin="2"/>
+                <Button Content="Apply and Close" Height="30" Width="100" Margin="2" Click="OnApplyButtonClick"/>
                 <Button Content="Exit" Height="30" Width="100" Margin="2"/>
             </StackPanel>
         </Grid>
