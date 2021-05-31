@@ -44,21 +44,20 @@ namespace WpfInvestigate.Controls
             set
             {
                 VM.Color = value;
-                OnPropertiesChanged(nameof(Color), nameof(ColorBrush));
+                OnPropertiesChanged(nameof(Color));
             }
         }
-        public SolidColorBrush ColorBrush => new SolidColorBrush(Color);
 
         public void SaveColor()
         {
             VM.SaveColor();
-            OnPropertiesChanged(nameof(Color), nameof(ColorBrush));
+            OnPropertiesChanged(nameof(Color));
         }
 
         public void RestoreColor()
         {
             VM.RestoreColor();
-            OnPropertiesChanged(nameof(Color), nameof(ColorBrush));
+            OnPropertiesChanged(nameof(Color));
         }
         #endregion
 
