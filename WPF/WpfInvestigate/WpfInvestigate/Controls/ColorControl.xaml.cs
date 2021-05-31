@@ -225,7 +225,6 @@ namespace WpfInvestigate.Controls
             get => (bool)GetValue(IsAlphaSliderVisibleProperty);
             set => SetValue(IsAlphaSliderVisibleProperty, value);
         }
-
         #endregion
     }
 }
