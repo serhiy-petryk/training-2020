@@ -161,7 +161,6 @@
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="Background" Value="#FF555555"/>
             <Setter Property="Foreground" Value="#FFE0E0E0"/>
-            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -262,11 +261,10 @@
                                             <SolidColorBrush Color="{Binding Color}"/>
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <controls:LabelBox Margin="0" Padding="4" BorderThickness="0"
-                                                           Style="{StaticResource Label}"
-                                                           HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"
-                                                           Background="{Binding ColorWithoutAlphaBrush}" Foreground="{Binding Color_ForegroundBrush}"
-                                                           Text="{Binding Color, Mode=OneWay}"/>
+                                    <controls:LabelBox Margin="0" Padding="4" Style="{StaticResource Label}"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"
+                                                       Background="{Binding ColorWithoutAlphaBrush}" Foreground="{Binding Color_ForegroundBrush}"
+                                                       Text="{Binding Color, Mode=OneWay}"/>
                                 </Grid>
 
                                 <Grid Grid.Row="0" Grid.Column="1" ToolTip="Current color">
@@ -293,11 +291,10 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Grid UseLayoutRounding="False" SnapsToDevicePixels="False">
-                                                <controls:LabelBox Margin="0" Padding="0" BorderThickness="0"
-                                                                       Style="{StaticResource Label}"
-                                                                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                                                       Background="{Binding Background, Delay=500}" Foreground="{Binding Foreground, Delay=500}"
-                                                                       Text="{Binding Background, Mode=OneWay, Delay=500}"/>
+                                                <controls:LabelBox Margin="0" Padding="0" Style="{StaticResource Label}"
+                                                                   VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                                   Background="{Binding Background, Delay=500}" Foreground="{Binding Foreground, Delay=500}"
+                                                                   Text="{Binding Background, Mode=OneWay, Delay=500}"/>
                                                 <ToggleButton IsThreeState="False" Margin="0" Padding="0" IsTabStop="False"
                                                               IsHitTestVisible="{Binding ElementName=ColorBoxPopup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}">
 
@@ -321,9 +318,9 @@
                                                                        Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}"
                                                                        Foreground="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.Instance}, ConverterParameter=+85%}"/>
                                                                 <controls:LabelBox Grid.Row="1" Background="Transparent" FontFamily="Courier New" Text="{Binding Info, Mode=OneWay}"
-                                                                                       Foreground="{Binding ElementName=ColorBoxBorder, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.Instance}, ConverterParameter=+85%}"
-                                                                                       Style="{StaticResource Label}"
-                                                                                       SelectionBrush="{Binding ElementName=ColorBoxBorder, Path=BorderBrush}"/>
+                                                                                   Foreground="{Binding ElementName=ColorBoxBorder, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.Instance}, ConverterParameter=+85%}"
+                                                                                   Style="{StaticResource Label}"
+                                                                                   SelectionBrush="{Binding ElementName=ColorBoxBorder, Path=BorderBrush}"/>
                                                                 <Button Grid.Row="2" BorderThickness="2" Margin="10" IsDefault="True"
                                                                         Background="{Binding ElementName=InfoHeader, Path=Background}"
                                                                         Style="{StaticResource HslMonoStyle}"

@@ -27,6 +27,7 @@ namespace WpfInvestigate.Controls
             IsReadOnly = true;
             Focusable = true;
             IsTabStop = false;
+            BorderThickness = new Thickness(0);
         }
     }
 }

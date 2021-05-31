@@ -124,7 +124,7 @@
                                     </Grid.RowDefinitions>
                                     <Viewbox Grid.Row="0" HorizontalAlignment="Right">
                                         <controls:LabelBox x:Name="History" Margin="1 0" Padding="0"
-                                                           BorderThickness="0" Background="Transparent" Opacity="0.7"
+                                                           Background="Transparent" Opacity="0.7"
                                                            TextAlignment="Right" VerticalContentAlignment="Center"
                                                            Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%/+75%, Mode=OneWay}"
                                                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=StatusText, Mode=OneWay}" />
@@ -133,7 +133,7 @@
                                     <Viewbox Grid.Row="1" HorizontalAlignment="Right"
                                              Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
                                         <controls:LabelBox x:Name="PART_Indicator" Margin="1 0" Padding="0"
-                                                           BorderThickness="0" Background="Transparent"
+                                                           Background="Transparent"
                                                            TextAlignment="Right" TextWrapping="WrapWithOverflow"
                                                            VerticalContentAlignment="Center"
                                                            Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%/+75%, Mode=OneWay}"
@@ -142,7 +142,7 @@
                                     </Viewbox>
 
                                     <Viewbox Grid.Row="1" HorizontalAlignment="Right">
-                                        <controls:LabelBox Margin="1" Padding="0" BorderThickness="0"
+                                        <controls:LabelBox Margin="1" Padding="0"
                                                            HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                                            Background="Transparent" Foreground="Red" FontWeight="SemiBold"
                                                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ErrorText, Mode=OneWay}" />

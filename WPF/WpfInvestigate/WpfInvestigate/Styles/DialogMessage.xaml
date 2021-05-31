@@ -86,7 +86,7 @@
                                               Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                     </Viewbox>
                                     <!-- Message -->
-                                    <controls:LabelBox Grid.Column="1" Margin="8" Padding="0" BorderThickness="0" Background="Transparent"
+                                    <controls:LabelBox Grid.Column="1" Margin="8" Padding="0" Background="Transparent"
                                                        HorizontalAlignment="Left" VerticalAlignment="Center"
                                                        Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
                                                        TextWrapping="Wrap"

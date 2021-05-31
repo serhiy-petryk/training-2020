@@ -93,7 +93,7 @@
                                             <Path Stretch="Uniform" Data="{Binding Icon}" Fill="{Binding IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                         </Viewbox>
                                         <!-- Message -->
-                                        <controls:LabelBox Grid.Column="1" Padding="0" BorderThickness="0" Background="Transparent"
+                                        <controls:LabelBox Grid.Column="1" Padding="0" Background="Transparent"
                                                            Margin="8" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"
                                                            Foreground="{Binding BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
                                                            Text="{Binding MessageText, Mode=OneWay}"/>
