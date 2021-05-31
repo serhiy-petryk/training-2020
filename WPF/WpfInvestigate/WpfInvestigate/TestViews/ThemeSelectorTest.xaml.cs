@@ -23,13 +23,15 @@ namespace WpfInvestigate.TestViews
             var a1 = new DialogAdorner(Host) { CloseOnClickBackground = false };
 
             var themeSelector = new ThemeSelector {Margin = new Thickness(0)};
+            themeSelector.ColorControl.Color = Colors.Orange;
             var mwiChild = new MwiChild
             {
                 Content = themeSelector,
                 Width = 700,
                 Height = 600,
                 LimitPositionToPanelBounds = true,
-                Title = "Theme Selector"
+                Title = "Theme Selector",
+                VisibleButtons = MwiChild.Buttons.Close
             };
             mwiChild.SetBinding(BackgroundProperty, new Binding("Color") { Source = themeSelector, Converter = ColorHslBrush.Instance });
             mwiChild.SetBinding(MwiChild.ThemeProperty, new Binding("Theme") { Source = themeSelector});

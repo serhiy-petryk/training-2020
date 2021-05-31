@@ -20,7 +20,11 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" x:Name="ThemeList" Orientation="Vertical" Margin="2 0"/>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Apply and Close" Height="30" Width="100" Margin="2" Click="OnApplyButtonClick"/>
+                <Button Content="Apply and Close" Height="30" Width="100" Margin="2" Click="OnApplyButtonClick"
+                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        Style="{StaticResource MonochromeButtonBaseStyle}"
+                        effects:ChromeEffect.Monochrome="{Binding Color, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
+                        effects:CornerRadiusEffect.CornerRadius="7"/>
                 <Button Content="Exit" Height="30" Width="100" Margin="2" Click="ButtonBase_OnClick"/>
             </StackPanel>
         </Grid>
@@ -29,10 +33,10 @@
                         Foreground="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}">
             <local:LabelBox.Style>
                 <Style TargetType="local:LabelBox">
-                    <Setter Property="Opacity" Value="1"></Setter>
+                    <Setter Property="Opacity" Value="1"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=ColorControl, Path=IsEnabled}" Value="False">
-                            <Setter Property="Opacity" Value="0.5"></Setter>
+                            <Setter Property="Opacity" Value="0.5"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

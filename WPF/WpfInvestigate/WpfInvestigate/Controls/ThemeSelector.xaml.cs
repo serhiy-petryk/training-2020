@@ -13,7 +13,7 @@ namespace WpfInvestigate.Controls
     /// <summary>
     /// Interaction logic for ThemeSelector.xaml
     /// </summary>
-    public partial class ThemeSelector
+    public partial class ThemeSelector: INotifyPropertyChanged
     {
         public ThemeSelector()
         {
@@ -25,7 +25,7 @@ namespace WpfInvestigate.Controls
             base.OnApplyTemplate();
 
             var dpd = DependencyPropertyDescriptor.FromProperty(ColorControl.ColorProperty, typeof(ColorControl));
-            dpd.AddValueChanged(ColorControl, (sender, args) => Color = ((ColorControl) sender).Color);
+            dpd.AddValueChanged(ColorControl, (sender, args) => OnPropertiesChanged(nameof(Color)));
 
             ThemeList.Children.Clear();
             foreach (var theme in MwiThemeInfo.Themes)
@@ -78,15 +78,8 @@ namespace WpfInvestigate.Controls
         }
 
         #region ==============  Dependency Properties  ===============
-        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register("Color",
-            typeof(Color), typeof(ThemeSelector), new FrameworkPropertyMetadata(Colors.White));
+        public Color Color => (Theme?.FixedColor ?? ColorControl?.Color) ?? Colors.White;
 
-        public Color Color
-        {
-            get => (Color)GetValue(ColorProperty);
-            set => SetValue(ColorProperty, value);
-        }
-        //====================
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
             typeof(MwiThemeInfo), typeof(ThemeSelector), new FrameworkPropertyMetadata(null, OnThemeChanged));
 
@@ -98,9 +91,19 @@ namespace WpfInvestigate.Controls
         private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ThemeSelector selector && e.NewValue is MwiThemeInfo theme)
-                selector.Color = theme.FixedColor ?? selector.ColorControl.Color;
+                selector.OnPropertiesChanged(nameof(Color));
         }
 
+        #endregion
+
+        #region ===========  INotifyPropertyChanged  ===============
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         #endregion
 
         // ================  TEMP  ================
