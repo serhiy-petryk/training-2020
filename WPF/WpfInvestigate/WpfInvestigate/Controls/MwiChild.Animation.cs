@@ -18,6 +18,7 @@ namespace WpfInvestigate.Controls
                 this.BeginAnimationAsync(OpacityProperty, fromOpacity, toOpacity)
             };
 
+            Position = new Point(to.X, to.Y);
             return Task.WhenAll(tasks.ToArray());
         }
 

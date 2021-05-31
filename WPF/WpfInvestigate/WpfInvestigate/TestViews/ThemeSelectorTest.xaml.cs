@@ -31,7 +31,7 @@ namespace WpfInvestigate.TestViews
                 Height = 600,
                 LimitPositionToPanelBounds = true,
                 Title = "Theme Selector",
-                VisibleButtons = MwiChild.Buttons.Close
+                VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize
             };
             mwiChild.SetBinding(BackgroundProperty, new Binding("Color") { Source = themeSelector, Converter = ColorHslBrush.Instance });
             mwiChild.SetBinding(MwiChild.ThemeProperty, new Binding("Theme") { Source = themeSelector});
