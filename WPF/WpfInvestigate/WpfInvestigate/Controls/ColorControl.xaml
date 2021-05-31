@@ -263,20 +263,7 @@
                                     <RowDefinition Height="10*"/>
                                 </Grid.RowDefinitions>
 
-                                <Grid Grid.Row="0" Grid.Column="0" Margin="0" VerticalAlignment="Stretch" ToolTip="Original color">
-                                    <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
-                                    <Rectangle>
-                                        <Rectangle.Fill>
-                                            <SolidColorBrush Color="{Binding Color}"/>
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-                                    <controls:LabelBox Margin="0" Padding="4" Style="{StaticResource Label}"
-                                                       HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"
-                                                       Background="{Binding ColorWithoutAlphaBrush}" Foreground="{Binding Color_ForegroundBrush}"
-                                                       Text="{Binding Color, Mode=OneWay}"/>
-                                </Grid>
-
-                                <Grid Grid.Row="0" Grid.Column="1" ToolTip="Current color">
+                                <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ToolTip="Current color">
                                     <Rectangle Fill="{StaticResource AlphaBackgroundBrush}"/>
                                     <Rectangle>
                                         <Rectangle.Fill>
@@ -285,12 +272,12 @@
                                     </Rectangle>
                                     <TextBox Margin="0" Padding="0" BorderThickness="1" FontWeight="Bold"
                                              HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" 
-                                             BorderBrush="{Binding CurrentColor_ForegroundBrush}"
-                                             Background="{Binding CurrentColorWithoutAlphaBrush}" Foreground="{Binding CurrentColor_ForegroundBrush}"
+                                             BorderBrush="{Binding Color_ForegroundBrush}"
+                                             Background="{Binding ColorWithoutAlphaBrush}" Foreground="{Binding Color_ForegroundBrush}"
                                              Text="{Binding Color}"/>
                                 </Grid>
 
-                                <controls:LabelBox Grid.Row="0" Grid.Column="2" Style="{StaticResource Label}" Text="{Binding Path=CurrentColorGrayLevel, Mode=OneWay, StringFormat=Gray level: {0:F1}%}" TextAlignment="Center"/>
+                                <controls:LabelBox Grid.Row="0" Grid.Column="2" Style="{StaticResource Label}" Text="{Binding Path=ColorGrayLevel, Mode=OneWay, StringFormat=Gray level: {0:F1}%}" TextAlignment="Center"/>
 
                                 <controls:LabelBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Label}" Text="Shades" TextAlignment="Center"/>
                                 <controls:LabelBox Grid.Row="1" Grid.Column="1" Style="{StaticResource Label}" Text="Tints" TextAlignment="Center"/>

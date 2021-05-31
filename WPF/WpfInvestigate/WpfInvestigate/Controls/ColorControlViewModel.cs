@@ -130,10 +130,8 @@ namespace WpfInvestigate.Controls
         }
         public SolidColorBrush HueBrush => GetCacheBrush(0, new HSV(HSV_H.SpaceValue, 1, 1).RGB.Color);
         public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorUtils.GetForegroundColor(Color));
-        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorUtils.GetForegroundColor(Color));
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, Color.FromRgb(Color.R, Color.G, Color.B));
-        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, Color.FromRgb(Color.R, Color.G, Color.B));
-        public double CurrentColorGrayLevel => ColorUtils.GetGrayLevel(new RGB(Color)) * 100;
+        public double ColorGrayLevel => ColorUtils.GetGrayLevel(new RGB(Color)) * 100;
         #endregion
 
         #region ==============  Update Values/UI  ===============
@@ -215,8 +213,8 @@ namespace WpfInvestigate.Controls
 
             Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                OnPropertiesChanged(nameof(Color), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
-                    nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColorGrayLevel));
+                OnPropertiesChanged(nameof(Color), nameof(HueBrush), nameof(Color_ForegroundBrush),
+                    nameof(ColorWithoutAlphaBrush), nameof(ColorGrayLevel));
                 foreach (var tone in Tones)
                     tone.UpdateUI();
             }, DispatcherPriority.ContextIdle);
