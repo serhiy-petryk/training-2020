@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfInvestigate.TestViews"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         mc:Ignorable="d"
-        Title="ThemeSelectorTest" Height="450" Width="800">
+        Title="ThemeSelectorTest" Height="700" Width="700">
 
     <Grid>
         <Grid.ColumnDefinitions>
