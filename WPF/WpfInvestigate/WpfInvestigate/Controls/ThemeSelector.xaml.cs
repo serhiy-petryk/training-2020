@@ -22,15 +22,29 @@ namespace WpfInvestigate.Controls
         {
             base.OnApplyTemplate();
 
-            ThemeList.ItemsSource = MwiThemeInfo.Themes.Values;
-            ThemeList.SelectedItem = MwiAppViewModel.Instance.CurrentTheme;
+            ThemeList.Children.Clear();
+            foreach (var theme in MwiThemeInfo.Themes)
+            {
+                var btn = new RadioButton{GroupName = "Theme", Content = theme.Value, IsChecked = theme.Value == MwiAppViewModel.Instance.CurrentTheme, Margin = new Thickness(2), IsThreeState = false, Background = Brushes.Yellow, Foreground=Brushes.Blue};
+                btn.Checked += OnRadioButtonChecked;
+                ThemeList.Children.Add(btn);
+            }
+
+            OnRadioButtonChecked(null, null);
 
             ColorControl.Color = MwiAppViewModel.Instance.AppColor;
         }
 
-        private void ThemeList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnRadioButtonChecked(object sender, RoutedEventArgs e)
         {
-            ColorControl.IsEnabled = ((MwiThemeInfo)ThemeList.SelectedItem).FixedColor == null;
+            foreach (RadioButton btn in ThemeList.Children)
+            {
+                var theme = (MwiThemeInfo)btn.Content;
+                if (Equals(btn.IsChecked, true))
+                {
+                    ColorControl.IsEnabled = theme.FixedColor == null;
+                }
+            }
         }
     }
 }
