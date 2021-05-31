@@ -23,14 +23,16 @@ namespace WpfInvestigate.Controls
             foreach (var theme in MwiThemeInfo.Themes)
             {
                 var btn = new RadioButton{GroupName = "Theme", Content = theme.Value, IsChecked = theme.Value == MwiAppViewModel.Instance.CurrentTheme, Margin = new Thickness(2), IsThreeState = false};
-                btn.Checked += Btn_Checked;
+                btn.Checked += OnRadioButtonChecked;
                 ThemeList.Children.Add(btn);
             }
 
-            Btn_Checked(null, null);
+            OnRadioButtonChecked(null, null);
+
+            ColorControl.Color = MwiAppViewModel.Instance.AppColor;
         }
 
-        private void Btn_Checked(object sender, RoutedEventArgs e)
+        private void OnRadioButtonChecked(object sender, RoutedEventArgs e)
         {
             foreach (RadioButton btn in ThemeList.Children)
             {

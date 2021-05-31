@@ -11,7 +11,6 @@
              MinHeight="420" MinWidth="400"
              SnapsToDevicePixels="True"
              UseLayoutRounding="True"
-             effects:CornerRadiusEffect.CornerRadius="6 6 0 0"
              Background="#FF282828">
 
     <UserControl.DataContext>
@@ -175,7 +174,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabItem">
-                            <Border Name="Border" BorderThickness="0" CornerRadius="4,4,0,0" Margin="2,0">
+                            <Border Name="Border" BorderThickness="0" CornerRadius="4 4 0 0" Margin="2 0">
                                 <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2"/>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -183,7 +182,7 @@
                                     <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
                                 </Trigger>
                                 <DataTrigger Binding="{Binding ElementName=ContentSite, Path=IsMouseOver}" Value="True">
-                                    <Setter TargetName="Border" Property="Opacity" Value="0.5" />
+                                    <Setter TargetName="Border" Property="Opacity" Value="0.85" />
                                 </DataTrigger>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="LightSkyBlue" />
