@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfInvestigate.TestViews"
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         mc:Ignorable="d"
-        Title="ThemeSelectorTest" Height="700" Width="700">
+        Title="ThemeSelectorTest" Height="900" Width="1000">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -29,14 +29,15 @@
                 AutoToolTipPlacement="BottomRight"
                 AutoToolTipPrecision="2"/>
 
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" x:Name="Host">
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
 
-            <controls:MwiChild Title="Theme Selector" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Button Content="Open color control" Click="OnOpenColorControlClick" Width="150" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <!--<controls:MwiChild Title="Theme Selector" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <controls:ThemeSelector Margin="0"></controls:ThemeSelector>
-            </controls:MwiChild>
+            </controls:MwiChild>-->
 
         </Grid>
     </Grid>

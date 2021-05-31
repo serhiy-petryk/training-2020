@@ -15,7 +15,7 @@ namespace WpfInvestigate.Themes
         {
             {"Windows7", new MwiThemeInfo("Windows 7", ColorUtils.StringToColor("#FFBBD2EB"),null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd7.xaml" })},
             {"Windows10", new MwiThemeInfo( "Windows 10", null, null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.xaml"})},
-            {"Windows10-2", new MwiThemeInfo( "Windows10 with borders", null,null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.WithBorders.xaml"})}
+            {"Windows10-2", new MwiThemeInfo( "Windows 10 with borders", null,null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.WithBorders.xaml"})}
         };
 
         // ==============   Static section  ======================
