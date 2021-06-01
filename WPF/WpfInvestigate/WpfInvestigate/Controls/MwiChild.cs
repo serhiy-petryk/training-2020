@@ -58,6 +58,15 @@ namespace WpfInvestigate.Controls
             if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
         }
 
+        private void UpdateTheme()
+        {
+            if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy mwiChildColorProxy)
+                mwiChildColorProxy.Value = BaseColor;
+            if (TryFindResource("Mwi.Container.BaseColorProxy") is BindingProxy mwiContainerColorProxy)
+                mwiContainerColorProxy.Value = BaseColor;
+            OnPropertiesChanged(nameof(BaseColor));
+        }
+
         private void OnBackgroundChanged(object sender, EventArgs e)
         {
             MwiAppViewModel.Instance.UpdateUI();
@@ -168,8 +177,8 @@ namespace WpfInvestigate.Controls
 
         public void SelectTheme(object obj)
         {
-            var adorner = new DialogAdorner() { CloseOnClickBackground = false };
-            var themeSelector = new ThemeSelector { Margin = new Thickness(0) };
+            var adorner = new DialogAdorner { CloseOnClickBackground = false };
+            var themeSelector = new ThemeSelector { Margin = new Thickness(0), Theme = Theme};
             var color = Tips.GetColorFromBrush(Background);
             if (color == Colors.Transparent)
                 color = (Color)Application.Current.Resources["PrimaryColor"];
@@ -190,7 +199,9 @@ namespace WpfInvestigate.Controls
             if (themeSelector.IsSaved)
             {
                 Theme = themeSelector.Theme;
-                if (!Theme.FixedColor.HasValue)
+                if (Theme.FixedColor.HasValue)
+                    Background = null;
+                else
                     Background = new SolidColorBrush(themeSelector.Color);
             }
         }

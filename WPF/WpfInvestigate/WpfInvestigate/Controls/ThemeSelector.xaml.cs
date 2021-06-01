@@ -35,7 +35,7 @@ namespace WpfInvestigate.Controls
                 {
                     GroupName = "Theme",
                     Content = theme.Value,
-                    IsChecked = theme.Value == MwiAppViewModel.Instance.CurrentTheme,
+                    IsChecked = theme.Value == Theme,
                     Margin = new Thickness(2, 1, 2, 1),
                     IsThreeState = false
                 };
@@ -59,6 +59,7 @@ namespace WpfInvestigate.Controls
                     break;
                 }
             }
+            OnPropertiesChanged(nameof(Color));
         }
 
         private void OnApplyButtonClick(object sender, RoutedEventArgs e)
