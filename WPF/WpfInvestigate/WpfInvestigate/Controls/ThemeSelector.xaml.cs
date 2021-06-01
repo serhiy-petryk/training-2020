@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Themes;
@@ -14,6 +15,7 @@ namespace WpfInvestigate.Controls
     /// </summary>
     public partial class ThemeSelector: INotifyPropertyChanged
     {
+        public bool IsSaved { get; private set; }
         public ThemeSelector()
         {
             InitializeComponent();
@@ -61,7 +63,10 @@ namespace WpfInvestigate.Controls
 
         private void OnApplyButtonClick(object sender, RoutedEventArgs e)
         {
-            if (MwiAppViewModel.Instance.AppColor != ColorControl.Color)
+            IsSaved = true;
+            ApplicationCommands.Close.Execute(null, this);
+
+            /*if (MwiAppViewModel.Instance.AppColor != ColorControl.Color)
                 MwiAppViewModel.Instance.AppColor = ColorControl.Color;
 
             foreach (RadioButton btn in ThemeList.Children)
@@ -73,7 +78,7 @@ namespace WpfInvestigate.Controls
                         MwiAppViewModel.Instance.ChangeTheme(newTheme);
                     break;
                 }
-            }
+            }*/
         }
 
         #region ==============  Dependency Properties  ===============

@@ -48,6 +48,7 @@ namespace WpfInvestigate.Controls
             SysCmdRestore = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState == WindowState.Maximized);
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
             CmdClose = new RelayCommand(Close, _ => AllowClose);
+            CmdSelectTheme = new RelayCommand(SelectTheme);
 
             // DataContext = this;
             Loaded += OnLoaded;
@@ -200,6 +201,35 @@ namespace WpfInvestigate.Controls
             // Dispatcher.Invoke(new Action(() => RaiseEvent(new RoutedEventArgs(UnloadedEvent))), DispatcherPriority.ApplicationIdle);
         }
 
+        public async void SelectTheme(object obj)
+        {
+            var adorner = new DialogAdorner() { CloseOnClickBackground = false };
+            var themeSelector = new ThemeSelector { Margin = new Thickness(0) };
+            var color = Tips.GetColorFromBrush(Background);
+            if (color == Colors.Transparent)
+                color = (Color)Application.Current.Resources["PrimaryColor"];
+            themeSelector.ColorControl.Color = color;
+            var mwiChild = new MwiChild
+            {
+                Content = themeSelector,
+                Width = 714,
+                Height = 600,
+                LimitPositionToPanelBounds = true,
+                Title = "Theme Selector",
+                VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize
+            };
+            mwiChild.SetBinding(BackgroundProperty, new Binding("Color") { Source = themeSelector, Converter = ColorHslBrush.Instance });
+            mwiChild.SetBinding(MwiChild.ThemeProperty, new Binding("Theme") { Source = themeSelector });
+            adorner.ShowContentDialog(mwiChild);
+
+            if (themeSelector.IsSaved)
+            {
+                Theme = themeSelector.Theme;
+                if (!Theme.FixedColor.HasValue)
+                    Background = new SolidColorBrush(themeSelector.Color);
+            }
+        }
+
         #region ==============  Thumbnail  ===================
         public ImageSource Thumbnail { get; private set; }
         public double ThumbnailWidth => GetThumbnailWidth();
@@ -263,6 +293,7 @@ namespace WpfInvestigate.Controls
         public RelayCommand SysCmdMaximize { get; private set; }
         public RelayCommand SysCmdRestore { get; private set; }
         public RelayCommand CmdClose { get; private set; }
+        public RelayCommand CmdSelectTheme { get; private set; }
         //=========================
         public static readonly DependencyProperty AllowDetachProperty = DependencyProperty.Register(nameof(AllowDetach), typeof(bool), typeof(MwiChild), new FrameworkPropertyMetadata(true));
         public bool AllowDetach
