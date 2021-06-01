@@ -134,7 +134,9 @@ namespace WpfInvestigate.Controls
                     data = ColorUtils.GetKnownColors(false).OrderBy(kvp => kvp.Key);
 
                 if (data != null)
-                    foreach (var kvp in data.Where(kvp=> kvp.Value != Colors.Transparent))
+                {
+                    var btnStyle = Application.Current.Resources["MonochromeButtonBaseStyle"] as Style; // Ripple effect
+                    foreach (var kvp in data.Where(kvp => kvp.Value != Colors.Transparent))
                     {
                         var content = new TextBox
                         {
@@ -155,20 +157,22 @@ namespace WpfInvestigate.Controls
                             BorderThickness = new Thickness(2),
                             HorizontalContentAlignment = HorizontalAlignment.Center,
                             VerticalContentAlignment = VerticalAlignment.Center,
-                            Content = content
+                            Content = content,
+                            Style = btnStyle
                         };
                         CornerRadiusEffect.SetCornerRadius(btn, new CornerRadius(2));
                         ChromeEffect.SetMonochrome(btn, kvp.Value);
                         ChromeEffect.SetChromeMatrix(btn, "+0%,+70%,+0%,40, +0%,+75%,+0%,100, +0%,+75%,+35%,100");
-                        btn.Click += (o, args) => VM.Color = ((SolidColorBrush)((Button)o).Background).Color;
+                        btn.Click += (o, args) => VM.Color = ((SolidColorBrush) ((Button) o).Background).Color;
                         content.PreviewMouseLeftButtonUp += (o, args) =>
                         {
-                            var textBox = (TextBox)o;
+                            var textBox = (TextBox) o;
                             if (string.IsNullOrEmpty(textBox.SelectedText))
-                                VM.Color = ((SolidColorBrush)((Control)textBox.Parent).Background).Color;
+                                VM.Color = ((SolidColorBrush) ((Control) textBox.Parent).Background).Color;
                         };
                         panel.Children.Add(btn);
                     }
+                }
             }
         }
 
