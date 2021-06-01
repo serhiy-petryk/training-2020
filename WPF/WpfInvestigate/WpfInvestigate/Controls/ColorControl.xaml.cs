@@ -145,12 +145,12 @@ namespace WpfInvestigate.Controls
                             Text = GetColorLabel(kvp),
                             Background = Brushes.Transparent,
                             Foreground = new SolidColorBrush(ColorUtils.GetForegroundColor(kvp.Value)),
-                            IsHitTestVisible = false
+                            Cursor = Cursors.Arrow
                         };
                         var btn = new Button
                         {
-                            Width = 140,
-                            Padding = new Thickness(2),
+                            Width = 130,
+                            Padding = new Thickness(0, 2, 0, 2),
                             Margin = new Thickness(2),
                             BorderThickness = new Thickness(2),
                             HorizontalContentAlignment = HorizontalAlignment.Center,
@@ -161,6 +161,12 @@ namespace WpfInvestigate.Controls
                         ChromeEffect.SetMonochrome(btn, kvp.Value);
                         ChromeEffect.SetChromeMatrix(btn, "+0%,+70%,+0%,40, +0%,+75%,+0%,100, +0%,+75%,+35%,100");
                         btn.Click += (o, args) => VM.Color = ((SolidColorBrush)((Button)o).Background).Color;
+                        content.PreviewMouseLeftButtonUp += (o, args) =>
+                        {
+                            var textBox = (TextBox)o;
+                            if (string.IsNullOrEmpty(textBox.SelectedText))
+                                VM.Color = ((SolidColorBrush)((Control)textBox.Parent).Background).Color;
+                        };
                         panel.Children.Add(btn);
                     }
             }

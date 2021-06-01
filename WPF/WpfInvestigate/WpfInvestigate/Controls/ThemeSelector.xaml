@@ -26,7 +26,7 @@
                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                         Style="{StaticResource MonochromeButtonBaseStyle}"
                         effects:ChromeEffect.Monochrome="{Binding Color, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
-                        effects:CornerRadiusEffect.CornerRadius="7"/>
+                        effects:CornerRadiusEffect.CornerRadius="3"/>
             </StackPanel>
         </Grid>
 

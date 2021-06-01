@@ -1,10 +1,8 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
-using WpfInvestigate.Samples;
 
 namespace WpfInvestigate.TestViews
 {
@@ -27,7 +25,7 @@ namespace WpfInvestigate.TestViews
             var mwiChild = new MwiChild
             {
                 Content = themeSelector,
-                Width = 765,
+                Width = 714,
                 Height = 600,
                 LimitPositionToPanelBounds = true,
                 Title = "Theme Selector",
