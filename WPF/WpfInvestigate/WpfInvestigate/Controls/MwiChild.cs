@@ -25,7 +25,8 @@ namespace WpfInvestigate.Controls
             Close = 1,
             Minimize = 2,
             Maximize = 4,
-            Detach = 8
+            Detach = 8,
+            SelectTheme = 16
         }
 
         private static int controlId = 0;
@@ -48,7 +49,7 @@ namespace WpfInvestigate.Controls
             SysCmdRestore = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState == WindowState.Maximized);
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
             CmdClose = new RelayCommand(Close, _ => AllowClose);
-            CmdSelectTheme = new RelayCommand(SelectTheme);
+            CmdSelectTheme = new RelayCommand(SelectTheme, _ => AllowSelectTheme);
 
             // DataContext = this;
             Loaded += OnLoaded;
@@ -216,7 +217,7 @@ namespace WpfInvestigate.Controls
                 Height = 600,
                 LimitPositionToPanelBounds = true,
                 Title = "Theme Selector",
-                VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize
+                VisibleButtons = Buttons.Close | Buttons.Maximize
             };
             mwiChild.SetBinding(BackgroundProperty, new Binding("Color") { Source = themeSelector, Converter = ColorHslBrush.Instance });
             mwiChild.SetBinding(MwiChild.ThemeProperty, new Binding("Theme") { Source = themeSelector });
@@ -285,6 +286,7 @@ namespace WpfInvestigate.Controls
         public bool IsMinimizeButtonVisible => (VisibleButtons & Buttons.Minimize) == Buttons.Minimize && Resizable;
         public bool IsMaximizeButtonVisible => (VisibleButtons & Buttons.Maximize) == Buttons.Maximize && Resizable;
         public bool IsDetachButtonVisible => (VisibleButtons & Buttons.Detach) == Buttons.Detach;
+        public bool IsSelectThemeButtonVisible => (VisibleButtons & Buttons.SelectTheme) == Buttons.SelectTheme;
 
         //============  Commands  =============
         public RelayCommand CmdDetach { get; private set; }
@@ -321,6 +323,13 @@ namespace WpfInvestigate.Controls
         {
             get => (bool)GetValue(AllowCloseProperty);
             set => SetValue(AllowCloseProperty, value);
+        }
+        //================================
+        public static readonly DependencyProperty AllowSelectThemeProperty = DependencyProperty.Register(nameof(AllowSelectTheme), typeof(bool), typeof(MwiChild), new FrameworkPropertyMetadata(true));
+        public bool AllowSelectTheme
+        {
+            get => (bool)GetValue(AllowSelectThemeProperty);
+            set => SetValue(AllowSelectThemeProperty, value);
         }
         //================================
         public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(MwiChild), new FrameworkPropertyMetadata(false));
@@ -381,7 +390,7 @@ namespace WpfInvestigate.Controls
         //==============================
         public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons",
             typeof(Buttons), typeof(MwiChild),
-            new FrameworkPropertyMetadata(Buttons.Close | Buttons.Minimize | Buttons.Maximize | Buttons.Detach,
+            new FrameworkPropertyMetadata(Buttons.Close | Buttons.Minimize | Buttons.Maximize | Buttons.Detach  | Buttons.SelectTheme,
                 (o, args) => ((MwiChild) o).UpdateUI()));
         public Buttons VisibleButtons
         {
@@ -425,6 +434,6 @@ namespace WpfInvestigate.Controls
         #endregion
 
         private void UpdateUI() => OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),
-            nameof(IsMinimizeButtonVisible), nameof(IsDetachButtonVisible));
+            nameof(IsMinimizeButtonVisible), nameof(IsDetachButtonVisible), nameof(IsSelectThemeButtonVisible));
     }
 }

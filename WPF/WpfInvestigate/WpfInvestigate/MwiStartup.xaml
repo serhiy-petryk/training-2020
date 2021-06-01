@@ -20,7 +20,9 @@
         <SolidColorBrush x:Key="MwiStartupBackground" Color="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
     </Window.Resources>
 
-    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close" Background="{StaticResource MwiStartupBackground}">
+    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close,SelectTheme"
+                       Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10]}"
+                       Background="Orange">
         <controls:MwiChild.CommandBar>
             <samples:MwiCommandBarSample/>
         </controls:MwiChild.CommandBar>
@@ -109,7 +111,7 @@
 
         </controls:MwiChild.RightHeaderBar>
 
-        <controls:MwiContainer x:Name="MwiContainer" Background="{Binding ElementName=TopControl, Path=Background}">
+        <controls:MwiContainer x:Name="MwiContainer" Background="{Binding ElementName=TopControl, Path=BaseColor, Converter={x:Static common:ColorHslBrush.Instance}}">
             <controls:MwiContainer.LeftPanel>
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>
