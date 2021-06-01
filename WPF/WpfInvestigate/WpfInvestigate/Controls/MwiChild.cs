@@ -56,28 +56,6 @@ namespace WpfInvestigate.Controls
             Unloaded += OnUnloaded;
 
             if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
-
-            /* can't reproduce (2021-03-12):
-             MwiAppViewModel.Instance.PropertyChanged += async (sender, args) =>
-            {
-                if (ActualWidth > 0 && args is PropertyChangedEventArgs e && e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
-                {
-                    // fixed bug (?): при зміні theme в MwiChild зявляється справа полоса
-                    var oldWidth = ActualWidth;
-                    Width = ActualWidth + 1;
-                    await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
-                    Width = oldWidth;
-                }
-            };*/
-
-            /*void OnLoaded(object sender, RoutedEventArgs e)
-            {
-                Loaded -= OnLoaded;
-                //if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
-                  //  Position = MwiContainer.GetStartPositionForMwiChild(this);
-                AnimateShow();
-            }*/
-            // Dispatcher.BeginInvoke(new Action(() => AnimateShow()), DispatcherPriority.Loaded);
         }
 
         private void OnBackgroundChanged(object sender, EventArgs e)
@@ -166,18 +144,6 @@ namespace WpfInvestigate.Controls
                 ((Window)Parent).Focus();
 
             _isActivating = false;
-
-            // BringIntoView(); // mouse click on element is not working in case of active BringIntoView -> need to delay BringIntoView
-            // todo: delay for ResizingControl.Activate, cancel original RequestBringIntoView, make own BringIntoView (see Obsolete.AnimationHelper.ScrollViewerAnimator method)
-            /*var timer = new DispatcherTimer {Interval = TimeSpan.FromMilliseconds(300)};
-            timer.Tick += OnDispatcherTimerTick;
-            timer.Start();
-
-            void OnDispatcherTimerTick(object sender, EventArgs e)
-            {
-                ((DispatcherTimer)sender).Stop();
-                BringIntoView();
-            }*/
         }
 
         public async void Close(object obj)
@@ -198,11 +164,9 @@ namespace WpfInvestigate.Controls
             MwiContainer?.Children?.Remove(this);
 
             Closed?.Invoke(this, EventArgs.Empty);
-
-            // Dispatcher.Invoke(new Action(() => RaiseEvent(new RoutedEventArgs(UnloadedEvent))), DispatcherPriority.ApplicationIdle);
         }
 
-        public async void SelectTheme(object obj)
+        public void SelectTheme(object obj)
         {
             var adorner = new DialogAdorner() { CloseOnClickBackground = false };
             var themeSelector = new ThemeSelector { Margin = new Thickness(0) };
