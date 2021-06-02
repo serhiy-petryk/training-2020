@@ -397,7 +397,7 @@ namespace WpfInvestigate.Controls
         {
             if (this.IsElementDisposing()) return;
 
-            // if (!colorChanged) { 
+            // Debug.Print($"MwiChild. UpdateColorTheme: {_controlId}");
             // Delay because no fill color for some icons
             Dispatcher.BeginInvoke(new Action(() =>
             {
