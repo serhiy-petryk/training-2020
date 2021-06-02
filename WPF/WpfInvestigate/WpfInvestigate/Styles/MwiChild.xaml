@@ -89,7 +89,6 @@
                                 <Border x:Name="SecondRightBottomBorder" BorderThickness="0 0 1 1" Background="Transparent" Margin="0"
                                         CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
                                         BorderBrush="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.SecondBorders.Visibility}"/>
-
                             </Grid>
                         </Border>
 
@@ -169,7 +168,11 @@
 
                             <!-- Window buttons -->
                             <Button Grid.Column="4" Focusable="False" x:Name="SelectThemeButton" Command="{Binding CmdSelectTheme}" Style="{DynamicResource Mwi.SelectThemeButtonStyle}"
-                                    Visibility="{Binding IsSelectThemeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                    Visibility="{Binding IsSelectThemeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                <Button.ToolTip>
+                                    <ToolTip Content="{Binding ActualTheme.Name}" ContentStringFormat="Change the theme of window. Current theme is {0}"/>
+                                </Button.ToolTip>
+                            </Button>
                             <Button Grid.Column="5" Focusable="False" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource Mwi.DetachedButtonStyle}"
                                     Visibility="{Binding IsDetachButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
                             <Button Grid.Column="6" Focusable="False" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource Mwi.MinimizeButtonStyle}"
