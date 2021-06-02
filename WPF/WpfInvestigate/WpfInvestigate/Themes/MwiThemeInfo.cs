@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -17,6 +18,17 @@ namespace WpfInvestigate.Themes
             {"Windows10", new MwiThemeInfo( "Windows 10", null, null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.xaml"})},
             {"Windows10-2", new MwiThemeInfo( "Windows 10 with borders", null,null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.WithBorders.xaml"})}
         };
+
+        public static MwiThemeInfo GetNexThemeInfo(MwiThemeInfo current)
+        {
+            var themes = Themes.Values.ToList();
+            var k = themes.IndexOf(current);
+            if (k > themes.Count - 2)
+                k = -1;
+
+            var newTheme = themes[k + 1];
+            return newTheme;
+        }
 
         // ==============   Static section  ======================
         private static Dictionary<string, Assembly> _assemblyCache = new Dictionary<string, Assembly>();

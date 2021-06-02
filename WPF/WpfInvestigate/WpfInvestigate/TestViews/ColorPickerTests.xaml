@@ -113,7 +113,7 @@
 
             <!-- =============== -->
             <controls:ColorControl x:Name="ColorControl" Grid.Row="1"
-                                   Color="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor, Mode=TwoWay}"
+                                   Color="GreenYellow"
                                    IsEnabled="{Binding ElementName=IsEnabledFlag, Path=IsChecked, Mode=TwoWay}"
                                    IsAlphaSliderVisible="{Binding ElementName=IsAlphaSliderVisible, Path=IsChecked, Mode=TwoWay}"/>
         </Grid>

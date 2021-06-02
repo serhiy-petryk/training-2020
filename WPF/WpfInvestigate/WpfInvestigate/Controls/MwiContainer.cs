@@ -14,7 +14,6 @@ using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
 using WpfInvestigate.Themes;
-using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
@@ -38,19 +37,9 @@ namespace WpfInvestigate.Controls
         public MwiContainer()
         {
             CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
-            /*var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
-            dpd.AddValueChanged(this, (sender, args) => UpdateResources(true));*/
-
-            // MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
             Children.CollectionChanged += OnChildrenCollectionChanged;
             Unloaded += OnUnloaded;
         }
-
-        /*private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
-                UpdateResources(true);
-        }*/
 
         private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -143,10 +132,6 @@ namespace WpfInvestigate.Controls
             if (GetTemplateChild("WindowsMenuButton") is ToggleButton windowsMenuButton)
                 windowsMenuButton.Checked += OnWindowsMenuButtonChecked;
 
-            // Children.CollectionChanged += OnChildrenCollectionChanged;
-            // var dpdBackground = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
-            // dpdBackground.AddValueChanged(this, OnBackgroundChanged);
-
             if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
             {
                 wnd.Activated += OnWindowActivated;
@@ -158,9 +143,8 @@ namespace WpfInvestigate.Controls
             // Dispatcher.BeginInvoke(new Action(() => OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children))), DispatcherPriority.Background);
             // To fix VS correct view of MwiStartup: DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal)
 
-            UpdateColorTheme(false, false);
+            UpdateColorTheme(false, true);
             // =======================
-            // void OnBackgroundChanged(object sender, EventArgs e) => UpdateResources(true);
             void OnWindowActivated(object sender, EventArgs e)
             {
                 if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
@@ -189,7 +173,6 @@ namespace WpfInvestigate.Controls
                     }
                     Children.CollectionChanged -= OnChildrenCollectionChanged;
                 }
-                // MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
                 _leftPanelButton = null;
                 _leftPanelContainer = null;
                 ScrollViewer = null;
@@ -216,16 +199,6 @@ namespace WpfInvestigate.Controls
         internal IEnumerable<MwiChild> InternalWindows => Children.Cast<MwiChild>().Where(w => !w.IsWindowed);
         internal MwiChild GetTopChild(IEnumerable<object> items) => items.Cast<MwiChild>().OrderByDescending(Panel.GetZIndex).FirstOrDefault();
 
-        /*private Color BaseColor
-        {
-            get
-            {
-                if (Theme?.FixedColor != null) return Theme.FixedColor.Value;
-                var backColor = Tips.GetColorFromBrush(Background);
-                return backColor == Colors.Transparent ? MwiAppViewModel.Instance.AppColor : backColor;
-            }
-        }*/
-
         // Offset for new window.
         private double _windowOffset = -WINDOW_OFFSET_STEP;
 
@@ -245,8 +218,26 @@ namespace WpfInvestigate.Controls
                 ? ScrollBarVisibility.Disabled
                 : ScrollBarVisibility.Auto;
 
-        public MwiThemeInfo ActualTheme => Theme ?? MwiThemeInfo.Themes.Values.FirstOrDefault();
-        public Color ActualThemeColor => ActualTheme.FixedColor ?? ThemeColor ?? Colors.Blue;
+        public MwiThemeInfo ActualTheme
+        {
+            get
+            {
+                if (Theme != null) return Theme;
+                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
+                return a1?.ActualTheme ?? MwiThemeInfo.Themes.Values.FirstOrDefault();
+            }
+        }
+
+        public Color ActualThemeColor
+        {
+            get
+            {
+                if (ActualTheme.FixedColor != null) return ActualTheme.FixedColor.Value;
+                if (ThemeColor.HasValue) return ThemeColor.Value;
+                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
+                return a1?.ActualThemeColor ?? Colors.GreenYellow;
+            }
+        }
 
         //==============================
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
@@ -288,7 +279,6 @@ namespace WpfInvestigate.Controls
         {
             if (!colorChanged && ActualTheme != null)
             {
-                // UnloadingHelper.ClearResources(Resources);
                 foreach (var f1 in ActualTheme.GetResources())
                     FillResources(this, f1);
             }
@@ -319,6 +309,5 @@ namespace WpfInvestigate.Controls
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
     }
 }

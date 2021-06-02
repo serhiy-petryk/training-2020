@@ -1,16 +1,13 @@
-﻿using System.ComponentModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Media;
-using WpfInvestigate.Common;
-using WpfInvestigate.Themes;
 
 namespace WpfInvestigate.ViewModels
 {
-    public class MwiAppViewModel: DependencyObject, INotifyPropertyChanged
+    public class MwiAppViewModel: DependencyObject
     {
         #region ================  Static section  =====================
-        public static MwiAppViewModel Instance = new MwiAppViewModel {CurrentTheme = MwiThemeInfo.Themes["Windows10-2"] };
+
+        public static MwiAppViewModel Instance = new MwiAppViewModel();
         #endregion
 
         #region ================  Instance section  ====================
@@ -20,26 +17,6 @@ namespace WpfInvestigate.ViewModels
             get => (double)GetValue(ScaleValueProperty);
             set => SetValue(ScaleValueProperty, value);
         }
-        //=============================
-        public static readonly DependencyProperty AppColorProperty = DependencyProperty.Register(nameof(AppColor), typeof(Color), typeof(MwiAppViewModel), new UIPropertyMetadata(Colors.Yellow, OnAppColorChanged));
-
-        private static void OnAppColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var model = (MwiAppViewModel)d;
-            model.OnPropertiesChanged(nameof(AppColor));
-        }
-
-        public Color AppColor
-        {
-            get => (Color)GetValue(AppColorProperty);
-            set => SetValue(AppColorProperty, value);
-        }
-        //=============================
-        // public MwiContainer ContainerControl { get; set; }
-        // public FontFamily DefaultFontFamily { get; } = new FontFamily("Segoe UI");
-        // public Dock WindowsBarLocation { get; } = Dock.Top;
-        public RelayCommand CmdChangeTheme { get; }
-
         public FrameworkElement DialogHost
         {
             get
@@ -50,39 +27,6 @@ namespace WpfInvestigate.ViewModels
                 return activeWnd;
             }
         }
-
-        public MwiThemeInfo CurrentTheme { get; private set; }
-        public int Test => 12;
-
-        public MwiAppViewModel()
-        {
-            CmdChangeTheme = new RelayCommand(o => ChangeTheme(null));
-        }
-
-        public void ChangeTheme(MwiThemeInfo newTheme)
-        {
-            if (newTheme != null)
-                CurrentTheme = newTheme;
-            else if (CurrentTheme == null)
-                CurrentTheme = MwiThemeInfo.Themes.Values.FirstOrDefault();
-            else
-                CurrentTheme = MwiThemeInfo.Themes.Values.SkipWhile(a => a != CurrentTheme).Skip(1).FirstOrDefault() ?? MwiThemeInfo.Themes.Values.FirstOrDefault();
-
-            UpdateUI();
-        }
-        #endregion
-
-        #region ===========  INotifyPropertyChanged  ===============
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertiesChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void UpdateUI() => OnPropertiesChanged(nameof(CurrentTheme), nameof(AppColor));
-
         #endregion
     }
 }

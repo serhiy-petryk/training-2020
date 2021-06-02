@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -10,14 +9,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Themes;
-using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
     /// <summary>
     /// Interaction logic for MwiChild.xaml
     /// </summary>
-    public partial class MwiChild: ResizingControl
+    public partial class MwiChild: ResizingControl, IColorThemeSupport
     {
         [Flags]
         public enum Buttons
@@ -58,30 +56,6 @@ namespace WpfInvestigate.Controls
             if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
         }
 
-        private void UpdateTheme()
-        {
-            if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy mwiChildColorProxy)
-                mwiChildColorProxy.Value = BaseColor;
-            if (TryFindResource("Mwi.Container.BaseColorProxy") is BindingProxy mwiContainerColorProxy)
-                mwiContainerColorProxy.Value = BaseColor;
-            OnPropertiesChanged(nameof(BaseColor));
-        }
-
-        private void OnBackgroundChanged(object sender, EventArgs e)
-        {
-            MwiAppViewModel.Instance.UpdateUI();
-            OnPropertiesChanged(nameof(BaseColor));
-        }
-
-        private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
-            {
-                if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
-                    colorProxy.Value = BaseColor;
-                OnPropertiesChanged(nameof(BaseColor));
-            }
-        }
         #region =============  Override methods  ====================
         private static bool _isActivating = false;
         public override void Activate() => Activate(true);
@@ -244,15 +218,25 @@ namespace WpfInvestigate.Controls
         public event EventHandler Closed;
 
         public MwiContainer MwiContainer; // !! Must be field, not property => important for clearing when unloaded
-        public Color BaseColor
+
+        public MwiThemeInfo ActualTheme
         {
             get
             {
-                if (Theme?.FixedColor != null) return Theme.FixedColor.Value;
-                var backColor = Tips.GetColorFromBrush(Background);
-                if (backColor == Colors.Transparent && MwiContainer != null)
-                    backColor = Tips.GetColorFromBrush(MwiContainer.Background);
-                return backColor == Colors.Transparent ? MwiAppViewModel.Instance.AppColor : backColor;
+                if (Theme != null) return Theme;
+                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
+                return a1?.ActualTheme ?? MwiThemeInfo.Themes.Values.FirstOrDefault();
+            }
+        }
+
+        public Color ActualThemeColor
+        {
+            get
+            {
+                if (ActualTheme.FixedColor != null) return ActualTheme.FixedColor.Value;
+                if (ThemeColor.HasValue) return ThemeColor.Value;
+                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
+                return a1?.ActualThemeColor ?? Colors.GreenYellow;
             }
         }
 
@@ -383,20 +367,7 @@ namespace WpfInvestigate.Controls
         }
         private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue is MwiThemeInfo themeInfo)
-            {
-                var mwiChild = (MwiChild)d;
-                // Delay because no fill color for some icons
-                mwiChild.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    // UnloadingHelper.ClearResources(mwiChild.Resources);
-                    foreach (var f1 in themeInfo.GetResources())
-                        FillResources(mwiChild, f1);
-
-                    if (mwiChild.TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
-                        colorProxy.Value = mwiChild.BaseColor;
-                 }), DispatcherPriority.Render);
-            }
+            ((MwiChild)d).UpdateColorTheme(false, true);
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
         {
@@ -406,6 +377,41 @@ namespace WpfInvestigate.Controls
                 fe.Resources[key] = resources[key];
         }
 
+        //==============================
+        public static readonly DependencyProperty ThemeColorProperty = DependencyProperty.Register("ThemeColor",
+            typeof(Color?), typeof(MwiChild), new FrameworkPropertyMetadata(null, OnThemeColorChanged));
+
+        public Color? ThemeColor
+        {
+            get => (Color?)GetValue(ThemeColorProperty);
+            set => SetValue(ThemeColorProperty, value);
+        }
+        private static void OnThemeColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((MwiChild)d).UpdateColorTheme(true, true);
+        }
+
+        public void UpdateColorTheme(bool colorChanged, bool processChildren)
+        {
+            // if (!colorChanged) { 
+            // Delay because no fill color for some icons
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (!colorChanged && ActualTheme != null)
+                {
+                    foreach (var f1 in ActualTheme.GetResources())
+                        FillResources(this, f1);
+                }
+
+                if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
+                    colorProxy.Value = ActualThemeColor;
+            }), DispatcherPriority.Render);
+
+            OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
+            if (processChildren)
+                foreach (var element in this.GetVisualChildren().OfType<IColorThemeSupport>())
+                    element.UpdateColorTheme(colorChanged, false);
+        }
         #endregion
 
         private void UpdateUI() => OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),

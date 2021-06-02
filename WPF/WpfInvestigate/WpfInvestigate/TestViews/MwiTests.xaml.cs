@@ -197,13 +197,7 @@ namespace WpfInvestigate.TestViews
 
         private void OnChangeThemeClick(object sender, RoutedEventArgs e)
         {
-            var current = MwiContainer.Theme;
-            var themes = MwiThemeInfo.Themes.Values.ToList();
-            var k = themes.IndexOf(current);
-            if (k > themes.Count - 2)
-                k = -1;
-
-            MwiContainer.Theme = themes[k + 1];
+            MwiContainer.Theme = MwiThemeInfo.GetNexThemeInfo(MwiContainer.ActualTheme);
             Debug.Print($"Theme: {MwiContainer.Theme.Name}");
         }
     }

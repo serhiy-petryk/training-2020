@@ -34,8 +34,6 @@ namespace WpfInvestigate
             cbCulture.SelectedValue = Thread.CurrentThread.CurrentUICulture;
 
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
-
-            MwiAppViewModel.Instance.PropertyChanged += TestEventHandler;
         }
 
         private static string[] _cultures = { "", "sq-AL", "uk-UA", "en-US", "km-KH", "yo-NG" };
@@ -166,10 +164,6 @@ namespace WpfInvestigate
             Debug.Print($"Test{step}: {a12:N0}");
 
             await Task.Delay(1000);
-        }
-
-        private void TestEventHandler(object sender, PropertyChangedEventArgs e)
-        {
         }
 
         private async void OnMwiStartupMemoryTestClick(object sender, RoutedEventArgs e)

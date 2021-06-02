@@ -3,10 +3,9 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
                     xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels"
-                    xmlns:effects="clr-namespace:WpfInvestigate.Effects"
-                    xmlns:controls="clr-namespace:WpfInvestigate.Controls">
+                    xmlns:effects="clr-namespace:WpfInvestigate.Effects">
 
-    <common:BindingProxy x:Key="Mwi.Child.BaseColorProxy" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
+    <common:BindingProxy x:Key="Mwi.Child.BaseColorProxy" Value="{StaticResource DangerColor}"/>
 
     <!-- ============= Windows 10 layout ============ -->
     <system:Double x:Key="Mwi.Child.Edge">7</system:Double>
@@ -127,7 +126,7 @@
     <!-- ========================================== -->
     <!-- ========  MwiContainer & MwiBar  ========= -->
     <!-- ========================================== -->
-    <common:BindingProxy x:Key="Mwi.Container.BaseColorProxy" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
+    <common:BindingProxy x:Key="Mwi.Container.BaseColorProxy" Value="{StaticResource DangerColor}"/>
     <SolidColorBrush x:Key="Mwi.Container.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Container.BaseColorProxy}, Path=Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=30:+30%}"/>
     <SolidColorBrush x:Key="Mwi.Container.WindowsMenu.ForegroundBrush" Color="#FF8194AA"/>
     <SolidColorBrush x:Key="Mwi.Container.LeftPanel.BackgroundBrush" Color="{Binding Source={StaticResource Mwi.Container.BaseColorProxy}, Path=Value}"/>

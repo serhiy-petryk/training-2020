@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -8,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WpfInvestigate.Helpers;
-using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
@@ -31,7 +29,7 @@ namespace WpfInvestigate.Controls
                 if (this.AutomaticUnloading(OnUnloaded))
                 {
                     base.OnUnloaded(sender, e);
-                    MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+                    // MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
                     Theme = null;
                     if (Icon is DrawingImage image && image.Drawing != null)
                         BindingOperations.ClearAllBindings(image.Drawing);
@@ -45,19 +43,11 @@ namespace WpfInvestigate.Controls
             if (MovingThumb != null)
                 MovingThumb.MouseDoubleClick -= OnMovingThumbMouseDoubleClick;
 
-            MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-            var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
-            dpd.RemoveValueChanged(this, OnBackgroundChanged);
-
             if (onlyRemove)
             {
                 MovingThumb = null;
                 return;
             }
-
-            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
-            dpd.AddValueChanged(this, OnBackgroundChanged);
-            OnBackgroundChanged(this, null);
 
             if (GetTemplateChild("MovingThumb") is Thumb movingThumb)
             {
@@ -67,6 +57,8 @@ namespace WpfInvestigate.Controls
             }
             else if (MovingThumb != null)
                 MovingThumb = null;
+
+            UpdateColorTheme(false, true);
 
             void OnMovingThumbMouseDoubleClick(object sender, MouseButtonEventArgs e)
             {
@@ -125,6 +117,5 @@ namespace WpfInvestigate.Controls
             void OnWindowActivated(object sender, EventArgs e) => Activate();
             void OnWindowDeactivated(object sender, EventArgs e) => IsActive = false;
         }
-
     }
 }
