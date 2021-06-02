@@ -33,7 +33,9 @@
                 AutoToolTipPrecision="2"/>
 
         <StackPanel Grid.Column="1" Orientation="Vertical">
-            <Button Content="Add" Click="AddChild_OnClick"/>
+            <Button Content="ChangeTheme" Click="OnChangeThemeClick" Margin="0 5 0 0"/>
+            <Button Content="ChangeColor" Click="OnChangeColorClick"/>
+            <Button Content="Add child" Click="AddChild_OnClick" Margin="0 5 0 0"/>
             <Button Content="Add dialog" Click="AddDialog_OnClick"/>
             <Button Content="Add resizable dialog" Click="AddResizableDialog_OnClick"/>
             <Button Content="Add mwi dialog" Click="AddMwiDialog_OnClick"/>
