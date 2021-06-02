@@ -2,7 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:common="clr-namespace:WpfInvestigate.Common"
-                    xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels"
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects">
 
     <common:BindingProxy x:Key="Mwi.Child.BaseColorProxy" Value="{StaticResource DangerColor}"/>
