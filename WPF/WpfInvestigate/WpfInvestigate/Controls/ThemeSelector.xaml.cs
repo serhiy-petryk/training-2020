@@ -65,20 +65,6 @@ namespace WpfInvestigate.Controls
         {
             IsSaved = true;
             ApplicationCommands.Close.Execute(null, this);
-
-            /*if (MwiAppViewModel.Instance.AppColor != ColorControl.Color)
-                MwiAppViewModel.Instance.AppColor = ColorControl.Color;
-
-            foreach (RadioButton btn in ThemeList.Children)
-            {
-                if (Equals(btn.IsChecked, true))
-                {
-                    var newTheme = (MwiThemeInfo)btn.Content;
-                    if (newTheme != MwiAppViewModel.Instance.CurrentTheme)
-                        MwiAppViewModel.Instance.ChangeTheme(newTheme);
-                    break;
-                }
-            }*/
         }
 
         #region ==============  Dependency Properties  ===============
