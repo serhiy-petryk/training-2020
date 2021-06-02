@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Themes;
-using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
