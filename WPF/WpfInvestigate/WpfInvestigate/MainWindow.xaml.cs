@@ -172,52 +172,6 @@ namespace WpfInvestigate
         {
         }
 
-        private void TestButton3_OnClick(object sender, RoutedEventArgs e)
-        {
-            var dpd = DependencyPropertyDescriptor.FromProperty(MwiAppViewModel.AppColorProperty, typeof(MwiAppViewModel));
-            dpd.AddValueChanged(MwiAppViewModel.Instance, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd.Name}"));
-            dpd.AddValueChanged(MwiAppViewModel.Instance, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd.Name}"));
-
-            Debug.Print($"TestButton3_OnClick");
-
-            TestButton3.IsHitTestVisibleChanged += TestButton3_IsHitTestVisibleChanged;
-            TestButton3.IsHitTestVisibleChanged += (o, args) => Debug.Print($"XXX");
-            TestButton3.Unloaded += (sender2, args) => Debug.Print($"Unload");
-            TestButton3.Unloaded += (sender2, args) => Debug.Print($"Unload");
-            /*var dpd1 = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-            dpd1.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd1.Name}"));
-            dpd1.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd1.Name}"));
-
-            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.EffectProperty, typeof(UIElement));
-            dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd.Name}"));
-            dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd.Name}"));*/
-
-            Debug.Print($"===========  Button3  ===============");
-            EventHelper.RemoveDependencyPropertyEventHandlers(TestButton3);
-            EventHelper.RemoveRoutedEventHandlers(TestButton3);
-
-            Debug.Print($"===========  Button4  ===============");
-            EventHelper.RemoveDependencyPropertyEventHandlers(TestButton4);
-            EventHelper.RemoveRoutedEventHandlers(TestButton4);
-            Debug.Print($"===========  end  ===============");
-        }
-
-        private void TestButton3_IsHitTestVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Debug.Print($"TestButton3_IsHitTestVisibleChanged");
-        }
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            /*var propertyInfo = typeof(PropertyChangedEventManager).GetProperty("CurrentManager",
-                BindingFlags.Static | BindingFlags.NonPublic);
-            var pm = propertyInfo.GetValue(null);*/
-             // Events.RemoveAllEventSubsriptions(this);
-             // Events.RemoveEventSubsriptions(MwiAppViewModel.Instance, this);
-            EventHelper.RemoveDependencyPropertyEventHandlers(MwiAppViewModel.Instance);
-            // EventHelper.RemovePropertyChangeEventHandlers(MwiAppViewModel.Instance);
-        }
-
         private async void OnMwiStartupMemoryTestClick(object sender, RoutedEventArgs e)
         {
             for (var k = 0; k < 5; k++)

@@ -94,11 +94,6 @@
                     </WrapPanel>
 
                     <WrapPanel Margin="5">
-                        <Button x:Name="TestButton3" Click="TestButton3_OnClick" Content="Test button 2"/>
-                        <Button x:Name="TestButton4" Content="as{Binding TestProperty}" Click="ButtonBase_OnClick"/>
-                    </WrapPanel>
-
-                    <WrapPanel Margin="5">
                         <Button x:Name="SaveWeakRefs" Click="OnSaveWeakRefsClick" Content="Save WeakRefs"/>
                         <Button x:Name="CompareWeakRefs" Click="OnCompareWeakRefsClick" Content="Compare WeakRefs"/>
                         <Button x:Name="CleanupWeakRefTable" Click="OnCleanupWeakRefTableClick" Content="Cleanup WeakRefTable"/>
