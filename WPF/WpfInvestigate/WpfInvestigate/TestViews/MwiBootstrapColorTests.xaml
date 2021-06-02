@@ -6,48 +6,47 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
+        xmlns:themes="clr-namespace:WpfInvestigate.Themes"
         mc:Ignorable="d"
         Title="MwiBootstrapColorTests" Height="700" Width="1000"
         Unloaded="OnUnloaded">
 
     <Window.Resources>
         <ControlTemplate x:Key="Test" TargetType="UserControl">
-            <controls:MwiChild Background="{TemplateBinding Background}" Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Margin="10" Width="600" Height="400">
-                <controls:MwiContainer Background="{TemplateBinding Background}">
+            <controls:MwiChild Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Margin="10" Width="600" Height="400"
+                               Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10-2]}"
+                               ThemeColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}">
+                <controls:MwiContainer>
                     <controls:MwiContainer.LeftPanel>
                         <StackPanel Orientation="Vertical">
                             <Button Content="Add window" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top"
                                     Click="OnAddWindowClick"
                                     effects:CornerRadiusEffect.CornerRadius="3"
-                                    effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25}"/>
+                                    effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiContainer}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25}"/>
                             <Button Content="Run Test" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top"
                                     Click="OnRunTestClick"
                                     effects:CornerRadiusEffect.CornerRadius="3"
-                                    effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25}"/>
+                                    effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiContainer}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25}"/>
                         </StackPanel>
                     </controls:MwiContainer.LeftPanel>
 
                     <controls:MwiChild Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
-                                       Background="{TemplateBinding Background}"
-                                       Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                                       Foreground="{Binding Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
                         <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"/>
                     </controls:MwiChild>
 
                     <controls:MwiChild Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
-                                       Background="{TemplateBinding Background}"
-                                       Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                                       Foreground="{Binding Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
                         <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"/>
                     </controls:MwiChild>
 
                     <controls:MwiChild Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
-                                       Background="{TemplateBinding Background}"
-                                       Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                                       Foreground="{Binding Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
                         <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"/>
                     </controls:MwiChild>
 
                     <controls:MwiChild Title="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
-                                       Background="{TemplateBinding Background}"
-                                       Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                                       Foreground="{Binding Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
                         <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"/>
                     </controls:MwiChild>
 
@@ -85,7 +84,7 @@
                 <WrapPanel VerticalAlignment="Top" Orientation="Horizontal">
                     <Button Content="Test" Click="OnTestClick"/>
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource PrimaryBrush}" Tag="Primary" />
-                    <UserControl Template="{StaticResource Test}" Background="{StaticResource SecondaryBrush}" Tag="Secondary" />
+                    <!--<UserControl Template="{StaticResource Test}" Background="{StaticResource SecondaryBrush}" Tag="Secondary" />
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource SuccessBrush}" Tag="Success" />
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource DangerBrush}" Tag="Danger" />
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource WarningBrush}" Tag="Warning" />
@@ -103,7 +102,7 @@
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource CyanBrush}" Tag="Cyan"/>
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource WhiteBrush}" Tag="White"/>
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource GrayBrush}" Tag="Gray"/>
-                    <UserControl Template="{StaticResource Test}" Background="{StaticResource GrayDarkBrush}" Tag="GrayDark"/>
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource GrayDarkBrush}" Tag="GrayDark"/>-->
                 </WrapPanel>
             </ScrollViewer>
         </Grid>

@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 using WpfInvestigate.Themes;
 
 namespace WpfInvestigate.Controls
@@ -152,8 +153,8 @@ namespace WpfInvestigate.Controls
         public void SelectTheme(object obj)
         {
             var adorner = new DialogAdorner { CloseOnClickBackground = false };
-            var themeSelector = new ThemeSelector { Margin = new Thickness(0), Theme = Theme};
-            var color = Tips.GetColorFromBrush(Background);
+            var themeSelector = new ThemeSelector { Margin = new Thickness(0), Theme = ActualTheme};
+            var color = ThemeColor ?? ActualThemeColor;
             if (color == Colors.Transparent)
                 color = (Color)Application.Current.Resources["PrimaryColor"];
             themeSelector.ColorControl.Color = color;
@@ -164,10 +165,10 @@ namespace WpfInvestigate.Controls
                 Height = 600,
                 LimitPositionToPanelBounds = true,
                 Title = "Theme Selector",
-                VisibleButtons = Buttons.Close | Buttons.Maximize
+                VisibleButtons = Buttons.Close | Buttons.Maximize,
             };
-            mwiChild.SetBinding(BackgroundProperty, new Binding("Color") { Source = themeSelector, Converter = ColorHslBrush.Instance });
-            mwiChild.SetBinding(MwiChild.ThemeProperty, new Binding("Theme") { Source = themeSelector });
+            mwiChild.SetBinding(ThemeProperty, new Binding("Theme") { Source = themeSelector });
+            mwiChild.SetBinding(ThemeColorProperty, new Binding("Color") { Source = themeSelector, Converter = ColorHslBrush.Instance });
             adorner.ShowContentDialog(mwiChild);
 
             if (themeSelector.IsSaved)
@@ -176,7 +177,8 @@ namespace WpfInvestigate.Controls
                 if (Theme.FixedColor.HasValue)
                     Background = null;
                 else
-                    Background = new SolidColorBrush(themeSelector.Color);
+                    // Background = new SolidColorBrush(themeSelector.Color);
+                    ThemeColor = themeSelector.Color;
             }
         }
 
@@ -393,6 +395,8 @@ namespace WpfInvestigate.Controls
 
         public void UpdateColorTheme(bool colorChanged, bool processChildren)
         {
+            if (this.IsElementDisposing()) return;
+
             // if (!colorChanged) { 
             // Delay because no fill color for some icons
             Dispatcher.BeginInvoke(new Action(() =>

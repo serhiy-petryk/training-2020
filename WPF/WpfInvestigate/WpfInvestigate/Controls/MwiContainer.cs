@@ -268,6 +268,8 @@ namespace WpfInvestigate.Controls
 
         public void UpdateColorTheme(bool colorChanged, bool processChildren)
         {
+            if (this.IsElementDisposing()) return;
+
             UpdateResources(false);
             OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
 

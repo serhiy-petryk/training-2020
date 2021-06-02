@@ -31,6 +31,7 @@ namespace WpfInvestigate.Controls
         public ColorControl()
         {
             InitializeComponent();
+            VM.Color = Color; // Vm.Color must be equals to Color at the initial state (fixed bug when initial color is White)
             VM.PropertyChanged += (sender, args) =>
             {
                 Color = VM.Color;
