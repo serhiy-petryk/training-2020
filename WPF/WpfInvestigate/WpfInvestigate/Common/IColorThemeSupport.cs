@@ -10,6 +10,5 @@ namespace WpfInvestigate.Common
         MwiThemeInfo ActualTheme { get; }
         Color ActualThemeColor { get; }
         void UpdateColorTheme(bool colorChanged, bool processChildren);
-
     }
 }
