@@ -17,6 +17,9 @@ namespace WpfInvestigate.Themes
             {"Windows10", new MwiThemeInfo( "Windows 10", null, null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.xaml"})},
             {"Windows10-2", new MwiThemeInfo( "Windows 10 with borders", null,null, new[] { $"pack://application:,,,/{_currentAssemblyName};component/Themes/Mwi.Wnd10.WithBorders.xaml"})}
         };
+        public static MwiThemeInfo DefaultTheme => Themes.First().Value;
+        public static Color DefaultThemeColor => (Color) Application.Current.Resources["PrimaryColor"];
+        // public static MwiThemeInfo DefaultTheme => Themes["Windows10"];
 
         public static MwiThemeInfo GetNexThemeInfo(MwiThemeInfo current)
         {

@@ -152,33 +152,47 @@ namespace WpfInvestigate.Controls
 
         public void SelectTheme(object obj)
         {
+            var defaultTheme = ActualTheme;
+            if (Theme != null)
+            {
+                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this) && a.Theme != null);
+                defaultTheme = a1?.Theme ?? MwiThemeInfo.DefaultTheme;
+            }
+
+            var defaultThemeColor = ActualThemeColor;
+            if (ThemeColor != null)
+            {
+                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this) && a.ThemeColor != null);
+                defaultThemeColor = a1?.ThemeColor ?? MwiThemeInfo.DefaultThemeColor;
+            }
+
             var adorner = new DialogAdorner { CloseOnClickBackground = false };
-            var themeSelector = new ThemeSelector { Margin = new Thickness(0), Theme = ActualTheme};
-            var color = ThemeColor ?? ActualThemeColor;
-            if (color == Colors.Transparent)
-                color = (Color)Application.Current.Resources["PrimaryColor"];
-            themeSelector.ColorControl.Color = color;
+            var themeSelector = new ThemeSelector
+            {
+                Margin = new Thickness(0),
+                Theme = Theme, DefaultTheme = defaultTheme,
+                ThemeColor = ThemeColor, DefaultThemeColor = defaultThemeColor
+            };
             var mwiChild = new MwiChild
             {
                 Content = themeSelector,
-                Width = 714,
-                Height = 600,
+                Width = 900, Height = 600,
+                MinWidth = 700, MinHeight = 500,
                 LimitPositionToPanelBounds = true,
                 Title = "Theme Selector",
                 VisibleButtons = Buttons.Close | Buttons.Maximize,
             };
-            mwiChild.SetBinding(ThemeProperty, new Binding("Theme") { Source = themeSelector });
-            mwiChild.SetBinding(ThemeColorProperty, new Binding("Color") { Source = themeSelector, Converter = ColorHslBrush.Instance });
+            mwiChild.SetBinding(ThemeProperty, new Binding("ActualTheme") { Source = themeSelector });
+            mwiChild.SetBinding(ThemeColorProperty, new Binding("ActualThemeColor") { Source = themeSelector, Converter = ColorHslBrush.Instance });
             adorner.ShowContentDialog(mwiChild);
 
             if (themeSelector.IsSaved)
             {
                 Theme = themeSelector.Theme;
-                if (Theme.FixedColor.HasValue)
+                if (ActualTheme.FixedColor.HasValue)
                     Background = null;
                 else
-                    // Background = new SolidColorBrush(themeSelector.Color);
-                    ThemeColor = themeSelector.Color;
+                    ThemeColor = themeSelector.ThemeColor;
             }
         }
 
@@ -227,7 +241,7 @@ namespace WpfInvestigate.Controls
             {
                 if (Theme != null) return Theme;
                 var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
-                return a1?.ActualTheme ?? MwiThemeInfo.Themes.Values.FirstOrDefault();
+                return a1?.ActualTheme ?? MwiThemeInfo.DefaultTheme;
             }
         }
 
@@ -238,14 +252,14 @@ namespace WpfInvestigate.Controls
                 if (ActualTheme.FixedColor != null) return ActualTheme.FixedColor.Value;
                 if (ThemeColor.HasValue) return ThemeColor.Value;
                 var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
-                return a1?.ActualThemeColor ?? Colors.GreenYellow;
+                return a1?.ActualThemeColor ?? MwiThemeInfo.DefaultThemeColor;
             }
         }
 
         //============  Buttons  ============
         public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;
-        public bool IsMinimizeButtonVisible => (VisibleButtons & Buttons.Minimize) == Buttons.Minimize && Resizable;
-        public bool IsMaximizeButtonVisible => (VisibleButtons & Buttons.Maximize) == Buttons.Maximize && Resizable;
+        public bool IsMinimizeButtonVisible => (VisibleButtons & Buttons.Minimize) == Buttons.Minimize && Resizable && HostPanel != null;
+        public bool IsMaximizeButtonVisible => (VisibleButtons & Buttons.Maximize) == Buttons.Maximize && Resizable && HostPanel != null;
         public bool IsDetachButtonVisible => (VisibleButtons & Buttons.Detach) == Buttons.Detach;
         public bool IsSelectThemeButtonVisible => (VisibleButtons & Buttons.SelectTheme) == Buttons.SelectTheme;
 

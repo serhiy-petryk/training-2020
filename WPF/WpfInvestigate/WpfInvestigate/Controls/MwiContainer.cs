@@ -224,7 +224,7 @@ namespace WpfInvestigate.Controls
             {
                 if (Theme != null) return Theme;
                 var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
-                return a1?.ActualTheme ?? MwiThemeInfo.Themes.Values.FirstOrDefault();
+                return a1?.ActualTheme ?? MwiThemeInfo.DefaultTheme;
             }
         }
 
@@ -235,7 +235,7 @@ namespace WpfInvestigate.Controls
                 if (ActualTheme.FixedColor != null) return ActualTheme.FixedColor.Value;
                 if (ThemeColor.HasValue) return ThemeColor.Value;
                 var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
-                return a1?.ActualThemeColor ?? Colors.GreenYellow;
+                return a1?.ActualThemeColor ?? MwiThemeInfo.DefaultThemeColor;
             }
         }
 

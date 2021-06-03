@@ -1,10 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using WpfInvestigate.Common;
+using System.Windows.Threading;
 using WpfInvestigate.Themes;
 
 namespace WpfInvestigate.Controls
@@ -14,7 +15,19 @@ namespace WpfInvestigate.Controls
     /// </summary>
     public partial class ThemeSelector: INotifyPropertyChanged
     {
+        public MwiThemeInfo Theme { get; set; }
+        public Color? ThemeColor { get; set; }
+        public MwiThemeInfo DefaultTheme { get; set; }
+        public Color DefaultThemeColor { get; set; }
+        public bool UseDefaultThemeColor => cbUseDefaultTheme.IsChecked == true;
+        public bool UseDefaultColor => cbUseDefaultColor.IsChecked == true;
+        public MwiThemeInfo ActualTheme => Theme ?? DefaultTheme;
+        public Color ActualThemeColor => ActualTheme?.FixedColor ?? (ThemeColor ?? DefaultThemeColor);
+        public bool IsThemeSelectorEnabled => !UseDefaultThemeColor;
+        public bool IsColorSelectorEnabled => ActualTheme != null && !ActualTheme.FixedColor.HasValue;
+        public bool IsColorControlEnabled => IsColorSelectorEnabled && !UseDefaultColor;
         public bool IsSaved { get; private set; }
+
         public ThemeSelector()
         {
             InitializeComponent();
@@ -25,40 +38,81 @@ namespace WpfInvestigate.Controls
             base.OnApplyTemplate();
 
             var dpd = DependencyPropertyDescriptor.FromProperty(ColorControl.ColorProperty, typeof(ColorControl));
-            dpd.AddValueChanged(ColorControl, (sender, args) => OnPropertiesChanged(nameof(Color)));
+            dpd.AddValueChanged(ColorControl, (sender, args) =>
+            {
+                if (_isUpdating) return;
+                if (IsColorControlEnabled) 
+                    ThemeColor = ColorControl.Color;
+                UpdateUI();
+            });
 
             ThemeList.Children.Clear();
             foreach (var theme in MwiThemeInfo.Themes)
             {
                 var btn = new RadioButton
                 {
-                    GroupName = "Theme",
                     Content = theme.Value,
-                    IsChecked = theme.Value == Theme,
-                    Margin = new Thickness(2, 1, 2, 1),
-                    IsThreeState = false
+                    IsChecked = Equals(theme.Value, Theme),
                 };
                 btn.Checked += OnRadioButtonChecked;
-                btn.SetBinding(ForegroundProperty, new Binding("Background") {ElementName = "Root", Converter = ColorHslBrush.Instance, ConverterParameter = "+100%"});
-
                 ThemeList.Children.Add(btn);
             }
 
-            OnRadioButtonChecked(null, null);
+            UpdateUI();
+        }
+
+        private bool _isUpdating;
+        private void UpdateUI()
+        {
+            if (_isUpdating) return;
+            _isUpdating = true;
+
+            var checkedRadioButton = ThemeList.Children.OfType<RadioButton>().FirstOrDefault(a => a.Content == ActualTheme);
+            if (checkedRadioButton != null)
+                checkedRadioButton.IsChecked = true;
+
+            ColorControl.Color = ActualThemeColor;
+
+            cbUseDefaultTheme.IsChecked = Theme == null;
+            cbUseDefaultColor.IsChecked = !ThemeColor.HasValue;
+
+            OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor),
+                nameof(IsThemeSelectorEnabled), nameof(IsColorSelectorEnabled), nameof(IsColorControlEnabled));
+            
+            _isUpdating = false;
         }
 
         private void OnRadioButtonChecked(object sender, RoutedEventArgs e)
         {
+            if (_isUpdating) return;
+            _isUpdating = true;
+
             foreach (RadioButton btn in ThemeList.Children)
             {
                 if (Equals(btn.IsChecked, true))
                 {
                     Theme = (MwiThemeInfo)btn.Content;
-                    ColorControl.IsEnabled = Theme.FixedColor == null;
                     break;
                 }
             }
-            OnPropertiesChanged(nameof(Color));
+            _isUpdating = false;
+
+            UpdateUI();
+        }
+
+
+        private void OnUseDefaultColorChanged(object sender, RoutedEventArgs e)
+        {
+            var cb = (CheckBox) sender;
+            ThemeColor = cb.IsChecked == true ? (Color?)null : DefaultThemeColor;
+            UpdateUI();
+        }
+
+        private void OnUseDefaultThemeChanged(object sender, RoutedEventArgs e)
+        {
+            var cb = (CheckBox)sender;
+            Theme = cb.IsChecked == true ? null : ActualTheme;
+            UpdateUI();
         }
 
         private void OnApplyButtonClick(object sender, RoutedEventArgs e)
@@ -66,25 +120,6 @@ namespace WpfInvestigate.Controls
             IsSaved = true;
             ApplicationCommands.Close.Execute(null, this);
         }
-
-        #region ==============  Dependency Properties  ===============
-        public Color Color => (Theme?.FixedColor ?? ColorControl?.Color) ?? Colors.White;
-
-        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
-            typeof(MwiThemeInfo), typeof(ThemeSelector), new FrameworkPropertyMetadata(null, OnThemeChanged));
-
-        public MwiThemeInfo Theme
-        {
-            get => (MwiThemeInfo)GetValue(ThemeProperty);
-            set => SetValue(ThemeProperty, value);
-        }
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is ThemeSelector selector && e.NewValue is MwiThemeInfo theme)
-                selector.OnPropertiesChanged(nameof(Color));
-        }
-
-        #endregion
 
         #region ===========  INotifyPropertyChanged  ===============
         public event PropertyChangedEventHandler PropertyChanged;
