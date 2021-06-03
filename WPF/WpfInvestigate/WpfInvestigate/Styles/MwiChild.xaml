@@ -3,8 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:controls="clr-namespace:WpfInvestigate.Controls"
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects"
-                    xmlns:common="clr-namespace:WpfInvestigate.Common"
-                    xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels">
+                    xmlns:common="clr-namespace:WpfInvestigate.Common">
 
     <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Themes/Mwi.Wnd7.xaml" />
