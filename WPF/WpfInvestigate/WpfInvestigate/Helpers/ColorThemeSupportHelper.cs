@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,8 +16,7 @@ namespace WpfInvestigate.Helpers
         MwiThemeInfo ActualTheme { get; }
         Color ActualThemeColor { get; }
         IColorThemeSupport ColorThemeParent { get; }
-        IEnumerable<IColorThemeSupport> ColorThemeChildren { get; }
-        void UpdateColorTheme(bool colorChanged, bool processChildren);
+        // void UpdateColorTheme(bool colorChanged, bool processChildren);
     }
 
     public static class ColorThemeSupportHelper

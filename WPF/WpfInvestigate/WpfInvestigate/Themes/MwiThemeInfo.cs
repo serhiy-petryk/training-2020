@@ -19,7 +19,7 @@ namespace WpfInvestigate.Themes
         };
         public static MwiThemeInfo DefaultTheme => Themes.First().Value;
         public static Color DefaultThemeColor => (Color) Application.Current.Resources["PrimaryColor"];
-        // public static MwiThemeInfo DefaultTheme => Themes["Windows10"];
+        // public static MwiThemeInfo DefaultTheme => Themes["Windows10-2"];
 
         public static MwiThemeInfo GetNexThemeInfo(MwiThemeInfo current)
         {

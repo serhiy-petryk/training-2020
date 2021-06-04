@@ -224,6 +224,7 @@ namespace WpfInvestigate.Controls
         public static MwiContainer GetMwiContainer(DependencyObject element) => element?.GetValue(MwiContainerProperty) as MwiContainer; // NotNull propagation need to prevent VS designer error
 
         #endregion
+
         #region =================  INotifyPropertyChanged  ==================
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertiesChanged(params string[] propertyNames)
@@ -237,13 +238,10 @@ namespace WpfInvestigate.Controls
         public MwiThemeInfo ActualTheme => this.GetActualTheme();
         public Color ActualThemeColor => this.GetActualThemeColor();
         public IColorThemeSupport ColorThemeParent => this.GetVisualParents().OfType<MwiChild>().FirstOrDefault();
-        public IEnumerable<IColorThemeSupport> ColorThemeChildren => Children.OfType<MwiChild>();
-
         //=================
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
             typeof(MwiThemeInfo), typeof(MwiContainer),
             new FrameworkPropertyMetadata(null, (d, e) => ((MwiContainer)d).UpdateColorTheme(false, true)));
-
 
         public MwiThemeInfo Theme
         {
@@ -269,7 +267,7 @@ namespace WpfInvestigate.Controls
             OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
 
             if (processChildren)
-                foreach (var element in ColorThemeChildren)
+                foreach (MwiChild element in Children)
                     element.UpdateColorTheme(colorChanged, true);
         }
         private void UpdateResources(bool colorChanged)

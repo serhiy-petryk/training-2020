@@ -317,7 +317,6 @@ namespace WpfInvestigate.Controls
         public MwiThemeInfo ActualTheme => this.GetActualTheme();
         public Color ActualThemeColor => this.GetActualThemeColor();
         public IColorThemeSupport ColorThemeParent => MwiContainer;
-        public IEnumerable<IColorThemeSupport> ColorThemeChildren => this.GetVisualChildren().OfType<MwiContainer>();
         //=============
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
             typeof(MwiThemeInfo), typeof(MwiChild),
@@ -359,7 +358,7 @@ namespace WpfInvestigate.Controls
             OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
 
             if (processChildren)
-                foreach (var element in ColorThemeChildren)
+                foreach (var element in this.GetVisualChildren().OfType<MwiContainer>())
                     element.UpdateColorTheme(colorChanged, true);
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
