@@ -186,29 +186,7 @@ namespace WpfInvestigate.Controls
 
         #region =============  Properties  =================
         public event EventHandler Closed;
-
         public MwiContainer MwiContainer; // !! Must be field, not property => important for clearing when unloaded
-
-        public MwiThemeInfo ActualTheme
-        {
-            get
-            {
-                if (Theme != null) return Theme;
-                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
-                return a1?.ActualTheme ?? MwiThemeInfo.DefaultTheme;
-            }
-        }
-
-        public Color ActualThemeColor
-        {
-            get
-            {
-                if (ActualTheme.FixedColor != null) return ActualTheme.FixedColor.Value;
-                if (ThemeColor.HasValue) return ThemeColor.Value;
-                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
-                return a1?.ActualThemeColor ?? MwiThemeInfo.DefaultThemeColor;
-            }
-        }
 
         //============  Buttons  ============
         public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;
@@ -327,6 +305,12 @@ namespace WpfInvestigate.Controls
             set => SetValue(VisibleButtonsProperty, value);
         }
         //==============================
+        #endregion
+
+        #region ===============  IColorThemeSupport  =================
+        public MwiThemeInfo ActualTheme => this.GetActualTheme();
+        public Color ActualThemeColor => this.GetActualThemeColor();
+        //=============
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
             typeof(MwiThemeInfo), typeof(MwiChild), new FrameworkPropertyMetadata(null, OnThemeChanged));
 

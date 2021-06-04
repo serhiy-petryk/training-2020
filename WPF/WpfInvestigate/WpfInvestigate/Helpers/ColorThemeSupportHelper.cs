@@ -20,6 +20,38 @@ namespace WpfInvestigate.Helpers
 
     public static class ColorThemeSupportHelper
     {
+        public static MwiThemeInfo GetActualTheme(this IColorThemeSupport obj)
+        {
+            if (obj.Theme != null) return obj.Theme;
+            var d = obj as DependencyObject;
+            var a1 = d.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, obj));
+            return a1?.ActualTheme ?? MwiThemeInfo.DefaultTheme;
+        }
+
+        public static Color GetActualThemeColor(this IColorThemeSupport obj)
+        {
+            if (obj.ActualTheme.FixedColor != null) return obj.ActualTheme.FixedColor.Value;
+            var d = obj as DependencyObject;
+            if (obj.ThemeColor.HasValue) return obj.ThemeColor.Value;
+            var a1 = d.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, obj));
+            return a1?.ActualThemeColor ?? MwiThemeInfo.DefaultThemeColor;
+        }
+
+        public static void UpdateColorTheme(this IColorThemeSupport obj, bool colorChanged, bool processChildren)
+        {
+            var fe = obj as FrameworkElement;
+            if (fe.IsElementDisposing()) return;
+
+            obj.UpdateColorTheme(colorChanged, processChildren);
+
+            // obj.PropertyChanged.Invoke(fe, new PropertyChangedEventArgs("ActualTheme"));
+            // obj.OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
+
+            if (processChildren)
+                foreach (var element in fe.GetVisualChildren().OfType<IColorThemeSupport>())
+                    element.UpdateColorTheme(colorChanged, false);
+        }
+
         public static void SelectTheme(this IColorThemeSupport obj)
         {
             var d = obj as DependencyObject;

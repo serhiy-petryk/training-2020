@@ -218,28 +218,26 @@ namespace WpfInvestigate.Controls
                 ? ScrollBarVisibility.Disabled
                 : ScrollBarVisibility.Auto;
 
-        public MwiThemeInfo ActualTheme
-        {
-            get
-            {
-                if (Theme != null) return Theme;
-                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
-                return a1?.ActualTheme ?? MwiThemeInfo.DefaultTheme;
-            }
-        }
-
-        public Color ActualThemeColor
-        {
-            get
-            {
-                if (ActualTheme.FixedColor != null) return ActualTheme.FixedColor.Value;
-                if (ThemeColor.HasValue) return ThemeColor.Value;
-                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this));
-                return a1?.ActualThemeColor ?? MwiThemeInfo.DefaultThemeColor;
-            }
-        }
-
         //==============================
+        public static readonly DependencyProperty MwiContainerProperty = DependencyProperty.RegisterAttached("MwiContainer", typeof(MwiContainer), typeof(MwiContainer));
+        public static void SetMwiContainer(DependencyObject element, MwiContainer value) => element?.SetValue(MwiContainerProperty, value); // NotNull propagation need to prevent VS designer error
+        public static MwiContainer GetMwiContainer(DependencyObject element) => element?.GetValue(MwiContainerProperty) as MwiContainer; // NotNull propagation need to prevent VS designer error
+
+        #endregion
+        #region =================  INotifyPropertyChanged  ==================
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #region ===============  IColorThemeSupport  =================
+        public MwiThemeInfo ActualTheme => this.GetActualTheme();
+        public Color ActualThemeColor => this.GetActualThemeColor();
+
+        //=================
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
             typeof(MwiThemeInfo), typeof(MwiContainer), new FrameworkPropertyMetadata(null, OnThemeChanged));
 
@@ -252,7 +250,7 @@ namespace WpfInvestigate.Controls
         {
             ((MwiContainer)d).UpdateColorTheme(false, true);
         }
-        //==============================
+        //=================
         public static readonly DependencyProperty ThemeColorProperty = DependencyProperty.Register("ThemeColor",
             typeof(Color?), typeof(MwiContainer), new FrameworkPropertyMetadata(null, OnThemeColorChanged));
 
@@ -297,19 +295,6 @@ namespace WpfInvestigate.Controls
                 fe.Resources[key] = resources[key];
         }
 
-        //==============================
-        public static readonly DependencyProperty MwiContainerProperty = DependencyProperty.RegisterAttached("MwiContainer", typeof(MwiContainer), typeof(MwiContainer));
-        public static void SetMwiContainer(DependencyObject element, MwiContainer value) => element?.SetValue(MwiContainerProperty, value); // NotNull propagation need to prevent VS designer error
-        public static MwiContainer GetMwiContainer(DependencyObject element) => element?.GetValue(MwiContainerProperty) as MwiContainer; // NotNull propagation need to prevent VS designer error
-
-        #endregion
-        #region =================  INotifyPropertyChanged  ==================
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertiesChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         #endregion
     }
 }
