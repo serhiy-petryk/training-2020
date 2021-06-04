@@ -48,7 +48,7 @@ namespace WpfInvestigate.Controls
             SysCmdRestore = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState == WindowState.Maximized);
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
             CmdClose = new RelayCommand(Close, _ => AllowClose);
-            CmdSelectTheme = new RelayCommand(SelectTheme, _ => AllowSelectTheme);
+            CmdSelectTheme = new RelayCommand(o => this.SelectTheme(), _ => AllowSelectTheme);
 
             // DataContext = this;
             Loaded += OnLoaded;
@@ -148,52 +148,6 @@ namespace WpfInvestigate.Controls
             MwiContainer?.Children?.Remove(this);
 
             Closed?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void SelectTheme(object obj)
-        {
-            var defaultTheme = ActualTheme;
-            if (Theme != null)
-            {
-                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this) && a.Theme != null);
-                defaultTheme = a1?.Theme ?? MwiThemeInfo.DefaultTheme;
-            }
-
-            var defaultThemeColor = ActualThemeColor;
-            if (ThemeColor != null)
-            {
-                var a1 = this.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, this) && a.ThemeColor != null);
-                defaultThemeColor = a1?.ThemeColor ?? MwiThemeInfo.DefaultThemeColor;
-            }
-
-            var adorner = new DialogAdorner { CloseOnClickBackground = false };
-            var themeSelector = new ThemeSelector
-            {
-                Margin = new Thickness(0),
-                Theme = Theme, DefaultTheme = defaultTheme,
-                ThemeColor = ThemeColor, DefaultThemeColor = defaultThemeColor
-            };
-            var mwiChild = new MwiChild
-            {
-                Content = themeSelector,
-                Width = 900, Height = 600,
-                MinWidth = 700, MinHeight = 500,
-                LimitPositionToPanelBounds = true,
-                Title = "Theme Selector",
-                VisibleButtons = Buttons.Close | Buttons.Maximize,
-            };
-            mwiChild.SetBinding(ThemeProperty, new Binding("ActualTheme") { Source = themeSelector });
-            mwiChild.SetBinding(ThemeColorProperty, new Binding("ActualThemeColor") { Source = themeSelector, Converter = ColorHslBrush.Instance });
-            adorner.ShowContentDialog(mwiChild);
-
-            if (themeSelector.IsSaved)
-            {
-                Theme = themeSelector.Theme;
-                if (ActualTheme.FixedColor.HasValue)
-                    Background = null;
-                else
-                    ThemeColor = themeSelector.ThemeColor;
-            }
         }
 
         #region ==============  Thumbnail  ===================
