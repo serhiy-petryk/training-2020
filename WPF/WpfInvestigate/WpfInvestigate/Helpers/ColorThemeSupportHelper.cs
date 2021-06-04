@@ -16,7 +16,6 @@ namespace WpfInvestigate.Helpers
         MwiThemeInfo ActualTheme { get; }
         Color ActualThemeColor { get; }
         IColorThemeSupport ColorThemeParent { get; }
-        // void UpdateColorTheme(bool colorChanged, bool processChildren);
     }
 
     public static class ColorThemeSupportHelper
