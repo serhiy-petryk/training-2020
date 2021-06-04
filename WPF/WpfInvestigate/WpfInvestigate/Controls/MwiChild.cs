@@ -312,39 +312,25 @@ namespace WpfInvestigate.Controls
         public Color ActualThemeColor => this.GetActualThemeColor();
         //=============
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
-            typeof(MwiThemeInfo), typeof(MwiChild), new FrameworkPropertyMetadata(null, OnThemeChanged));
+            typeof(MwiThemeInfo), typeof(MwiChild),
+            new FrameworkPropertyMetadata(null, (d, e) => ((MwiChild)d).UpdateColorTheme(false, true)));
 
         public MwiThemeInfo Theme
         {
             get => (MwiThemeInfo)GetValue(ThemeProperty);
             set => SetValue(ThemeProperty, value);
         }
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((MwiChild)d).UpdateColorTheme(false, true);
-        }
-        private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
-        {
-            foreach (var rd in resources.MergedDictionaries)
-                FillResources(fe, rd);
-            foreach (var key in resources.Keys.OfType<string>().Where(key => !key.StartsWith("Mwi.Container") && !key.StartsWith("Mwi.Bar")))
-                fe.Resources[key] = resources[key];
-        }
-
         //==============================
         public static readonly DependencyProperty ThemeColorProperty = DependencyProperty.Register("ThemeColor",
-            typeof(Color?), typeof(MwiChild), new FrameworkPropertyMetadata(null, OnThemeColorChanged));
+            typeof(Color?), typeof(MwiChild),
+            new FrameworkPropertyMetadata(null, (d, e) => ((MwiChild)d).UpdateColorTheme(true, true)));
 
         public Color? ThemeColor
         {
             get => (Color?)GetValue(ThemeColorProperty);
             set => SetValue(ThemeColorProperty, value);
         }
-        private static void OnThemeColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((MwiChild)d).UpdateColorTheme(true, true);
-        }
-
+        //=================
         public void UpdateColorTheme(bool colorChanged, bool processChildren)
         {
             if (this.IsElementDisposing()) return;
@@ -367,6 +353,13 @@ namespace WpfInvestigate.Controls
             if (processChildren)
                 foreach (var element in this.GetVisualChildren().OfType<IColorThemeSupport>())
                     element.UpdateColorTheme(colorChanged, false);
+        }
+        private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
+        {
+            foreach (var rd in resources.MergedDictionaries)
+                FillResources(fe, rd);
+            foreach (var key in resources.Keys.OfType<string>().Where(key => !key.StartsWith("Mwi.Container") && !key.StartsWith("Mwi.Bar")))
+                fe.Resources[key] = resources[key];
         }
         #endregion
 

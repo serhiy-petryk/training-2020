@@ -239,31 +239,26 @@ namespace WpfInvestigate.Controls
 
         //=================
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
-            typeof(MwiThemeInfo), typeof(MwiContainer), new FrameworkPropertyMetadata(null, OnThemeChanged));
+            typeof(MwiThemeInfo), typeof(MwiContainer),
+            new FrameworkPropertyMetadata(null, (d, e) => ((MwiContainer)d).UpdateColorTheme(false, true)));
+
 
         public MwiThemeInfo Theme
         {
             get => (MwiThemeInfo)GetValue(ThemeProperty);
             set => SetValue(ThemeProperty, value);
         }
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((MwiContainer)d).UpdateColorTheme(false, true);
-        }
         //=================
         public static readonly DependencyProperty ThemeColorProperty = DependencyProperty.Register("ThemeColor",
-            typeof(Color?), typeof(MwiContainer), new FrameworkPropertyMetadata(null, OnThemeColorChanged));
+            typeof(Color?), typeof(MwiContainer),
+            new FrameworkPropertyMetadata(null, (d, e) => ((MwiContainer) d).UpdateColorTheme(true, true)));
 
         public Color? ThemeColor
         {
             get => (Color?)GetValue(ThemeColorProperty);
             set => SetValue(ThemeColorProperty, value);
         }
-        private static void OnThemeColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((MwiContainer)d).UpdateColorTheme(true, true);
-        }
-
+        //================
         public void UpdateColorTheme(bool colorChanged, bool processChildren)
         {
             if (this.IsElementDisposing()) return;
