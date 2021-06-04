@@ -97,7 +97,7 @@ namespace WpfInvestigate.Controls
             if (WindowState != WindowState.Normal && !IsLoaded)
             {
                 Dispatcher.BeginInvoke(new Action(() => WindowStateValueChanged(WindowState, WindowState.Normal)),
-                    DispatcherPriority.Render);
+                    DispatcherPriority.Background);
             }
         }
         #endregion
