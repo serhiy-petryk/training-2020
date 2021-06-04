@@ -172,7 +172,7 @@
                 <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=Title}"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Position="600 225" Title="Fixed Windows 10 Theme" Height="150"
+            <controls:MwiChild Position="600 225" Title="Fixed Windows 10 Theme" Height="150" WindowState="Maximized"
                                ThemeColor="{StaticResource PrimaryColor}"
                                Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10]}" >
                 <ContentControl Content="Fixed Windows 10 Theme. Bootstrap Primary color" Foreground="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>

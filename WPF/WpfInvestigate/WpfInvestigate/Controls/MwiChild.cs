@@ -90,11 +90,15 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private Window _activatedHost;
-        protected override async void OnVisualParentChanged(DependencyObject oldParent)
+        protected override void OnVisualParentChanged(DependencyObject oldParent)
         {
             base.OnVisualParentChanged(oldParent);
             AddVisualParentChangedEvents();
+            if (WindowState != WindowState.Normal)
+            {
+                Dispatcher.BeginInvoke(new Action(() => { WindowStateValueChanged(WindowState, WindowState.Normal); }),
+                    DispatcherPriority.Render);
+            }
         }
         #endregion
 

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
 using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
@@ -110,6 +111,8 @@ namespace WpfInvestigate.Controls
             ((MwiChild)sender).WindowStateValueChanged((WindowState)e.NewValue, (WindowState)e.OldValue);
         private async void WindowStateValueChanged(WindowState newWindowState, WindowState previousWindowState)
         {
+            if (this.IsElementDisposing() || HostPanel == null) return;
+
             if (previousWindowState == WindowState.Maximized)
             {
                 BindingOperations.ClearBinding(this, WidthProperty);

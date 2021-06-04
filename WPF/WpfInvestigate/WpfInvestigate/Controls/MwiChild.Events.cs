@@ -69,6 +69,7 @@ namespace WpfInvestigate.Controls
             }
         }
 
+        private Window _activatedHost;
         private async void AddVisualParentChangedEvents(bool onlyRemove = false)
         {
             if (_activatedHost != null)
