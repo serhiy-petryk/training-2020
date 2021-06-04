@@ -1,7 +1,7 @@
 ﻿using System.Windows.Media;
 using WpfInvestigate.Themes;
 
-namespace WpfInvestigate.Common
+namespace WpfInvestigate.Helpers
 {
     public interface IColorThemeSupport
     {
