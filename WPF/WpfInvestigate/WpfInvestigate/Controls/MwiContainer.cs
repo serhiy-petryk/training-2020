@@ -236,6 +236,8 @@ namespace WpfInvestigate.Controls
         #region ===============  IColorThemeSupport  =================
         public MwiThemeInfo ActualTheme => this.GetActualTheme();
         public Color ActualThemeColor => this.GetActualThemeColor();
+        public IColorThemeSupport ColorThemeParent => this.GetVisualParents().OfType<MwiChild>().FirstOrDefault();
+        public IEnumerable<IColorThemeSupport> ColorThemeChildren => Children.OfType<MwiChild>();
 
         //=================
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
@@ -267,8 +269,8 @@ namespace WpfInvestigate.Controls
             OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
 
             if (processChildren)
-                foreach (var element in this.GetVisualChildren().OfType<IColorThemeSupport>())
-                    element.UpdateColorTheme(colorChanged, false);
+                foreach (var element in ColorThemeChildren)
+                    element.UpdateColorTheme(colorChanged, true);
         }
         private void UpdateResources(bool colorChanged)
         {

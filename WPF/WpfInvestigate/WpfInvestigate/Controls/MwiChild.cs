@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -310,6 +311,8 @@ namespace WpfInvestigate.Controls
         #region ===============  IColorThemeSupport  =================
         public MwiThemeInfo ActualTheme => this.GetActualTheme();
         public Color ActualThemeColor => this.GetActualThemeColor();
+        public IColorThemeSupport ColorThemeParent => MwiContainer;
+        public IEnumerable<IColorThemeSupport> ColorThemeChildren => this.GetVisualChildren().OfType<MwiContainer>();
         //=============
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
             typeof(MwiThemeInfo), typeof(MwiChild),
@@ -350,9 +353,10 @@ namespace WpfInvestigate.Controls
             }), DispatcherPriority.Render);
 
             OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
+
             if (processChildren)
-                foreach (var element in this.GetVisualChildren().OfType<IColorThemeSupport>())
-                    element.UpdateColorTheme(colorChanged, false);
+                foreach (var element in ColorThemeChildren)
+                    element.UpdateColorTheme(colorChanged, true);
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
         {

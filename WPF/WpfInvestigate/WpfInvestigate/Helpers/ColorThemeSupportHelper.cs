@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,6 +16,8 @@ namespace WpfInvestigate.Helpers
         Color? ThemeColor { get; set; }
         MwiThemeInfo ActualTheme { get; }
         Color ActualThemeColor { get; }
+        IColorThemeSupport ColorThemeParent { get; }
+        IEnumerable<IColorThemeSupport> ColorThemeChildren { get; }
         void UpdateColorTheme(bool colorChanged, bool processChildren);
     }
 
@@ -23,18 +26,14 @@ namespace WpfInvestigate.Helpers
         public static MwiThemeInfo GetActualTheme(this IColorThemeSupport obj)
         {
             if (obj.Theme != null) return obj.Theme;
-            var d = obj as DependencyObject;
-            var a1 = d.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, obj));
-            return a1?.ActualTheme ?? MwiThemeInfo.DefaultTheme;
+            return obj.ColorThemeParent?.ActualTheme ?? MwiThemeInfo.DefaultTheme;
         }
 
         public static Color GetActualThemeColor(this IColorThemeSupport obj)
         {
             if (obj.ActualTheme.FixedColor != null) return obj.ActualTheme.FixedColor.Value;
-            var d = obj as DependencyObject;
             if (obj.ThemeColor.HasValue) return obj.ThemeColor.Value;
-            var a1 = d.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, obj));
-            return a1?.ActualThemeColor ?? MwiThemeInfo.DefaultThemeColor;
+            return obj.ColorThemeParent?.ActualThemeColor ?? MwiThemeInfo.DefaultThemeColor;
         }
 
         public static void SelectTheme(this IColorThemeSupport obj)
