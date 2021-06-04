@@ -94,9 +94,9 @@ namespace WpfInvestigate.Controls
         {
             base.OnVisualParentChanged(oldParent);
             AddVisualParentChangedEvents();
-            if (WindowState != WindowState.Normal)
+            if (WindowState != WindowState.Normal && !IsLoaded)
             {
-                Dispatcher.BeginInvoke(new Action(() => { WindowStateValueChanged(WindowState, WindowState.Normal); }),
+                Dispatcher.BeginInvoke(new Action(() => WindowStateValueChanged(WindowState, WindowState.Normal)),
                     DispatcherPriority.Render);
             }
         }
@@ -343,7 +343,6 @@ namespace WpfInvestigate.Controls
         {
             if (this.IsElementDisposing()) return;
 
-            // Debug.Print($"MwiChild. UpdateColorTheme: {_controlId}");
             // Delay because no fill color for some icons
             Dispatcher.BeginInvoke(new Action(() =>
             {
