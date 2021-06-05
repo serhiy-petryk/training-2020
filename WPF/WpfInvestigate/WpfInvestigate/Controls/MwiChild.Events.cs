@@ -16,7 +16,7 @@ namespace WpfInvestigate.Controls
         {
             // Loaded -= OnLoaded; // run only on startup mwichild
             AddLoadedEvents();
-            if (!IsWindowed)
+            if (!IsWindowed && WindowState == WindowState.Normal)
                 AnimateShow();
         }
 
