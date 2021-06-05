@@ -33,7 +33,7 @@ namespace WpfInvestigate.Helpers
             return obj.ColorThemeParent?.ActualThemeColor ?? MwiThemeInfo.DefaultThemeColor;
         }
 
-        public static void SelectTheme(this IColorThemeSupport obj)
+        public static void SelectTheme(this IColorThemeSupport obj, FrameworkElement host)
         {
             var d = obj as DependencyObject;
 
@@ -51,7 +51,7 @@ namespace WpfInvestigate.Helpers
                 defaultThemeColor = a1?.ThemeColor ?? MwiThemeInfo.DefaultThemeColor;
             }
 
-            var adorner = new DialogAdorner { CloseOnClickBackground = false };
+            var adorner = new DialogAdorner(host) { CloseOnClickBackground = true };
             var themeSelector = new ThemeSelector
             {
                 Margin = new Thickness(0),
@@ -67,7 +67,7 @@ namespace WpfInvestigate.Helpers
                 Height = 600,
                 MinWidth = 700,
                 MinHeight = 500,
-                LimitPositionToPanelBounds = true,
+                LimitPositionToPanelBounds = false,
                 Title = "Theme Selector",
                 VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
             };

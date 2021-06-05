@@ -49,7 +49,7 @@ namespace WpfInvestigate.Controls
             SysCmdRestore = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState == WindowState.Maximized);
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
             CmdClose = new RelayCommand(Close, _ => AllowClose);
-            CmdSelectTheme = new RelayCommand(o => this.SelectTheme(), _ => AllowSelectTheme);
+            CmdSelectTheme = new RelayCommand(o => this.SelectTheme(Content as FrameworkElement), _ => AllowSelectTheme);
 
             // DataContext = this;
             Loaded += OnLoaded;
