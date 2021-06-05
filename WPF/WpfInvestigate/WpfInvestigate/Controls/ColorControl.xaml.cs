@@ -177,13 +177,14 @@ namespace WpfInvestigate.Controls
             }
         }
 
-        private static string GetColorLabel(KeyValuePair<string, Color> kvp)
+        private string GetColorLabel(KeyValuePair<string, Color> kvp)
         {
-            var s1 = string.Concat(kvp.Key.Select(x => Char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' ');
+            var s1 = string.Concat(kvp.Key.Select(x => char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' ');
             var rgb = new RGB(kvp.Value);
+            var rgbName = IsAlphaSliderVisible ? rgb.Color.ToString() : rgb.Color.ToString().Remove(1, 2);
             var hsl = new HSL(rgb);
 
-            return $"{s1}{Environment.NewLine}{rgb.Color}{Environment.NewLine}HSL: {Math.Round(hsl.Hue)}, {Math.Round(hsl.Saturation)}, {Math.Round(hsl.Lightness)}";
+            return $"{s1}{Environment.NewLine}{rgbName}{Environment.NewLine}HSL: {Math.Round(hsl.Hue)}, {Math.Round(hsl.Saturation)}, {Math.Round(hsl.Lightness)}";
         }
 
         private static int GetSortNumberForColor(Color color)

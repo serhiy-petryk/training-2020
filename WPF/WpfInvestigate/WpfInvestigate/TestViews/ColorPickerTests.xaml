@@ -60,7 +60,7 @@
                             <Viewbox Grid.Column="0">
                                 <Path Stretch="Uniform" Data="{StaticResource TestGeometry}"/>
                             </Viewbox>
-                            <TextBlock Grid.Column="1" Margin="4 0 0 0" Foreground="Black" Text="Content"/>
+                            <TextBlock Grid.Column="1" Margin="4 0 0 0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Text="Content"/>
                         </Grid>
                     </Button>
 

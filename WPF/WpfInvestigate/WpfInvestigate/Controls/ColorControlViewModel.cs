@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -103,6 +104,7 @@ namespace WpfInvestigate.Controls
             {
                 _isAlphaSliderVisible = value;
                 OnPropertiesChanged(nameof(IsAlphaSliderVisible));
+                UpdateUI();
             }
         }
 
@@ -218,6 +220,9 @@ namespace WpfInvestigate.Controls
                 foreach (var tone in Tones)
                     tone.UpdateUI();
             }, DispatcherPriority.ContextIdle);
+
+            foreach (var tone in Tones)
+                tone.UpdateUI();
         }
         #endregion
 
@@ -330,6 +335,8 @@ namespace WpfInvestigate.Controls
             public int GridRow { get; }
             public SolidColorBrush Background { get; } = new SolidColorBrush();
             public SolidColorBrush Foreground { get; } = new SolidColorBrush();
+
+            public string BoxLabel => _owner.IsAlphaSliderVisible ? Background.Color.ToString() : Background.Color.ToString().Remove(1,2);
             public string Info
             {
                 get
@@ -339,8 +346,12 @@ namespace WpfInvestigate.Controls
                     var hsv = new HSV(rgb) { H = hsl.H };
                     var lab = new LAB(rgb);
                     var yCbCr = new YCbCr(rgb);
+                    var color = rgb.Color;
+                    var names = string.Join(", ", ColorUtils.GetKnownColors(false).Where(kvp => kvp.Value == color).Select(kvp => kvp.Key).ToArray());
 
                     var sb = new StringBuilder();
+                    if (!string.IsNullOrEmpty(names))
+                        sb.AppendLine((names.Contains(",") ? "Names: " : "Name: ") + names);
                     sb.AppendLine("Gray level:" + FormatDouble(ColorUtils.GetGrayLevel(rgb) * 100) + "%");
                     sb.AppendLine("HEX:".PadRight(5) + rgb.Color);
                     sb.AppendLine(FormatInfoString("RGB", rgb.R * 255, rgb.G * 255, rgb.B * 255));
@@ -364,7 +375,7 @@ namespace WpfInvestigate.Controls
                 var hsl = GetBackgroundHSL();
                 Background.Color = hsl.RGB.Color;
                 Foreground.Color = ColorUtils.GetForegroundColor(Background.Color);
-                OnPropertiesChanged(nameof(Background), nameof(Foreground), nameof(Info));
+                OnPropertiesChanged(nameof(Background), nameof(Foreground), nameof(Info), nameof(BoxLabel));
             }
 
             public void SetCurrentColor() =>
