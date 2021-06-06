@@ -14,6 +14,16 @@
              Foreground="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}"
              LayoutTransform="{StaticResource Mwi.ScaleTransform}">
 
+    <UserControl.Resources>
+        <Style TargetType="Border">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
     <DockPanel>
         <Grid DockPanel.Dock="Left" >
             <Grid.RowDefinitions>
@@ -59,23 +69,14 @@
             <DockPanel>
                 <Grid DockPanel.Dock="Top" Margin="2 -10 2 2" Background="{Binding ElementName=Root, Path=Background}" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <local:LabelBox DockPanel.Dock="Top" Text="Color" FontWeight="SemiBold" HorizontalAlignment="Left"
-                                    Background="Transparent" Foreground="{Binding ElementName=Root, Path=Foreground}">
-                        <local:LabelBox.Style>
-                            <Style TargetType="local:LabelBox">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=IsEnabled}" Value="False">
-                                        <Setter Property="Opacity" Value="0.5"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </local:LabelBox.Style>
-                    </local:LabelBox>
+                                    Background="Transparent" Foreground="{Binding ElementName=Root, Path=Foreground}"/>
                 </Grid>
                 <CheckBox x:Name="cbUseDefaultColor" DockPanel.Dock="Top" Margin="2 0 0 2" Content="Use default color?" IsThreeState="False"
                           Foreground="{Binding ElementName=Root, Path=Foreground}"
                           Checked="OnUseDefaultColorChanged" Unchecked="OnUseDefaultColorChanged" />
-                <local:ColorControl x:Name="ColorControl" Margin="1" effects:CornerRadiusEffect.CornerRadius="6 6 0 0"
-                                    IsEnabled="{Binding ElementName=Root, Path=DataContext.IsColorControlEnabled}"/>
+                <Border IsEnabled="{Binding ElementName=Root, Path=DataContext.IsColorControlEnabled}">
+                    <local:ColorControl x:Name="ColorControl" Margin="1" effects:CornerRadiusEffect.CornerRadius="6 6 0 0"/>
+                </Border>
             </DockPanel>
         </Border>
     </DockPanel>
