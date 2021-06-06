@@ -158,7 +158,7 @@ namespace WpfInvestigate.Controls
                 objectEditor.Value = objectEditor.Value; // Coerce value
             }
         }
-        //===========  INotifyPropertyChanged  =======================
+
         #region ===========  INotifyPropertyChanged  ===============
         public event PropertyChangedEventHandler PropertyChanged;
 

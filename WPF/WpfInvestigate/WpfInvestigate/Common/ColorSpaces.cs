@@ -142,7 +142,7 @@ namespace WpfInvestigate.Common.ColorSpaces
     /// HSL (hue, saturation, lightness) color spaces (see https://en.wikipedia.org/wiki/HSL_and_HSV)
     /// </summary>
     [TypeConverter(typeof(HslTypeConverter))]
-    public class HSL: INotifyPropertyChanged
+    public class HSL: NotifyPropertyChangedAbstract
     {
         /// <summary>
         /// For dynamic binding
@@ -263,16 +263,7 @@ namespace WpfInvestigate.Common.ColorSpaces
             return p;
         }
         public override string ToString() => $"H: {Hue}, S: {Saturation}, L: {Lightness}";
-
-        #region ===========  INotifyPropertyChanged  ===============
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertiesChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
+        public override void UpdateUI(){}
     }
 
     public class HslTypeConverter : TypeConverter
