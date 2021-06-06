@@ -6,7 +6,6 @@
         xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         xmlns:effects="clr-namespace:WpfInvestigate.Effects"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
-        xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels"
         mc:Ignorable="d"
         Title="ColorControlTests" Height="600" Width="700">
 
