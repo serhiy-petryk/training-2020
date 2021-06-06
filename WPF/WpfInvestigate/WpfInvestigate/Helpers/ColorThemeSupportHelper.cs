@@ -33,7 +33,7 @@ namespace WpfInvestigate.Helpers
             return obj.ColorThemeParent?.ActualThemeColor ?? MwiThemeInfo.DefaultThemeColor;
         }
 
-        public static void SelectTheme(this IColorThemeSupport obj, FrameworkElement host)
+        public static void SelectTheme(this IColorThemeSupport obj, FrameworkElement host = null)
         {
             var d = obj as DependencyObject;
 
@@ -51,7 +51,7 @@ namespace WpfInvestigate.Helpers
                 defaultThemeColor = a1?.ThemeColor ?? MwiThemeInfo.DefaultThemeColor;
             }
 
-            var adorner = new DialogAdorner(host) { CloseOnClickBackground = true };
+            var adorner = new DialogAdorner(host) {CloseOnClickBackground = true};
             var themeSelector = new ThemeSelector
             {
                 Margin = new Thickness(0),
