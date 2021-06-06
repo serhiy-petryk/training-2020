@@ -448,7 +448,7 @@
                 <WrapPanel Orientation="Horizontal"/>
             </ScrollViewer>
         </TabItem>
-        <TabItem x:Name="KnownColorsByColorItem" Header="Known colors by color">
+        <TabItem x:Name="KnownColorsByColorItem" Header="Known colors">
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                 <WrapPanel Orientation="Horizontal"/>
             </ScrollViewer>
