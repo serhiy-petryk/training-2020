@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -10,6 +9,7 @@ using WpfInvestigate.Common;
 using WpfInvestigate.Controls;
 using WpfInvestigate.Helpers;
 using WpfInvestigate.Samples;
+using WpfInvestigate.Themes;
 using WpfInvestigate.ViewModels;
 
 namespace TestDll
@@ -55,7 +55,7 @@ namespace TestDll
             TestMwi = MwiContainer.Children?.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
 
             if (TestMwi != null && TestMwi.Content is FrameworkElement fe)
-                fe.DataContext = new TestViewModel(TestMwi);
+                fe.DataContext = new WpfInvestigate.MwiStartup.TestViewModel(TestMwi);
         }
 
         private int cnt = 0;
@@ -205,7 +205,7 @@ namespace TestDll
         {
             if (this.IsElementDisposing())
             {
-                if (TestMwi != null && TestMwi.Content is FrameworkElement fe && fe.DataContext is TestViewModel vm)
+                if (TestMwi != null && TestMwi.Content is FrameworkElement fe && fe.DataContext is WpfInvestigate.MwiStartup.TestViewModel vm)
                     vm.Dispose();
             }
 
@@ -222,6 +222,11 @@ namespace TestDll
                 ScaleSlider = null;
                 MwiContainer = null;
             }
+        }
+
+        private void UIElement_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TopControl.Theme = MwiThemeInfo.GetNexThemeInfo(TopControl.ActualTheme);
         }
     }
 }

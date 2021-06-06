@@ -16,11 +16,9 @@
         KeyDown="MwiStartup_OnKeyDown"
         Unloaded="OnUnloaded">
 
-    <Window.Resources>
-        <SolidColorBrush x:Key="MwiStartupBackground" Color="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=AppColor}"/>
-    </Window.Resources>
-
-    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1000" VisibleButtons="Minimize,Maximize,Close" Background="{StaticResource MwiStartupBackground}">
+    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1050" VisibleButtons="Minimize,Maximize,Close,SelectTheme"
+                       Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10-2]}"
+                       ThemeColor="Orange">
         <controls:MwiChild.CommandBar>
             <samples:MwiCommandBarSample/>
         </controls:MwiChild.CommandBar>
@@ -32,6 +30,7 @@
         <controls:MwiChild.RightHeaderBar>
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -75,8 +74,8 @@
                                     <Setter Property="Foreground" Value="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15}"/>
-                                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15/+75%}"/>
+                                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15}"/>
+                                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15/+75%}"/>
                                     <!--<Setter Property="Background" Value="{Binding Source={StaticResource MwiBaseColorProxy}, Path=Value.Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15}"/>
                                     <Setter Property="Foreground" Value="{Binding Source={StaticResource MwiBaseColorProxy}, Path=Value.Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15/+75%}"/>-->
                                 </Trigger>
@@ -86,21 +85,12 @@
                 </Button>
 
                 <Separator Grid.Column="3" Style="{DynamicResource Mwi.Startup.WindowHeaderSeparator}"/>
-
-                <!-- CmdChangeTheme button -->
-                <Button Grid.Column="4" Style="{DynamicResource Mwi.WindowCommonButtonStyle}" Command="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CmdChangeTheme}">
-                    <Viewbox Width="13" Height="13">
-                        <Path Width="16" Height="16" Data="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8zm-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7z" />
-                    </Viewbox>
-                    <Button.ToolTip>
-                        <ToolTip Content="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme}" ContentStringFormat="Change the theme of application. Current theme is {0}"/>
-                    </Button.ToolTip>
-                </Button>
             </Grid>
 
         </controls:MwiChild.RightHeaderBar>
 
-        <controls:MwiContainer x:Name="MwiContainer" Background="{Binding ElementName=TopControl, Path=Background}">
+        <!--<controls:MwiContainer x:Name="MwiContainer" Background="{Binding ElementName=TopControl, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}}">-->
+        <controls:MwiContainer x:Name="MwiContainer">
             <controls:MwiContainer.LeftPanel>
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>
@@ -109,19 +99,19 @@
                 <ContentControl Content="Mwi Child Test. No background"/>
             </controls:MwiChild>
 
-            <controls:MwiChild x:Name="TestChild2" Title="Title" Height="150" BorderBrush="Orange" Background="Gainsboro">
-                <ContentControl Content="Mwi Child Test. Background: Gainsboro"/>
+            <controls:MwiChild x:Name="TestChild2" Title="Title" Height="150" BorderBrush="Orange" ThemeColor="Gainsboro">
+                <ContentControl Content="Mwi Child Test. ThemeColor: Gainsboro"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Title="Empty Window Using XAML and long header" Background="LightBlue" />
+            <controls:MwiChild Title="Empty Window Using XAML and long header" ThemeColor="LightBlue" />
 
-            <controls:MwiChild BorderBrush="Orange" Background="LightGreen">
-                <ContentControl Content="object Content. Background: LightGreen"/>
+            <controls:MwiChild BorderBrush="Orange" ThemeColor="LightGreen" BorderThickness="8" MinHeight="70">
+                <ContentControl Content="object Content. ThemeColor: LightGreen. No border for Windows 7 theme"/>
                 <controls:MwiChild.Resources>
                     <Style TargetType="controls:MwiChild" BasedOn="{StaticResource {x:Type controls:MwiChild}}">
                         <Setter Property="BorderThickness" Value="4"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme.Id}" Value="Windows7">
+                            <DataTrigger Binding="{Binding Path=ActualTheme.Id}" Value="Windows7">
                                 <Setter Property="BorderThickness" Value="0"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -165,7 +155,7 @@
             </controls:MwiChild>
 
             <controls:MwiChild Position="600 225" Title="Fixed Windows 10 Theme" Height="150"
-                               Background="{StaticResource PrimaryBrush}"
+                               ThemeColor="{StaticResource PrimaryColor}"
                                Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10]}" >
                 <ContentControl Content="Fixed Windows 10 Theme. Bootstrap Primary color" Foreground="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
             </controls:MwiChild>
