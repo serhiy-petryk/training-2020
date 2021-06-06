@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -11,7 +10,6 @@ using System.Windows.Threading;
 using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
 using WpfInvestigate.Themes;
-using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate.Controls
 {
