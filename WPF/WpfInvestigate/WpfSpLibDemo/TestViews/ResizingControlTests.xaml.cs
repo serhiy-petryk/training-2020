@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
-using WpfSpLib.Samples;
+using WpfSpLibDemo.Samples;
 
 namespace WpfSpLibDemo.TestViews
 {

@@ -2,11 +2,8 @@
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
-using System.Windows.Media;
 using WpfSpLib.Common;
 using WpfSpLib.Helpers;
-using WpfSpLib.Themes;
-using WpfSpLib.ViewModels;
 
 namespace TestDll
 {

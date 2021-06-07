@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
-        xmlns:temp="clr-namespace:WpfSpLib.Temp;assembly=WpfSpLib"
         xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+        xmlns:temp="clr-namespace:WpfSpLibDemo.Temp"
         mc:Ignorable="d"
         Title="VirtualKeyboardTests" Height="800" Width="1000">
 

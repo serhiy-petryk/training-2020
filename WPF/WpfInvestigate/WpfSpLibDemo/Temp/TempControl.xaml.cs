@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using WpfSpLib.Controls;
 using WpfSpLib.ViewModels;
+using MwiAppViewModel = WpfSpLibDemo.ViewModels.MwiAppViewModel;
 
 namespace WpfSpLibDemo.Temp
 {

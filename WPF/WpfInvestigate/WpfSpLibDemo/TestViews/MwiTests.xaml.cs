@@ -5,8 +5,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WpfSpLib.Common;
 using WpfSpLib.Controls;
-using WpfSpLib.Samples;
 using WpfSpLib.Themes;
+using WpfSpLibDemo.Samples;
 
 namespace WpfSpLibDemo.TestViews
 {

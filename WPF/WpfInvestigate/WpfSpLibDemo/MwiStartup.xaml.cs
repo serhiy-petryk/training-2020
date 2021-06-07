@@ -8,10 +8,9 @@ using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
-// using WpfSpLib.Samples;
 using WpfSpLib.Themes;
-using WpfSpLib.ViewModels;
 using WpfSpLibDemo.Samples;
+using WpfSpLibDemo.ViewModels;
 
 namespace WpfSpLibDemo
 {

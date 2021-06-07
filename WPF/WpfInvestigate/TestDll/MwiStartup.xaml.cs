@@ -8,9 +8,9 @@ using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
-using WpfSpLib.Samples;
 using WpfSpLib.Themes;
-using WpfSpLib.ViewModels;
+using WpfSpLibDemo.Samples;
+using WpfSpLibDemo.ViewModels;
 
 namespace TestDll
 {
@@ -55,7 +55,7 @@ namespace TestDll
             TestMwi = MwiContainer.Children?.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
 
             if (TestMwi != null && TestMwi.Content is FrameworkElement fe)
-                fe.DataContext = new WpfSpLib.MwiStartup.TestViewModel(TestMwi);
+                fe.DataContext = new WpfSpLibDemo.MwiStartup.TestViewModel(TestMwi);
         }
 
         private int cnt = 0;
@@ -205,7 +205,7 @@ namespace TestDll
         {
             if (this.IsElementDisposing())
             {
-                if (TestMwi != null && TestMwi.Content is FrameworkElement fe && fe.DataContext is WpfSpLib.MwiStartup.TestViewModel vm)
+                if (TestMwi != null && TestMwi.Content is FrameworkElement fe && fe.DataContext is WpfSpLibDemo.MwiStartup.TestViewModel vm)
                     vm.Dispose();
             }
 

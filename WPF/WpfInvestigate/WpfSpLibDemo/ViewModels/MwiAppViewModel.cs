@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 
-namespace WpfSpLib.ViewModels
+namespace WpfSpLibDemo.ViewModels
 {
     public class MwiAppViewModel: DependencyObject
     {
@@ -10,13 +11,13 @@ namespace WpfSpLib.ViewModels
         #endregion
 
         #region ================  Instance section  ====================
-        public static readonly DependencyProperty ScaleValueProperty = DependencyProperty.Register(nameof(ScaleValue), typeof(double), typeof(MwiAppViewModel), new UIPropertyMetadata(1.0));
+        /*public static readonly DependencyProperty ScaleValueProperty = DependencyProperty.Register(nameof(ScaleValue), typeof(double), typeof(MwiAppViewModel), new UIPropertyMetadata(1.0));
         public double ScaleValue
         {
             get => (double)GetValue(ScaleValueProperty);
             set => SetValue(ScaleValueProperty, value);
-        }
-        /*public FrameworkElement DialogHost
+        }*/
+        public FrameworkElement DialogHost
         {
             get
             {
@@ -25,7 +26,7 @@ namespace WpfSpLib.ViewModels
                     return topContentControl;
                 return activeWnd;
             }
-        }*/
+        }
         #endregion
     }
 }

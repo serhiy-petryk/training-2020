@@ -118,6 +118,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WpfSpLibDemo\WpfSpLibDemo.csproj">
+      <Project>{d6f50465-bd37-4c4f-b89d-1d93292b2a47}</Project>
+      <Name>WpfSpLibDemo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WpfSpLib\WpfSpLib.csproj">
       <Project>{b1fa6b9f-5d5c-48d0-a0f7-9ec85c4c6724}</Project>
       <Name>WpfSpLib</Name>

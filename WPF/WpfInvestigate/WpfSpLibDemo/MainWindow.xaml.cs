@@ -16,6 +16,7 @@ using WpfSpLib.Helpers;
 using WpfSpLib.ViewModels;
 using WpfSpLibDemo.Temp;
 using WpfSpLibDemo.TestViews;
+using MwiAppViewModel = WpfSpLibDemo.ViewModels.MwiAppViewModel;
 
 namespace WpfSpLibDemo
 {
