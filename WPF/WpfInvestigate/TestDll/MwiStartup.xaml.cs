@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -30,7 +31,13 @@ namespace TestDll
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 if (TopControl.Template.FindName("ContentBorder", TopControl) is FrameworkElement topContentControl)
-                    topContentControl.LayoutTransform = FindResource("Mwi.ScaleTransform") as ScaleTransform;
+                {
+                    if (!(topContentControl.LayoutTransform is ScaleTransform))
+                        topContentControl.LayoutTransform = new ScaleTransform();
+                    var transform = (ScaleTransform)topContentControl.LayoutTransform;
+                    BindingOperations.SetBinding(transform, ScaleTransform.ScaleXProperty, new Binding("Value") { Source = ScaleSlider });
+                    BindingOperations.SetBinding(transform, ScaleTransform.ScaleYProperty, new Binding("Value") { Source = ScaleSlider });
+                }
             }), DispatcherPriority.Normal);
         }
 

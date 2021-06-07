@@ -1,12 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using WpfSpLib.Common;
 using WpfSpLib.Helpers;
-using WpfSpLib.ViewModels;
 
 namespace WpfSpLib.Controls
 {
@@ -55,11 +53,8 @@ namespace WpfSpLib.Controls
             if (MwiContainer == null) return;
 
             if (WindowState == WindowState.Normal) SaveActualRectangle();
-
-            var dpd = DependencyPropertyDescriptor.FromProperty(MwiAppViewModel.ScaleValueProperty, typeof(MwiAppViewModel));
-            dpd.RemoveValueChanged(MwiAppViewModel.Instance, OnScaleValueChanged);
-
             await AnimateHide();
+
             if (IsWindowed)
             {
                 var wnd = (Window)Parent;
@@ -72,10 +67,10 @@ namespace WpfSpLib.Controls
             }
             else
             {
+                LayoutTransform = DialogHost.LayoutTransform;
                 Margin = new Thickness();
                 MwiContainer.MwiPanel.Children.Remove(this);
                 var wnd = new Window { Style = FindResource("HeadlessWindow") as Style, Content = this};
-                LayoutTransform = FindResource("Mwi.ScaleTransform") as ScaleTransform;
                 wnd.Show();
                 Activate();
 
@@ -83,7 +78,6 @@ namespace WpfSpLib.Controls
                 MwiContainer.ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
                 MwiContainer.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
 
-                dpd.AddValueChanged(MwiAppViewModel.Instance, OnScaleValueChanged);
                 _detachedPosition = new Point(
                     SystemParameters.WorkArea.X + Math.Max(0, (SystemParameters.WorkArea.Width - _lastNormalSize.Width * _scale.X) / 2),
                     SystemParameters.WorkArea.Y + Math.Max(0, (SystemParameters.WorkArea.Height - _lastNormalSize.Height * _scale.Y) / 2));

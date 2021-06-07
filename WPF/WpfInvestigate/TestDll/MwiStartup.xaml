@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:WpfSpLib.ViewModels;assembly=WpfSpLib"
         xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
         xmlns:testDll="clr-namespace:TestDll"
         xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
@@ -56,8 +55,7 @@
                 <!-- Scale Slider -->
                 <Slider Grid.Column="1" x:Name="ScaleSlider" ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
                         Height="22" Width="100" Margin="2 0 0 0" VerticalAlignment="Bottom" Orientation="Horizontal"
-                        TickFrequency="0.5" Minimum="0.5" Maximum="4" LargeChange="0.5"
-                        Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=ScaleValue, Mode=TwoWay}"
+                        Value="1.0" TickFrequency="0.5" Minimum="0.5" Maximum="4" LargeChange="0.5"
                         IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"/>
 
                 <Button Grid.Column="2" Width="18" Height="18" BorderThickness="0" Focusable="False" ToolTip="Reset zoom"
@@ -89,7 +87,6 @@
 
         </controls:MwiChild.RightHeaderBar>
 
-        <!--<controls:MwiContainer x:Name="MwiContainer" Background="{Binding ElementName=TopControl, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}}">-->
         <controls:MwiContainer x:Name="MwiContainer">
             <controls:MwiContainer.LeftPanel>
                 <samples:MwiLeftPanelSample/>

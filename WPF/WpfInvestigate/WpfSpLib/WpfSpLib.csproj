@@ -52,7 +52,6 @@
     </ApplicationDefinition>
     <Compile Include="Themes\MwiThemeInfo.cs" />
     <Compile Include="Useful\BindingClearing.cs" />
-    <Compile Include="ViewModels\MwiAppViewModel.cs" />
     <Page Include="Controls\ColorControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -29,7 +29,6 @@ namespace WpfSpLib.Controls
                 if (this.AutomaticUnloading(OnUnloaded))
                 {
                     base.OnUnloaded(sender, e);
-                    // MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
                     Theme = null;
                     if (Icon is DrawingImage image && image.Drawing != null)
                         BindingOperations.ClearAllBindings(image.Drawing);
