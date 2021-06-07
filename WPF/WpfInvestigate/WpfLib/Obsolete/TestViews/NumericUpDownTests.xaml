@@ -1,0 +1,72 @@
+﻿<Window x:Class="WpfLib.Obsolete.TestViews.NumericUpDownTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:obsolete="clr-namespace:WpfLib.Obsolete"
+        xmlns:effects="clr-namespace:WpfLib.Effects"
+        mc:Ignorable="d"
+        Title="Obsolete NumericUpDownTests" Height="450" Width="1000">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Slider Grid.Column="0"
+                x:Name="uiScaleSlider"
+                Focusable="False"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100"
+                Value="1" Minimum="0.5" Maximum="4"
+                Orientation="Vertical"
+                Ticks="1"
+                IsSnapToTickEnabled="False"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
+
+        <Grid Grid.Column="1">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+
+            <StackPanel Orientation="Vertical">
+                <TextBlock>NumericUpDown</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="SelectAll" Margin="1 0" Value="23" SelectAllOnFocus="True"/>
+                    <obsolete:NumericUpDown effects:WatermarkEffect.Watermark="NotSelectAll" Margin="1 0" Value="23" SelectAllOnFocus="False" IsTabStop="False" IsNullable="True"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="SelectAll" Margin="1 0" Value="23" SelectAllOnFocus="True" IsNullable="True"/>
+                    <obsolete:NumericUpDown Width="100" Height="40" effects:WatermarkEffect.Watermark="NotSelectAll" Margin="1 0" Value="23" SelectAllOnFocus="False"
+                                        VerticalContentAlignment="Top" HorizontalContentAlignment="Right" IsNullable="True"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox x:Name="ReadOnlyCheck" Margin="1" Content="IsReadOnly" IsChecked="True" />
+                    <obsolete:NumericUpDown Width="150" effects:WatermarkEffect.Watermark="Test" Margin="1 0" ButtonsWidth="12" StringFormat="pcs. {0:N2} pcs." InterceptManualEnter="False"/>
+                    <obsolete:NumericUpDown x:Name="AAA" Width="100" Margin="1 0" IsNullable="True" IsReadOnly="True" Focusable="True"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Black" Foreground="White" InterceptManualEnter="False"/>
+                    <obsolete:NumericUpDown Width="100" Margin="1 0" Background="Black" Foreground="White" HorizontalContentAlignment="Right"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}" IsNullable="True" effects:WatermarkEffect.Watermark="Test"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Blue" Foreground="Yellow" IsNullable="True"/>
+                    <obsolete:NumericUpDown Width="100" Margin="1 0" Background="Blue" Foreground="Yellow" effects:WatermarkEffect.Foreground="GreenYellow"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Yellow" Foreground="Blue" effects:WatermarkEffect.Foreground="Red" IsNullable="True"/>
+                    <obsolete:NumericUpDown Width="100" Margin="1 0" Background="Yellow" IsNullable="True" effects:WatermarkEffect.Watermark="Test"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Width="50" PreviewTextInput="UIElement_OnPreviewTextInput"/>
+                    <obsolete:NumericUpDown x:Name="test1" Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Interval="0.1" Delay="1000" Focusable="True"
+                                        MinValue="10" SelectAllOnFocus="True" Speedup="True" IsNullable="True" StringFormat="N2" DecimalPlaces="1"/>
+                    <Label Content="{Binding ElementName=test1, Path=Value, Mode=OneWay}" ContentStringFormat="StringFormat, Real Value = {0}" Background="Silver" />
+                    <obsolete:NumericUpDown x:Name="test2" Width="100" Margin="1 0" Background="Yellow" Foreground="Blue" IsNullable="False"
+                                        MinValue="0" InterceptMouseWheel="False" ButtonsWidth="24"/>
+                    <Button Click="ChangeNullable_OnClick" >Change nullable</Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</Window>

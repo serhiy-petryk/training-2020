@@ -157,7 +157,6 @@ namespace WpfLib.Controls
             OnPropertiesChanged(nameof(KeyboardSet), nameof(AvailableKeyboardLayouts), nameof(SelectedKeyboardLayout));
         }
 
-        //===========  INotifyPropertyChanged  =======================
         #region ===========  INotifyPropertyChanged  ===============
         public event PropertyChangedEventHandler PropertyChanged;
 

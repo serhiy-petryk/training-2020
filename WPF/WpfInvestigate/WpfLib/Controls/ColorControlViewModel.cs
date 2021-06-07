@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ using WpfLib.Common.ColorSpaces;
 namespace WpfLib.Controls
 {
     // ColorControl ViewModel for DataTemplate
-    public class ColorControlViewModel : INotifyPropertyChangedAbstract
+    public class ColorControlViewModel : NotifyPropertyChangedAbstract
     {
         internal enum ColorSpace { RGB, HSL, HSV, LAB, YCbCr };
         internal CultureInfo CurrentCulture => Thread.CurrentThread.CurrentCulture;
@@ -48,11 +49,11 @@ namespace WpfLib.Controls
             Sliders = new[]
             {
                 new ColorComponent("RGB_R", this, 0, 255, null,
-                    (k) => Color.FromRgb(Convert.ToByte(255 * k), CurrentColor.G, CurrentColor.B)),
+                    (k) => Color.FromRgb(Convert.ToByte(255 * k), Color.G, Color.B)),
                 new ColorComponent("RGB_G", this, 0, 255, null,
-                    (k) => Color.FromRgb(CurrentColor.R, Convert.ToByte(255 * k), CurrentColor.B)),
+                    (k) => Color.FromRgb(Color.R, Convert.ToByte(255 * k), Color.B)),
                 new ColorComponent("RGB_B", this, 0, 255, null,
-                    (k) => Color.FromRgb(CurrentColor.R, CurrentColor.G, Convert.ToByte(255 * k))),
+                    (k) => Color.FromRgb(Color.R, Color.G, Convert.ToByte(255 * k))),
                 new ColorComponent("HSL_H", this, 0, 360, "°",
                     (k) => new HSL(k / 100.0, HSL_S.SpaceValue, HSL_L.SpaceValue).RGB.Color),
                 new ColorComponent("HSL_S", this, 0, 100, "%",
@@ -94,29 +95,32 @@ namespace WpfLib.Controls
         }
 
         #region  ==============  Public Properties  ================
-        public Color Color // Original color
+
+        private bool _isAlphaSliderVisible;
+        public bool IsAlphaSliderVisible
         {
-            get => Color.FromArgb(Convert.ToByte((1.0 - _oldColorData[_oldColorData.Length - 1]) * 255),
-                Convert.ToByte(_oldColorData[0] * 255), Convert.ToByte(_oldColorData[1] * 255), Convert.ToByte(_oldColorData[2] * 255));
+            get => _isAlphaSliderVisible;
             set
             {
-                CurrentColor = value;
-                SaveColor();
+                _isAlphaSliderVisible = value;
+                OnPropertiesChanged(nameof(IsAlphaSliderVisible));
+                UpdateUI();
             }
         }
 
-        public Color CurrentColor
+        public Color Color
         {
             get => Color.FromArgb(Convert.ToByte((1 - AlphaSlider.yValue) * 255), Convert.ToByte(RGB_R.Value),
                 Convert.ToByte(RGB_G.Value), Convert.ToByte(RGB_B.Value));
             set
             {
-                _isUpdating = true;
+                // _isUpdating = true;
                 AlphaSlider.SetProperties(0, 1.0 - value.A / 255.0);
+                // _isUpdating = false;
                 RGB_R.Value = value.R;
                 RGB_G.Value = value.G;
-                _isUpdating = false;
                 RGB_B.Value = value.B;
+                OnPropertiesChanged(nameof(Color));
             }
         }
 
@@ -128,10 +132,8 @@ namespace WpfLib.Controls
         }
         public SolidColorBrush HueBrush => GetCacheBrush(0, new HSV(HSV_H.SpaceValue, 1, 1).RGB.Color);
         public SolidColorBrush Color_ForegroundBrush => GetCacheBrush(1, ColorUtils.GetForegroundColor(Color));
-        public SolidColorBrush CurrentColor_ForegroundBrush => GetCacheBrush(2, ColorUtils.GetForegroundColor(CurrentColor));
         public SolidColorBrush ColorWithoutAlphaBrush => GetCacheBrush(3, Color.FromRgb(Color.R, Color.G, Color.B));
-        public SolidColorBrush CurrentColorWithoutAlphaBrush => GetCacheBrush(4, Color.FromRgb(CurrentColor.R, CurrentColor.G, CurrentColor.B));
-        public double CurrentColorGrayLevel => ColorUtils.GetGrayLevel(new RGB(CurrentColor)) * 100;
+        public double ColorGrayLevel => ColorUtils.GetGrayLevel(new RGB(Color)) * 100;
         #endregion
 
         #region ==============  Update Values/UI  ===============
@@ -213,44 +215,20 @@ namespace WpfLib.Controls
 
             Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                OnPropertiesChanged(nameof(CurrentColor), nameof(HueBrush), nameof(CurrentColor_ForegroundBrush),
-                    nameof(CurrentColorWithoutAlphaBrush), nameof(CurrentColorGrayLevel));
+                OnPropertiesChanged(nameof(Color), nameof(HueBrush), nameof(Color_ForegroundBrush),
+                    nameof(ColorWithoutAlphaBrush), nameof(ColorGrayLevel));
                 foreach (var tone in Tones)
                     tone.UpdateUI();
             }, DispatcherPriority.ContextIdle);
-        }
-        #endregion
 
-        #region ===========  Save & Restore color  =================
-
-        private const int ComponentNumber = 15;
-        private double[] _savedColorData = new double[ComponentNumber + 1];
-        private double[] _oldColorData = new double[ComponentNumber + 1];
-
-        internal void SaveColor()
-        {
-            _oldColorData.CopyTo(_savedColorData, 0);
-            for (var k = 0; k < ComponentNumber; k++)
-                _oldColorData[k] = ((ColorComponent)Sliders[k]).SpaceValue;
-            _oldColorData[ComponentNumber] = AlphaSlider.yValue;
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
-        }
-        internal void RestoreColor()
-        {
-            _savedColorData.CopyTo(_oldColorData, 0);
-            for (var k = 0; k < ComponentNumber; k++)
-                ((ColorComponent)Sliders[k]).SetSpaceValue(_oldColorData[k]);
-            AlphaSlider.SetProperties(0, _oldColorData[ComponentNumber]);
-            OnPropertiesChanged(nameof(Color), nameof(Color_ForegroundBrush), nameof(ColorWithoutAlphaBrush));
-
-            HueSlider.SetProperties(0, HSV_H.SpaceValue, false);
-            SaturationAndValueSlider.SetProperties(HSV_S.SpaceValue, 1.0 - HSV_V.SpaceValue, true);
+            foreach (var tone in Tones)
+                tone.UpdateUI();
         }
         #endregion
 
         #region ===================  SUBCLASSES  ========================
         #region ==============  Hue/SaturationAndValue Sliders  ============
-        public class XYSlider : INotifyPropertyChangedAbstract
+        public class XYSlider : NotifyPropertyChangedAbstract
         {
             protected string Id { get; }
             public double xValue { get; private set; }
@@ -350,13 +328,15 @@ namespace WpfLib.Controls
         #endregion
 
         #region ==============  ColorToneBox  =======================
-        public class ColorToneBox : INotifyPropertyChangedAbstract
+        public class ColorToneBox : NotifyPropertyChangedAbstract
         {
             private readonly ColorControlViewModel _owner;
             public int GridColumn { get; }
             public int GridRow { get; }
             public SolidColorBrush Background { get; } = new SolidColorBrush();
             public SolidColorBrush Foreground { get; } = new SolidColorBrush();
+
+            public string BoxLabel => _owner.IsAlphaSliderVisible ? Background.Color.ToString() : Background.Color.ToString().Remove(1,2);
             public string Info
             {
                 get
@@ -366,8 +346,12 @@ namespace WpfLib.Controls
                     var hsv = new HSV(rgb) { H = hsl.H };
                     var lab = new LAB(rgb);
                     var yCbCr = new YCbCr(rgb);
+                    var color = rgb.Color;
+                    var names = string.Join(", ", ColorUtils.GetKnownColors(false).Where(kvp => kvp.Value == color).Select(kvp => kvp.Key).ToArray());
 
                     var sb = new StringBuilder();
+                    if (!string.IsNullOrEmpty(names))
+                        sb.AppendLine((names.Contains(",") ? "Names: " : "Name: ") + names);
                     sb.AppendLine("Gray level:" + FormatDouble(ColorUtils.GetGrayLevel(rgb) * 100) + "%");
                     sb.AppendLine("HEX:".PadRight(5) + rgb.Color);
                     sb.AppendLine(FormatInfoString("RGB", rgb.R * 255, rgb.G * 255, rgb.B * 255));
@@ -391,11 +375,11 @@ namespace WpfLib.Controls
                 var hsl = GetBackgroundHSL();
                 Background.Color = hsl.RGB.Color;
                 Foreground.Color = ColorUtils.GetForegroundColor(Background.Color);
-                OnPropertiesChanged(nameof(Background), nameof(Foreground), nameof(Info));
+                OnPropertiesChanged(nameof(Background), nameof(Foreground), nameof(Info), nameof(BoxLabel));
             }
 
             public void SetCurrentColor() =>
-                _owner.CurrentColor = GetBackgroundHSL().RGB.GetColor(1 - _owner.AlphaSlider.yValue);
+                _owner.Color = GetBackgroundHSL().RGB.GetColor(1 - _owner.AlphaSlider.yValue);
 
             private HSL GetBackgroundHSL()
             {

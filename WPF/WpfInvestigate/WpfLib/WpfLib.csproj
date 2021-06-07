@@ -55,6 +55,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MwiStartup.xaml.cs">
       <DependentUpon>MwiStartup.xaml</DependentUpon>
     </Compile>
@@ -162,6 +169,9 @@
     <Compile Include="TestViews\TextBoxTests.xaml.cs">
       <DependentUpon>TextBoxTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\ThemeSelectorTest.xaml.cs">
+      <DependentUpon>ThemeSelectorTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\TimePickerTests.xaml.cs">
       <DependentUpon>TimePickerTests.xaml</DependentUpon>
     </Compile>
@@ -177,25 +187,15 @@
     <Compile Include="Themes\MwiThemeInfo.cs" />
     <Compile Include="Useful\BindingClearing.cs" />
     <Compile Include="ViewModels\MwiAppViewModel.cs" />
-    <Page Include="Controls\ColorControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Common\AnimationHelper.cs" />
     <Compile Include="Common\BindingProxy.cs" />
     <Compile Include="Common\ColorConverters.cs" />
     <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\DataTypeMetadata.cs" />
-    <Compile Include="Common\INotifyPropertyChangedAbstract.cs" />
+    <Compile Include="Common\NotifyPropertyChangedAbstract.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\Tips.cs" />
     <Compile Include="Controls\AdornerControl.cs" />
@@ -207,6 +207,7 @@
     <Compile Include="Controls\DateTimePicker.cs" />
     <Compile Include="Controls\DialogAdorner.cs" />
     <Compile Include="Controls\DialogMessage.cs" />
+    <Compile Include="Controls\LabelBox.cs" />
     <Compile Include="Controls\MwiBar.cs" />
     <Compile Include="Controls\MwiChild.Animation.cs" />
     <Compile Include="Controls\MwiChild.cs" />
@@ -223,6 +224,9 @@
     <Compile Include="Controls\PopupResizeControl.cs" />
     <Compile Include="Controls\ResizingControl.cs" />
     <Compile Include="Controls\ResizingControl.Events.cs" />
+    <Compile Include="Controls\ThemeSelector.xaml.cs">
+      <DependentUpon>ThemeSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TimePicker.cs" />
     <Compile Include="Controls\TimePickerBase.cs" />
     <Compile Include="Controls\TimePickerBaseHelper.cs" />
@@ -237,16 +241,177 @@
     <Compile Include="Effects\TextBoxEffects.cs" />
     <Compile Include="Effects\WatermarkEffect.cs" />
     <Compile Include="Helpers\BindingHelper.cs" />
+    <Compile Include="Helpers\ColorThemeSupportHelper.cs" />
     <Compile Include="Helpers\ControlHelper.cs" />
     <Compile Include="Helpers\EventHelper.cs" />
     <Compile Include="Helpers\EventHelper.Log.cs" />
     <Compile Include="Helpers\SelectAllOnFocusForTextBox.cs" />
     <Compile Include="Helpers\UnloadingHelper.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Obsolete\AnimationHelper.cs" />
+    <Compile Include="Obsolete\DialogItems.cs" />
+    <Compile Include="Obsolete\Events.cs" />
+    <Compile Include="Obsolete\FlatButton.xaml.cs">
+      <DependentUpon>FlatButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\FlatButtonConverters\FlatButtonConverters.cs" />
+    <Compile Include="Obsolete\FocusEffect.cs" />
+    <Compile Include="Obsolete\MessageBlock.cs" />
+    <Compile Include="Obsolete\MonochromeButton.xaml.cs">
+      <DependentUpon>MonochromeButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\NumericUpDown.xaml.cs">
+      <DependentUpon>NumericUpDown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\PathToggleButton.xaml.cs">
+      <DependentUpon>PathToggleButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\RippleButton.xaml.cs">
+      <DependentUpon>RippleButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\ShadowEffect.cs" />
+    <Compile Include="Obsolete\TestViews\ControlLibrary.xaml.cs">
+      <DependentUpon>ControlLibrary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\TestViews\DialogTests.xaml.cs">
+      <DependentUpon>DialogTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\TestViews\DualPathToggleButtonEffectTests.xaml.cs">
+      <DependentUpon>DualPathToggleButtonEffectTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\TestViews\FlatButtonTests.xaml.cs">
+      <DependentUpon>FlatButtonTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\TestViews\MonochromeButtonTests.xaml.cs">
+      <DependentUpon>MonochromeButtonTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\TestViews\NumericUpDownTests.xaml.cs">
+      <DependentUpon>NumericUpDownTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\TestViews\RippleButtonTests.xaml.cs">
+      <DependentUpon>RippleButtonTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\TestViews\SampleDialogMovable.xaml.cs">
+      <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\TestViews\ShadowEffectTests.xaml.cs">
+      <DependentUpon>ShadowEffectTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Obsolete\TextBoxExtensions.cs" />
+    <Compile Include="Obsolete\ToggleButtonHelper.cs" />
+    <Compile Include="Obsolete\XButtonStyleTests.xaml.cs">
+      <DependentUpon>XButtonStyleTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\ColorControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ThemeSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MwiStartup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\DialogItems.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\FlatButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\ForObsolete.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\MessageBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\MonochromeButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\NumericUpDown.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\PathToggleButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\RippleButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\TestViews\ControlLibrary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\TestViews\DialogTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\TestViews\DualPathToggleButtonEffectTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\TestViews\FlatButtonTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\TestViews\MonochromeButtonTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\TestViews\NumericUpDownTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\TestViews\RippleButtonTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\TestViews\SampleDialogMovable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\TestViews\ShadowEffectTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Obsolete\XButtonStyleTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -438,6 +603,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="TestViews\ThemeSelectorTest.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="TestViews\TimePickerTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -478,32 +647,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\1.jpg" />

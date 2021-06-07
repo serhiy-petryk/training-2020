@@ -10,7 +10,7 @@
 //      - middle size with scroll: color boxes of known colors (140 items)
 
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,10 +18,12 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfLib.Common;
+using WpfLib.Common.ColorSpaces;
+using WpfLib.Effects;
 
 namespace WpfLib.Controls
 {
-    public partial class ColorControl : UserControl, INotifyPropertyChanged
+    public partial class ColorControl
     {
         private ColorControlViewModel VM => (ColorControlViewModel)DataContext;
 
@@ -29,34 +31,13 @@ namespace WpfLib.Controls
         public ColorControl()
         {
             InitializeComponent();
-            SaveColor();
-        }
-
-        #region  ==============  User UI  ===========
-        /// <summary>Original color</summary>
-        public Color Color
-        {
-            get => VM.Color;
-            set
+            VM.Color = Color; // Vm.Color must be equals to Color at the initial state (fixed bug when initial color is White)
+            VM.PropertyChanged += (sender, args) =>
             {
-                VM.Color = value;
-                OnPropertiesChanged(nameof(Color), nameof(ColorBrush));
-            }
+                Color = VM.Color;
+                IsAlphaSliderVisible = VM.IsAlphaSliderVisible;
+            };
         }
-        public SolidColorBrush ColorBrush => new SolidColorBrush(Color);
-
-        public void SaveColor()
-        {
-            VM.SaveColor();
-            OnPropertiesChanged(nameof(Color), nameof(ColorBrush));
-        }
-
-        public void RestoreColor()
-        {
-            VM.RestoreColor();
-            OnPropertiesChanged(nameof(Color), nameof(ColorBrush));
-        }
-        #endregion
 
         #region ==============  Event handlers  ====================
 
@@ -138,12 +119,123 @@ namespace WpfLib.Controls
         }
         #endregion
 
-        #region ===========  INotifyPropertyChanged  ===============
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertiesChanged(params string[] propertyNames)
+        #region ==============  Color tabs   ===============
+        private void OnTabControlSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            var tc = (TabControl) sender;
+            var selectedItem = tc.SelectedItem as TabItem;
+            if ((selectedItem?.Content as ScrollViewer)?.Content is WrapPanel panel && panel.Children.Count == 0)
+            {
+                IEnumerable<KeyValuePair<string, Color>> data = null;
+                if (Equals(tc.SelectedItem, BootstrapItem))
+                    data = GetBootstrapColors();
+                else if (Equals(tc.SelectedItem, KnownColorsByColorItem))
+                    data = ColorUtils.GetKnownColors(false).OrderBy(kvp => GetSortNumberForColor(kvp.Value));
+                else if (Equals(tc.SelectedItem, KnownColorsByNameItem))
+                    data = ColorUtils.GetKnownColors(false).OrderBy(kvp => kvp.Key);
+
+                if (data != null)
+                {
+                    var btnStyle = Application.Current.Resources["MonochromeButtonBaseStyle"] as Style; // Ripple effect
+                    foreach (var kvp in data.Where(kvp => kvp.Value != Colors.Transparent))
+                    {
+                        var content = new TextBox
+                        {
+                            BorderThickness = new Thickness(0),
+                            Margin = new Thickness(0),
+                            Padding = new Thickness(0),
+                            IsReadOnly = true,
+                            Text = GetColorLabel(kvp),
+                            Background = Brushes.Transparent,
+                            Foreground = new SolidColorBrush(ColorUtils.GetForegroundColor(kvp.Value)),
+                            Cursor = Cursors.Arrow
+                        };
+                        var btn = new Button
+                        {
+                            Width = 130,
+                            Padding = new Thickness(0, 2, 0, 2),
+                            Margin = new Thickness(2),
+                            BorderThickness = new Thickness(2),
+                            HorizontalContentAlignment = HorizontalAlignment.Center,
+                            VerticalContentAlignment = VerticalAlignment.Center,
+                            Content = content,
+                            Style = btnStyle
+                        };
+                        CornerRadiusEffect.SetCornerRadius(btn, new CornerRadius(2));
+                        ChromeEffect.SetMonochrome(btn, kvp.Value);
+                        ChromeEffect.SetChromeMatrix(btn, "+0%,+70%,+0%,40, +0%,+75%,+0%,100, +0%,+75%,+35%,100");
+                        btn.Click += (o, args) => VM.Color = ((SolidColorBrush) ((Button) o).Background).Color;
+                        content.PreviewMouseLeftButtonUp += (o, args) =>
+                        {
+                            var textBox = (TextBox) o;
+                            if (string.IsNullOrEmpty(textBox.SelectedText))
+                                VM.Color = ((SolidColorBrush) ((Control) textBox.Parent).Background).Color;
+                        };
+                        panel.Children.Add(btn);
+                    }
+                }
+            }
+        }
+
+        private string GetColorLabel(KeyValuePair<string, Color> kvp)
+        {
+            var s1 = string.Concat(kvp.Key.Select(x => char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' ');
+            var rgb = new RGB(kvp.Value);
+            var rgbName = IsAlphaSliderVisible ? rgb.Color.ToString() : rgb.Color.ToString().Remove(1, 2);
+            var hsl = new HSL(rgb);
+
+            return $"{s1}{Environment.NewLine}{rgbName}{Environment.NewLine}HSL: {Math.Round(hsl.Hue)}, {Math.Round(hsl.Saturation)}, {Math.Round(hsl.Lightness)}";
+        }
+
+        private static int GetSortNumberForColor(Color color)
+        {
+            var hsl = new HSL(new RGB(color));
+            return Convert.ToInt32(hsl.Hue) * 36000 + Convert.ToInt32(hsl.Saturation) * 100 + Convert.ToInt32(hsl.Lightness);
+        }
+
+        private static Dictionary<string, Color> GetBootstrapColors()
+        {
+            string[] bootstrapColorNames =
+            {
+                "PrimaryColor", "SecondaryColor", "SuccessColor", "DangerColor", "WarningColor", "InfoColor", "LightColor",
+                "DarkColor", "BlueColor", "IndigoColor", "PurpleColor", "PinkColor", "RedColor", "OrangeColor",
+                "YellowColor", "GreenColor", "TealColor", "CyanColor", "WhiteColor", "GrayColor", "GrayDarkColor"
+            };
+            var result = new Dictionary<string, Color>();
+            foreach (var name in bootstrapColorNames)
+                result.Add(name.Remove(name.Length - 5), (Color)Application.Current.Resources[name]);
+            return result;
+        }
+        #endregion
+
+        #region ==============  Dependency Properties  ===============
+        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register("Color",
+            typeof(Color), typeof(ColorControl), new FrameworkPropertyMetadata(Colors.White, OnColorChanged));
+
+        public Color Color
+        {
+            get => (Color)GetValue(ColorProperty);
+            set => SetValue(ColorProperty, value);
+        }
+        private static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorControl cc && e.NewValue is Color color && cc.VM.Color != color)
+                cc.VM.Color = color;
+        }
+        //====================
+        public static readonly DependencyProperty IsAlphaSliderVisibleProperty = DependencyProperty.Register("IsAlphaSliderVisible",
+            typeof(bool), typeof(ColorControl), new FrameworkPropertyMetadata(false, IsAlphaSliderVisibleChanged));
+
+        private static void IsAlphaSliderVisibleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorControl cc && e.NewValue is bool value && cc.VM.IsAlphaSliderVisible != value)
+                cc.VM.IsAlphaSliderVisible = value;
+        }
+
+        public bool IsAlphaSliderVisible
+        {
+            get => (bool)GetValue(IsAlphaSliderVisibleProperty);
+            set => SetValue(IsAlphaSliderVisibleProperty, value);
         }
         #endregion
     }

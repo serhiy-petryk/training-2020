@@ -74,7 +74,7 @@ namespace WpfLib.Effects
                 transform.Y = 0.0;
         }
 
-        private static void OnElementPreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private static void OnElementPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!(sender is FrameworkElement element)) return;
 

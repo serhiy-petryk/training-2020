@@ -1,0 +1,283 @@
+﻿<Window x:Class="WpfLib.Obsolete.TestViews.ObsoleteControlLibrary"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfLib.Controls"
+        xmlns:common="clr-namespace:WpfLib.Common"
+        xmlns:obsolete="clr-namespace:WpfLib.Obsolete"
+        xmlns:effects="clr-namespace:WpfLib.Effects"
+        mc:Ignorable="d"
+        Title="Obsolete ControlLibrary" Height="450" Width="800">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="BG" Color="#FF8194AA"/>
+
+        <!--  "Chromeless" style for buttons  -->
+        <ControlTemplate x:Key="ChromelessButtonTemplate" TargetType="{x:Type ButtonBase}">
+            <Grid Background="{TemplateBinding Background}">
+                <ContentPresenter x:Name="PART_ContentPresenter"
+                                  Margin="{TemplateBinding Padding}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Opacity="0.65"
+                                  RecognizesAccessKey="True"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="1" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <!--<Setter Property="Foreground" Value="#ADADAD" />-->
+                    <Setter Property="Opacity" Value="0.25" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <!-- ========= -->
+        <Style TargetType="Path">
+            <Setter Property="Fill" Value="Black"/>
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Height" Value="24"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="0 0 3 0"/>
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+
+        <ScaleTransform x:Key="ScaleTransform" CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+        <Path x:Key="DownArrowPath" x:Shared="False" Width="8.5" Height="3" Data="M2.5,0L8.5,0 5.5,3z" VerticalAlignment="Center"/>
+        <StackPanel x:Key="OpenIcon" x:Shared="False">
+            <Path Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"/>
+            <StaticResource ResourceKey="DownArrowPath"/>
+        </StackPanel>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical" LayoutTransform="{StaticResource ScaleTransform}">
+
+            <TextBlock>Ready: Placeholder</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Width="100" Background="Yellow" obsolete:TextBoxExtensions.Placeholder="Test place ..."/>
+                <TextBox Width="100" Background="White" Foreground="Black" obsolete:TextBoxExtensions.Placeholder="Test place ..."/>
+                <TextBox Width="100" Background="Black" Foreground="White" obsolete:TextBoxExtensions.Placeholder="Test place ..."/>
+                <TextBox Width="100" Background="Yellow" Foreground="Blue" obsolete:TextBoxExtensions.Placeholder="Test place ..."/>
+                <TextBox Width="100" Background="Blue" Foreground="Yellow" obsolete:TextBoxExtensions.Placeholder="Test place ..."/>
+                <TextBox Name="VVV" Width="100" Background="Blue" Foreground="White" obsolete:TextBoxExtensions.Placeholder="Test place ..."/>
+                <Button Click="RemoveTextBox_OnClick" >Remove text box</Button>
+            </StackPanel>
+
+            <TextBlock>Time picker</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                <Label Content="TimePicker:"/>
+                <controls:TimePicker x:Name="NNN" Width="100" Height="30" Background="Yellow" IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"/>
+                <Button Click="XButtonBase_OnClick" >AAA</Button>
+                <!--<Label Content="TimePickerBase:"/>
+                <temp:TimePickerBase x:Name="NNN1" Width="100" Height="30" Background="Yellow" HandVisibility="HourMinute" PickerVisibility="HourMinute"
+                                 IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"/>-->
+                <!--<temp:TimePickerBase/>-->
+                <!--<temp:XXTimePickerBase/>
+                <temp:XXTimePickerBase HandVisibility="HourMinute" PickerVisibility="HourMinute"
+                        IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long"/>-->
+
+            </StackPanel>
+
+            <TextBlock>Test Object editor</TextBlock>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="SelectAll" Value="23" SelectAllOnFocus="True"/>
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock>NumericUpDown</TextBlock>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="SelectAll" Margin="1 0" Value="23" SelectAllOnFocus="True"/>
+                    <obsolete:NumericUpDown effects:WatermarkEffect.Watermark="NotSelectAll" Margin="1 0" Value="23" SelectAllOnFocus="False" IsTabStop="False" IsNullable="True"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="SelectAll" Margin="1 0" Value="23" SelectAllOnFocus="True" IsNullable="True"/>
+                    <obsolete:NumericUpDown Width="100" Height="40" effects:WatermarkEffect.Watermark="NotSelectAll" Margin="1 0" Value="23" SelectAllOnFocus="False"
+                                        VerticalContentAlignment="Top" HorizontalContentAlignment="Right" IsNullable="True"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox x:Name="ReadOnlyCheck" Margin="1" Content="IsReadOnly" IsChecked="True" />
+                    <obsolete:NumericUpDown Width="150" effects:WatermarkEffect.Watermark="Test" Margin="1 0" ButtonsWidth="12" StringFormat="pcs. {0:N2} pcs." InterceptManualEnter="False"/>
+                    <obsolete:NumericUpDown x:Name="AAA" Width="100" Margin="1 0" IsNullable="True" IsReadOnly="True" Focusable="True"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Black" Foreground="White" InterceptManualEnter="False"/>
+                    <obsolete:NumericUpDown Width="100" Margin="1 0" Background="Black" Foreground="White" HorizontalContentAlignment="Right"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Blue" Foreground="Yellow"/>
+                    <obsolete:NumericUpDown Width="100" Margin="1 0" Background="Blue" Foreground="Yellow" effects:WatermarkEffect.Foreground="GreenYellow"/>
+                    <obsolete:NumericUpDown Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Background="Yellow" Foreground="Blue" effects:WatermarkEffect.Foreground="Red"/>
+                    <obsolete:NumericUpDown Width="100" Margin="1 0" Background="Yellow" Foreground="Blue"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Width="50" PreviewTextInput="UIElement_OnPreviewTextInput"/>
+                    <obsolete:NumericUpDown x:Name="test1" Width="100" effects:WatermarkEffect.Watermark="Test" Margin="1 0" Interval="0.1" Delay="1000" Focusable="True"
+                                        MinValue="10" SelectAllOnFocus="True" Speedup="True" IsNullable="True" StringFormat="N2" DecimalPlaces="1"/>
+                    <Label Content="{Binding ElementName=test1, Path=Value, Mode=OneWay}" ContentStringFormat="StringFormat, Real Value = {0}" Background="Silver" />
+                    <obsolete:NumericUpDown x:Name="test2" Width="100" Margin="1 0" Background="Yellow" Foreground="Blue" IsNullable="False"
+                                        MinValue="0" InterceptMouseWheel="False"/>
+                    <Button Click="ChangeNullable_OnClick" >Change nullable</Button>
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock>Test box</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <obsolete:RippleButton Margin="2 0" Padding="0" Width="100" Height="26" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White">
+                    <Button Template="{StaticResource ChromelessButtonTemplate}" Width="100" HorizontalAlignment="Left" Background="LightBlue">AAA</Button>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Padding="0" Width="100" Height="26" VerticalAlignment="Center" Foreground="White" RippleColor="White">
+                    <Button Template="{StaticResource ChromelessButtonTemplate}" Background="{StaticResource BG}" >
+                        <StackPanel Margin="0 0 5 0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Path Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"/>
+                            <Path Width="8.5" Height="3" Data="M2.5,0L8.5,0 5.5,3z" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Padding="0" Width="26" Height="26" VerticalAlignment="Center" Foreground="White" RippleColor="White">
+                    <Button Template="{StaticResource ChromelessButtonTemplate}" Background="{StaticResource BG}">
+                        <Path Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"/>
+                    </Button>
+                </obsolete:RippleButton>
+            </StackPanel>
+
+            <!-- Ripple buttons -->
+            <TextBlock>Ripple buttons</TextBlock>
+            <ToolBar Margin="0" Padding="0" Height="30" Background="Gray">
+                <obsolete:RippleButton Margin="2 0" Padding="0" Width="26" Height="26" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White">
+                    <TextBlock Text="H" Margin="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Padding="0" Width="26" Height="26" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White">
+                    <Button Margin="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"/>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Width="36" Padding="0" Height="26" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White"  Click="ButtonBase_OnClick">
+                    <StackPanel Margin="0 0 5 0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Path Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"/>
+                        <Path Width="8.5" Height="3" Data="M2.5,0L8.5,0 5.5,3z" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Width="36" Padding="0" Height="26" VerticalAlignment="Center" Background="#FF6739B6" RippleColor="#FFe0d5f2" Click="Dropdown_Click">
+                    <StackPanel Margin="0 0 5 0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Path Fill="White" Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"/>
+                        <Path Fill="White" Width="8.5" Height="3" Data="M2.5,0L8.5,0 5.5,3z" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Width="100" Padding="0" Height="26" VerticalAlignment="Center" Background="{StaticResource BG}" RippleColor="#FFe0d5f2">
+                    <CheckBox IsThreeState="True" IsChecked="False" Height="20" Content="Неотмечено" />
+                </obsolete:RippleButton>
+
+                <Separator/>
+                <Button VerticalAlignment="Stretch" Padding="0 0 20 0">AAA</Button>
+                <obsolete:PathToggleButton x:Uid="WindowsMenuButton" Width="18" Margin="0 0 0 0" Foreground="Black" PathWidth="10" PathHeight="10" Padding="1 7"
+                                           ToolTip="Open/Close Windows menu"
+                                           VerticalAlignment="Stretch"
+                                           Visibility="{Binding Path=Children.Count, Converter={x:Static common:VisibilityConverter.Instance}, ConverterParameter=Hide}"
+                                           GeometryOff="M 0 2.5 L 5 7.5 L 10 2.5 Z"
+                                           GeometryOn="M9.5 2.136875L7.863125 0.5L5 3.363125L2.136875 0.5L0.5 2.136875L3.363125 5L0.5 7.863125L2.136875 9.5L5 6.636875L7.863125 9.5L9.5 7.863125L6.636875 5L9.5 2.136875Z">
+                </obsolete:PathToggleButton>
+
+                <Separator Margin="0 0 0 0"/>
+
+                <TextBlock Text="Splt button:" Margin="4 0" VerticalAlignment="Center"/>
+                <Button VerticalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="AAA" Margin="0"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0 0 1 0"/>
+                            <obsolete:PathToggleButton Grid.Column="1" Foreground="Black" PathWidth="10" PathHeight="10" BorderThickness="1 0 0 0"
+                                                       ToolTip="Open/Close Windows menu" Width="18" Padding="1 7" Margin="-1 1 0 1" 
+                                                       VerticalAlignment="Stretch"
+                                                       Visibility="{Binding Path=Children.Count, Converter={x:Static common:VisibilityConverter.Instance}, ConverterParameter=Hide}"
+                                                       GeometryOff="M 0 2.5 L 5 7.5 L 10 2.5 Z"
+                                                       GeometryOn="M9.5 2.136875L7.863125 0.5L5 3.363125L2.136875 0.5L0.5 2.136875L3.363125 5L0.5 7.863125L2.136875 9.5L5 6.636875L7.863125 9.5L9.5 7.863125L6.636875 5L9.5 2.136875Z">
+                            </obsolete:PathToggleButton>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+
+                <Separator Margin="20 0 0 0"/>
+
+                <obsolete:RippleButton Margin="2 0" Width="36" Padding="0" Height="26" VerticalAlignment="Center" RippleColor="#FFe0d5f2">
+                    <ToggleButton Content="{StaticResource OpenIcon}" Padding="0" IsThreeState="False" Checked="OpenSettingButton_OnChecked"
+                                  Background="{StaticResource BG}" Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+                        <ToggleButton.Resources>
+                            <ContextMenu x:Key="items" StaysOpen="False" Placement="Bottom" LayoutTransform="{StaticResource ScaleTransform}">
+                                <MenuItem Header="Copy"/>
+                                <MenuItem Header="Paste"/>
+                                <MenuItem Header="Delete"/>
+                            </ContextMenu>
+                        </ToggleButton.Resources>
+                    </ToggleButton>
+                </obsolete:RippleButton>
+
+                <Separator/>
+
+                <ToggleButton x:Name="OpenSettingButton" Content="{StaticResource OpenIcon}" Padding="0" IsThreeState="False" Checked="OpenSettingButton_OnChecked">
+                    <ToggleButton.Resources>
+                        <ContextMenu x:Key="items" StaysOpen="False" Placement="Bottom" LayoutTransform="{StaticResource ScaleTransform}">
+                            <MenuItem Header="Copy"/>
+                            <MenuItem Header="Paste"/>
+                            <MenuItem Header="Delete"/>
+                        </ContextMenu>
+                    </ToggleButton.Resources>
+                </ToggleButton>
+            </ToolBar>
+
+            <TextBlock>Combobox</TextBlock>
+            <StackPanel Orientation="Horizontal" Height="30" Background="Gainsboro" VerticalAlignment="Top" >
+                <ComboBox Name="phonesList" Height="30" VerticalAlignment="Center" Width="100" IsEditable="True" VerticalContentAlignment="Center">
+                    <TextBlock>LG Nexus 5X</TextBlock>
+                    <TextBlock>Huawai Nexus 6P</TextBlock>
+                    <TextBlock>iPhone 6S</TextBlock>
+                    <TextBlock>iPhone 6S Plus</TextBlock>
+                    <TextBlock>Microsoft Lumia 950</TextBlock>
+                </ComboBox>
+                <TextBox Width="100" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" VerticalContentAlignment="Center" />
+
+                <obsolete:RippleButton Margin="8 0" Width="100" Height="20" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White"
+                                       Click="ButtonBase_OnClick">
+                    <TextBlock Text="Hellow world!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="8 0" Width="70" Height="20" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White">
+                    <Button Content="Button" Background="Transparent" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonBase_OnClick"/>
+                </obsolete:RippleButton>
+            </StackPanel>
+
+        </StackPanel>
+
+        <Grid Grid.Column="1" Background="AntiqueWhite">
+            <Slider x:Name="uiScaleSlider"
+                    Focusable="False"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.1" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
+        </Grid>
+
+    </Grid>
+
+</Window>

@@ -9,6 +9,7 @@ using WpfLib.Common;
 using WpfLib.Controls;
 using WpfLib.Helpers;
 using WpfLib.Samples;
+using WpfLib.Themes;
 using WpfLib.ViewModels;
 
 namespace WpfLib
@@ -221,6 +222,11 @@ namespace WpfLib
                 ScaleSlider = null;
                 MwiContainer = null;
             }
+        }
+
+        private void UIElement_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TopControl.Theme = MwiThemeInfo.GetNexThemeInfo(TopControl.ActualTheme);
         }
     }
 }

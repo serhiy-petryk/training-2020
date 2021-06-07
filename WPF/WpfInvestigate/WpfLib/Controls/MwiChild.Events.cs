@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -8,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WpfLib.Helpers;
-using WpfLib.ViewModels;
 
 namespace WpfLib.Controls
 {
@@ -18,7 +16,7 @@ namespace WpfLib.Controls
         {
             // Loaded -= OnLoaded; // run only on startup mwichild
             AddLoadedEvents();
-            if (!IsWindowed)
+            if (!IsWindowed && WindowState == WindowState.Normal)
                 AnimateShow();
         }
 
@@ -31,7 +29,7 @@ namespace WpfLib.Controls
                 if (this.AutomaticUnloading(OnUnloaded))
                 {
                     base.OnUnloaded(sender, e);
-                    MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
+                    // MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
                     Theme = null;
                     if (Icon is DrawingImage image && image.Drawing != null)
                         BindingOperations.ClearAllBindings(image.Drawing);
@@ -45,19 +43,11 @@ namespace WpfLib.Controls
             if (MovingThumb != null)
                 MovingThumb.MouseDoubleClick -= OnMovingThumbMouseDoubleClick;
 
-            MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
-            var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiChild));
-            dpd.RemoveValueChanged(this, OnBackgroundChanged);
-
             if (onlyRemove)
             {
                 MovingThumb = null;
                 return;
             }
-
-            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
-            dpd.AddValueChanged(this, OnBackgroundChanged);
-            OnBackgroundChanged(this, null);
 
             if (GetTemplateChild("MovingThumb") is Thumb movingThumb)
             {
@@ -68,6 +58,8 @@ namespace WpfLib.Controls
             else if (MovingThumb != null)
                 MovingThumb = null;
 
+            UpdateColorTheme(false, true);
+
             void OnMovingThumbMouseDoubleClick(object sender, MouseButtonEventArgs e)
             {
                 var element = (FrameworkElement)sender;
@@ -77,6 +69,7 @@ namespace WpfLib.Controls
             }
         }
 
+        private Window _activatedHost;
         private async void AddVisualParentChangedEvents(bool onlyRemove = false)
         {
             if (_activatedHost != null)
@@ -125,6 +118,5 @@ namespace WpfLib.Controls
             void OnWindowActivated(object sender, EventArgs e) => Activate();
             void OnWindowDeactivated(object sender, EventArgs e) => IsActive = false;
         }
-
     }
 }

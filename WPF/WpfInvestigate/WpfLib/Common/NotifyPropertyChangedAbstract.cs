@@ -2,7 +2,7 @@
 
 namespace WpfLib.Common
 {
-    public abstract class INotifyPropertyChangedAbstract: INotifyPropertyChanged
+    public abstract class NotifyPropertyChangedAbstract: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertiesChanged(params string[] propertyNames) // [CallerMemberName]

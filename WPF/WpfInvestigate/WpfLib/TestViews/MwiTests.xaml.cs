@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfLib.Common;
 using WpfLib.Controls;
 using WpfLib.Samples;
+using WpfLib.Themes;
 
 namespace WpfLib.TestViews
 {
@@ -183,6 +185,20 @@ namespace WpfLib.TestViews
                 mwiContainer.ActiveMwiChild.CmdClose.Execute(null);
                 e.Handled = true;
             }
+        }
+
+        private void OnChangeColorClick(object sender, RoutedEventArgs e)
+        {
+            if (MwiContainer.ThemeColor != Colors.Green)
+                MwiContainer.ThemeColor = Colors.Green;
+            else
+                MwiContainer.ThemeColor = Colors.Yellow;
+        }
+
+        private void OnChangeThemeClick(object sender, RoutedEventArgs e)
+        {
+            MwiContainer.Theme = MwiThemeInfo.GetNexThemeInfo(MwiContainer.ActualTheme);
+            Debug.Print($"Theme: {MwiContainer.Theme.Name}");
         }
     }
 }

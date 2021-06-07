@@ -39,86 +39,8 @@ namespace WpfLib.Controls
             base.OnContentChanged(oldContent, newContent);
             AddContentChangedEvents(oldContent, true);
             AddContentChangedEvents(newContent);
-
-            /*var dpdWidth = DependencyPropertyDescriptor.FromProperty(WidthProperty, typeof(FrameworkElement));
-            var dpdHeight = DependencyPropertyDescriptor.FromProperty(HeightProperty, typeof(FrameworkElement));
-
-            if (oldContent is FrameworkElement m_oldContent)
-            {
-                MovingThumb = null;
-
-                BindingOperations.ClearBinding(this, MinWidthProperty);
-                BindingOperations.ClearBinding(this, MaxWidthProperty);
-                BindingOperations.ClearBinding(this, MinHeightProperty);
-                BindingOperations.ClearBinding(this, MaxHeightProperty);
-
-                dpdWidth.RemoveValueChanged(m_oldContent, OnWidthChanged);
-                dpdHeight.RemoveValueChanged(m_oldContent, OnHeightChanged);
-            }
-
-            if (newContent is FrameworkElement m_newContent)
-            {
-                if (!Tips.AreEqual(0, m_newContent.MinWidth))
-                    SetBinding(MinWidthProperty, new Binding("MinWidth") { Source = m_newContent });
-                if (!double.IsInfinity(m_newContent.MaxWidth))
-                    SetBinding(MaxWidthProperty, new Binding("MaxWidth") { Source = m_newContent });
-                if (!Tips.AreEqual(0, m_newContent.MinHeight))
-                    SetBinding(MinHeightProperty, new Binding("MinHeight") { Source = m_newContent });
-                if (!double.IsInfinity(m_newContent.MaxHeight))
-                    SetBinding(MaxHeightProperty, new Binding("MaxHeight") { Source = m_newContent });
-
-                dpdWidth.AddValueChanged(m_newContent, OnWidthChanged);
-                dpdHeight.AddValueChanged(m_newContent, OnHeightChanged);
-
-                if (m_newContent.IsLoaded)
-                    OnContentLoaded(m_newContent, null);
-                else
-                    m_newContent.Loaded += OnContentLoaded;
-
-                Activate();
-            }
-
-            void OnWidthChanged(object sender, EventArgs e)
-            {
-                var content = (FrameworkElement)sender;
-                if (!double.IsNaN(content.Width))
-                {
-                    var resizingControl = content.GetVisualParents().OfType<ResizingControl>().FirstOrDefault();
-                    resizingControl.Width = content.Width;
-                    content.Dispatcher.InvokeAsync(() => content.Width = double.NaN, DispatcherPriority.Render);
-                }
-            }
-            void OnHeightChanged(object sender, EventArgs e)
-            {
-                var content = (FrameworkElement)sender;
-                if (!double.IsNaN(content.Height))
-                {
-                    var resizingControl = content.GetVisualParents().OfType<ResizingControl>().FirstOrDefault();
-                    resizingControl.Height = content.Height;
-                    content.Dispatcher.InvokeAsync(() => content.Height = double.NaN, DispatcherPriority.Render);
-                }
-            }
-            void OnContentLoaded(object sender, RoutedEventArgs args)
-            {
-                var content = (FrameworkElement)sender;
-                content.Loaded -= OnContentLoaded;
-                MovingThumb = MovingThumb ?? content.GetVisualChildren().OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
-            }*/
         }
 
-        /*public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            foreach (var thumb in Tips.GetVisualChildren(this).OfType<Thumb>().Where(t=>t.Name.StartsWith("Resize")))
-                thumb.DragDelta += ResizeThumb_OnDragDelta;
-
-            if (Tips.GetVisualParents(HostPanel).OfType<ScrollViewer>().FirstOrDefault() is ScrollViewer sv && !Equals(sv.Resources["State"], "Activated"))
-            {
-                // sv.Resources["State"] = "Activated";
-                sv.ScrollChanged += ScrollViewer_OnScrollChanged;
-            }
-        }*/
         private static void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             var sv = (ScrollViewer)sender;

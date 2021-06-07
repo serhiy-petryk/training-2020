@@ -13,6 +13,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using WpfLib.Common;
 using WpfLib.Helpers;
+using WpfLib.Obsolete;
+using WpfLib.Obsolete.TestViews;
 using WpfLib.Temp;
 using WpfLib.TestViews;
 using WpfLib.ViewModels;
@@ -32,8 +34,6 @@ namespace WpfLib
             cbCulture.SelectedValue = Thread.CurrentThread.CurrentUICulture;
 
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
-
-            MwiAppViewModel.Instance.PropertyChanged += TestEventHandler;
         }
 
         private static string[] _cultures = { "", "sq-AL", "uk-UA", "en-US", "km-KH", "yo-NG" };
@@ -76,6 +76,17 @@ namespace WpfLib
         private void ButtonStyleTests_OnClick(object sender, RoutedEventArgs e) => new ButtonStyleTests().Show();
         private void FocusEffectTests_OnClick(object sender, RoutedEventArgs e) => new FocusEffectTests().Show();
         private void TextBoxTests_OnClick(object sender, RoutedEventArgs e) => new TextBoxTests().Show();
+        private void ThemeSelectorTest_OnClick(object sender, RoutedEventArgs e) => new ThemeSelectorTest().Show();
+
+        private void ObsoleteNumericUpDownTest_OnClick(object sender, RoutedEventArgs e) => new NumericUpDownTests().Show();
+        private void ObsoleteRippleButtonTest_OnClick(object sender, RoutedEventArgs e) => new RippleButtonTests().Show();
+        private void ObsoleteControlLibrary_OnClick(object sender, RoutedEventArgs e) => new ObsoleteControlLibrary().Show();
+        private void ObsoleteMonochromeButtonTest_OnClick(object sender, RoutedEventArgs e) => new MonochromeButtonTests().Show();
+        private void ObsoleteDualPathToggleButtonEffectTest_OnClick(object sender, RoutedEventArgs e) => new DualPathToggleButtonEffectTests().Show();
+        private void ObsoleteFlatButtonTest_OnClick(object sender, RoutedEventArgs e) => new FlatButtonTests().Show();
+        private void ObsoleteShadowEffectTest_OnClick(object sender, RoutedEventArgs e) => new ShadowEffectTests().Show();
+        private void ObsoleteDialogItemsTests_OnClick(object sender, RoutedEventArgs e) => new DialogItemsTests().Show();
+        private void OldButtonStyleTest_OnClick(object sender, RoutedEventArgs e) => new XButtonStyleTests().Show();
 
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
         private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
@@ -153,56 +164,6 @@ namespace WpfLib
             Debug.Print($"Test{step}: {a12:N0}");
 
             await Task.Delay(1000);
-        }
-
-        private void TestEventHandler(object sender, PropertyChangedEventArgs e)
-        {
-        }
-
-        private void TestButton3_OnClick(object sender, RoutedEventArgs e)
-        {
-            var dpd = DependencyPropertyDescriptor.FromProperty(MwiAppViewModel.AppColorProperty, typeof(MwiAppViewModel));
-            dpd.AddValueChanged(MwiAppViewModel.Instance, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd.Name}"));
-            dpd.AddValueChanged(MwiAppViewModel.Instance, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd.Name}"));
-
-            Debug.Print($"TestButton3_OnClick");
-
-            TestButton3.IsHitTestVisibleChanged += TestButton3_IsHitTestVisibleChanged;
-            TestButton3.IsHitTestVisibleChanged += (o, args) => Debug.Print($"XXX");
-            TestButton3.Unloaded += (sender2, args) => Debug.Print($"Unload");
-            TestButton3.Unloaded += (sender2, args) => Debug.Print($"Unload");
-            /*var dpd1 = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-            dpd1.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd1.Name}"));
-            dpd1.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd1.Name}"));
-
-            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.EffectProperty, typeof(UIElement));
-            dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor: {dpd.Name}"));
-            dpd.AddValueChanged(TestButton3, (o, args) => Debug.Print($"DependencyPropertyDescriptor2: {dpd.Name}"));*/
-
-            Debug.Print($"===========  Button3  ===============");
-            EventHelper.RemoveDependencyPropertyEventHandlers(TestButton3);
-            EventHelper.RemoveRoutedEventHandlers(TestButton3);
-
-            Debug.Print($"===========  Button4  ===============");
-            EventHelper.RemoveDependencyPropertyEventHandlers(TestButton4);
-            EventHelper.RemoveRoutedEventHandlers(TestButton4);
-            Debug.Print($"===========  end  ===============");
-        }
-
-        private void TestButton3_IsHitTestVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Debug.Print($"TestButton3_IsHitTestVisibleChanged");
-        }
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            /*var propertyInfo = typeof(PropertyChangedEventManager).GetProperty("CurrentManager",
-                BindingFlags.Static | BindingFlags.NonPublic);
-            var pm = propertyInfo.GetValue(null);*/
-             // Events.RemoveAllEventSubsriptions(this);
-             // Events.RemoveEventSubsriptions(MwiAppViewModel.Instance, this);
-            EventHelper.RemoveDependencyPropertyEventHandlers(MwiAppViewModel.Instance);
-            // EventHelper.RemovePropertyChangeEventHandlers(MwiAppViewModel.Instance);
         }
 
         private async void OnMwiStartupMemoryTestClick(object sender, RoutedEventArgs e)
@@ -372,5 +333,6 @@ namespace WpfLib
             var a31 = aa31.Except(aa11).ToArray();
             var a32 = aa11.Except(aa31).ToArray();
         }
+
     }
 }

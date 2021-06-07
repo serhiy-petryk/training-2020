@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -9,15 +8,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfLib.Common;
+using WpfLib.Helpers;
 using WpfLib.Themes;
-using WpfLib.ViewModels;
 
 namespace WpfLib.Controls
 {
     /// <summary>
     /// Interaction logic for MwiChild.xaml
     /// </summary>
-    public partial class MwiChild: ResizingControl
+    public partial class MwiChild: ResizingControl, IColorThemeSupport
     {
         [Flags]
         public enum Buttons
@@ -25,7 +24,8 @@ namespace WpfLib.Controls
             Close = 1,
             Minimize = 2,
             Maximize = 4,
-            Detach = 8
+            Detach = 8,
+            SelectTheme = 16
         }
 
         private static int controlId = 0;
@@ -48,51 +48,15 @@ namespace WpfLib.Controls
             SysCmdRestore = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState == WindowState.Maximized);
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
             CmdClose = new RelayCommand(Close, _ => AllowClose);
+            CmdSelectTheme = new RelayCommand(o => this.SelectTheme(Window.GetWindow(this) is MwiStartup mwiStartup ? mwiStartup.MwiContainer : null), _ => AllowSelectTheme);
 
             // DataContext = this;
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
 
             if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
-
-            /* can't reproduce (2021-03-12):
-             MwiAppViewModel.Instance.PropertyChanged += async (sender, args) =>
-            {
-                if (ActualWidth > 0 && args is PropertyChangedEventArgs e && e.PropertyName == nameof(MwiAppViewModel.CurrentTheme))
-                {
-                    // fixed bug (?): при зміні theme в MwiChild зявляється справа полоса
-                    var oldWidth = ActualWidth;
-                    Width = ActualWidth + 1;
-                    await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render).Task;
-                    Width = oldWidth;
-                }
-            };*/
-
-            /*void OnLoaded(object sender, RoutedEventArgs e)
-            {
-                Loaded -= OnLoaded;
-                //if (MwiContainer != null && (Position.X < 0 || Position.Y < 0))
-                  //  Position = MwiContainer.GetStartPositionForMwiChild(this);
-                AnimateShow();
-            }*/
-            // Dispatcher.BeginInvoke(new Action(() => AnimateShow()), DispatcherPriority.Loaded);
         }
 
-        private void OnBackgroundChanged(object sender, EventArgs e)
-        {
-            MwiAppViewModel.Instance.UpdateUI();
-            OnPropertiesChanged(nameof(BaseColor));
-        }
-
-        private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
-            {
-                if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
-                    colorProxy.Value = BaseColor;
-                OnPropertiesChanged(nameof(BaseColor));
-            }
-        }
         #region =============  Override methods  ====================
         private static bool _isActivating = false;
         public override void Activate() => Activate(true);
@@ -125,11 +89,15 @@ namespace WpfLib.Controls
             }
         }
 
-        private Window _activatedHost;
-        protected override async void OnVisualParentChanged(DependencyObject oldParent)
+        protected override void OnVisualParentChanged(DependencyObject oldParent)
         {
             base.OnVisualParentChanged(oldParent);
             AddVisualParentChangedEvents();
+            if (WindowState != WindowState.Normal && !IsLoaded)
+            {
+                Dispatcher.BeginInvoke(new Action(() => WindowStateValueChanged(WindowState, WindowState.Normal)),
+                    DispatcherPriority.Background);
+            }
         }
         #endregion
 
@@ -164,18 +132,6 @@ namespace WpfLib.Controls
                 ((Window)Parent).Focus();
 
             _isActivating = false;
-
-            // BringIntoView(); // mouse click on element is not working in case of active BringIntoView -> need to delay BringIntoView
-            // todo: delay for ResizingControl.Activate, cancel original RequestBringIntoView, make own BringIntoView (see Obsolete.AnimationHelper.ScrollViewerAnimator method)
-            /*var timer = new DispatcherTimer {Interval = TimeSpan.FromMilliseconds(300)};
-            timer.Tick += OnDispatcherTimerTick;
-            timer.Start();
-
-            void OnDispatcherTimerTick(object sender, EventArgs e)
-            {
-                ((DispatcherTimer)sender).Stop();
-                BringIntoView();
-            }*/
         }
 
         public async void Close(object obj)
@@ -196,8 +152,6 @@ namespace WpfLib.Controls
             MwiContainer?.Children?.Remove(this);
 
             Closed?.Invoke(this, EventArgs.Empty);
-
-            // Dispatcher.Invoke(new Action(() => RaiseEvent(new RoutedEventArgs(UnloadedEvent))), DispatcherPriority.ApplicationIdle);
         }
 
         #region ==============  Thumbnail  ===================
@@ -236,25 +190,15 @@ namespace WpfLib.Controls
 
         #region =============  Properties  =================
         public event EventHandler Closed;
-
         public MwiContainer MwiContainer; // !! Must be field, not property => important for clearing when unloaded
-        public Color BaseColor
-        {
-            get
-            {
-                if (Theme?.Id == "Windows7") return MwiThemeInfo.Wnd7BaseColor;
-                var backColor = Tips.GetColorFromBrush(Background);
-                if (backColor == Colors.Transparent && MwiContainer != null)
-                    backColor = Tips.GetColorFromBrush(MwiContainer.Background);
-                return backColor == Colors.Transparent ? MwiAppViewModel.Instance.AppColor : backColor;
-            }
-        }
 
         //============  Buttons  ============
         public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;
-        public bool IsMinimizeButtonVisible => (VisibleButtons & Buttons.Minimize) == Buttons.Minimize && Resizable;
-        public bool IsMaximizeButtonVisible => (VisibleButtons & Buttons.Maximize) == Buttons.Maximize && Resizable;
+        public bool IsMinimizeButtonVisible => (VisibleButtons & Buttons.Minimize) == Buttons.Minimize && Resizable && (HostPanel != null || IsWindowed);
+        public bool IsMaximizeButtonVisible => (VisibleButtons & Buttons.Maximize) == Buttons.Maximize && Resizable && (HostPanel != null || IsWindowed);
+
         public bool IsDetachButtonVisible => (VisibleButtons & Buttons.Detach) == Buttons.Detach;
+        public bool IsSelectThemeButtonVisible => (VisibleButtons & Buttons.SelectTheme) == Buttons.SelectTheme;
 
         //============  Commands  =============
         public RelayCommand CmdDetach { get; private set; }
@@ -263,6 +207,7 @@ namespace WpfLib.Controls
         public RelayCommand SysCmdMaximize { get; private set; }
         public RelayCommand SysCmdRestore { get; private set; }
         public RelayCommand CmdClose { get; private set; }
+        public RelayCommand CmdSelectTheme { get; private set; }
         //=========================
         public static readonly DependencyProperty AllowDetachProperty = DependencyProperty.Register(nameof(AllowDetach), typeof(bool), typeof(MwiChild), new FrameworkPropertyMetadata(true));
         public bool AllowDetach
@@ -290,6 +235,13 @@ namespace WpfLib.Controls
         {
             get => (bool)GetValue(AllowCloseProperty);
             set => SetValue(AllowCloseProperty, value);
+        }
+        //================================
+        public static readonly DependencyProperty AllowSelectThemeProperty = DependencyProperty.Register(nameof(AllowSelectTheme), typeof(bool), typeof(MwiChild), new FrameworkPropertyMetadata(true));
+        public bool AllowSelectTheme
+        {
+            get => (bool)GetValue(AllowSelectThemeProperty);
+            set => SetValue(AllowSelectThemeProperty, value);
         }
         //================================
         public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(MwiChild), new FrameworkPropertyMetadata(false));
@@ -350,7 +302,7 @@ namespace WpfLib.Controls
         //==============================
         public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.Register("VisibleButtons",
             typeof(Buttons), typeof(MwiChild),
-            new FrameworkPropertyMetadata(Buttons.Close | Buttons.Minimize | Buttons.Maximize | Buttons.Detach,
+            new FrameworkPropertyMetadata(Buttons.Close | Buttons.Minimize | Buttons.Maximize | Buttons.Detach  | Buttons.SelectTheme,
                 (o, args) => ((MwiChild) o).UpdateUI()));
         public Buttons VisibleButtons
         {
@@ -358,30 +310,55 @@ namespace WpfLib.Controls
             set => SetValue(VisibleButtonsProperty, value);
         }
         //==============================
+        #endregion
+
+        #region ===============  IColorThemeSupport  =================
+        public MwiThemeInfo ActualTheme => this.GetActualTheme();
+        public Color ActualThemeColor => this.GetActualThemeColor();
+        public IColorThemeSupport ColorThemeParent => MwiContainer;
+        //=============
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
-            typeof(MwiThemeInfo), typeof(MwiChild), new FrameworkPropertyMetadata(null, OnThemeChanged));
+            typeof(MwiThemeInfo), typeof(MwiChild),
+            new FrameworkPropertyMetadata(null, (d, e) => ((MwiChild)d).UpdateColorTheme(false, true)));
 
         public MwiThemeInfo Theme
         {
             get => (MwiThemeInfo)GetValue(ThemeProperty);
             set => SetValue(ThemeProperty, value);
         }
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue is MwiThemeInfo themeInfo)
-            {
-                var mwiChild = (MwiChild)d;
-                // Delay because no fill color for some icons
-                mwiChild.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    // UnloadingHelper.ClearResources(mwiChild.Resources);
-                    foreach (var f1 in themeInfo.GetResources())
-                        FillResources(mwiChild, f1);
+        //==============================
+        public static readonly DependencyProperty ThemeColorProperty = DependencyProperty.Register("ThemeColor",
+            typeof(Color?), typeof(MwiChild),
+            new FrameworkPropertyMetadata(null, (d, e) => ((MwiChild)d).UpdateColorTheme(true, true)));
 
-                    if (mwiChild.TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
-                        colorProxy.Value = mwiChild.BaseColor;
-                 }), DispatcherPriority.Render);
-            }
+        public Color? ThemeColor
+        {
+            get => (Color?)GetValue(ThemeColorProperty);
+            set => SetValue(ThemeColorProperty, value);
+        }
+        //=================
+        public void UpdateColorTheme(bool colorChanged, bool processChildren)
+        {
+            if (this.IsElementDisposing()) return;
+
+            // Delay because no fill color for some icons
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (!colorChanged && ActualTheme != null)
+                {
+                    foreach (var f1 in ActualTheme.GetResources())
+                        FillResources(this, f1);
+                }
+
+                if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
+                    colorProxy.Value = ActualThemeColor;
+            }), DispatcherPriority.Render);
+
+            OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
+
+            if (processChildren)
+                foreach (var element in this.GetVisualChildren().OfType<MwiContainer>())
+                    element.UpdateColorTheme(colorChanged, true);
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
         {
@@ -390,10 +367,9 @@ namespace WpfLib.Controls
             foreach (var key in resources.Keys.OfType<string>().Where(key => !key.StartsWith("Mwi.Container") && !key.StartsWith("Mwi.Bar")))
                 fe.Resources[key] = resources[key];
         }
-
         #endregion
 
         private void UpdateUI() => OnPropertiesChanged(nameof(IsCloseButtonVisible), nameof(IsMaximizeButtonVisible),
-            nameof(IsMinimizeButtonVisible), nameof(IsDetachButtonVisible));
+            nameof(IsMinimizeButtonVisible), nameof(IsDetachButtonVisible), nameof(IsSelectThemeButtonVisible));
     }
 }

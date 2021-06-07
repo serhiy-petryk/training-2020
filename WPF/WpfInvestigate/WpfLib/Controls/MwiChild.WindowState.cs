@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using WpfLib.Common;
+using WpfLib.Helpers;
 using WpfLib.ViewModels;
 
 namespace WpfLib.Controls
@@ -110,6 +111,9 @@ namespace WpfLib.Controls
             ((MwiChild)sender).WindowStateValueChanged((WindowState)e.NewValue, (WindowState)e.OldValue);
         private async void WindowStateValueChanged(WindowState newWindowState, WindowState previousWindowState)
         {
+            // if (this.IsElementDisposing() || (HostPanel == null && !IsWindowed)) return;
+            if (this.IsElementDisposing()) return; // not init or disposed
+
             if (previousWindowState == WindowState.Maximized)
             {
                 BindingOperations.ClearBinding(this, WidthProperty);

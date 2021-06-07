@@ -1,0 +1,182 @@
+﻿<Window x:Class="WpfLib.Obsolete.TestViews.RippleButtonTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:common="clr-namespace:WpfLib.Common"
+        xmlns:obsolete="clr-namespace:WpfLib.Obsolete"
+        xmlns:effects="clr-namespace:WpfLib.Effects"
+        mc:Ignorable="d"
+        Title="Obsolete RippleButtonTests" Height="450" Width="800">
+
+    <Window.Resources>
+
+        <SolidColorBrush x:Key="BG" Color="#FF8194AA"/>
+
+        <!-- ========= -->
+        <Style TargetType="Path">
+            <Setter Property="Fill" Value="Black"/>
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Height" Value="24"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="0 0 3 0"/>
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+
+        <!-- ========= -->
+        <Path x:Key="DownArrowPath" x:Shared="False" Width="8.5" Height="3" Data="M2.5,0L8.5,0 5.5,3z" VerticalAlignment="Center"/>
+        <StackPanel x:Key="OpenIcon" x:Shared="False">
+            <Path Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"/>
+            <StaticResource ResourceKey="DownArrowPath"/>
+        </StackPanel>
+
+        <ScaleTransform x:Key="ScaleTransform" CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical" LayoutTransform="{StaticResource ScaleTransform}">
+            <TextBlock>Ripple buttons</TextBlock>
+            <ToolBar Margin="0" Padding="0" Height="30" Background="Gainsboro" Foreground="Yellow">
+                <obsolete:RippleButton Margin="2 0" Padding="0" Width="26" Height="26" Background="White" Foreground="Black" RippleColor="GreenYellow">
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Line StrokeThickness="2" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" X1="0" X2="10" Y1="0" Y2="10" />
+                        <Line StrokeThickness="2" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" X1="0" X2="10" Y1="10" Y2="0" />
+                    </Grid>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Padding="0" Width="26" Height="26" VerticalAlignment="Center" Background="White" Foreground="Black" RippleColor="GreenYellow">
+                    <TextBlock Text="H" Margin="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Padding="0" Width="26" Height="26" VerticalAlignment="Center"
+                                       IsEnabled="False" Background="White" Foreground="Black" RippleColor="GreenYellow">
+                    <TextBlock Text="H" Margin="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Padding="0" Width="26" Height="26" VerticalAlignment="Center"
+                                       Background="#6739B6" Foreground="White" RippleColor="White">
+                    <TextBlock Text="H" Margin="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Padding="0" Width="26" Height="26" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White">
+                    <Button Margin="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"/>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Width="36" Padding="0" Height="26" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White"  Click="ButtonBase_OnClick">
+                    <StackPanel Margin="0 0 5 0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Path Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"/>
+                        <Path Width="8.5" Height="3" Data="M2.5,0L8.5,0 5.5,3z" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Width="36" Padding="0" Height="26" VerticalAlignment="Center" Background="#FF6739B6" RippleColor="#FFe0d5f2" Click="Dropdown_Click">
+                    <StackPanel Margin="0 0 5 0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Path Fill="White" Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"/>
+                        <Path Fill="White" Width="8.5" Height="3" Data="M2.5,0L8.5,0 5.5,3z" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </obsolete:RippleButton>
+
+                <obsolete:RippleButton Margin="2 0" Width="100" Padding="0" Height="26" VerticalAlignment="Center" Background="{StaticResource BG}" RippleColor="#FFe0d5f2">
+                    <CheckBox IsThreeState="True" IsChecked="False" Height="20" Content="Неотмечено" />
+                </obsolete:RippleButton>
+
+                <Separator/>
+                <Button>AAA</Button>
+
+                <Separator/>
+
+                <obsolete:PathToggleButton x:Uid="WindowsMenuButton" Width="18" Margin="0 0 1 0" Foreground="Black" PathWidth="10" PathHeight="10" Padding="1 7"
+                                       ToolTip="Open/Close Windows menu"
+                                       Visibility="{Binding Path=Children.Count, Converter={x:Static common:VisibilityConverter.Instance}, ConverterParameter=Hide}"
+                                       GeometryOff="M 0 2.5 L 5 7.5 L 10 2.5 Z"
+                                       GeometryOn="M9.5 2.136875L7.863125 0.5L5 3.363125L2.136875 0.5L0.5 2.136875L3.363125 5L0.5 7.863125L2.136875 9.5L5 6.636875L7.863125 9.5L9.5 7.863125L6.636875 5L9.5 2.136875Z">
+                </obsolete:PathToggleButton>
+
+                <Separator/>
+
+                <obsolete:RippleButton Margin="2 0" Width="38" Padding="0" Height="26" VerticalAlignment="Center" RippleColor="#FFe0d5f2">
+                    <ToggleButton Content="{StaticResource OpenIcon}" Padding="0" IsThreeState="False" Checked="OpenSettingButton_OnChecked"
+                                  Background="{StaticResource BG}" Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+                        <ToggleButton.Resources>
+                            <ContextMenu x:Key="items" StaysOpen="False" Placement="Bottom" LayoutTransform="{StaticResource ScaleTransform}">
+                                <MenuItem Header="Copy"/>
+                                <MenuItem Header="Paste"/>
+                                <MenuItem Header="Delete"/>
+                            </ContextMenu>
+                        </ToggleButton.Resources>
+                    </ToggleButton>
+                </obsolete:RippleButton>
+
+                <Separator/>
+
+                <ToggleButton x:Name="OpenSettingButton" Content="{StaticResource OpenIcon}" Padding="0" IsThreeState="False" Checked="OpenSettingButton_OnChecked">
+                    <ToggleButton.Resources>
+                        <ContextMenu x:Key="items" StaysOpen="False" Placement="Bottom" LayoutTransform="{StaticResource ScaleTransform}">
+                            <MenuItem Header="Copy"/>
+                            <MenuItem Header="Paste"/>
+                            <MenuItem Header="Delete"/>
+                        </ContextMenu>
+                    </ToggleButton.Resources>
+                </ToggleButton>
+            </ToolBar>
+
+            <TextBlock>Combobox</TextBlock>
+            <StackPanel Orientation="Horizontal" Height="30" Background="Gainsboro" VerticalAlignment="Top" >
+                <obsolete:RippleButton Margin="2 0" Padding="0" Width="26" Height="26"
+                                       Background="White" Foreground="Black" RippleColor="GreenYellow">
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Line StrokeThickness="2" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" X1="0" X2="10" Y1="0" Y2="10" />
+                        <Line StrokeThickness="2" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" X1="0" X2="10" Y1="10" Y2="0" />
+                    </Grid>
+                </obsolete:RippleButton>
+
+                <AdornerDecorator>
+                <ComboBox Name="phonesList" Height="30" VerticalAlignment="Center" Width="100" IsEditable="True" VerticalContentAlignment="Center"
+                          TextBoxBase.TextChanged="ComboBox_TextChanged" effects:WatermarkEffect.Watermark="watermark">
+                    <TextBlock>LG Nexus 5X</TextBlock>
+                    <TextBlock>Huawai Nexus 6P</TextBlock>
+                    <TextBlock>iPhone 6S</TextBlock>
+                    <TextBlock>iPhone 6S Plus</TextBlock>
+                    <TextBlock>Microsoft Lumia 950</TextBlock>
+                </ComboBox>
+                </AdornerDecorator>
+                <TextBox Width="100" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" VerticalContentAlignment="Center" />
+
+                <obsolete:RippleButton Margin="8 0" Width="100" Height="20" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White"
+                                       Click="ButtonBase_OnClick">
+                    <TextBlock Text="Hellow world!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </obsolete:RippleButton>
+
+                <TextBlock Text="Hellow world!" effects:ClickEffect.RippleColor="White" Margin="8 0" Width="100" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#6739B6" Foreground="White"/>
+
+                <obsolete:RippleButton Margin="8 0" Width="70" Height="20" VerticalAlignment="Center" Background="#6739B6" Foreground="White" RippleColor="White">
+                    <Button Content="Button" Background="Transparent" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonBase_OnClick"/>
+                </obsolete:RippleButton>
+            </StackPanel>
+
+        </StackPanel>
+
+        <Grid Grid.Column="1" Background="AntiqueWhite">
+            <Slider x:Name="uiScaleSlider"
+                    Focusable="False"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.1" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
+        </Grid>
+    </Grid>
+</Window>

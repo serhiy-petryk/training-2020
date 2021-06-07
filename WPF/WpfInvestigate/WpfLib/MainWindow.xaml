@@ -47,8 +47,9 @@
                 </Grid.LayoutTransform>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition MaxWidth="250"/>
-                    <ColumnDefinition MaxWidth="250"/>
+                    <ColumnDefinition MaxWidth="220"/>
+                    <ColumnDefinition MaxWidth="220"/>
+                    <ColumnDefinition MaxWidth="240"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5" MaxWidth="500">
@@ -70,6 +71,7 @@
                     <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
                     <Button x:Name="MwiTemplate" Width="200" Margin="0 5" Content="WiP: Mwi Template" Click="MwiTemplate_OnClick"/>
                     <Button x:Name="MemoryLeakInvestigation" Width="200" Margin="0 5" Content="MemoryLeakInvestigation" Click="MemoryLeakInvestigation_OnClick"/>
+                    <Button x:Name="ThemeSelectorTest" Width="200" Margin="0 5" Content="Theme Selector Test" Click="ThemeSelectorTest_OnClick"/>
 
                     <WrapPanel Margin="5" HorizontalAlignment="Stretch">
                         <Border Width="60" Height="60" Background="Gainsboro" BorderBrush="Red" BorderThickness="1" Padding="0 0">
@@ -89,11 +91,6 @@
                         <Button Content="Memory usage" Click="MemoryUsageOnClick"/>
                         <Button Content="MwiContainer Memory test" Click="OnMwiContainerMemoryTestClick"/>
                         <Button Content="MwiStartup Memory test" Click="OnMwiStartupMemoryTestClick"/>
-                    </WrapPanel>
-
-                    <WrapPanel Margin="5">
-                        <Button x:Name="TestButton3" Click="TestButton3_OnClick" Content="Test button 2"/>
-                        <Button x:Name="TestButton4" Content="as{Binding TestProperty}" Click="ButtonBase_OnClick"/>
                     </WrapPanel>
 
                     <WrapPanel Margin="5">
@@ -136,6 +133,19 @@
                     <Button x:Name="KeyboardTest" Margin="5" Content="Others: Keyboard" Click="KeyboardTest_OnClick"/>
                     <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="Others: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
                     <Button x:Name="WiPTest" Margin="5" Content="WiP Tests" Click="WiPTest_OnClick"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
+                    <Label>Obsolete:</Label>
+                    <Button x:Name="ObsoleteNumericUpDownTest" Width="200" Margin="0 5" Content="Obsolete: NumericUpDown" Click="ObsoleteNumericUpDownTest_OnClick"/>
+                    <Button x:Name="ObsoleteRippleButtonTest" Width="250" Margin="0 5" Content="Obsolete (use RippleEffect): RippleButton" Click="ObsoleteRippleButtonTest_OnClick"/>
+                    <Button x:Name="ObsoleteTests" Width="200" Margin="0 5" Content="Obsolete: ControlLibrary" Click="ObsoleteControlLibrary_OnClick"/>
+                    <Button x:Name="ObsoleteMonochromeButtonTest" Width="200" Margin="0 5" Content="Obsolete: MonochromeButton" Click="ObsoleteMonochromeButtonTest_OnClick"/>
+                    <Button x:Name="ObsoleteDualPathToggleButtonEffectTest" Width="200" Margin="0 5" Content="Obsolete: DualPathToggleButtonEffect" Click="ObsoleteDualPathToggleButtonEffectTest_OnClick"/>
+                    <Button x:Name="ObsoleteFlatButtonTest" Width="200" Margin="0 5" Content="Obsolete: FlatButton" Click="ObsoleteFlatButtonTest_OnClick"/>
+                    <Button x:Name="ObsoleteShadowEffectTest" Margin="5" Content="Obsolete: ShadowEffect Tests" Click="ObsoleteShadowEffectTest_OnClick"/>
+                    <Button x:Name="ObsoleteDialogItemsTest" Width="200" Margin="0 5" Content="Obsolete: DialogItemsTests" Click="ObsoleteDialogItemsTests_OnClick"/>
+                    <Button x:Name="OldButtonStyleTest" Margin="5" Content="Old: ButtonStyle Tests" Click="OldButtonStyleTest_OnClick"/>
                 </StackPanel>
             </Grid>
         </ScrollViewer>

@@ -3,19 +3,14 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:controls="clr-namespace:WpfLib.Controls"
                     xmlns:effects="clr-namespace:WpfLib.Effects"
-                    xmlns:common="clr-namespace:WpfLib.Common"
-                    xmlns:viewModels="clr-namespace:WpfLib.ViewModels">
-
-    <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WpfLib;component/Themes/Mwi.Wnd7.xaml" />
-    </ResourceDictionary.MergedDictionaries>-->
+                    xmlns:common="clr-namespace:WpfLib.Common">
 
     <!-- Default application icon based on https://fontawesome.com/ fa-fighter-jet (size 1920x1920) -->
     <Geometry x:Key="DefaultIconGeometry">M1920 960q-1 32-288 96l-352 32-224 64h-64l-293 352h69q26 0 45 4.5t19 11.5-19 11.5-45 4.5h-320v-32h64v-416h-160l-192 224h-96l-32-32v-192h32v-32h128v-8l-192-24v-128l192-24v-8h-128v-32h-32v-192l32-32h96l192 224h160v-416h-64v-32h320q26 0 45 4.5t19 11.5-19 11.5-45 4.5h-69l293 352h64l224 64 352 32q261 58 287 93z</Geometry>
     <DrawingImage x:Key="Mwi.DefaultIcon" x:Shared="False">
         <DrawingImage.Drawing>
             <GeometryDrawing Geometry="{StaticResource DefaultIconGeometry}"
-                             Brush="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=BaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"/>
+                             Brush="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"/>
         </DrawingImage.Drawing>
     </DrawingImage>
 
@@ -50,9 +45,8 @@
             </ControlTemplate>
         </Style.Resources>
 
-        <Setter Property="MinWidth" Value="150"/>
+        <Setter Property="MinWidth" Value="210"/>
         <Setter Property="MinHeight" Value="50"/>
-        <Setter Property="Theme" Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=CurrentTheme}"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="DataContext" Value="{Binding RelativeSource={RelativeSource Self}}"/>
@@ -89,7 +83,6 @@
                                 <Border x:Name="SecondRightBottomBorder" BorderThickness="0 0 1 1" Background="Transparent" Margin="0"
                                         CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
                                         BorderBrush="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.SecondBorders.Visibility}"/>
-
                             </Grid>
                         </Border>
 
@@ -168,13 +161,20 @@
                             <ContentPresenter Grid.Column="3" Content="{TemplateBinding RightHeaderBar}"/>
 
                             <!-- Window buttons -->
-                            <Button Grid.Column="4" Focusable="False" x:Name="DetachedButton" Command="{Binding CmdDetach}" Style="{DynamicResource Mwi.DetachedButtonStyle}"
+                            <Button Grid.Column="4" Focusable="False" x:Name="DetachedButton" ToolTip="Detach/attach window" Command="{Binding CmdDetach}"
+                                    Style="{DynamicResource Mwi.DetachedButtonStyle}"
                                     Visibility="{Binding IsDetachButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                            <Button Grid.Column="5" Focusable="False" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource Mwi.MinimizeButtonStyle}"
+                            <Button Grid.Column="5" Focusable="False" x:Name="SelectThemeButton" Command="{Binding CmdSelectTheme}" Style="{DynamicResource Mwi.SelectThemeButtonStyle}"
+                                    Visibility="{Binding IsSelectThemeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                <Button.ToolTip>
+                                    <ToolTip Content="{Binding ActualTheme.Name}" ContentStringFormat="Change the theme of window. Current theme is {0}"/>
+                                </Button.ToolTip>
+                            </Button>
+                            <Button Grid.Column="6" Focusable="False" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource Mwi.MinimizeButtonStyle}"
                                     Visibility="{Binding IsMinimizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                            <Button Grid.Column="6" Focusable="False" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource Mwi.MaximizeButtonStyle}"
+                            <Button Grid.Column="7" Focusable="False" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource Mwi.MaximizeButtonStyle}"
                                     Visibility="{Binding IsMaximizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
-                            <Button Grid.Column="7" Focusable="False" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{DynamicResource Mwi.CloseButtonStyle}"
+                            <Button Grid.Column="8" Focusable="False" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{DynamicResource Mwi.CloseButtonStyle}"
                                     Visibility="{Binding IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
                         </Grid>
                     </Grid>

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfLib.Controls"
         xmlns:effects="clr-namespace:WpfLib.Effects"
+        xmlns:common="clr-namespace:WpfLib.Common"
         mc:Ignorable="d"
         Title="ColorControlTests" Height="600" Width="700">
 
@@ -58,7 +59,7 @@
                             <Viewbox Grid.Column="0">
                                 <Path Stretch="Uniform" Data="{StaticResource TestGeometry}"/>
                             </Viewbox>
-                            <TextBlock Grid.Column="1" Margin="4 0 0 0" Foreground="Black" Text="Content"/>
+                            <TextBlock Grid.Column="1" Margin="4 0 0 0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Text="Content"/>
                         </Grid>
                     </Button>
 
@@ -92,21 +93,28 @@
 
                     <Button BorderThickness="2" Margin="5" Content="Monochrome" effects:ChromeEffect.Monochrome="{Binding ElementName=ColorControl, Path=Color}"/>
 
-                    <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left" Fill="{Binding ElementName=ColorControl, Path=ColorBrush}"/>
+                    <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left" Fill="{Binding ElementName=ColorControl, Path=Color, Converter={x:Static common:ColorHslBrush.Instance}}"/>
 
                     <Rectangle Width="20" Height="20" Margin="5" HorizontalAlignment="Left">
                         <Rectangle.Fill>
                             <SolidColorBrush x:Name="Brush" Color="{Binding ElementName=ColorControl, Path=Color, Mode=TwoWay}"/>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Button Content="Save Color" Margin="5" Height="24" Click="SaveButton_Click" HorizontalAlignment="Left"/>
-                    <Button Content="Restore Color" Margin="2" Height="34" Click="RestoreButton_Click" HorizontalAlignment="Left"/>
                     <Button Content="Change Color" Margin="2" Height="34" Click="ChangeColorButton_Click" HorizontalAlignment="Left"/>
+
+                    <TextBlock Margin="10 0 2 0" VerticalAlignment="Center">IsEnabled?</TextBlock>
+                    <CheckBox x:Name="IsEnabledFlag" IsThreeState="False" VerticalAlignment="Center" IsChecked="True"/>
+
+                    <TextBlock Margin="10 0 2 0" VerticalAlignment="Center">IsAlphaSliderVisible?</TextBlock>
+                    <CheckBox x:Name="IsAlphaSliderVisible" IsThreeState="False" VerticalAlignment="Center" IsChecked="True"/>
                 </WrapPanel>
             </Grid>
 
             <!-- =============== -->
-            <controls:ColorControl x:Name="ColorControl" Grid.Row="1" Color="#CCFF8040"/>
+            <controls:ColorControl x:Name="ColorControl" Grid.Row="1"
+                                   Color="GreenYellow"
+                                   IsEnabled="{Binding ElementName=IsEnabledFlag, Path=IsChecked, Mode=TwoWay}"
+                                   IsAlphaSliderVisible="{Binding ElementName=IsAlphaSliderVisible, Path=IsChecked, Mode=TwoWay}"/>
         </Grid>
 
     </Grid>

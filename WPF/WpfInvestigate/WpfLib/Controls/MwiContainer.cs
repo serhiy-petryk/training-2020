@@ -14,7 +14,6 @@ using System.Windows.Threading;
 using WpfLib.Common;
 using WpfLib.Helpers;
 using WpfLib.Themes;
-using WpfLib.ViewModels;
 
 namespace WpfLib.Controls
 {
@@ -22,7 +21,7 @@ namespace WpfLib.Controls
     /// Interaction logic for MwiContainer.xaml
     /// </summary>
     [ContentProperty("Children")]
-    public partial class MwiContainer: ContentControl, INotifyPropertyChanged
+    public partial class MwiContainer: ContentControl, INotifyPropertyChanged, IColorThemeSupport
     {
         const int WINDOW_OFFSET_STEP = 25;
         private static int controlId = 0;
@@ -38,18 +37,8 @@ namespace WpfLib.Controls
         public MwiContainer()
         {
             CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
-            /*var dpd = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
-            dpd.AddValueChanged(this, (sender, args) => UpdateResources(true));*/
-
-            MwiAppViewModel.Instance.PropertyChanged += OnMwiAppViewModelPropertyChanged;
             Children.CollectionChanged += OnChildrenCollectionChanged;
             Unloaded += OnUnloaded;
-        }
-
-        private void OnMwiAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(MwiAppViewModel.AppColor))
-                UpdateResources(true);
         }
 
         private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -143,10 +132,6 @@ namespace WpfLib.Controls
             if (GetTemplateChild("WindowsMenuButton") is ToggleButton windowsMenuButton)
                 windowsMenuButton.Checked += OnWindowsMenuButtonChecked;
 
-            // Children.CollectionChanged += OnChildrenCollectionChanged;
-            var dpdBackground = DependencyPropertyDescriptor.FromProperty(BackgroundProperty, typeof(MwiContainer));
-            dpdBackground.AddValueChanged(this, OnBackgroundChanged);
-
             if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
             {
                 wnd.Activated += OnWindowActivated;
@@ -155,11 +140,10 @@ namespace WpfLib.Controls
 
             if (DesignerProperties.GetIsInDesignMode(this)) // only for correct view in VS designer
                 Dispatcher.BeginInvoke(new Action(() => OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children))), DispatcherPriority.Background);
-            // Dispatcher.BeginInvoke(new Action(() => OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children))), DispatcherPriority.Background);
             // To fix VS correct view of MwiStartup: DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal)
 
+            UpdateColorTheme(false, true);
             // =======================
-            void OnBackgroundChanged(object sender, EventArgs e) => UpdateResources(true);
             void OnWindowActivated(object sender, EventArgs e)
             {
                 if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
@@ -188,7 +172,6 @@ namespace WpfLib.Controls
                     }
                     Children.CollectionChanged -= OnChildrenCollectionChanged;
                 }
-                MwiAppViewModel.Instance.PropertyChanged -= OnMwiAppViewModelPropertyChanged;
                 _leftPanelButton = null;
                 _leftPanelContainer = null;
                 ScrollViewer = null;
@@ -215,16 +198,6 @@ namespace WpfLib.Controls
         internal IEnumerable<MwiChild> InternalWindows => Children.Cast<MwiChild>().Where(w => !w.IsWindowed);
         internal MwiChild GetTopChild(IEnumerable<object> items) => items.Cast<MwiChild>().OrderByDescending(Panel.GetZIndex).FirstOrDefault();
 
-        private Color BaseColor
-        {
-            get
-            {
-                if (Theme?.Id == "Windows7") return MwiThemeInfo.Wnd7BaseColor;
-                var backColor = Tips.GetColorFromBrush(Background);
-                return backColor == Colors.Transparent ? MwiAppViewModel.Instance.AppColor : backColor;
-            }
-        }
-
         // Offset for new window.
         private double _windowOffset = -WINDOW_OFFSET_STEP;
 
@@ -245,34 +218,67 @@ namespace WpfLib.Controls
                 : ScrollBarVisibility.Auto;
 
         //==============================
+        public static readonly DependencyProperty MwiContainerProperty = DependencyProperty.RegisterAttached("MwiContainer", typeof(MwiContainer), typeof(MwiContainer));
+        public static void SetMwiContainer(DependencyObject element, MwiContainer value) => element?.SetValue(MwiContainerProperty, value); // NotNull propagation need to prevent VS designer error
+        public static MwiContainer GetMwiContainer(DependencyObject element) => element?.GetValue(MwiContainerProperty) as MwiContainer; // NotNull propagation need to prevent VS designer error
+
+        #endregion
+
+        #region =================  INotifyPropertyChanged  ==================
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #region ===============  IColorThemeSupport  =================
+        public MwiThemeInfo ActualTheme => this.GetActualTheme();
+        public Color ActualThemeColor => this.GetActualThemeColor();
+        public IColorThemeSupport ColorThemeParent => this.GetVisualParents().OfType<MwiChild>().FirstOrDefault();
+        //=================
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
-            typeof(MwiThemeInfo), typeof(MwiContainer), new FrameworkPropertyMetadata(null, OnThemeChanged));
+            typeof(MwiThemeInfo), typeof(MwiContainer),
+            new FrameworkPropertyMetadata(null, (d, e) => ((MwiContainer)d).UpdateColorTheme(false, true)));
 
         public MwiThemeInfo Theme
         {
             get => (MwiThemeInfo)GetValue(ThemeProperty);
             set => SetValue(ThemeProperty, value);
         }
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //=================
+        public static readonly DependencyProperty ThemeColorProperty = DependencyProperty.Register("ThemeColor",
+            typeof(Color?), typeof(MwiContainer),
+            new FrameworkPropertyMetadata(null, (d, e) => ((MwiContainer) d).UpdateColorTheme(true, true)));
+
+        public Color? ThemeColor
         {
-            if (e.NewValue is MwiThemeInfo)
-            {
-                var container = (MwiContainer)d;
-                // container.Dispatcher.BeginInvoke(new Action(() => { container.UpdateResources(false); }), DispatcherPriority.Normal);
-                container.UpdateResources(false);
-            }
+            get => (Color?)GetValue(ThemeColorProperty);
+            set => SetValue(ThemeColorProperty, value);
         }
-        private void UpdateResources(bool onlyColor)
+        //================
+        public void UpdateColorTheme(bool colorChanged, bool processChildren)
         {
-            if (!onlyColor && Theme != null)
+            if (this.IsElementDisposing()) return;
+
+            UpdateResources(false);
+            OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
+
+            if (processChildren)
+                foreach (MwiChild element in Children)
+                    element.UpdateColorTheme(colorChanged, true);
+        }
+        private void UpdateResources(bool colorChanged)
+        {
+            if (!colorChanged && ActualTheme != null)
             {
-                // UnloadingHelper.ClearResources(Resources);
-                foreach (var f1 in Theme.GetResources())
+                foreach (var f1 in ActualTheme.GetResources())
                     FillResources(this, f1);
             }
 
             if (TryFindResource("Mwi.Container.BaseColorProxy") is BindingProxy colorProxy)
-                colorProxy.Value = BaseColor;
+                colorProxy.Value = ActualThemeColor;
             (GetTemplateChild("WindowsBar") as MwiBar)?.UpdateTabItems();
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)
@@ -283,20 +289,6 @@ namespace WpfLib.Controls
                 fe.Resources[key] = resources[key];
         }
 
-        //==============================
-        public static readonly DependencyProperty MwiContainerProperty = DependencyProperty.RegisterAttached("MwiContainer", typeof(MwiContainer), typeof(MwiContainer));
-        public static void SetMwiContainer(DependencyObject element, MwiContainer value) => element?.SetValue(MwiContainerProperty, value); // NotNull propagation need to prevent VS designer error
-        public static MwiContainer GetMwiContainer(DependencyObject element) => element?.GetValue(MwiContainerProperty) as MwiContainer; // NotNull propagation need to prevent VS designer error
-
         #endregion
-        #region =================  INotifyPropertyChanged  ==================
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertiesChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
-
     }
 }

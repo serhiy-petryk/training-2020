@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:effects="clr-namespace:WpfLib.Effects"
+        xmlns:controls="clr-namespace:WpfLib.Controls"
         mc:Ignorable="d"
         Title="TextBoxTests" Height="325" Width="800">
 
@@ -45,7 +46,7 @@
                     <Button Margin="2" Content="Change Foreground" Click="ChangeForeground_OnClick"/>
                     <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick"/>
                     <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
-                    <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" Style="{StaticResource ReadOnlyTextBoxStyle}"/>
+                    <controls:LabelBox Margin="2" Width="70" Background="Yellow" Foreground="Blue"/>
                 </WrapPanel>
 
                 <WrapPanel Margin="5">

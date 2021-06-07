@@ -67,16 +67,16 @@ namespace WpfLib.Controls
         }
 
         private Grid _panel => Child as Grid;
-        private FrameworkElement _host;
+        public FrameworkElement Host { get; }
         #endregion
 
         public DialogAdorner(FrameworkElement host = null) : base(GetHost(host))
         {
-            _host = GetHost(host);
+            Host = GetHost(host);
             if (AdornerLayer == null)
                 throw new Exception("DialogAdorner constructor error! AdornerLevel can't be null");
 
-            if (_host is Window)
+            if (Host is Window)
             {
                 var hostMargin = (AdornedElement as FrameworkElement).Margin;
                 Margin = new Thickness(-hostMargin.Left, -hostMargin.Top, hostMargin.Left, hostMargin.Top);
