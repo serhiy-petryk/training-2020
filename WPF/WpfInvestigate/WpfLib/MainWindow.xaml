@@ -4,10 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
-        xmlns:controls="clr-namespace:WpfLib.Controls"
-        xmlns:effects="clr-namespace:WpfLib.Effects"
         mc:Ignorable="d"
-        Title="LIVE MainWindow" Height="700" Width="1200">
+        Title="LIVE MainWindow" Height="700" Width="1000">
 
     <Window.Resources>
         <SolidColorBrush x:Key="TestBrush" Color="GreenYellow"/>
@@ -47,9 +45,8 @@
                 </Grid.LayoutTransform>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition MaxWidth="220"/>
-                    <ColumnDefinition MaxWidth="220"/>
-                    <ColumnDefinition MaxWidth="240"/>
+                    <ColumnDefinition MaxWidth="270"/>
+                    <ColumnDefinition MaxWidth="270"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5" MaxWidth="500">
@@ -133,19 +130,6 @@
                     <Button x:Name="KeyboardTest" Margin="5" Content="Others: Keyboard" Click="KeyboardTest_OnClick"/>
                     <Button x:Name="BootstrapButtonTest" Width="200" Margin="0 5" Content="Others: BootstrapButtonTests" Click="BootstrapButtonTests_OnClick"/>
                     <Button x:Name="WiPTest" Margin="5" Content="WiP Tests" Click="WiPTest_OnClick"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
-                    <Label>Obsolete:</Label>
-                    <Button x:Name="ObsoleteNumericUpDownTest" Width="200" Margin="0 5" Content="Obsolete: NumericUpDown" Click="ObsoleteNumericUpDownTest_OnClick"/>
-                    <Button x:Name="ObsoleteRippleButtonTest" Width="250" Margin="0 5" Content="Obsolete (use RippleEffect): RippleButton" Click="ObsoleteRippleButtonTest_OnClick"/>
-                    <Button x:Name="ObsoleteTests" Width="200" Margin="0 5" Content="Obsolete: ControlLibrary" Click="ObsoleteControlLibrary_OnClick"/>
-                    <Button x:Name="ObsoleteMonochromeButtonTest" Width="200" Margin="0 5" Content="Obsolete: MonochromeButton" Click="ObsoleteMonochromeButtonTest_OnClick"/>
-                    <Button x:Name="ObsoleteDualPathToggleButtonEffectTest" Width="200" Margin="0 5" Content="Obsolete: DualPathToggleButtonEffect" Click="ObsoleteDualPathToggleButtonEffectTest_OnClick"/>
-                    <Button x:Name="ObsoleteFlatButtonTest" Width="200" Margin="0 5" Content="Obsolete: FlatButton" Click="ObsoleteFlatButtonTest_OnClick"/>
-                    <Button x:Name="ObsoleteShadowEffectTest" Margin="5" Content="Obsolete: ShadowEffect Tests" Click="ObsoleteShadowEffectTest_OnClick"/>
-                    <Button x:Name="ObsoleteDialogItemsTest" Width="200" Margin="0 5" Content="Obsolete: DialogItemsTests" Click="ObsoleteDialogItemsTests_OnClick"/>
-                    <Button x:Name="OldButtonStyleTest" Margin="5" Content="Old: ButtonStyle Tests" Click="OldButtonStyleTest_OnClick"/>
                 </StackPanel>
             </Grid>
         </ScrollViewer>

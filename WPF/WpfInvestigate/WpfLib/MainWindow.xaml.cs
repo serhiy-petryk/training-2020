@@ -13,8 +13,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using WpfLib.Common;
 using WpfLib.Helpers;
-using WpfLib.Obsolete;
-using WpfLib.Obsolete.TestViews;
 using WpfLib.Temp;
 using WpfLib.TestViews;
 using WpfLib.ViewModels;
@@ -77,16 +75,6 @@ namespace WpfLib
         private void FocusEffectTests_OnClick(object sender, RoutedEventArgs e) => new FocusEffectTests().Show();
         private void TextBoxTests_OnClick(object sender, RoutedEventArgs e) => new TextBoxTests().Show();
         private void ThemeSelectorTest_OnClick(object sender, RoutedEventArgs e) => new ThemeSelectorTest().Show();
-
-        private void ObsoleteNumericUpDownTest_OnClick(object sender, RoutedEventArgs e) => new NumericUpDownTests().Show();
-        private void ObsoleteRippleButtonTest_OnClick(object sender, RoutedEventArgs e) => new RippleButtonTests().Show();
-        private void ObsoleteControlLibrary_OnClick(object sender, RoutedEventArgs e) => new ObsoleteControlLibrary().Show();
-        private void ObsoleteMonochromeButtonTest_OnClick(object sender, RoutedEventArgs e) => new MonochromeButtonTests().Show();
-        private void ObsoleteDualPathToggleButtonEffectTest_OnClick(object sender, RoutedEventArgs e) => new DualPathToggleButtonEffectTests().Show();
-        private void ObsoleteFlatButtonTest_OnClick(object sender, RoutedEventArgs e) => new FlatButtonTests().Show();
-        private void ObsoleteShadowEffectTest_OnClick(object sender, RoutedEventArgs e) => new ShadowEffectTests().Show();
-        private void ObsoleteDialogItemsTests_OnClick(object sender, RoutedEventArgs e) => new DialogItemsTests().Show();
-        private void OldButtonStyleTest_OnClick(object sender, RoutedEventArgs e) => new XButtonStyleTests().Show();
 
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
         private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();

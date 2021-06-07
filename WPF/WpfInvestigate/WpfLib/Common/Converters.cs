@@ -283,31 +283,4 @@ namespace WpfLib.Common
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
-
-    // Converter for Controls.DoubleButton.xaml
-    public class ObsoleteDoubleButtonConverter : IValueConverter
-    {
-        public static ObsoleteDoubleButtonConverter LeftUpPolygonPoints = new ObsoleteDoubleButtonConverter { _isLeftUpPolygonPoints = true };
-        public static ObsoleteDoubleButtonConverter RightDownPolygonPoints = new ObsoleteDoubleButtonConverter();
-        public static ObsoleteDoubleButtonConverter RightDownMargin = new ObsoleteDoubleButtonConverter { _isRightDownMargin = true };
-
-        private bool _isLeftUpPolygonPoints = false;
-        private bool _isRightDownMargin = false;
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is double dValue)
-            {
-                if (_isRightDownMargin)
-                    return new Thickness(-dValue, 0, 0, 0);
-                return _isLeftUpPolygonPoints
-                    ? PointCollection.Parse($"0, 0, {dValue}, 0, 0, {dValue}")
-                    : PointCollection.Parse($"0, {dValue}, {dValue}, 0, {dValue}, {dValue}");
-            }
-
-            if (targetType == typeof(Thickness)) return new Thickness();
-            return $"0, 0";
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
 }

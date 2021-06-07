@@ -247,60 +247,6 @@
     <Compile Include="Helpers\EventHelper.Log.cs" />
     <Compile Include="Helpers\SelectAllOnFocusForTextBox.cs" />
     <Compile Include="Helpers\UnloadingHelper.cs" />
-    <Compile Include="Obsolete\AnimationHelper.cs" />
-    <Compile Include="Obsolete\DialogItems.cs" />
-    <Compile Include="Obsolete\Events.cs" />
-    <Compile Include="Obsolete\FlatButton.xaml.cs">
-      <DependentUpon>FlatButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\FlatButtonConverters\FlatButtonConverters.cs" />
-    <Compile Include="Obsolete\FocusEffect.cs" />
-    <Compile Include="Obsolete\MessageBlock.cs" />
-    <Compile Include="Obsolete\MonochromeButton.xaml.cs">
-      <DependentUpon>MonochromeButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\NumericUpDown.xaml.cs">
-      <DependentUpon>NumericUpDown.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\PathToggleButton.xaml.cs">
-      <DependentUpon>PathToggleButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\RippleButton.xaml.cs">
-      <DependentUpon>RippleButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\ShadowEffect.cs" />
-    <Compile Include="Obsolete\TestViews\ControlLibrary.xaml.cs">
-      <DependentUpon>ControlLibrary.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\TestViews\DialogTests.xaml.cs">
-      <DependentUpon>DialogTests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\TestViews\DualPathToggleButtonEffectTests.xaml.cs">
-      <DependentUpon>DualPathToggleButtonEffectTests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\TestViews\FlatButtonTests.xaml.cs">
-      <DependentUpon>FlatButtonTests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\TestViews\MonochromeButtonTests.xaml.cs">
-      <DependentUpon>MonochromeButtonTests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\TestViews\NumericUpDownTests.xaml.cs">
-      <DependentUpon>NumericUpDownTests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\TestViews\RippleButtonTests.xaml.cs">
-      <DependentUpon>RippleButtonTests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\TestViews\SampleDialogMovable.xaml.cs">
-      <DependentUpon>SampleDialogMovable.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\TestViews\ShadowEffectTests.xaml.cs">
-      <DependentUpon>ShadowEffectTests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\TextBoxExtensions.cs" />
-    <Compile Include="Obsolete\ToggleButtonHelper.cs" />
-    <Compile Include="Obsolete\XButtonStyleTests.xaml.cs">
-      <DependentUpon>XButtonStyleTests.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -340,78 +286,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MwiStartup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\DialogItems.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\FlatButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\ForObsolete.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\MessageBlock.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\MonochromeButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\NumericUpDown.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\PathToggleButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\RippleButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\TestViews\ControlLibrary.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\TestViews\DialogTests.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\TestViews\DualPathToggleButtonEffectTests.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\TestViews\FlatButtonTests.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\TestViews\MonochromeButtonTests.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\TestViews\NumericUpDownTests.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\TestViews\RippleButtonTests.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\TestViews\SampleDialogMovable.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\TestViews\ShadowEffectTests.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Obsolete\XButtonStyleTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
