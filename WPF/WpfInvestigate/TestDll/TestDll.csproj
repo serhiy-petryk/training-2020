@@ -53,6 +53,9 @@
     <Compile Include="MwiStartup.xaml.cs">
       <DependentUpon>MwiStartup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Samples\ResizableInheritanceSample.xaml.cs">
+      <DependentUpon>ResizableInheritanceSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViews\BootstrapButtonTests.xaml.cs">
       <DependentUpon>BootstrapButtonTests.xaml</DependentUpon>
     </Compile>
@@ -72,6 +75,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MwiStartup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\ResizableInheritanceSample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
