@@ -1,0 +1,68 @@
+﻿<Window x:Class="WpfSpLibDemo.TestViews.ChromeTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
+        xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+        mc:Ignorable="d"
+        Title="ChromeTests" Height="450" Width="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Background="White">
+            <Slider Grid.Column="0"
+                    x:Name="uiScaleSlider"
+                    Focusable="False"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.5" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
+        </Grid>
+
+        <Grid Grid.Column="1" UseLayoutRounding="True" SnapsToDevicePixels="True">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+
+            <StackPanel Orientation="Vertical">
+                <WrapPanel Margin="0 5">
+                    <Label Content="Controls:"/>
+                    <controls:NumericBox Margin="5 0" BorderThickness="0" Width="100" Background="Yellow" Foreground="Blue"
+                                         VisibleButtons="Close,Calculator,RightDown,Up" IsNullable="True" Value="23"
+                                         effects:WatermarkEffect.Watermark="No value"
+                                         effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
+
+                    <controls:TimePicker Margin="5 0" Background="Yellow" SelectedTimeFormat="Long" IsNullable="True" BorderThickness="0"
+                                         effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
+
+                    <controls:DateTimePicker Margin="5 0" Background="Yellow" SelectedTimeFormat="Long" IsNullable="True" BorderThickness="0"
+                                             effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
+
+                    <DatePicker Margin="5 0" Background="GreenYellow" Foreground="Blue"
+                                effects:DatePickerEffect.ClearButton="True" 
+                                effects:DatePickerEffect.IsNullable="True"
+                                effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <Button Content="Test button" Click="TestButton_OnClick"
+                            effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"/>
+                </WrapPanel>
+
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>

@@ -1,0 +1,89 @@
+﻿<Window x:Class="WpfSpLibDemo.TestViews.ControlEffectTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+        mc:Ignorable="d"
+        Title="ControlEffectTests" Height="600" Width="900">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Background="White">
+            <Slider Grid.Column="0"
+                    x:Name="uiScaleSlider"
+                    Focusable="False"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.5" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+
+            <StackPanel Orientation="Vertical">
+                <WrapPanel Orientation="Horizontal">
+                    <UserControl Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30"/>
+                    <Button Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="Orange" Background="Red" BorderThickness="2" Width="100" Height="30"
+                        VerticalContentAlignment="Center"/>
+
+                    <Button Margin="5" Content="Test animated control" effects:ChromeEffect.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
+                        effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                    <Label Content="Monochrome:" Margin="5 0" VerticalAlignment="Center"/>
+
+                    <CheckBox x:Name="cbMonochromeEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center"/>
+                    <Label Content="IsEnabled?" Margin="5 0" VerticalContentAlignment="Center"/>
+                    <Button Margin="5 0" Content="Change color" Click="Monochrome_ChangeColor_OnClick"/>
+
+                    <Grid Background="Black">
+                        <Button x:Name="MonochromeButtonBlack" Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
+                                IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
+                                effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid Background="White">
+                        <Button x:Name="MonochromeButtonWhite" Margin="5" Content="Test control" effects:ChromeEffect.Monochrome="LightBlue" BorderThickness="2" Padding="8 4" Height="30"
+                                IsEnabled="{Binding ElementName=cbMonochromeEnabled, Path=IsChecked}"
+                                effects:CornerRadiusEffect.CornerRadius="2" VerticalContentAlignment="Center"/>
+                    </Grid>
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                    <Label Content="Bichrome:" Margin="5 0" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="cbBichromeEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center"/>
+                    <Label Content="IsEnabled?" Margin="5 0" VerticalContentAlignment="Center"/>
+                    <Button Margin="5 0" Content="Change color" Click="Bichrome_ChangeColor_OnClick"/>
+
+                    <Grid Background="Black">
+                        <Button x:Name="BichromeButtonBlack" Width="140" Height="40" Content="Bichrome" FontWeight="Bold" BorderThickness="2" Margin="5"
+                                IsEnabled="{Binding ElementName=cbBichromeEnabled, Path=IsChecked}"
+                                effects:ChromeEffect.BichromeBackground="Blue" effects:ChromeEffect.BichromeForeground="Yellow"/>
+                    </Grid>
+                    <Grid Background="White">
+                        <Button x:Name="BichromeButtonWhite" Width="140" Height="40" Content="Bichrome" FontWeight="Bold" BorderThickness="2" Margin="5"
+                                IsEnabled="{Binding ElementName=cbBichromeEnabled, Path=IsChecked}"
+                                effects:ChromeEffect.BichromeBackground="Blue" effects:ChromeEffect.BichromeForeground="Yellow"/>
+                    </Grid>
+                </WrapPanel>
+
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>

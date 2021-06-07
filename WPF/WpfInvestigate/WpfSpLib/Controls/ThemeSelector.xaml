@@ -74,7 +74,7 @@
                           Foreground="{Binding ElementName=Root, Path=Foreground}"
                           Checked="OnUseDefaultColorChanged" Unchecked="OnUseDefaultColorChanged" />
                 <Border IsEnabled="{Binding ElementName=Root, Path=DataContext.IsColorControlEnabled}">
-                    <local:ColorControl x:Name="ColorControl" Margin="1" effects:CornerRadiusEffect.CornerRadius="6 6 0 0"/>
+                    <local:ColorControl x:Name="ColorControl" x:FieldModifier="public" Margin="1" effects:CornerRadiusEffect.CornerRadius="6 6 0 0"/>
                 </Border>
             </DockPanel>
         </Border>

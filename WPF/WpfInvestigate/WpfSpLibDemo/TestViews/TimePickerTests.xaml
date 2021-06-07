@@ -1,0 +1,187 @@
+﻿<Window x:Class="WpfSpLibDemo.TestViews.TimePickerTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
+        xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+        mc:Ignorable="d"
+        Title="TimePickerTest" Height="700" Width="1000">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Slider Grid.Column="0" x:Name="uiScaleSlider" Focusable="False"
+                HorizontalAlignment="Center" VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100" Value="1" Minimum="0.5" Maximum="4" Orientation="Vertical" Ticks="1"
+                IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
+
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+            <StackPanel.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </StackPanel.LayoutTransform>
+
+            <Label Margin="0 10 0 0"/>
+            <Label FontWeight="Bold">ToDo:</Label>
+            <Label Margin="8 0 0 0" Padding="0">-analog clock with digits</Label>
+            <Label Margin="8 0 0 0" Padding="0">-multicolumn combobox for hours/minutes/.. or зразу показати список без popup</Label>
+            <Label Margin="8 0 0 0" Padding="0">-Center for icon of TimePicker, test for high height (see DatePicker as example)</Label>
+            <Label Margin="8 0 0 0" Padding="0">-Center for clock image of TimePicker</Label>
+            <Label Margin="8 0 0 0" Padding="0">-ClearButton</Label>
+            <Label Margin="8 0 0 8" Padding="0">-space between second &amp; am/pm buttons</Label>
+
+            <WrapPanel Margin="0 5 0 0">
+                <controls:TimePicker Padding="0" Margin="0 0 5 0"
+                                     IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Short" />
+                <controls:TimePicker Padding="0" Margin="0 0 5 0"
+                                     IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long" />
+                <controls:DateTimePicker Padding="0" Margin="0 0 5 0" IsDateOnlyMode="True"
+                                         IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                         IsReadOnly="False" SelectedTimeFormat="Short" />
+                <controls:DateTimePicker Padding="0" Margin="0 0 5 0" IsDateOnlyMode="True"
+                                         IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                         IsReadOnly="False" SelectedTimeFormat="Long" />
+                <controls:DateTimePicker Padding="0" Margin="0 0 5 0" IsDateOnlyMode="False"
+                                         IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                         IsReadOnly="False" SelectedTimeFormat="Short" />
+                <controls:DateTimePicker Padding="0" Margin="0 0 5 0" IsDateOnlyMode="False"
+                                         IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                         IsReadOnly="False" SelectedTimeFormat="Long" />
+            </WrapPanel>
+
+            <WrapPanel Margin="0 5 0 0">
+                <TextBlock Margin="0 5"><Run Text="Time picker"/></TextBlock>
+                <Label Content="TimePicker (not nullable):" Margin="0 0 5 0"/>
+                <controls:TimePicker Padding="0" Margin="0 0 5 0"
+                                     IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long" />
+                <controls:TimePicker x:Name="NNN" Width="100" Height="30" Background="Yellow" Margin="0 0 5 0"
+                                     IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long"/>
+                <Button Click="ChangeNullable_OnClick" Content="Change IsNullable" />
+            </WrapPanel>
+
+            <WrapPanel Margin="0 5 0 0">
+                <TextBlock Margin="0 5 5 5" Text="Monochrome Time picker:" VerticalAlignment="Center"/>
+
+                <CheckBox x:Name="cbIsEnabled" Margin="0 0 5 0" Content="IsReadOnly?" IsChecked="True" VerticalAlignment="Center" />
+
+                <controls:TimePicker Margin="5" Width="100" Padding="0" IsNullable="True"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
+                                     IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:WatermarkEffect.Watermark="First"
+                                     effects:ChromeEffect.Monochrome="Aqua"/>
+                <controls:TimePicker Margin="5" IsNullable="True"
+                                     IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:WatermarkEffect.Watermark="Element 2"
+                                     effects:ChromeEffect.Monochrome="{StaticResource WhiteColor}"/>
+                <controls:TimePicker Margin="5" IsNullable="True"
+                                     IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:WatermarkEffect.Watermark="element 3"
+                                     effects:ChromeEffect.Monochrome="{StaticResource DarkColor}"/>
+                <controls:TimePicker Margin="5" Width="100" IsNullable="True"
+                                     IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                     IsReadOnly="False" SelectedTimeFormat="Long"
+                                     effects:WatermarkEffect.Watermark="element 4"
+                                     effects:ChromeEffect.Monochrome="#FFD6EAFF"/>
+            </WrapPanel>
+
+            <WrapPanel Margin="0 5 0 0">
+                <Label Content="TimePicker (nullable, Padding:0):" VerticalAlignment="Center"/>
+                <controls:TimePicker Width="180" Background="Yellow"
+                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" IsNullable="True"
+                                     Padding="0" BorderThickness="4" BorderBrush="YellowGreen" FontSize="8" />
+            </WrapPanel>
+
+            <WrapPanel Margin="0 5 0 0">
+                <Label Content="TimePicker (nullable, Padding:6,8,10,12):" VerticalAlignment="Center"/>
+                <controls:TimePicker Width="180" Height="60" Background="Yellow"
+                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" IsNullable="True"
+                                     Padding="6 8 10 12" BorderThickness="4" BorderBrush="YellowGreen" FontSize="20" />
+
+                <controls:TimePicker Width="180" Height="60" Background="Yellow"
+                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" IsNullable="True"
+                                     Padding="0" BorderThickness="4" BorderBrush="YellowGreen" FontSize="20" />
+
+                <Label Content="TimePicker (nullable, Padding:10 10 0 20):" VerticalAlignment="Center"/>
+                <controls:TimePicker Width="200" Height="60"
+                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" IsNullable="True"
+                                     Padding="10 10 0 20" BorderThickness="4" BorderBrush="YellowGreen" FontSize="20" />
+            </WrapPanel>
+
+            <WrapPanel Margin="0 5 0 0">
+                <Label Content="TimePicker (nullable + no buttons):"/>
+                <controls:TimePicker x:Name="AAA" VisibleButtons="{x:Null}" Width="100" Background="Yellow"
+                                 IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" IsNullable="True"
+                                 BorderThickness="1" BorderBrush="YellowGreen" FontSize="16"
+                                 effects:WatermarkEffect.Watermark="test" effects:WatermarkEffect.Foreground="Gray"/>
+                <TextBox Text="{Binding Path=SelectedTime, ElementName=AAA}"/>
+            </WrapPanel>
+
+            <WrapPanel Margin="0 5 0 0">
+                <Label Content="DatePicker &amp; DateTimePicker: (not nullable, MinDate=2002/1/1)"/>
+                <controls:DateTimePicker x:Name="dtp" Background="Yellow" Width="230"
+                             IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
+                             IsNullable="False"
+                             IsDateOnlyMode="True"
+                             FontSize="20"
+                             DisplayDateStart="2002/1/1"
+                             effects:WatermarkEffect.Watermark="Test"/>
+                <Button Click="ChangeDate_OnClick" Content="Change date"/>
+                <Button Click="DatePickerMode_OnClick" Content="Change DatePickerMode"/>
+                <Button Click="TimeFormat_OnClick" Content="TimeFormat" Margin="2 0"/>
+                <Button Click="DateFormat_OnClick" Content="DateFormat" Margin="2 0"/>
+                <Button Click="ReadOnly_OnClick" Content="ReadOnly" Margin="2 0"/>
+                <Button Click="IsEnabled_OnClick" Content="IsEnabled" Margin="2 0"/>
+                <Button Click="ChangeBackground_OnClick" Content="ChangeBackground" Margin="2 0"/>
+                <Button Click="ChangeForeground_OnClick" Content="ChangeForeground" Margin="2 0"/>
+            </WrapPanel>
+
+            <WrapPanel Margin="0 5 0 0">
+                <Label Content="DatePicker &amp; DateTimePicker: (not nullable, not MinDate)"/>
+                <controls:DateTimePicker x:Name="dtp1" Width="150" Height="30" Background="Yellow"
+                                         IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
+                                         IsNullable="False"
+                                         IsDateOnlyMode="True"
+                                         effects:WatermarkEffect.Watermark="test" effects:WatermarkEffect.Foreground="Gray"/>
+                <Button Click="ChangeDate1_OnClick" Content="Change date"/>
+                <Button Click="DatePickerMode1_OnClick" Content="Change DatePickerMode"/>
+            </WrapPanel>
+
+            <WrapPanel Margin="0 5 0 0">
+                <Label Content="DatePicker &amp; DateTimePicker: (nullable, MinDate=2022/1/1)"/>
+                <controls:DateTimePicker x:Name="dtp2"
+                                 IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
+                                 IsNullable="True"
+                                 IsDateOnlyMode="True"
+                                 DisplayDateStart="2022/1/1"/>
+                <Button Click="ChangeDate2_OnClick" Content="Change date"/>
+                <Button Click="DatePickerMode2_OnClick" Content="Change DatePickerMode"/>
+            </WrapPanel>
+
+            <WrapPanel Margin="0 5 0 0">
+                <Label Content="DatePicker &amp; DateTimePicker: (nullable, not MinDate)"/>
+                <controls:DateTimePicker x:Name="dtp3" Width="200" Height="30" Background="Yellow"
+                                         BorderThickness="5" BorderBrush="Red"
+                                 IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
+                                 IsNullable="True"
+                                 IsDateOnlyMode="True"
+                                 effects:WatermarkEffect.Watermark="test" effects:WatermarkEffect.Foreground="Gray"/>
+                <Button Click="ChangeDate3_OnClick" Content="Change date"/>
+                <Button Click="DatePickerMode3_OnClick" Content="Change DatePickerMode"/>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</Window>

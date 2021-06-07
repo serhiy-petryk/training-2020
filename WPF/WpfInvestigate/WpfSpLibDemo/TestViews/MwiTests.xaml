@@ -1,0 +1,163 @@
+﻿<Window x:Class="WpfSpLibDemo.TestViews.MwiTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
+        xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
+        xmlns:samples="clr-namespace:WpfSpLibDemo.Samples"
+        mc:Ignorable="d"
+        Title="MwiTests" Height="700" Width="1000"
+        KeyDown="MwiTests_OnKeyDown">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Slider Grid.Column="0"
+                x:Name="uiScaleSlider"
+                Focusable="False"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100"
+                Value="1" Minimum="0.5" Maximum="4"
+                Orientation="Vertical"
+                Ticks="1"
+                IsSnapToTickEnabled="False"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
+
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+            <Button Content="ChangeTheme" Click="OnChangeThemeClick" Margin="0 5 0 0"/>
+            <Button Content="ChangeColor" Click="OnChangeColorClick"/>
+            <Button Content="Add child" Click="AddChild_OnClick" Margin="0 5 0 0"/>
+            <Button Content="Add dialog" Click="AddDialog_OnClick"/>
+            <Button Content="Add resizable dialog" Click="AddResizableDialog_OnClick"/>
+            <Button Content="Add mwi dialog" Click="AddMwiDialog_OnClick"/>
+            <Button Content="Add" Click="AddChild2_OnClick"/>
+            <Button Content="Test" Click="Test_OnClick" Focusable="False"/>
+            <Button Content="OpenWindow" Click="OpenWindow_OnClick"/>
+        </StackPanel>
+
+        <Grid Grid.Column="2">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+
+            <controls:MwiContainer x:Name="MwiContainer">
+                <controls:MwiContainer.LeftPanel>
+                    <samples:MwiLeftPanelSample/>
+                </controls:MwiContainer.LeftPanel>
+
+                <controls:MwiChild Position="25 25" Title="Indigo" Height="150" Background="{StaticResource IndigoBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: IndigoBrush"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="300 25" Title="Primary" Height="150" Background="{StaticResource PrimaryBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: primary"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="575 25" Title="Title" Height="150" Background="{StaticResource SecondaryBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: secondary"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="300 200" Title="Title" Height="150" Background="{StaticResource SuccessBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: Success"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="25 200" Title="Title" Height="150" Background="{StaticResource DangerBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: Danger"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="575 200" Title="Title" Height="150" Background="{StaticResource WarningBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: Warning"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="25 400" Title="Title" Height="150" Background="{StaticResource InfoBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: Info"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="300 400" Title="Title" Height="150" Background="{StaticResource LightBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: LightBrush"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="575 400" Title="Title" Height="150" Background="{StaticResource DarkBrush}"
+                                   Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
+                    <ContentControl Content="Bootstrap: DarkBrush"/>
+                </controls:MwiChild>
+
+                <!--<controls:MwiChild Position="100 100">
+                    <ContentControl Content="object Content"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="200 200" Height="150">
+                    <controls:MwiChild.CommandBar>
+                        <samples:MwiCommandBarSample/>
+                    </controls:MwiChild.CommandBar>
+                    <controls:MwiChild.StatusBar>
+                        <samples:MwiStatusBarSample/>
+                    </controls:MwiChild.StatusBar>
+                    <TextBlock Text="TextBlock Content: height=150" FontSize="16" Background="Yellow"
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="250 250" Title="Long long very long Title very long very long" Height="150">
+                    <controls:MwiChild.CommandBar>
+                        <samples:MwiCommandBarSample/>
+                    </controls:MwiChild.CommandBar>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Mwi Child TextBlock Content" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Orange"
+                                   PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                        <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
+                        <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
+                        <Button Focusable="False">Not focusable</Button>
+                    </StackPanel>
+                </controls:MwiChild>
+
+                <controls:MwiChild Position="300 300" Title="Title" Resizable="False">
+                    <controls:MwiChild.StatusBar>
+                        <samples:MwiStatusBarSample/>
+                    </controls:MwiChild.StatusBar>
+                    <TextBlock Text="Not resizable" Background="Yellow"/>
+                </controls:MwiChild>
+
+                <controls:MwiChild Title="Window Using XAML" Position="20 222" Icon="pack://application:,,,/WpfSpLib;component/Resources/OriginalLogo.png" Height="350" x:Name="Test2">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdDisableDetach}">Disable Detach</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdEnableDetach}">Enable Detach</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdDisableMinimize}">Disable Minimize</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdEnableMinimize}">Enable Minimize</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdDisableMaximize}">Disable Maximize</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdEnableMaximize}">Enable Maximize</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdDisableClose}">Disable Close</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdEnableClose}">Enable Close</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdShowIcon}">Show Icon</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdHideIcon}">Hide Icon</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdChangeTitle}">Change Title</Button>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdOpenDialog}">Cmd: Open Dialog Window</Button>
+                            <Button Height="20" Click="OnOpenDialogClick" Content="Open Dialog Window"/>
+                            <Button Height="20" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CmdShowMessage}">Show Message</Button>
+                            <Button Height="20" Click="OnTestClick" Content="Test click"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </controls:MwiChild>-->
+
+            </controls:MwiContainer>
+        </Grid>
+    </Grid>
+
+</Window>

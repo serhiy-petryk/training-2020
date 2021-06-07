@@ -94,6 +94,78 @@
     <Compile Include="Samples\ResizableSample.xaml.cs">
       <DependentUpon>ResizableSample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViews\BootstrapButtonTests.xaml.cs">
+      <DependentUpon>BootstrapButtonTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ButtonStyleTests.xaml.cs">
+      <DependentUpon>ButtonStyleTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\CalculatorTests.xaml.cs">
+      <DependentUpon>CalculatorTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ChromeTests.xaml.cs">
+      <DependentUpon>ChromeTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ColorPickerTests.xaml.cs">
+      <DependentUpon>ColorPickerTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ControlDemo.xaml.cs">
+      <DependentUpon>ControlDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ControlEffectTests.xaml.cs">
+      <DependentUpon>ControlEffectTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DatePickerEffectTests.xaml.cs">
+      <DependentUpon>DatePickerEffectTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\DropDownButtonTests.xaml.cs">
+      <DependentUpon>DropDownButtonTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\FocusEffectTests.xaml.cs">
+      <DependentUpon>FocusEffectTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\MemoryLeakInvestigation.xaml.cs">
+      <DependentUpon>MemoryLeakInvestigation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\MwiBootstrapColorTests.xaml.cs">
+      <DependentUpon>MwiBootstrapColorTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\MwiTemplate.xaml.cs">
+      <DependentUpon>MwiTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\MwiTests.xaml.cs">
+      <DependentUpon>MwiTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\NumericBoxTests.xaml.cs">
+      <DependentUpon>NumericBoxTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ObjectEditorTests.xaml.cs">
+      <DependentUpon>ObjectEditorTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ResizingControlTests.xaml.cs">
+      <DependentUpon>ResizingControlTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\RippleEffectTests.xaml.cs">
+      <DependentUpon>RippleEffectTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\TextBoxTests.xaml.cs">
+      <DependentUpon>TextBoxTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ThemeSelectorTest.xaml.cs">
+      <DependentUpon>ThemeSelectorTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\TimePickerTests.xaml.cs">
+      <DependentUpon>TimePickerTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\VirtualKeyboardTests.xaml.cs">
+      <DependentUpon>VirtualKeyboardTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\WatermarkTests.xaml.cs">
+      <DependentUpon>WatermarkTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\WiPTests.xaml.cs">
+      <DependentUpon>WiPTests.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -155,6 +227,102 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Samples\ResizableSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\BootstrapButtonTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ButtonStyleTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\CalculatorTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ChromeTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ColorPickerTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ControlDemo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ControlEffectTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DatePickerEffectTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DropDownButtonTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\FocusEffectTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\MemoryLeakInvestigation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\MwiBootstrapColorTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\MwiTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\MwiTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\NumericBoxTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ObjectEditorTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ResizingControlTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\RippleEffectTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\TextBoxTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ThemeSelectorTest.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\TimePickerTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\VirtualKeyboardTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\WatermarkTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\WiPTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

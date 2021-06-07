@@ -1,0 +1,153 @@
+﻿<Window x:Class="WpfSpLibDemo.TestViews.ObjectEditorTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
+        xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
+        xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+        mc:Ignorable="d"
+        Title="ObjectEditorTest" Height="450" Width="1000"
+        Background="PowderBlue">
+
+    <Window.Resources>
+    </Window.Resources>
+
+    <Grid Margin="0 10 0 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Background="White">
+            <Slider Grid.Column="0"
+                    x:Name="uiScaleSlider"
+                    Focusable="False"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.5" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+
+            <StackPanel Orientation="Vertical">
+                <TextBlock>Test Object editor</TextBlock>
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <Label Content="Numeric Box:"/>
+                    <controls:NumericBox Width="100" effects:WatermarkEffect.Watermark="SelectAll" Value="23" IsNullable="True" MinValue="0" MaxValue="100"/>
+                </StackPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                    <Label Content="Bool:"/>
+                    <controls:ObjectEditor ValueDataType="Bool" Background="Yellow"/>
+                    <Label Content="Byte:"/>
+                    <controls:ObjectEditor Width="100" ValueDataType="Byte" Background="Yellow"/>
+                    <controls:ObjectEditor Width="100" ValueDataType="Byte" Background="Yellow"/>
+                    <Label Content="Int:"/>
+                    <controls:ObjectEditor x:Name="Int" Width="100" ValueDataType="Integer" Background="Aqua"/>
+                    <Label Content="Double:"/>
+                    <controls:ObjectEditor Width="100" ValueDataType="Double" Background="Yellow"/>
+                    <Label Content="Date:"/>
+                    <controls:ObjectEditor ValueDataType="Date" Background="Yellow"/>
+                    <Label Content="DateTime:"/>
+                    <controls:ObjectEditor ValueDataType="DateTime" Background="Yellow"/>
+                    <Label Content="Time:"/>
+                    <controls:ObjectEditor ValueDataType="Time" Background="Yellow"/>
+                    <Label Content="String:"/>
+                    <controls:ObjectEditor ValueDataType="String" Width="100" Background="AntiqueWhite" />
+                    <controls:ObjectEditor ValueDataType="String" Width="100" Height="40" Padding="5" BorderThickness="4" BorderBrush="GreenYellow" Background="AntiqueWhite" />
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBox Background="Yellow" Margin="5 0" Width="70"/>
+                    <ComboBox x:Name="cbDataType"/>
+
+                    <Label Content="Nullable:" Margin="5 0 0 0"/>
+                    <CheckBox x:Name="cbNullable" IsThreeState="False" IsChecked="False" VerticalAlignment="Center" />
+
+                    <Label Content="IsEnabled:" Margin="5 0 0 0"/>
+                    <CheckBox x:Name="cbEnabled" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
+
+                    <Label Content="Object editor (focusable=false):"/>
+                    <controls:ObjectEditor x:Name="Editor" MinWidth="100" Foreground="Red"
+                                           Focusable="False"
+                                           effects:WatermarkEffect.Watermark="TestWatermark"
+                                           ValueDataType="{Binding ElementName=cbDataType, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
+                                           IsNullable="{Binding ElementName=cbNullable, Path=IsChecked}"
+                                           IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>
+                    <Label Content="Value:"/>
+                    <TextBlock Text="{Binding Path=Value, ElementName=Editor}" Background="Yellow" VerticalAlignment="Center"/>
+                    <Button Click="Test_OnClick">Test</Button>
+                    <Button Margin="5 0" Click="ChangeValue_OnClick">Change value</Button>
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal" Margin="0 5" Height="36">
+                    <TextBox Background="Yellow" Margin="5 0" Width="70"/>
+                    <ComboBox x:Name="cbDataType2"/>
+
+                    <Label Content="Nullable:" Margin="5 0 0 0"/>
+                    <CheckBox x:Name="cbNullable2" IsThreeState="False" IsChecked="False" VerticalAlignment="Center" />
+
+                    <Label Content="IsEnabled:" Margin="5 0 0 0"/>
+                    <CheckBox x:Name="cbEnabled2" IsThreeState="False" IsChecked="True" VerticalAlignment="Center" />
+
+                    <!--<Label Content="Object editor:"/>
+                    <controls:ObjectEditor x:Name="Editor2" Foreground="Red" MinWidth="70"
+                                           effects:WatermarkEffect.Watermark="TestWatermark"
+                                           effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                           ValueDataType="{Binding ElementName=cbDataType2, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
+                                           IsNullable="{Binding ElementName=cbNullable2, Path=IsChecked}"
+                                           IsEnabled="{Binding ElementName=cbEnabled2, Path=IsChecked}"/>-->
+                    <Label Content="Value:"/>
+                    <TextBlock Text="{Binding Path=Value, ElementName=Editor2}" Background="Yellow" VerticalAlignment="Center"/>
+
+                    <Label Content="Height:" Margin="5 0 0 0"/>
+                    <TextBlock Text="{Binding Path=ActualHeight, ElementName=Editor2}" Background="Yellow" VerticalAlignment="Center"/>
+
+                    <Label Content="Control Height:" Margin="5 0 0 0"/>
+                    <TextBlock Text="{Binding Path=ActualHeight, ElementName=TestControl}" Background="Yellow" VerticalAlignment="Center"/>
+                    
+                    <Button Click="Test_OnClick">Test</Button>
+                    <Button Margin="5 0" Click="ChangeValue2_OnClick">Change value</Button>
+                </WrapPanel>
+
+                <controls:ObjectEditor x:Name="Editor2" Foreground="Red" Background="Transparent"
+                                       Padding="0" Margin="0 5" BorderThickness="1" BorderBrush="#FF777777"
+                                       HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                       VerticalContentAlignment="Bottom"
+                                       HorizontalContentAlignment="Right"
+                                       effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                       effects:WatermarkEffect.Watermark="AAA"
+                                       ValueDataType="{Binding ElementName=cbDataType2, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
+                                       IsNullable="{Binding ElementName=cbNullable2, Path=IsChecked}"
+                                       IsEnabled="{Binding ElementName=cbEnabled2, Path=IsChecked}"/>
+
+                <controls:ObjectEditor x:Name="Editor3" Foreground="Red" Width="150" Background="Transparent"
+                                       Padding="12" Margin="0 5" BorderThickness="1" BorderBrush="#FF777777"
+                                       FontSize="16"
+                                       effects:FocusVisualEffect.AlwaysShowFocus="True"
+                                       ValueDataType="{Binding ElementName=cbDataType2, Path=SelectedItem, TargetNullValue={x:Static common:DataTypeMetadata+DataType.String} }"
+                                       IsNullable="{Binding ElementName=cbNullable2, Path=IsChecked}"
+                                       IsEnabled="{Binding ElementName=cbEnabled2, Path=IsChecked}"/>
+
+                <TextBox x:Name="TestControl" BorderThickness="0" BorderBrush="Blue" Margin="0" Padding="0" Width="100" Background="Aqua"/>
+
+                <controls:NumericBox x:Name="TestControl2" BorderThickness="0" BorderBrush="Blue" Margin="0 5 0 0" Padding="10" FontSize="18" Width="100" Background="Aqua"
+                                     VisibleButtons="RightDown,Up,Close"/>
+                <DatePicker Margin="0 5" Width="100" Padding="0"/>
+                <controls:NumericBox Margin="0 5" Width="100" Padding="0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
