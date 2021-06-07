@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using WpfSpLib;
 using WpfSpLib.Common;
 using WpfSpLib.Controls;
 

@@ -29,7 +29,7 @@ namespace WpfSpLib.Controls
         }
 
         private static int controlId = 0;
-        internal int _controlId = controlId++;
+        public int _controlId = controlId++;
         static MwiChild()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MwiChild), new FrameworkPropertyMetadata(typeof(ResizingControl)));

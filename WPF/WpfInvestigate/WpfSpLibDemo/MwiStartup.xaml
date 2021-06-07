@@ -1,0 +1,189 @@
+﻿<Window x:Class="WpfSpLibDemo.MwiStartup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
+        xmlns:viewModels="clr-namespace:WpfSpLib.ViewModels;assembly=WpfSpLib"
+        xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+        xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
+        xmlns:themes="clr-namespace:WpfSpLib.Themes;assembly=WpfSpLib"
+        xmlns:wpfSpLibDemo="clr-namespace:WpfSpLibDemo"
+        xmlns:samples="clr-namespace:WpfSpLibDemo.Samples"
+        mc:Ignorable="d"
+        Title="MwiStartup"
+        Style="{StaticResource HeadlessWindow}"
+        KeyDown="MwiStartup_OnKeyDown"
+        Unloaded="OnUnloaded">
+
+    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1050" VisibleButtons="Minimize,Maximize,Close,SelectTheme"
+                       Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10-2]}"
+                       ThemeColor="Orange">
+        <controls:MwiChild.CommandBar>
+            <samples:MwiCommandBarSample/>
+        </controls:MwiChild.CommandBar>
+
+        <controls:MwiChild.StatusBar>
+            <samples:MwiStatusBarSample/>
+        </controls:MwiChild.StatusBar>
+
+        <controls:MwiChild.RightHeaderBar>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Scale Slider label -->
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding StringFormat=Zoom {0:P0}, ElementName=ScaleSlider, Path=Value}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="{DynamicResource Mwi.Child.Header.Unfocused.ForegroundBrush}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=ScaleSlider, Path=IsMouseOver}" Value="True">
+                                    <!-- or <DataTrigger Binding="{Binding Path=Children[1].IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=StackPanel}}" Value="True">-->
+                                    <Setter Property="Foreground" Value="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <!-- Scale Slider -->
+                <Slider Grid.Column="1" x:Name="ScaleSlider" ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                        Height="22" Width="100" Margin="2 0 0 0" VerticalAlignment="Bottom" Orientation="Horizontal"
+                        TickFrequency="0.5" Minimum="0.5" Maximum="4" LargeChange="0.5"
+                        Value="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=ScaleValue, Mode=TwoWay}"
+                        IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"/>
+
+                <Button Grid.Column="2" Width="18" Height="18" BorderThickness="0" Focusable="False" ToolTip="Reset zoom"
+                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=wpfSpLibDemo:MwiStartup}, Path=CmdScaleSliderReset}"
+                        effects:CornerRadiusEffect.CornerRadius="3">
+                    <Viewbox Width="10" Height="10">
+                        <Path Width="13" Height="13" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Data="F1 M0 0 H1 L13 12 V13 H12 L0 1Z M13 0 V1 L1 13 H0 V12 L12 0Z"/>
+                    </Viewbox>
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonBaseStyle}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15}"/>
+                                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15/+75%}"/>
+                                    <!--<Setter Property="Background" Value="{Binding Source={StaticResource MwiBaseColorProxy}, Path=Value.Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15}"/>
+                                    <Setter Property="Foreground" Value="{Binding Source={StaticResource MwiBaseColorProxy}, Path=Value.Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15/+75%}"/>-->
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Separator Grid.Column="3" Style="{DynamicResource Mwi.Startup.WindowHeaderSeparator}"/>
+            </Grid>
+
+        </controls:MwiChild.RightHeaderBar>
+
+        <!--<controls:MwiContainer x:Name="MwiContainer" Background="{Binding ElementName=TopControl, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}}">-->
+        <controls:MwiContainer x:Name="MwiContainer">
+            <controls:MwiContainer.LeftPanel>
+                <samples:MwiLeftPanelSample/>
+            </controls:MwiContainer.LeftPanel>
+
+            <controls:MwiChild x:Name="TestChild" Title="Title" Height="150" BorderBrush="Orange">
+                <ContentControl Content="Mwi Child Test. No background"/>
+            </controls:MwiChild>
+
+            <controls:MwiChild x:Name="TestChild2" Title="Title" Height="150" BorderBrush="Orange" ThemeColor="Gainsboro">
+                <ContentControl Content="Mwi Child Test. ThemeColor: Gainsboro"/>
+            </controls:MwiChild>
+
+            <controls:MwiChild Title="Empty Window Using XAML and long header" ThemeColor="LightBlue" />
+
+            <controls:MwiChild BorderBrush="Orange" ThemeColor="LightGreen" BorderThickness="8" MinHeight="70">
+                <ContentControl Content="object Content. ThemeColor: LightGreen. No border for Windows 7 theme"/>
+                <controls:MwiChild.Resources>
+                    <Style TargetType="controls:MwiChild" BasedOn="{StaticResource {x:Type controls:MwiChild}}">
+                        <Setter Property="BorderThickness" Value="4"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=ActualTheme.Id}" Value="Windows7">
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </controls:MwiChild.Resources>
+            </controls:MwiChild>
+
+            <controls:MwiChild Height="150">
+                <controls:MwiChild.CommandBar>
+                    <samples:MwiCommandBarSample/>
+                </controls:MwiChild.CommandBar>
+                <controls:MwiChild.StatusBar>
+                    <samples:MwiStatusBarSample/>
+                </controls:MwiChild.StatusBar>
+                <TextBlock Text="TextBlock Content: height=150" FontSize="16" Background="Yellow"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </controls:MwiChild>
+
+            <controls:MwiChild Title="Long long very long Title very long very long" Height="150">
+                <controls:MwiChild.CommandBar>
+                    <samples:MwiCommandBarSample/>
+                </controls:MwiChild.CommandBar>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Mwi Child TextBlock Content" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Orange"
+                               PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
+                    <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
+                    <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
+                    <Button Focusable="False">Not focusable</Button>
+                </StackPanel>
+            </controls:MwiChild>
+
+            <controls:MwiChild Title="Title" Resizable="False">
+                <controls:MwiChild.StatusBar>
+                    <samples:MwiStatusBarSample/>
+                </controls:MwiChild.StatusBar>
+                <TextBlock Text="Not resizable" Background="Yellow"/>
+            </controls:MwiChild>
+
+            <controls:MwiChild Position="600 25" Title="Fixed Windows 7 Theme" Height="150" Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows7]}" >
+                <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=Title}"/>
+            </controls:MwiChild>
+
+            <controls:MwiChild Position="600 225" Title="Fixed Windows 10 Theme" Height="150"
+                               ThemeColor="{StaticResource PrimaryColor}"
+                               Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10]}" >
+                <ContentControl Content="Fixed Windows 10 Theme. Bootstrap Primary color" Foreground="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
+            </controls:MwiChild>
+
+            <controls:MwiChild Title="Window Using XAML" Icon="pack://application:,,,/WpfSpLib;component/Resources/OriginalLogo.png" Height="350">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Button Height="20" Command="{Binding CmdDisableDetach}">Disable Detach</Button>
+                        <Button Height="20" Command="{Binding CmdEnableDetach}">Enable Detach</Button>
+                        <Button Height="20" Command="{Binding CmdDisableMinimize}">Disable Minimize</Button>
+                        <Button Height="20" Command="{Binding CmdEnableMinimize}">Enable Minimize</Button>
+                        <Button Height="20" Command="{Binding CmdDisableMaximize}">Disable Maximize</Button>
+                        <Button Height="20" Command="{Binding CmdEnableMaximize}">Enable Maximize</Button>
+                        <Button Height="20" Command="{Binding CmdDisableClose}">Disable Close</Button>
+                        <Button Height="20" Command="{Binding CmdEnableClose}">Enable Close</Button>
+                        <Button Height="20" Command="{Binding CmdShowIcon}">Show Icon</Button>
+                        <Button Height="20" Command="{Binding CmdHideIcon}">Hide Icon</Button>
+                        <Button Height="20" Command="{Binding CmdChangeTitle}">Change Title</Button>
+                        <Button Height="20" Command="{Binding CmdOpenDialog}">Show Dialog Window</Button>
+                        <Button Height="20" Command="{Binding CmdShowMessage}">Show Message</Button>
+                        <Button Height="20" Click="OnTestButtonClick" Content="Test click"/>
+                    </StackPanel>
+                </ScrollViewer>
+                <controls:MwiChild.StatusBar>
+                    <samples:MwiStatusBarSample/>
+                </controls:MwiChild.StatusBar>
+            </controls:MwiChild>
+
+        </controls:MwiContainer>
+    </controls:MwiChild>
+</Window>
