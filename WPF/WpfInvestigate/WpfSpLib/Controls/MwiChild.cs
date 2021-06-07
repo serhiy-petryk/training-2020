@@ -192,8 +192,16 @@ namespace WpfSpLib.Controls
         public event EventHandler Closed;
         public MwiContainer MwiContainer; // !! Must be field, not property => important for clearing when unloaded
 
-        public FrameworkElement DialogHost => !IsWindowed && MwiContainer != null ? (FrameworkElement) MwiContainer
-                : Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+        public FrameworkElement DialogHost
+        {
+            get
+            {
+                var parentMwiChild = this.GetVisualParents().OfType<MwiChild>().FirstOrDefault(a => a != this);
+                if (parentMwiChild?.Template.FindName("ContentBorder", parentMwiChild) is FrameworkElement fe)
+                    return fe;
+                return !IsWindowed && MwiContainer != null ? (FrameworkElement) MwiContainer : Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            }
+        }
 
         //============  Buttons  ============
         public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;
