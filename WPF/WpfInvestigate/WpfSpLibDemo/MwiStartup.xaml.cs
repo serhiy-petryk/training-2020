@@ -10,7 +10,6 @@ using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
 using WpfSpLib.Themes;
 using WpfSpLibDemo.Samples;
-using WpfSpLibDemo.ViewModels;
 
 namespace WpfSpLibDemo
 {
@@ -167,7 +166,7 @@ namespace WpfSpLibDemo
                         Height = 200,
                         IsActive = true
                     };
-                    var adorner = new DialogAdorner(MwiAppViewModel.Instance.DialogHost) { CloseOnClickBackground = true };
+                    var adorner = new DialogAdorner(_owner.DialogHost) { CloseOnClickBackground = true };
                     adorner.ShowContentDialog(content);
                 });
 
@@ -176,10 +175,10 @@ namespace WpfSpLibDemo
                     var result = DialogMessage.ShowDialog(
                         "Message text Message text Message text Message text Message text Message text",
                         "Caption of Message block", DialogMessage.DialogMessageIcon.Success, new[] { "OK", "Cancel" }, true,
-                        MwiAppViewModel.Instance.DialogHost);
+                        _owner.DialogHost);
 
                     DialogMessage.ShowDialog($"You pressed '{result ?? "X"}' button", null,
-                        DialogMessage.DialogMessageIcon.Info, new[] { "OK" }, true, MwiAppViewModel.Instance.DialogHost);
+                        DialogMessage.DialogMessageIcon.Info, new[] { "OK" }, true, _owner.DialogHost);
                 });
             }
 

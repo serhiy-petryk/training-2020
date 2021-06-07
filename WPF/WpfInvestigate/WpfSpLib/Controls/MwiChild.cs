@@ -192,6 +192,9 @@ namespace WpfSpLib.Controls
         public event EventHandler Closed;
         public MwiContainer MwiContainer; // !! Must be field, not property => important for clearing when unloaded
 
+        public FrameworkElement DialogHost => !IsWindowed && MwiContainer != null ? (FrameworkElement) MwiContainer
+                : Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+
         //============  Buttons  ============
         public bool IsCloseButtonVisible => (VisibleButtons & Buttons.Close) == Buttons.Close;
         public bool IsMinimizeButtonVisible => (VisibleButtons & Buttons.Minimize) == Buttons.Minimize && Resizable && (HostPanel != null || IsWindowed);

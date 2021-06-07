@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using WpfSpLib.Controls;
-using WpfSpLibDemo.ViewModels;
 
 namespace WpfSpLibDemo.Temp
 {
@@ -19,7 +18,7 @@ namespace WpfSpLibDemo.Temp
             DialogMessage.Show(
                 "Message text Message text Message text Message text Message text Message text",
                 "Caption of Message block", DialogMessage.DialogMessageIcon.Success, new[] { "OK", "Cancel" }, true,
-                MwiAppViewModel.Instance.DialogHost);
+                Content);
         }
     }
 }

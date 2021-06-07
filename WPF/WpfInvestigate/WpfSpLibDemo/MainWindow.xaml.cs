@@ -13,10 +13,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using WpfSpLib.Common;
 using WpfSpLib.Helpers;
-using WpfSpLib.ViewModels;
 using WpfSpLibDemo.Temp;
 using WpfSpLibDemo.TestViews;
-using MwiAppViewModel = WpfSpLibDemo.ViewModels.MwiAppViewModel;
 
 namespace WpfSpLibDemo
 {
@@ -301,9 +299,6 @@ namespace WpfSpLibDemo
             var aa5 = PropertyInvestigation.lves;
 
             Debug.Print($"Button props: {aa2[typeof(Button)].Count}");
-
-            var pp = TypeDescriptor.GetProperties(typeof(MwiAppViewModel), _attrs);
-            var pp2 = TypeDescriptor.GetProperties(typeof(MwiAppViewModel));
         }
 
         private void OnTestForPropertiesClick(object sender, RoutedEventArgs e)
