@@ -71,6 +71,8 @@ namespace WpfInvestigate.Helpers
                 Title = "Theme Selector",
                 VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
             };
+            if (adorner.Host.ActualWidth < mwiChild.Width || adorner.Host.ActualHeight < mwiChild.Height)
+                mwiChild.WindowState = WindowState.Maximized;
             mwiChild.SetBinding(MwiChild.ThemeProperty, new Binding("ActualTheme") { Source = themeSelector });
             mwiChild.SetBinding(MwiChild.ThemeColorProperty, new Binding("ActualThemeColor") { Source = themeSelector, Converter = ColorHslBrush.Instance });
             adorner.ShowContentDialog(mwiChild);
