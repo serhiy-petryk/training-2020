@@ -17,8 +17,8 @@ namespace WpfInvestigate
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            var vCulture = new CultureInfo("uk");
-            // var vCulture = Tips.InvariantCulture;
+            // var vCulture = new CultureInfo("uk");
+            var vCulture = Tips.InvariantCulture;
 
             Thread.CurrentThread.CurrentCulture = vCulture;
             Thread.CurrentThread.CurrentUICulture = vCulture;
