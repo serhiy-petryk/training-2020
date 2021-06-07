@@ -10,7 +10,6 @@ using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
 using WpfSpLib.Themes;
 using WpfSpLibDemo.Samples;
-using WpfSpLibDemo.ViewModels;
 
 namespace TestDll
 {
