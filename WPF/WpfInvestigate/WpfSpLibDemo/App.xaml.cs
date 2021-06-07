@@ -8,7 +8,7 @@ using System.Windows.Markup;
 using WpfSpLib.Common;
 using WpfSpLib.Helpers;
 
-namespace WpfSpLib
+namespace WpfSpLibDemo
 {
     /// <summary>
     /// Interaction logic for App.xaml

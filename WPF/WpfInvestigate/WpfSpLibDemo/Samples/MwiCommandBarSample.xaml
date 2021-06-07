@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="WpfSpLibDemo.Samples.MwiCommandBarSample"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+
+    <Grid Background="GreenYellow">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0">Command Bar</TextBlock>
+        <Button Grid.Column="0" Margin="100 0 0 0" Width="100" Content="Test button" Click="OnTestButtonClick"/>
+        <TextBlock Grid.Column="1">The right side of Command Bar</TextBlock>
+    </Grid>
+</UserControl>
