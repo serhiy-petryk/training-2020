@@ -1,0 +1,170 @@
+﻿<Window x:Class="WpfSpLib.TestViews.WatermarkTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfSpLib.Controls"
+        xmlns:effects="clr-namespace:WpfSpLib.Effects"
+        mc:Ignorable="d"
+        Title="WatermarkTests" Height="400" Width="1000">
+
+    <Window.Resources>
+        <!-- Control colors -->
+        <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
+        <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
+        <Color x:Key="ControlLightColor">#00AAAA</Color>
+        <Color x:Key="BorderMediumColor">#FF888888</Color>
+
+        <Style x:Key="CustomTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="MinWidth" Value="120" />
+            <Setter Property="MinHeight" Value="20" />
+            <Setter Property="AllowDrop" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                        <Border Name="Border" CornerRadius="2" Padding="2" BorderThickness="4">
+                            <Border.Background>
+                                <SolidColorBrush Color="{DynamicResource ControlLightColor}" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource BorderMediumColor}" />
+                            </Border.BorderBrush>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                          Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0" Value="{StaticResource DisabledControlLightColor}" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="ReadOnly">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                          Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0" Value="{StaticResource DisabledControlDarkColor}" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="MouseOver" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Slider Grid.Column="0"
+                x:Name="uiScaleSlider"
+                Focusable="False"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100"
+                Value="1" Minimum="0.5" Maximum="4"
+                Orientation="Vertical"
+                Ticks="1"
+                IsSnapToTickEnabled="False"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
+
+        <WrapPanel Background="Yellow" Grid.Column="1">
+            <WrapPanel.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </WrapPanel.LayoutTransform>
+
+            <TextBlock Text="Textbox:" Margin="0 20 0 0"/>
+            <TextBox x:Name="TestBox" effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Height="30" Background="Aquamarine" Padding="0" Width="80"/>
+            <Button Content="Change watermark text" Click="ChangeWatermarkText_OnClick"/>
+            <Button Content="Change watermark foreground" Click="ChangeWatermarkForeground_OnClick"/>
+
+            <TextBlock Text="Custom Textbox:"/>
+            <TextBox effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80" Style="{StaticResource CustomTextBox}"/>
+
+            <TextBlock Text="Rotated Textbox:"/>
+            <TextBox effects:WatermarkEffect.Watermark="Long AAAA" Margin="0 0 0 5" Padding="7"  Width="120" BorderThickness="4 6 8 10" Height="60"
+                     VerticalAlignment="Top" VerticalContentAlignment="Bottom"
+                     HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                     BorderBrush="YellowGreen" Background="Aquamarine">
+                <TextBox.RenderTransform >
+                    <RotateTransform CenterX="10" CenterY="20" Angle="5" />
+                </TextBox.RenderTransform>
+            </TextBox>
+
+            <TextBlock Text="Rotated Numeric:"/>
+            <controls:NumericBox effects:WatermarkEffect.Watermark="Long AAAA" Margin="0 0 0 5" Padding="15 5 15 5"  Width="180" BorderThickness="4 6 8 10" Height="50"
+                                 VerticalAlignment="Top" VerticalContentAlignment="Bottom"
+                                 HorizontalContentAlignment="Right"
+                                 BorderBrush="YellowGreen" Background="Aquamarine" IsNullable="True">
+                <controls:NumericBox.RenderTransform>
+                    <RotateTransform CenterX="10" CenterY="20" Angle="5" />
+                </controls:NumericBox.RenderTransform>
+            </controls:NumericBox>
+
+            <TextBlock Text="Rotated Textbox:"/>
+            <TextBox effects:WatermarkEffect.Watermark="Long text AAAA " Margin="0 0 0 5" Width="40">
+                <TextBox.RenderTransform >
+                    <RotateTransform CenterX="10" CenterY="20" Angle="5" />
+                </TextBox.RenderTransform>
+            </TextBox>
+
+            <TextBlock Text="ComboBox:"/>
+            <ComboBox x:Name="cb" effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 2"  Padding="7"  Width="120" BorderThickness="4 6 8 10" Height="30"
+                      VerticalAlignment="Top" VerticalContentAlignment="Bottom"
+                      HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                      BorderBrush="YellowGreen">
+                <ComboBox.RenderTransform >
+                    <RotateTransform CenterX="10" CenterY="20" Angle="5" />
+                </ComboBox.RenderTransform>
+                <TextBlock>LG Nexus 5X</TextBlock>
+                <TextBlock>Huawai Nexus 6P</TextBlock>
+                <TextBlock>iPhone 6S</TextBlock>
+            </ComboBox>
+            <Button Content="Clear combobox" Click="ClearCombobox_OnClick" Margin="0 0 0 10"/>
+
+            <TextBlock Text="Editable ComboBox:"/>
+            <ComboBox effects:WatermarkEffect.Watermark="AAAA" effects:WatermarkEffect.Foreground="Blue"
+                      Margin="0 0 0 5" IsEditable="True" Width="80" Height="30" Background="Aquamarine">
+                <TextBlock>LG Nexus 5X</TextBlock>
+                <TextBlock>Huawai Nexus 6P</TextBlock>
+                <TextBlock>iPhone 6S</TextBlock>
+            </ComboBox>
+
+            <TextBlock Text="DatePicker:"/>
+            <DatePicker effects:WatermarkEffect.Watermark="AAAA" effects:WatermarkEffect.Foreground="Red"
+                        Margin="0 0 0 5" Padding="2"  Width="120" BorderThickness="4 6 8 10" Height="40"
+                        Background="Aquamarine" 
+                        VerticalAlignment="Top" VerticalContentAlignment="Bottom"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                        BorderBrush="YellowGreen">
+                <DatePicker.RenderTransform >
+                    <RotateTransform CenterX="10" CenterY="20" Angle="5" />
+                </DatePicker.RenderTransform>
+            </DatePicker>
+
+            <TextBlock Text="PasswordBox:"/>
+            <PasswordBox effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80" BorderThickness="1" BorderBrush="Black" Padding="0"/>
+
+            <TextBlock Text="Hidden PasswordBox:"/>
+            <PasswordBox effects:WatermarkEffect.Watermark="AAAA" Margin="0 0 0 5" Width="80" Visibility="Hidden"/>
+
+            <DatePicker/>
+        </WrapPanel>
+    </Grid>
+</Window>

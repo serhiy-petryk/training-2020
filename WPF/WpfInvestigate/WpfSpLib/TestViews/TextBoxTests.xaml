@@ -1,0 +1,70 @@
+﻿<Window x:Class="WpfSpLib.TestViews.TextBoxTests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:effects="clr-namespace:WpfSpLib.Effects"
+        xmlns:controls="clr-namespace:WpfSpLib.Controls"
+        mc:Ignorable="d"
+        Title="TextBoxTests" Height="325" Width="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Slider Grid.Column="0"
+                x:Name="uiScaleSlider"
+                Focusable="False"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                Height="100"
+                Value="1" Minimum="0.5" Maximum="4"
+                Orientation="Vertical"
+                Ticks="1"
+                IsSnapToTickEnabled="False"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"/>
+
+        <Grid Grid.Column="1">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+
+            <StackPanel Orientation="Vertical">
+                <WrapPanel Margin="5">
+                    <TextBox x:Name="TestTextBox" Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
+                             Text="AAAAAA" BorderThickness="2" BorderBrush="Blue" 
+                             effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
+                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
+                             effects:CornerRadiusEffect.CornerRadius="2"
+                             effects:WatermarkEffect.Watermark="Watermark"/>
+                    <Button Margin="2" Content="Change Background" Click="ChangeBackground_OnClick"/>
+                    <Button Margin="2" Content="Change Foreground" Click="ChangeForeground_OnClick"/>
+                    <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick"/>
+                    <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
+                    <controls:LabelBox Margin="2" Width="70" Background="Yellow" Foreground="Blue"/>
+                </WrapPanel>
+
+                <WrapPanel Margin="5">
+                    <TextBlock Margin="5 0" Text="Not focusable:" VerticalAlignment="Center"/>
+                    <TextBox Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
+                             BorderThickness="1" BorderBrush="Blue" 
+                             Focusable="False"
+                             effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
+                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
+                             effects:CornerRadiusEffect.CornerRadius="4"
+                             effects:WatermarkEffect.Watermark="Watermark"/>
+                    <TextBox Margin="2" Padding="4" Width="50" Background="Yellow" Foreground="Blue"
+                             BorderThickness="1" BorderBrush="Blue" 
+                             Focusable="False"
+                             effects:CornerRadiusEffect.CornerRadius="4"
+                             effects:WatermarkEffect.Watermark="Watermark"/>
+                </WrapPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

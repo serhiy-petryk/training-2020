@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="WpfSpLib.Controls.ThemeSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfSpLib.Controls"
+             xmlns:effects="clr-namespace:WpfSpLib.Effects"
+             xmlns:common="clr-namespace:WpfSpLib.Common"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="Root"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             Background="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}}"
+             Foreground="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}">
+
+    <UserControl.Resources>
+        <Style TargetType="Border">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <DockPanel>
+        <Grid DockPanel.Dock="Left" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderThickness="1" Background="Transparent" CornerRadius="4" Margin="4 10 0 4" Padding="4 0 4 4"
+                    BorderBrush="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
+                <StackPanel Orientation="Vertical">
+                    <local:LabelBox DockPanel.Dock="Top" Text="Theme" Margin="2 -10 2 2" FontWeight="SemiBold"
+                                    HorizontalAlignment="Left"
+                                    Background="{Binding ElementName=Root, Path=Background}"
+                                    Foreground="{Binding ElementName=Root, Path=Foreground}"/>
+                    <CheckBox x:Name="cbUseDefaultTheme" Margin="4 0 0 4" Content="Use default theme?" IsThreeState="False"
+                              Foreground="{Binding ElementName=Root, Path=Foreground}"
+                              Checked="OnUseDefaultThemeChanged" Unchecked="OnUseDefaultThemeChanged" />
+
+                    <StackPanel x:Name="ThemeList" Orientation="Vertical" Margin="2 0" IsEnabled="{Binding IsThemeSelectorEnabled}">
+                        <StackPanel.Resources>
+                            <Style TargetType="RadioButton">
+                                <Setter Property="GroupName" Value="Theme"/>
+                                <Setter Property="Margin" Value="2 1"/>
+                                <Setter Property="IsThreeState" Value="False"/>
+                                <Setter Property="Foreground" Value="{Binding ElementName=Root, Path=Foreground}"/>
+                            </Style>
+                        </StackPanel.Resources>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Button Grid.Row="1" Content="Apply and Close" Height="30" Width="100" Margin="2 2 8 2" Click="OnApplyButtonClick"
+                    VerticalAlignment="Bottom"
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Style="{StaticResource MonochromeButtonBaseStyle}"
+                    effects:ChromeEffect.Monochrome="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
+                    effects:CornerRadiusEffect.CornerRadius="3"/>
+        </Grid>
+
+        <Border BorderThickness="1" Background="Transparent" CornerRadius="4" Margin="4 10 4 4" Padding="4 0 4 4"
+                BorderBrush="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"
+                IsEnabled="{Binding IsColorSelectorEnabled}">
+            <DockPanel>
+                <Grid DockPanel.Dock="Top" Margin="2 -10 2 2" Background="{Binding ElementName=Root, Path=Background}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <local:LabelBox DockPanel.Dock="Top" Text="Color" FontWeight="SemiBold" HorizontalAlignment="Left"
+                                    Background="Transparent" Foreground="{Binding ElementName=Root, Path=Foreground}"/>
+                </Grid>
+                <CheckBox x:Name="cbUseDefaultColor" DockPanel.Dock="Top" Margin="2 0 0 2" Content="Use default color?" IsThreeState="False"
+                          Foreground="{Binding ElementName=Root, Path=Foreground}"
+                          Checked="OnUseDefaultColorChanged" Unchecked="OnUseDefaultColorChanged" />
+                <Border IsEnabled="{Binding ElementName=Root, Path=DataContext.IsColorControlEnabled}">
+                    <local:ColorControl x:Name="ColorControl" Margin="1" effects:CornerRadiusEffect.CornerRadius="6 6 0 0"/>
+                </Border>
+            </DockPanel>
+        </Border>
+    </DockPanel>
+</UserControl>
