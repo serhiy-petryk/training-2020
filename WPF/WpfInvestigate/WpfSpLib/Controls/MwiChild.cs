@@ -48,7 +48,12 @@ namespace WpfSpLib.Controls
             SysCmdRestore = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState == WindowState.Maximized);
             SysCmdMaximize = new RelayCommand(ToggleMaximize, _ => AllowMaximize && WindowState != WindowState.Maximized);
             CmdClose = new RelayCommand(Close, _ => AllowClose);
-            CmdSelectTheme = new RelayCommand(o => this.SelectTheme(this.GetVisualChildren().OfType<MwiContainer>().FirstOrDefault()), _ => AllowSelectTheme);
+            CmdSelectTheme = new RelayCommand(o =>
+            {
+                AllowSelectTheme = false;
+                this.SelectTheme(this.GetVisualChildren().OfType<MwiContainer>().FirstOrDefault());
+                AllowSelectTheme = true;
+            }, _ => AllowSelectTheme);
 
             // DataContext = this;
             Loaded += OnLoaded;
