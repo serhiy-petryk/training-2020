@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Windows.Controls.Primitives;
-using WpfLib.Common;
+using WpfSpLib.Common;
 
 namespace TestDll.Samples
 {

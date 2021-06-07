@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:WpfLib.Controls;assembly=WpfLib"
-             xmlns:samples="clr-namespace:WpfLib.Samples;assembly=WpfLib"
-             xmlns:common="clr-namespace:WpfLib.Common;assembly=WpfLib"
+             xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
+             xmlns:samples="clr-namespace:WpfSpLib.Samples;assembly=WpfSpLib"
+             xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="Aqua">
 
