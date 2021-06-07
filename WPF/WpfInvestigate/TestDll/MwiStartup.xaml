@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels;assembly=WpfInvestigate"
-        xmlns:controls="clr-namespace:WpfInvestigate.Controls;assembly=WpfInvestigate"
-        xmlns:samples="clr-namespace:WpfInvestigate.Samples;assembly=WpfInvestigate"
+        xmlns:viewModels="clr-namespace:WpfLib.ViewModels;assembly=WpfLib"
+        xmlns:controls="clr-namespace:WpfLib.Controls;assembly=WpfLib"
+        xmlns:samples="clr-namespace:WpfLib.Samples;assembly=WpfLib"
         xmlns:testDll="clr-namespace:TestDll"
-        xmlns:effects="clr-namespace:WpfInvestigate.Effects;assembly=WpfInvestigate"
-        xmlns:themes="clr-namespace:WpfInvestigate.Themes;assembly=WpfInvestigate"
-        xmlns:common="clr-namespace:WpfInvestigate.Common;assembly=WpfInvestigate"
+        xmlns:effects="clr-namespace:WpfLib.Effects;assembly=WpfLib"
+        xmlns:themes="clr-namespace:WpfLib.Themes;assembly=WpfLib"
+        xmlns:common="clr-namespace:WpfLib.Common;assembly=WpfLib"
         mc:Ignorable="d"
         Title="Test DLL MwiStartup"
         Style="{StaticResource HeadlessWindow}"
@@ -160,7 +160,7 @@
                 <ContentControl Content="Fixed Windows 10 Theme. Bootstrap Primary color" Foreground="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
             </controls:MwiChild>
 
-            <controls:MwiChild Title="Window Using XAML" Icon="pack://application:,,,/WpfInvestigate;component/Resources/OriginalLogo.png" Height="350">
+            <controls:MwiChild Title="Window Using XAML" Icon="pack://application:,,,/WpfLib;component/Resources/OriginalLogo.png" Height="350">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <Button Height="20" Command="{Binding CmdDisableDetach}">Disable Detach</Button>

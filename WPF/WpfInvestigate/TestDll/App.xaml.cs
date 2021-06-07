@@ -3,10 +3,10 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
-using WpfInvestigate.Common;
-using WpfInvestigate.Helpers;
-using WpfInvestigate.Themes;
-using WpfInvestigate.ViewModels;
+using WpfLib.Common;
+using WpfLib.Helpers;
+using WpfLib.Themes;
+using WpfLib.ViewModels;
 
 namespace TestDll
 {

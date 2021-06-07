@@ -111,9 +111,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WpfInvestigate\WpfInvestigate.csproj">
-      <Project>{63d9ee61-8d0e-4d40-9cb1-a6ddc081f088}</Project>
-      <Name>WpfInvestigate</Name>
+    <ProjectReference Include="..\WpfLib\WpfLib.csproj">
+      <Project>{e5102ee6-bfa8-4014-96fa-40838b586f45}</Project>
+      <Name>WpfLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

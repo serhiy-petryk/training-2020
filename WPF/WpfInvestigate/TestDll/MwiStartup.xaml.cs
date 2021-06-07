@@ -5,12 +5,12 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using WpfInvestigate.Common;
-using WpfInvestigate.Controls;
-using WpfInvestigate.Helpers;
-using WpfInvestigate.Samples;
-using WpfInvestigate.Themes;
-using WpfInvestigate.ViewModels;
+using WpfLib.Common;
+using WpfLib.Controls;
+using WpfLib.Helpers;
+using WpfLib.Samples;
+using WpfLib.Themes;
+using WpfLib.ViewModels;
 
 namespace TestDll
 {
@@ -55,7 +55,7 @@ namespace TestDll
             TestMwi = MwiContainer.Children?.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
 
             if (TestMwi != null && TestMwi.Content is FrameworkElement fe)
-                fe.DataContext = new WpfInvestigate.MwiStartup.TestViewModel(TestMwi);
+                fe.DataContext = new WpfLib.MwiStartup.TestViewModel(TestMwi);
         }
 
         private int cnt = 0;
@@ -205,7 +205,7 @@ namespace TestDll
         {
             if (this.IsElementDisposing())
             {
-                if (TestMwi != null && TestMwi.Content is FrameworkElement fe && fe.DataContext is WpfInvestigate.MwiStartup.TestViewModel vm)
+                if (TestMwi != null && TestMwi.Content is FrameworkElement fe && fe.DataContext is WpfLib.MwiStartup.TestViewModel vm)
                     vm.Dispose();
             }
 
