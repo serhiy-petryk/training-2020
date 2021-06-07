@@ -27,9 +27,6 @@ namespace TestDll
             var a3 = CultureInfo.DefaultThreadCurrentCulture;
             var a4 = CultureInfo.DefaultThreadCurrentUICulture;
 
-            // MwiThemeInfo.Themes.Add("TestTheme", new MwiThemeInfo("Test dll theme", Colors.LightBlue, null, MwiThemeInfo.Themes["Windows10"].GetUris()));
-            // MwiAppViewModel.Instance.ChangeTheme(MwiThemeInfo.Themes["TestTheme"]);
-
             // Apply culture to WPF controls (datepicker, ..)
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
 

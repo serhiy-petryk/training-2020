@@ -16,16 +16,6 @@ namespace WpfSpLib.ViewModels
             get => (double)GetValue(ScaleValueProperty);
             set => SetValue(ScaleValueProperty, value);
         }
-        /*public FrameworkElement DialogHost
-        {
-            get
-            {
-                var activeWnd = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-                if (activeWnd is MwiStartup mwiStartup && mwiStartup.TopControl.Template.FindName("ContentBorder", mwiStartup.TopControl) is FrameworkElement topContentControl)
-                    return topContentControl;
-                return activeWnd;
-            }
-        }*/
         #endregion
     }
 }
