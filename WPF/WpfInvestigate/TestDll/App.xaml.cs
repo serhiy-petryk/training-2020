@@ -33,9 +33,10 @@ namespace TestDll
             // MwiThemeInfo.Themes.Add("TestTheme", new MwiThemeInfo("Test dll theme", Colors.LightBlue, null, MwiThemeInfo.Themes["Windows10"].GetUris()));
             // MwiAppViewModel.Instance.ChangeTheme(MwiThemeInfo.Themes["TestTheme"]);
 
-            // FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
+            // Apply culture to WPF controls (datepicker, ..)
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
 
-            // SelectAllOnFocusForTextBox.ActivateGlobally();
+             SelectAllOnFocusForTextBox.ActivateGlobally();
 
             base.OnStartup(e);
         }

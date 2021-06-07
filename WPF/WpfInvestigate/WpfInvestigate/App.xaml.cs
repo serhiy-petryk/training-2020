@@ -17,8 +17,8 @@ namespace WpfInvestigate
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            // var vCulture = new CultureInfo("uk");
-            var vCulture = Tips.InvariantCulture;
+            var vCulture = new CultureInfo("uk");
+            // var vCulture = Tips.InvariantCulture;
 
             Thread.CurrentThread.CurrentCulture = vCulture;
             Thread.CurrentThread.CurrentUICulture = vCulture;
@@ -30,6 +30,7 @@ namespace WpfInvestigate
             var a3 = CultureInfo.DefaultThreadCurrentCulture;
             var a4 = CultureInfo.DefaultThreadCurrentUICulture;
 
+            // Apply culture to WPF controls (datepicker, ..)
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
 
             // global event handlers 

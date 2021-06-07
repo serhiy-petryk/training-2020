@@ -51,6 +51,8 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+                    <TextBox Text="AAA"></TextBox>
+                    <TextBox Text="AAA"></TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
