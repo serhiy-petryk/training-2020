@@ -98,11 +98,6 @@
     <Compile Include="Temp\OriginalVirtualKeyboard.xaml.cs">
       <DependentUpon>OriginalVirtualKeyboard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Temp\PropertyInvestigation.cs" />
-    <Compile Include="Temp\SystemDropShadowChrome.cs" />
-    <Compile Include="Temp\TempControl.xaml.cs">
-      <DependentUpon>TempControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TestViews\BootstrapButtonTests.xaml.cs">
       <DependentUpon>BootstrapButtonTests.xaml</DependentUpon>
     </Compile>
@@ -248,10 +243,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Temp\OriginalVirtualKeyboard.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Temp\TempControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

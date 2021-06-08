@@ -65,7 +65,6 @@
                     <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick" Panel.ZIndex="1"/>
                     <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
                     <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
-                    <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
                     <Button x:Name="MwiTemplate" Width="200" Margin="0 5" Content="WiP: Mwi Template" Click="MwiTemplate_OnClick"/>
                     <Button x:Name="MemoryLeakInvestigation" Width="200" Margin="0 5" Content="MemoryLeakInvestigation" Click="MemoryLeakInvestigation_OnClick"/>
                     <Button x:Name="ThemeSelectorTest" Width="200" Margin="0 5" Content="Theme Selector Test" Click="ThemeSelectorTest_OnClick"/>
@@ -96,12 +95,6 @@
                         <Button x:Name="CleanupWeakRefTable" Click="OnCleanupWeakRefTableClick" Content="Cleanup WeakRefTable"/>
                         <Button x:Name="GetInfo" Click="OnGetInfoClick" Content="Get info"/>
                     </WrapPanel>
-
-                    <WrapPanel Margin="5">
-                        <Button x:Name="UpdateProperties" Click="OnUpdatePropertiesClick" Content="Update Properties"/>
-                        <Button x:Name="TestForProperties" Click="OnTestForPropertiesClick" Content="Test for Properties"/>
-                    </WrapPanel>
-
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">

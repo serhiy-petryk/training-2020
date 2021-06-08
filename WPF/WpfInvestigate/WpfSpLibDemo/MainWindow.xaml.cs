@@ -77,7 +77,6 @@ namespace WpfSpLibDemo
         private void ThemeSelectorTest_OnClick(object sender, RoutedEventArgs e) => new ThemeSelectorTest().Show();
 
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
-        private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
         private void MwiTemplate_OnClick(object sender, RoutedEventArgs e) => new MwiTemplate().Show();
 
         private void MemoryLeakInvestigation_OnClick(object sender, RoutedEventArgs e) => new MemoryLeakInvestigation().Show();
@@ -288,36 +287,5 @@ namespace WpfSpLibDemo
             var data = fiData.GetValue(table) as Hashtable;
             Debug.Print($"Weak refs: {data.Count}");
         }
-
-        private static Attribute[] _attrs = { new PropertyFilterAttribute(PropertyFilterOptions.All) };
-        private void OnUpdatePropertiesClick(object sender, RoutedEventArgs e)
-        {
-            PropertyInvestigation.UpdateProperties();
-            var aa1 = PropertyInvestigation.pis;
-            var aa2 = PropertyInvestigation.pds;
-            var aa3 = PropertyInvestigation.dps;
-            var aa4 = PropertyInvestigation.dpds;
-            var aa5 = PropertyInvestigation.lves;
-
-            Debug.Print($"Button props: {aa2[typeof(Button)].Count}");
-        }
-
-        private void OnTestForPropertiesClick(object sender, RoutedEventArgs e)
-        {
-            var aa1 = PropertyInvestigation.pis;
-            var aa2 = PropertyInvestigation.pds;
-            var aa3 = PropertyInvestigation.dps;
-            var aa4 = PropertyInvestigation.dpds;
-
-            var aa11 = aa1[typeof(Button)].Select(a => a.Name).ToArray();
-            var aa21 = aa2[typeof(Button)].Select(a => a.Name).ToArray();
-            var a21 = aa21.Except(aa11).ToArray();
-            var a22 = aa11.Except(aa21).ToArray();
-
-            var aa31 = aa3[typeof(Button)].Select(a => a.Name).ToArray();
-            var a31 = aa31.Except(aa11).ToArray();
-            var a32 = aa11.Except(aa31).ToArray();
-        }
-
     }
 }
