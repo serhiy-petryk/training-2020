@@ -123,7 +123,7 @@
       <Name>WpfSpLibDemo</Name>
     </ProjectReference>
     <ProjectReference Include="..\WpfSpLib\WpfSpLib.csproj">
-      <Project>{b1fa6b9f-5d5c-48d0-a0f7-9ec85c4c6724}</Project>
+      <Project>{a3379e6f-b884-479b-986f-71bf3e827fa8}</Project>
       <Name>WpfSpLib</Name>
     </ProjectReference>
   </ItemGroup>

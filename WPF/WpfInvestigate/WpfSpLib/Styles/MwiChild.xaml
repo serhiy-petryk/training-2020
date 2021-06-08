@@ -47,6 +47,13 @@
 
         <Setter Property="MinWidth" Value="210"/>
         <Setter Property="MinHeight" Value="50"/>
+
+        <!-- Below 4 setters don't inherited from ResizingControl in DLL ??? -->
+        <Setter Property="MaxWidth" Value="3000"/>
+        <Setter Property="MaxHeight" Value="2000"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="DataContext" Value="{Binding RelativeSource={RelativeSource Self}}"/>
