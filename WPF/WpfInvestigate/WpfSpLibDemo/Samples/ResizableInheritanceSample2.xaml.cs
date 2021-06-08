@@ -31,23 +31,5 @@ namespace WpfSpLibDemo.Samples
                 MovingThumb = a2;
             //}, DispatcherPriority.DataBind);*/
         }
-
-        // ==============================
-        /*public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content),
-            typeof(object), typeof(ResizableInheritanceSample2), new FrameworkPropertyMetadata(null));
-        public new object Content
-        {
-            get => (object)GetValue(ContentProperty);
-            set => SetValue(ContentProperty, value);
-        }*/
-
-        /*public static readonly DependencyProperty XXContentProperty = DependencyProperty.Register(nameof(XXContent),
-            typeof(object), typeof(ResizableInheritanceSample2), new FrameworkPropertyMetadata(null));
-        public object XXContent
-        {
-            get => (object)GetValue(XXContentProperty);
-            set => SetValue(XXContentProperty, value);
-        }*/
-
     }
 }
