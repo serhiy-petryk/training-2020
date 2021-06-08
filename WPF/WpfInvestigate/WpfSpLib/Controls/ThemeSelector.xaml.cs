@@ -58,6 +58,7 @@ namespace WpfSpLib.Controls
         public bool IsThemeSelectorEnabled => !UseDefaultThemeColor;
         public bool IsColorSelectorEnabled => ActualTheme != null && !ActualTheme.FixedColor.HasValue;
         public bool IsColorControlEnabled => IsColorSelectorEnabled && !UseDefaultColor;
+        public bool IsApplyButtonEnabled => !(Equals(Target?.Theme, Theme) && Equals(Target?.ThemeColor, ThemeColor));
         public bool IsRestoreButtonEnabled => Changes.Count > 0;
 
         public ThemeSelector()
@@ -108,7 +109,8 @@ namespace WpfSpLib.Controls
             cbUseDefaultTheme.IsChecked = Theme == null;
             cbUseDefaultColor.IsChecked = !ThemeColor.HasValue;
 
-            OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor), nameof(IsRestoreButtonEnabled),
+            OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor),
+                nameof(IsApplyButtonEnabled), nameof(IsRestoreButtonEnabled),
                 nameof(IsThemeSelectorEnabled), nameof(IsColorSelectorEnabled), nameof(IsColorControlEnabled));
             
             _isUpdating = false;

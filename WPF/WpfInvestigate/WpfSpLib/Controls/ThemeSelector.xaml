@@ -58,6 +58,7 @@
                 <Button Content="Apply" Height="30" Width="100" Margin="2 2 8 2" Click="OnApplyButtonClick"
                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                         Style="{StaticResource MonochromeButtonBaseStyle}"
+                        IsEnabled="{Binding IsApplyButtonEnabled}"
                         effects:ChromeEffect.Monochrome="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
                         effects:CornerRadiusEffect.CornerRadius="3"/>
                 <Button Content="Restore" Height="30" Width="100" Margin="2 2 8 8" Click="OnRestoreButtonClick"
