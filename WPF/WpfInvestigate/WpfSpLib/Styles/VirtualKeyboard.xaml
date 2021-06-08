@@ -413,7 +413,8 @@
                                 <Button Grid.Column="1" DataContext="{Binding KeyboardSet[VK_SPACE]}" Style="{StaticResource KeyButtonStyle}"/>
                                 <RepeatButton Grid.Column="2" DataContext="{Binding KeyboardSet[VK_LEFT]}" Style="{StaticResource ArrowButtonStyle}"/>
                                 <RepeatButton Grid.Column="3" DataContext="{Binding KeyboardSet[VK_RIGHT]}" Style="{StaticResource ArrowButtonStyle}"/>
-                                <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="4" IsThreeState="False" Padding="4 0 2 0" HorizontalContentAlignment="Left"
+                                <ToggleButton x:Name="PART_LanguageSelector" Grid.Column="4" IsThreeState="False" Padding="4 0 2 0"
+                                              HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
                                               Focusable="False"
                                               Content="{Binding RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=SelectedKeyboardLayout.Label}"
                                               Style="{StaticResource LanguageSelectorButtonStyle}">
