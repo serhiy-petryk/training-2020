@@ -74,7 +74,6 @@ namespace WpfSpLibDemo
         private void ButtonStyleTests_OnClick(object sender, RoutedEventArgs e) => new ButtonStyleTests().Show();
         private void FocusEffectTests_OnClick(object sender, RoutedEventArgs e) => new FocusEffectTests().Show();
         private void TextBoxTests_OnClick(object sender, RoutedEventArgs e) => new TextBoxTests().Show();
-        private void ThemeSelectorTest_OnClick(object sender, RoutedEventArgs e) => new ThemeSelectorTest().Show();
 
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
         private void MwiTemplate_OnClick(object sender, RoutedEventArgs e) => new MwiTemplate().Show();

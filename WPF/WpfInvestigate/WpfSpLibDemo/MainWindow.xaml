@@ -67,7 +67,6 @@
                     <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
                     <Button x:Name="MwiTemplate" Width="200" Margin="0 5" Content="WiP: Mwi Template" Click="MwiTemplate_OnClick"/>
                     <Button x:Name="MemoryLeakInvestigation" Width="200" Margin="0 5" Content="MemoryLeakInvestigation" Click="MemoryLeakInvestigation_OnClick"/>
-                    <Button x:Name="ThemeSelectorTest" Width="200" Margin="0 5" Content="Theme Selector Test" Click="ThemeSelectorTest_OnClick"/>
 
                     <WrapPanel Margin="5" HorizontalAlignment="Stretch">
                         <Border Width="60" Height="60" Background="Gainsboro" BorderBrush="Red" BorderThickness="1" Padding="0 0">
