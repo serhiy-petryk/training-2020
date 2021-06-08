@@ -1,9 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using WpfSpLib.Helpers;
 using WpfSpLib.Themes;
 
 namespace WpfSpLib.Controls
@@ -13,6 +16,8 @@ namespace WpfSpLib.Controls
     /// </summary>
     public partial class ThemeSelector: INotifyPropertyChanged
     {
+        public IColorThemeSupport Target { get; set; }
+        public List<Tuple<MwiThemeInfo, Color?>> Changes = new List<Tuple<MwiThemeInfo, Color?>>();
         public MwiThemeInfo Theme { get; set; }
         public Color? ThemeColor { get; set; }
         public MwiThemeInfo DefaultTheme { get; set; }
@@ -24,6 +29,7 @@ namespace WpfSpLib.Controls
         public bool IsThemeSelectorEnabled => !UseDefaultThemeColor;
         public bool IsColorSelectorEnabled => ActualTheme != null && !ActualTheme.FixedColor.HasValue;
         public bool IsColorControlEnabled => IsColorSelectorEnabled && !UseDefaultColor;
+        public bool IsRestoreButtonEnabled => Changes.Count > 0;
         public bool IsSaved { get; private set; }
 
         public ThemeSelector()
@@ -74,7 +80,7 @@ namespace WpfSpLib.Controls
             cbUseDefaultTheme.IsChecked = Theme == null;
             cbUseDefaultColor.IsChecked = !ThemeColor.HasValue;
 
-            OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor),
+            OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor), nameof(IsRestoreButtonEnabled),
                 nameof(IsThemeSelectorEnabled), nameof(IsColorSelectorEnabled), nameof(IsColorControlEnabled));
             
             _isUpdating = false;
@@ -102,7 +108,7 @@ namespace WpfSpLib.Controls
         private void OnUseDefaultColorChanged(object sender, RoutedEventArgs e)
         {
             var cb = (CheckBox) sender;
-            ThemeColor = cb.IsChecked == true ? (Color?)null : DefaultThemeColor;
+            ThemeColor = cb.IsChecked == true ? (Color?)null : ActualThemeColor;
             UpdateUI();
         }
 
@@ -113,7 +119,7 @@ namespace WpfSpLib.Controls
             UpdateUI();
         }
 
-        private void OnApplyButtonClick(object sender, RoutedEventArgs e)
+        private void OnApplyAndCloseButtonClick(object sender, RoutedEventArgs e)
         {
             IsSaved = true;
             ApplicationCommands.Close.Execute(null, this);
@@ -128,5 +134,35 @@ namespace WpfSpLib.Controls
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        private void OnApplyButtonClick(object sender, RoutedEventArgs e)
+        {
+            Changes.Add(new Tuple<MwiThemeInfo, Color?>(Target.Theme, Target.ThemeColor));
+            ApplyTheme();
+        }
+
+        private void OnRestoreButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (Changes.Count > 0)
+            {
+                Theme = Changes[Changes.Count - 1].Item1;
+                ThemeColor = Changes[Changes.Count - 1].Item2;
+                Changes.RemoveAt(Changes.Count - 1);
+                ApplyTheme();
+            }
+        }
+
+        private void ApplyTheme()
+        {
+            Target.Theme = Theme;
+            if (Target.ActualTheme.FixedColor.HasValue)
+            {
+                if (Target is Control cntrl)
+                    cntrl.Background = null;
+            }
+            else
+                Target.ThemeColor = ThemeColor;
+            UpdateUI();
+        }
     }
 }

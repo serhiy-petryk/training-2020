@@ -58,7 +58,8 @@ namespace WpfSpLib.Helpers
                 Theme = obj.Theme,
                 DefaultTheme = defaultTheme,
                 ThemeColor = obj.ThemeColor,
-                DefaultThemeColor = defaultThemeColor
+                DefaultThemeColor = defaultThemeColor,
+                Target = obj
             };
             var mwiChild = new MwiChild
             {

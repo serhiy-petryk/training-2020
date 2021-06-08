@@ -54,12 +54,24 @@
                 </StackPanel>
             </Border>
 
-            <Button Grid.Row="1" Content="Apply and Close" Height="30" Width="100" Margin="2 2 8 2" Click="OnApplyButtonClick"
-                    VerticalAlignment="Bottom"
-                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                    Style="{StaticResource MonochromeButtonBaseStyle}"
-                    effects:ChromeEffect.Monochrome="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
-                    effects:CornerRadiusEffect.CornerRadius="3"/>
+            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
+                <Button Content="Apply" Height="30" Width="100" Margin="2 2 8 2" Click="OnApplyButtonClick"
+                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        Style="{StaticResource MonochromeButtonBaseStyle}"
+                        effects:ChromeEffect.Monochrome="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
+                        effects:CornerRadiusEffect.CornerRadius="3"/>
+                <Button Content="Restore" Height="30" Width="100" Margin="2 2 8 8" Click="OnRestoreButtonClick"
+                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        Style="{StaticResource MonochromeButtonBaseStyle}"
+                        IsEnabled="{Binding IsRestoreButtonEnabled}"
+                        effects:ChromeEffect.Monochrome="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
+                        effects:CornerRadiusEffect.CornerRadius="3"/>
+                <Button Content="Apply and Close" Height="30" Width="100" Margin="2 2 8 2" Click="OnApplyAndCloseButtonClick"
+                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        Style="{StaticResource MonochromeButtonBaseStyle}"
+                        effects:ChromeEffect.Monochrome="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
+                        effects:CornerRadiusEffect.CornerRadius="3"/>
+            </StackPanel>
         </Grid>
 
         <Border BorderThickness="1" Background="Transparent" CornerRadius="4" Margin="4 10 4 4" Padding="4 0 4 4"
