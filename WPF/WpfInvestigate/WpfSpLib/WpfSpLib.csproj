@@ -119,7 +119,7 @@
     <Compile Include="Effects\TextBlockEffects.cs" />
     <Compile Include="Effects\TextBoxEffects.cs" />
     <Compile Include="Effects\WatermarkEffect.cs" />
-    <Compile Include="Helpers\BindingHelper.cs" />
+    <Compile Include="Useful\BindingHelper.cs" />
     <Compile Include="Helpers\ColorThemeSupportHelper.cs" />
     <Compile Include="Helpers\ControlHelper.cs" />
     <Compile Include="Helpers\EventHelper.cs" />
