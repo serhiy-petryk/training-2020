@@ -10,14 +10,13 @@ namespace WpfSpLib.Helpers
 {
     public static class SelectAllOnFocusForTextBox
     {
-        public static bool ActivateGlobally()
+        public static void ActivateGlobally()
         {
             // Select the text in a TextBox when it receives focus.
             // var type = typeof(TextBox).Assembly.GetType("System.Windows.Controls.TextBoxView");
             EventManager.RegisterClassHandler(typeof(TextBox), UIElement.PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(SelectivelyIgnoreMouseButton));
             EventManager.RegisterClassHandler(typeof(TextBox), UIElement.GotKeyboardFocusEvent, new RoutedEventHandler(SelectAllText));
             EventManager.RegisterClassHandler(typeof(TextBox), Control.MouseDoubleClickEvent, new RoutedEventHandler(SelectAllText));
-            return true;
         }
 
         private static void SelectivelyIgnoreMouseButton(object sender, MouseButtonEventArgs e)
