@@ -194,5 +194,14 @@ namespace WpfSpLib.Controls
                 Target.ThemeColor = ThemeColor;
             UpdateUI();
         }
+
+        private void ThemeSelector_OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.AutomaticUnloading(ThemeSelector_OnUnloaded))
+            {
+                Target = null;
+                ColorControl = null;
+            }
+        }
     }
 }
