@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using WpfSpLib.Common;
 using WpfSpLib.Helpers;
 using WpfSpLib.Themes;
 
@@ -16,7 +17,35 @@ namespace WpfSpLib.Controls
     /// </summary>
     public partial class ThemeSelector: INotifyPropertyChanged
     {
-        public IColorThemeSupport Target { get; set; }
+        private IColorThemeSupport _target;
+
+        public IColorThemeSupport Target
+        {
+            get => _target;
+            set
+            {
+                _target = value;
+
+                var d = _target as DependencyObject;
+                DefaultTheme = _target?.ActualTheme;
+                if (_target?.Theme != null)
+                {
+                    var a1 = d.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, _target) && a.Theme != null);
+                    DefaultTheme = a1?.Theme ?? MwiThemeInfo.DefaultTheme;
+                }
+
+                DefaultThemeColor = _target?.ActualThemeColor ?? MwiThemeInfo.DefaultThemeColor;
+                if (_target?.ThemeColor != null)
+                {
+                    var a1 = d.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, _target) && a.ThemeColor != null);
+                    DefaultThemeColor = a1?.ThemeColor ?? MwiThemeInfo.DefaultThemeColor;
+                }
+
+                Theme = _target?.Theme;
+                ThemeColor = _target?.ThemeColor;
+            }
+        }
+
         public List<Tuple<MwiThemeInfo, Color?>> Changes = new List<Tuple<MwiThemeInfo, Color?>>();
         public MwiThemeInfo Theme { get; set; }
         public Color? ThemeColor { get; set; }
@@ -30,7 +59,6 @@ namespace WpfSpLib.Controls
         public bool IsColorSelectorEnabled => ActualTheme != null && !ActualTheme.FixedColor.HasValue;
         public bool IsColorControlEnabled => IsColorSelectorEnabled && !UseDefaultColor;
         public bool IsRestoreButtonEnabled => Changes.Count > 0;
-        public bool IsSaved { get; private set; }
 
         public ThemeSelector()
         {
@@ -121,7 +149,7 @@ namespace WpfSpLib.Controls
 
         private void OnApplyAndCloseButtonClick(object sender, RoutedEventArgs e)
         {
-            IsSaved = true;
+            ApplyTheme();
             ApplicationCommands.Close.Execute(null, this);
         }
 
