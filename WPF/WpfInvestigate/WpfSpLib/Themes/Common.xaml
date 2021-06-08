@@ -3,7 +3,8 @@
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:common="clr-namespace:WpfSpLib.Common"
-                    xmlns:effects="clr-namespace:WpfSpLib.Effects">
+                    xmlns:effects="clr-namespace:WpfSpLib.Effects"
+                    xmlns:helpers="clr-namespace:WpfSpLib.Helpers">
 
     <DropShadowEffect x:Key="ShadowEffect" BlurRadius="5" ShadowDepth="2" Direction="315" po:Freeze="True" />
 
@@ -138,12 +139,12 @@
                                     <VisualState x:Name="Pressed" Storyboard="{StaticResource PressedState}"/>-->
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
+                                        <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Duration="{x:Static helpers:AnimationHelper.AnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation To="0.5" Storyboard.TargetProperty="Opacity" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
+                                        <DoubleAnimation To="0.5" Storyboard.TargetProperty="Opacity" Duration="{x:Static helpers:AnimationHelper.AnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

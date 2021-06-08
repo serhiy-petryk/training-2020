@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:WpfSpLib.Controls"
                     xmlns:effects="clr-namespace:WpfSpLib.Effects"
-                    xmlns:common="clr-namespace:WpfSpLib.Common">
+                    xmlns:common="clr-namespace:WpfSpLib.Common"
+                    xmlns:helpers="clr-namespace:WpfSpLib.Helpers">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ButtonStyles.xaml" />
@@ -27,7 +28,7 @@
                     <EventTrigger RoutedEvent="ToolTip.Opened">
                         <BeginStoryboard HandoffBehavior="Compose">
                             <Storyboard TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" RenderOptions.BitmapScalingMode="HighQuality" >
-                                <DoubleAnimation From="0.7" To="1" Duration="{x:Static common:AnimationHelper.AnimationDuration}" />
+                                <DoubleAnimation From="0.7" To="1" Duration="{x:Static helpers:AnimationHelper.AnimationDuration}" />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>

@@ -68,7 +68,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\AnimationHelper.cs" />
+    <Compile Include="Helpers\AnimationHelper.cs" />
     <Compile Include="Common\BindingProxy.cs" />
     <Compile Include="Common\ColorConverters.cs" />
     <Compile Include="Common\ColorSpaces.cs" />

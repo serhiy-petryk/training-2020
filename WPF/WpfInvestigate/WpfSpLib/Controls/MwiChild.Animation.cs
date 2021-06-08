@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using WpfSpLib.Common;
+using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Controls
 {

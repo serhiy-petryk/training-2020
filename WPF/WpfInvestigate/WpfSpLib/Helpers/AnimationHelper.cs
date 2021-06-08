@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using WpfSpLib.Helpers;
+using WpfSpLib.Common;
 
-namespace WpfSpLib.Common
+namespace WpfSpLib.Helpers
 {
     #region ======  AnimationHelper  =====
     public static class AnimationHelper

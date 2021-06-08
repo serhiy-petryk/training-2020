@@ -7,7 +7,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using WpfSpLib.Common;
 using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
 

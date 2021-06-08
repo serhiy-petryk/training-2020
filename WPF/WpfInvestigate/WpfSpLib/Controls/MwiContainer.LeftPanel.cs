@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using WpfSpLib.Common;
+using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Controls
 {
