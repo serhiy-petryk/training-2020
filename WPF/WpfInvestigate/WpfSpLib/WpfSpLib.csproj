@@ -234,7 +234,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\1.jpg" />
     <Resource Include="Resources\Mwi.Wnd7\Close.Disabled.png" />
     <Resource Include="Resources\Mwi.Wnd7\Close.png" />
     <Resource Include="Resources\Mwi.Wnd7\Maximize.Disabled.png" />
@@ -243,7 +242,6 @@
     <Resource Include="Resources\Mwi.Wnd7\Minimize.png" />
     <Resource Include="Resources\Mwi.Wnd7\Restore.Disabled.png" />
     <Resource Include="Resources\Mwi.Wnd7\Restore.png" />
-    <Resource Include="Resources\OriginalLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
