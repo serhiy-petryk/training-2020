@@ -12,6 +12,10 @@
         <Style TargetType="samples:ResizableInheritanceSample4">
             <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="BorderBrush" Value="LightBlue"/>
+            <Setter Property="MaxWidth" Value="3000"/>
+            <Setter Property="MaxHeight" Value="2000"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="samples:ResizableInheritanceSample4">

@@ -7,6 +7,11 @@ namespace WpfSpLibDemo.Samples
     /// </summary>
     public partial class ResizableInheritanceSample3
     {
+        static ResizableInheritanceSample3()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ResizableInheritanceSample3), new FrameworkPropertyMetadata(typeof(ResizableInheritanceSample3)));
+        }
+
         public ResizableInheritanceSample3()
         {
             InitializeComponent();
