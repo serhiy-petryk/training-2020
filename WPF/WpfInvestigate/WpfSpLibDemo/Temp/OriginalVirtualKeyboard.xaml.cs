@@ -15,12 +15,10 @@ namespace WpfSpLibDemo.Temp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // throw new NotImplementedException();
         }
 
         private void cmd1_LostFocus(object sender, RoutedEventArgs e)
         {
-            // throw new NotImplementedException();
         }
     }
 }
