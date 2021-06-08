@@ -18,7 +18,7 @@ namespace WpfSpLibDemo.Samples
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
-            var a1 = Tips.GetVisualParents((DependencyObject) sender).OfType<MwiStartup>().FirstOrDefault();
+            var a1 = Tips.GetVisualParents((DependencyObject) sender).OfType<MwiStartupDemo>().FirstOrDefault();
             var a2 = a1.Content as MwiChild;
             a2.Background = Brushes.Green;
 

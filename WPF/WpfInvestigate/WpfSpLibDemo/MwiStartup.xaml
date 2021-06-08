@@ -7,17 +7,17 @@
         xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
         xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
         xmlns:themes="clr-namespace:WpfSpLib.Themes;assembly=WpfSpLib"
-        xmlns:wpfSpLibDemo="clr-namespace:WpfSpLibDemo"
         xmlns:samples="clr-namespace:WpfSpLibDemo.Samples"
+        xmlns:wpfSpLibDemo="clr-namespace:WpfSpLibDemo"
         mc:Ignorable="d"
         Title="MwiStartup"
         Style="{StaticResource HeadlessWindow}"
         KeyDown="MwiStartup_OnKeyDown"
-        Unloaded="OnUnloaded">
+        Unloaded="MwiStartup_OnUnloaded">
 
     <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1050" VisibleButtons="Minimize,Maximize,Close,SelectTheme"
                        Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10-2]}"
-                       ThemeColor="Orange">
+                       ThemeColor="LightSteelBlue">
         <controls:MwiChild.CommandBar>
             <samples:MwiCommandBarSample/>
         </controls:MwiChild.CommandBar>
@@ -91,96 +91,6 @@
             <controls:MwiContainer.LeftPanel>
                 <samples:MwiLeftPanelSample/>
             </controls:MwiContainer.LeftPanel>
-
-            <controls:MwiChild x:Name="TestChild" Title="Title" Height="150" BorderBrush="Orange">
-                <ContentControl Content="Mwi Child Test. No background"/>
-            </controls:MwiChild>
-
-            <controls:MwiChild x:Name="TestChild2" Title="Title" Height="150" BorderBrush="Orange" ThemeColor="Gainsboro">
-                <ContentControl Content="Mwi Child Test. ThemeColor: Gainsboro"/>
-            </controls:MwiChild>
-
-            <controls:MwiChild Title="Empty Window Using XAML and long header" ThemeColor="LightBlue" />
-
-            <controls:MwiChild BorderBrush="Orange" ThemeColor="LightGreen" BorderThickness="8" MinHeight="70">
-                <ContentControl Content="object Content. ThemeColor: LightGreen. No border for Windows 7 theme"/>
-                <controls:MwiChild.Resources>
-                    <Style TargetType="controls:MwiChild" BasedOn="{StaticResource {x:Type controls:MwiChild}}">
-                        <Setter Property="BorderThickness" Value="4"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=ActualTheme.Id}" Value="Windows7">
-                                <Setter Property="BorderThickness" Value="0"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </controls:MwiChild.Resources>
-            </controls:MwiChild>
-
-            <controls:MwiChild Height="150">
-                <controls:MwiChild.CommandBar>
-                    <samples:MwiCommandBarSample/>
-                </controls:MwiChild.CommandBar>
-                <controls:MwiChild.StatusBar>
-                    <samples:MwiStatusBarSample/>
-                </controls:MwiChild.StatusBar>
-                <TextBlock Text="TextBlock Content: height=150" FontSize="16" Background="Yellow"
-                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            </controls:MwiChild>
-
-            <controls:MwiChild Title="Long long very long Title very long very long" Height="150">
-                <controls:MwiChild.CommandBar>
-                    <samples:MwiCommandBarSample/>
-                </controls:MwiChild.CommandBar>
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Mwi Child TextBlock Content" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Orange"
-                               PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown"/>
-                    <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
-                    <Button Focusable="True" Click="OnTestButtonClick">Focusable</Button>
-                    <Button Focusable="False">Not focusable</Button>
-                </StackPanel>
-            </controls:MwiChild>
-
-            <controls:MwiChild Title="Title" Resizable="False">
-                <controls:MwiChild.StatusBar>
-                    <samples:MwiStatusBarSample/>
-                </controls:MwiChild.StatusBar>
-                <TextBlock Text="Not resizable" Background="Yellow"/>
-            </controls:MwiChild>
-
-            <controls:MwiChild Position="600 25" Title="Fixed Windows 7 Theme" Height="150" Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows7]}" >
-                <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=Title}"/>
-            </controls:MwiChild>
-
-            <controls:MwiChild Position="600 225" Title="Fixed Windows 10 Theme" Height="150"
-                               ThemeColor="{StaticResource PrimaryColor}"
-                               Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10]}" >
-                <ContentControl Content="Fixed Windows 10 Theme. Bootstrap Primary color" Foreground="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
-            </controls:MwiChild>
-
-            <controls:MwiChild Title="Window Using XAML" Icon="pack://application:,,,/WpfSpLib;component/Resources/OriginalLogo.png" Height="350">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <StackPanel>
-                        <Button Height="20" Command="{Binding CmdDisableDetach}">Disable Detach</Button>
-                        <Button Height="20" Command="{Binding CmdEnableDetach}">Enable Detach</Button>
-                        <Button Height="20" Command="{Binding CmdDisableMinimize}">Disable Minimize</Button>
-                        <Button Height="20" Command="{Binding CmdEnableMinimize}">Enable Minimize</Button>
-                        <Button Height="20" Command="{Binding CmdDisableMaximize}">Disable Maximize</Button>
-                        <Button Height="20" Command="{Binding CmdEnableMaximize}">Enable Maximize</Button>
-                        <Button Height="20" Command="{Binding CmdDisableClose}">Disable Close</Button>
-                        <Button Height="20" Command="{Binding CmdEnableClose}">Enable Close</Button>
-                        <Button Height="20" Command="{Binding CmdShowIcon}">Show Icon</Button>
-                        <Button Height="20" Command="{Binding CmdHideIcon}">Hide Icon</Button>
-                        <Button Height="20" Command="{Binding CmdChangeTitle}">Change Title</Button>
-                        <Button Height="20" Command="{Binding CmdOpenDialog}">Show Dialog Window</Button>
-                        <Button Height="20" Command="{Binding CmdShowMessage}">Show Message</Button>
-                        <Button Height="20" Click="OnTestButtonClick" Content="Test click"/>
-                    </StackPanel>
-                </ScrollViewer>
-                <controls:MwiChild.StatusBar>
-                    <samples:MwiStatusBarSample/>
-                </controls:MwiChild.StatusBar>
-            </controls:MwiChild>
-
         </controls:MwiContainer>
     </controls:MwiChild>
 </Window>

@@ -53,6 +53,7 @@ namespace WpfSpLibDemo
         }
 
         private void MwiStartup_OnClick(object sender, RoutedEventArgs e) => new MwiStartup().Show();
+        private void MwiStartupDemo_OnClick(object sender, RoutedEventArgs e) => new MwiStartupDemo().Show();
         private void MwiBootstrapColorTests_OnClick(object sender, RoutedEventArgs e) => new MwiBootstrapColorTests().Show();
         private void MwiTests_OnClick(object sender, RoutedEventArgs e) => new MwiTests().Show();
         private void ResizingControlTests_OnClick(object sender, RoutedEventArgs e) => new ResizingControlTests().Show();
@@ -160,7 +161,7 @@ namespace WpfSpLibDemo
         }
         private async Task MwiStartupMemoryTestStep(int step)
         {
-            var wnd = new MwiStartup();
+            var wnd = new MwiStartupDemo();
             wnd.Show();
 
             await Task.Delay(1000);

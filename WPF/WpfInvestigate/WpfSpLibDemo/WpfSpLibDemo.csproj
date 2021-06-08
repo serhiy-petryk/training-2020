@@ -53,6 +53,9 @@
     <Compile Include="MwiStartup.xaml.cs">
       <DependentUpon>MwiStartup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MwiStartupDemo.xaml.cs">
+      <DependentUpon>MwiStartupDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Samples\MwiCommandBarSample.xaml.cs">
       <DependentUpon>MwiCommandBarSample.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MwiStartup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MwiStartupDemo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
