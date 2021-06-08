@@ -102,14 +102,11 @@ namespace WpfSpLib.Controls
             {
                 var oldCanScrollLeft = CanScrollLeft;
                 var oldCanScrollRight = CanScrollRight;
-                var oldScrollButtonVisibility = ScrollButtonVisibility;
                 _scrollableWidth = newScrollableWidth;
                 _viewportWidth = newViewportWidth;
                 _extentWidth = newExtentWidth;
                 _horizontalOffset = newHorizontalOffset;
 
-                if (ScrollButtonVisibility != oldScrollButtonVisibility)
-                    Dispatcher.BeginInvoke(new Action(() => _doubleButtonGrid?.UpdateAllBindings()), DispatcherPriority.Render);
                 if (oldCanScrollLeft != CanScrollLeft || oldCanScrollRight != CanScrollRight)
                     OnPropertiesChanged(nameof(CanScrollLeft), nameof(CanScrollRight), nameof(ScrollButtonVisibility));
             }
