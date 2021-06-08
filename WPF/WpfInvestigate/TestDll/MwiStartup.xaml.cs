@@ -61,7 +61,7 @@ namespace TestDll
             TestMwi = MwiContainer.Children?.OfType<MwiChild>().FirstOrDefault(w => w.Title == "Window Using XAML");
 
             if (TestMwi != null && TestMwi.Content is FrameworkElement fe)
-                fe.DataContext = new WpfSpLibDemo.MwiStartup.TestViewModel(TestMwi);
+                fe.DataContext = new TestViewModel(TestMwi);
         }
 
         private int cnt = 0;
@@ -211,7 +211,7 @@ namespace TestDll
         {
             if (this.IsElementDisposing())
             {
-                if (TestMwi != null && TestMwi.Content is FrameworkElement fe && fe.DataContext is WpfSpLibDemo.MwiStartup.TestViewModel vm)
+                if (TestMwi != null && TestMwi.Content is FrameworkElement fe && fe.DataContext is TestViewModel vm)
                     vm.Dispose();
             }
 
