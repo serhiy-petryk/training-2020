@@ -191,7 +191,7 @@ namespace WpfSpLibDemo
 
         private async void OnPopupResizeControlMemoryTestClick(object sender, RoutedEventArgs e)
         {
-            for (var k = 0; k < 25; k++)
+            for (var k = 0; k < 5; k++)
                 await PopupResizeControlTestStep(k);
         }
         private async Task PopupResizeControlTestStep(int step)

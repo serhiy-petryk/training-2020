@@ -4,9 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
-        xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
         mc:Ignorable="d"
-        Title="TextBoxTests" Height="325" Width="800">
+        Title="TextBoxTests" Height="400" Width="800">
 
     <Grid>
         <Grid.ColumnDefinitions>
