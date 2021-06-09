@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using WpfSpLib.Common;
+using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
 using WpfSpLibDemo.TestViews;
 
@@ -119,7 +120,7 @@ namespace WpfSpLibDemo
             // Tips.ClearAllBindings(WpfSpLib.TestViews.MwiBootstrapColorTests.Instance);
         }
 
-        private async void OnMwiContainerMemoryTestClick(object sender, RoutedEventArgs e)
+        private async void xOnMwiContainerMemoryTestClick(object sender, RoutedEventArgs e)
         {
             for (var k = 0; k < 5; k++)
                 await MwiContainerMemoryTestStep(k);
@@ -151,7 +152,7 @@ namespace WpfSpLibDemo
             await Task.Delay(1000);
         }
 
-        private async void OnMwiStartupMemoryTestClick(object sender, RoutedEventArgs e)
+        private async void xOnMwiStartupMemoryTestClick(object sender, RoutedEventArgs e)
         {
             for (var k = 0; k < 5; k++)
                 await MwiStartupMemoryTestStep(k);
@@ -167,47 +168,6 @@ namespace WpfSpLibDemo
             GC.WaitForPendingFinalizers();
             GC.Collect();
             var a11 = GC.GetTotalMemory(true);*/
-
-            wnd.Close();
-
-            await Task.Delay(1000);
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
-            CleanupWeakEventTable();
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
-            CleanupWeakEventTable();
-
-            var a12 = GC.GetTotalMemory(true);
-
-            Debug.Print($"Test{step}: {a12:N0}");
-            // Debug.Print($"Test{step}: {a12:N0}, {EventHelper._cnt1}, {EventHelper._cnt2}, {EventHelper._cnt3}, {EventHelper._cnt4}");
-
-            await Task.Delay(1000);
-        }
-
-        private async void OnPopupResizeControlMemoryTestClick(object sender, RoutedEventArgs e)
-        {
-            for (var k = 0; k < 5; k++)
-                await PopupResizeControlTestStep(k);
-        }
-        private async Task PopupResizeControlTestStep(int step)
-        {
-            var wnd = new TextBoxTests();
-            wnd.Show();
-
-            await Task.Delay(1000);
-
-            var a1 = wnd.TestTextBox.GetVisualChildren().OfType<ToggleButton>().FirstOrDefault(a=> a.Name.EndsWith("Keyboard"));
-            if (a1 != null)
-            {
-                a1.IsChecked = true;
-            }
-
-            await Task.Delay(1000);
 
             wnd.Close();
 
@@ -324,6 +284,87 @@ namespace WpfSpLibDemo
             var table = fi.GetValue(null);
             var data = fiData.GetValue(table) as Hashtable;
             Debug.Print($"Weak refs: {data.Count}");
+        }
+
+        // ============  Memory leak tests =========
+        private async void RunTests(Func<Task> test)
+        {
+            for (var k = 0; k < 5; k++)
+            {
+                await test();
+
+                await Task.Delay(1000);
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                CleanupWeakEventTable();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                CleanupWeakEventTable();
+
+                var a12 = GC.GetTotalMemory(true);
+
+                Debug.Print($"Test{k}: {a12:N0}");
+                // Debug.Print($"Test{step}: {a12:N0}, {EventHelper._cnt1}, {EventHelper._cnt2}, {EventHelper._cnt3}, {EventHelper._cnt4}");
+
+                await Task.Delay(1000);
+            }
+        }
+        //==============
+        private void OnMwiStartupMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(new Func<Task>(async () =>
+            {
+                var wnd = new MwiStartupDemo();
+                wnd.Show();
+                await Task.Delay(1000);
+                wnd.Close();
+            }));
+        }
+        private void OnMwiContainerMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(new Func<Task>(async () =>
+            {
+                var wnd = new MwiBootstrapColorTests();
+                wnd.Show();
+                await Task.Delay(1000);
+                wnd.Close();
+            }));
+        }
+        private void OnPopupResizeControlMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(new Func<Task>(async () =>
+            {
+                var wnd = new TextBoxTests();
+                wnd.Show();
+
+                await Task.Delay(1000);
+
+                var a1 = wnd.TestTextBox.GetVisualChildren().OfType<ToggleButton>().FirstOrDefault(a => a.Name.EndsWith("Keyboard"));
+                if (a1 != null)
+                    a1.IsChecked = true;
+
+                await Task.Delay(1000);
+
+                wnd.Close();
+            }));
+        }
+        private async void OnBootstrapColorMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            var wnd = new MwiBootstrapColorTests();
+            wnd.Show();
+            await Task.Delay(1000);
+            wnd.RunTest();
+        }
+
+        private async void OnResizingControlMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            var wnd = new ResizingControlTests();
+            wnd.Show();
+            await Task.Delay(1000);
+            wnd.Automate_OnClick(null, null);
         }
     }
 }

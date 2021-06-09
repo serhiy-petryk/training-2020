@@ -37,7 +37,7 @@ namespace WpfSpLibDemo.TestViews
             GridPanel.Children.Add(resizingControl3);
         }
 
-        private async void Automate_OnClick(object sender, RoutedEventArgs e)
+        public async void Automate_OnClick(object sender, RoutedEventArgs e)
         {
             for (var k = 0; k < 5; k++)
                 await Automate_Step(k);
@@ -75,7 +75,7 @@ namespace WpfSpLibDemo.TestViews
 
             var a12 = GC.GetTotalMemory(true);
 
-            Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
+            Debug.Print($"Test{step}: {a12:N0}");
         }
 
         private void AddContent_OnClick(object sender, RoutedEventArgs e)

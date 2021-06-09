@@ -45,18 +45,28 @@ namespace WpfSpLibDemo.TestViews
             container.Children.Add(mwiChild);
         }
 
+        public async void RunTest()
+        {
+            Debug.Print($"Run Tests"); // !!! Debug.Print decrease memory leak on ~25%
+            var userControl = this.GetVisualChildren().OfType<UserControl>().FirstOrDefault();
+            for (var k = 0; k < 5; k++)
+                await StepOfTest(userControl, k);
+        }
+
         private async void OnRunTestClick(object sender, RoutedEventArgs e)
         {
             Debug.Print($"Run Tests"); // !!! Debug.Print decrease memory leak on ~25%
-            for (var k = 0; k < 5; k++)
-                await StepOfTest(sender, k);
-        }
-
-        private async Task StepOfTest(object sender, int step)
-        {
             var btn = sender as ButtonBase;
             var userControl = btn.GetVisualParents().OfType<UserControl>().First();
-            var container = btn.GetVisualParents().OfType<MwiContainer>().First();
+            for (var k = 0; k < 5; k++)
+                await StepOfTest(userControl, k);
+        }
+
+        private async Task StepOfTest(UserControl userControl, int step)
+        {
+            //var btn = sender as ButtonBase;
+            // var userControl = btn.GetVisualParents().OfType<UserControl>().First();
+            var container = userControl.GetVisualChildren().OfType<MwiContainer>().First();
 
             var mwiChild = new MwiChild { Title = userControl.Tag.ToString() };
             var b1 = new Binding { Path = new PropertyPath("Background"), Source = userControl };
@@ -89,7 +99,7 @@ namespace WpfSpLibDemo.TestViews
 
             var a12 = GC.GetTotalMemory(true);
 
-            Debug.Print($"Test{step}: {a11:N0}, {a12:N0}");
+            Debug.Print($"Test{step}: {a12:N0}");
         }
 
         public void OnUnloaded(object sender, RoutedEventArgs e)
