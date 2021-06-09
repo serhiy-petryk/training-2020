@@ -17,6 +17,12 @@ namespace WpfSpLib.Helpers
     {
         public static List<string> EventLog = new List<string>();
         #region ========  Public section  =========
+        public static bool IsElementDisposing(this FrameworkElement fe)
+        {
+            var wnd = Window.GetWindow(fe);
+            return !fe.IsLoaded && !fe.IsVisible && (wnd == null || fe.Parent == null || (wnd != null && !wnd.IsLoaded && !wnd.IsVisible));
+        }
+
         public static bool AutomaticUnloading(this FrameworkElement fe, RoutedEventHandler onUnloadedEventHandler)
         {
             if (!fe.IsElementDisposing()) return false;
@@ -25,6 +31,7 @@ namespace WpfSpLib.Helpers
                 fe.Unloaded -= onUnloadedEventHandler;
             if (!fe.Resources.Contains("Unloaded"))
             {
+                // Debug.Print($"Unload: {fe.GetType().Name}");
                 // fe.Dispatcher.BeginInvoke(new Action(() => UnloadElement(fe)), DispatcherPriority.Normal); // ? Closing is faster but many WeakRefs
                 UnloadElement(fe);
             }
@@ -51,12 +58,6 @@ namespace WpfSpLib.Helpers
             if (!rd.IsReadOnly)
                 rd.Clear();
         }
-        public static bool IsElementDisposing(this FrameworkElement fe)
-        {
-            var wnd = Window.GetWindow(fe);
-            return !fe.IsLoaded && !fe.IsVisible && (wnd == null || fe.Parent == null || (wnd != null && !wnd.IsLoaded && !wnd.IsVisible));
-        }
-
         #endregion
 
         #region ===========  Dependency Object cleaner  ===============
@@ -120,6 +121,7 @@ namespace WpfSpLib.Helpers
 
             foreach (var pi in GetPropertiesForCleaner(element.GetType()).Where(pi => !pi.PropertyType.IsValueType))
             {
+                // Debug.Print($"XX: {element.GetType().Name}, {pi.Name}");
                 var value = pi.GetValue(element);
 
                 /*if (value is ItemCollection items)

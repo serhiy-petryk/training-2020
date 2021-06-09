@@ -167,7 +167,7 @@ namespace WpfSpLib.Helpers
                             log.Add($"DPD: {o.GetType().Name}, {dpd.Name}");
                         else
                         {
-                            // Debug.Print($"RemoveDPD: {type.Name}, {dpd.Name}");
+                            // Debug.Print($"RemoveDPD: {o.GetType().Name}, {dpd.Name}");
                             var tracker = trackers[o];
                             if (_fiChangedHandlerOfTrackers == null)
                                 _fiChangedHandlerOfTrackers = tracker.GetType().GetField("Changed", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -181,6 +181,8 @@ namespace WpfSpLib.Helpers
         }
         private static DependencyPropertyDescriptor[] GetDependencyPropertyDescriptorsForType(Type type)
         {
+            // if (type == typeof(Typography) || type == typeof(SpellCheck)) return new DependencyPropertyDescriptor[0];
+
             if (!_dpdOfType.ContainsKey(type))
                 _dpdOfType[type] = type.GetFields(BindingFlags.Public | BindingFlags.Static)
                     .Where(f => f.FieldType == typeof(DependencyProperty))
@@ -216,8 +218,12 @@ namespace WpfSpLib.Helpers
                         if (ei.Item1.EventHandlerType.Name != "HighlightChangedEventHandler")
                             log.Add($"Delegate: {target.GetType()}, {ei.Item2.Name}");
                     }
-                    else 
-                    miRemove.Invoke(target, new object[] { handler });
+                    else
+                    {
+                        // Debug.Print($"RemoveDelegates: {target.GetType().Name}, {ei.Item2.Name}");
+                        miRemove.Invoke(target, new object[] {handler});
+                    }
+
                     /*foreach (var d in handler.GetInvocationList())
                     {
                         // string s = d.Method.Name;
