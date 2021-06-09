@@ -30,7 +30,7 @@ namespace WpfSpLibDemo.Samples
             Loaded -= ResizableInheritanceSample2_Loaded;
             Dispatcher.Invoke(() => // To prevent the VS designer error
             {
-                var cp = Tips.GetVisualChildren(this).OfType<ContentPresenter>().FirstOrDefault();
+                var cp = this.GetVisualChildren().OfType<ContentPresenter>().FirstOrDefault();
                 var a2 = cp.ContentTemplate.FindName("MovingThumb", cp) as Thumb;
                 MovingThumb = a2;
             }, DispatcherPriority.Background);
