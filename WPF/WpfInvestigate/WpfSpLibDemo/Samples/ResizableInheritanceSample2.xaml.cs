@@ -28,12 +28,12 @@ namespace WpfSpLibDemo.Samples
         private void ResizableInheritanceSample2_Loaded(object sender, RoutedEventArgs e)
         {
             Loaded -= ResizableInheritanceSample2_Loaded;
-            Dispatcher.Invoke(() => // To prevent the VS designer error
+            var cp = this.GetVisualChildren().OfType<ContentPresenter>().FirstOrDefault();
+            if (cp != null) // to prevent VS designer error
             {
-                var cp = this.GetVisualChildren().OfType<ContentPresenter>().FirstOrDefault();
                 var a2 = cp.ContentTemplate.FindName("MovingThumb", cp) as Thumb;
                 MovingThumb = a2;
-            }, DispatcherPriority.Background);
+            }
         }
 
     }
