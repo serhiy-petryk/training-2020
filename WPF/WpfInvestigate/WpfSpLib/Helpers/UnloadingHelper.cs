@@ -161,6 +161,12 @@ namespace WpfSpLib.Helpers
                         EventHelper.RemoveWpfEventHandlers(o2);
                 }
 
+                /*if (value is Popup popup)
+                {
+                    popup.PlacementTarget = null;
+                    popup.Child = null;
+                }*/
+
                 // if (value is ResourceDictionary rd)
                    // ClearResources(rd);
 

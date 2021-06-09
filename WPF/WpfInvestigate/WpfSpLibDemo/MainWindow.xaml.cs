@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -10,10 +9,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using WpfSpLib.Common;
 using WpfSpLib.Helpers;
-using WpfSpLibDemo.Temp;
 using WpfSpLibDemo.TestViews;
 
 namespace WpfSpLibDemo
@@ -190,6 +189,46 @@ namespace WpfSpLibDemo
             await Task.Delay(1000);
         }
 
+        private async void OnPopupResizeControlMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            for (var k = 0; k < 25; k++)
+                await PopupResizeControlTestStep(k);
+        }
+        private async Task PopupResizeControlTestStep(int step)
+        {
+            var wnd = new TextBoxTests();
+            wnd.Show();
+
+            await Task.Delay(1000);
+
+            var a1 = wnd.TestTextBox.GetVisualChildren().OfType<ToggleButton>().FirstOrDefault(a=> a.Name.EndsWith("Keyboard"));
+            if (a1 != null)
+            {
+                a1.IsChecked = true;
+            }
+
+            await Task.Delay(1000);
+
+            wnd.Close();
+
+            await Task.Delay(1000);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            CleanupWeakEventTable();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            CleanupWeakEventTable();
+
+            var a12 = GC.GetTotalMemory(true);
+
+            Debug.Print($"Test{step}: {a12:N0}");
+            // Debug.Print($"Test{step}: {a12:N0}, {EventHelper._cnt1}, {EventHelper._cnt2}, {EventHelper._cnt3}, {EventHelper._cnt4}");
+
+            await Task.Delay(1000);
+        }
 
         private Hashtable weakRefDataCopy;
         private Hashtable weakRefDataCopy2;
