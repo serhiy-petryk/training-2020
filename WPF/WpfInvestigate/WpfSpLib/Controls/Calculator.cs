@@ -30,7 +30,6 @@ namespace WpfSpLib.Controls
             for (var k = 0; k < power; k++)
                 result *= IntervalStepChange;
             return result;
-
         }
 
         public Calculator()
@@ -64,10 +63,20 @@ namespace WpfSpLib.Controls
 
             // Allow to select text in indicators
             foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
-                textBox.LostFocus += (sender, args) => args.Handled = true;
+                textBox.LostFocus += TextBox_LostFocus; ;
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e) => e.Handled = true;
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.IsElementDisposing())
+            {
+                foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
+                    textBox.LostFocus -= TextBox_LostFocus;
+            }
+            this.AutomaticUnloading(OnUnloaded);
+        }
 
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
         {
