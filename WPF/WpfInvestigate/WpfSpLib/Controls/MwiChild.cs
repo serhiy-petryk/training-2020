@@ -59,7 +59,15 @@ namespace WpfSpLib.Controls
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
 
-            if (Icon == null) Icon = FindResource("Mwi.DefaultIcon") as ImageSource;
+            if (Icon == null)
+            {
+                // Can't define in XAML because Binding error on startup 
+                var brush = new SolidColorBrush();
+                BindingOperations.SetBinding(brush, SolidColorBrush.ColorProperty, new Binding("ActualThemeColor")
+                        {Source = this, Converter = ColorHslBrush.Instance, ConverterParameter = "+50%"});
+                var geometry = new GeometryDrawing(brush, null, FindResource("DefaultIconGeometry") as Geometry);
+                Icon = new DrawingImage(geometry);
+            }
         }
 
         #region =============  Override methods  ====================
@@ -358,8 +366,8 @@ namespace WpfSpLib.Controls
             if (this.IsElementDisposing()) return;
 
             // Delay because no fill color for some icons
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
+            //Dispatcher.BeginInvoke(new Action(() =>
+            //{
                 if (!colorChanged && ActualTheme != null)
                 {
                     foreach (var f1 in ActualTheme.GetResources())
@@ -368,7 +376,7 @@ namespace WpfSpLib.Controls
 
                 if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
                     colorProxy.Value = ActualThemeColor;
-            }), DispatcherPriority.Render);
+            //}), DispatcherPriority.Render);
 
             OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
 
