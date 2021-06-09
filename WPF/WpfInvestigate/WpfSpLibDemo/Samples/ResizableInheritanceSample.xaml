@@ -10,7 +10,7 @@
              d:DesignHeight="450" d:DesignWidth="800" Background="Aqua">
 
     <controls:ResizingControl.Resources>
-        <Style TargetType="samples:ResizableInheritanceSample">
+        <Style TargetType="samples:ResizableInheritanceSample" BasedOn="{StaticResource {x:Type controls:ResizingControl}}">
             <Style.Resources>
                 <Style x:Key="ResizeThumb" TargetType="Thumb">
                     <Setter Property="Opacity" Value="0"/>
@@ -21,10 +21,6 @@
 
             <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="BorderBrush" Value="Yellow"/>
-            <Setter Property="MaxWidth" Value="3000"/>
-            <Setter Property="MaxHeight" Value="2000"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="samples:ResizableInheritanceSample">

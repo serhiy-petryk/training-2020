@@ -29,7 +29,7 @@
             </Border>
         </DataTemplate>
 
-        <Style TargetType="samples:ResizableInheritanceSample2">
+        <Style TargetType="samples:ResizableInheritanceSample2" BasedOn="{StaticResource {x:Type controls:ResizingControl}}">
             <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="BorderBrush" Value="Yellow"/>
             <!--<Setter Property="Content" Value="{Binding}"/>-->

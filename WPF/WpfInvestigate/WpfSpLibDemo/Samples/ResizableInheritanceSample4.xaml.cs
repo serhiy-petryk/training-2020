@@ -10,6 +10,7 @@ namespace WpfSpLibDemo.Samples
         static ResizableInheritanceSample4()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ResizableInheritanceSample4), new FrameworkPropertyMetadata(typeof(ResizableInheritanceSample4)));
+            FocusableProperty.OverrideMetadata(typeof(ResizableInheritanceSample4), new FrameworkPropertyMetadata(true));
         }
 
         public ResizableInheritanceSample4()
@@ -26,16 +27,5 @@ namespace WpfSpLibDemo.Samples
             get => (object)GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
         }
-        /*
-        //=============================
-        public static readonly DependencyProperty BaseContentProperty = DependencyProperty.Register(nameof(BaseContent),
-            typeof(object), typeof(ResizableInheritanceSample4),
-            new FrameworkPropertyMetadata(null, (o, args) => ((ResizableInheritanceSample4) o).SetBaseContent(args.NewValue)));
-        public object BaseContent
-        {
-            get => GetValue(BaseContentProperty);
-            set => SetValue(BaseContentProperty, value);
-        }
-        private void SetBaseContent(object content) => base.Content = content;*/
     }
 }

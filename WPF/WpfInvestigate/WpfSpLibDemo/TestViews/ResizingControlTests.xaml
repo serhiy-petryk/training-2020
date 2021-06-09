@@ -116,9 +116,9 @@
                         <TextBlock Text="ResizableInheritanceSample3 (new property for BaseContent)" FontSize="16" Background="YellowGreen"/>
                     </samples:ResizableInheritanceSample3>
 
-                    <!--<samples:ResizableInheritanceSample4 Position="420 330">
-                        <TextBlock Text="!!! THE BEST: ResizableInheritanceSample4: &#x0a;found the best implementation for XAML Inheritance" FontSize="16" Background="YellowGreen" TextWrapping="Wrap"/>
-                    </samples:ResizableInheritanceSample4>-->
+                    <samples:ResizableInheritanceSample4 Position="420 330">
+                        <TextBlock Text="Has some bugs!!! Need to investigate! THE BEST: ResizableInheritanceSample4: &#x0a;found the best implementation for XAML Inheritance" FontSize="16" Background="YellowGreen" TextWrapping="Wrap"/>
+                    </samples:ResizableInheritanceSample4>
 
                     <samples:ResizableInheritanceSample5 Margin="450 450 0 0">
                         <TextBlock Text="ResizableInheritanceSample5 (no Inheritance)" FontSize="16" Background="YellowGreen"/>

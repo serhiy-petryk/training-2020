@@ -9,17 +9,13 @@
              d:DesignHeight="450" d:DesignWidth="800" Background="Aqua">
 
     <controls:ResizingControl.Resources>
-        <Style TargetType="samples:ResizableInheritanceSample4">
+        <Style TargetType="samples:ResizableInheritanceSample4" BasedOn="{StaticResource {x:Type controls:ResizingControl}}">
             <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="BorderBrush" Value="LightBlue"/>
-            <Setter Property="MaxWidth" Value="3000"/>
-            <Setter Property="MaxHeight" Value="2000"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="samples:ResizableInheritanceSample4">
-                        <controls:ResizingControl>
+                        <controls:ResizingControl Style="{StaticResource {x:Type controls:ResizingControl}}">
                             <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
                                 <Grid>
                                     <Grid.RowDefinitions>

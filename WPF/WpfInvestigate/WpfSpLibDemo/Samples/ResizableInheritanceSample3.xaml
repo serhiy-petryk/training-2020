@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800" Background="Aqua">
 
     <controls:ResizingControl.Resources>
-        <Style TargetType="samples:ResizableInheritanceSample3">
+        <Style TargetType="samples:ResizableInheritanceSample3" BasedOn="{StaticResource {x:Type controls:ResizingControl}}">
             <Setter Property="BorderThickness" Value="7"/>
             <Setter Property="BorderBrush" Value="Yellow"/>
             <Setter Property="BaseContent">
