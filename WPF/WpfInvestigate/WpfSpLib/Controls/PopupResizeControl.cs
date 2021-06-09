@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using WpfSpLib.Common;
+using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Controls
 {
@@ -15,6 +16,30 @@ namespace WpfSpLib.Controls
     {
         private const int MaxSize = 1200;
         private const int MinSize = 50;
+
+        public PopupResizeControl()
+        {
+            Unloaded += OnUnloaded;
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (UnloadingHelper.IsElementDisposing(this))
+            {
+                var resizeThumb = GetTemplateChild("PART_ResizeGrip") as Thumb;
+                if (resizeThumb != null)
+                    resizeThumb.DragDelta -= ThumbDragDelta;
+
+                var root = GetTemplateChild("PART_Root") as Grid;
+                if (root != null)
+                    foreach (var thumb in root.Children.OfType<Thumb>())
+                        thumb.DragDelta -= ThumbDragDelta;
+            }
+
+            if (this.AutomaticUnloading(OnUnloaded))
+            {
+            }
+        }
 
         public override void OnApplyTemplate()
         {

@@ -9,6 +9,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using WpfSpLib.Common;
 using WpfSpLib.Common.ColorSpaces;
+using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Controls
 {
@@ -32,6 +33,7 @@ namespace WpfSpLib.Controls
             PrepareKeyboardSet();
             foreach (var language in AvailableKeyboardLayouts)
                 language.OnSelect += Language_OnSelect;
+            Unloaded += OnUnloaded;
         }
 
         public event EventHandler OnReturnKeyClick;
@@ -46,8 +48,23 @@ namespace WpfSpLib.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            foreach (var button in Tips.GetVisualChildren(this).OfType<ButtonBase>().Where(a => a.DataContext is KeyModel))
+            foreach (var button in this.GetVisualChildren().OfType<ButtonBase>().Where(a => a.DataContext is KeyModel))
                 button.Click += Key_OnClick;
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.IsElementDisposing())
+            {
+                foreach (var button in this.GetVisualChildren().OfType<ButtonBase>().Where(a => a.DataContext is KeyModel))
+                    button.Click -= Key_OnClick;
+                foreach (var language in AvailableKeyboardLayouts)
+                  language.OnSelect -= Language_OnSelect;
+            }
+
+            if (this.AutomaticUnloading(OnUnloaded))
+            {
+            }
         }
 
         private void Key_OnClick(object sender, EventArgs e)

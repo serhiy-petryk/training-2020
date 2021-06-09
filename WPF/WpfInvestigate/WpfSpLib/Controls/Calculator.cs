@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfSpLib.Common;
+using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Controls
 {
@@ -36,6 +37,7 @@ namespace WpfSpLib.Controls
         {
             ClickCommand = new RelayCommand(ButtonClickHandler);
             Culture = Tips.CurrentCulture;
+            Unloaded += OnUnloaded;
         }
 
         public readonly CultureInfo Culture;
@@ -62,8 +64,10 @@ namespace WpfSpLib.Controls
 
             // Allow to select text in indicators
             foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
-              textBox.LostFocus += (sender, args) => args.Handled = true;
+                textBox.LostFocus += (sender, args) => args.Handled = true;
         }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
 
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
         {
