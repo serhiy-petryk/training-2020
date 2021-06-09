@@ -63,7 +63,6 @@
             </Style>
 
             <Style x:Key="KeyButtonBaseStyle" TargetType="{x:Type ButtonBase}">
-                <Setter Property="OverridesDefaultStyle" Value="True"/>
                 <Setter Property="Margin" Value="{Binding ConverterParameter=0.15%, RelativeSource={RelativeSource AncestorType=local:VirtualKeyboard}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}}"/>
                 <Setter Property="Padding" Value="0"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>

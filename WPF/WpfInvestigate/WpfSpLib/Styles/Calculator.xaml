@@ -68,7 +68,6 @@
             </Style>
 
             <Style x:Key="PrecisionButtonStyle" TargetType="{x:Type controls:NumericBox}" BasedOn="{StaticResource {x:Type controls:NumericBox}}">
-                <Setter Property="OverridesDefaultStyle" Value="True"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Margin" Value="2"/>

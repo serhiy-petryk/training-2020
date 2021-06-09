@@ -8,7 +8,7 @@
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ButtonStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="controls:MwiContainer">
+    <Style TargetType="controls:MwiContainer" x:Shared="False">
         <Style.Resources>
             <!-- 'Mwi.Bar.BackgroundBrush': To suppress output window errors (System.Windows.Data Error: 40) in output window of Visual Studio  -->
             <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="Transparent"/>
