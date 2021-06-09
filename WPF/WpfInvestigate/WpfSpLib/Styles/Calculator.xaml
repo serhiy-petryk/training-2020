@@ -7,6 +7,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ButtonStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/NumericBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="DarkCalculatorStyle" TargetType="controls:Calculator">
@@ -66,7 +67,8 @@
                 <Setter Property="Foreground" Value="{Binding Source={StaticResource ClearButtonHsl}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=65}"/>
             </Style>
 
-            <Style x:Key="PrecisionButtonStyle" TargetType="{x:Type controls:NumericBox}">
+            <Style x:Key="PrecisionButtonStyle" TargetType="{x:Type controls:NumericBox}" BasedOn="{StaticResource {x:Type controls:NumericBox}}">
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Margin" Value="2"/>
@@ -239,7 +241,7 @@
             <Style x:Key="ClearButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource LightButtonBaseStyle}">
                 <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource OrangeColor}"/>
             </Style>
-            <Style x:Key="PrecisionButtonStyle" TargetType="{x:Type controls:NumericBox}">
+            <Style x:Key="PrecisionButtonStyle" TargetType="{x:Type controls:NumericBox}" BasedOn="{StaticResource {x:Type controls:NumericBox}}">
                 <Setter Property="BorderThickness" Value="2"/>
                 <Setter Property="Margin" Value="1 1 0 0"/>
                 <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="0"/>

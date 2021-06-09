@@ -12,6 +12,12 @@ namespace WpfSpLib.Controls
 {
     public class Calculator : Control, INotifyPropertyChanged
     {
+        static Calculator()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Calculator), new FrameworkPropertyMetadata(typeof(Calculator)));
+            KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(Calculator), new FrameworkPropertyMetadata(false));
+        }
+
         private const int IntervalCountWhenChange = 100;
         private const int IntervalStepChange = 10;
         private int _numberOfIntervals = 0;
