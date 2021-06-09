@@ -1,11 +1,12 @@
 ﻿using System.Windows;
+using WpfSpLib.Controls;
 
 namespace WpfSpLibDemo.Samples
 {
     /// <summary>
     /// Interaction logic for ResizableInheritanceSample4.xaml
     /// </summary>
-    public partial class ResizableInheritanceSample4
+    public partial class ResizableInheritanceSample4 : ResizingControl
     {
         static ResizableInheritanceSample4()
         {

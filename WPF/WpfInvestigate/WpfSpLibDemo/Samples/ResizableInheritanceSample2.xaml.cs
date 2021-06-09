@@ -2,15 +2,15 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Threading;
 using WpfSpLib.Common;
+using WpfSpLib.Controls;
 
 namespace WpfSpLibDemo.Samples
 {
     /// <summary>
     /// Interaction logic for ResizableInheritanceSample2.xaml
     /// </summary>
-    public partial class ResizableInheritanceSample2
+    public partial class ResizableInheritanceSample2: ResizingControl
     {
         static ResizableInheritanceSample2()
         {
