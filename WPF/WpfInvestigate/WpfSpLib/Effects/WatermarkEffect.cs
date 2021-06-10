@@ -76,15 +76,8 @@ namespace WpfSpLib.Effects
             }
         }
 
-        private static void ControlBox_ChangeFocus(object sender, RoutedEventArgs e)
-        {
-            CheckWatermark((Control)sender);
-        }
-
-        private static void TxtBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            CheckWatermark((TextBox)sender);
-        }
+        private static void ControlBox_ChangeFocus(object sender, RoutedEventArgs e) => CheckWatermark((Control)sender);
+        private static void TxtBox_TextChanged(object sender, TextChangedEventArgs e) => CheckWatermark((TextBox)sender);
 
         private static void CheckWatermark(Control ctrlBox)
         {

@@ -37,9 +37,7 @@ namespace WpfSpLib.Effects
                 return;
             }
 
-            
-            dp.Unloaded -= ClearClearButtonEvents;
-            dp.Unloaded += ClearClearButtonEvents;
+            RemoveClearButton(dp);
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
@@ -47,8 +45,6 @@ namespace WpfSpLib.Effects
                     AddClearButton(dp);
             }, DispatcherPriority.Loaded);
         }
-
-        private static void ClearClearButtonEvents(object sender, RoutedEventArgs e) => RemoveClearButton((DatePicker)sender);
 
         private static void AddClearButton(DatePicker dp)
         {
