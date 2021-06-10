@@ -113,18 +113,19 @@ namespace WpfSpLib.Effects
                 return;
             }
 
+            dp.SelectedDateChanged -= OnSelectedDateChanged;
+            var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
+            dpdStart.RemoveValueChanged(dp, OnChangeDateLimit);
+            var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
+            dpdEnd.RemoveValueChanged(dp, OnChangeDateLimit);
+
+            var isInitialized = dp.IsInitialized;
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                dp.SelectedDateChanged -= OnSelectedDateChanged;
-                var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
-                dpdStart.RemoveValueChanged(dp, OnChangeDateLimit);
-                var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
-                dpdEnd.RemoveValueChanged(dp, OnChangeDateLimit);
-
                 //if (e.NewValue == null)
                     //return;
 
-                if (!dp.IsElementDisposing())
+                if (!isInitialized || !dp.IsElementDisposing())
                 {
                     dp.SelectedDateChanged += OnSelectedDateChanged;
                     dpdStart.AddValueChanged(dp, OnChangeDateLimit);
