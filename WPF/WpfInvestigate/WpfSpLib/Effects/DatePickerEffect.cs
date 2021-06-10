@@ -33,16 +33,16 @@ namespace WpfSpLib.Effects
         {
             if (!(d is DatePicker dp))
             {
-                Debug.Print(
-                    $"DatePickerEffect.ClearButton is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+                Debug.Print($"DatePickerEffect.ClearButton is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
                 return;
             }
 
+            RemoveClearButton(dp);
+            var isInitialized = dp.IsInitialized;
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                RemoveClearButton(dp);
 
-                if ((bool)e.NewValue && !dp.IsElementDisposing())
+                if ((bool)e.NewValue && (!isInitialized || !dp.IsElementDisposing()))
                     AddClearButton(dp);
             }, DispatcherPriority.Loaded);
         }
