@@ -295,5 +295,16 @@ namespace WpfSpLibDemo
             await Task.Delay(1000);
             wnd.Automate_OnClick(null, null);
         }
+
+        private void OnDatePickerMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(async () =>
+            {
+                var wnd = new DatePickerEffectTests();
+                wnd.Show();
+                await Task.Delay(1000);
+                wnd.Close();
+            });
+        }
     }
 }
