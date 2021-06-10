@@ -133,6 +133,7 @@
                     <Button Margin="0 5" Content="ResizingControl test" Click="OnResizingControlMemoryTestClick"/>
                     <Button Margin="0 5" Content="DatePicker test" Click="OnDatePickerMemoryTestClick"/>
                     <Button Margin="0 5" Content="Watermark test" Click="OnWatermarkMemoryTestClick"/>
+                    <Button Margin="0 5" Content="ButtonStyle test" Click="OnButtonStyleMemoryTestClick"/>
                 </StackPanel>
 
             </Grid>

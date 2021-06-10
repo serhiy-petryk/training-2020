@@ -317,5 +317,16 @@ namespace WpfSpLibDemo
                 wnd.Close();
             });
         }
+
+        private void OnButtonStyleMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(async () =>
+            {
+                var wnd = new ButtonStyleTests();
+                wnd.Show();
+                await Task.Delay(1000);
+                wnd.Close();
+            });
+        }
     }
 }
