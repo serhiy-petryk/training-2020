@@ -306,5 +306,16 @@ namespace WpfSpLibDemo
                 wnd.Close();
             });
         }
+
+        private void OnWatermarkMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(async () =>
+            {
+                var wnd = new WatermarkTests();
+                wnd.Show();
+                await Task.Delay(1000);
+                wnd.Close();
+            });
+        }
     }
 }
