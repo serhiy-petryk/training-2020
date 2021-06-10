@@ -73,7 +73,7 @@ namespace WpfSpLib.Effects
 
         private static void RemoveClearButton(DatePicker dp)
         {
-            var clearButton = Tips.GetVisualChildren(dp).FirstOrDefault(btn => btn is Button && ((Button)btn).Name == ClearButtonName) as Button;
+            var clearButton = dp.GetVisualChildren().OfType<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName);
             if (clearButton != null)
             {
                 clearButton.Click -= ClearButton_Click;
