@@ -38,41 +38,40 @@ namespace WpfSpLib.Effects
                 Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                 {
                     var txtBox = fe as TextBox ?? fe.GetVisualChildren().FirstOrDefault(c => c is TextBox) as TextBox;
+                    var pswBox = fe as PasswordBox ?? fe.GetVisualChildren().FirstOrDefault(c => c is PasswordBox) as PasswordBox;
+
                     if (txtBox != null)
                     {
-                        txtBox.Dispatcher.InvokeAsync(() => TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None)), DispatcherPriority.Background);
                         txtBox.TextChanged -= TxtBox_TextChanged;
                         txtBox.GotFocus -= ControlBox_ChangeFocus;
                         txtBox.LostFocus -= ControlBox_ChangeFocus;
+                    }
+                    else if (pswBox != null)
+                    {
+                        pswBox.PasswordChanged -= ControlBox_ChangeFocus;
+                        pswBox.GotFocus -= ControlBox_ChangeFocus;
+                        pswBox.LostFocus -= ControlBox_ChangeFocus;
+                    }
 
-                        if (!txtBox.IsElementDisposing())
+                    if (!fe.IsElementDisposing())
+                    {
+                        if (txtBox != null)
                         {
                             txtBox.TextChanged += TxtBox_TextChanged;
                             txtBox.GotFocus += ControlBox_ChangeFocus;
                             txtBox.LostFocus += ControlBox_ChangeFocus;
+                            TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None));
                         }
-
-                        return;
-                    }
-
-                    var pswBox = fe as PasswordBox ?? fe.GetVisualChildren().FirstOrDefault(c => c is PasswordBox) as PasswordBox;
-                    if (pswBox != null)
-                    {
-                        pswBox.Dispatcher.InvokeAsync(() => ControlBox_ChangeFocus(pswBox, new RoutedEventArgs()), DispatcherPriority.Background);
-                        pswBox.PasswordChanged -= ControlBox_ChangeFocus;
-                        pswBox.GotFocus -= ControlBox_ChangeFocus;
-                        pswBox.LostFocus -= ControlBox_ChangeFocus;
-
-                        if (!pswBox.IsElementDisposing())
+                        else if (pswBox != null)
                         {
                             pswBox.PasswordChanged += ControlBox_ChangeFocus;
                             pswBox.GotFocus += ControlBox_ChangeFocus;
                             pswBox.LostFocus += ControlBox_ChangeFocus;
+                            ControlBox_ChangeFocus(pswBox, new RoutedEventArgs());
                         }
-                        return;
+                        else
+                            Debug.Print($"WatermarkEffect.Watermark is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
                     }
-
-                    Debug.Print($"WatermarkEffect.Watermark is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
                 }, DispatcherPriority.Loaded);
             }
         }
@@ -99,7 +98,7 @@ namespace WpfSpLib.Effects
                 current = VisualTreeHelper.GetParent(current);
             }
 
-            var boxContent = ctrlBox is TextBox ? ((TextBox)ctrlBox).Text : ((PasswordBox)ctrlBox).Password;
+            var boxContent = ctrlBox is TextBox textBox ? textBox.Text : ((PasswordBox)ctrlBox).Password;
 
             if (string.IsNullOrWhiteSpace(boxContent) && !string.IsNullOrEmpty(watermark))
                 ShowWatermark(ctrlBox, watermark, foregroundBrush);
@@ -114,19 +113,19 @@ namespace WpfSpLib.Effects
 
             if (foregroundBrush == null)
             {
-                if (ctrlBox.Foreground is SolidColorBrush)
+                if (ctrlBox.Foreground is SolidColorBrush scb)
                 {
-                    var color = ((SolidColorBrush)ctrlBox.Foreground).Color;
+                    var color = scb.Color;
                     foregroundBrush = new SolidColorBrush(Color.FromArgb(Convert.ToByte(color.A / 2), color.R, color.G, color.B));
                 }
                 else
                     foregroundBrush = Brushes.DarkGray;
             }
 
-            var partWatermark = ctrlBox?.Template.FindName("PART_Watermark", ctrlBox) as ContentControl;
+            var partWatermark = ctrlBox.Template.FindName("PART_Watermark", ctrlBox) as ContentControl;
             if (partWatermark == null)
             {
-                var ctrlBoxView = Tips.GetVisualChildren(ctrlBox).FirstOrDefault(a => a.GetType().Name == "TextBoxView") as FrameworkElement;
+                var ctrlBoxView = ctrlBox.GetVisualChildren().FirstOrDefault(a => a.GetType().Name == "TextBoxView") as FrameworkElement;
                 var layer = AdornerLayer.GetAdornerLayer(ctrlBoxView);
                 if (layer == null) return;
 
@@ -174,7 +173,7 @@ namespace WpfSpLib.Effects
             var partWatermark = ctrlBox?.Template.FindName("PART_Watermark", ctrlBox) as ContentControl;
             if (partWatermark == null)
             {
-                var ctrlBoxView = Tips.GetVisualChildren(ctrlBox).FirstOrDefault(a => a.GetType().Name == "TextBoxView") as FrameworkElement;
+                var ctrlBoxView = ctrlBox.GetVisualChildren().FirstOrDefault(a => a.GetType().Name == "TextBoxView") as FrameworkElement;
                 var layer = AdornerLayer.GetAdornerLayer(ctrlBoxView);
                 var adorners = layer?.GetAdorners(ctrlBoxView) ?? new Adorner[0];
                 foreach (var adorner in adorners.OfType<AdornerControl>().Where(a => a.Child.Name == "Watermark"))
