@@ -54,10 +54,9 @@ namespace WpfSpLib.Effects
             if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
                 return;
 
-            var isInitialized = control.IsInitialized;
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                if (!isInitialized || !control.IsElementDisposing())
+                if (!control.IsElementDisposing())
                 {
                     control.PreviewMouseLeftButtonDown += ChromeUpdate;
                     control.PreviewMouseLeftButtonUp += ChromeUpdate;
@@ -65,7 +64,7 @@ namespace WpfSpLib.Effects
                     dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
                     var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
                     dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
-                    control.Unloaded += OnControlUnloaded;
+                    control.Unloaded += Control_Unloaded;
 
                     if (control.Style == null && Application.Current.TryFindResource("DefaultButtonBaseStyle") is Style style && style.TargetType.IsInstanceOfType(control))
                         control.Style = style;
@@ -74,22 +73,16 @@ namespace WpfSpLib.Effects
             }, DispatcherPriority.Loaded);
         }
 
+        private static void Control_Unloaded(object sender, RoutedEventArgs e) => ClearEvents((Control)sender);
         private static void ClearEvents(Control control)
         {
-            control.Unloaded -= OnControlUnloaded;
+            control.Unloaded -= Control_Unloaded;
             control.PreviewMouseLeftButtonDown -= ChromeUpdate;
             control.PreviewMouseLeftButtonUp -= ChromeUpdate;
             var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
             dpdIsMouseOver.RemoveValueChanged(control, ChromeUpdate);
             var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
             dpdIsEnabled.RemoveValueChanged(control, ChromeUpdate);
-        }
-
-        private static void OnControlUnloaded(object sender, RoutedEventArgs e)
-        {
-            var control = (Control)sender;
-            if (control.IsElementDisposing())
-                ClearEvents(control);
         }
 
         private static Tuple<Color?, Color?, Color?, bool, bool, bool> GetState(Control control)
