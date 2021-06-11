@@ -25,12 +25,15 @@ namespace WpfSpLib.Effects
             // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
             element.Dispatcher.InvokeAsync(() =>
             {
-                element.Unloaded += OnElementUnloaded;
-                element.SizeChanged += UpdateBorders;
-                element.Loaded += UpdateBorders;
-                var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
-                dpd.AddValueChanged(element, UpdateBorders);
-                UpdateBorders(element, null);
+                if (!element.IsElementDisposing())
+                {
+                    element.Unloaded += OnElementUnloaded;
+                    element.SizeChanged += UpdateBorders;
+                    element.Loaded += UpdateBorders;
+                    var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
+                    dpd.AddValueChanged(element, UpdateBorders);
+                    UpdateBorders(element, null);
+                }
             }, DispatcherPriority.Loaded);
         }
 
