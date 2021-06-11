@@ -20,23 +20,29 @@ namespace WpfSpLib.Effects
         {
             if (!(d is FrameworkElement element)) return;
 
+            ClearEvents(element);
+
+            // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
+            element.Dispatcher.InvokeAsync(() =>
+            {
+                element.Unloaded += OnElementUnloaded;
+                element.SizeChanged += UpdateBorders;
+                element.Loaded += UpdateBorders;
+                var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
+                dpd.AddValueChanged(element, UpdateBorders);
+                UpdateBorders(element, null);
+            }, DispatcherPriority.Loaded);
+        }
+
+        private static void OnElementUnloaded(object sender, RoutedEventArgs e) => ClearEvents((FrameworkElement)sender);
+
+        private static void ClearEvents(FrameworkElement element)
+        {
+            element.Unloaded -= OnElementUnloaded;
             element.SizeChanged -= UpdateBorders;
             element.Loaded -= UpdateBorders;
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
             dpd.RemoveValueChanged(element, UpdateBorders);
-
-            var isInitialized = element.IsInitialized;
-            // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
-            element.Dispatcher.InvokeAsync(() =>
-            {
-                if (!isInitialized || !element.IsElementDisposing())
-                {
-                    element.SizeChanged += UpdateBorders;
-                    element.Loaded += UpdateBorders;
-                    dpd.AddValueChanged(element, UpdateBorders);
-                    UpdateBorders(element, null);
-                }
-            }, DispatcherPriority.Input);
         }
 
         private static void UpdateBorders(object sender, EventArgs e)
