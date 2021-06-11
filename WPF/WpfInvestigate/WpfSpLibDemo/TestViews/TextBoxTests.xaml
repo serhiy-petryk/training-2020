@@ -39,7 +39,7 @@
                     <TextBox x:Name="TestTextBox" Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
                              Text="AAAAAA" BorderThickness="2" BorderBrush="Blue" 
                              effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"/>
-                    <TextBox x:Name="TestTextBox2" Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
+                    <!--<TextBox x:Name="TestTextBox2" Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
                              Text="AAAAAA" BorderThickness="2" BorderBrush="Blue" 
                              effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
                              ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
@@ -49,7 +49,7 @@
                     <Button Margin="2" Content="Change Foreground" Click="ChangeForeground_OnClick"/>
                     <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick"/>
                     <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
-                    <controls:LabelBox Margin="2" Width="70" Background="Yellow" Foreground="Blue"/>
+                    <controls:LabelBox Margin="2" Width="70" Background="Yellow" Foreground="Blue"/>-->
                 </WrapPanel>
 
                 <WrapPanel Margin="5">
