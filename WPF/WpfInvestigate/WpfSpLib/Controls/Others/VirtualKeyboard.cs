@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -54,6 +55,7 @@ namespace WpfSpLib.Controls
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
+            Debug.Print($"Keyboard. Unloaded");
             if (this.IsElementDisposing())
             {
                 foreach (var button in this.GetVisualChildren().OfType<ButtonBase>().Where(a => a.DataContext is KeyModel))

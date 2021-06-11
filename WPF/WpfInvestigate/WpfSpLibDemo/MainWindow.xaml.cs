@@ -78,6 +78,7 @@ namespace WpfSpLibDemo
         private void MwiTemplate_OnClick(object sender, RoutedEventArgs e) => new MwiTemplate().Show();
 
         private void MemoryLeakInvestigation_OnClick(object sender, RoutedEventArgs e) => new MemoryLeakInvestigation().Show();
+        private void TabControlTest_OnClick(object sender, RoutedEventArgs e) => new TabControlTests().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
@@ -339,5 +340,6 @@ namespace WpfSpLibDemo
                 wnd.Close();
             });
         }
+
     }
 }
