@@ -36,9 +36,9 @@ namespace WpfSpLib.Controls
                         thumb.DragDelta -= ThumbDragDelta;
             }
 
-            if (this.AutomaticUnloading(OnUnloaded))
+            /*if (this.AutomaticUnloading(OnUnloaded))
             {
-            }
+            }*/
         }
 
         public override void OnApplyTemplate()

@@ -62,9 +62,9 @@ namespace WpfSpLib.Controls
                   language.OnSelect -= Language_OnSelect;
             }
 
-            if (this.AutomaticUnloading(OnUnloaded))
+            /*if (this.AutomaticUnloading(OnUnloaded))
             {
-            }
+            }*/
         }
 
         private void Key_OnClick(object sender, EventArgs e)
