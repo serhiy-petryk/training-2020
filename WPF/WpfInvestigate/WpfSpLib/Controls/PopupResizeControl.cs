@@ -62,7 +62,7 @@ namespace WpfSpLib.Controls
 
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            var thumb = sender as Thumb;
+            var thumb = (Thumb) sender;
             var popup = this.GetVisualParents().OfType<Popup>().FirstOrDefault();
             if (popup == null) return;
 
