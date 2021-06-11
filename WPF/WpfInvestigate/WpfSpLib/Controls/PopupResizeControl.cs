@@ -27,16 +27,14 @@ namespace WpfSpLib.Controls
             if (!IsVisible)
                 ApplyTemplate();
 
-            var resizeThumb = GetTemplateChild("PART_ResizeGrip") as Thumb;
-            if (resizeThumb != null)
+            if (GetTemplateChild("PART_ResizeGrip") is Thumb resizeThumb)
                 resizeThumb.DragDelta += ThumbDragDelta;
 
             var root = GetTemplateChild("PART_Root") as Grid;
             foreach (var thumb in root.Children.OfType<Thumb>())
                 thumb.DragDelta += ThumbDragDelta;
 
-            var popup = Tips.GetVisualParents(this).OfType<Popup>().FirstOrDefault();
-            if (popup != null)
+            if (this.GetVisualParents().OfType<Popup>().FirstOrDefault() is Popup popup)
             {
                 if (double.IsNaN(popup.Width)) popup.Width = ActualWidth;
                 if (double.IsNaN(popup.Height)) popup.Height = ActualHeight;
@@ -65,7 +63,7 @@ namespace WpfSpLib.Controls
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
             var thumb = sender as Thumb;
-            var popup = Tips.GetVisualParents(this).OfType<Popup>().FirstOrDefault();
+            var popup = this.GetVisualParents().OfType<Popup>().FirstOrDefault();
             if (popup == null) return;
 
             if (thumb.Cursor == Cursors.SizeWE || thumb.Cursor == Cursors.SizeNWSE)
