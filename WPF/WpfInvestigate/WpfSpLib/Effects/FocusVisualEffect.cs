@@ -38,19 +38,17 @@ namespace WpfSpLib.Effects
 
                     Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                     {
-                        if (!element.IsElementDisposing())
-                        {
-                            element.SizeChanged += Element_ChangeFocus;
-                            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
-                            dpd.AddValueChanged(element, OnElementFocusChanged);
-                            element.Unloaded += Element_Unloaded;
-                        }
+                        element.Unloaded += Element_Unloaded;
+                        element.SizeChanged += Element_ChangeFocus;
+                        var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+                        dpd.AddValueChanged(element, OnElementFocusChanged);
                     }, DispatcherPriority.Background);
                 }
             }
         }
         #endregion
 
+        private static void Element_Unloaded(object sender, RoutedEventArgs e) => ClearEvents((FrameworkElement)sender);
         private static void ClearEvents(FrameworkElement element)
         {
             element.Unloaded -= Element_Unloaded;
@@ -59,13 +57,6 @@ namespace WpfSpLib.Effects
             dpd.RemoveValueChanged(element, OnElementFocusChanged);
         }
 
-        private static void Element_Unloaded(object sender, RoutedEventArgs e)
-        {
-            var fe = (FrameworkElement) sender;
-            // Debug.Print($"Focus.Unloaded: {fe.GetType().Name}, {fe.Name}, {(UnloadingHelper.IsElementDisposing(fe))}");
-            if (UnloadingHelper.IsElementDisposing(fe))
-                ClearEvents(fe);
-        }
 
         private static void OnElementFocusChanged(object sender, EventArgs e) => Element_ChangeFocus(sender, null);
 
