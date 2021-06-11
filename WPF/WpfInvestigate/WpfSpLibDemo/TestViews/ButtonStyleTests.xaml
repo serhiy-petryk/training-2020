@@ -297,7 +297,7 @@
                             </StackPanel>
 
                             <Button Content="Change border width" Click="ChangeBorder_OnClick"/>
-                            <ToggleButton x:Name="TestTB" Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                            <ToggleButton x:Name="TestTB" Margin="5" Height="30" Width="120" Content="#FFD6EAF0" Padding="8 0"
                                           Background="GreenYellow" Foreground="BlueViolet"
                                           VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
                                           BorderBrush="Orange" BorderThickness="4"
@@ -306,7 +306,7 @@
                                           effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
                                           Resources="{StaticResource PopupMenu}"/>
 
-                            <ToggleButton Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                            <ToggleButton Margin="5" Height="30" Width="120" Content="#FFD6EAF1" Padding="8 0"
                                           Background="GreenYellow" Foreground="BlueViolet"
                                           VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
                                           BorderBrush="Orange" BorderThickness="4 4 1 4"
@@ -320,7 +320,7 @@
                                 </ToggleButton.Resources>
                             </ToggleButton>
 
-                            <ToggleButton Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                            <ToggleButton Margin="5" Height="30" Width="120" Content="#FFD6EAF2" Padding="8 0"
                                           Background="Blue" Foreground="White"
                                           VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
                                           BorderBrush="Blue" BorderThickness="4"
@@ -346,16 +346,16 @@
 
                             <Button Content="Change content" Click="ChangeContent_OnClick"/>
 
-                            <ToggleButton Margin="5" Height="30" Content="#FFD6EAFF" Padding="8 0" Background="#FFD6EAFF"
+                            <ToggleButton Margin="5" Height="30" Content="#FFD6EAF3" Padding="8 0" Background="#FFD6EAF3"
                                           Style="{StaticResource SplitButtonStyle}"
                                           Resources="{StaticResource PopupMenu}"/>
 
-                            <ToggleButton x:Name="TB1" Margin="5" Height="30" Content="#FFD6EAFF" Padding="8 0" Background="#FFD6EAFF"
+                            <ToggleButton x:Name="TB1" Margin="5" Height="30" Content="#FFD6EAF4" Padding="8 0" Background="#FFD6EAF4"
                                           Style="{StaticResource SplitButtonStyle}"
                                           effects:CornerRadiusEffect.CornerRadius="8"
                                           Resources="{StaticResource PopupMenu}"/>
 
-                            <ToggleButton Margin="5" Height="30" Content="#FFD6EAFF" Padding="8 0" Background="#FFD6EAFF"
+                            <ToggleButton Margin="5" Height="30" Content="#FFD6EAF5" Padding="8 0" Background="#FFD6EAF5"
                                           BorderThickness="0"
                                           Style="{StaticResource SplitButtonStyle}"
                                           effects:CornerRadiusEffect.CornerRadius="8"
@@ -492,7 +492,7 @@
                                           Style="{StaticResource MonochromeSplitButtonStyle}"
                                           Resources="{StaticResource PopupMenu}"/>
 
-                            <ToggleButton Margin="5" Height="30" Content="#FFD6EAFF" Padding="8 0" Background="#FFD6EAFF"
+                            <ToggleButton Margin="5" Height="30" Content="#FFD6EAF6" Padding="8 0" Background="#FFD6EAF6"
                                           BorderBrush="Red" BorderThickness="1"
                                           Style="{StaticResource MonochromeSplitButtonStyle}"
                                           effects:CornerRadiusEffect.CornerRadius="4"
@@ -548,7 +548,7 @@
                                           Resources="{StaticResource PopupMenu}">
                             </ToggleButton>
 
-                            <ToggleButton Margin="5" Height="30" Width="120" Content="#FFD6EAFF" Padding="8 0"
+                            <ToggleButton x:Name="Root_FFD6EAF7" Margin="5" Height="30" Width="120" Content="#FFD6EAF7" Padding="8 0"
                                           Background="Blue" BorderBrush="Blue" BorderThickness="4"
                                           VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"
                                           Style="{StaticResource MonochromeSplitButtonStyle}"
