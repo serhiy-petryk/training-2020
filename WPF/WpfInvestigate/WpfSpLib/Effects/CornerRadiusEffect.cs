@@ -22,7 +22,6 @@ namespace WpfSpLib.Effects
 
             ClearEvents(element);
 
-            // bad direct call: UpdateBorders(element, null); //(see monochrome button with CornerRadius)
             element.Dispatcher.InvokeAsync(() =>
             {
                 if (!element.IsElementDisposing())

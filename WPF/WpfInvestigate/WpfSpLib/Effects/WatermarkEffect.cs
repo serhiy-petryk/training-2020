@@ -45,23 +45,33 @@ namespace WpfSpLib.Effects
                         txtBox.TextChanged -= TxtBox_TextChanged;
                         txtBox.GotFocus -= ControlBox_ChangeFocus;
                         txtBox.LostFocus -= ControlBox_ChangeFocus;
-                        txtBox.TextChanged += TxtBox_TextChanged;
-                        txtBox.GotFocus += ControlBox_ChangeFocus;
-                        txtBox.LostFocus += ControlBox_ChangeFocus;
-                        TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None));
                     }
                     else if (pswBox != null)
                     {
                         pswBox.PasswordChanged -= ControlBox_ChangeFocus;
                         pswBox.GotFocus -= ControlBox_ChangeFocus;
                         pswBox.LostFocus -= ControlBox_ChangeFocus;
-                        pswBox.PasswordChanged += ControlBox_ChangeFocus;
-                        pswBox.GotFocus += ControlBox_ChangeFocus;
-                        pswBox.LostFocus += ControlBox_ChangeFocus;
-                        ControlBox_ChangeFocus(pswBox, new RoutedEventArgs());
                     }
-                    else
-                        Debug.Print($"WatermarkEffect.Watermark is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+
+                    if (!fe.IsElementDisposing())
+                    {
+                        if (txtBox != null)
+                        {
+                            txtBox.TextChanged += TxtBox_TextChanged;
+                            txtBox.GotFocus += ControlBox_ChangeFocus;
+                            txtBox.LostFocus += ControlBox_ChangeFocus;
+                            TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None));
+                        }
+                        else if (pswBox != null)
+                        {
+                            pswBox.PasswordChanged += ControlBox_ChangeFocus;
+                            pswBox.GotFocus += ControlBox_ChangeFocus;
+                            pswBox.LostFocus += ControlBox_ChangeFocus;
+                            ControlBox_ChangeFocus(pswBox, new RoutedEventArgs());
+                        }
+                        else
+                            Debug.Print($"WatermarkEffect.Watermark is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+                    }
                 }, DispatcherPriority.Loaded);
             }
         }

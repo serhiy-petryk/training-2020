@@ -38,10 +38,13 @@ namespace WpfSpLib.Effects
 
                     Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                     {
-                        element.Unloaded += Element_Unloaded;
-                        element.SizeChanged += Element_ChangeFocus;
-                        var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
-                        dpd.AddValueChanged(element, OnElementFocusChanged);
+                        if (!element.IsElementDisposing())
+                        {
+                            element.Unloaded += Element_Unloaded;
+                            element.SizeChanged += Element_ChangeFocus;
+                            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+                            dpd.AddValueChanged(element, OnElementFocusChanged);
+                        }
                     }, DispatcherPriority.Loaded);
                 }
             }
