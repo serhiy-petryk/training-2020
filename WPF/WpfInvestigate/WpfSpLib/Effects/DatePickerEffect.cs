@@ -38,13 +38,19 @@ namespace WpfSpLib.Effects
             }
 
             RemoveClearButton(dp);
+            // dp.Unloaded -= OnRemoveClearButtonUnloaded;
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                if ((bool)e.NewValue && !dp.IsElementDisposing())
+                if ((bool) e.NewValue && !dp.IsElementDisposing())
+                {
+                    // dp.Unloaded += OnRemoveClearButtonUnloaded;
                     AddClearButton(dp);
+                }
             }, DispatcherPriority.Loaded);
         }
+
+        private static void OnRemoveClearButtonUnloaded(object sender, RoutedEventArgs e) => RemoveClearButton((DatePicker)sender);
 
         private static void AddClearButton(DatePicker dp)
         {
@@ -114,7 +120,6 @@ namespace WpfSpLib.Effects
 
             ClearIsNullableEvents(dp, null);
             dp.Unloaded -= ClearIsNullableEvents;
-            dp.Unloaded += ClearIsNullableEvents;
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
@@ -123,6 +128,7 @@ namespace WpfSpLib.Effects
 
                 if (!dp.IsElementDisposing())
                 {
+                    dp.Unloaded += ClearIsNullableEvents;
                     dp.SelectedDateChanged += OnSelectedDateChanged;
                     var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
                     dpdStart.AddValueChanged(dp, OnChangeDateLimit);
