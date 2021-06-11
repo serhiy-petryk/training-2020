@@ -13,13 +13,10 @@ namespace WpfSpLibDemo.TestViews
         public TextBoxTests()
         {
             InitializeComponent();
-            Unloaded += OnUnloaded;
+            // Unloaded += OnUnloaded;
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            this.AutomaticUnloading(OnUnloaded);
-        }
+        private void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
 
         private void ChangeBackground_OnClick(object sender, RoutedEventArgs e)
         {

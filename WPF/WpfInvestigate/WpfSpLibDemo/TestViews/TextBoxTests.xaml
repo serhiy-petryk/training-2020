@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+        xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
         mc:Ignorable="d"
         Title="TextBoxTests" Height="400" Width="800">
 
@@ -38,7 +39,7 @@
                     <TextBox x:Name="TestTextBox" Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
                              Text="AAAAAA" BorderThickness="2" BorderBrush="Blue" 
                              effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"/>
-                    <!--<TextBox x:Name="TestTextBox" Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
+                    <TextBox x:Name="TestTextBox2" Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
                              Text="AAAAAA" BorderThickness="2" BorderBrush="Blue" 
                              effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
                              ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
@@ -48,10 +49,10 @@
                     <Button Margin="2" Content="Change Foreground" Click="ChangeForeground_OnClick"/>
                     <Button Margin="2" Content="Change Button" Click="ChangeButton_OnClick"/>
                     <TextBox Margin="2" Width="70" Background="Yellow" Foreground="Blue" IsEnabled="False" Text="AAAAAA"/>
-                    <controls:LabelBox Margin="2" Width="70" Background="Yellow" Foreground="Blue"/>-->
+                    <controls:LabelBox Margin="2" Width="70" Background="Yellow" Foreground="Blue"/>
                 </WrapPanel>
 
-                <!--<WrapPanel Margin="5">
+                <WrapPanel Margin="5">
                     <TextBlock Margin="5 0" Text="Not focusable:" VerticalAlignment="Center"/>
                     <TextBox Margin="2" Padding="4" Width="100" Background="Yellow" Foreground="Blue"
                              BorderThickness="1" BorderBrush="Blue" 
@@ -65,7 +66,7 @@
                              Focusable="False"
                              effects:CornerRadiusEffect.CornerRadius="4"
                              effects:WatermarkEffect.Watermark="Watermark"/>
-                </WrapPanel>-->
+                </WrapPanel>
             </StackPanel>
         </Grid>
     </Grid>
