@@ -13,6 +13,9 @@ namespace WpfSpLib.Controls
     /// </summary>
     public class PopupResizeControl : ContentControl
     {
+        // private static int _objectCnt = 0;
+        // private int _objectId = _objectCnt++;
+
         private const int MaxSize = 1200;
         private const int MinSize = 50;
 
@@ -22,18 +25,42 @@ namespace WpfSpLib.Controls
             Unloaded += OnUnloaded;
         }
 
+        private void AttachEvents(bool onlyRemove = false)
+        {
+            var resizeThumb = GetTemplateChild("PART_ResizeGrip") as Thumb;
+            if (resizeThumb == null) return;
+
+            resizeThumb.DragDelta -= ThumbDragDelta;
+            var root = GetTemplateChild("PART_Root") as Grid;
+            foreach (var thumb in root.Children.OfType<Thumb>())
+                thumb.DragDelta -= ThumbDragDelta;
+            if (onlyRemove) return;
+
+
+            resizeThumb.DragDelta += ThumbDragDelta;
+            foreach (var thumb in root.Children.OfType<Thumb>())
+                thumb.DragDelta += ThumbDragDelta;
+        }
+
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (!IsVisible)
-                ApplyTemplate();
+            // Debug.Print($"PopupResize.Loaded: {_objectId}");
+            AttachEvents();
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
+        }
 
-            if (GetTemplateChild("PART_ResizeGrip") is Thumb resizeThumb)
-                resizeThumb.DragDelta += ThumbDragDelta;
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            // Debug.Print($"PopupResize.Unloaded: {_objectId}");
+            AttachEvents(true);
+        }
 
-            if (GetTemplateChild("PART_Root") is Grid root)
-                foreach (var thumb in root.Children.OfType<Thumb>())
-                    thumb.DragDelta += ThumbDragDelta;
-
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            // Debug.Print($"PopupResize.Template: {_objectId}");
+            AttachEvents();
             if (this.GetVisualParents().OfType<Popup>().FirstOrDefault() is Popup popup)
             {
                 if (double.IsNaN(popup.Width)) popup.Width = ActualWidth;
@@ -46,16 +73,6 @@ namespace WpfSpLib.Controls
                     if (!double.IsNaN(content.Height)) content.Height = double.NaN;
                 }
             }
-        }
-
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            if (GetTemplateChild("PART_ResizeGrip") is Thumb resizeThumb)
-                resizeThumb.DragDelta -= ThumbDragDelta;
-
-            if (GetTemplateChild("PART_Root") is Grid root)
-                foreach (var thumb in root.Children.OfType<Thumb>())
-                    thumb.DragDelta -= ThumbDragDelta;
         }
 
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
