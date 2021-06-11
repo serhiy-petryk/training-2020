@@ -26,11 +26,9 @@ namespace WpfSpLib.Effects
         {
             if (!(d is ContentControl control) || !(e.NewValue is Geometry geometry)) return;
 
-            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {
-                if (!control.IsElementDisposing())
-                    ControlHelper.AddIconToControl(control, true, geometry, GetMargin(control));
-            }, DispatcherPriority.Loaded);
+            Dispatcher.CurrentDispatcher.InvokeAsync(
+                () => ControlHelper.AddIconToControl(control, true, geometry, GetMargin(control)),
+                DispatcherPriority.Loaded);
         }
     }
 }
