@@ -328,5 +328,16 @@ namespace WpfSpLibDemo
                 wnd.Close();
             });
         }
+
+        private void OnRippleEffectMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(async () =>
+            {
+                var wnd = new RippleEffectTests();
+                wnd.Show();
+                await Task.Delay(1000);
+                wnd.Close();
+            });
+        }
     }
 }
