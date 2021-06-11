@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using WpfSpLib.Common;
-using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Controls
 {
@@ -19,38 +18,21 @@ namespace WpfSpLib.Controls
 
         public PopupResizeControl()
         {
+            Loaded += OnLoaded;
             Unloaded += OnUnloaded;
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (UnloadingHelper.IsElementDisposing(this))
-            {
-                var resizeThumb = GetTemplateChild("PART_ResizeGrip") as Thumb;
-                if (resizeThumb != null)
-                    resizeThumb.DragDelta -= ThumbDragDelta;
-
-                var root = GetTemplateChild("PART_Root") as Grid;
-                if (root != null)
-                    foreach (var thumb in root.Children.OfType<Thumb>())
-                        thumb.DragDelta -= ThumbDragDelta;
-            }
-
-            /*if (this.AutomaticUnloading(OnUnloaded))
-            {
-            }*/
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
+            if (!IsVisible)
+                ApplyTemplate();
 
             var resizeThumb = GetTemplateChild("PART_ResizeGrip") as Thumb;
             if (resizeThumb != null)
                 resizeThumb.DragDelta += ThumbDragDelta;
 
             var root = GetTemplateChild("PART_Root") as Grid;
-            foreach(var thumb in root.Children.OfType<Thumb>())
+            foreach (var thumb in root.Children.OfType<Thumb>())
                 thumb.DragDelta += ThumbDragDelta;
 
             var popup = Tips.GetVisualParents(this).OfType<Popup>().FirstOrDefault();
@@ -66,6 +48,18 @@ namespace WpfSpLib.Controls
                     if (!double.IsNaN(content.Height)) content.Height = double.NaN;
                 }
             }
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            var resizeThumb = GetTemplateChild("PART_ResizeGrip") as Thumb;
+            if (resizeThumb != null)
+                resizeThumb.DragDelta -= ThumbDragDelta;
+
+            var root = GetTemplateChild("PART_Root") as Grid;
+            if (root != null)
+                foreach (var thumb in root.Children.OfType<Thumb>())
+                    thumb.DragDelta -= ThumbDragDelta;
         }
 
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
