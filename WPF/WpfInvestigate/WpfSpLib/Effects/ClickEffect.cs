@@ -56,8 +56,7 @@ namespace WpfSpLib.Effects
                             if (groups != null)
                                 foreach (var visualGroup in groups.OfType<VisualStateGroup>())
                                 {
-                                    var state = visualGroup.States.Cast<VisualState>()
-                                        .FirstOrDefault(v => v.Name == "Pressed");
+                                    var state = visualGroup.States.Cast<VisualState>().FirstOrDefault(v => v.Name == "Pressed");
                                     if (state != null)
                                         visualGroup.States.Remove(state);
                                 }
