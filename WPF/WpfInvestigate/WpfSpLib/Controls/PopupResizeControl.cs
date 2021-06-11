@@ -30,9 +30,9 @@ namespace WpfSpLib.Controls
             if (GetTemplateChild("PART_ResizeGrip") is Thumb resizeThumb)
                 resizeThumb.DragDelta += ThumbDragDelta;
 
-            var root = GetTemplateChild("PART_Root") as Grid;
-            foreach (var thumb in root.Children.OfType<Thumb>())
-                thumb.DragDelta += ThumbDragDelta;
+            if (GetTemplateChild("PART_Root") is Grid root)
+                foreach (var thumb in root.Children.OfType<Thumb>())
+                    thumb.DragDelta += ThumbDragDelta;
 
             if (this.GetVisualParents().OfType<Popup>().FirstOrDefault() is Popup popup)
             {
@@ -50,12 +50,10 @@ namespace WpfSpLib.Controls
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            var resizeThumb = GetTemplateChild("PART_ResizeGrip") as Thumb;
-            if (resizeThumb != null)
+            if (GetTemplateChild("PART_ResizeGrip") is Thumb resizeThumb)
                 resizeThumb.DragDelta -= ThumbDragDelta;
 
-            var root = GetTemplateChild("PART_Root") as Grid;
-            if (root != null)
+            if (GetTemplateChild("PART_Root") is Grid root)
                 foreach (var thumb in root.Children.OfType<Thumb>())
                     thumb.DragDelta -= ThumbDragDelta;
         }
