@@ -61,18 +61,15 @@ namespace WpfSpLib.Effects
         {
             if (d is ToggleButton tb)
             {
+                tb.Checked -= OnToggleButtonCheckChanged;
+                tb.Unchecked -= OnToggleButtonCheckChanged;
                 Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                 {
                     if ((!(tb.Content is FrameworkElement) || GetViewbox(tb) == null) && GetGeometryOn(tb) != Geometry.Empty && GetGeometryOff(tb) != Geometry.Empty)
                     {
-                        tb.Checked -= OnToggleButtonCheckChanged;
-                        tb.Unchecked -= OnToggleButtonCheckChanged;
-                        if (!tb.IsElementDisposing())
-                        {
-                            Init(tb);
-                            tb.Checked += OnToggleButtonCheckChanged;
-                            tb.Unchecked += OnToggleButtonCheckChanged;
-                        }
+                        Init(tb);
+                        tb.Checked += OnToggleButtonCheckChanged;
+                        tb.Unchecked += OnToggleButtonCheckChanged;
                     }
                 }, DispatcherPriority.Loaded);
             }
@@ -100,7 +97,7 @@ namespace WpfSpLib.Effects
                 path.Data = tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb);
                 viewbox.Margin = tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb);
                 await viewbox.RenderTransform.BeginAnimationAsync(ScaleTransform.ScaleXProperty, 0.0, 1.0);
-            }, DispatcherPriority.ApplicationIdle);
+            }, DispatcherPriority.Background);
         }
 
         private static Viewbox GetViewbox(ToggleButton tb) => tb.GetVisualChildren().OfType<Viewbox>().FirstOrDefault(vb => vb.Resources["IconViewBox"] is bool);
