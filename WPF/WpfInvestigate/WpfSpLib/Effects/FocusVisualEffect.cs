@@ -42,7 +42,7 @@ namespace WpfSpLib.Effects
                         element.SizeChanged += Element_ChangeFocus;
                         var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
                         dpd.AddValueChanged(element, OnElementFocusChanged);
-                    }, DispatcherPriority.Background);
+                    }, DispatcherPriority.Loaded);
                 }
             }
         }
