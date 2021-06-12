@@ -341,5 +341,26 @@ namespace WpfSpLibDemo
             });
         }
 
+        private void OnCalculatorMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(async () =>
+            {
+                var wnd = new CalculatorTests();
+                wnd.Show();
+                await Task.Delay(1000);
+                wnd.Close();
+            });
+        }
+
+        private void OnNumericBoxMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(async () =>
+            {
+                var wnd = new NumericBoxTests();
+                wnd.Show();
+                await Task.Delay(1000);
+                wnd.Close();
+            });
+        }
     }
 }
