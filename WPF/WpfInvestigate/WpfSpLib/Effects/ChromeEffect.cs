@@ -48,8 +48,8 @@ namespace WpfSpLib.Effects
         {
             if (!(d is Control control)) return;
 
-            control.Unloaded -= OnControlUnloaded;
-            control.Loaded -= OnControlLoaded;
+            control.Unloaded -= Deactivate;
+            control.Loaded -= Activate;
 
             var state = GetState(control);
             if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
@@ -61,15 +61,16 @@ namespace WpfSpLib.Effects
                 {
                     if (control.Style == null && Application.Current.TryFindResource("DefaultButtonBaseStyle") is Style style && style.TargetType.IsInstanceOfType(control))
                         control.Style = style;
-                    control.Unloaded += OnControlUnloaded;
-                    control.Loaded += OnControlLoaded;
-                    ChromeUpdate(control, null);
+                    control.Unloaded += Deactivate;
+                    control.Loaded += Activate;
+                    Activate(control, null);
                 }
             }, DispatcherPriority.Loaded);
         }
 
-        private static void OnControlLoaded(object sender, RoutedEventArgs e)
+        private static void Activate(object sender, RoutedEventArgs e)
         {
+            Deactivate(sender, e);
             var control = (Control)sender;
             control.PreviewMouseLeftButtonDown += ChromeUpdate;
             control.PreviewMouseLeftButtonUp += ChromeUpdate;
@@ -80,7 +81,7 @@ namespace WpfSpLib.Effects
             ChromeUpdate(control, null);
         }
 
-        private static void OnControlUnloaded(object sender, RoutedEventArgs e)
+        private static void Deactivate(object sender, RoutedEventArgs e)
         {
             var control = (Control) sender;
             control.PreviewMouseLeftButtonDown -= ChromeUpdate;

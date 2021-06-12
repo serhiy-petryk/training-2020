@@ -20,32 +20,31 @@ namespace WpfSpLib.Effects
         {
             if (!(d is FrameworkElement element)) return;
 
-            element.Unloaded -= OnElementUnloaded;
-            element.Loaded -= OnElementLoaded;
+            element.Unloaded -= Deactivate;
+            element.Loaded -= Activate;
 
             element.Dispatcher.InvokeAsync(() =>
             {
                 if (!element.IsElementDisposing())
                 {
-                    element.Unloaded += OnElementUnloaded;
-                    element.Loaded += OnElementLoaded;
-                    UpdateBorders(element, null);
+                    element.Unloaded += Deactivate;
+                    element.Loaded += Activate;
+                    Activate(element, null);
                 }
             }, DispatcherPriority.Background); // !!! Background: if Loaded -> no visible button in MessageBox, etc ..
         }
 
-        private static void OnElementLoaded(object sender, RoutedEventArgs e)
+        private static void Activate(object sender, RoutedEventArgs e)
         {
+            Deactivate(sender, e);
             var element = (FrameworkElement)sender;
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
-            dpd.RemoveValueChanged(element, UpdateBorders);
             dpd.AddValueChanged(element, UpdateBorders);
-            element.SizeChanged -= UpdateBorders;
             element.SizeChanged += UpdateBorders;
             UpdateBorders(element, null);
         }
 
-        private static void OnElementUnloaded(object sender, RoutedEventArgs e)
+        private static void Deactivate(object sender, RoutedEventArgs e)
         {
             var element = (FrameworkElement)sender;
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));

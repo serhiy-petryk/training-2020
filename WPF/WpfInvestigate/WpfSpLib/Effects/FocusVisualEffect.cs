@@ -29,8 +29,8 @@ namespace WpfSpLib.Effects
         {
             if (d is FrameworkElement element)
             {
-                element.Unloaded -= DetachEvents;
-                element.Loaded -= AttachEvents;
+                element.Unloaded -= Deactivate;
+                element.Loaded -= Activate;
 
                 if (e.NewValue is Style)
                 {
@@ -41,25 +41,25 @@ namespace WpfSpLib.Effects
                     {
                         if (!element.IsElementDisposing())
                         {
-                            element.Unloaded += DetachEvents;
-                            element.Loaded += AttachEvents;
-                            AttachEvents(element, null);
+                            element.Unloaded += Deactivate;
+                            element.Loaded += Activate;
+                            Activate(element, null);
                         }
                     }, DispatcherPriority.Loaded);
                 }
             }
         }
 
-        private static void AttachEvents(object sender, RoutedEventArgs e)
+        private static void Activate(object sender, RoutedEventArgs e)
         {
-            DetachEvents(sender, e);
+            Deactivate(sender, e);
             var element = (FrameworkElement)sender;
             element.SizeChanged += Element_ChangeFocus;
             var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
             dpd.AddValueChanged(element, OnElementFocusChanged);
         }
 
-        private static void DetachEvents(object sender, RoutedEventArgs e)
+        private static void Deactivate(object sender, RoutedEventArgs e)
         {
             var element = (FrameworkElement) sender;
             element.SizeChanged -= Element_ChangeFocus;

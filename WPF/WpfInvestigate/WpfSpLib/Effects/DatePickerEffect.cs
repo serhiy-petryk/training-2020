@@ -38,15 +38,11 @@ namespace WpfSpLib.Effects
             }
 
             RemoveClearButton(dp);
-            // dp.Unloaded -= OnRemoveClearButtonUnloaded;
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 if ((bool) e.NewValue && !dp.IsElementDisposing())
-                {
-                    // dp.Unloaded += OnRemoveClearButtonUnloaded;
                     AddClearButton(dp);
-                }
             }, DispatcherPriority.Loaded);
         }
 
@@ -116,22 +112,23 @@ namespace WpfSpLib.Effects
                 return;
             }
 
-            dp.Unloaded -= OnElementUnloaded;
-            dp.Loaded -= OnElementLoaded;
+            dp.Unloaded -= Deactivate;
+            dp.Loaded -= Activate;
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 if (!dp.IsElementDisposing())
                 {
-                    dp.Unloaded += OnElementUnloaded;
-                    dp.Loaded += OnElementLoaded;
-                    CheckDatePicker(dp);
+                    dp.Unloaded += Deactivate;
+                    dp.Loaded += Activate;
+                    Activate(dp, null);
                 }
             }, DispatcherPriority.Loaded);
         }
 
-        private static void OnElementLoaded(object sender, RoutedEventArgs e)
+        private static void Activate(object sender, RoutedEventArgs e)
         {
+            Deactivate(sender, e);
             var dp = (DatePicker)sender;
             dp.SelectedDateChanged += OnSelectedDateChanged;
             var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
@@ -141,7 +138,7 @@ namespace WpfSpLib.Effects
             CheckDatePicker(dp);
         }
 
-        private static void OnElementUnloaded(object sender, RoutedEventArgs e)
+        private static void Deactivate(object sender, RoutedEventArgs e)
         {
             var dp = (DatePicker)sender;
             dp.SelectedDateChanged -= OnSelectedDateChanged;
