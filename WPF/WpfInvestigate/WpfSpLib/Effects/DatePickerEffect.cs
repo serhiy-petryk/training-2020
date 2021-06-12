@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Helpers;
 
@@ -32,20 +31,9 @@ namespace WpfSpLib.Effects
         private static void OnClearButtonChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is DatePicker dp))
-            {
                 Debug.Print($"DatePickerEffect.ClearButton is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
-                return;
-            }
-
-            dp.Unloaded -= Deactivate_ClearButton;
-            dp.Loaded -= Activate_ClearButton;
-
-            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {
-                dp.Unloaded += Deactivate_ClearButton;
-                dp.Loaded += Activate_ClearButton;
-                Activate_ClearButton(dp, null);
-            }, DispatcherPriority.Loaded);
+            else
+                dp.AttachedPropertyChangedHandler(Activate_ClearButton, Deactivate_ClearButton);
         }
 
         private static void Activate_ClearButton(object sender, RoutedEventArgs e)
@@ -123,20 +111,9 @@ namespace WpfSpLib.Effects
         private static void OnIsNullableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is DatePicker dp))
-            {
                 Debug.Print($"DatePickerEffect.IsNullable is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
-                return;
-            }
-
-            dp.Unloaded -= Deactivate_IsNullable;
-            dp.Loaded -= Activate_IsNullable;
-
-            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {
-                dp.Unloaded += Deactivate_IsNullable;
-                dp.Loaded += Activate_IsNullable;
-                Activate_IsNullable(dp, null);
-            }, DispatcherPriority.Loaded);
+            else
+                dp.AttachedPropertyChangedHandler(Activate_IsNullable, Deactivate_IsNullable);
         }
 
         private static void Activate_IsNullable(object sender, RoutedEventArgs e)
@@ -192,18 +169,9 @@ namespace WpfSpLib.Effects
         private static void OnHideInnerBordersChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is FrameworkElement element))
-            {
                 Debug.Print($"DatePickerEffect.HideInnerBorders is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
-                return;
-            }
-
-            element.Loaded -= Activate_HideInnerBorder;
-
-            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {
-                element.Loaded += Activate_HideInnerBorder;
-                Activate_HideInnerBorder(element, null);
-            }, DispatcherPriority.Loaded);
+            else
+                element.AttachedPropertyChangedHandler(Activate_HideInnerBorder, null);
         }
 
         private static void Activate_HideInnerBorder(object sender, RoutedEventArgs e)

@@ -17,6 +17,22 @@ namespace WpfSpLib.Helpers
 {
     public static class ControlHelper
     {
+        public static void AttachedPropertyChangedHandler(this FrameworkElement dp, RoutedEventHandler activate,
+            RoutedEventHandler deactivate, DispatcherPriority dispatcherPriority = DispatcherPriority.Loaded)
+        {
+            if (deactivate != null)
+                dp.Unloaded -= deactivate;
+            dp.Loaded -= activate;
+
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+            {
+                if (deactivate != null)
+                    dp.Unloaded += deactivate;
+                dp.Loaded += activate;
+                activate(dp, null);
+            }, dispatcherPriority);
+        }
+
         public static void SetCurrentValueSmart(this DependencyObject d, DependencyProperty property, object newValue)
         {
             if (Equals(d.GetValue(property), newValue) || property.ReadOnly) return;
