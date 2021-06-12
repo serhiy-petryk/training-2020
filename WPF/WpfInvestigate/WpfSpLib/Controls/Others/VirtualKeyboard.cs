@@ -36,6 +36,7 @@ namespace WpfSpLib.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            OnUnloaded(sender, e);
             foreach (var language in AvailableKeyboardLayouts)
                 language.OnSelect += Language_OnSelect;
             foreach (var button in this.GetVisualChildren().OfType<ButtonBase>().Where(a => a.DataContext is KeyModel))

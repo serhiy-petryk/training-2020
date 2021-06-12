@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfSpLib.Common;
-using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Controls
 {
@@ -36,7 +35,22 @@ namespace WpfSpLib.Controls
         {
             ClickCommand = new RelayCommand(ButtonClickHandler);
             Culture = Tips.CurrentCulture;
+            Loaded += OnLoaded;
             Unloaded += OnUnloaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
+            {
+                textBox.LostFocus -= TextBox_LostFocus;
+                textBox.LostFocus += TextBox_LostFocus;
+            }
+        }
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
+                textBox.LostFocus -= TextBox_LostFocus;
         }
 
         public readonly CultureInfo Culture;
@@ -56,27 +70,7 @@ namespace WpfSpLib.Controls
         public string DecimalSeparator => Culture.NumberFormat.NumberDecimalSeparator;
 
         #region ========  Override && events =================
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            // Allow to select text in indicators
-            foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
-                textBox.LostFocus += TextBox_LostFocus; ;
-        }
-
         private void TextBox_LostFocus(object sender, RoutedEventArgs e) => e.Handled = true;
-
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            if (this.IsElementDisposing())
-            {
-                foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
-                    textBox.LostFocus -= TextBox_LostFocus;
-            }
-            // this.AutomaticUnloading(OnUnloaded);
-        }
 
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
         {
