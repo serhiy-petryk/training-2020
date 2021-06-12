@@ -31,7 +31,7 @@ namespace WpfSpLib.Effects
                     element.Loaded += OnElementLoaded;
                     UpdateBorders(element, null);
                 }
-            }, DispatcherPriority.Background);
+            }, DispatcherPriority.Loaded);
         }
 
         private static void OnElementLoaded(object sender, RoutedEventArgs e)
