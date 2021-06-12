@@ -53,6 +53,7 @@ namespace WpfSpLibDemo
 
         private void MwiStartup_OnClick(object sender, RoutedEventArgs e) => new MwiStartup().Show();
         private void MwiStartupDemo_OnClick(object sender, RoutedEventArgs e) => new MwiStartupDemo().Show();
+        private void TabDemo_OnClick(object sender, RoutedEventArgs e) => new TabDemo().Show();
         private void MwiBootstrapColorTests_OnClick(object sender, RoutedEventArgs e) => new MwiBootstrapColorTests().Show();
         private void MwiTests_OnClick(object sender, RoutedEventArgs e) => new MwiTests().Show();
         private void ResizingControlTests_OnClick(object sender, RoutedEventArgs e) => new ResizingControlTests().Show();
@@ -78,8 +79,6 @@ namespace WpfSpLibDemo
         private void MwiTemplate_OnClick(object sender, RoutedEventArgs e) => new MwiTemplate().Show();
 
         private void MemoryLeakInvestigation_OnClick(object sender, RoutedEventArgs e) => new MemoryLeakInvestigation().Show();
-        private void TabControlTest_OnClick(object sender, RoutedEventArgs e) => new TabControlTests().Show();
-
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
         }

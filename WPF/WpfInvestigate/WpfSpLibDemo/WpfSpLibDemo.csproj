@@ -152,8 +152,8 @@
     <Compile Include="TestViews\RippleEffectTests.xaml.cs">
       <DependentUpon>RippleEffectTests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\TabControlTests.xaml.cs">
-      <DependentUpon>TabControlTests.xaml</DependentUpon>
+    <Compile Include="TabDemo.xaml.cs">
+      <DependentUpon>TabDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\TextBoxTests.xaml.cs">
       <DependentUpon>TextBoxTests.xaml</DependentUpon>
@@ -318,7 +318,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestViews\TabControlTests.xaml">
+    <Page Include="TabDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

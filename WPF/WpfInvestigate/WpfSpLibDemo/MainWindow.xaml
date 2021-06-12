@@ -68,7 +68,6 @@
                     <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
                     <Button x:Name="MwiTemplate" Width="200" Margin="0 5" Content="WiP: Mwi Template" Click="MwiTemplate_OnClick"/>
                     <Button x:Name="MemoryLeakInvestigation" Width="200" Margin="0 5" Content="MemoryLeakInvestigation" Click="MemoryLeakInvestigation_OnClick"/>
-                    <Button x:Name="TabControlTest" Width="200" Margin="0 5" Content="TabControl Test" Click="TabControlTest_OnClick"/>
 
                     <WrapPanel Margin="5" HorizontalAlignment="Stretch">
                         <Border Width="60" Height="60" Background="Gainsboro" BorderBrush="Red" BorderThickness="1" Padding="0 0">
@@ -100,6 +99,7 @@
                     <Label>Ready:</Label>
                     <Button x:Name="MwiStartup" Width="200" Margin="0 5" Content="Mwi Startup" Click="MwiStartup_OnClick"/>
                     <Button x:Name="MwiStartupDemo" Width="200" Margin="0 5" Content="Mwi Startup Demo" Click="MwiStartupDemo_OnClick"/>
+                    <Button x:Name="TabDemo" Width="200" Margin="0 5" Content="Tab Demo" Click="TabDemo_OnClick"/>
                     <Button x:Name="MwiBootstrapColorTests" Width="200" Margin="0 5" Content="Mwi bootstrap color test" Click="MwiBootstrapColorTests_OnClick"/>
                     <Button x:Name="MwiTests" Width="200" Margin="0 5" Content="Mwi test" Click="MwiTests_OnClick"/>
                     <Button x:Name="ResizingControlTests" Width="200" Margin="0 5" Content="Ready: ResizingControlTests" Click="ResizingControlTests_OnClick"/>
