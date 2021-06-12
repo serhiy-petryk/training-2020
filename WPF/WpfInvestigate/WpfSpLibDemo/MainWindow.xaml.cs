@@ -362,5 +362,16 @@ namespace WpfSpLibDemo
                 wnd.Close();
             });
         }
+
+        private void OnTimePickerMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(async () =>
+            {
+                var wnd = new TimePickerTests();
+                wnd.Show();
+                await Task.Delay(1000);
+                wnd.Close();
+            });
+        }
     }
 }

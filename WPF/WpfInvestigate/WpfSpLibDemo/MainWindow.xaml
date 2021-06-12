@@ -138,6 +138,7 @@
                     <Button Margin="0 5" Content="RippleEffect test" Click="OnRippleEffectMemoryTestClick"/>
                     <Button Margin="0 5" Content="Calculator test" Click="OnCalculatorMemoryTestClick"/>
                     <Button Margin="0 5" Content="NumericBox test" Click="OnNumericBoxMemoryTestClick"/>
+                    <Button Margin="0 5" Content="TimePicker test" Click="OnTimePickerMemoryTestClick"/>
                 </StackPanel>
 
             </Grid>

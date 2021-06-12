@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
         xmlns:temp="clr-namespace:WpfSpLibDemo.Temp"
+        xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
         mc:Ignorable="d"
         Title="TabControlTests" Height="450" Width="1000">
 
@@ -55,6 +56,28 @@
                     </TabItem.Header>
                     <TabItem.Content>
                         <controls:VirtualKeyboard x:Name="Keyboard" Margin="5" BorderThickness="2" BorderBrush="Aqua"/>
+                    </TabItem.Content>
+                </TabItem>
+                <TabItem Header="Controls" >
+                    <TabItem.Content>
+                        <WrapPanel>
+                            <!--<DatePicker x:Name="dp1" effects:DatePickerEffect.ClearButton="True" effects:DatePickerEffect.IsNullable="True" Height="36"
+                                        Background="GreenYellow" Foreground="Blue" IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}"/>-->
+                            <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
+                                                 IsEnabled="{Binding IsChecked, ElementName=cbEnabled2}"
+                                                 effects:ChromeEffect.Monochrome="#FFD6EAFF"
+                                                 Height="28" VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True" Value="23"/>
+                            <controls:TimePicker Padding="0" Margin="0 0 5 0"
+                                                 IsEnabled="{Binding ElementName=cbIsEnabled, Path=IsChecked}"
+                                                 IsReadOnly="False" SelectedTimeFormat="Long" />
+                            <controls:DateTimePicker x:Name="dtp" Background="Yellow" Width="230"
+                                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
+                                                     IsNullable="False"
+                                                     IsDateOnlyMode="True"
+                                                     FontSize="20"
+                                                     DisplayDateStart="2002/1/1"
+                                                     effects:WatermarkEffect.Watermark="Test"/>
+                        </WrapPanel>
                     </TabItem.Content>
                 </TabItem>
             </TabControl>

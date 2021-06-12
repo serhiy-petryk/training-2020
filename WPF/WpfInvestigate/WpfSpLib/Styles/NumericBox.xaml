@@ -31,8 +31,8 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="False" />
+        <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="False"/>
         <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{StaticResource OuterFocusVisualStyle}"/>
         <Setter Property="Template">
