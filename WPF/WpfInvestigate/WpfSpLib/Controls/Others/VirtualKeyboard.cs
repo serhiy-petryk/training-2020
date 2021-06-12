@@ -59,11 +59,6 @@ namespace WpfSpLib.Controls
         public bool IsShifted { get; private set; }
         public bool IsExtra { get; private set; }
 
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-        }
-
         private void Key_OnClick(object sender, EventArgs e)
         {
             var element = Keyboard.FocusedElement as FrameworkElement;
