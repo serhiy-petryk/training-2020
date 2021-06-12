@@ -40,12 +40,9 @@ namespace WpfSpLib.Effects
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                // if (!element.IsElementDisposing())
-                // {
-                    element.Unloaded += Deactivate;
-                    element.Loaded += Activate;
-                    Activate(element, null);
-                // }
+                element.Unloaded += Deactivate;
+                element.Loaded += Activate;
+                Activate(element, null);
             }, DispatcherPriority.Loaded);
         }
 
@@ -69,7 +66,7 @@ namespace WpfSpLib.Effects
                 pswBox.LostFocus += ControlBox_ChangeFocus;
                 ControlBox_ChangeFocus(pswBox, new RoutedEventArgs());
             }
-            else if (element.IsLoaded)
+            else if (element.IsArrangeValid)
                 Debug.Print($"WatermarkEffect.Watermark is not implemented for {element.GetType().Namespace}.{element.GetType().Name} type");
         }
 
@@ -91,7 +88,7 @@ namespace WpfSpLib.Effects
                 pswBox.GotFocus -= ControlBox_ChangeFocus;
                 pswBox.LostFocus -= ControlBox_ChangeFocus;
             } 
-            else if (element.IsLoaded)
+            else if (element.IsArrangeValid)
                 Debug.Print($"WatermarkEffect.Watermark is not implemented for {element.GetType().Namespace}.{element.GetType().Name} type");
         }
 
