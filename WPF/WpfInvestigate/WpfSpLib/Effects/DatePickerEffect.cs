@@ -50,13 +50,6 @@ namespace WpfSpLib.Effects
             }, DispatcherPriority.Loaded);
         }
 
-        private static void OnRemoveClearButtonUnloaded(object sender, RoutedEventArgs e)
-        {
-            var dp = (DatePicker) sender;
-            dp.Unloaded -= OnRemoveClearButtonUnloaded;
-            RemoveClearButton(dp);
-        }
-
         private static void AddClearButton(DatePicker dp)
         {
             if (dp.GetVisualChildren().OfType<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName) != null)
@@ -123,31 +116,34 @@ namespace WpfSpLib.Effects
                 return;
             }
 
-            ClearIsNullableEvents(dp, null);
-            dp.Unloaded -= ClearIsNullableEvents;
+            dp.Unloaded -= OnElementUnloaded;
+            dp.Loaded -= OnElementLoaded;
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                //if (e.NewValue == null)
-                    //return;
-
                 if (!dp.IsElementDisposing())
                 {
-                    dp.Unloaded += ClearIsNullableEvents;
-                    dp.SelectedDateChanged += OnSelectedDateChanged;
-                    var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
-                    dpdStart.AddValueChanged(dp, OnChangeDateLimit);
-                    var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
-                    dpdEnd.AddValueChanged(dp, OnChangeDateLimit);
+                    dp.Unloaded += OnElementUnloaded;
+                    dp.Loaded += OnElementLoaded;
                     CheckDatePicker(dp);
                 }
             }, DispatcherPriority.Loaded);
         }
 
-        private static void ClearIsNullableEvents(object sender, RoutedEventArgs e)
+        private static void OnElementLoaded(object sender, RoutedEventArgs e)
         {
-            var dp = (DatePicker) sender;
-            dp.Unloaded -= ClearIsNullableEvents;
+            var dp = (DatePicker)sender;
+            dp.SelectedDateChanged += OnSelectedDateChanged;
+            var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
+            dpdStart.AddValueChanged(dp, OnChangeDateLimit);
+            var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
+            dpdEnd.AddValueChanged(dp, OnChangeDateLimit);
+            CheckDatePicker(dp);
+        }
+
+        private static void OnElementUnloaded(object sender, RoutedEventArgs e)
+        {
+            var dp = (DatePicker)sender;
             dp.SelectedDateChanged -= OnSelectedDateChanged;
             var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
             dpdStart.RemoveValueChanged(dp, OnChangeDateLimit);
