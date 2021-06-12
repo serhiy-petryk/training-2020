@@ -48,7 +48,8 @@ namespace WpfSpLib.Effects
         {
             if (!(d is Control control)) return;
 
-            ClearEvents(control);
+            control.Unloaded -= OnControlUnloaded;
+            control.Loaded -= OnControlLoaded;
 
             var state = GetState(control);
             if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
@@ -58,25 +59,30 @@ namespace WpfSpLib.Effects
             {
                 if (!control.IsElementDisposing())
                 {
-                    control.PreviewMouseLeftButtonDown += ChromeUpdate;
-                    control.PreviewMouseLeftButtonUp += ChromeUpdate;
-                    var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-                    dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
-                    var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-                    dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
-                    control.Unloaded += Control_Unloaded;
-
                     if (control.Style == null && Application.Current.TryFindResource("DefaultButtonBaseStyle") is Style style && style.TargetType.IsInstanceOfType(control))
                         control.Style = style;
+                    control.Unloaded += OnControlUnloaded;
+                    control.Loaded += OnControlLoaded;
                     ChromeUpdate(control, null);
                 }
             }, DispatcherPriority.Loaded);
         }
 
-        private static void Control_Unloaded(object sender, RoutedEventArgs e) => ClearEvents((Control)sender);
-        private static void ClearEvents(Control control)
+        private static void OnControlLoaded(object sender, RoutedEventArgs e)
         {
-            control.Unloaded -= Control_Unloaded;
+            var control = (Control)sender;
+            control.PreviewMouseLeftButtonDown += ChromeUpdate;
+            control.PreviewMouseLeftButtonUp += ChromeUpdate;
+            var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
+            var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
+            dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
+            ChromeUpdate(control, null);
+        }
+
+        private static void OnControlUnloaded(object sender, RoutedEventArgs e)
+        {
+            var control = (Control) sender;
             control.PreviewMouseLeftButtonDown -= ChromeUpdate;
             control.PreviewMouseLeftButtonUp -= ChromeUpdate;
             var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
