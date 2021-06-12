@@ -13,16 +13,13 @@ namespace WpfSpLib.Controls
     /// </summary>
     public class PopupResizeControl : ContentControl
     {
-        // private static int _objectCnt = 0;
-        // private int _objectId = _objectCnt++;
-
         private const int MaxSize = 1200;
         private const int MinSize = 50;
 
         public PopupResizeControl()
         {
-            Loaded += OnLoaded;
-            Unloaded += OnUnloaded;
+            Loaded += (sender, args) => AttachEvents();
+            Unloaded += (sender, args) => AttachEvents(true);
         }
 
         private void AttachEvents(bool onlyRemove = false)
@@ -42,25 +39,9 @@ namespace WpfSpLib.Controls
                 thumb.DragDelta += ThumbDragDelta;
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            // Debug.Print($"PopupResize.Loaded: {_objectId}");
-            AttachEvents();
-            Loaded += OnLoaded;
-            Unloaded += OnUnloaded;
-        }
-
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            // Debug.Print($"PopupResize.Unloaded: {_objectId}");
-            AttachEvents(true);
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            // Debug.Print($"PopupResize.Template: {_objectId}");
-            AttachEvents();
             if (this.GetVisualParents().OfType<Popup>().FirstOrDefault() is Popup popup)
             {
                 if (double.IsNaN(popup.Width)) popup.Width = ActualWidth;
