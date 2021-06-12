@@ -45,9 +45,7 @@ namespace WpfSpLib.Effects
                 return;
             }
 
-            textBox.Unloaded -= TextBoxOnUnloaded;
-            textBox.Unloaded += TextBoxOnUnloaded;
-            TextBoxOnUnloaded(textBox, null);
+            RemoveButtons(textBox);
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
@@ -56,8 +54,6 @@ namespace WpfSpLib.Effects
             }, DispatcherPriority.Loaded);
 
         }
-
-        private static void TextBoxOnUnloaded(object sender, RoutedEventArgs e) => RemoveButtons((TextBox)sender);
 
         private static void RemoveButtons(TextBox textBox)
         {
