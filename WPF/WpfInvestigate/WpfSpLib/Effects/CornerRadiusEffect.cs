@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Helpers;
 
@@ -19,19 +18,7 @@ namespace WpfSpLib.Effects
         private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is FrameworkElement element)) return;
-
-            element.Unloaded -= Deactivate;
-            element.Loaded -= Activate;
-
-            element.Dispatcher.InvokeAsync(() =>
-            {
-                if (!element.IsElementDisposing())
-                {
-                    element.Unloaded += Deactivate;
-                    element.Loaded += Activate;
-                    Activate(element, null);
-                }
-            }, DispatcherPriority.Background); // !!! Background: if Loaded -> no visible button in MessageBox, etc ..
+            element.AttachedPropertyChangedHandler(Activate, Deactivate);
         }
 
         private static void Activate(object sender, RoutedEventArgs e)
@@ -41,7 +28,8 @@ namespace WpfSpLib.Effects
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
             dpd.AddValueChanged(element, UpdateBorders);
             element.SizeChanged += UpdateBorders;
-            UpdateBorders(element, null);
+            if (element.IsArrangeValid)
+                UpdateBorders(element, null);
         }
 
         private static void Deactivate(object sender, RoutedEventArgs e)
