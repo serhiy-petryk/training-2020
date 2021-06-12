@@ -30,10 +30,10 @@ namespace WpfSpLib.Effects
 
         private static void OnClearButtonChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is DatePicker dp))
-                Debug.Print($"DatePickerEffect.ClearButton is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
-            else
+            if (d is DatePicker dp)
                 dp.AttachedPropertyChangedHandler(Activate_ClearButton, Deactivate_ClearButton);
+            else
+                Debug.Print($"DatePickerEffect.ClearButton is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
         }
 
         private static void Activate_ClearButton(object sender, RoutedEventArgs e)
@@ -110,10 +110,10 @@ namespace WpfSpLib.Effects
 
         private static void OnIsNullableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is DatePicker dp))
-                Debug.Print($"DatePickerEffect.IsNullable is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
-            else
+            if (d is DatePicker dp)
                 dp.AttachedPropertyChangedHandler(Activate_IsNullable, Deactivate_IsNullable);
+            else
+                Debug.Print($"DatePickerEffect.IsNullable is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
         }
 
         private static void Activate_IsNullable(object sender, RoutedEventArgs e)
@@ -168,10 +168,10 @@ namespace WpfSpLib.Effects
 
         private static void OnHideInnerBordersChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is FrameworkElement element))
-                Debug.Print($"DatePickerEffect.HideInnerBorders is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
-            else
+            if (d is FrameworkElement element)
                 element.AttachedPropertyChangedHandler(Activate_HideInnerBorder, null);
+            else
+                Debug.Print($"DatePickerEffect.HideInnerBorders is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
         }
 
         private static void Activate_HideInnerBorder(object sender, RoutedEventArgs e)

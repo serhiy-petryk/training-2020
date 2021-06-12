@@ -17,8 +17,8 @@ namespace WpfSpLib.Effects
         public static void SetCornerRadius(DependencyObject obj, CornerRadius value) => obj.SetValue(CornerRadiusProperty, value);
         private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is FrameworkElement element)) return;
-            element.AttachedPropertyChangedHandler(Activate, Deactivate);
+            if (d is FrameworkElement element)
+                element.AttachedPropertyChangedHandler(Activate, Deactivate);
         }
 
         private static void Activate(object sender, RoutedEventArgs e)
