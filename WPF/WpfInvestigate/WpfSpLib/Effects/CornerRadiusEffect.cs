@@ -31,7 +31,7 @@ namespace WpfSpLib.Effects
                     element.Loaded += OnElementLoaded;
                     UpdateBorders(element, null);
                 }
-            }, DispatcherPriority.Loaded);
+            }, DispatcherPriority.Background); // !!! Background: if Loaded -> no visible button in MessageBox, etc ..
         }
 
         private static void OnElementLoaded(object sender, RoutedEventArgs e)
