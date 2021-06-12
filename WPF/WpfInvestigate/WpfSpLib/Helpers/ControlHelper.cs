@@ -17,18 +17,19 @@ namespace WpfSpLib.Helpers
 {
     public static class ControlHelper
     {
-        public static void AttachedPropertyChangedHandler(this FrameworkElement dp, RoutedEventHandler activate, RoutedEventHandler deactivate)
+        public static void AttachedPropertyChangedHandler(this FrameworkElement fe, RoutedEventHandler activate, RoutedEventHandler deactivate)
         {
             if (deactivate != null)
-                dp.Unloaded -= deactivate;
-            dp.Loaded -= activate;
+                fe.Unloaded -= deactivate;
+            fe.Loaded -= activate;
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 if (deactivate != null)
-                    dp.Unloaded += deactivate;
-                dp.Loaded += activate;
-                activate(dp, null);
+                    fe.Unloaded += deactivate;
+                fe.Loaded += activate;
+                if (fe.IsArrangeValid)
+                    activate(fe, null);
             }, DispatcherPriority.Loaded);
         }
 
