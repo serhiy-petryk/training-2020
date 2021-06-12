@@ -20,31 +20,37 @@ namespace WpfSpLib.Effects
         {
             if (!(d is FrameworkElement element)) return;
 
-            ClearEvents(element);
+            element.Unloaded -= OnElementUnloaded;
+            element.Loaded -= OnElementLoaded;
 
             element.Dispatcher.InvokeAsync(() =>
             {
                 if (!element.IsElementDisposing())
                 {
                     element.Unloaded += OnElementUnloaded;
-                    element.SizeChanged += UpdateBorders;
-                    element.Loaded += UpdateBorders;
-                    var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
-                    dpd.AddValueChanged(element, UpdateBorders);
+                    element.Loaded += OnElementLoaded;
                     UpdateBorders(element, null);
                 }
-            }, DispatcherPriority.Loaded);
+            }, DispatcherPriority.Background);
         }
 
-        private static void OnElementUnloaded(object sender, RoutedEventArgs e) => ClearEvents((FrameworkElement)sender);
-
-        private static void ClearEvents(FrameworkElement element)
+        private static void OnElementLoaded(object sender, RoutedEventArgs e)
         {
-            element.Unloaded -= OnElementUnloaded;
-            element.SizeChanged -= UpdateBorders;
-            element.Loaded -= UpdateBorders;
+            var element = (FrameworkElement)sender;
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
             dpd.RemoveValueChanged(element, UpdateBorders);
+            dpd.AddValueChanged(element, UpdateBorders);
+            element.SizeChanged -= UpdateBorders;
+            element.SizeChanged += UpdateBorders;
+            UpdateBorders(element, null);
+        }
+
+        private static void OnElementUnloaded(object sender, RoutedEventArgs e)
+        {
+            var element = (FrameworkElement)sender;
+            var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
+            dpd.RemoveValueChanged(element, UpdateBorders);
+            element.SizeChanged -= UpdateBorders;
         }
 
         private static void UpdateBorders(object sender, EventArgs e)
