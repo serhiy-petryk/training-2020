@@ -29,7 +29,8 @@ namespace WpfSpLib.Effects
         {
             if (d is FrameworkElement element)
             {
-                ClearEvents(element);
+                element.Unloaded -= DetachEvents;
+                element.Loaded -= AttachEvents;
 
                 if (e.NewValue is Style)
                 {
@@ -40,26 +41,33 @@ namespace WpfSpLib.Effects
                     {
                         if (!element.IsElementDisposing())
                         {
-                            element.Unloaded += Element_Unloaded;
-                            element.SizeChanged += Element_ChangeFocus;
-                            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
-                            dpd.AddValueChanged(element, OnElementFocusChanged);
+                            element.Unloaded += DetachEvents;
+                            element.Loaded += AttachEvents;
+                            AttachEvents(element, null);
                         }
                     }, DispatcherPriority.Loaded);
                 }
             }
         }
-        #endregion
 
-        private static void Element_Unloaded(object sender, RoutedEventArgs e) => ClearEvents((FrameworkElement)sender);
-        private static void ClearEvents(FrameworkElement element)
+        private static void AttachEvents(object sender, RoutedEventArgs e)
         {
-            element.Unloaded -= Element_Unloaded;
+            DetachEvents(sender, e);
+            var element = (FrameworkElement)sender;
+            element.SizeChanged += Element_ChangeFocus;
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+            dpd.AddValueChanged(element, OnElementFocusChanged);
+        }
+
+        private static void DetachEvents(object sender, RoutedEventArgs e)
+        {
+            var element = (FrameworkElement) sender;
             element.SizeChanged -= Element_ChangeFocus;
             var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
             dpd.RemoveValueChanged(element, OnElementFocusChanged);
         }
 
+        #endregion
 
         private static void OnElementFocusChanged(object sender, EventArgs e) => Element_ChangeFocus(sender, null);
 
