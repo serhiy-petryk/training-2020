@@ -37,17 +37,33 @@ namespace WpfSpLib.Effects
                 return;
             }
 
-            RemoveClearButton(dp);
+            dp.Unloaded -= Deactivate_ClearButton;
+            dp.Loaded -= Activate_ClearButton;
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                if ((bool) e.NewValue && !dp.IsElementDisposing())
-                    AddClearButton(dp);
+                dp.Unloaded += Deactivate_ClearButton;
+                dp.Loaded += Activate_ClearButton;
+                Activate_ClearButton(dp, null);
             }, DispatcherPriority.Loaded);
+        }
+
+        private static void Activate_ClearButton(object sender, RoutedEventArgs e)
+        {
+            Deactivate_ClearButton(sender, null);
+            var dp = (DatePicker) sender;
+            AddClearButton(dp);
+        }
+
+        private static void Deactivate_ClearButton(object sender, RoutedEventArgs e)
+        {
+            var dp = (DatePicker)sender;
+            RemoveClearButton(dp);
         }
 
         private static void AddClearButton(DatePicker dp)
         {
+            if (!dp.IsVisible) return;
             if (dp.GetVisualChildren().OfType<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName) != null)
                 return;
 
@@ -112,23 +128,20 @@ namespace WpfSpLib.Effects
                 return;
             }
 
-            dp.Unloaded -= Deactivate;
-            dp.Loaded -= Activate;
+            dp.Unloaded -= Deactivate_IsNullable;
+            dp.Loaded -= Activate_IsNullable;
 
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                if (!dp.IsElementDisposing())
-                {
-                    dp.Unloaded += Deactivate;
-                    dp.Loaded += Activate;
-                    Activate(dp, null);
-                }
+                dp.Unloaded += Deactivate_IsNullable;
+                dp.Loaded += Activate_IsNullable;
+                Activate_IsNullable(dp, null);
             }, DispatcherPriority.Loaded);
         }
 
-        private static void Activate(object sender, RoutedEventArgs e)
+        private static void Activate_IsNullable(object sender, RoutedEventArgs e)
         {
-            Deactivate(sender, e);
+            Deactivate_IsNullable(sender, e);
             var dp = (DatePicker)sender;
             dp.SelectedDateChanged += OnSelectedDateChanged;
             var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
@@ -138,7 +151,7 @@ namespace WpfSpLib.Effects
             CheckDatePicker(dp);
         }
 
-        private static void Deactivate(object sender, RoutedEventArgs e)
+        private static void Deactivate_IsNullable(object sender, RoutedEventArgs e)
         {
             var dp = (DatePicker)sender;
             dp.SelectedDateChanged -= OnSelectedDateChanged;
@@ -178,14 +191,26 @@ namespace WpfSpLib.Effects
 
         private static void OnHideInnerBordersChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is FrameworkElement fe))
+            if (!(d is FrameworkElement element))
             {
                 Debug.Print($"DatePickerEffect.HideInnerBorders is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
                 return;
             }
 
-            if (e.NewValue is bool toHide)
-                ControlHelper.HideInnerBorderOfDatePickerTextBox(fe, toHide);
+            element.Loaded -= Activate_HideInnerBorder;
+
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+            {
+                element.Loaded += Activate_HideInnerBorder;
+                Activate_HideInnerBorder(element, null);
+            }, DispatcherPriority.Loaded);
+        }
+
+        private static void Activate_HideInnerBorder(object sender, RoutedEventArgs e)
+        {
+            var element = (FrameworkElement) sender;
+            var toHide = GetHideInnerBorders(element);
+            ControlHelper.HideInnerBorderOfDatePickerTextBox(element, toHide);
         }
         #endregion
     }
