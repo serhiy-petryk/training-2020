@@ -75,7 +75,7 @@ namespace WpfSpLib.Controls
                 foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
                     textBox.LostFocus -= TextBox_LostFocus;
             }
-            this.AutomaticUnloading(OnUnloaded);
+            // this.AutomaticUnloading(OnUnloaded);
         }
 
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)

@@ -24,13 +24,10 @@ namespace WpfSpLibDemo.TestViews
         {
             InitializeComponent();
             DataContext = this;
-            Unloaded += OnUnloaded;
+            // Unloaded += OnUnloaded;
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            this.AutomaticUnloading(OnUnloaded);
-        }
+        // private void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
 
         private void XButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
