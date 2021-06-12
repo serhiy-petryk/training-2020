@@ -33,47 +33,46 @@ namespace WpfSpLib.Effects
         //=====================================
         private static void OnPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is FrameworkElement fe)
-            {
-                Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-                {
-                    var txtBox = fe as TextBox ?? fe.GetVisualChildren().FirstOrDefault(c => c is TextBox) as TextBox;
-                    var pswBox = fe as PasswordBox ?? fe.GetVisualChildren().FirstOrDefault(c => c is PasswordBox) as PasswordBox;
+            if (!(d is FrameworkElement fe)) return;
 
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+            {
+                var txtBox = fe as TextBox ?? fe.GetVisualChildren().FirstOrDefault(c => c is TextBox) as TextBox;
+                var pswBox = fe as PasswordBox ?? fe.GetVisualChildren().FirstOrDefault(c => c is PasswordBox) as PasswordBox;
+
+                if (txtBox != null)
+                {
+                    txtBox.TextChanged -= TxtBox_TextChanged;
+                    txtBox.GotFocus -= ControlBox_ChangeFocus;
+                    txtBox.LostFocus -= ControlBox_ChangeFocus;
+                }
+                else if (pswBox != null)
+                {
+                    pswBox.PasswordChanged -= ControlBox_ChangeFocus;
+                    pswBox.GotFocus -= ControlBox_ChangeFocus;
+                    pswBox.LostFocus -= ControlBox_ChangeFocus;
+                }
+
+                if (!fe.IsElementDisposing())
+                {
                     if (txtBox != null)
                     {
-                        txtBox.TextChanged -= TxtBox_TextChanged;
-                        txtBox.GotFocus -= ControlBox_ChangeFocus;
-                        txtBox.LostFocus -= ControlBox_ChangeFocus;
+                        txtBox.TextChanged += TxtBox_TextChanged;
+                        txtBox.GotFocus += ControlBox_ChangeFocus;
+                        txtBox.LostFocus += ControlBox_ChangeFocus;
+                        TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None));
                     }
                     else if (pswBox != null)
                     {
-                        pswBox.PasswordChanged -= ControlBox_ChangeFocus;
-                        pswBox.GotFocus -= ControlBox_ChangeFocus;
-                        pswBox.LostFocus -= ControlBox_ChangeFocus;
+                        pswBox.PasswordChanged += ControlBox_ChangeFocus;
+                        pswBox.GotFocus += ControlBox_ChangeFocus;
+                        pswBox.LostFocus += ControlBox_ChangeFocus;
+                        ControlBox_ChangeFocus(pswBox, new RoutedEventArgs());
                     }
-
-                    if (!fe.IsElementDisposing())
-                    {
-                        if (txtBox != null)
-                        {
-                            txtBox.TextChanged += TxtBox_TextChanged;
-                            txtBox.GotFocus += ControlBox_ChangeFocus;
-                            txtBox.LostFocus += ControlBox_ChangeFocus;
-                            TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None));
-                        }
-                        else if (pswBox != null)
-                        {
-                            pswBox.PasswordChanged += ControlBox_ChangeFocus;
-                            pswBox.GotFocus += ControlBox_ChangeFocus;
-                            pswBox.LostFocus += ControlBox_ChangeFocus;
-                            ControlBox_ChangeFocus(pswBox, new RoutedEventArgs());
-                        }
-                        else
-                            Debug.Print($"WatermarkEffect.Watermark is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
-                    }
-                }, DispatcherPriority.Loaded);
-            }
+                    else
+                        Debug.Print($"WatermarkEffect.Watermark is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+                }
+            }, DispatcherPriority.Loaded);
         }
 
         private static void ControlBox_ChangeFocus(object sender, RoutedEventArgs e) => CheckWatermark((Control)sender);
