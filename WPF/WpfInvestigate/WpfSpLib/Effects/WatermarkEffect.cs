@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
@@ -33,17 +32,8 @@ namespace WpfSpLib.Effects
         //=====================================
         private static void OnPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is FrameworkElement element)) return;
-
-            element.Unloaded -= Deactivate;
-            element.Loaded -= Activate;
-
-            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {
-                element.Unloaded += Deactivate;
-                element.Loaded += Activate;
-                Activate(element, null);
-            }, DispatcherPriority.Loaded);
+            if (d is FrameworkElement element)
+                element.AttachedPropertyChangedHandler(Activate, Deactivate);
         }
 
         private static void Activate(object sender, RoutedEventArgs e)
@@ -57,14 +47,16 @@ namespace WpfSpLib.Effects
                 txtBox.TextChanged += TxtBox_TextChanged;
                 txtBox.GotFocus += ControlBox_ChangeFocus;
                 txtBox.LostFocus += ControlBox_ChangeFocus;
-                TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None));
+                if (element.IsArrangeValid)
+                    TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None));
             }
             else if (pswBox != null)
             {
                 pswBox.PasswordChanged += ControlBox_ChangeFocus;
                 pswBox.GotFocus += ControlBox_ChangeFocus;
                 pswBox.LostFocus += ControlBox_ChangeFocus;
-                ControlBox_ChangeFocus(pswBox, new RoutedEventArgs());
+                if (element.IsArrangeValid)
+                    ControlBox_ChangeFocus(pswBox, new RoutedEventArgs());
             }
             else if (element.IsArrangeValid)
                 Debug.Print($"WatermarkEffect.Watermark is not implemented for {element.GetType().Namespace}.{element.GetType().Name} type");
