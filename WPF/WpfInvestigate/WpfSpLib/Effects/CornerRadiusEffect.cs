@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Helpers;
 
@@ -18,7 +19,7 @@ namespace WpfSpLib.Effects
         private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is FrameworkElement element)
-                element.AttachedPropertyChangedHandler(Activate, Deactivate);
+                element.AttachedPropertyChangedHandler(Activate, Deactivate, DispatcherPriority.Background);
         }
 
         private static void Activate(object sender, RoutedEventArgs e)
@@ -28,7 +29,7 @@ namespace WpfSpLib.Effects
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
             dpd.AddValueChanged(element, UpdateBorders);
             element.SizeChanged += UpdateBorders;
-            if (element.IsArrangeValid)
+            if (element.IsVisible)
                 UpdateBorders(element, null);
         }
 

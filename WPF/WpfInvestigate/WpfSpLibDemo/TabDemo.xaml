@@ -39,161 +39,163 @@
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
 
-            <TabControl>
-                <TabItem Header="Start" >
-                    <TabItem.Content>
-                        <WrapPanel Margin="0 2 0 35" >
-                            <controls:LabelBox Margin="5 10 0 0" Text="Original: https://github.com/simple0812/keyboard (no license)"/>
-                            <temp:OriginalVirtualKeyboard x:Name="OriginalKeyboard" Margin="5"/>
-                        </WrapPanel>
-                    </TabItem.Content>
-                </TabItem>
-                <TabItem Header="Keyboard">
-                    <TabItem.Content>
-                        <controls:VirtualKeyboard Margin="5" BorderThickness="2" BorderBrush="Aqua"/>
-                    </TabItem.Content>
-                </TabItem>
-                <TabItem Header="DatePicker effect">
-                    <TabItem.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <controls:LabelBox Grid.Column="0" Grid.Row="0" Text="Clear button:"/>
-                            <DatePicker Grid.Column="1" Grid.Row="0" Background="GreenYellow" Foreground="Blue" Margin="5"
-                                        effects:DatePickerEffect.ClearButton="True"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <TabControl>
+                    <TabItem Header="Start" >
+                        <TabItem.Content>
+                            <WrapPanel Margin="0 2 0 35" >
+                                <controls:LabelBox Margin="5 10 0 0" Text="Original: https://github.com/simple0812/keyboard (no license)"/>
+                                <temp:OriginalVirtualKeyboard x:Name="OriginalKeyboard" Margin="5"/>
+                            </WrapPanel>
+                        </TabItem.Content>
+                    </TabItem>
+                    <TabItem Header="Keyboard">
+                        <TabItem.Content>
+                            <controls:VirtualKeyboard Margin="5" BorderThickness="2" BorderBrush="Aqua"/>
+                        </TabItem.Content>
+                    </TabItem>
+                    <TabItem Header="DatePicker effect">
+                        <TabItem.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <controls:LabelBox Grid.Column="0" Grid.Row="0" Text="Clear button:"/>
+                                <DatePicker Grid.Column="1" Grid.Row="0" Background="GreenYellow" Foreground="Blue" Margin="5"
+                                            effects:DatePickerEffect.ClearButton="True"/>
 
-                            <controls:LabelBox Grid.Column="0" Grid.Row="1" Text="Nullable:"/>
-                            <DatePicker Grid.Column="1" Grid.Row="1" Background="GreenYellow" Foreground="Blue" Margin="5"
-                                        effects:DatePickerEffect.IsNullable="True"/>
+                                <controls:LabelBox Grid.Column="0" Grid.Row="1" Text="Nullable:"/>
+                                <DatePicker Grid.Column="1" Grid.Row="1" Background="GreenYellow" Foreground="Blue" Margin="5"
+                                            effects:DatePickerEffect.IsNullable="True"/>
 
-                            <controls:LabelBox Grid.Column="0" Grid.Row="2" Text="Not Nullable:"/>
-                            <DatePicker Grid.Column="1" Grid.Row="2" Background="GreenYellow" Foreground="Blue" Margin="5"
-                                        effects:DatePickerEffect.IsNullable="False"/>
+                                <controls:LabelBox Grid.Column="0" Grid.Row="2" Text="Not Nullable:"/>
+                                <DatePicker Grid.Column="1" Grid.Row="2" Background="GreenYellow" Foreground="Blue" Margin="5"
+                                            effects:DatePickerEffect.IsNullable="False"/>
 
-                            <controls:LabelBox Grid.Column="0" Grid.Row="3" Text="Hide inner borders:" VerticalAlignment="Center"/>
-                            <DatePicker Grid.Column="1" Grid.Row="3" Background="GreenYellow" Foreground="Blue" Margin="5"
-                                        effects:DatePickerEffect.HideInnerBorders="True"/>
+                                <controls:LabelBox Grid.Column="0" Grid.Row="3" Text="Hide inner borders:" VerticalAlignment="Center"/>
+                                <DatePicker Grid.Column="1" Grid.Row="3" Background="GreenYellow" Foreground="Blue" Margin="5"
+                                            effects:DatePickerEffect.HideInnerBorders="True"/>
 
-                            <controls:LabelBox Grid.Column="0" Grid.Row="4" Text="All effects (nullable):"/>
-                            <DatePicker Grid.Column="1" Grid.Row="4" Background="GreenYellow" Foreground="Blue" Margin="5"
-                                        effects:DatePickerEffect.ClearButton="True"
-                                        effects:DatePickerEffect.IsNullable="True"
-                                        effects:DatePickerEffect.HideInnerBorders="True"/>
-                            <controls:LabelBox Grid.Column="0" Grid.Row="5" Text="All effects (not nullable):"/>
-                            <DatePicker Grid.Column="1" Grid.Row="5" Background="GreenYellow" Foreground="Blue" Margin="5"
-                                        effects:DatePickerEffect.ClearButton="True"
-                                        effects:DatePickerEffect.IsNullable="False"
-                                        effects:DatePickerEffect.HideInnerBorders="True"/>
-                        </Grid>
-                    </TabItem.Content>
-                </TabItem>
+                                <controls:LabelBox Grid.Column="0" Grid.Row="4" Text="All effects (nullable):"/>
+                                <DatePicker Grid.Column="1" Grid.Row="4" Background="GreenYellow" Foreground="Blue" Margin="5"
+                                            effects:DatePickerEffect.ClearButton="True"
+                                            effects:DatePickerEffect.IsNullable="True"
+                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                                <controls:LabelBox Grid.Column="0" Grid.Row="5" Text="All effects (not nullable):"/>
+                                <DatePicker Grid.Column="1" Grid.Row="5" Background="GreenYellow" Foreground="Blue" Margin="5"
+                                            effects:DatePickerEffect.ClearButton="True"
+                                            effects:DatePickerEffect.IsNullable="False"
+                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                            </Grid>
+                        </TabItem.Content>
+                    </TabItem>
 
-                <TabItem Header="Corner Radius Effect" >
-                    <TabItem.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+                    <TabItem Header="Corner Radius Effect" >
+                        <TabItem.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-                            <controls:LabelBox Grid.Row="0" Grid.Column="0" Text="CornerRadius effect is only applicable for elements that are border-based" TextWrapping="Wrap" MaxWidth="300"/>
+                                <controls:LabelBox Grid.Row="0" Grid.Column="0" Text="CornerRadius effect is only applicable for elements that are border-based" TextWrapping="Wrap" MaxWidth="300"/>
 
-                            <controls:LabelBox Grid.Row="1" Grid.Column="0" Text="Corner=(0,4,8,12) is not applicable for standard button:" TextWrapping="Wrap" MaxWidth="300"/>
-                            <Button Grid.Row="1" Grid.Column="1" Margin="4" Padding="4" Content="Standard button" BorderThickness="2"
-                                    effects:CornerRadiusEffect.CornerRadius="0 4 8 12"/>
+                                <controls:LabelBox Grid.Row="1" Grid.Column="0" Text="Corner=(0,4,8,12) is not applicable for standard button:" TextWrapping="Wrap" MaxWidth="300"/>
+                                <Button Grid.Row="1" Grid.Column="1" Margin="4" Padding="4" Content="Standard button" BorderThickness="2"
+                                        effects:CornerRadiusEffect.CornerRadius="0 4 8 12"/>
 
-                            <controls:LabelBox Grid.Row="2" Grid.Column="0" Text="Corner=(0,4,8,12), DefaultButtonBaseStyle" TextWrapping="Wrap" MaxWidth="300"/>
-                            <Button Grid.Row="2" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" BorderThickness="2"
-                                    effects:CornerRadiusEffect.CornerRadius="0 4 8 12"
-                                    Style="{StaticResource DefaultButtonBaseStyle}"
-                                    ToolTip="ToolTip"/>
+                                <controls:LabelBox Grid.Row="2" Grid.Column="0" Text="Corner=(0,4,8,12), DefaultButtonBaseStyle" TextWrapping="Wrap" MaxWidth="300"/>
+                                <Button Grid.Row="2" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" BorderThickness="2"
+                                        effects:CornerRadiusEffect.CornerRadius="0 4 8 12"
+                                        Style="{StaticResource DefaultButtonBaseStyle}"
+                                        ToolTip="ToolTip"/>
 
-                            <controls:LabelBox Grid.Row="3" Grid.Column="0" Text="Corner=(0,4,8,12), ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
-                            <Button Grid.Row="3" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" BorderThickness="2" Width="150" Height="32"
-                                    effects:CornerRadiusEffect.CornerRadius="0 4 8 12"
-                                    effects:ChromeEffect.Monochrome="{StaticResource PrimaryColor}"
-                                    effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100">
-                            </Button>
+                                <controls:LabelBox Grid.Row="3" Grid.Column="0" Text="Corner=(0,4,8,12), ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
+                                <Button Grid.Row="3" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" BorderThickness="2" Width="150" Height="32"
+                                        effects:CornerRadiusEffect.CornerRadius="0 4 8 12"
+                                        effects:ChromeEffect.Monochrome="{StaticResource PrimaryColor}"
+                                        effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100">
+                                </Button>
 
-                            <controls:LabelBox Grid.Row="4" Grid.Column="0" Text="CornerRadius=30, Height/Width=30, IconEffect.Geometry, ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
-                            <Button Grid.Row="4" Grid.Column="1" Height="30" Width="30" Margin="4" BorderThickness="2"
-                                    Style="{StaticResource DefaultButtonBaseStyle}"
-                                    effects:ChromeEffect.Monochrome="{StaticResource PrimaryColor}"
-                                    effects:CornerRadiusEffect.CornerRadius="30"
-                                    effects:IconEffect.Geometry="{StaticResource DemoGeometry}"/>
+                                <controls:LabelBox Grid.Row="4" Grid.Column="0" Text="CornerRadius=30, Height/Width=30, IconEffect.Geometry, ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
+                                <Button Grid.Row="4" Grid.Column="1" Height="30" Width="30" Margin="4" BorderThickness="2"
+                                        Style="{StaticResource DefaultButtonBaseStyle}"
+                                        effects:ChromeEffect.Monochrome="{StaticResource PrimaryColor}"
+                                        effects:CornerRadiusEffect.CornerRadius="30"
+                                        effects:IconEffect.Geometry="{StaticResource DemoGeometry}"/>
 
-                            <controls:LabelBox Grid.Row="5" Grid.Column="0" Text="Corner (14,0,18,8) for DefaultButtonBaseStyle" TextWrapping="Wrap" MaxWidth="300"/>
-                            <Button Grid.Row="5" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" BorderThickness="2"
-                                    effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
-                                    Style="{StaticResource DefaultButtonBaseStyle}"
-                                    ToolTip="ToolTip"/>
+                                <controls:LabelBox Grid.Row="5" Grid.Column="0" Text="Corner (14,0,18,8) for DefaultButtonBaseStyle" TextWrapping="Wrap" MaxWidth="300"/>
+                                <Button Grid.Row="5" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" BorderThickness="2"
+                                        effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
+                                        Style="{StaticResource DefaultButtonBaseStyle}"
+                                        ToolTip="ToolTip"/>
 
-                            <controls:LabelBox Grid.Row="6" Grid.Column="0" Text="Corner (14,0,18,8) + rotation + ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
-                            <Button Grid.Row="6" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" FontSize="16" BorderThickness="2" Width="150" Height="40"
-                                    effects:CornerRadiusEffect.CornerRadius="14 0 12 8"
-                                    effects:ChromeEffect.Monochrome="{StaticResource SecondaryColor}"
-                                    effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100">
-                                <Button.RenderTransform>
-                                    <RotateTransform CenterX="10" CenterY="20" Angle="10" />
-                                </Button.RenderTransform>
-                            </Button>
+                                <controls:LabelBox Grid.Row="6" Grid.Column="0" Text="Corner (14,0,18,8) + rotation + ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
+                                <Button Grid.Row="6" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" FontSize="16" BorderThickness="2" Width="150" Height="40"
+                                        effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
+                                        effects:ChromeEffect.Monochrome="{StaticResource SecondaryColor}"
+                                        effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100">
+                                    <Button.RenderTransform>
+                                        <RotateTransform CenterX="10" CenterY="20" Angle="10" />
+                                    </Button.RenderTransform>
+                                </Button>
 
-                        </Grid>
-                    </TabItem.Content>
-                </TabItem>
+                            </Grid>
+                        </TabItem.Content>
+                    </TabItem>
 
-                <TabItem Header="Controls" >
-                    <TabItem.Content>
-                        <WrapPanel>
-                            <DatePicker Background="GreenYellow" Foreground="Blue"
-                                        effects:DatePickerEffect.ClearButton="True"
-                                        effects:DatePickerEffect.IsNullable="True"
-                                        effects:DatePickerEffect.HideInnerBorders="True"/>
+                    <TabItem Header="Controls" >
+                        <TabItem.Content>
+                            <WrapPanel>
+                                <DatePicker Background="GreenYellow" Foreground="Blue"
+                                            effects:DatePickerEffect.ClearButton="True"
+                                            effects:DatePickerEffect.IsNullable="True"
+                                            effects:DatePickerEffect.HideInnerBorders="True"/>
 
-                            <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
-                                                 effects:ChromeEffect.Monochrome="#FFD6EAFF"
-                                                 effects:CornerRadiusEffect.CornerRadius="5"
-                                                 VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True"/>
+                                <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
+                                                     effects:ChromeEffect.Monochrome="#FFD6EAFF"
+                                                     effects:CornerRadiusEffect.CornerRadius="5"
+                                                     VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True"/>
 
-                            <controls:TimePicker Padding="0" Margin="0 0 5 0" IsReadOnly="False" SelectedTimeFormat="Long" />
+                                <controls:TimePicker Padding="0" Margin="0 0 5 0" IsReadOnly="False" SelectedTimeFormat="Long" />
 
-                            <controls:DateTimePicker x:Name="dtp" Background="Yellow" Width="230"
-                                                     IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
-                                                     IsNullable="False"
-                                                     IsDateOnlyMode="True"
-                                                     DisplayDateStart="2002/1/1"
-                                                     effects:WatermarkEffect.Watermark="Test"/>
+                                <controls:DateTimePicker x:Name="dtp" Background="Yellow" Width="230"
+                                                         IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
+                                                         IsNullable="False"
+                                                         IsDateOnlyMode="True"
+                                                         DisplayDateStart="2002/1/1"
+                                                         effects:WatermarkEffect.Watermark="Test"/>
 
-                            <Button Width="100" Height="30" Margin="5" Content="Ripple"
-                                    Style="{StaticResource MonochromeButtonBaseStyle}"
-                                    effects:ChromeEffect.Monochrome="#F0AD4E"
-                                    effects:CornerRadiusEffect.CornerRadius="5"/>
-                        </WrapPanel>
-                    </TabItem.Content>
-                </TabItem>
-            </TabControl>
+                                <Button Width="100" Height="30" Margin="5" Content="Ripple"
+                                        Style="{StaticResource MonochromeButtonBaseStyle}"
+                                        effects:ChromeEffect.Monochrome="#F0AD4E"
+                                        effects:CornerRadiusEffect.CornerRadius="5"/>
+                            </WrapPanel>
+                        </TabItem.Content>
+                    </TabItem>
+                </TabControl>
+            </ScrollViewer>
         </Grid>
     </Grid>
 

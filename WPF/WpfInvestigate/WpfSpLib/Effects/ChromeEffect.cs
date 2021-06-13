@@ -63,7 +63,8 @@ namespace WpfSpLib.Effects
                         control.Style = style;
                     control.Unloaded += Deactivate;
                     control.Loaded += Activate;
-                    Activate(control, null);
+                    if (control.IsArrangeValid)
+                        Activate(control, null);
                 }
             }, DispatcherPriority.Loaded);
         }
@@ -78,7 +79,8 @@ namespace WpfSpLib.Effects
             dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
             var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
             dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
-            ChromeUpdate(control, null);
+            if (control.IsArrangeValid)
+                ChromeUpdate(control, null);
         }
 
         private static void Deactivate(object sender, RoutedEventArgs e)
