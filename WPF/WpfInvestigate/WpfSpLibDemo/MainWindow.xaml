@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="LIVE MainWindow" Height="700" Width="1100">
+        Title="LIVE MainWindow" Height="750" Width="1100">
 
     <Window.Resources>
         <SolidColorBrush x:Key="TestBrush" Color="GreenYellow"/>
