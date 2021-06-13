@@ -47,7 +47,7 @@ namespace WpfSpLib.Effects
                 txtBox.TextChanged += TxtBox_TextChanged;
                 txtBox.GotFocus += ControlBox_ChangeFocus;
                 txtBox.LostFocus += ControlBox_ChangeFocus;
-                if (element.IsArrangeValid)
+                if (element.IsVisible)
                     TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None));
             }
             else if (pswBox != null)
@@ -55,10 +55,10 @@ namespace WpfSpLib.Effects
                 pswBox.PasswordChanged += ControlBox_ChangeFocus;
                 pswBox.GotFocus += ControlBox_ChangeFocus;
                 pswBox.LostFocus += ControlBox_ChangeFocus;
-                if (element.IsArrangeValid)
+                if (element.IsVisible)
                     ControlBox_ChangeFocus(pswBox, new RoutedEventArgs());
             }
-            else if (element.IsArrangeValid)
+            else if (element.IsVisible)
                 Debug.Print($"WatermarkEffect.Watermark is not implemented for {element.GetType().Namespace}.{element.GetType().Name} type");
         }
 
@@ -80,7 +80,7 @@ namespace WpfSpLib.Effects
                 pswBox.GotFocus -= ControlBox_ChangeFocus;
                 pswBox.LostFocus -= ControlBox_ChangeFocus;
             } 
-            else if (element.IsArrangeValid)
+            else if (element.IsVisible)
                 Debug.Print($"WatermarkEffect.Watermark is not implemented for {element.GetType().Namespace}.{element.GetType().Name} type");
         }
 

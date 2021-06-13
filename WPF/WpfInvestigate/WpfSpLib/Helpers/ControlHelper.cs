@@ -28,7 +28,7 @@ namespace WpfSpLib.Helpers
                 if (deactivate != null)
                     fe.Unloaded += deactivate;
                 fe.Loaded += activate;
-                if (fe.IsArrangeValid)
+                if (fe.IsVisible)
                     activate(fe, null);
             }, dispatcherPriority);
         }

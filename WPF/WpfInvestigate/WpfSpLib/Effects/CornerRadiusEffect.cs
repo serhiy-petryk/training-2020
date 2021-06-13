@@ -19,7 +19,7 @@ namespace WpfSpLib.Effects
         private static void OnCornerRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is FrameworkElement element)
-                element.AttachedPropertyChangedHandler(Activate, Deactivate, DispatcherPriority.Background);
+                element.AttachedPropertyChangedHandler(Activate, Deactivate, DispatcherPriority.Input);
         }
 
         private static void Activate(object sender, RoutedEventArgs e)
