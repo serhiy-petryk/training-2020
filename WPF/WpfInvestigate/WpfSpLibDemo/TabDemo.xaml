@@ -38,10 +38,10 @@
             <TabControl>
                 <TabItem Header="Start" >
                     <TabItem.Content>
-                        <StackPanel Orientation="Vertical">
-                        <controls:LabelBox Margin="5 10 0 0" Text="Original: https://github.com/simple0812/keyboard (no license)"/>
-                        <temp:OriginalVirtualKeyboard x:Name="OriginalKeyboard" Margin="5"/>
-                        </StackPanel>
+                        <WrapPanel Margin="0 2 0 35" >
+                            <controls:LabelBox Margin="5 10 0 0" Text="Original: https://github.com/simple0812/keyboard (no license)"/>
+                            <temp:OriginalVirtualKeyboard x:Name="OriginalKeyboard" Margin="5"/>
+                        </WrapPanel>
                     </TabItem.Content>
                 </TabItem>
                 <TabItem Header="Keyboard">
@@ -95,6 +95,50 @@
                         </Grid>
                     </TabItem.Content>
                 </TabItem>
+
+                <TabItem Header="Corner Radius Effect" >
+                    <TabItem.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <controls:LabelBox Grid.Row="0" Grid.Column="0" Text="CornerRadius effect is only applicable for elements that are border-based" TextWrapping="Wrap" MaxWidth="300"/>
+
+                            <controls:LabelBox Grid.Row="1" Grid.Column="0" Text="Corner (14 0 18 8) is not applicable for standard button:"/>
+                            <Button Grid.Row="1" Grid.Column="1" Margin="4" Padding="4" Content="Standard button" BorderThickness="2"
+                                    effects:CornerRadiusEffect.CornerRadius="14 0 18 8"/>
+
+                            <controls:LabelBox Grid.Row="2" Grid.Column="0" Text="Corner (14,0,18,8) for DefaultButtonBaseStyle"/>
+                            <Button Grid.Row="2" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" BorderThickness="2"
+                                    effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
+                                    Style="{StaticResource DefaultButtonBaseStyle}"
+                                    ToolTip="ToolTip"/>
+
+                            <controls:LabelBox Grid.Row="3" Grid.Column="0" Text="Corner (14,0,18,8) + rotation + ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
+                            <Button Grid.Row="3" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" FontSize="16" BorderThickness="2" Width="150" Height="40"
+                                    effects:CornerRadiusEffect.CornerRadius="14 0 12 8"
+                                    effects:ChromeEffect.Monochrome="#FF007BFF"
+                                    effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100">
+                                <Button.RenderTransform>
+                                    <RotateTransform CenterX="10" CenterY="20" Angle="10" />
+                                </Button.RenderTransform>
+                            </Button>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+
                 <TabItem Header="Controls" >
                     <TabItem.Content>
                         <WrapPanel>
@@ -109,7 +153,7 @@
                                                  VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True"/>
 
                             <controls:TimePicker Padding="0" Margin="0 0 5 0" IsReadOnly="False" SelectedTimeFormat="Long" />
-                            
+
                             <controls:DateTimePicker x:Name="dtp" Background="Yellow" Width="230"
                                                      IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
                                                      IsNullable="False"
