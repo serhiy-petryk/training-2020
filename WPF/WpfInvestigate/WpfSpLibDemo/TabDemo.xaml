@@ -43,10 +43,10 @@
                 <TabControl>
                     <TabItem Header="Start" >
                         <TabItem.Content>
-                            <WrapPanel Margin="0 2 0 35" >
+                            <StackPanel Margin="0 2 0 35" Orientation="Vertical">
                                 <controls:LabelBox Margin="5 10 0 0" Text="Original: https://github.com/simple0812/keyboard (no license)"/>
                                 <temp:OriginalVirtualKeyboard x:Name="OriginalKeyboard" Margin="5"/>
-                            </WrapPanel>
+                            </StackPanel>
                         </TabItem.Content>
                     </TabItem>
                     <TabItem Header="Keyboard">
@@ -198,5 +198,4 @@
             </ScrollViewer>
         </Grid>
     </Grid>
-
 </Window>
