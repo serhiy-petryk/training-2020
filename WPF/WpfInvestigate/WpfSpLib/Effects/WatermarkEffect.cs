@@ -47,8 +47,8 @@ namespace WpfSpLib.Effects
                 txtBox.TextChanged += TxtBox_TextChanged;
                 txtBox.GotFocus += ControlBox_ChangeFocus;
                 txtBox.LostFocus += ControlBox_ChangeFocus;
-                txtBox.SizeChanged += ControlBox_ChangeFocus;
-                if (element.IsVisible)
+                txtBox.SizeChanged += ControlBox_ChangeFocus;  // for invisible controls
+                if (element.IsArrangeValid) // children must be ready
                     TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None));
             }
             else if (pswBox != null)
@@ -56,8 +56,8 @@ namespace WpfSpLib.Effects
                 pswBox.PasswordChanged += ControlBox_ChangeFocus;
                 pswBox.GotFocus += ControlBox_ChangeFocus;
                 pswBox.LostFocus += ControlBox_ChangeFocus;
-                pswBox.SizeChanged += ControlBox_ChangeFocus;
-                if (element.IsVisible)
+                pswBox.SizeChanged += ControlBox_ChangeFocus; // for invisible controls
+                if (element.IsArrangeValid) // children must be ready
                     ControlBox_ChangeFocus(pswBox, new RoutedEventArgs());
             }
             else if (element.IsVisible)
