@@ -183,8 +183,6 @@
                                             Visibility="Collapsed"/>
                                 <CheckBox Grid.Row="9" Grid.Column="2" Margin="5" VerticalAlignment="Center"
                                           IsThreeState="False" IsChecked="True" Content="Is collapsed?" Click="DatePicker_ToggleVisibility"/>
-
-
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
