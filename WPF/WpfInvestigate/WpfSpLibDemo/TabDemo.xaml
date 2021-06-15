@@ -73,6 +73,7 @@
                                     <RowDefinition Height="34"/>
                                     <RowDefinition Height="34"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="34"/>
                                 </Grid.RowDefinitions>
                                 <controls:LabelBox Grid.Column="0" Grid.Row="0" Text="Clear button:"/>
                                 <DatePicker Grid.Column="1" Grid.Row="0" Background="GreenYellow" Foreground="Blue" Margin="5"
@@ -133,6 +134,14 @@
                                           IsThreeState="False" IsChecked="True" Content="Is hidden?" Click="ToggleVisibility"/>
                                 <CheckBox Grid.Row="8" Grid.Column="3" Margin="5" VerticalAlignment="Center"
                                           IsThreeState="False" IsChecked="True" Content="Toggle Clear button" Click="DatePicker_ToggleClearButton"/>
+
+                                <controls:LabelBox Grid.Column="0" Grid.Row="9" Text="No effects (collapsed):"/>
+                                <DatePicker Grid.Column="1" Grid.Row="9" Background="GreenYellow" Foreground="Blue" Margin="5"
+                                            Visibility="Collapsed"/>
+                                <CheckBox Grid.Row="9" Grid.Column="2" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Is collapsed?" Click="ToggleVisibility"/>
+
+
                             </Grid>
                         </TabItem.Content>
                     </TabItem>

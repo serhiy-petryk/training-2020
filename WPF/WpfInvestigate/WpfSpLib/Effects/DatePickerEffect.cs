@@ -37,7 +37,6 @@ namespace WpfSpLib.Effects
                     AddClearButton(dp);
                 else
                     RemoveClearButton(dp);
-
             }), DispatcherPriority.Render);
         }
 
@@ -78,15 +77,11 @@ namespace WpfSpLib.Effects
 
         private static void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            var current = (DependencyObject)sender;
-            while (current != null && !(current is DatePicker))
-                current = VisualTreeHelper.GetParent(current) ?? (current as FrameworkElement)?.Parent;
-
-            if (current != null)
+            if (((DependencyObject)sender).GetVisualParents().OfType<DatePicker>().FirstOrDefault() is DatePicker dp)
             {
-                var isNullable = GetIsNullable(current) ?? false;
-                ((DatePicker)current).SelectedDate = isNullable ? (DateTime?)null : DateTime.Today;
-                ((DatePicker)current).Focus();
+                var isNullable = GetIsNullable(dp) ?? false;
+                dp.SelectedDate = isNullable ? (DateTime?)null : DateTime.Today;
+                dp.Focus();
             }
         }
         #endregion
@@ -124,6 +119,8 @@ namespace WpfSpLib.Effects
 
         private static void CheckIsNullable(DatePicker dp)
         {
+            if (!dp.IsVisible) return;
+
             var isNullable = GetIsNullable(dp) ?? false;
             if (!dp.SelectedDate.HasValue && isNullable)
                 return;
