@@ -7,7 +7,7 @@
         xmlns:temp="clr-namespace:WpfSpLibDemo.Temp"
         xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
         mc:Ignorable="d"
-        Title="TabControlTests" Height="500" Width="1100">
+        Title="TabControlTests" Height="700" Width="1100">
 
     <Window.Resources>
         <Geometry x:Key="DemoGeometry">M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z</Geometry>
@@ -45,7 +45,7 @@
                         <TabItem.Content>
                             <StackPanel Margin="0 2 0 35" Orientation="Vertical">
                                 <controls:LabelBox Margin="5 10 0 0" Text="Original: https://github.com/simple0812/keyboard (no license)"/>
-                                <temp:OriginalVirtualKeyboard x:Name="OriginalKeyboard" Margin="5"/>
+                                <temp:OriginalVirtualKeyboard Margin="5"/>
                             </StackPanel>
                         </TabItem.Content>
                     </TabItem>
@@ -60,6 +60,8 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -67,8 +69,9 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <controls:LabelBox Grid.Column="0" Grid.Row="0" Text="Clear button:"/>
@@ -92,16 +95,49 @@
                                             effects:DatePickerEffect.ClearButton="True"
                                             effects:DatePickerEffect.IsNullable="True"
                                             effects:DatePickerEffect.HideInnerBorders="True"/>
-                                <controls:LabelBox Grid.Column="0" Grid.Row="5" Text="All effects (not nullable):"/>
+
+                                <controls:LabelBox Grid.Column="0" Grid.Row="5" Margin="5" Text="All effects (not nullable):"/>
                                 <DatePicker Grid.Column="1" Grid.Row="5" Background="GreenYellow" Foreground="Blue" Margin="5"
                                             effects:DatePickerEffect.ClearButton="True"
                                             effects:DatePickerEffect.IsNullable="False"
                                             effects:DatePickerEffect.HideInnerBorders="True"/>
+                                <CheckBox Grid.Row="5" Grid.Column="2" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Toggle Clear button" Click="DatePicker_ToggleClearButton"/>
+
+                                <controls:LabelBox Grid.Column="0" Grid.Row="6" Text="All effects (not nullable, collapsed):"/>
+                                <DatePicker Grid.Column="1" Grid.Row="6" Background="GreenYellow" Foreground="Blue" Margin="5"
+                                            Visibility="Collapsed"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            effects:DatePickerEffect.ClearButton="True"
+                                            effects:DatePickerEffect.IsNullable="False"
+                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                                <CheckBox Grid.Row="6" Grid.Column="2" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Is collapsed?" Click="ToggleVisibility"/>
+
+                                <controls:LabelBox Grid.Column="0" Grid.Row="7" Text="All effects (nullable, collapsed):"/>
+                                <DatePicker Grid.Column="1" Grid.Row="7" Background="GreenYellow" Foreground="Blue" Margin="5"
+                                            Visibility="Collapsed"
+                                            effects:DatePickerEffect.ClearButton="True"
+                                            effects:DatePickerEffect.IsNullable="True"
+                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                                <CheckBox Grid.Row="7" Grid.Column="2" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Is collapsed?" Click="ToggleVisibility"/>
+
+                                <controls:LabelBox Grid.Column="0" Grid.Row="8" Text="All effects (nullable, hidden):"/>
+                                <DatePicker Grid.Column="1" Grid.Row="8" Background="GreenYellow" Foreground="Blue" Margin="5"
+                                            Visibility="Hidden" Tag="Hidden"
+                                            effects:DatePickerEffect.ClearButton="True"
+                                            effects:DatePickerEffect.IsNullable="True"
+                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                                <CheckBox Grid.Row="8" Grid.Column="2" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Is hidden?" Click="ToggleVisibility"/>
+                                <CheckBox Grid.Row="8" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Toggle Clear button" Click="DatePicker_ToggleClearButton"/>
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
 
-                    <TabItem Header="Corner Radius Effect" >
+                    <TabItem Header="CornerRadius effect" >
                         <TabItem.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -165,6 +201,115 @@
                         </TabItem.Content>
                     </TabItem>
 
+                    <TabItem Header="Watermark effect" >
+                        <TabItem.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <controls:LabelBox Grid.Row="0" Grid.Column="0" Text="Textbox:"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" Margin="5"
+                                         VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"
+                                         effects:WatermarkEffect.Watermark="Watermark"/>
+                                <Button Grid.Row="0" Grid.Column="2" Margin="5" Content="Change watermark text" Click="ChangeWatermarkText_OnClick"/>
+                                <Button Grid.Row="0" Grid.Column="3" Margin="5" Content="Change watermark foreground" Click="ChangeWatermarkForeground_OnClick"/>
+
+                                <controls:LabelBox Grid.Row="1" Grid.Column="0" Margin="0 40" Text="Rotated Textbox:"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" Padding="7"
+                                         Width="120" BorderThickness="4 6 8 10" Height="60"
+                                         VerticalAlignment="Center" VerticalContentAlignment="Bottom"
+                                         HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                                         BorderBrush="LightGray">
+                                    <TextBox.RenderTransform >
+                                        <RotateTransform CenterX="10" CenterY="20" Angle="5" />
+                                    </TextBox.RenderTransform>
+                                </TextBox>
+
+                                <controls:LabelBox Grid.Row="2" Grid.Column="0" Margin="0 30" Text="Rotated NumericBox:"/>
+                                <controls:NumericBox Grid.Row="2" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" Padding="15 5 15 5"
+                                                     Width="180" BorderThickness="4 6 8 10" Height="50"
+                                                     VerticalAlignment="Top" VerticalContentAlignment="Bottom"
+                                                     HorizontalContentAlignment="Right"
+                                                     BorderBrush="YellowGreen" Background="Aquamarine" IsNullable="True">
+                                    <controls:NumericBox.RenderTransform>
+                                        <RotateTransform CenterX="10" CenterY="20" Angle="5" />
+                                    </controls:NumericBox.RenderTransform>
+                                </controls:NumericBox>
+
+                                <controls:LabelBox Grid.Row="3" Grid.Column="0" Text="Rotated Textbox:"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" effects:WatermarkEffect.Watermark="Long text AAAA " Width="40">
+                                    <TextBox.RenderTransform >
+                                        <RotateTransform CenterX="10" CenterY="20" Angle="5" />
+                                    </TextBox.RenderTransform>
+                                </TextBox>
+
+                                <controls:LabelBox Grid.Row="4" Grid.Column="0" Margin="0 30" Text="ComboBox:"/>
+                                <ComboBox Grid.Row="4" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" Padding="7" Width="120" BorderThickness="4 6 8 10" Height="30"
+                                          VerticalAlignment="Center" VerticalContentAlignment="Bottom"
+                                          HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                                          BorderBrush="YellowGreen">
+                                    <ComboBox.RenderTransform >
+                                        <RotateTransform CenterX="10" CenterY="20" Angle="5" />
+                                    </ComboBox.RenderTransform>
+                                    <TextBlock>LG Nexus 5X</TextBlock>
+                                    <TextBlock>Huawai Nexus 6P</TextBlock>
+                                    <TextBlock>iPhone 6S</TextBlock>
+                                </ComboBox>
+                                <Button Grid.Row="4" Grid.Column="2" Margin="10 0" Content="Clear combobox" Click="ClearCombobox_OnClick" Height="24"/>
+
+                                <controls:LabelBox Grid.Row="5" Grid.Column="0" Text="Editable ComboBox:"/>
+                                <ComboBox Grid.Row="5" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" effects:WatermarkEffect.Foreground="Blue"
+                                          Margin="5" IsEditable="True" Width="80" Height="30" Background="Aquamarine">
+                                    <TextBlock>LG Nexus 5X</TextBlock>
+                                    <TextBlock>Huawai Nexus 6P</TextBlock>
+                                    <TextBlock>iPhone 6S</TextBlock>
+                                </ComboBox>
+
+                                <controls:LabelBox Grid.Row="6" Grid.Column="0" Text="DatePicker:"/>
+                                <DatePicker Grid.Row="6" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" effects:WatermarkEffect.Foreground="Red"
+                                            Margin="5" Padding="2"  Width="120" BorderThickness="4 6 8 10" Height="40"
+                                            Background="Aquamarine"
+                                            effects:DatePickerEffect.HideInnerBorders="True"
+                                            VerticalAlignment="Top" VerticalContentAlignment="Bottom"
+                                            HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                                            BorderBrush="YellowGreen">
+                                    <DatePicker.RenderTransform >
+                                        <RotateTransform CenterX="10" CenterY="20" Angle="5" />
+                                    </DatePicker.RenderTransform>
+                                </DatePicker>
+
+                                <controls:LabelBox Grid.Row="7" Grid.Column="0" Text="PasswordBox:"/>
+                                <PasswordBox Grid.Row="7" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" Margin="5" Width="80" BorderThickness="1" BorderBrush="Black" Padding="0"/>
+
+                                <controls:LabelBox Grid.Row="8" Grid.Column="0" Text="Hidden PasswordBox:"/>
+                                <PasswordBox Grid.Row="8" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" Margin="5" Width="80" Visibility="Collapsed"/>
+                                <Button Grid.Row="8" Grid.Column="2" Margin="5" Content="Toggle visibility" Click="ToggleVisibility"/>
+
+                                <controls:LabelBox Grid.Row="9" Grid.Column="0" Text="DatePicker:"/>
+                                <DatePicker Grid.Row="9" Grid.Column="1" Margin="5" Background="DarkSeaGreen" HorizontalAlignment="Center"
+                                            effects:DatePickerEffect.HideInnerBorders="True"
+                                            effects:WatermarkEffect.Watermark="Watermark"/>
+                            </Grid>
+
+                        </TabItem.Content>
+                        </TabItem>
+
                     <TabItem Header="Controls" >
                         <TabItem.Content>
                             <WrapPanel>
@@ -180,7 +325,7 @@
 
                                 <controls:TimePicker Padding="0" Margin="0 0 5 0" IsReadOnly="False" SelectedTimeFormat="Long" />
 
-                                <controls:DateTimePicker x:Name="dtp" Background="Yellow" Width="230"
+                                <controls:DateTimePicker Background="Yellow" Width="230"
                                                          IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
                                                          IsNullable="False"
                                                          IsDateOnlyMode="True"

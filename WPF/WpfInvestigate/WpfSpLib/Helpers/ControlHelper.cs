@@ -172,11 +172,11 @@ namespace WpfSpLib.Helpers
         {
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                foreach (var textBox in Tips.GetVisualChildren(fe).OfType<DatePickerTextBox>())
+                foreach (var textBox in fe.GetVisualChildren().OfType<DatePickerTextBox>())
                 {
                     const string name1 = "watermark_decorator", name2 = "ContentElement";
                     var newBorderThickness = new Thickness(toHide ? 0 : 1);
-                    var borders = Tips.GetVisualChildren(textBox).OfType<Border>().Where(c => c.Name == name1 || c.Name == name2);
+                    var borders = textBox.GetVisualChildren().OfType<Border>().Where(c => c.Name == name1 || c.Name == name2);
                     foreach (var x in borders)
                         x.BorderThickness = newBorderThickness;
                 }

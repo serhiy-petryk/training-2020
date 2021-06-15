@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using WpfSpLib.Effects;
-using WpfSpLib.Helpers;
 
 namespace WpfSpLibDemo.TestViews
 {
