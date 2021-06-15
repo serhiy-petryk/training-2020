@@ -80,7 +80,7 @@
                             effects:WatermarkEffect.Foreground="{TemplateBinding effects:WatermarkEffect.Foreground}"
                             effects:DatePickerEffect.ClearButton="True"
                             effects:DatePickerEffect.IsNullable="{TemplateBinding IsNullable}"
-                            effects:DatePickerEffect.HideInnerBorders="True"
+                            effects:DatePickerEffect.HideInnerBorder="True"
                             SelectedDate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value}">
                 </DatePicker>
             </ControlTemplate>

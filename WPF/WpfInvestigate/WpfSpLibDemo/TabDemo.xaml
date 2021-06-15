@@ -62,6 +62,9 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -69,11 +72,11 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="34"/>
-                                    <RowDefinition Height="34"/>
-                                    <RowDefinition Height="34"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <controls:LabelBox Grid.Column="0" Grid.Row="0" Text="Clear button:"/>
                                 <DatePicker Grid.Column="1" Grid.Row="0" Background="GreenYellow" Foreground="Blue" Margin="5"
@@ -89,21 +92,39 @@
 
                                 <controls:LabelBox Grid.Column="0" Grid.Row="3" Text="Hide inner borders:" VerticalAlignment="Center"/>
                                 <DatePicker Grid.Column="1" Grid.Row="3" Background="GreenYellow" Foreground="Blue" Margin="5"
-                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                                            effects:DatePickerEffect.HideInnerBorder="True"/>
 
                                 <controls:LabelBox Grid.Column="0" Grid.Row="4" Text="All effects (nullable):"/>
                                 <DatePicker Grid.Column="1" Grid.Row="4" Background="GreenYellow" Foreground="Blue" Margin="5"
                                             effects:DatePickerEffect.ClearButton="True"
                                             effects:DatePickerEffect.IsNullable="True"
-                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                                            effects:DatePickerEffect.HideInnerBorder="True"/>
+                                <CheckBox Grid.Row="4" Grid.Column="2" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="False" Content="Is collapsed?" Click="DatePicker_ToggleVisibility"/>
+                                <CheckBox Grid.Row="4" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Show Clear button" Click="DatePicker_ToggleClearButton"/>
+                                <CheckBox Grid.Row="4" Grid.Column="4" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Is nullable?" Click="DatePicker_ToggleIsNullbale"/>
+                                <CheckBox Grid.Row="4" Grid.Column="5" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Hide inner border?" Click="DatePicker_ToggleHideInnerBorder"/>
+                                <CheckBox Grid.Row="4" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="False" Content="Clear background?" Click="DatePicker_ClearBackground"/>
 
-                                <controls:LabelBox Grid.Column="0" Grid.Row="5" Margin="5" Text="All effects (not nullable):"/>
+                                <controls:LabelBox Grid.Column="0" Grid.Row="5" Text="All effects (not nullable):"/>
                                 <DatePicker Grid.Column="1" Grid.Row="5" Background="GreenYellow" Foreground="Blue" Margin="5"
                                             effects:DatePickerEffect.ClearButton="True"
                                             effects:DatePickerEffect.IsNullable="False"
-                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                                            effects:DatePickerEffect.HideInnerBorder="True"/>
                                 <CheckBox Grid.Row="5" Grid.Column="2" Margin="5" VerticalAlignment="Center"
-                                          IsThreeState="False" IsChecked="True" Content="Toggle Clear button" Click="DatePicker_ToggleClearButton"/>
+                                          IsThreeState="False" IsChecked="False" Content="Is collapsed?" Click="DatePicker_ToggleVisibility"/>
+                                <CheckBox Grid.Row="5" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Show Clear button" Click="DatePicker_ToggleClearButton"/>
+                                <CheckBox Grid.Row="5" Grid.Column="4" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="False" Content="Is nullable?" Click="DatePicker_ToggleIsNullbale"/>
+                                <CheckBox Grid.Row="5" Grid.Column="5" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Hide inner border?" Click="DatePicker_ToggleHideInnerBorder"/>
+                                <CheckBox Grid.Row="5" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="False" Content="Clear background?" Click="DatePicker_ClearBackground"/>
 
                                 <controls:LabelBox Grid.Column="0" Grid.Row="6" Text="All effects (not nullable, collapsed):"/>
                                 <DatePicker Grid.Column="1" Grid.Row="6" Background="GreenYellow" Foreground="Blue" Margin="5"
@@ -111,35 +132,57 @@
                                             HorizontalAlignment="Center" VerticalAlignment="Center"
                                             effects:DatePickerEffect.ClearButton="True"
                                             effects:DatePickerEffect.IsNullable="False"
-                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                                            effects:DatePickerEffect.HideInnerBorder="True"/>
                                 <CheckBox Grid.Row="6" Grid.Column="2" Margin="5" VerticalAlignment="Center"
-                                          IsThreeState="False" IsChecked="True" Content="Is collapsed?" Click="ToggleVisibility"/>
+                                          IsThreeState="False" IsChecked="True" Content="Is collapsed?" Click="DatePicker_ToggleVisibility"/>
+                                <CheckBox Grid.Row="6" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Show Clear button" Click="DatePicker_ToggleClearButton"/>
+                                <CheckBox Grid.Row="6" Grid.Column="4" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="False" Content="Is nullable?" Click="DatePicker_ToggleIsNullbale"/>
+                                <CheckBox Grid.Row="6" Grid.Column="5" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Hide inner border?" Click="DatePicker_ToggleHideInnerBorder"/>
+                                <CheckBox Grid.Row="6" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="False" Content="Clear background?" Click="DatePicker_ClearBackground"/>
 
                                 <controls:LabelBox Grid.Column="0" Grid.Row="7" Text="All effects (nullable, collapsed):"/>
                                 <DatePicker Grid.Column="1" Grid.Row="7" Background="GreenYellow" Foreground="Blue" Margin="5"
                                             Visibility="Collapsed"
                                             effects:DatePickerEffect.ClearButton="True"
                                             effects:DatePickerEffect.IsNullable="True"
-                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                                            effects:DatePickerEffect.HideInnerBorder="True"/>
                                 <CheckBox Grid.Row="7" Grid.Column="2" Margin="5" VerticalAlignment="Center"
-                                          IsThreeState="False" IsChecked="True" Content="Is collapsed?" Click="ToggleVisibility"/>
+                                          IsThreeState="False" IsChecked="True" Content="Is collapsed?" Click="DatePicker_ToggleVisibility"/>
+                                <CheckBox Grid.Row="7" Grid.Column="3" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Show Clear button" Click="DatePicker_ToggleClearButton"/>
+                                <CheckBox Grid.Row="7" Grid.Column="4" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Is nullable?" Click="DatePicker_ToggleIsNullbale"/>
+                                <CheckBox Grid.Row="7" Grid.Column="5" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Hide inner border?" Click="DatePicker_ToggleHideInnerBorder"/>
+                                <CheckBox Grid.Row="7" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="False" Content="Clear background?" Click="DatePicker_ClearBackground"/>
 
                                 <controls:LabelBox Grid.Column="0" Grid.Row="8" Text="All effects (nullable, hidden):"/>
                                 <DatePicker Grid.Column="1" Grid.Row="8" Background="GreenYellow" Foreground="Blue" Margin="5"
                                             Visibility="Hidden" Tag="Hidden"
                                             effects:DatePickerEffect.ClearButton="True"
                                             effects:DatePickerEffect.IsNullable="True"
-                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                                            effects:DatePickerEffect.HideInnerBorder="True"/>
                                 <CheckBox Grid.Row="8" Grid.Column="2" Margin="5" VerticalAlignment="Center"
-                                          IsThreeState="False" IsChecked="True" Content="Is hidden?" Click="ToggleVisibility"/>
+                                          IsThreeState="False" IsChecked="True" Content="Is hidden?" Click="DatePicker_ToggleVisibility"/>
                                 <CheckBox Grid.Row="8" Grid.Column="3" Margin="5" VerticalAlignment="Center"
-                                          IsThreeState="False" IsChecked="True" Content="Toggle Clear button" Click="DatePicker_ToggleClearButton"/>
+                                          IsThreeState="False" IsChecked="True" Content="Show Clear button" Click="DatePicker_ToggleClearButton"/>
+                                <CheckBox Grid.Row="8" Grid.Column="4" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Is nullable?" Click="DatePicker_ToggleIsNullbale"/>
+                                <CheckBox Grid.Row="8" Grid.Column="5" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Hide inner border?" Click="DatePicker_ToggleHideInnerBorder"/>
+                                <CheckBox Grid.Row="8" Grid.Column="6" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="False" Content="Clear background?" Click="DatePicker_ClearBackground"/>
 
                                 <controls:LabelBox Grid.Column="0" Grid.Row="9" Text="No effects (collapsed):"/>
-                                <DatePicker Grid.Column="1" Grid.Row="9" Background="GreenYellow" Foreground="Blue" Margin="5"
+                                <DatePicker Grid.Column="1" Grid.Row="9" Margin="5"
                                             Visibility="Collapsed"/>
                                 <CheckBox Grid.Row="9" Grid.Column="2" Margin="5" VerticalAlignment="Center"
-                                          IsThreeState="False" IsChecked="True" Content="Is collapsed?" Click="ToggleVisibility"/>
+                                          IsThreeState="False" IsChecked="True" Content="Is collapsed?" Click="DatePicker_ToggleVisibility"/>
 
 
                             </Grid>
@@ -294,7 +337,7 @@
                                 <DatePicker Grid.Row="6" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" effects:WatermarkEffect.Foreground="Red"
                                             Margin="5" Padding="2"  Width="120" BorderThickness="4 6 8 10" Height="40"
                                             Background="Aquamarine"
-                                            effects:DatePickerEffect.HideInnerBorders="True"
+                                            effects:DatePickerEffect.HideInnerBorder="True"
                                             VerticalAlignment="Top" VerticalContentAlignment="Bottom"
                                             HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                                             BorderBrush="YellowGreen">
@@ -308,11 +351,11 @@
 
                                 <controls:LabelBox Grid.Row="8" Grid.Column="0" Text="Hidden PasswordBox:"/>
                                 <PasswordBox Grid.Row="8" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" Margin="5" Width="80" Visibility="Collapsed"/>
-                                <Button Grid.Row="8" Grid.Column="2" Margin="5" Content="Toggle visibility" Click="ToggleVisibility"/>
+                                <Button Grid.Row="8" Grid.Column="2" Margin="5" Content="Toggle visibility" Click="DatePicker_ToggleVisibility"/>
 
                                 <controls:LabelBox Grid.Row="9" Grid.Column="0" Text="DatePicker:"/>
                                 <DatePicker Grid.Row="9" Grid.Column="1" Margin="5" Background="DarkSeaGreen" HorizontalAlignment="Center"
-                                            effects:DatePickerEffect.HideInnerBorders="True"
+                                            effects:DatePickerEffect.HideInnerBorder="True"
                                             effects:WatermarkEffect.Watermark="Watermark"/>
                             </Grid>
 
@@ -325,7 +368,7 @@
                                 <DatePicker Background="GreenYellow" Foreground="Blue"
                                             effects:DatePickerEffect.ClearButton="True"
                                             effects:DatePickerEffect.IsNullable="True"
-                                            effects:DatePickerEffect.HideInnerBorders="True"/>
+                                            effects:DatePickerEffect.HideInnerBorder="True"/>
 
                                 <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
                                                      effects:ChromeEffect.Monochrome="#FFD6EAFF"

@@ -14,7 +14,7 @@ namespace WpfSpLib.Effects
     /// <summary>
     /// DatePickerEffect.IsNullable property: supports IsNullable and DisplayDateStart/End (as Minimum/Maximum dates) for SelectedDate of DatePicker
     /// DatePickerEffect.ClearButton property: hide/show clear button for DatePicker
-    /// DatePickerEffect.HideInnerBorders property: hide/show borders of DatePickerTextBox which is child of any framework element
+    /// DatePickerEffect.HideInnerBorder property: hide/show borders of DatePickerTextBox which is child of any framework element
     /// Usage:  <DatePicker controls:DatePickerEffect.ClearButton="True" controls:DatePickerEffect.IsNullable="True" />
     /// </summary>
     public class DatePickerEffect
@@ -66,8 +66,7 @@ namespace WpfSpLib.Effects
 
         private static void RemoveClearButton(DatePicker dp)
         {
-            var clearButton = dp.GetVisualChildren().OfType<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName);
-            if (clearButton != null)
+            if (dp.GetVisualChildren().OfType<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName) is Button clearButton)
             {
                 clearButton.Click -= ClearButton_Click;
                 var grid = VisualTreeHelper.GetParent(clearButton) as Grid;
@@ -137,15 +136,15 @@ namespace WpfSpLib.Effects
         #endregion
 
         #region ===============  Hide inner borders  ================
-        public static readonly DependencyProperty HideInnerBordersProperty = DependencyProperty.RegisterAttached("HideInnerBorders",
+        public static readonly DependencyProperty HideInnerBorderProperty = DependencyProperty.RegisterAttached("HideInnerBorder",
             typeof(bool?), typeof(DatePickerEffect), new PropertyMetadata(null, propertyChangedCallback: OnPropertyChanged));
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
-        public static void SetHideInnerBorders(DependencyObject d, bool? value) => d.SetValue(HideInnerBordersProperty, value);
+        public static void SetHideInnerBorder(DependencyObject d, bool? value) => d.SetValue(HideInnerBorderProperty, value);
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
-        public static bool? GetHideInnerBorders(DependencyObject d) => (bool?)d.GetValue(HideInnerBordersProperty);
+        public static bool? GetHideInnerBorder(DependencyObject d) => (bool?)d.GetValue(HideInnerBorderProperty);
         private static void CheckHideInnerBorder(DatePicker dp)
         {
-            var toHide = GetHideInnerBorders(dp);
+            var toHide = GetHideInnerBorder(dp);
             if (toHide.HasValue)
                 ControlHelper.HideInnerBorderOfDatePickerTextBox(dp, toHide.Value);
         }
@@ -176,7 +175,7 @@ namespace WpfSpLib.Effects
             {
                 if (e.Property == UIElement.IsVisibleProperty || e.Property == ClearButtonProperty)
                     CheckClearButton(dp);
-                if (e.Property == UIElement.IsVisibleProperty || e.Property == HideInnerBordersProperty)
+                if (e.Property == UIElement.IsVisibleProperty || e.Property == HideInnerBorderProperty)
                     CheckHideInnerBorder(dp);
                 if (e.Property == UIElement.IsVisibleProperty)
                     Activate_IsNullable(dp);

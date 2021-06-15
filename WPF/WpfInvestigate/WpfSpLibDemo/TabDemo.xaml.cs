@@ -41,24 +41,43 @@ namespace WpfSpLibDemo
 
         private void DatePicker_ToggleClearButton(object sender, RoutedEventArgs e)
         {
-            /*var current = sender as FrameworkElement;
-            var target = GetPreviousElement(current);
-            var oldValue = DatePickerEffect.GetClearButton(target);
-            DatePickerEffect.SetClearButton(target, !oldValue);*/
             var checkBox = sender as CheckBox;
             var target = GetPreviousElement(checkBox);
             DatePickerEffect.SetClearButton(target, checkBox.IsChecked.Value);
         }
-        private void ToggleVisibility(object sender, RoutedEventArgs e)
+        private void DatePicker_ToggleVisibility(object sender, RoutedEventArgs e)
         {
-            /*var current = sender as FrameworkElement;
-            var target = GetPreviousElement(current);
-            var a1 = Equals(target.Tag, "Hidden") ? Visibility.Hidden : Visibility.Collapsed;
-            target.Visibility = target.Visibility == Visibility.Visible ? a1 : Visibility.Visible;*/
             var checkBox = sender as CheckBox;
             var target = GetPreviousElement(checkBox);
             var a1 = Equals(target.Tag, "Hidden") ? Visibility.Hidden : Visibility.Collapsed;
             target.Visibility = Equals(checkBox.IsChecked, true) ? a1 : Visibility.Visible;
+        }
+        private void DatePicker_ToggleIsNullbale(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            var target = GetPreviousElement(checkBox);
+            DatePickerEffect.SetIsNullable(target, checkBox.IsChecked.Value);
+        }
+        private void DatePicker_ToggleHideInnerBorder(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            var target = GetPreviousElement(checkBox);
+            DatePickerEffect.SetHideInnerBorder(target, checkBox.IsChecked.Value);
+        }
+        private void DatePicker_ClearBackground(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            var target = GetPreviousElement(checkBox) as Control;
+            if (checkBox.IsChecked.Value)
+            {
+                target.Background = Brushes.Transparent;
+                target.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF333333");
+            }
+            else
+            {
+                target.Background = Brushes.GreenYellow;
+                target.Foreground = Brushes.Blue;
+            }
         }
         private FrameworkElement GetPreviousElement(FrameworkElement current)
         {
@@ -66,5 +85,6 @@ namespace WpfSpLibDemo
             var row = Grid.GetRow(current);
             return grid.Children.OfType<FrameworkElement>().FirstOrDefault(a => Grid.GetColumn(a) == 1 && Grid.GetRow(a) == row);
         }
+
     }
 }
