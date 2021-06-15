@@ -19,6 +19,42 @@ namespace WpfSpLib.Effects
     /// </summary>
     public class DatePickerEffect
     {
+        #region ===========  OnPropertyChanged  ===========
+        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is DatePicker dp)
+            {
+                dp.IsVisibleChanged -= DatePicker_IsVisibleChanged;
+                dp.IsVisibleChanged += DatePicker_IsVisibleChanged;
+
+                if (dp.IsVisible)
+                    PropertyChangeRouter(dp, e);
+            }
+            else
+                Debug.Print($"DatePickerEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+
+            void DatePicker_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
+                PropertyChangeRouter((DatePicker)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
+        }
+
+        private static void PropertyChangeRouter(DatePicker dp, DependencyPropertyChangedEventArgs e)
+        {
+            if (dp.IsVisible)
+            {
+                if (e.Property == UIElement.IsVisibleProperty || e.Property == ClearButtonProperty)
+                    CheckClearButton(dp);
+                if (e.Property == UIElement.IsVisibleProperty || e.Property == HideInnerBorderProperty)
+                    CheckHideInnerBorder(dp);
+                if (e.Property == UIElement.IsVisibleProperty)
+                    Activate_IsNullable(dp);
+                if (e.Property == IsNullableProperty)
+                    CheckIsNullable(dp);
+            }
+            else if (e.Property == UIElement.IsVisibleProperty)
+                Deactivate_IsNullable(dp);
+        }
+        #endregion
+
         #region ===============  ClearButton attached property  ================
         private const string ClearButtonName = "DatePickerEffectClearButton";
 
@@ -147,43 +183,6 @@ namespace WpfSpLib.Effects
             var toHide = GetHideInnerBorder(dp);
             if (toHide.HasValue)
                 ControlHelper.HideInnerBorderOfDatePickerTextBox(dp, toHide.Value);
-        }
-
-        #endregion
-
-        #region ===========  OnPropertyChanged  ===========
-        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is DatePicker dp)
-            {
-                dp.IsVisibleChanged -= DatePicker_IsVisibleChanged;
-                dp.IsVisibleChanged += DatePicker_IsVisibleChanged;
-
-                if (dp.IsVisible)
-                    PropertyChangeRouter(dp, e);
-            }
-            else
-                Debug.Print($"DatePickerEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
-
-            void DatePicker_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
-                PropertyChangeRouter((DatePicker) sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
-        }
-
-        private static void PropertyChangeRouter(DatePicker dp, DependencyPropertyChangedEventArgs e)
-        {
-            if (dp.IsVisible)
-            {
-                if (e.Property == UIElement.IsVisibleProperty || e.Property == ClearButtonProperty)
-                    CheckClearButton(dp);
-                if (e.Property == UIElement.IsVisibleProperty || e.Property == HideInnerBorderProperty)
-                    CheckHideInnerBorder(dp);
-                if (e.Property == UIElement.IsVisibleProperty)
-                    Activate_IsNullable(dp);
-                if (e.Property == IsNullableProperty)
-                    CheckIsNullable(dp);
-            }
-            else if (e.Property == UIElement.IsVisibleProperty)
-                Deactivate_IsNullable(dp);
         }
         #endregion
     }
