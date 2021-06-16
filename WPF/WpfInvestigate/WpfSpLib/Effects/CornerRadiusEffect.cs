@@ -66,24 +66,26 @@ namespace WpfSpLib.Effects
             element.SizeChanged -= UpdateBorders;
         }
 
-        private static async void UpdateBorders(object sender, EventArgs e)
+        private static void UpdateBorders(object sender, EventArgs e)
         {
             if (!(sender is FrameworkElement element && element.IsVisible)) return;
 
-            await element.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Loaded).Task;
-            var newRadius = GetCornerRadius(element);
-            foreach (var border in ControlHelper.GetMainElements<Border>(element))
+            element.Dispatcher.BeginInvoke(new Action(() =>
             {
-                var borderSize = border.BorderThickness;
-                var radius = new CornerRadius(
-                    GetCornerWidth(newRadius.TopLeft, borderSize.Top, borderSize.Left),
-                    GetCornerWidth(newRadius.TopRight, borderSize.Top, borderSize.Right),
-                    GetCornerWidth(newRadius.BottomRight, borderSize.Bottom, borderSize.Right),
-                    GetCornerWidth(newRadius.BottomLeft, borderSize.Bottom, borderSize.Left));
+                var newRadius = GetCornerRadius(element);
+                foreach (var border in ControlHelper.GetMainElements<Border>(element))
+                {
+                    var borderSize = border.BorderThickness;
+                    var radius = new CornerRadius(
+                        GetCornerWidth(newRadius.TopLeft, borderSize.Top, borderSize.Left),
+                        GetCornerWidth(newRadius.TopRight, borderSize.Top, borderSize.Right),
+                        GetCornerWidth(newRadius.BottomRight, borderSize.Bottom, borderSize.Right),
+                        GetCornerWidth(newRadius.BottomLeft, borderSize.Bottom, borderSize.Left));
 
-                border.CornerRadius = radius;
-                ControlHelper.ClipToBoundBorder(border);
-            }
+                    border.CornerRadius = radius;
+                    ControlHelper.ClipToBoundBorder(border);
+                }
+            }), DispatcherPriority.Loaded);
         }
 
         private static double GetCornerWidth(double requiredCornerWidth, double firstBorderWidth, double secondBorderWidth)
