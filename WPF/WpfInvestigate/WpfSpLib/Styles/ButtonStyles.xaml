@@ -30,10 +30,9 @@
                         <Border Margin="0" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}"
                                 BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
                                 SnapsToDevicePixels="True" UseLayoutRounding="True">
-                            <ContentControl Content="{TemplateBinding Content}"
-                                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                            <ContentControl Content="{TemplateBinding Content}" Focusable="False"
+                                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
                                 <ContentControl.Template>

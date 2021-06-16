@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Helpers;
 
@@ -65,9 +66,11 @@ namespace WpfSpLib.Effects
             element.SizeChanged -= UpdateBorders;
         }
 
-        private static void UpdateBorders(object sender, EventArgs e)
+        private static async void UpdateBorders(object sender, EventArgs e)
         {
             if (!(sender is FrameworkElement element && element.IsVisible)) return;
+
+            await element.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Loaded).Task;
             var newRadius = GetCornerRadius(element);
             foreach (var border in ControlHelper.GetMainElements<Border>(element))
             {
