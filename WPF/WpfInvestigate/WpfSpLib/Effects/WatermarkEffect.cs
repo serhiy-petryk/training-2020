@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
@@ -19,56 +19,83 @@ namespace WpfSpLib.Effects
     /// </summary>
     public class WatermarkEffect
     {
+        #region ===========  OnAttachedPropertyChanged  ===========
+        private static void OnAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is Control control)
+            {
+                control.IsVisibleChanged -= Element_IsVisibleChanged;
+                control.IsVisibleChanged += Element_IsVisibleChanged;
+
+                if (control.IsVisible)
+                    PropertyChangeRouter(control, e);
+            }
+            else
+                Debug.Print($"WatermarkEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+
+            void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
+                PropertyChangeRouter((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
+        }
+
+        private static void PropertyChangeRouter(Control control, DependencyPropertyChangedEventArgs e)
+        {
+            if (control.IsVisible)
+            {
+                if (e.Property == UIElement.IsVisibleProperty)
+                    control.Dispatcher.BeginInvoke(new Action(() => Activate(control)), DispatcherPriority.Background);
+                else
+                {
+                    if ((control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox)) is TextBox txtBox)
+                        CheckWatermark(txtBox);
+                    else if ((control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox)) is PasswordBox pswBox)
+                        CheckWatermark(pswBox);
+                }
+            }
+            else if (e.Property == UIElement.IsVisibleProperty)
+                control.Dispatcher.BeginInvoke(new Action(() => Deactivate(control)), DispatcherPriority.Background);
+        }
+        #endregion
+
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached(
-            "Watermark", typeof(string), typeof(WatermarkEffect), new FrameworkPropertyMetadata(string.Empty, OnPropertiesChanged));
+            "Watermark", typeof(string), typeof(WatermarkEffect), new FrameworkPropertyMetadata(string.Empty, OnAttachedPropertyChanged));
         public static string GetWatermark(DependencyObject obj) => (string)obj.GetValue(WatermarkProperty);
         public static void SetWatermark(DependencyObject obj, string value) => obj.SetValue(WatermarkProperty, value);
         
         public static readonly DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(
-            "Foreground", typeof(Brush), typeof(WatermarkEffect), new FrameworkPropertyMetadata(null, OnPropertiesChanged));
+            "Foreground", typeof(Brush), typeof(WatermarkEffect), new FrameworkPropertyMetadata(null, OnAttachedPropertyChanged));
         public static Brush GetForeground(DependencyObject obj) => (Brush)obj.GetValue(ForegroundProperty);
         public static void SetForeground(DependencyObject obj, Brush value) => obj.SetValue(ForegroundProperty, value);
 
         //=====================================
-        private static void OnPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void Activate(Control control)
         {
-            if (d is FrameworkElement element)
-                element.AttachedPropertyChangedHandler(Activate, Deactivate);
+            Deactivate(control);
+                var txtBox = control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox) as TextBox;
+                var pswBox = control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox) as PasswordBox;
+                if (txtBox != null)
+                {
+                    txtBox.TextChanged += TxtBox_TextChanged;
+                    txtBox.GotFocus += ControlBox_ChangeFocus;
+                    txtBox.LostFocus += ControlBox_ChangeFocus;
+                    txtBox.SizeChanged += ControlBox_ChangeFocus; // for invisible controls
+                    CheckWatermark(txtBox);
+                }
+                else if (pswBox != null)
+                {
+                    pswBox.PasswordChanged += ControlBox_ChangeFocus;
+                    pswBox.GotFocus += ControlBox_ChangeFocus;
+                    pswBox.LostFocus += ControlBox_ChangeFocus;
+                    pswBox.SizeChanged += ControlBox_ChangeFocus; // for invisible controls
+                    CheckWatermark(pswBox);
+                }
+                else if (control.IsVisible)
+                    Debug.Print($"WatermarkEffect.Watermark is not implemented for {control.GetType().Namespace}.{control.GetType().Name} type");
         }
 
-        private static void Activate(object sender, RoutedEventArgs e)
+        private static void Deactivate(Control control)
         {
-            Deactivate(sender, e);
-            var element = (FrameworkElement)sender;
-            var txtBox = element as TextBox ?? element.GetVisualChildren().FirstOrDefault(c => c is TextBox) as TextBox;
-            var pswBox = element as PasswordBox ?? element.GetVisualChildren().FirstOrDefault(c => c is PasswordBox) as PasswordBox;
-            if (txtBox != null)
-            {
-                txtBox.TextChanged += TxtBox_TextChanged;
-                txtBox.GotFocus += ControlBox_ChangeFocus;
-                txtBox.LostFocus += ControlBox_ChangeFocus;
-                txtBox.SizeChanged += ControlBox_ChangeFocus;  // for invisible controls
-                if (element.IsArrangeValid) // children must be ready
-                    TxtBox_TextChanged(txtBox, new TextChangedEventArgs(TextBoxBase.TextChangedEvent, UndoAction.None));
-            }
-            else if (pswBox != null)
-            {
-                pswBox.PasswordChanged += ControlBox_ChangeFocus;
-                pswBox.GotFocus += ControlBox_ChangeFocus;
-                pswBox.LostFocus += ControlBox_ChangeFocus;
-                pswBox.SizeChanged += ControlBox_ChangeFocus; // for invisible controls
-                if (element.IsArrangeValid) // children must be ready
-                    ControlBox_ChangeFocus(pswBox, new RoutedEventArgs());
-            }
-            else if (element.IsVisible)
-                Debug.Print($"WatermarkEffect.Watermark is not implemented for {element.GetType().Namespace}.{element.GetType().Name} type");
-        }
-
-        private static void Deactivate(object sender, RoutedEventArgs e)
-        {
-            var element = (FrameworkElement)sender;
-            var txtBox = element as TextBox ?? element.GetVisualChildren().FirstOrDefault(c => c is TextBox) as TextBox;
-            var pswBox = element as PasswordBox ?? element.GetVisualChildren().FirstOrDefault(c => c is PasswordBox) as PasswordBox;
+            var txtBox = control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox) as TextBox;
+            var pswBox = control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox) as PasswordBox;
 
             if (txtBox != null)
             {
@@ -84,8 +111,8 @@ namespace WpfSpLib.Effects
                 pswBox.LostFocus -= ControlBox_ChangeFocus;
                 pswBox.SizeChanged -= ControlBox_ChangeFocus;
             }
-            else if (element.IsVisible)
-                Debug.Print($"WatermarkEffect.Watermark is not implemented for {element.GetType().Namespace}.{element.GetType().Name} type");
+            else if (control.IsVisible)
+                Debug.Print($"WatermarkEffect.Watermark is not implemented for {control.GetType().Namespace}.{control.GetType().Name} type");
         }
 
         private static void ControlBox_ChangeFocus(object sender, RoutedEventArgs e) => CheckWatermark((Control)sender);

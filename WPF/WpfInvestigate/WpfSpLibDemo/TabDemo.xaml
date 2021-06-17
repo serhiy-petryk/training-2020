@@ -332,13 +332,13 @@
                                 </ComboBox>
 
                                 <controls:LabelBox Grid.Row="6" Grid.Column="0" Text="DatePicker:"/>
-                                <DatePicker Grid.Row="6" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" effects:WatermarkEffect.Foreground="Red"
+                                <DatePicker Grid.Row="6" Grid.Column="1"
                                             Margin="5" Padding="2"  Width="120" BorderThickness="4 6 8 10" Height="40"
-                                            Background="Aquamarine"
-                                            effects:DatePickerEffect.HideInnerBorder="True"
+                                            Background="Aquamarine" BorderBrush="YellowGreen"
                                             VerticalAlignment="Top" VerticalContentAlignment="Bottom"
                                             HorizontalAlignment="Right" HorizontalContentAlignment="Center"
-                                            BorderBrush="YellowGreen">
+                                            effects:DatePickerEffect.HideInnerBorder="True"
+                                            effects:WatermarkEffect.Watermark="Watermark" effects:WatermarkEffect.Foreground="Red">
                                     <DatePicker.RenderTransform >
                                         <RotateTransform CenterX="10" CenterY="20" Angle="5" />
                                     </DatePicker.RenderTransform>
@@ -349,7 +349,8 @@
 
                                 <controls:LabelBox Grid.Row="8" Grid.Column="0" Text="Hidden PasswordBox:"/>
                                 <PasswordBox Grid.Row="8" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" Margin="5" Width="80" Visibility="Collapsed"/>
-                                <Button Grid.Row="8" Grid.Column="2" Margin="5" Content="Toggle visibility" Click="DatePicker_ToggleVisibility"/>
+                                <CheckBox Grid.Row="8" Grid.Column="2" Margin="5" VerticalAlignment="Center"
+                                          IsThreeState="False" IsChecked="True" Content="Is collapsed?" Click="DatePicker_ToggleVisibility"/>
 
                                 <controls:LabelBox Grid.Row="9" Grid.Column="0" Text="DatePicker:"/>
                                 <DatePicker Grid.Row="9" Grid.Column="1" Margin="5" Background="DarkSeaGreen" HorizontalAlignment="Center"

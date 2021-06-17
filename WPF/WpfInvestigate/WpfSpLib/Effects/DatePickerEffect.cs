@@ -154,11 +154,8 @@ namespace WpfSpLib.Effects
 
         private static void CheckIsNullable(DatePicker dp)
         {
-            if (!dp.IsVisible) return;
-
-            var isNullable = GetIsNullable(dp) ?? false;
-            if (!dp.SelectedDate.HasValue && isNullable)
-                return;
+            if (!(dp.IsVisible && GetIsNullable(dp) is bool isNullable)) return;
+            if (!dp.SelectedDate.HasValue && isNullable) return;
 
             var value = dp.SelectedDate ?? DateTime.Today;
             if (dp.DisplayDateStart.HasValue && dp.DisplayDateStart.Value > value)

@@ -14,7 +14,6 @@ namespace WpfSpLib.Effects
     public class CornerRadiusEffect
     {
         #region ===========  OnPropertyChanged  ===========
-
         private static void OnAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is FrameworkElement element)
