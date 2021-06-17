@@ -27,7 +27,7 @@ namespace WpfSpLib.Effects
                 }
             }
             else
-                Debug.Print($"ChromeEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+                Debug.Print($"Effect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
 
             void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
                 OnAttachedPropertyChanged((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));

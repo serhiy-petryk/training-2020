@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,7 +19,7 @@ namespace WpfSpLib.Effects
     public class ChromeEffect
     {
         #region ===========  OnAttachedPropertyChanged  ===========
-        private static readonly ConcurrentDictionary<Control, object> _activated = new ConcurrentDictionary<Control, object>();
+        private static readonly ConcurrentDictionary<Control, SemaphoreSlim> _activated = new ConcurrentDictionary<Control, SemaphoreSlim>();
         private static void OnAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is Control control)
@@ -34,7 +33,12 @@ namespace WpfSpLib.Effects
                     if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
                         return;
 
-                    if (_activated.TryAdd(control, null)) Activate(control);
+                    if (_activated.TryAdd(control, null))
+                    {
+                        _activated[control] = new SemaphoreSlim(1, 1);
+                        Activate(control);
+                    }
+
                     control.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         if (control.Style == null && Application.Current.TryFindResource("DefaultButtonBaseStyle") is Style style && style.TargetType.IsInstanceOfType(control))
@@ -44,7 +48,11 @@ namespace WpfSpLib.Effects
                 }
                 else
                 {
-                    if (_activated.TryRemove(control, out _)) Deactivate(control);
+                    if (_activated.TryRemove(control, out var semaphore))
+                    {
+                        semaphore.Dispose();
+                        Deactivate(control);
+                    }
                 }
             }
             else
@@ -110,18 +118,11 @@ namespace WpfSpLib.Effects
                 control.IsMouseOver, control.IsEnabled, IsPressed(control));
         }
 
-        private static readonly FieldInfo _fiSemaphoreLock= typeof(SemaphoreSlim).GetField("m_lockObj", BindingFlags.Instance | BindingFlags.NonPublic);
         private static async void ChromeUpdate(object sender, EventArgs e)
         {
             if (!(sender is Control control)) return;
 
-            if (!(control.Resources["semaphore"] is SemaphoreSlim semaphore))
-            {
-                semaphore = new SemaphoreSlim(1, 1);
-                control.Resources["semaphore"] = semaphore;
-            }
-
-            await semaphore.WaitAsync();
+            await _activated[control].WaitAsync();
 
             try
             {
@@ -144,8 +145,7 @@ namespace WpfSpLib.Effects
             }
             finally
             {
-                if (_fiSemaphoreLock.GetValue(semaphore) != null) // not disposed: can be disposed when element is unloading (see UnloadingHelper)
-                    semaphore.Release();
+                _activated[control].Release();
             }
         }
 
