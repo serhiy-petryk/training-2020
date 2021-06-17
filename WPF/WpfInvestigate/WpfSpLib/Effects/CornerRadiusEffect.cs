@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
@@ -14,57 +15,48 @@ namespace WpfSpLib.Effects
     public class CornerRadiusEffect
     {
         #region ===========  OnPropertyChanged  ===========
+        private static readonly ConcurrentDictionary<FrameworkElement, object> _activated = new ConcurrentDictionary<FrameworkElement, object>();
+
         private static void OnAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is FrameworkElement element)
+            if (d is Control control)
             {
-                element.IsVisibleChanged -= Element_IsVisibleChanged;
-                element.IsVisibleChanged += Element_IsVisibleChanged;
+                control.IsVisibleChanged -= Element_IsVisibleChanged;
+                control.IsVisibleChanged += Element_IsVisibleChanged;
 
-                if (element.IsVisible)
-                    PropertyChangeRouter(element, e);
+                if (control.IsVisible)
+                {
+                    if (_activated.TryAdd(control, null)) Activate(control);
+                    UpdateBorders(control, null);
+                }
+                else
+                {
+                    if (_activated.TryRemove(control, out var o)) Deactivate(control);
+                }
             }
             else
                 Debug.Print($"CornerRadiusEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
 
             void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
-                PropertyChangeRouter((FrameworkElement) sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
+                OnAttachedPropertyChanged((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
+        }
+        private static void Activate(FrameworkElement element)
+        {
+            var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
+            dpd.AddValueChanged(element, UpdateBorders);
+        }
+        private static void Deactivate(FrameworkElement element)
+        {
+            var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
+            dpd.RemoveValueChanged(element, UpdateBorders);
         }
 
-        private static void PropertyChangeRouter(FrameworkElement element, DependencyPropertyChangedEventArgs e)
-        {
-            if (element.IsVisible)
-            {
-                if (e.Property == UIElement.IsVisibleProperty)
-                    Activate(element);
-                if (e.Property == CornerRadiusProperty)
-                    UpdateBorders(element, null);
-            }
-            else if (e.Property == UIElement.IsVisibleProperty)
-                Deactivate(element);
-        }
         #endregion
 
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.RegisterAttached(
             "CornerRadius", typeof(CornerRadius), typeof(CornerRadiusEffect), new FrameworkPropertyMetadata(new CornerRadius(), OnAttachedPropertyChanged));
         public static CornerRadius GetCornerRadius(DependencyObject obj) => (CornerRadius)obj.GetValue(CornerRadiusProperty);
         public static void SetCornerRadius(DependencyObject obj, CornerRadius value) => obj.SetValue(CornerRadiusProperty, value);
-        private static void Activate(FrameworkElement element)
-        {
-            Deactivate(element);
-            var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
-            dpd.AddValueChanged(element, UpdateBorders);
-            element.SizeChanged += UpdateBorders;
-            UpdateBorders(element, null);
-        }
-
-        private static void Deactivate(FrameworkElement element)
-        {
-            var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
-            dpd.RemoveValueChanged(element, UpdateBorders);
-            element.SizeChanged -= UpdateBorders;
-        }
-
         private static void UpdateBorders(object sender, EventArgs e)
         {
             if (!(sender is FrameworkElement element && element.IsVisible)) return;
@@ -84,7 +76,7 @@ namespace WpfSpLib.Effects
                     border.CornerRadius = radius;
                     ControlHelper.ClipToBoundBorder(border);
                 }
-            }), DispatcherPriority.Loaded);
+            }), DispatcherPriority.Input);
         }
 
         private static double GetCornerWidth(double requiredCornerWidth, double firstBorderWidth, double secondBorderWidth)
