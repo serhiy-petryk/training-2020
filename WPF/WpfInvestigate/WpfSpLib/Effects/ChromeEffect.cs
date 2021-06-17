@@ -19,7 +19,7 @@ namespace WpfSpLib.Effects
     /// </summary>
     public class ChromeEffect
     {
-        private static ConcurrentDictionary<Control, object> _activated = new ConcurrentDictionary<Control, object>();
+        private static readonly ConcurrentDictionary<Control, object> _activated = new ConcurrentDictionary<Control, object>();
         #region ===========  OnAttachedPropertyChanged  ===========
         private static void OnAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
