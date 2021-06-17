@@ -42,7 +42,7 @@ namespace WpfSpLib.Effects
             if (control.IsVisible)
             {
                 if (e.Property == UIElement.IsVisibleProperty)
-                    control.Dispatcher.BeginInvoke(new Action(() => Activate(control)), DispatcherPriority.Background);
+                    control.Dispatcher.BeginInvoke(new Action(() => Activate(control)), DispatcherPriority.Render);
                 else
                 {
                     if ((control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox)) is TextBox txtBox)
@@ -52,7 +52,7 @@ namespace WpfSpLib.Effects
                 }
             }
             else if (e.Property == UIElement.IsVisibleProperty)
-                control.Dispatcher.BeginInvoke(new Action(() => Deactivate(control)), DispatcherPriority.Background);
+                control.Dispatcher.BeginInvoke(new Action(() => Deactivate(control)), DispatcherPriority.Render);
         }
         #endregion
 
@@ -70,46 +70,37 @@ namespace WpfSpLib.Effects
         private static void Activate(Control control)
         {
             Deactivate(control);
-                var txtBox = control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox) as TextBox;
-                var pswBox = control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox) as PasswordBox;
-                if (txtBox != null)
-                {
-                    txtBox.TextChanged += TxtBox_TextChanged;
-                    txtBox.GotFocus += ControlBox_ChangeFocus;
-                    txtBox.LostFocus += ControlBox_ChangeFocus;
-                    txtBox.SizeChanged += ControlBox_ChangeFocus; // for invisible controls
-                    CheckWatermark(txtBox);
-                }
-                else if (pswBox != null)
-                {
-                    pswBox.PasswordChanged += ControlBox_ChangeFocus;
-                    pswBox.GotFocus += ControlBox_ChangeFocus;
-                    pswBox.LostFocus += ControlBox_ChangeFocus;
-                    pswBox.SizeChanged += ControlBox_ChangeFocus; // for invisible controls
-                    CheckWatermark(pswBox);
-                }
-                else if (control.IsVisible)
-                    Debug.Print($"WatermarkEffect.Watermark is not implemented for {control.GetType().Namespace}.{control.GetType().Name} type");
+            if ((control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox)) is TextBox txtBox)
+            {
+                txtBox.TextChanged += TxtBox_TextChanged;
+                txtBox.GotFocus += ControlBox_ChangeFocus;
+                txtBox.LostFocus += ControlBox_ChangeFocus;
+                CheckWatermark(txtBox);
+            }
+            else if ((control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox)) is PasswordBox pswBox)
+            {
+                pswBox.PasswordChanged += ControlBox_ChangeFocus;
+                pswBox.GotFocus += ControlBox_ChangeFocus;
+                pswBox.LostFocus += ControlBox_ChangeFocus;
+                CheckWatermark(pswBox);
+            }
+            else if (control.IsVisible)
+                Debug.Print($"WatermarkEffect.Watermark is not implemented for {control.GetType().Namespace}.{control.GetType().Name} type");
         }
 
         private static void Deactivate(Control control)
         {
-            var txtBox = control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox) as TextBox;
-            var pswBox = control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox) as PasswordBox;
-
-            if (txtBox != null)
+            if ((control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox)) is TextBox txtBox)
             {
                 txtBox.TextChanged -= TxtBox_TextChanged;
                 txtBox.GotFocus -= ControlBox_ChangeFocus;
                 txtBox.LostFocus -= ControlBox_ChangeFocus;
-                txtBox.SizeChanged -= ControlBox_ChangeFocus;
             }
-            else if (pswBox != null)
+            else if ((control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox)) is PasswordBox pswBox)
             {
                 pswBox.PasswordChanged -= ControlBox_ChangeFocus;
                 pswBox.GotFocus -= ControlBox_ChangeFocus;
                 pswBox.LostFocus -= ControlBox_ChangeFocus;
-                pswBox.SizeChanged -= ControlBox_ChangeFocus;
             }
             else if (control.IsVisible)
                 Debug.Print($"WatermarkEffect.Watermark is not implemented for {control.GetType().Namespace}.{control.GetType().Name} type");
