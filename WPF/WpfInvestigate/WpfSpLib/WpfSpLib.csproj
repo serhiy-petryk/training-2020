@@ -85,6 +85,7 @@
     <Compile Include="Effects\CornerRadiusEffect.cs" />
     <Compile Include="Effects\DatePickerEffect.cs" />
     <Compile Include="Effects\DoubleIconToggleButtonEffect.cs" />
+    <Compile Include="Effects\EffectBase.cs" />
     <Compile Include="Effects\FocusVisualEffect.cs" />
     <Compile Include="Effects\IconEffect.cs" />
     <Compile Include="Effects\TextBlockEffects.cs" />

@@ -19,8 +19,8 @@ namespace WpfSpLib.Effects
     /// </summary>
     public class ChromeEffect
     {
-        private static readonly ConcurrentDictionary<Control, object> _activated = new ConcurrentDictionary<Control, object>();
         #region ===========  OnAttachedPropertyChanged  ===========
+        private static readonly ConcurrentDictionary<Control, object> _activated = new ConcurrentDictionary<Control, object>();
         private static void OnAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is Control control)
@@ -29,36 +29,52 @@ namespace WpfSpLib.Effects
                 control.IsVisibleChanged += Element_IsVisibleChanged;
 
                 if (control.IsVisible)
-                    PropertyChangeRouter(control, e);
+                {
+                    var state = GetState(control);
+                    if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
+                        return;
+
+                    if (_activated.TryAdd(control, null)) Activate(control);
+                    control.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        if (control.Style == null && Application.Current.TryFindResource("DefaultButtonBaseStyle") is Style style && style.TargetType.IsInstanceOfType(control))
+                            control.Style = style;
+                        ChromeUpdate(control, null);
+                    }), DispatcherPriority.Loaded);
+                }
+                else
+                {
+                    if (_activated.TryRemove(control, out _)) Deactivate(control);
+                }
             }
             else
                 Debug.Print($"ChromeEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
 
             void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
-                PropertyChangeRouter((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
-        }
+                OnAttachedPropertyChanged((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
 
-        private static void PropertyChangeRouter(Control control, DependencyPropertyChangedEventArgs e)
+        }
+        private static void Activate(Control control)
         {
-            if (control.IsVisible)
-            {
-                var state = GetState(control);
-                if (!(state.Item1.HasValue || (state.Item2.HasValue && state.Item3.HasValue)))
-                    return;
-
-                Activate(control);
-                control.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    if (control.Style == null && Application.Current.TryFindResource("DefaultButtonBaseStyle") is Style style && style.TargetType.IsInstanceOfType(control))
-                        control.Style = style;
-                    ChromeUpdate(control, null);
-                }), DispatcherPriority.Loaded);
-            }
-            else if (e.Property == UIElement.IsVisibleProperty)
-                Deactivate(control);
+            control.PreviewMouseLeftButtonDown += ChromeUpdate;
+            control.PreviewMouseLeftButtonUp += ChromeUpdate;
+            var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
+            var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
+            dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
         }
-        #endregion
 
+        private static void Deactivate(Control control)
+        {
+            control.PreviewMouseLeftButtonDown -= ChromeUpdate;
+            control.PreviewMouseLeftButtonUp -= ChromeUpdate;
+            var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
+            dpdIsMouseOver.RemoveValueChanged(control, ChromeUpdate);
+            var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
+            dpdIsEnabled.RemoveValueChanged(control, ChromeUpdate);
+        }
+
+        #endregion
 
         #region ================  Chrome Settings  ======================
         public static readonly DependencyProperty ChromeMatrixProperty = DependencyProperty.RegisterAttached(
@@ -87,35 +103,6 @@ namespace WpfSpLib.Effects
         #endregion
 
         #region ====================  Chrome common methods  ======================
-        private static void Activate(Control control)
-        {
-            if (_activated.TryAdd(control, null))
-            {
-                control.PreviewMouseLeftButtonDown += ChromeUpdate;
-                control.PreviewMouseLeftButtonUp += ChromeUpdate;
-                var dpdIsMouseOver =
-                    DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-                dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
-                var dpdIsEnabled =
-                    DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-                dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
-            }
-        }
-
-        private static void Deactivate(Control control)
-        {
-            object o;
-            if (_activated.TryRemove(control, out o))
-            {
-                control.PreviewMouseLeftButtonDown -= ChromeUpdate;
-                control.PreviewMouseLeftButtonUp -= ChromeUpdate;
-                var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-                dpdIsMouseOver.RemoveValueChanged(control, ChromeUpdate);
-                var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-                dpdIsEnabled.RemoveValueChanged(control, ChromeUpdate);
-            }
-        }
-
         private static Tuple<Color?, Color?, Color?, bool, bool, bool> GetState(Control control)
         {
             return new Tuple<Color?, Color?, Color?, bool, bool, bool>(
