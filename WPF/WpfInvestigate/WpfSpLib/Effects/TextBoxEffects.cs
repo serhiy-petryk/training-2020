@@ -47,11 +47,7 @@ namespace WpfSpLib.Effects
 
             RemoveButtons(textBox);
 
-            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {
-                if (!textBox.IsElementDisposing())
-                    AddButtons(textBox);
-            }, DispatcherPriority.Loaded);
+            Dispatcher.CurrentDispatcher.InvokeAsync(() => AddButtons(textBox), DispatcherPriority.Loaded);
 
         }
 
