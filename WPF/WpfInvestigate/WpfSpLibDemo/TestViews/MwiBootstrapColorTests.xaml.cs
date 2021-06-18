@@ -8,7 +8,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using WpfSpLib.Common;
 using WpfSpLib.Controls;
-using WpfSpLib.Helpers;
 
 namespace WpfSpLibDemo.TestViews
 {
@@ -100,15 +99,6 @@ namespace WpfSpLibDemo.TestViews
             var a12 = GC.GetTotalMemory(true);
 
             Debug.Print($"Test{step}: {a12:N0}");
-        }
-
-        public void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            // need to clear bindings to prevent an error in AutomaticUnloading.ClearElement
-            if (this.IsElementDisposing())
-                BindingOperations.ClearAllBindings(MainGrid.LayoutTransform);
-
-            this.AutomaticUnloading(OnUnloaded);
         }
 
         private void OnTestClick(object sender, RoutedEventArgs e)
