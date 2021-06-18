@@ -32,8 +32,7 @@ namespace WpfSpLib.Effects
             else
                 Debug.Print($"Effect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
 
-            void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
-                OnPropertyChanged((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
+            void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) => OnPropertyChanged((Control)sender, e2);
         }
 
         private static void Activate(Control control) { }
