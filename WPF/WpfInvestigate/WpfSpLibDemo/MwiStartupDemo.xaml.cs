@@ -8,8 +8,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Controls;
-using WpfSpLib.Helpers;
-using WpfSpLib.Themes;
 using WpfSpLibDemo.Samples;
 
 namespace WpfSpLibDemo
@@ -64,47 +62,6 @@ namespace WpfSpLibDemo
                 fe.DataContext = new TestViewModel(TestMwi);
         }
 
-        private int cnt = 0;
-        private void AddChild_OnClick(object sender, RoutedEventArgs e)
-        {
-            MwiContainer.Children.Add(new MwiChild
-            {
-                Title = "Window Using Code",
-                Content = $"New MwiChild: {cnt++}",
-                Width = 300,
-                Height = 200,
-                StatusBar = new MwiStatusBarSample(),
-                CommandBar = new MwiCommandBarSample()
-                // AllowDetach = false, AllowMinimize = false
-            });
-        }
-
-        private void AddChild2_OnClick(object sender, RoutedEventArgs e)
-        {
-            MwiContainer.Children.Add(new MwiChild
-            {
-                Title = "Window Using Code",
-                Content = new ResizableSample {Width = double.NaN, Height = double.NaN},
-                Width = 300,
-                Height = 200,
-                Position = new Point(300, 80)
-            });
-        }
-
-        private void Test_OnClick(object sender, RoutedEventArgs e)
-        {
-            // foreach (var c in MwiContainer.Children)
-            // c.AllowDetach = !c.AllowDetach;
-            ((MwiChild) MwiContainer.Children[0]).Focus();
-            var a1 = Keyboard.FocusedElement;
-        }
-
-        private void OpenWindow_OnClick(object sender, RoutedEventArgs e)
-        {
-            var wnd = new Window();
-            wnd.Show();
-        }
-
         private void UIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var wnd = Window.GetWindow((DependencyObject) sender);
@@ -115,7 +72,7 @@ namespace WpfSpLibDemo
         //============  Test window  =============
 
         #region ========  Subclass TestViewModel  ===========
-        public class TestViewModel: DependencyObject, IDisposable
+        public class TestViewModel: DependencyObject
         {
             private MwiChild _owner;
             public RelayCommand CmdDisableDetach { get; private set; }
@@ -188,14 +145,6 @@ namespace WpfSpLibDemo
                         DialogMessage.DialogMessageIcon.Info, new[] { "OK" }, true, _owner.DialogHost);
                 });
             }
-
-            public void Dispose()
-            {
-                _owner = null;
-                 UnloadingHelper.ClearElement(this);
-                 EventHelper.RemoveWpfEventHandlers(this);
-               // UnloadingHelper.UnloadElement(this);
-            }
         }
         #endregion
 
@@ -205,34 +154,6 @@ namespace WpfSpLibDemo
             {
                 Debug.Print($"Child: {a1._controlId}, {a1.ActualWidth}, {a1.ActualHeight}");
             }
-        }
-
-        private void MwiStartupDemo_OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            if (this.IsElementDisposing())
-            {
-                if (TestMwi != null && TestMwi.Content is FrameworkElement fe && fe.DataContext is TestViewModel vm)
-                    vm.Dispose();
-            }
-
-            if (this.AutomaticUnloading(MwiStartupDemo_OnUnloaded))
-            {
-                if (TestMwi != null)
-                {
-                    TestMwi.DataContext = null;
-                    TestMwi = null;
-                }
-
-                Icon = null;
-                TopControl = null;
-                ScaleSlider = null;
-                MwiContainer = null;
-            }
-        }
-
-        private void UIElement_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            TopControl.Theme = MwiThemeInfo.GetNexThemeInfo(TopControl.ActualTheme);
         }
     }
 }
