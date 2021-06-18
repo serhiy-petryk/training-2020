@@ -147,7 +147,8 @@ namespace WpfSpLib.Effects
             }
             finally
             {
-                _activated[control].Release();
+                if (_activated.ContainsKey(control))
+                    _activated[control].Release();
             }
         }
 

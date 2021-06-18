@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
 
@@ -14,6 +15,53 @@ namespace WpfSpLib.Effects
 {
     public class FocusVisualEffect
     {
+        #region ===========  OnPropertyChanged  ===========
+        private static readonly ConcurrentDictionary<FrameworkElement, object> _activated = new ConcurrentDictionary<FrameworkElement, object>();
+
+        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is FrameworkElement fe)
+            {
+                if (e.Property != UIElement.VisibilityProperty)
+                {
+                    fe.IsVisibleChanged -= Element_IsVisibleChanged;
+                    fe.IsVisibleChanged += Element_IsVisibleChanged;
+                }
+
+                if (fe.IsVisible)
+                {
+                    if (GetFocusControlStyle(fe) is Style)
+                    {
+                        if (fe.FocusVisualStyle != null)
+                            fe.FocusVisualStyle = null;
+
+                        if (_activated.TryAdd(fe, null)) Activate(fe);
+                    }
+                }
+                else
+                {
+                    if (_activated.TryRemove(fe, out var o)) Deactivate(fe);
+                }
+            }
+            else
+                Debug.Print($"FocusVisualEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+
+            void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) => OnPropertyChanged((Control)sender, e2);
+        }
+
+        private static void Activate(FrameworkElement element)
+        {
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+            dpd.AddValueChanged(element, OnElementFocusChanged);
+        }
+
+        private static void Deactivate(FrameworkElement element)
+        {
+            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
+            dpd.RemoveValueChanged(element, OnElementFocusChanged);
+        }
+        #endregion
+
         #region ==============  Properties  ==============
         public static readonly DependencyProperty AlwaysShowFocusProperty = DependencyProperty.RegisterAttached(
             "AlwaysShowFocus", typeof(bool), typeof(FocusVisualEffect), new FrameworkPropertyMetadata(false));
@@ -21,52 +69,9 @@ namespace WpfSpLib.Effects
         public static void SetAlwaysShowFocus(DependencyObject obj, bool value) => obj.SetValue(AlwaysShowFocusProperty, value);
         //================
         public static readonly DependencyProperty FocusControlStyleProperty = DependencyProperty.RegisterAttached(
-            "FocusControlStyle", typeof(Style), typeof(FocusVisualEffect), new FrameworkPropertyMetadata(null, OnFocusControlStyleChanged));
+            "FocusControlStyle", typeof(Style), typeof(FocusVisualEffect), new FrameworkPropertyMetadata(null, OnPropertyChanged));
         public static Style GetFocusControlStyle(DependencyObject obj) => (Style)obj.GetValue(FocusControlStyleProperty);
         public static void SetFocusControlStyle(DependencyObject obj, Style value) => obj.SetValue(FocusControlStyleProperty, value);
-
-        private static void OnFocusControlStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is FrameworkElement element)
-            {
-                element.Unloaded -= Deactivate;
-                element.Loaded -= Activate;
-
-                if (e.NewValue is Style)
-                {
-                    if (element.FocusVisualStyle != null)
-                        element.FocusVisualStyle = null;
-
-                    Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-                    {
-                        if (!element.IsElementDisposing())
-                        {
-                            element.Unloaded += Deactivate;
-                            element.Loaded += Activate;
-                            Activate(element, null);
-                        }
-                    }, DispatcherPriority.Loaded);
-                }
-            }
-        }
-
-        private static void Activate(object sender, RoutedEventArgs e)
-        {
-            Deactivate(sender, e);
-            var element = (FrameworkElement)sender;
-            element.SizeChanged += Element_ChangeFocus;
-            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
-            dpd.AddValueChanged(element, OnElementFocusChanged);
-        }
-
-        private static void Deactivate(object sender, RoutedEventArgs e)
-        {
-            var element = (FrameworkElement) sender;
-            element.SizeChanged -= Element_ChangeFocus;
-            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(element, OnElementFocusChanged);
-        }
-
         #endregion
 
         private static void OnElementFocusChanged(object sender, EventArgs e) => Element_ChangeFocus(sender, null);
