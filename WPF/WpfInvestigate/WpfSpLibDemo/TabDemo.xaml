@@ -221,8 +221,7 @@
                                 <controls:LabelBox Grid.Row="3" Grid.Column="0" Text="Corner=(0,4,8,12), ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
                                 <Button Grid.Row="3" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" BorderThickness="2" Width="150" Height="32"
                                         effects:CornerRadiusEffect.CornerRadius="0 4 8 12"
-                                        effects:ChromeEffect.Monochrome="{StaticResource PrimaryColor}"
-                                        effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100">
+                                        effects:ChromeEffect.Monochrome="{StaticResource PrimaryColor}">
                                 </Button>
 
                                 <controls:LabelBox Grid.Row="4" Grid.Column="0" Text="CornerRadius=30, Height/Width=30, IconEffect.Geometry, ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
@@ -241,8 +240,7 @@
                                 <controls:LabelBox Grid.Row="6" Grid.Column="0" Text="Corner (14,0,18,8) + rotation + ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
                                 <Button Grid.Row="6" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" FontSize="16" BorderThickness="2" Width="150" Height="40"
                                         effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
-                                        effects:ChromeEffect.Monochrome="{StaticResource SecondaryColor}"
-                                        effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100">
+                                        effects:ChromeEffect.Monochrome="{StaticResource SecondaryColor}">
                                     <Button.RenderTransform>
                                         <RotateTransform CenterX="10" CenterY="20" Angle="10" />
                                     </Button.RenderTransform>

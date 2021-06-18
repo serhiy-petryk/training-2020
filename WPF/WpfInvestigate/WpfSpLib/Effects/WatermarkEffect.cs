@@ -111,6 +111,8 @@ namespace WpfSpLib.Effects
 
         private static void CheckWatermark(Control ctrlBox)
         {
+            if (!ctrlBox.IsVisible) return;
+
             DependencyObject current = ctrlBox;
             string watermark = null;
             Brush foregroundBrush = null;

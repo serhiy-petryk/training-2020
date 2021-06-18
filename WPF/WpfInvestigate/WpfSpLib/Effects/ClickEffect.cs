@@ -101,13 +101,13 @@ namespace WpfSpLib.Effects
         private static void OnElementPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var content = (sender as FrameworkElement).GetVisualChildren().OfType<ContentPresenter>().FirstOrDefault() ?? sender as FrameworkElement;
-            if (content != null && content.RenderTransform is TranslateTransform transform)
+            if (content != null && content.RenderTransform is TranslateTransform transform && !Tips.AreEqual(0.0, transform.Y))
                 transform.Y = 0.0;
         }
 
         private static void OnElementPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!(sender is FrameworkElement element)) return;
+            if (!(sender is FrameworkElement element && element.IsVisible)) return;
 
             var rippleColor = GetRippleColor(element);
             if (rippleColor.HasValue)
