@@ -122,7 +122,7 @@ namespace WpfSpLib.Effects
 
         private static async void ChromeUpdate(object sender, EventArgs e)
         {
-            if (!(sender is Control control)) return;
+            if (!(sender is Control control && control.IsVisible)) return;
 
             await _activated[control].WaitAsync();
 

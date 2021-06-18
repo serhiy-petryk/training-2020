@@ -63,7 +63,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <Label Content="WiP controls:" Margin="0 10 0 0"/>
-                    <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick" Panel.ZIndex="1"/>
+                    <Button x:Name="TestButton" Margin="5" Content="TestButton" Click="OnTestButtonClick" Width="150"/>
                     <Button x:Name="ControlEffectTest" Width="200" Margin="0 5" Content="WiP: ControlEffect" Click="ControlEffectTests_OnClick"/>
                     <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
                     <Button x:Name="MwiTemplate" Width="200" Margin="0 5" Content="WiP: Mwi Template" Click="MwiTemplate_OnClick"/>

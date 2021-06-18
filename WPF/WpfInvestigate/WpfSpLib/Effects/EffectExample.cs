@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,7 +24,7 @@ namespace WpfSpLib.Effects
                 if (control.IsVisible)
                 {
                     if (_activated.TryAdd(control, null)) Activate(control);
-                    PropertyChanged(control, e);
+                    Update(control, null);
                 }
                 else
                 {
@@ -33,12 +34,15 @@ namespace WpfSpLib.Effects
             else
                 Debug.Print($"Effect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
 
-            void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) => OnPropertyChanged((Control)sender, e2);
+            void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) => OnPropertyChanged((Control) sender, e2);
         }
 
         private static void Activate(Control control) { }
         private static void Deactivate(Control control) { }
-        private static void PropertyChanged(Control control, DependencyPropertyChangedEventArgs e) { }
+        private static void Update(object sender, EventArgs e)
+        {
+            if (!(sender is Control control && control.IsVisible)) return;
+        }
         #endregion
     }
 }
