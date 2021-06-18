@@ -12,8 +12,7 @@
         mc:Ignorable="d"
         Title="Test DLL MwiStartup"
         Style="{StaticResource HeadlessWindow}"
-        KeyDown="MwiStartup_OnKeyDown"
-        Unloaded="OnUnloaded">
+        KeyDown="MwiStartup_OnKeyDown">
 
     <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1050" VisibleButtons="Minimize,Maximize,Close,SelectTheme"
                        Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10-2]}"
