@@ -45,16 +45,5 @@ namespace WpfSpLibDemo
                 e.Handled = true;
             }
         }
-
-        private void MwiStartup_OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            if (this.AutomaticUnloading(MwiStartup_OnUnloaded))
-            {
-                Icon = null;
-                TopControl = null;
-                ScaleSlider = null;
-                MwiContainer = null;
-            }
-        }
     }
 }

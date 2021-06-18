@@ -136,10 +136,6 @@ namespace WpfSpLibDemo
             // if (weakRefDataCopy == null)
                 weakRefDataCopy = data.Clone() as Hashtable;
             Debug.Print($"Weak Data: {data.Count}");
-            // var aa1 = UnloadingHelper.AAA;
-
-            Debug.Print($"ClearLog");
-            UnloadingHelper.EventLog.Clear();
         }
 
         private void OnCompareWeakRefsClick(object sender, RoutedEventArgs e)
@@ -166,13 +162,6 @@ namespace WpfSpLibDemo
             var aa1 = diffKeys.Select(a => a.GetType());
             var aa2 = diffKeys.Select(a=> GetStringOfEventKey(a)).ToList();
             var aa3 = aa2.GroupBy(a => a).Select(a => new { Key = a.Key, Count = a.Count() });
-            // foreach(var a1 in diffKeys)
-            //  data.Remove(a1);
-            var log = UnloadingHelper.EventLog;
-            if (Debugger.IsAttached)
-                Debug.Print($"New WeakRefs: {diffKeys.Count}, {log.Count}");
-            else
-                MessageBox.Show($"New WeakRefs: {diffKeys.Count}, {log.Count}");
         }
 
         private string GetStringOfEventKey(object eventKey)

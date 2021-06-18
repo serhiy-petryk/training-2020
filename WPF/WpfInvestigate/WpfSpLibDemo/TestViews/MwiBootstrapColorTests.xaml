@@ -8,8 +8,7 @@
         xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
         xmlns:themes="clr-namespace:WpfSpLib.Themes;assembly=WpfSpLib"
         mc:Ignorable="d"
-        Title="MwiBootstrapColorTests" Height="700" Width="1000"
-        Unloaded="OnUnloaded">
+        Title="MwiBootstrapColorTests" Height="700" Width="1000">
 
     <Window.Resources>
         <ControlTemplate x:Key="Test" TargetType="UserControl">
