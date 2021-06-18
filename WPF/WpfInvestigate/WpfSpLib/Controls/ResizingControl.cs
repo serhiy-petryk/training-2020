@@ -38,7 +38,8 @@ namespace WpfSpLib.Controls
         {
             base.OnContentChanged(oldContent, newContent);
             AddContentChangedEvents(oldContent, true);
-            AddContentChangedEvents(newContent);
+            if (IsLoaded)
+                AddContentChangedEvents(newContent);
         }
 
         private static void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)

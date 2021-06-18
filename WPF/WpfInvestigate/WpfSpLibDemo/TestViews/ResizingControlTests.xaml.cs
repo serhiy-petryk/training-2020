@@ -286,7 +286,5 @@ namespace WpfSpLibDemo.TestViews
             window.Show();
 
         }
-
-        private void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
     }
 }

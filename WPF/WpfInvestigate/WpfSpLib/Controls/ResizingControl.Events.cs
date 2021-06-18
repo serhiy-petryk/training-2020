@@ -9,7 +9,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Threading;
 using WpfSpLib.Common;
-using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Controls
 {
@@ -18,20 +17,19 @@ namespace WpfSpLib.Controls
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             AddLoadedEvents();
+            AddContentChangedEvents(Content);
         }
 
         private static Dictionary<Type, List<FieldInfo>> _fiCache = new Dictionary<Type, List<FieldInfo>>();
         private static Dictionary<Type, List<PropertyInfo>> _piCache = new Dictionary<Type, List<PropertyInfo>>();
 
-        private void AddLoadedEvents(bool onlyRemove = false)
+        private void AddLoadedEvents()
         {
             foreach (var thumb in this.GetVisualChildren().OfType<Thumb>().Where(t => t.Name.StartsWith("Resize")))
+            {
                 thumb.DragDelta -= ResizeThumb_OnDragDelta;
-
-            if (onlyRemove) return;
-
-            foreach (var thumb in this.GetVisualChildren().OfType<Thumb>().Where(t => t.Name.StartsWith("Resize")))
                 thumb.DragDelta += ResizeThumb_OnDragDelta;
+            }
 
             if (HostPanel.GetVisualParents().OfType<ScrollViewer>().FirstOrDefault() is ScrollViewer sv && !Equals(sv.Resources["State"], "Activated"))
             {
@@ -128,10 +126,6 @@ namespace WpfSpLib.Controls
             }
         }
 
-        public virtual void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            if (this.AutomaticUnloading(OnUnloaded))
-                MovingThumb = null;
-        }
+        public virtual void OnUnloaded(object sender, RoutedEventArgs e) => AddContentChangedEvents(Content, true);
     }
 }
