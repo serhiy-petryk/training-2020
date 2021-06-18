@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -20,56 +21,44 @@ namespace WpfSpLib.Effects
     public class WatermarkEffect
     {
         #region ===========  OnAttachedPropertyChanged  ===========
+        private static readonly ConcurrentDictionary<FrameworkElement, object> _activated = new ConcurrentDictionary<FrameworkElement, object>();
         private static void OnAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is Control control)
             {
-                control.IsVisibleChanged -= Element_IsVisibleChanged;
-                control.IsVisibleChanged += Element_IsVisibleChanged;
+                if (e.Property != UIElement.VisibilityProperty)
+                {
+                    control.IsVisibleChanged -= Element_IsVisibleChanged;
+                    control.IsVisibleChanged += Element_IsVisibleChanged;
+                }
 
                 if (control.IsVisible)
-                    PropertyChangeRouter(control, e);
+                {
+                    if (_activated.TryAdd(control, null))
+                        control.Dispatcher.BeginInvoke(new Action(() => Activate(control)), DispatcherPriority.Render);
+                    else
+                    {
+                        if ((control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox)) is TextBox txtBox)
+                            CheckWatermark(txtBox);
+                        else if ((control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox)) is PasswordBox pswBox)
+                            CheckWatermark(pswBox);
+                    }
+                }
+                else
+                {
+                    if (_activated.TryRemove(control, out var o))
+                        control.Dispatcher.BeginInvoke(new Action(() => Deactivate(control)), DispatcherPriority.Render);
+                }
             }
             else
                 Debug.Print($"WatermarkEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
 
             void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
-                PropertyChangeRouter((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
+                OnAttachedPropertyChanged((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
         }
 
-        private static void PropertyChangeRouter(Control control, DependencyPropertyChangedEventArgs e)
-        {
-            if (control.IsVisible)
-            {
-                if (e.Property == UIElement.IsVisibleProperty)
-                    control.Dispatcher.BeginInvoke(new Action(() => Activate(control)), DispatcherPriority.Render);
-                else
-                {
-                    if ((control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox)) is TextBox txtBox)
-                        CheckWatermark(txtBox);
-                    else if ((control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox)) is PasswordBox pswBox)
-                        CheckWatermark(pswBox);
-                }
-            }
-            else if (e.Property == UIElement.IsVisibleProperty)
-                control.Dispatcher.BeginInvoke(new Action(() => Deactivate(control)), DispatcherPriority.Render);
-        }
-        #endregion
-
-        public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached(
-            "Watermark", typeof(string), typeof(WatermarkEffect), new FrameworkPropertyMetadata(string.Empty, OnAttachedPropertyChanged));
-        public static string GetWatermark(DependencyObject obj) => (string)obj.GetValue(WatermarkProperty);
-        public static void SetWatermark(DependencyObject obj, string value) => obj.SetValue(WatermarkProperty, value);
-        
-        public static readonly DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(
-            "Foreground", typeof(Brush), typeof(WatermarkEffect), new FrameworkPropertyMetadata(null, OnAttachedPropertyChanged));
-        public static Brush GetForeground(DependencyObject obj) => (Brush)obj.GetValue(ForegroundProperty);
-        public static void SetForeground(DependencyObject obj, Brush value) => obj.SetValue(ForegroundProperty, value);
-
-        //=====================================
         private static void Activate(Control control)
         {
-            Deactivate(control);
             if ((control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox)) is TextBox txtBox)
             {
                 txtBox.TextChanged += TxtBox_TextChanged;
@@ -105,6 +94,18 @@ namespace WpfSpLib.Effects
             else if (control.IsVisible)
                 Debug.Print($"WatermarkEffect.Watermark is not implemented for {control.GetType().Namespace}.{control.GetType().Name} type");
         }
+
+        #endregion
+
+        public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached(
+            "Watermark", typeof(string), typeof(WatermarkEffect), new FrameworkPropertyMetadata(string.Empty, OnAttachedPropertyChanged));
+        public static string GetWatermark(DependencyObject obj) => (string)obj.GetValue(WatermarkProperty);
+        public static void SetWatermark(DependencyObject obj, string value) => obj.SetValue(WatermarkProperty, value);
+        
+        public static readonly DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(
+            "Foreground", typeof(Brush), typeof(WatermarkEffect), new FrameworkPropertyMetadata(null, OnAttachedPropertyChanged));
+        public static Brush GetForeground(DependencyObject obj) => (Brush)obj.GetValue(ForegroundProperty);
+        public static void SetForeground(DependencyObject obj, Brush value) => obj.SetValue(ForegroundProperty, value);
 
         private static void ControlBox_ChangeFocus(object sender, RoutedEventArgs e) => CheckWatermark((Control)sender);
         private static void TxtBox_TextChanged(object sender, TextChangedEventArgs e) => CheckWatermark((TextBox)sender);
@@ -203,6 +204,5 @@ namespace WpfSpLib.Effects
                     adorner.Visibility = Visibility.Collapsed;
             }
         }
-
     }
 }
