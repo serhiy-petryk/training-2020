@@ -14,10 +14,7 @@ namespace WpfSpLibDemo.TestViews
         {
             InitializeComponent();
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
-            // Unloaded += OnUnloaded;
         }
-
-        // private void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
 
         private void ToggleButtonVisibility1_OnClick(object sender, RoutedEventArgs e)
         {

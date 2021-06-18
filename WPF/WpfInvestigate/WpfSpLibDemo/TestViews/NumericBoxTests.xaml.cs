@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
-using WpfSpLib.Helpers;
 
 namespace WpfSpLibDemo.TestViews
 {
@@ -24,10 +23,7 @@ namespace WpfSpLibDemo.TestViews
         {
             InitializeComponent();
             DataContext = this;
-            // Unloaded += OnUnloaded;
         }
-
-        // private void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
 
         private void XButtonBase_OnClick(object sender, RoutedEventArgs e)
         {

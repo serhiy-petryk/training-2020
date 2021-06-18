@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using WpfSpLib.Common;
-using WpfSpLib.Helpers;
 
 namespace WpfSpLibDemo.TestViews
 {
@@ -13,10 +12,7 @@ namespace WpfSpLibDemo.TestViews
         public ButtonStyleTests()
         {
             InitializeComponent();
-            // Unloaded += OnUnloaded;
         }
-
-        // private void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
 
         private void ChangeContent_OnClick(object sender, RoutedEventArgs e)
         {

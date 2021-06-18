@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using WpfSpLib.Helpers;
 
 namespace WpfSpLibDemo.TestViews
 {
@@ -11,9 +10,6 @@ namespace WpfSpLibDemo.TestViews
         public RippleEffectTests()
         {
             InitializeComponent();
-            // Unloaded += OnUnloaded;
         }
-
-        // private void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
     }
 }

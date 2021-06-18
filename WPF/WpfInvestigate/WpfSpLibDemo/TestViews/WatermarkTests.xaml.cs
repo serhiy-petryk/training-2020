@@ -12,10 +12,7 @@ namespace WpfSpLibDemo.TestViews
         public WatermarkTests()
         {
             InitializeComponent();
-            // Unloaded += OnUnloaded;
         }
-
-        // private void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
 
         private void ClearCombobox_OnClick(object sender, RoutedEventArgs e)
         {
