@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -20,46 +21,65 @@ namespace WpfSpLib.Effects
     public class DatePickerEffect
     {
         #region ===========  OnPropertyChanged  ===========
-        private static void OnAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static readonly ConcurrentDictionary<FrameworkElement, object> _activated = new ConcurrentDictionary<FrameworkElement, object>();
+
+        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is DatePicker dp)
             {
-                dp.IsVisibleChanged -= DatePicker_IsVisibleChanged;
-                dp.IsVisibleChanged += DatePicker_IsVisibleChanged;
+                if (e.Property != UIElement.VisibilityProperty)
+                {
+                    dp.IsVisibleChanged -= Element_IsVisibleChanged;
+                    dp.IsVisibleChanged += Element_IsVisibleChanged;
+                }
 
                 if (dp.IsVisible)
-                    PropertyChangeRouter(dp, e);
+                {
+                    if (GetIsNullable(dp).HasValue && _activated.TryAdd(dp, null)) Activate_IsNullable(dp);
+
+                    if (e.Property == UIElement.IsVisibleProperty || e.Property == ClearButtonProperty)
+                        CheckClearButton(dp);
+                    if (e.Property == UIElement.IsVisibleProperty || e.Property == HideInnerBorderProperty)
+                        CheckHideInnerBorder(dp);
+                    if (e.Property == UIElement.IsVisibleProperty || e.Property == IsNullableProperty)
+                        CheckIsNullable(dp);
+                }
+                else
+                {
+                    if (_activated.TryRemove(dp, out var o)) Deactivate_IsNullable(dp);
+                }
             }
             else
                 Debug.Print($"DatePickerEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
 
-            void DatePicker_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
-                PropertyChangeRouter((DatePicker)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
+            void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) => OnPropertyChanged((Control)sender, e2);
         }
 
-        private static void PropertyChangeRouter(DatePicker dp, DependencyPropertyChangedEventArgs e)
+        private static void Activate_IsNullable(DatePicker dp)
         {
-            if (dp.IsVisible)
-            {
-                if (e.Property == UIElement.IsVisibleProperty || e.Property == ClearButtonProperty)
-                    CheckClearButton(dp);
-                if (e.Property == UIElement.IsVisibleProperty || e.Property == HideInnerBorderProperty)
-                    CheckHideInnerBorder(dp);
-                if (e.Property == UIElement.IsVisibleProperty)
-                    Activate_IsNullable(dp);
-                if (e.Property == IsNullableProperty)
-                    CheckIsNullable(dp);
-            }
-            else if (e.Property == UIElement.IsVisibleProperty)
-                Deactivate_IsNullable(dp);
+            dp.SelectedDateChanged += OnSelectedDateChanged;
+            var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
+            dpdStart.AddValueChanged(dp, OnChangeDateLimit);
+            var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
+            dpdEnd.AddValueChanged(dp, OnChangeDateLimit);
         }
+
+        private static void Deactivate_IsNullable(DatePicker dp)
+        {
+            dp.SelectedDateChanged -= OnSelectedDateChanged;
+            var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
+            dpdStart.RemoveValueChanged(dp, OnChangeDateLimit);
+            var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
+            dpdEnd.RemoveValueChanged(dp, OnChangeDateLimit);
+        }
+
         #endregion
 
         #region ===============  ClearButton attached property  ================
         private const string ClearButtonName = "DatePickerEffectClearButton";
 
         public static readonly DependencyProperty ClearButtonProperty = DependencyProperty.RegisterAttached("ClearButton",
-            typeof(bool), typeof(DatePickerEffect), new PropertyMetadata(false, propertyChangedCallback: OnAttachedPropertyChanged));
+            typeof(bool), typeof(DatePickerEffect), new PropertyMetadata(false, propertyChangedCallback: OnPropertyChanged));
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         public static void SetClearButton(DependencyObject d, bool value) => d.SetValue(ClearButtonProperty, value);
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
@@ -123,31 +143,11 @@ namespace WpfSpLib.Effects
 
         #region ===============  IsNullable attached property  ================
         public static readonly DependencyProperty IsNullableProperty = DependencyProperty.RegisterAttached("IsNullable",
-            typeof(bool?), typeof(DatePickerEffect), new PropertyMetadata(null, propertyChangedCallback: OnAttachedPropertyChanged));
+            typeof(bool?), typeof(DatePickerEffect), new PropertyMetadata(null, propertyChangedCallback: OnPropertyChanged));
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         public static void SetIsNullable(DependencyObject d, bool? value) => d.SetValue(IsNullableProperty, value);
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         public static bool? GetIsNullable(DependencyObject d) => (bool?)d.GetValue(IsNullableProperty);
-
-        private static void Activate_IsNullable(DatePicker dp)
-        {
-            Deactivate_IsNullable(dp);
-            dp.SelectedDateChanged += OnSelectedDateChanged;
-            var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
-            dpdStart.AddValueChanged(dp, OnChangeDateLimit);
-            var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
-            dpdEnd.AddValueChanged(dp, OnChangeDateLimit);
-            CheckIsNullable(dp);
-        }
-
-        private static void Deactivate_IsNullable(DatePicker dp)
-        {
-            dp.SelectedDateChanged -= OnSelectedDateChanged;
-            var dpdStart = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateStartProperty, typeof(DatePicker));
-            dpdStart.RemoveValueChanged(dp, OnChangeDateLimit);
-            var dpdEnd = DependencyPropertyDescriptor.FromProperty(Calendar.DisplayDateEndProperty, typeof(DatePicker));
-            dpdEnd.RemoveValueChanged(dp, OnChangeDateLimit);
-        }
 
         private static void OnSelectedDateChanged(object sender, SelectionChangedEventArgs e) => CheckIsNullable(sender as DatePicker);
         private static void OnChangeDateLimit(object sender, EventArgs e) => CheckIsNullable(sender as DatePicker);
@@ -170,7 +170,7 @@ namespace WpfSpLib.Effects
 
         #region ===============  Hide inner borders  ================
         public static readonly DependencyProperty HideInnerBorderProperty = DependencyProperty.RegisterAttached("HideInnerBorder",
-            typeof(bool?), typeof(DatePickerEffect), new PropertyMetadata(null, propertyChangedCallback: OnAttachedPropertyChanged));
+            typeof(bool?), typeof(DatePickerEffect), new PropertyMetadata(null, propertyChangedCallback: OnPropertyChanged));
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         public static void SetHideInnerBorder(DependencyObject d, bool? value) => d.SetValue(HideInnerBorderProperty, value);
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
