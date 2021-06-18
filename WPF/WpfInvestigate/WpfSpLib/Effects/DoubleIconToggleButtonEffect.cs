@@ -50,7 +50,7 @@ namespace WpfSpLib.Effects
         {
             tb.Checked += OnToggleButtonCheckChanged;
             tb.Unchecked += OnToggleButtonCheckChanged;
-            tb.Dispatcher.InvokeAsync(() => Init(tb), DispatcherPriority.Normal);
+            tb.Dispatcher.InvokeAsync(() => Init(tb), DispatcherPriority.Loaded);
         }
 
         private static void Deactivate(ToggleButton tb)

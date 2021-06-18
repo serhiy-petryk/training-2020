@@ -29,7 +29,7 @@ namespace WpfSpLib.Effects
 
             control.Dispatcher.InvokeAsync(
                 () => ControlHelper.AddIconToControl(IconId, control, true, geometry, GetMargin(control)),
-                DispatcherPriority.Normal);
+                DispatcherPriority.Loaded);
         }
     }
 }
