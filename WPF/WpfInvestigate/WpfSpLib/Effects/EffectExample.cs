@@ -7,6 +7,7 @@ namespace WpfSpLib.Effects
 {
     public class EffectExample
     {
+        #region ===========  OnPropertyChanged  ===========
         private static readonly ConcurrentDictionary<FrameworkElement, object> _activated = new ConcurrentDictionary<FrameworkElement, object>();
 
         private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -38,5 +39,6 @@ namespace WpfSpLib.Effects
         private static void Activate(Control control) { }
         private static void Deactivate(Control control) { }
         private static void PropertyChanged(Control control, DependencyPropertyChangedEventArgs e) { }
+        #endregion
     }
 }

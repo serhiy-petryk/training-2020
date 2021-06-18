@@ -78,22 +78,18 @@ namespace WpfSpLib.Helpers
             return new Size(formattedText.Width, formattedText.Height);
         }
 
-        public static void AddIconToControl(ContentControl control, bool iconBeforeContent, Geometry icon, Thickness iconMargin, double iconWidth = double.NaN)
+        public static void AddIconToControl(string iconId, ContentControl control, bool iconBeforeContent, Geometry icon, Thickness iconMargin, double iconWidth = double.NaN)
         {
-            if (control.Resources["AddIcon"] is bool)
-            { // icon already exists
-                var oldViewBox = Tips.GetVisualChildren(control).OfType<Viewbox>().FirstOrDefault(vb => vb.Resources["IconViewBox"] is bool);
-                if (oldViewBox != null)
-                {
-                    // wrong Margin/Width, якщо повторно виконуємо метод => потрібно ускладнити обробку (??? чи це потрібно)
-                    // oldViewBox.Margin = iconMargin;
-                    // oldViewBox.Width = iconWidth;
-                    if (oldViewBox.Child is Path oldPath)
-                        oldPath.Data = icon;
-                }
+            var oldViewBox = control.GetVisualChildren().OfType<Viewbox>().FirstOrDefault(vb => vb.Resources.Contains(iconId));
+            if (oldViewBox != null)
+            {
+                // wrong Margin/Width, якщо повторно виконуємо метод => потрібно ускладнити обробку (??? чи це потрібно)
+                // oldViewBox.Margin = iconMargin;
+                // oldViewBox.Width = iconWidth;
+                if (oldViewBox.Child is Path oldPath)
+                    oldPath.Data = icon;
                 return;
             }
-            control.Resources["AddIcon"] = true;
 
             var path = new Path { Stretch = Stretch.Uniform, Margin = new Thickness(), Data = icon };
             var viewbox = new Viewbox
@@ -102,7 +98,7 @@ namespace WpfSpLib.Helpers
                 VerticalAlignment = VerticalAlignment.Stretch,
                 Margin = iconMargin,
                 Width = iconWidth,
-                Resources = { ["IconViewBox"] = true }
+                Resources = { [iconId] = true }
             };
 
             if (control.HasContent)

@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -12,6 +15,52 @@ namespace WpfSpLib.Effects
 {
     public class DoubleIconToggleButtonEffect
     {
+        #region ===========  OnPropertyChanged  ===========
+
+        private const string IconId = "DoubleIconToggleButtonEffect";
+        private static readonly ConcurrentDictionary<FrameworkElement, object> _activated = new ConcurrentDictionary<FrameworkElement, object>();
+
+        private static void OnGeometryPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ToggleButton tb)
+            {
+                if (e.Property != UIElement.VisibilityProperty)
+                {
+                    tb.IsVisibleChanged -= Element_IsVisibleChanged;
+                    tb.IsVisibleChanged += Element_IsVisibleChanged;
+                }
+
+                if (tb.IsVisible)
+                {
+                    if ((!(tb.Content is FrameworkElement) || GetViewbox(tb) == null) && GetGeometryOn(tb) != Geometry.Empty && GetGeometryOff(tb) != Geometry.Empty)
+                        if (_activated.TryAdd(tb, null)) Activate(tb);
+                }
+                else
+                {
+                    if (_activated.TryRemove(tb, out var o)) Deactivate(tb);
+                }
+            }
+            else
+                Debug.Print($"DoubleIconToggleButtonEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+
+            void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) => OnGeometryPropertyChanged((Control)sender, e2);
+        }
+
+        private static void Activate(ToggleButton tb)
+        {
+            tb.Checked += OnToggleButtonCheckChanged;
+            tb.Unchecked += OnToggleButtonCheckChanged;
+            tb.Dispatcher.InvokeAsync(() => Init(tb), DispatcherPriority.Normal);
+        }
+
+        private static void Deactivate(ToggleButton tb)
+        {
+            tb.Checked -= OnToggleButtonCheckChanged;
+            tb.Unchecked -= OnToggleButtonCheckChanged;
+        }
+        #endregion
+
+        #region =====================  Dependency Properties  ==========================
         public static readonly DependencyProperty GeometryOnProperty = DependencyProperty.RegisterAttached("GeometryOn",
             typeof(Geometry), typeof(DoubleIconToggleButtonEffect), new FrameworkPropertyMetadata(Geometry.Empty, OnGeometryPropertyChanged));
         public static Geometry GetGeometryOn(DependencyObject obj) => (Geometry)obj.GetValue(GeometryOnProperty);
@@ -36,6 +85,7 @@ namespace WpfSpLib.Effects
             typeof(Thickness), typeof(DoubleIconToggleButtonEffect), new FrameworkPropertyMetadata(new Thickness(), OnMarginPropertyChanged));
         public static Thickness GetMarginOff(DependencyObject obj) => (Thickness)obj.GetValue(MarginOffProperty);
         public static void SetMarginOff(DependencyObject obj, Thickness value) => obj.SetValue(MarginOffProperty, value);
+        #endregion
 
         //=====================================
         private static void OnWidthPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -57,30 +107,9 @@ namespace WpfSpLib.Effects
             }, DispatcherPriority.Loaded);
         }
 
-        private static void OnGeometryPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is ToggleButton tb)
-            {
-                tb.Checked -= OnToggleButtonCheckChanged;
-                tb.Unchecked -= OnToggleButtonCheckChanged;
-                Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-                {
-                    if ((!(tb.Content is FrameworkElement) || GetViewbox(tb) == null) && GetGeometryOn(tb) != Geometry.Empty && GetGeometryOff(tb) != Geometry.Empty)
-                    {
-                        if (!tb.IsElementDisposing())
-                        {
-                            Init(tb);
-                            tb.Checked += OnToggleButtonCheckChanged;
-                            tb.Unchecked += OnToggleButtonCheckChanged;
-                        }
-                    }
-                }, DispatcherPriority.Loaded);
-            }
-        }
-
         private static void Init(ToggleButton tb)
         {
-            ControlHelper.AddIconToControl(tb, false, tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb),
+            ControlHelper.AddIconToControl(IconId, tb, false, tb.IsChecked == true ? GetGeometryOn(tb) : GetGeometryOff(tb),
                 tb.IsChecked == true ? GetMarginOn(tb) : GetMarginOff(tb), GetWidth(tb));
         }
 
@@ -103,6 +132,6 @@ namespace WpfSpLib.Effects
             }, DispatcherPriority.Background);
         }
 
-        private static Viewbox GetViewbox(ToggleButton tb) => tb.GetVisualChildren().OfType<Viewbox>().FirstOrDefault(vb => vb.Resources["IconViewBox"] is bool);
+        private static Viewbox GetViewbox(ToggleButton tb) => tb.GetVisualChildren().OfType<Viewbox>().FirstOrDefault(vb => vb.Resources.Contains(IconId));
     }
 }

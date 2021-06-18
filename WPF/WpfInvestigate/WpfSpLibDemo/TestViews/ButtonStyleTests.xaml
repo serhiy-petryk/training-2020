@@ -50,23 +50,22 @@
             <Grid.LayoutTransform>
                 <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
             </Grid.LayoutTransform>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <WrapPanel Grid.Row="0" Orientation="Horizontal">
-                    <TextBlock Text="Visibility: "/>
-                    <CheckBox x:Name="cbVisibility" IsChecked="True" IsThreeState="False"/>
+                    <WrapPanel Grid.Row="0" Orientation="Horizontal">
+                        <TextBlock Text="Visibility: "/>
+                        <CheckBox x:Name="cbVisibility" IsChecked="True" IsThreeState="False"/>
 
-                    <TextBlock Text="Enabled: " Margin="10 0 2 0"/>
-                    <CheckBox x:Name="cbEnabled" IsChecked="True" IsThreeState="False"/>
+                        <TextBlock Text="Enabled: " Margin="10 0 2 0"/>
+                        <CheckBox x:Name="cbEnabled" IsChecked="True" IsThreeState="False"/>
+                    </WrapPanel>
 
-                </WrapPanel>
-
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel Orientation="Vertical"
+                    <StackPanel Grid.Row="1" Orientation="Vertical"
                                 Visibility="{Binding ElementName=cbVisibility, Path=IsChecked, Converter={x:Static common:VisibilityConverter.Instance}}"
                                 IsEnabled="{Binding ElementName=cbEnabled, Path=IsChecked}">
                         <WrapPanel Orientation="Horizontal">
@@ -239,7 +238,7 @@
                                 </ToggleButton.Content>
                             </ToggleButton>
 
-                            <ToggleButton Margin="5" Height="30" Padding="2"
+                            <ToggleButton Margin="5" Height="30" Padding="4"
                                           Background="GreenYellow" Foreground="BlueViolet" BorderBrush="Orange"
                                           Style="{StaticResource DropDownButtonStyle}"
                                           ToolTip="No content, but IconEffect.Geometry"
@@ -423,7 +422,7 @@
                                 </ToggleButton.Content>
                             </ToggleButton>
 
-                            <ToggleButton Margin="5" Height="30"
+                            <ToggleButton Margin="5" Height="30" Padding="4"
                                           Style="{StaticResource MonochromeDropDownButtonStyle}"
                                           ToolTip="No content, but IconEffect.Geometry"
                                           effects:CornerRadiusEffect.CornerRadius="4"
@@ -432,12 +431,12 @@
                                           effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
                                           Resources="{StaticResource PopupMenu}"/>
 
-                            <ToggleButton Margin="5" Height="30" Padding="4 0" Content="Icon"
+                            <ToggleButton Margin="5" Height="30" Padding="4" Content="Icon"
                                           Style="{StaticResource MonochromeDropDownButtonStyle}"
                                           effects:CornerRadiusEffect.CornerRadius="4"
                                           effects:ChromeEffect.Monochrome="GreenYellow"
                                           effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                          effects:IconEffect.Margin="3"
+                                          effects:IconEffect.Margin="4"
                                           effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
                                           Resources="{StaticResource PopupMenu}"/>
 
@@ -462,7 +461,7 @@
                                     </Viewbox>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton Margin="5" Height="30" BorderThickness="2"
+                            <ToggleButton Margin="5" Height="30" Padding="4" BorderThickness="2"
                                           Style="{StaticResource DropDownButtonStyle}"
                                           ToolTip="No content, but IconEffect.Geometry"
                                           effects:CornerRadiusEffect.CornerRadius="4"
@@ -471,12 +470,12 @@
                                           effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
                                           Resources="{StaticResource PopupMenu}"/>
 
-                            <ToggleButton Margin="5" Height="30" BorderThickness="2" Padding="4 0" Content="Icon"
+                            <ToggleButton Margin="5" Height="30" BorderThickness="2" Padding="4" Content="Icon"
                                           Style="{StaticResource DropDownButtonStyle}"
                                           effects:CornerRadiusEffect.CornerRadius="4"
                                           effects:ChromeEffect.Monochrome="GreenYellow"
                                           effects:IconEffect.Geometry="{StaticResource DemoGeometry}"
-                                          effects:IconEffect.Margin="3"
+                                          effects:IconEffect.Margin="4"
                                           effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
                                           Resources="{StaticResource PopupMenu}"/>
                         </WrapPanel>
@@ -885,8 +884,8 @@
                             </Button>
                         </WrapPanel>
                     </StackPanel>
-                </ScrollViewer>
-            </Grid>
+                </Grid>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Window>
