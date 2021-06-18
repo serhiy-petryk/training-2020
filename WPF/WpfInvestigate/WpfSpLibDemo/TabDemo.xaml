@@ -51,7 +51,8 @@
                     </TabItem>
                     <TabItem Header="Keyboard">
                         <TabItem.Content>
-                            <controls:VirtualKeyboard Margin="5" BorderThickness="2" BorderBrush="Aqua"/>
+                            <controls:VirtualKeyboard Margin="5" BorderThickness="2" BorderBrush="Aqua"
+                                                      effects:CornerRadiusEffect.CornerRadius="8"/>
                         </TabItem.Content>
                     </TabItem>
                     <TabItem Header="DatePicker effect">

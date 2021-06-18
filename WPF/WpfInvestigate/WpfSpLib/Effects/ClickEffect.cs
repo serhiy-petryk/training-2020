@@ -1,6 +1,8 @@
 ﻿// Based on https://github.com/Taka414/RippleEffectControl
 
 using System;
+using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,49 +25,79 @@ namespace WpfSpLib.Effects
     /// </summary>
     public class ClickEffect
     {
+        #region =============  PropertyChanged  =====================
+        private static readonly ConcurrentDictionary<FrameworkElement, object> _activated = new ConcurrentDictionary<FrameworkElement, object>();
+
+        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is FrameworkElement fe)
+            {
+                if (e.Property != UIElement.VisibilityProperty)
+                {
+                    fe.IsVisibleChanged -= Element_IsVisibleChanged;
+                    fe.IsVisibleChanged += Element_IsVisibleChanged;
+                }
+
+                if (fe.IsVisible)
+                {
+                    if (_activated.TryAdd(fe, null))
+                    {
+                        Activate(fe);
+
+                        fe.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            // Suppress 'Pressed' VisualState for ripple FlatButton
+                            foreach (var o in fe.GetVisualChildren().OfType<FrameworkElement>())
+                            {
+                                var groups = VisualStateManager.GetVisualStateGroups(o);
+                                if (groups != null)
+                                    foreach (var visualGroup in groups.OfType<VisualStateGroup>())
+                                    {
+                                        var state = visualGroup.States.Cast<VisualState>().FirstOrDefault(v => v.Name == "Pressed");
+                                        if (state != null) visualGroup.States.Remove(state);
+                                    }
+                            }
+                        }), DispatcherPriority.Loaded);
+                    }
+                }
+                else
+                {
+                    if (_activated.TryRemove(fe, out var o)) Deactivate(fe);
+                }
+            }
+            else
+                Debug.Print($"Effect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+
+            void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) => OnPropertyChanged((Control)sender, e2);
+        }
+
+        private static void Activate(FrameworkElement fe)
+        {
+            fe.PreviewMouseLeftButtonDown += OnElementPreviewMouseLeftButtonDown;
+            fe.PreviewMouseLeftButtonUp += OnElementPreviewMouseLeftButtonUp;
+        }
+
+        private static void Deactivate(FrameworkElement fe)
+        {
+            fe.PreviewMouseLeftButtonDown -= OnElementPreviewMouseLeftButtonDown;
+            fe.PreviewMouseLeftButtonUp -= OnElementPreviewMouseLeftButtonUp;
+        }
+        #endregion
+
+        #region =============  Dependency Properties  ================
         public static readonly DependencyProperty ShiftOffsetOnClickProperty = DependencyProperty.RegisterAttached("ShiftOffsetOnClick",
-            typeof(double), typeof(ClickEffect), new FrameworkPropertyMetadata(0.0, OnPropertiesChanged));
+            typeof(double), typeof(ClickEffect), new FrameworkPropertyMetadata(0.0, OnPropertyChanged));
         public static double GetShiftOffsetOnClick(DependencyObject obj) => (double)obj.GetValue(ShiftOffsetOnClickProperty);
         /// <summary>The number of pixels by which the element will move down when the mouse button is pressed. Recommended value is 1.0 or 1.5</summary>
         public static void SetShiftOffsetOnClick(DependencyObject obj, double value) => obj.SetValue(ShiftOffsetOnClickProperty, value);
 
         public static readonly DependencyProperty RippleColorProperty = DependencyProperty.RegisterAttached("RippleColor",
-            typeof(Color?), typeof(ClickEffect), new FrameworkPropertyMetadata(null, OnPropertiesChanged));
+            typeof(Color?), typeof(ClickEffect), new FrameworkPropertyMetadata(null, OnPropertyChanged));
         public static Color? GetRippleColor(DependencyObject obj) => (Color?)obj.GetValue(RippleColorProperty);
         public static void SetRippleColor(DependencyObject obj, Color? value) => obj.SetValue(RippleColorProperty, value);
+        #endregion
 
-        //=====================================
-        private static void OnPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is FrameworkElement fe)
-            {
-                Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-                {
-                    fe.PreviewMouseLeftButtonDown -= OnElementPreviewMouseLeftButtonDown;
-                    fe.PreviewMouseLeftButtonUp -= OnElementPreviewMouseLeftButtonUp;
-
-                    if (!fe.IsElementDisposing())
-                    {
-                        fe.PreviewMouseLeftButtonDown += OnElementPreviewMouseLeftButtonDown;
-                        fe.PreviewMouseLeftButtonUp += OnElementPreviewMouseLeftButtonUp;
-
-                        // Suppress 'Pressed' VisualState for ripple FlatButton
-                        foreach (var o in fe.GetVisualChildren().OfType<FrameworkElement>())
-                        {
-                            var groups = VisualStateManager.GetVisualStateGroups(o);
-                            if (groups != null)
-                                foreach (var visualGroup in groups.OfType<VisualStateGroup>())
-                                {
-                                    var state = visualGroup.States.Cast<VisualState>().FirstOrDefault(v => v.Name == "Pressed");
-                                    if (state != null)
-                                        visualGroup.States.Remove(state);
-                                }
-                        }
-                    }
-                }, DispatcherPriority.Loaded);
-            }
-        }
-
+        #region =============  Private methods  ================
         private static void OnElementPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var content = (sender as FrameworkElement).GetVisualChildren().OfType<ContentPresenter>().FirstOrDefault() ?? sender as FrameworkElement;
@@ -133,5 +165,6 @@ namespace WpfSpLib.Effects
             ellipse.BeginAnimation(FrameworkElement.WidthProperty, new DoubleAnimation(0.0, newSize, TimeSpan.FromMilliseconds(duration)));
             ellipse.BeginAnimation(UIElement.OpacityProperty, new DoubleAnimation(0.5, 0.0, TimeSpan.FromMilliseconds(duration * 2 / 3)));
         }
+        #endregion
     }
 }
