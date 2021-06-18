@@ -9,12 +9,15 @@ namespace WpfSpLib.Effects
     {
         private static readonly ConcurrentDictionary<FrameworkElement, object> _activated = new ConcurrentDictionary<FrameworkElement, object>();
 
-        private static void OnAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is Control control)
             {
-                control.IsVisibleChanged -= Element_IsVisibleChanged;
-                control.IsVisibleChanged += Element_IsVisibleChanged;
+                if (e.Property != UIElement.VisibilityProperty)
+                {
+                    control.IsVisibleChanged -= Element_IsVisibleChanged;
+                    control.IsVisibleChanged += Element_IsVisibleChanged;
+                }
 
                 if (control.IsVisible)
                 {
@@ -30,7 +33,7 @@ namespace WpfSpLib.Effects
                 Debug.Print($"Effect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
 
             void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
-                OnAttachedPropertyChanged((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
+                OnPropertyChanged((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
         }
 
         private static void Activate(Control control) { }

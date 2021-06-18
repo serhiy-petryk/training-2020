@@ -18,14 +18,17 @@ namespace WpfSpLib.Effects
     /// </summary>
     public class ChromeEffect
     {
-        #region ===========  OnAttachedPropertyChanged  ===========
+        #region ===========  OnPropertyChanged  ===========
         private static readonly ConcurrentDictionary<Control, SemaphoreSlim> _activated = new ConcurrentDictionary<Control, SemaphoreSlim>();
-        private static void OnAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is Control control)
             {
-                control.IsVisibleChanged -= Element_IsVisibleChanged;
-                control.IsVisibleChanged += Element_IsVisibleChanged;
+                if (e.Property != UIElement.VisibilityProperty)
+                {
+                    control.IsVisibleChanged -= Element_IsVisibleChanged;
+                    control.IsVisibleChanged += Element_IsVisibleChanged;
+                }
 
                 if (control.IsVisible)
                 {
@@ -59,7 +62,7 @@ namespace WpfSpLib.Effects
                 Debug.Print($"ChromeEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
 
             void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
-                OnAttachedPropertyChanged((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
+                OnPropertyChanged((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
 
         }
         private static void Activate(Control control)
@@ -86,26 +89,26 @@ namespace WpfSpLib.Effects
 
         #region ================  Chrome Settings  ======================
         public static readonly DependencyProperty ChromeMatrixProperty = DependencyProperty.RegisterAttached(
-            "ChromeMatrix", typeof(string), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnAttachedPropertyChanged));
+            "ChromeMatrix", typeof(string), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnPropertyChanged));
         public static string GetChromeMatrix(DependencyObject obj) => (string)obj.GetValue(ChromeMatrixProperty);
         public static void SetChromeMatrix(DependencyObject obj, string value) => obj.SetValue(ChromeMatrixProperty, value);
         #endregion
 
         #region ================  Monochrome Animated ======================
         public static readonly DependencyProperty MonochromeProperty = DependencyProperty.RegisterAttached(
-            "Monochrome", typeof(Color?), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnAttachedPropertyChanged));
+            "Monochrome", typeof(Color?), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnPropertyChanged));
         public static Color? GetMonochrome(DependencyObject obj) => (Color?)obj.GetValue(MonochromeProperty);
         public static void SetMonochrome(DependencyObject obj, Color? value) => obj.SetValue(MonochromeProperty, value);
         #endregion
 
         #region =============================  Bichrome Animated ===========================
         public static readonly DependencyProperty BichromeBackgroundProperty = DependencyProperty.RegisterAttached(
-            "BichromeBackground", typeof(Color?), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnAttachedPropertyChanged));
+            "BichromeBackground", typeof(Color?), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnPropertyChanged));
         public static Color? GetBichromeBackground(DependencyObject obj) => (Color?)obj.GetValue(BichromeBackgroundProperty);
         public static void SetBichromeBackground(DependencyObject obj, Color? value) => obj.SetValue(BichromeBackgroundProperty, value);
 
         public static readonly DependencyProperty BichromeForegroundProperty = DependencyProperty.RegisterAttached(
-            "BichromeForeground", typeof(Color?), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnAttachedPropertyChanged));
+            "BichromeForeground", typeof(Color?), typeof(ChromeEffect), new FrameworkPropertyMetadata(null, OnPropertyChanged));
         public static Color? GetBichromeForeground(DependencyObject obj) => (Color?)obj.GetValue(BichromeForegroundProperty);
         public static void SetBichromeForeground(DependencyObject obj, Color? value) => obj.SetValue(BichromeForegroundProperty, value);
         #endregion

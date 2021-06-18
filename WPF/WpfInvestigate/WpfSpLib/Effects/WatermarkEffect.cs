@@ -20,9 +20,9 @@ namespace WpfSpLib.Effects
     /// </summary>
     public class WatermarkEffect
     {
-        #region ===========  OnAttachedPropertyChanged  ===========
+        #region ===========  OnPropertyChanged  ===========
         private static readonly ConcurrentDictionary<FrameworkElement, object> _activated = new ConcurrentDictionary<FrameworkElement, object>();
-        private static void OnAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is Control control)
             {
@@ -54,7 +54,7 @@ namespace WpfSpLib.Effects
                 Debug.Print($"WatermarkEffect is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
 
             void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) =>
-                OnAttachedPropertyChanged((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
+                OnPropertyChanged((Control)sender, new DependencyPropertyChangedEventArgs(e2.Property, null, null));
         }
 
         private static void Activate(Control control)
@@ -98,12 +98,12 @@ namespace WpfSpLib.Effects
         #endregion
 
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached(
-            "Watermark", typeof(string), typeof(WatermarkEffect), new FrameworkPropertyMetadata(string.Empty, OnAttachedPropertyChanged));
+            "Watermark", typeof(string), typeof(WatermarkEffect), new FrameworkPropertyMetadata(string.Empty, OnPropertyChanged));
         public static string GetWatermark(DependencyObject obj) => (string)obj.GetValue(WatermarkProperty);
         public static void SetWatermark(DependencyObject obj, string value) => obj.SetValue(WatermarkProperty, value);
         
         public static readonly DependencyProperty ForegroundProperty = DependencyProperty.RegisterAttached(
-            "Foreground", typeof(Brush), typeof(WatermarkEffect), new FrameworkPropertyMetadata(null, OnAttachedPropertyChanged));
+            "Foreground", typeof(Brush), typeof(WatermarkEffect), new FrameworkPropertyMetadata(null, OnPropertyChanged));
         public static Brush GetForeground(DependencyObject obj) => (Brush)obj.GetValue(ForegroundProperty);
         public static void SetForeground(DependencyObject obj, Brush value) => obj.SetValue(ForegroundProperty, value);
 
