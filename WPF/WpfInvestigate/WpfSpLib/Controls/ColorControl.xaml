@@ -288,7 +288,7 @@
                                         <DataTemplate>
                                             <Grid UseLayoutRounding="False" SnapsToDevicePixels="False">
                                                 <controls:LabelBox Margin="0" Padding="0" Style="{StaticResource Label}"
-                                                                   VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                                   HorizontalContentAlignment="Center"
                                                                    Background="{Binding Background, Delay=500}" Foreground="{Binding Foreground, Delay=500}"
                                                                    Text="{Binding BoxLabel, Mode=OneWay, Delay=500}"/>
                                                 <ToggleButton IsThreeState="False" Margin="0" Padding="0" IsTabStop="False"

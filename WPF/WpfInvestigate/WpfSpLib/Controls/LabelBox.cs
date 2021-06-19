@@ -9,7 +9,10 @@ namespace WpfSpLib.Controls
         static LabelBox()
         {
             IsEnabledProperty.OverrideMetadata(typeof(LabelBox), new UIPropertyMetadata(true, IsEnabledPropertyChanged, CoerceIsEnabled));
-            VerticalAlignmentProperty.OverrideMetadata(typeof(LabelBox), new FrameworkPropertyMetadata(VerticalAlignment.Center));
+            HorizontalAlignmentProperty.OverrideMetadata(typeof(LabelBox), new FrameworkPropertyMetadata(System.Windows.HorizontalAlignment.Stretch));
+            VerticalAlignmentProperty.OverrideMetadata(typeof(LabelBox), new FrameworkPropertyMetadata(VerticalAlignment.Stretch));
+            HorizontalContentAlignmentProperty.OverrideMetadata(typeof(LabelBox), new FrameworkPropertyMetadata(System.Windows.HorizontalAlignment.Left));
+            VerticalContentAlignmentProperty.OverrideMetadata(typeof(LabelBox), new FrameworkPropertyMetadata(VerticalAlignment.Center));
         }
 
         private static void IsEnabledPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs args)
