@@ -425,7 +425,7 @@
                         </TabItem.Content>
                     </TabItem>
 
-                    <TabItem Header="FocusVisualEffect">
+                    <TabItem Header="FocusVisualEffect" IsTabStop="False">
                         <TabItem.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
