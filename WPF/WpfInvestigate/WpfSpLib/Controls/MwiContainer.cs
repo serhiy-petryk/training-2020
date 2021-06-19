@@ -158,7 +158,7 @@ namespace WpfSpLib.Controls
 
         public void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            if (this.AutomaticUnloading(OnUnloaded))
+            if (this.IsElementDisposing())
             {
                 if (Children != null)
                 {

@@ -64,20 +64,35 @@ namespace WpfSpLib.Controls
         public ThemeSelector()
         {
             InitializeComponent();
+            Loaded += ThemeSelector_Loaded;
+            Unloaded += ThemeSelector_Unloaded;
+        }
+
+        private void ThemeSelector_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (IsVisible)
+            {
+                var dpd = DependencyPropertyDescriptor.FromProperty(ColorControl.ColorProperty, typeof(ColorControl));
+                dpd.AddValueChanged(ColorControl, OnColorChanged);
+            }
+        }
+        private void ThemeSelector_Unloaded(object sender, RoutedEventArgs e)
+        {
+            var dpd = DependencyPropertyDescriptor.FromProperty(ColorControl.ColorProperty, typeof(ColorControl));
+            dpd.RemoveValueChanged(ColorControl, OnColorChanged);
+        }
+
+        private void OnColorChanged(object sender, EventArgs e)
+        {
+            if (_isUpdating) return;
+            if (IsColorControlEnabled)
+                ThemeColor = ColorControl.Color;
+            UpdateUI();
         }
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            var dpd = DependencyPropertyDescriptor.FromProperty(ColorControl.ColorProperty, typeof(ColorControl));
-            dpd.AddValueChanged(ColorControl, (sender, args) =>
-            {
-                if (_isUpdating) return;
-                if (IsColorControlEnabled) 
-                    ThemeColor = ColorControl.Color;
-                UpdateUI();
-            });
 
             ThemeList.Children.Clear();
             foreach (var theme in MwiThemeInfo.Themes)
@@ -197,7 +212,7 @@ namespace WpfSpLib.Controls
 
         private void ThemeSelector_OnUnloaded(object sender, RoutedEventArgs e)
         {
-            if (this.AutomaticUnloading(ThemeSelector_OnUnloaded))
+            if (this.IsElementDisposing())
             {
                 Target = null;
                 ColorControl = null;

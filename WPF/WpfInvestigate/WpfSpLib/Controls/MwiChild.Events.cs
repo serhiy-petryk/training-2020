@@ -26,7 +26,7 @@ namespace WpfSpLib.Controls
             if (!_unloaded)
             {
                 _unloaded = true;
-                if (this.AutomaticUnloading(OnUnloaded))
+                if (this.IsElementDisposing())
                 {
                     base.OnUnloaded(sender, e);
                     Theme = null;
