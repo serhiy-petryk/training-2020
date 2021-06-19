@@ -137,7 +137,6 @@ namespace WpfSpLib.Controls
 
             if (onlyDetach) return;
 
-            // item.Unloaded += OnTabItemUnloaded;
             item.PreviewMouseLeftButtonDown += TabItem_OnPreviewMouseLeftButtonDown;
             item.Loaded += OnTabItemLoaded;
             item.MouseEnter += OnTabItemMouseEnterOrLeave;
@@ -147,7 +146,6 @@ namespace WpfSpLib.Controls
             if (child != null && child.ToolTip is ToolTip childToolTip)
                 childToolTip.Opened += OnTabItemToolTipOnOpened;
 
-            // void OnTabItemUnloaded(object sender, RoutedEventArgs e) => ((TabItem)sender).AutomaticUnloading(OnTabItemUnloaded);
             void OnTabItemLoaded(object sender, RoutedEventArgs e) => ((TabItem)sender).BeginAnimation(OpacityProperty, new DoubleAnimation(0.0, 1.0, AnimationHelper.AnimationDuration));
             void OnTabItemMouseEnterOrLeave(object sender, MouseEventArgs e) => AnimateTabButton((TabItem)sender);
             void OnTabItemToolTipOpening(object sender, ToolTipEventArgs e) => ((MwiChild)((FrameworkElement)sender).DataContext)?.RefreshThumbnail();
@@ -176,7 +174,7 @@ namespace WpfSpLib.Controls
 
         private void AnimateTabButton(TabItem tabItem)
         {
-            if (tabItem == null || tabItem.IsElementDisposing()) return; // For VS designer
+            if (tabItem == null || !tabItem.IsVisible) return;
 
             LinearGradientBrush newBrush;
             if (tabItem.IsSelected)
@@ -189,7 +187,6 @@ namespace WpfSpLib.Controls
             if (newBrush != null)
                 tabItem.SetCurrentValueSmart(BackgroundProperty, AnimationHelper.BeginLinearGradientBrushAnimation(newBrush, (LinearGradientBrush) tabItem.Background));
         }
-
         #endregion
 
         #region ===========  INotifyPropertyChanged  ==============
@@ -200,7 +197,5 @@ namespace WpfSpLib.Controls
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
-        // public void OnUnloaded(object sender, RoutedEventArgs e) => this.AutomaticUnloading(OnUnloaded);
     }
 }
