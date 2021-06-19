@@ -128,6 +128,7 @@
                 <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5">
                     <Label>Memory leak tests:</Label>
                     <Button Margin="0 5" Content="MwiStartup test" Click="OnMwiStartupMemoryTestClick"/>
+                    <Button Margin="0 5" Content="MwiStartup/ThemeSelector test" Click="OnMwiStartupThemeSelectorMemoryTestClick"/>
                     <Button Margin="0 5" Content="MwiContainer test" Click="OnMwiContainerMemoryTestClick"/>
                     <Button Margin="0 5" Content="PopupResizeControl test" Click="OnPopupResizeControlMemoryTestClick"/>
                     <Button Margin="0 5" Content="Bootstrap color test" Click="OnBootstrapColorMemoryTestClick"/>
@@ -139,6 +140,7 @@
                     <Button Margin="0 5" Content="Calculator test" Click="OnCalculatorMemoryTestClick"/>
                     <Button Margin="0 5" Content="NumericBox test" Click="OnNumericBoxMemoryTestClick"/>
                     <Button Margin="0 5" Content="TimePicker test" Click="OnTimePickerMemoryTestClick"/>
+                    <Button Margin="0 5" Content="ColorControl test" Click="OnColorControlMemoryTestClick"/>
                 </StackPanel>
 
             </Grid>

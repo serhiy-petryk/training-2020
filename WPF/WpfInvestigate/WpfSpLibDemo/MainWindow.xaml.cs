@@ -10,8 +10,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using WpfSpLib.Common;
+using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
 using WpfSpLibDemo.TestViews;
 
@@ -360,6 +363,50 @@ namespace WpfSpLibDemo
                 await Task.Delay(1000);
                 wnd.Close();
             });
+        }
+
+        private void OnColorControlMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(async () =>
+            {
+                var wnd = new ColorControlTests();
+                wnd.Show();
+                await Task.Delay(1000);
+                wnd.Close();
+            });
+        }
+
+        private void OnMwiStartupThemeSelectorMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(new Func<Task>(async () =>
+            {
+                var wnd = new MwiStartupDemo();
+                wnd.Show();
+
+                await Task.Delay(1000);
+
+                // var a1 = wnd.TopControl.Template.FindName("SelectThemeButton", wnd.TopControl) as Button;
+                var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+                timer.Start();
+                timer.Tick += (sender2, args) =>
+                {
+                    timer.Stop();
+                    var selectorHost = Keyboard.FocusedElement as MwiChild;
+                    selectorHost.CmdClose.Execute(null);
+                };
+                wnd.TopControl.CmdSelectTheme.Execute(null);
+                await Task.Delay(1000);
+
+                // IInputElement focusedControl1 = Keyboard.FocusedElement;
+                // IInputElement focusedControl = FocusManager.GetFocusedElement(wnd.TopControl);
+                // var a1 = wnd.TestTextBox.GetVisualChildren().OfType<ToggleButton>().FirstOrDefault(a => a.Name.EndsWith("Keyboard"));
+                /*if (a1 != null)
+                    a1.IsChecked = true;
+
+                await Task.Delay(1000);*/
+
+                wnd.Close();
+            }));
         }
     }
 }
