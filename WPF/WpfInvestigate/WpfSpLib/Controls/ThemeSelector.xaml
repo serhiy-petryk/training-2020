@@ -11,8 +11,7 @@
              x:Name="Root"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              Background="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}}"
-             Foreground="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}"
-             Unloaded="ThemeSelector_OnUnloaded">
+             Foreground="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}">
 
     <UserControl.Resources>
         <Style TargetType="Border">
