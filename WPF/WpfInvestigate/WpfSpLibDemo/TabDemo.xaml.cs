@@ -81,8 +81,8 @@ namespace WpfSpLibDemo
         }
         private void OnControlChangeSizeClick(object sender, RoutedEventArgs e)
         {
-            var checkBox = sender as Button;
-            var target = GetPreviousElement(checkBox) as Control;
+            var button = sender as Button;
+            var target = GetPreviousElement(button) as Control;
             target.Width = target.ActualWidth * 1.05;
             target.Height = target.ActualHeight * 1.05;
         }
@@ -94,5 +94,11 @@ namespace WpfSpLibDemo
             return grid.Children.OfType<FrameworkElement>().FirstOrDefault(a => Grid.GetColumn(a) == 1 && Grid.GetRow(a) == row);
         }
 
+        private void FocusVisual_AlwaysShowFocus(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            var target = GetPreviousElement(checkBox);
+            FocusVisualEffect.SetAlwaysShowFocus(target, checkBox.IsChecked.Value);
+        }
     }
 }

@@ -366,7 +366,7 @@
                         </TabItem.Content>
                     </TabItem>
 
-                    <TabItem Header="Controls" >
+                    <TabItem Header="Controls">
                         <TabItem.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -421,6 +421,62 @@
                                         effects:ChromeEffect.Monochrome="#F0AD4E"
                                         effects:CornerRadiusEffect.CornerRadius="5"/>
                                 <Button Grid.Row="4" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
+                            </Grid>
+                        </TabItem.Content>
+                    </TabItem>
+
+                    <TabItem Header="FocusVisualEffect">
+                        <TabItem.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <controls:LabelBox Grid.Row="0" Grid.Column="0" Text="OuterFocusVisualStyle:"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Padding="4" Width="70" Background="Yellow" Foreground="Blue"
+                                         Text="AAAAAA" BorderThickness="2" BorderBrush="Blue" 
+                                         effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
+                                         ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
+                                         effects:WatermarkEffect.Watermark="Watermark"
+                                         effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>
+                                <Button Grid.Row="0" Grid.Column="2" Margin="5" Focusable="False" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
+                                <CheckBox Grid.Row="0" Grid.Column="3" Margin="5" VerticalAlignment="Center" Focusable="False"
+                                          IsThreeState="False" IsChecked="False" Content="Always show focus?" Click="FocusVisual_AlwaysShowFocus"/>
+
+                                <controls:LabelBox Grid.Row="0" Grid.Column="0" Text="InnerFocusVisualStyle:"/>
+                                <DatePicker Grid.Row="1" Grid.Column="1" Margin="5" Focusable="True" effects:FocusVisualEffect.FocusControlStyle="{StaticResource InnerFocusVisualStyle}"/>
+                                <Button Grid.Row="1" Grid.Column="2" Margin="5" Focusable="False" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
+                                <CheckBox Grid.Row="1" Grid.Column="3" Margin="5" VerticalAlignment="Center" Focusable="False"
+                                          IsThreeState="False" IsChecked="False" Content="Always show focus?" Click="FocusVisual_AlwaysShowFocus"/>
+
+                                <controls:LabelBox Grid.Row="0" Grid.Column="0" Text="OuterFocusVisualStyle:"/>
+                                <DatePicker Grid.Row="2" Grid.Column="1" Margin="5" Focusable="True" effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>
+                                <Button Grid.Row="2" Grid.Column="2" Margin="5" Focusable="False" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
+                                <CheckBox Grid.Row="2" Grid.Column="3" Margin="5" VerticalAlignment="Center" Focusable="False"
+                                          IsThreeState="False" IsChecked="False" Content="Always show focus?" Click="FocusVisual_AlwaysShowFocus"/>
+
+                                <controls:LabelBox Grid.Row="0" Grid.Column="0" Text="SolidFocusVisualStyle:"/>
+                                <DatePicker Grid.Row="3" Grid.Column="1" Margin="5" Focusable="True"
+                                            effects:FocusVisualEffect.FocusControlStyle="{StaticResource SolidFocusVisualStyle}"
+                                            effects:CornerRadiusEffect.CornerRadius="4"/>
+                                <Button Grid.Row="3" Grid.Column="2" Margin="5" Focusable="False" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
+                                <CheckBox Grid.Row="3" Grid.Column="3" Margin="5" VerticalAlignment="Center" Focusable="False"
+                                          IsThreeState="False" IsChecked="False" Content="Always show focus?" Click="FocusVisual_AlwaysShowFocus"/>
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
