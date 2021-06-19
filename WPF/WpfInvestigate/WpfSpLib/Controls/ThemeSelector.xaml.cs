@@ -70,11 +70,9 @@ namespace WpfSpLib.Controls
 
         private void ThemeSelector_Loaded(object sender, RoutedEventArgs e)
         {
-            if (IsVisible)
-            {
-                var dpd = DependencyPropertyDescriptor.FromProperty(ColorControl.ColorProperty, typeof(ColorControl));
-                dpd.AddValueChanged(ColorControl, OnColorChanged);
-            }
+            var dpd = DependencyPropertyDescriptor.FromProperty(ColorControl.ColorProperty, typeof(ColorControl));
+            dpd.RemoveValueChanged(ColorControl, OnColorChanged);
+            dpd.AddValueChanged(ColorControl, OnColorChanged);
         }
         private void ThemeSelector_Unloaded(object sender, RoutedEventArgs e)
         {
