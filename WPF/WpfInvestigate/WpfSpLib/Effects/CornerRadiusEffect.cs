@@ -44,11 +44,13 @@ namespace WpfSpLib.Effects
         }
         private static void Activate(FrameworkElement element)
         {
+            element.SizeChanged += UpdateBorders;
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
             dpd.AddValueChanged(element, UpdateBorders);
         }
         private static void Deactivate(FrameworkElement element)
         {
+            element.SizeChanged -= UpdateBorders;
             var dpd = DependencyPropertyDescriptor.FromProperty(Border.BorderThicknessProperty, typeof(Border));
             dpd.RemoveValueChanged(element, UpdateBorders);
         }
