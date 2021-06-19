@@ -6,7 +6,7 @@
         xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
         xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
         mc:Ignorable="d"
-        Title="ButtonStyleTests" Height="700" Width="1150">
+        Title="ButtonStyleTests" Height="750" Width="1150">
 
     <Window.Resources>
         <Geometry x:Key="Mwi.Container.MenuGeometry">M0 0 Z M24 24Z M4,6H20V8H4V6M4,11H20V13H4V11M4,16H20V18H4V16Z</Geometry>
