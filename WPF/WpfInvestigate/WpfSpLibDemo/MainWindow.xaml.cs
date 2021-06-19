@@ -165,6 +165,10 @@ namespace WpfSpLibDemo
             var aa1 = diffKeys.Select(a => a.GetType());
             var aa2 = diffKeys.Select(a=> GetStringOfEventKey(a)).ToList();
             var aa3 = aa2.GroupBy(a => a).Select(a => new { Key = a.Key, Count = a.Count() });
+            if (Debugger.IsAttached)
+                Debug.Print($"New WeakRefs: {diffKeys.Count}");
+            else
+                MessageBox.Show($"New WeakRefs: {diffKeys.Count}");
         }
 
         private string GetStringOfEventKey(object eventKey)
