@@ -125,7 +125,6 @@ namespace WpfSpLib.Controls
             if (item == null) return;
             var child = VisualTreeHelper.GetChildrenCount(item) > 0 ? VisualTreeHelper.GetChild(item, 0) as FrameworkElement : null;
 
-            // item.Unloaded -= OnTabItemUnloaded;
             item.PreviewMouseLeftButtonDown -= TabItem_OnPreviewMouseLeftButtonDown;
             item.Loaded -= OnTabItemLoaded;
             item.MouseEnter -= OnTabItemMouseEnterOrLeave;
@@ -174,7 +173,7 @@ namespace WpfSpLib.Controls
 
         private void AnimateTabButton(TabItem tabItem)
         {
-            if (tabItem == null || !tabItem.IsVisible) return;
+            if (tabItem == null || tabItem.IsElementDisposing()) return;
 
             LinearGradientBrush newBrush;
             if (tabItem.IsSelected)
