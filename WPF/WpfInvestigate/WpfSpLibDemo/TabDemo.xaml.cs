@@ -79,6 +79,14 @@ namespace WpfSpLibDemo
                 target.Foreground = Brushes.Blue;
             }
         }
+        private void OnControlChangeSizeClick(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as Button;
+            var target = GetPreviousElement(checkBox) as Control;
+            target.Width = target.ActualWidth * 1.05;
+            target.Height = target.ActualHeight * 1.05;
+        }
+
         private FrameworkElement GetPreviousElement(FrameworkElement current)
         {
             var grid = current.Parent as Grid;

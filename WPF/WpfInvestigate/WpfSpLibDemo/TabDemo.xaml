@@ -66,6 +66,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -110,6 +111,7 @@
                                           IsThreeState="False" IsChecked="True" Content="Hide inner border?" Click="DatePicker_ToggleHideInnerBorder"/>
                                 <CheckBox Grid.Row="4" Grid.Column="6" Margin="5" VerticalAlignment="Center"
                                           IsThreeState="False" IsChecked="False" Content="Clear background?" Click="DatePicker_ClearBackground"/>
+                                <Button Grid.Row="4" Grid.Column="7" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
 
                                 <controls:LabelBox Grid.Column="0" Grid.Row="5" Text="All effects (not nullable):"/>
                                 <DatePicker Grid.Column="1" Grid.Row="5" Background="GreenYellow" Foreground="Blue" Margin="5"
@@ -194,6 +196,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -230,12 +233,14 @@
                                         effects:ChromeEffect.Monochrome="{StaticResource PrimaryColor}"
                                         effects:CornerRadiusEffect.CornerRadius="30"
                                         effects:IconEffect.Geometry="{StaticResource DemoGeometry}"/>
+                                <Button Grid.Row="4" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
 
                                 <controls:LabelBox Grid.Row="5" Grid.Column="0" Text="Corner (14,0,18,8) for DefaultButtonBaseStyle" TextWrapping="Wrap" MaxWidth="300"/>
                                 <Button Grid.Row="5" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" BorderThickness="2"
                                         effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                                         Style="{StaticResource DefaultButtonBaseStyle}"
                                         ToolTip="ToolTip"/>
+                                <Button Grid.Row="5" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
 
                                 <controls:LabelBox Grid.Row="6" Grid.Column="0" Text="Corner (14,0,18,8) + rotation + ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
                                 <Button Grid.Row="6" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" FontSize="16" BorderThickness="2" Width="150" Height="40"
@@ -300,6 +305,7 @@
                                         <RotateTransform CenterX="10" CenterY="20" Angle="5" />
                                     </controls:NumericBox.RenderTransform>
                                 </controls:NumericBox>
+                                <Button Grid.Row="2" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
 
                                 <controls:LabelBox Grid.Row="3" Grid.Column="0" Text="Rotated Textbox:"/>
                                 <TextBox Grid.Row="3" Grid.Column="1" effects:WatermarkEffect.Watermark="Long text AAAA " Width="40">
@@ -342,6 +348,7 @@
                                         <RotateTransform CenterX="10" CenterY="20" Angle="5" />
                                     </DatePicker.RenderTransform>
                                 </DatePicker>
+                                <Button Grid.Row="6" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
 
                                 <controls:LabelBox Grid.Row="7" Grid.Column="0" Text="PasswordBox:"/>
                                 <PasswordBox Grid.Row="7" Grid.Column="1" effects:WatermarkEffect.Watermark="Watermark" Margin="5" Width="80" BorderThickness="1" BorderBrush="Black" Padding="0"/>
@@ -356,37 +363,65 @@
                                             effects:DatePickerEffect.HideInnerBorder="True"
                                             effects:WatermarkEffect.Watermark="Watermark"/>
                             </Grid>
-
                         </TabItem.Content>
-                        </TabItem>
+                    </TabItem>
 
                     <TabItem Header="Controls" >
                         <TabItem.Content>
-                            <WrapPanel>
-                                <DatePicker Background="GreenYellow" Foreground="Blue"
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <controls:LabelBox Grid.Row="0" Grid.Column="0" Text="DatePicker:"/>
+                                <DatePicker Grid.Row="0" Grid.Column="1" Background="GreenYellow" Foreground="Blue"
                                             effects:DatePickerEffect.ClearButton="True"
                                             effects:DatePickerEffect.IsNullable="True"
                                             effects:DatePickerEffect.HideInnerBorder="True"/>
+                                <Button Grid.Row="0" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
 
-                                <controls:NumericBox Margin="5 0" effects:WatermarkEffect.Watermark="No value"
+                                <controls:LabelBox Grid.Row="1" Grid.Column="0" Text="NumericBox:"/>
+                                <controls:NumericBox Grid.Row="1" Grid.Column="1" Margin="5 0" effects:WatermarkEffect.Watermark="No value"
                                                      effects:ChromeEffect.Monochrome="#FFD6EAFF"
                                                      effects:CornerRadiusEffect.CornerRadius="5"
                                                      VisibleButtons="Close,Calculator,RightDown,Up,Separator1px" IsNullable="True"/>
+                                <Button Grid.Row="1" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
 
-                                <controls:TimePicker Padding="0" Margin="0 0 5 0" IsReadOnly="False" SelectedTimeFormat="Long" />
+                                <controls:LabelBox Grid.Row="2" Grid.Column="0" Text="TimePicker:"/>
+                                <controls:TimePicker Grid.Row="2" Grid.Column="1" Padding="0" Margin="0 0 5 0" IsReadOnly="False" SelectedTimeFormat="Long" />
+                                <Button Grid.Row="2" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
 
-                                <controls:DateTimePicker Background="Yellow" Width="230"
+                                <controls:LabelBox Grid.Row="3" Grid.Column="0" Text="DateTimePicker:"/>
+                                <controls:DateTimePicker Grid.Row="3" Grid.Column="1" Background="Yellow" Width="230"
                                                          IsEnabled="True" IsReadOnly="False" SelectedTimeFormat="Long" SelectedDateFormat="Short"
                                                          IsNullable="False"
                                                          IsDateOnlyMode="True"
                                                          DisplayDateStart="2002/1/1"
                                                          effects:WatermarkEffect.Watermark="Test"/>
+                                <Button Grid.Row="3" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
 
-                                <Button Width="100" Height="30" Margin="5" Content="Ripple"
+                                <controls:LabelBox Grid.Row="4" Grid.Column="0" Text="RippleEffect:"/>
+                                <Button Grid.Row="4" Grid.Column="1" Width="100" Height="30" Margin="5" Content="Ripple"
                                         Style="{StaticResource MonochromeButtonBaseStyle}"
                                         effects:ChromeEffect.Monochrome="#F0AD4E"
                                         effects:CornerRadiusEffect.CornerRadius="5"/>
-                            </WrapPanel>
+                                <Button Grid.Row="4" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
+                            </Grid>
                         </TabItem.Content>
                     </TabItem>
                 </TabControl>
