@@ -225,13 +225,13 @@ namespace WpfSpLib.Controls
         public bool IsSelectThemeButtonVisible => (VisibleButtons & Buttons.SelectTheme) == Buttons.SelectTheme;
 
         //============  Commands  =============
-        public RelayCommand CmdDetach { get; private set; }
-        public RelayCommand CmdMinimize { get; private set; }
-        public RelayCommand CmdMaximize { get; private set; }
-        public RelayCommand SysCmdMaximize { get; private set; }
-        public RelayCommand SysCmdRestore { get; private set; }
-        public RelayCommand CmdClose { get; private set; }
-        public RelayCommand CmdSelectTheme { get; private set; }
+        public RelayCommand CmdDetach { get; }
+        public RelayCommand CmdMinimize { get; }
+        public RelayCommand CmdMaximize { get; }
+        public RelayCommand SysCmdMaximize { get; }
+        public RelayCommand SysCmdRestore { get; }
+        public RelayCommand CmdClose { get; }
+        public RelayCommand CmdSelectTheme { get; }
         //=========================
         public static readonly DependencyProperty AllowDetachProperty = DependencyProperty.Register(nameof(AllowDetach), typeof(bool), typeof(MwiChild), new FrameworkPropertyMetadata(true));
         public bool AllowDetach
