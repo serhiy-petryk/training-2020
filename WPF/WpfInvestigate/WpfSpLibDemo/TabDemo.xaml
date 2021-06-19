@@ -453,16 +453,19 @@
                                          effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
                                          ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(effects:TextBoxEffects.VisibleButtons)}"
                                          effects:WatermarkEffect.Watermark="Watermark"
-                                         effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>
+                                         effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"
+                                         effects:FocusVisualEffect.AlwaysShowFocus="True"/>
                                 <Button Grid.Row="0" Grid.Column="2" Margin="5" Focusable="False" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
                                 <CheckBox Grid.Row="0" Grid.Column="3" Margin="5" VerticalAlignment="Center" Focusable="False"
-                                          IsThreeState="False" IsChecked="False" Content="Always show focus?" Click="FocusVisual_AlwaysShowFocus"/>
+                                          IsThreeState="False" IsChecked="True" Content="Always show focus?" Click="FocusVisual_AlwaysShowFocus"/>
 
                                 <controls:LabelBox Grid.Row="0" Grid.Column="0" Text="InnerFocusVisualStyle:"/>
-                                <DatePicker Grid.Row="1" Grid.Column="1" Margin="5" Focusable="True" effects:FocusVisualEffect.FocusControlStyle="{StaticResource InnerFocusVisualStyle}"/>
+                                <DatePicker Grid.Row="1" Grid.Column="1" Margin="5" Focusable="True"
+                                            effects:FocusVisualEffect.FocusControlStyle="{StaticResource InnerFocusVisualStyle}"
+                                            effects:FocusVisualEffect.AlwaysShowFocus="True"/>
                                 <Button Grid.Row="1" Grid.Column="2" Margin="5" Focusable="False" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
                                 <CheckBox Grid.Row="1" Grid.Column="3" Margin="5" VerticalAlignment="Center" Focusable="False"
-                                          IsThreeState="False" IsChecked="False" Content="Always show focus?" Click="FocusVisual_AlwaysShowFocus"/>
+                                          IsThreeState="False" IsChecked="True" Content="Always show focus?" Click="FocusVisual_AlwaysShowFocus"/>
 
                                 <controls:LabelBox Grid.Row="0" Grid.Column="0" Text="OuterFocusVisualStyle:"/>
                                 <DatePicker Grid.Row="2" Grid.Column="1" Margin="5" Focusable="True" effects:FocusVisualEffect.FocusControlStyle="{StaticResource OuterFocusVisualStyle}"/>
