@@ -273,6 +273,11 @@ namespace WpfSpLibDemo
 
                 await Task.Delay(1000);
 
+                if (a1 != null)
+                    a1.IsChecked = false;
+
+                await Task.Delay(1000);
+
                 wnd.Close();
             }));
         }

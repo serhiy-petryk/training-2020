@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -11,13 +12,11 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Controls;
-using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Effects
 {
     public class TextBoxEffects
     {
-        #region ===============  Buttons attached property  ================
         [Flags]
         public enum Buttons
         {
@@ -30,27 +29,48 @@ namespace WpfSpLib.Effects
         private const string GridColumnPrefix = "TextBoxButtonsColumn";
         private const string ElementPrefix = "TextBoxEffects";
 
+        #region ===========  OnPropertyChanged  ===========
+        private static readonly ConcurrentDictionary<FrameworkElement, object> _activated = new ConcurrentDictionary<FrameworkElement, object>();
+
+        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is TextBox textBox)
+            {
+                if (e.Property != UIElement.VisibilityProperty)
+                {
+                    textBox.IsVisibleChanged -= Element_IsVisibleChanged;
+                    textBox.IsVisibleChanged += Element_IsVisibleChanged;
+                }
+
+                if (textBox.IsVisible)
+                {
+                    Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+                    {
+                        RemoveButtons(textBox);
+                        AddButtons(textBox);
+                    }, DispatcherPriority.Loaded);
+                }
+                else
+                    RemoveButtons(textBox);
+            }
+            else
+                Debug.Print($"TextBoxEffects is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
+
+            void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) => OnPropertyChanged((Control)sender, e2);
+        }
+
+        #endregion
+
+        #region ================  Properties  =====================
         public static readonly DependencyProperty VisibleButtonsProperty = DependencyProperty.RegisterAttached("VisibleButtons",
-            typeof(Buttons?), typeof(TextBoxEffects), new PropertyMetadata(null, propertyChangedCallback: OnButtonsChanged));
+            typeof(Buttons?), typeof(TextBoxEffects), new PropertyMetadata(null, propertyChangedCallback: OnPropertyChanged));
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         public static void SetVisibleButtons(DependencyObject d, Buttons? value) => d.SetValue(VisibleButtonsProperty, value);
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         public static Buttons? GetVisibleButtons(DependencyObject d) => (Buttons?)d.GetValue(VisibleButtonsProperty);
+        #endregion
 
-        private static void OnButtonsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (!(d is TextBox textBox))
-            {
-                Debug.Print($"TextBoxEffects.VisibleButtons is not implemented for {d.GetType().Namespace}.{d.GetType().Name} type");
-                return;
-            }
-
-            RemoveButtons(textBox);
-
-            Dispatcher.CurrentDispatcher.InvokeAsync(() => AddButtons(textBox), DispatcherPriority.Loaded);
-
-        }
-
+        #region ===============  Private methods  ===================
         private static void RemoveButtons(TextBox textBox)
         {
             var grid = textBox.GetVisualChildren().OfType<Grid>().FirstOrDefault();
@@ -196,12 +216,11 @@ namespace WpfSpLib.Effects
             }
         }
 
-        #region  ============  Event handlers  ============
         private static void KeyboardControl_OnReturnKeyClick(object sender, EventArgs e)
         {
             var vk = (VirtualKeyboard)sender;
 
-            if (Tips.GetVisualParents(vk).OfType<Popup>().FirstOrDefault() is Popup popup)
+            if (vk.GetVisualParents().OfType<Popup>().FirstOrDefault() is Popup popup)
                 popup.IsOpen = false;
 
             if (Keyboard.FocusedElement is FrameworkElement element)
@@ -219,7 +238,6 @@ namespace WpfSpLib.Effects
         }
 
         private static void Popup_OnOpened(object sender, EventArgs e) => ((Popup)sender).PlacementTarget.Focus();
-        #endregion
         #endregion
     }
 }
