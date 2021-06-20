@@ -30,8 +30,6 @@ namespace WpfSpLib.Effects
         private const string ElementPrefix = "TextBoxEffects";
 
         #region ===========  OnPropertyChanged  ===========
-        private static readonly ConcurrentDictionary<FrameworkElement, object> _activated = new ConcurrentDictionary<FrameworkElement, object>();
-
         private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is TextBox textBox)
