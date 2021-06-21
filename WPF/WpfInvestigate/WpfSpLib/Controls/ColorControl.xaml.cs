@@ -33,12 +33,14 @@ namespace WpfSpLib.Controls
         {
             InitializeComponent();
             VM.Color = Color; // Vm.Color must be equals to Color at the initial state (fixed bug when initial color is White)
-            VM.PropertyChanged += (sender, args) =>
-            {
-                Color = VM.Color;
-                IsAlphaSliderVisible = VM.IsAlphaSliderVisible;
-            };
+            VM.PropertyChanged += VM_PropertyChanged;
             Unloaded += ColorControl_Unloaded;
+        }
+
+        private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            Color = VM.Color;
+            IsAlphaSliderVisible = VM.IsAlphaSliderVisible;
         }
 
         private void ColorControl_Unloaded(object sender, RoutedEventArgs e)
@@ -46,6 +48,7 @@ namespace WpfSpLib.Controls
             if (this.IsElementDisposing())
             {
                 VM.Dispose();
+                VM.PropertyChanged -= VM_PropertyChanged;
                 DataContext = null;
             }
         }
