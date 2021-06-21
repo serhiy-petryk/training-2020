@@ -142,7 +142,7 @@ namespace WpfSpLib.Common.ColorSpaces
     /// HSL (hue, saturation, lightness) color spaces (see https://en.wikipedia.org/wiki/HSL_and_HSV)
     /// </summary>
     [TypeConverter(typeof(HslTypeConverter))]
-    public class HSL: NotifyPropertyChangedAbstract
+    public class HSL// : NotifyPropertyChangedAbstract
     {
         /// <summary>
         /// For dynamic binding
@@ -158,7 +158,7 @@ namespace WpfSpLib.Common.ColorSpaces
             set
             {
                 H = value / 360.0;
-                OnPropertiesChanged(nameof(Hue), nameof(Self));
+                // OnPropertiesChanged(nameof(Hue), nameof(Self));
             }
         }
 
@@ -171,7 +171,7 @@ namespace WpfSpLib.Common.ColorSpaces
             set
             {
                 S = value / 100.0;
-                OnPropertiesChanged(nameof(Saturation), nameof(Self));
+                // OnPropertiesChanged(nameof(Saturation), nameof(Self));
             }
         }
         /// <summary>
@@ -183,7 +183,7 @@ namespace WpfSpLib.Common.ColorSpaces
             set
             {
                 L = value / 100.0;
-                OnPropertiesChanged(nameof(Lightness), nameof(Self));
+                // OnPropertiesChanged(nameof(Lightness), nameof(Self));
             }
         }
         internal double H { get; private set; }
@@ -263,7 +263,7 @@ namespace WpfSpLib.Common.ColorSpaces
             return p;
         }
         public override string ToString() => $"H: {Hue}, S: {Saturation}, L: {Lightness}";
-        public override void UpdateUI(){}
+        // public override void UpdateUI(){}
     }
 
     public class HslTypeConverter : TypeConverter
