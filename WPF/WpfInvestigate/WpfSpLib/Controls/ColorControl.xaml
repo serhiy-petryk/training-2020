@@ -289,8 +289,8 @@
                                     <Grid UseLayoutRounding="False" SnapsToDevicePixels="False">
                                         <controls:LabelBox Margin="0" Padding="0" Style="{StaticResource Label}"
                                                            HorizontalContentAlignment="Center"
-                                                           Background="{Binding Background, Delay=500}" Foreground="{Binding Foreground, Delay=500}"
-                                                           Text="{Binding BoxLabel, Mode=OneWay, Delay=500}"/>
+                                                           Background="{Binding Background}" Foreground="{Binding Foreground}"
+                                                           Text="{Binding BoxLabel, Mode=OneWay}"/>
                                         <ToggleButton IsThreeState="False" Margin="0" Padding="0" IsTabStop="False"
                                                       IsHitTestVisible="{Binding ElementName=ColorBoxPopup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}">
 
@@ -330,7 +330,7 @@
 
                                             <ToggleButton.Style>
                                                 <Style TargetType="ToggleButton">
-                                                    <Setter Property="BorderBrush" Value="{Binding Background, Delay=500}"/>
+                                                    <Setter Property="BorderBrush" Value="{Binding Background}"/>
                                                     <Setter Property="Template">
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="ToggleButton">
@@ -340,7 +340,7 @@
                                                     </Setter>
                                                     <Style.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="BorderBrush" Value="{Binding Foreground, Delay=500}"/>
+                                                            <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
                                                         </Trigger>
                                                     </Style.Triggers>
                                                 </Style>

@@ -212,13 +212,8 @@ namespace WpfSpLib.Controls
             foreach (var component in Sliders)
                 component.UpdateUI();
 
-            Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                OnPropertiesChanged(nameof(Color), nameof(HueBrush), nameof(Color_ForegroundBrush),
-                    nameof(ColorWithoutAlphaBrush), nameof(ColorGrayLevel));
-                foreach (var tone in Tones)
-                    tone.UpdateUI();
-            }, DispatcherPriority.ContextIdle);
+            OnPropertiesChanged(nameof(Color), nameof(HueBrush), nameof(Color_ForegroundBrush),
+                nameof(ColorWithoutAlphaBrush), nameof(ColorGrayLevel));
 
             foreach (var tone in Tones)
                 tone.UpdateUI();
@@ -327,15 +322,15 @@ namespace WpfSpLib.Controls
         #endregion
 
         #region ==============  ColorToneBox  =======================
-        public class ColorToneBox : NotifyPropertyChangedAbstract
+        public class ColorToneBox
         {
-            private readonly ColorControlViewModel _owner;
+            private ColorControlViewModel Owner { get; set; }
             public int GridColumn { get; }
             public int GridRow { get; }
-            public SolidColorBrush Background { get; } = new SolidColorBrush();
-            public SolidColorBrush Foreground { get; } = new SolidColorBrush();
+            public SolidColorBrush Background { get; private set; } = new SolidColorBrush();
+            public SolidColorBrush Foreground { get; private set; } = new SolidColorBrush();
 
-            public string BoxLabel => _owner.IsAlphaSliderVisible ? Background.Color.ToString() : Background.Color.ToString().Remove(1,2);
+            public string BoxLabel => Owner.IsAlphaSliderVisible ? Background.Color.ToString() : Background.Color.ToString().Remove(1,2);
             public string Info
             {
                 get
@@ -364,36 +359,47 @@ namespace WpfSpLib.Controls
 
             public ColorToneBox(ColorControlViewModel owner, int gridColumn, int gridRow)
             {
-                _owner = owner;
+                Owner = owner;
                 GridColumn = gridColumn;
                 GridRow = gridRow;
             }
 
-            public override void UpdateUI()
+            public void UpdateUI()
             {
                 var hsl = GetBackgroundHSL();
                 Background.Color = hsl.RGB.Color;
                 Foreground.Color = ColorUtils.GetForegroundColor(Background.Color);
-                OnPropertiesChanged(nameof(Background), nameof(Foreground), nameof(Info), nameof(BoxLabel));
             }
 
-            public void SetCurrentColor() =>
-                _owner.Color = GetBackgroundHSL().RGB.GetColor(1 - _owner.AlphaSlider.yValue);
+            public void SetCurrentColor() => Owner.Color = GetBackgroundHSL().RGB.GetColor(1 - Owner.AlphaSlider.yValue);
 
             private HSL GetBackgroundHSL()
             {
                 if (GridColumn == 0)
-                    return new HSL(_owner.HSL_H.SpaceValue, _owner.HSL_S.SpaceValue, 0.05 * GridRow);
+                    return new HSL(Owner.HSL_H.SpaceValue, Owner.HSL_S.SpaceValue, 0.05 * GridRow);
                 if (GridColumn == 1)
-                    return new HSL(_owner.HSL_H.SpaceValue, _owner.HSL_S.SpaceValue, 1 - 0.05 * GridRow);
-                return new HSL(_owner.HSL_H.SpaceValue, 0.1 * GridRow, _owner.HSL_L.SpaceValue);
+                    return new HSL(Owner.HSL_H.SpaceValue, Owner.HSL_S.SpaceValue, 1 - 0.05 * GridRow);
+                return new HSL(Owner.HSL_H.SpaceValue, 0.1 * GridRow, Owner.HSL_L.SpaceValue);
             }
 
             private string FormatInfoString(string label, double value1, double value2, double value3) =>
                 (label + ":").PadRight(7) + FormatDouble(value1) + FormatDouble(value2) + FormatDouble(value3);
-            private string FormatDouble(double value) => value.ToString("F1", _owner.CurrentCulture).PadLeft(7);
+            private string FormatDouble(double value) => value.ToString("F1", Owner.CurrentCulture).PadLeft(7);
+
+            public void Dispose()
+            {
+                Owner = null;
+                Background = null;
+                Foreground = null;
+            }
         }
         #endregion
         #endregion
+
+        public void Dispose()
+        {
+            foreach (var tone in Tones)
+                tone.Dispose();
+        }
     }
 }

@@ -20,6 +20,7 @@ using System.Windows.Media;
 using WpfSpLib.Common;
 using WpfSpLib.Common.ColorSpaces;
 using WpfSpLib.Effects;
+using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Controls
 {
@@ -37,6 +38,13 @@ namespace WpfSpLib.Controls
                 Color = VM.Color;
                 IsAlphaSliderVisible = VM.IsAlphaSliderVisible;
             };
+            Unloaded += ColorControl_Unloaded;
+        }
+
+        private void ColorControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.IsElementDisposing())
+                VM.Dispose();
         }
 
         #region ==============  Event handlers  ====================
