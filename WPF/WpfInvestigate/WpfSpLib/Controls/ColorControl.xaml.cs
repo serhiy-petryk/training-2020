@@ -47,6 +47,12 @@ namespace WpfSpLib.Controls
         {
             if (this.IsElementDisposing())
             {
+                foreach (var slider in this.GetVisualChildren().OfType<Canvas>())
+                {
+                    slider.MouseDown -= Slider_MouseDown;
+                    slider.MouseUp -= Slider_MouseUp;
+                    slider.MouseMove -= Slider_MouseMove;
+                }
                 VM.Dispose();
                 VM.PropertyChanged -= VM_PropertyChanged;
                 DataContext = null;
