@@ -248,6 +248,29 @@ namespace WpfSpLibDemo
                 wnd.Close();
             }));
         }
+        private void OnMwiStartupThemeSelectorMemoryTestClick(object sender, RoutedEventArgs e)
+        {
+            RunTests(async () =>
+            {
+                var wnd = new MwiStartupDemo();
+                wnd.Show();
+
+                await Task.Delay(1000);
+
+                var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+                timer.Start();
+                timer.Tick += (sender2, args) =>
+                {
+                    timer.Stop();
+                    var selectorHost = Keyboard.FocusedElement as MwiChild;
+                    selectorHost.CmdClose.Execute(null);
+                };
+                wnd.TopControl.CmdSelectTheme.Execute(null);
+                await Task.Delay(1000);
+
+                wnd.Close();
+            });
+        }
         private void OnMwiContainerMemoryTestClick(object sender, RoutedEventArgs e)
         {
             RunTests(new Func<Task>(async () =>
@@ -385,28 +408,21 @@ namespace WpfSpLibDemo
             });
         }
 
-        private void OnMwiStartupThemeSelectorMemoryTestClick(object sender, RoutedEventArgs e)
+        private void OnKnownColorsOfColorControlMemoryTestClick(object sender, RoutedEventArgs e)
         {
-            RunTests(new Func<Task>(async () =>
+            RunTests(async () =>
             {
-                var wnd = new MwiStartupDemo();
+                var wnd = new ColorControlTests();
                 wnd.Show();
 
                 await Task.Delay(1000);
 
-                var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
-                timer.Start();
-                timer.Tick += (sender2, args) =>
-                {
-                    timer.Stop();
-                    var selectorHost = Keyboard.FocusedElement as MwiChild;
-                    selectorHost.CmdClose.Execute(null);
-                };
-                wnd.TopControl.CmdSelectTheme.Execute(null);
+                var a1 = wnd.ColorControl.GetVisualChildren().OfType<TabControl>().FirstOrDefault();
+                a1.SelectedIndex = 2;
                 await Task.Delay(1000);
 
                 wnd.Close();
-            }));
+            });
         }
     }
 }

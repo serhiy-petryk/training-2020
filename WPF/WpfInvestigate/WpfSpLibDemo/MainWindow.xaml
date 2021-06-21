@@ -141,6 +141,7 @@
                     <Button Margin="0 5" Content="NumericBox test" Click="OnNumericBoxMemoryTestClick"/>
                     <Button Margin="0 5" Content="TimePicker test" Click="OnTimePickerMemoryTestClick"/>
                     <Button Margin="0 5" Content="ColorControl test" Click="OnColorControlMemoryTestClick"/>
+                    <Button Margin="0 5" Content="KnownColors of ColorControl test" Click="OnKnownColorsOfColorControlMemoryTestClick"/>
                 </StackPanel>
 
             </Grid>
