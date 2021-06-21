@@ -6,7 +6,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Common.ColorSpaces;
 
@@ -222,7 +221,7 @@ namespace WpfSpLib.Controls
 
         #region ===================  SUBCLASSES  ========================
         #region ==============  Hue/SaturationAndValue Sliders  ============
-        public class XYSlider : NotifyPropertyChangedAbstract
+        public class XYSlider : NotifyPropertyChangedAbstract, IDisposable
         {
             protected string Id { get; }
             public double xValue { get; private set; }
@@ -256,11 +255,16 @@ namespace WpfSpLib.Controls
                 var thumb = panel.Children[0] as FrameworkElement;
                 SizeOfThumb = new Size(thumb.ActualWidth, thumb.ActualHeight);
             }
+
+            public virtual void Dispose()
+            {
+                SetValuesAction = null;
+            }
         }
         #endregion
 
         #region ==============  Color Component  ===============
-        public class ColorComponent : XYSlider
+        public class ColorComponent : XYSlider, IDisposable
         {
             private double _value;
             public double Value
@@ -275,7 +279,7 @@ namespace WpfSpLib.Controls
 
             public string Label => Id.Split('_')[1];
             public string ValueLabel { get; }
-            public LinearGradientBrush BackgroundBrush { get; }
+            public LinearGradientBrush BackgroundBrush { get; private set; }
 
             private ColorControlViewModel _owner;
             private readonly double _spaceMultiplier;
@@ -318,18 +322,25 @@ namespace WpfSpLib.Controls
                 else
                     _value = value * _spaceMultiplier;
             }
+
+            public override void Dispose()
+            {
+                base.Dispose();
+                _owner = null;
+                _backgroundGradient = null;
+                BackgroundBrush = null;
+            }
         }
         #endregion
 
         #region ==============  ColorToneBox  =======================
-        public class ColorToneBox : NotifyPropertyChangedAbstract
+        public class ColorToneBox : NotifyPropertyChangedAbstract, IDisposable
         {
             private ColorControlViewModel Owner { get; set; }
             public int GridColumn { get; }
             public int GridRow { get; }
-            public SolidColorBrush Background { get; private set; } = new SolidColorBrush();
-            public SolidColorBrush Foreground { get; private set; } = new SolidColorBrush();
-            public string BoxLabel => Owner.IsAlphaSliderVisible ? Background.Color.ToString() : Background.Color.ToString().Remove(1, 2);
+            public Color BackgroundColor => GetBackgroundHSL().RGB.Color;
+            public string BoxLabel => Owner.IsAlphaSliderVisible ? BackgroundColor.ToString() : BackgroundColor.ToString().Remove(1, 2);
             public string Info
             {
                 get
@@ -365,13 +376,8 @@ namespace WpfSpLib.Controls
 
             public override void UpdateUI()
             {
-                var hsl = GetBackgroundHSL();
-                Background.Color = hsl.RGB.Color;
-                Foreground.Color = ColorUtils.GetForegroundColor(Background.Color);
-                OnPropertiesChanged(nameof(Background), nameof(Foreground), nameof(Info), nameof(BoxLabel));
+                OnPropertiesChanged(nameof(Info), nameof(BoxLabel), nameof(BackgroundColor));
             }
-
-            public void SetCurrentColor() => Owner.Color = GetBackgroundHSL().RGB.GetColor(1 - Owner.AlphaSlider.yValue);
 
             private HSL GetBackgroundHSL()
             {
@@ -389,8 +395,6 @@ namespace WpfSpLib.Controls
             public void Dispose()
             {
                 Owner = null;
-                Background = null;
-                Foreground = null;
             }
         }
         #endregion
@@ -398,6 +402,8 @@ namespace WpfSpLib.Controls
 
         public void Dispose()
         {
+            foreach (var slider in Sliders.OfType<IDisposable>())
+                slider.Dispose();
             foreach (var tone in Tones)
                 tone.Dispose();
         }

@@ -107,7 +107,9 @@ namespace WpfSpLib.Controls
             var toggleButton = Tips.GetVisualParents(element).OfType<Grid>().SelectMany(grid => grid.Children.OfType<ToggleButton>()).FirstOrDefault();
             toggleButton.IsChecked = false;
 
-            (element.DataContext as ColorControlViewModel.ColorToneBox).SetCurrentColor();
+            var backColor = ((ColorControlViewModel.ColorToneBox) element.DataContext).BackgroundColor;
+            backColor.A = Convert.ToByte((1- VM.AlphaSlider.yValue) * 255);
+            VM.Color = backColor;
         }
         #endregion
 

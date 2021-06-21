@@ -289,7 +289,8 @@
                                     <Grid UseLayoutRounding="False" SnapsToDevicePixels="False">
                                         <controls:LabelBox Margin="0" Padding="0" Style="{StaticResource Label}"
                                                            HorizontalContentAlignment="Center"
-                                                           Background="{Binding Background}" Foreground="{Binding Foreground}"
+                                                           Background="{Binding BackgroundColor, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                                           Foreground="{Binding BackgroundColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}"
                                                            Text="{Binding BoxLabel, Mode=OneWay}"/>
                                         <ToggleButton IsThreeState="False" Margin="0" Padding="0" IsTabStop="False"
                                                       IsHitTestVisible="{Binding ElementName=ColorBoxPopup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}">
@@ -299,8 +300,8 @@
                                                    PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
                                                    IsOpen="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}, Path=IsChecked}">
                                                 <Border x:Name="ColorBoxBorder" Margin="0 0 8 8"  BorderThickness="2" CornerRadius="2"
-                                                        BorderBrush="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
-                                                        Background="{Binding Background, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=+0%}">
+                                                        BorderBrush="{Binding BackgroundColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+70%}"
+                                                        Background="{Binding BackgroundColor, Converter={x:Static common:ColorHslBrush.NoSplit}, ConverterParameter=+0%}">
                                                     <Border.Effect>
                                                         <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
                                                     </Border.Effect>
@@ -311,7 +312,7 @@
                                                             <RowDefinition Height="Auto"/>
                                                         </Grid.RowDefinitions>
                                                         <Label x:Name="InfoHeader" Grid.Row="0" FontSize="12" FontWeight="SemiBold" Content="Color information"
-                                                               Background="{Binding Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}"
+                                                               Background="{Binding BackgroundColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}"
                                                                Foreground="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.Instance}, ConverterParameter=+85%}"/>
                                                         <controls:LabelBox Grid.Row="1" Background="Transparent" FontFamily="Courier New" Text="{Binding Info, Mode=OneWay}"
                                                                            Foreground="{Binding ElementName=ColorBoxBorder, Path=Background, Converter={x:Static common:ColorGrayScaleBrush.Instance}, ConverterParameter=+85%}"
@@ -330,7 +331,7 @@
 
                                             <ToggleButton.Style>
                                                 <Style TargetType="ToggleButton">
-                                                    <Setter Property="BorderBrush" Value="{Binding Background}"/>
+                                                    <Setter Property="BorderBrush" Value="{Binding BackgroundColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
                                                     <Setter Property="Template">
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="ToggleButton">
@@ -340,7 +341,7 @@
                                                     </Setter>
                                                     <Style.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="BorderBrush" Value="{Binding Foreground}"/>
+                                                            <Setter Property="BorderBrush" Value="{Binding BackgroundColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}"/>
                                                         </Trigger>
                                                     </Style.Triggers>
                                                 </Style>
