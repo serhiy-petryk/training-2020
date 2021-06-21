@@ -44,7 +44,10 @@ namespace WpfSpLib.Controls
         private void ColorControl_Unloaded(object sender, RoutedEventArgs e)
         {
             if (this.IsElementDisposing())
+            {
                 VM.Dispose();
+                DataContext = null;
+            }
         }
 
         #region ==============  Event handlers  ====================
