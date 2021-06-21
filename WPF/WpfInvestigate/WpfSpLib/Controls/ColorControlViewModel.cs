@@ -322,15 +322,14 @@ namespace WpfSpLib.Controls
         #endregion
 
         #region ==============  ColorToneBox  =======================
-        public class ColorToneBox
+        public class ColorToneBox : NotifyPropertyChangedAbstract
         {
             private ColorControlViewModel Owner { get; set; }
             public int GridColumn { get; }
             public int GridRow { get; }
             public SolidColorBrush Background { get; private set; } = new SolidColorBrush();
             public SolidColorBrush Foreground { get; private set; } = new SolidColorBrush();
-
-            public string BoxLabel => Owner.IsAlphaSliderVisible ? Background.Color.ToString() : Background.Color.ToString().Remove(1,2);
+            public string BoxLabel => Owner.IsAlphaSliderVisible ? Background.Color.ToString() : Background.Color.ToString().Remove(1, 2);
             public string Info
             {
                 get
@@ -364,11 +363,12 @@ namespace WpfSpLib.Controls
                 GridRow = gridRow;
             }
 
-            public void UpdateUI()
+            public override void UpdateUI()
             {
                 var hsl = GetBackgroundHSL();
                 Background.Color = hsl.RGB.Color;
                 Foreground.Color = ColorUtils.GetForegroundColor(Background.Color);
+                OnPropertiesChanged(nameof(Background), nameof(Foreground), nameof(Info), nameof(BoxLabel));
             }
 
             public void SetCurrentColor() => Owner.Color = GetBackgroundHSL().RGB.GetColor(1 - Owner.AlphaSlider.yValue);
