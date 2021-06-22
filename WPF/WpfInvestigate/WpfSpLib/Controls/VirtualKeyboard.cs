@@ -179,10 +179,10 @@ namespace WpfSpLib.Controls
 
         #region ============== Properties/Events  ===================
         public static readonly DependencyProperty BaseHslProperty = DependencyProperty.Register("BaseHsl",
-            typeof(HSL), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null));
-        public HSL BaseHsl
+            typeof(HSL_Observable), typeof(VirtualKeyboard), new FrameworkPropertyMetadata(null));
+        public HSL_Observable BaseHsl
         {
-            get => (HSL)GetValue(BaseHslProperty);
+            get => (HSL_Observable)GetValue(BaseHslProperty);
             set => SetValue(BaseHslProperty, value);
         }
         //=======================
