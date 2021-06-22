@@ -144,34 +144,12 @@ namespace WpfSpLib.Common.ColorSpaces
     [TypeConverter(typeof(HslTypeConverter))]
     public class HSL// : NotifyPropertyChangedAbstract
     {
-        /// <summary>
-        /// Hue in range 0-360
-        /// </summary>
-        public virtual double Hue
-        {
-            get => H * 360.0;
-            //set => H = value / 360.0;
-        }
-
-        /// <summary>
-        /// Saturation in range 0-100
-        /// </summary>
-        public virtual double Saturation
-        {
-            get => S * 100.0;
-            //set => S = value / 100.0;
-        }
-        /// <summary>
-        /// Lightness in range 0-100
-        /// </summary>
-        public virtual double Lightness
-        {
-            get => L * 100.0;
-            //set => L = value / 100.0;
-        }
-        internal double H { get; set; }
-        internal double S { get; set; }
-        internal double L { get; set; }
+        public virtual double Hue => H * 360.0; // Hue in range 0-360
+        public virtual double Saturation => S * 100.0; // Saturation in range 0-100
+        public virtual double Lightness => L * 100.0; // Lightness in range 0-100
+        internal double H { get; private protected set; }
+        internal double S { get; private protected set; }
+        internal double L { get; private protected set; }
 
         public HSL() { }
         public HSL(string s, CultureInfo culture)
