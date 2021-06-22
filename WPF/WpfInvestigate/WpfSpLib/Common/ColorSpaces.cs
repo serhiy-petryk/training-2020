@@ -150,7 +150,7 @@ namespace WpfSpLib.Common.ColorSpaces
         public virtual double Hue
         {
             get => H * 360.0;
-            set => H = value / 360.0;
+            //set => H = value / 360.0;
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace WpfSpLib.Common.ColorSpaces
         public virtual double Saturation
         {
             get => S * 100.0;
-            set => S = value / 100.0;
+            //set => S = value / 100.0;
         }
         /// <summary>
         /// Lightness in range 0-100
@@ -167,7 +167,7 @@ namespace WpfSpLib.Common.ColorSpaces
         public virtual double Lightness
         {
             get => L * 100.0;
-            set => L = value / 100.0;
+            //set => L = value / 100.0;
         }
         internal double H { get; set; }
         internal double S { get; set; }
@@ -181,11 +181,11 @@ namespace WpfSpLib.Common.ColorSpaces
             double d;
             if (double.TryParse(ss[0], NumberStyles.Any, culture, out d))
             {
-                Hue = d;
+                H = d / 360.0;
                 if (ss.Length > 1 && double.TryParse(ss[1], NumberStyles.Any, culture, out d))
-                    Saturation = d;
+                    S = d / 100.0;
                 if (ss.Length > 2 && double.TryParse(ss[2], NumberStyles.Any, culture, out d))
-                    Lightness = d;
+                    L = d / 100.0;
             }
             else
             {
@@ -285,7 +285,7 @@ namespace WpfSpLib.Common.ColorSpaces
         /// <summary>
         /// Hue in range 0-360
         /// </summary>
-        public override double Hue
+        public new double Hue
         {
             get => H * 360.0;
             set
@@ -298,7 +298,7 @@ namespace WpfSpLib.Common.ColorSpaces
         /// <summary>
         /// Saturation in range 0-100
         /// </summary>
-        public override double Saturation
+        public new double Saturation
         {
             get => S * 100.0;
             set
@@ -310,7 +310,7 @@ namespace WpfSpLib.Common.ColorSpaces
         /// <summary>
         /// Lightness in range 0-100
         /// </summary>
-        public override double Lightness
+        public new double Lightness
         {
             get => L * 100.0;
             set
@@ -320,7 +320,8 @@ namespace WpfSpLib.Common.ColorSpaces
             }
         }
 
-        public HSL_Observable (string s, CultureInfo culture) : base(s, culture) {}
+        public HSL_Observable() { }
+        public HSL_Observable(string s, CultureInfo culture) : base(s, culture) { }
 
         #region ===========  INotifyPropertyChanged  ===============
         public event PropertyChangedEventHandler PropertyChanged;

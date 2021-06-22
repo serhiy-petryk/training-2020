@@ -44,11 +44,11 @@
             </Style>
 
             <!-- Dark theme -->
-            <colorSpaces:HSL x:Key="DigitButtonHsl">240,5</colorSpaces:HSL>
-            <colorSpaces:HSL x:Key="OperatorButtonHsl" Hue="180" Saturation="50"/>
-            <colorSpaces:HSL x:Key="EqualButtonHsl" Hue="120" Saturation="50"/>
-            <colorSpaces:HSL x:Key="ClearButtonHsl" Hue="0" Saturation="50"/>
-            <colorSpaces:HSL x:Key="PrecisionButtonHsl" Hue="300" Saturation="50"/>
+            <colorSpaces:HSL_Observable x:Key="DigitButtonHsl">240,5</colorSpaces:HSL_Observable>
+            <colorSpaces:HSL_Observable x:Key="OperatorButtonHsl" Hue="180" Saturation="50"/>
+            <colorSpaces:HSL_Observable x:Key="EqualButtonHsl" Hue="120" Saturation="50"/>
+            <colorSpaces:HSL_Observable x:Key="ClearButtonHsl" Hue="0" Saturation="50"/>
+            <colorSpaces:HSL_Observable x:Key="PrecisionButtonHsl" Hue="300" Saturation="50"/>
 
             <Style x:Key="DigitButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource DarkButtonBaseStyle}">
                 <Setter Property="Background" Value="{Binding Source={StaticResource DigitButtonHsl}, Converter={x:Static common:GradientMonochromeBrush.Instance}, ConverterParameter='38,0/19,0.2/12.5,0.9/38,1.0'}"/>
