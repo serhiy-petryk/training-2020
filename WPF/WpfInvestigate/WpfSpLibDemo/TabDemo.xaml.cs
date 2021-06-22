@@ -1,8 +1,12 @@
 ﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using WpfSpLib.Common;
 using WpfSpLib.Effects;
+using WpfSpLib.Helpers;
 
 namespace WpfSpLibDemo
 {
@@ -14,6 +18,37 @@ namespace WpfSpLibDemo
         public TabDemo()
         {
             InitializeComponent();
+            Unloaded += TabDemo_Unloaded;
+        }
+
+        private void TabDemo_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.IsElementDisposing())
+            {
+
+                /*foreach (var tc in this.GetVisualChildren().OfType<TabControl>())
+                {
+                    tc.SelectedItem = null;
+                    foreach (TabItem ti in tc.Items)
+                        ti.Content = null;
+                    tc.Items.Clear();
+                }*/
+
+                foreach (var btn in this.GetVisualChildren().OfType<ButtonBase>())
+                {
+                    btn.Click -= ClearCombobox_OnClick;
+                    btn.Click -= DatePicker_ToggleVisibility;
+                    btn.Click -= DatePicker_ToggleClearButton;
+                    btn.Click -= DatePicker_ToggleIsNullbale;
+                    btn.Click -= DatePicker_ToggleHideInnerBorder;
+                    btn.Click -= DatePicker_ClearBackground;
+                    btn.Click -= OnControlChangeSizeClick;
+                    btn.Click -= ChangeWatermarkText_OnClick;
+                    btn.Click -= ChangeWatermarkForeground_OnClick;
+                    btn.Click -= FocusVisual_AlwaysShowFocus;
+                }
+
+            }
         }
 
         private void ClearCombobox_OnClick(object sender, RoutedEventArgs e)

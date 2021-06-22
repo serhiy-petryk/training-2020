@@ -101,29 +101,28 @@ namespace WpfSpLibDemo
                 Resources["TestBrush"]= new SolidColorBrush(Colors.Green);
         }
 
-        private void MemoryUsageOnClick(object sender, RoutedEventArgs e)
+        private async void MemoryUsageOnClick(object sender, RoutedEventArgs e)
         {
-            var o = new object();
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
 
-            o = null;
+            await Task.Delay(2000);
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
             //
+            await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
+
             var a1 = GC.GetTotalMemory(true);
             if (Debugger.IsAttached)
                 Debug.Print($"Memory usage: {a1.ToString("N0")}");
             else
                 MessageBox.Show($"Memory usage: {a1.ToString("N0")}");
-            // Tips.ClearAllBindings(WpfSpLib.TestViews.MwiBootstrapColorTests.Instance);
         }
 
         private Hashtable weakRefDataCopy;
-        private Hashtable weakRefDataCopy2;
         private void OnSaveWeakRefsClick(object sender, RoutedEventArgs e)
         {
             var t = Tips.TryGetType("MS.Internal.WeakEventTable");
