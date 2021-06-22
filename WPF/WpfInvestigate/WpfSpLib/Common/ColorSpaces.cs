@@ -138,9 +138,6 @@ namespace WpfSpLib.Common.ColorSpaces
     #endregion
 
     #region  ===========  HSL  ============
-    /// <summary>
-    /// HSL (hue, saturation, lightness) color spaces (see https://en.wikipedia.org/wiki/HSL_and_HSV)
-    /// </summary>
     [TypeConverter(typeof(HslTypeConverter))]
     public class HSL// : NotifyPropertyChangedAbstract
     {
