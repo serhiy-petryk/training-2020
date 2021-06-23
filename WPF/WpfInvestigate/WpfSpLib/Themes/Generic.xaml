@@ -7,6 +7,7 @@
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/NumericBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/DateTimePickers.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/DialogMessage.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ColorControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/Calculator.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/VirtualKeyboard.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ObjectEditor.xaml" />

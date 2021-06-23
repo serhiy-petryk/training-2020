@@ -113,6 +113,8 @@
             <!-- =============== -->
             <controls:ColorControl x:Name="ColorControl" Grid.Row="1"
                                    Color="GreenYellow"
+                                   BorderThickness="2" BorderBrush="Red" Padding="4"
+                                   effects:CornerRadiusEffect.CornerRadius="5"
                                    IsEnabled="{Binding ElementName=IsEnabledFlag, Path=IsChecked, Mode=TwoWay}"
                                    IsAlphaSliderVisible="{Binding ElementName=IsAlphaSliderVisible, Path=IsChecked, Mode=TwoWay}"/>
         </Grid>

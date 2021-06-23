@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using WpfSpLib.Common;
 using WpfSpLib.Common.ColorSpaces;
@@ -341,6 +342,7 @@ namespace WpfSpLib.Controls
             public int GridRow { get; }
             public Color BackgroundColor => GetBackgroundHSL().RGB.Color;
             public string BoxLabel => Owner.IsAlphaSliderVisible ? BackgroundColor.ToString() : BackgroundColor.ToString().Remove(1, 2);
+            public RelayCommand CmdBoxClick { get; }
             public string Info
             {
                 get
@@ -372,6 +374,17 @@ namespace WpfSpLib.Controls
                 Owner = owner;
                 GridColumn = gridColumn;
                 GridRow = gridRow;
+                CmdBoxClick = new RelayCommand(OnBoxClick);
+            }
+
+            private void OnBoxClick(object obj)
+            {
+                if (obj is Popup popup)
+                    popup.IsOpen = false;
+
+                var backColor = BackgroundColor;
+                backColor.A = Convert.ToByte((1 - Owner.AlphaSlider.yValue) * 255);
+                Owner.Color = backColor;
             }
 
             public override void UpdateUI()

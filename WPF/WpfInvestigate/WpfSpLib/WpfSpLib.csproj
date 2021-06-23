@@ -50,9 +50,7 @@
     <Compile Include="Common\Tips.cs" />
     <Compile Include="Controls\AdornerControl.cs" />
     <Compile Include="Controls\Calculator.cs" />
-    <Compile Include="Controls\ColorControl.xaml.cs">
-      <DependentUpon>ColorControl.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\ColorControl.cs" />
     <Compile Include="Controls\ColorControlViewModel.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
     <Compile Include="Controls\DialogAdorner.cs" />
@@ -104,15 +102,15 @@
     <Compile Include="Useful\BindingHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\ColorControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\ThemeSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\ButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ColorControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
