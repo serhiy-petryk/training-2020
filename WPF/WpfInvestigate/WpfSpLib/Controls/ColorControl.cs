@@ -205,12 +205,9 @@ namespace WpfSpLib.Controls
                     var btnStyle = Application.Current.Resources["MonochromeButtonBaseStyle"] as Style; // Ripple effect
                     foreach (var kvp in data.Where(kvp => kvp.Value != Colors.Transparent))
                     {
-                        var content = new TextBox
+                        var content = new LabelBox
                         {
-                            BorderThickness = new Thickness(0),
-                            Margin = new Thickness(0),
                             Padding = new Thickness(0),
-                            IsReadOnly = true,
                             Text = GetColorLabel(kvp),
                             Background = Brushes.Transparent,
                             Foreground = new SolidColorBrush(ColorUtils.GetForegroundColor(kvp.Value)),
@@ -224,17 +221,13 @@ namespace WpfSpLib.Controls
                             BorderThickness = new Thickness(2),
                             HorizontalContentAlignment = HorizontalAlignment.Center,
                             VerticalContentAlignment = VerticalAlignment.Center,
-                            Content = content,
+                            Content = content, // GetColorLabel(kvp),
                             Style = btnStyle
                         };
                         CornerRadiusEffect.SetCornerRadius(btn, new CornerRadius(2));
                         ChromeEffect.SetMonochrome(btn, kvp.Value);
                         ChromeEffect.SetChromeMatrix(btn, "+0%,+70%,+0%,40, +0%,+75%,+0%,100, +0%,+75%,+35%,100");
-                        content.PreviewMouseLeftButtonDown += (o, args) =>
-                        {
-                            var textBox = (TextBox)o;
-                            VM.Color = ((SolidColorBrush)((Control)textBox.Parent).Background).Color;
-                        };
+                        btn.PreviewMouseLeftButtonDown += (o, args) => VM.Color = ((SolidColorBrush)((Control)o).Background).Color;
                         panel.Children.Add(btn);
                     }
                 }
