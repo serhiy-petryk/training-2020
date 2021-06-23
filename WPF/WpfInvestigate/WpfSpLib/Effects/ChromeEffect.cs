@@ -68,22 +68,20 @@ namespace WpfSpLib.Effects
         {
             control.PreviewMouseLeftButtonDown += ChromeUpdate;
             control.PreviewMouseLeftButtonUp += ChromeUpdate;
-            var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-            dpdIsMouseOver.AddValueChanged(control, ChromeUpdate);
-            var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-            dpdIsEnabled.AddValueChanged(control, ChromeUpdate);
+            control.MouseEnter += ChromeUpdate;
+            control.MouseLeave += ChromeUpdate;
+            control.IsEnabledChanged += Control_IsEnabledChanged;
         }
 
         private static void Deactivate(Control control)
         {
             control.PreviewMouseLeftButtonDown -= ChromeUpdate;
             control.PreviewMouseLeftButtonUp -= ChromeUpdate;
-            var dpdIsMouseOver = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(UIElement));
-            dpdIsMouseOver.RemoveValueChanged(control, ChromeUpdate);
-            var dpdIsEnabled = DependencyPropertyDescriptor.FromProperty(UIElement.IsEnabledProperty, typeof(UIElement));
-            dpdIsEnabled.RemoveValueChanged(control, ChromeUpdate);
+            control.MouseEnter -= ChromeUpdate;
+            control.MouseLeave -= ChromeUpdate;
+            control.IsEnabledChanged -= Control_IsEnabledChanged;
         }
-
+        private static void Control_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e) => ChromeUpdate(sender, null);
         #endregion
 
         #region ================  Chrome Settings  ======================
