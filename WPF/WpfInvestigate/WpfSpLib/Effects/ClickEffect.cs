@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Controls;
-using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Effects
 {

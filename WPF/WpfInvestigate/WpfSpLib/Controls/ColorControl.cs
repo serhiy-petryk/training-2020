@@ -14,8 +14,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfSpLib.Common;
@@ -232,12 +230,10 @@ namespace WpfSpLib.Controls
                         CornerRadiusEffect.SetCornerRadius(btn, new CornerRadius(2));
                         ChromeEffect.SetMonochrome(btn, kvp.Value);
                         ChromeEffect.SetChromeMatrix(btn, "+0%,+70%,+0%,40, +0%,+75%,+0%,100, +0%,+75%,+35%,100");
-                        btn.Click += (o, args) => VM.Color = ((SolidColorBrush) ((Button) o).Background).Color;
-                        content.PreviewMouseLeftButtonUp += (o, args) =>
+                        content.PreviewMouseLeftButtonDown += (o, args) =>
                         {
-                            var textBox = (TextBox) o;
-                            if (string.IsNullOrEmpty(textBox.SelectedText))
-                                VM.Color = ((SolidColorBrush) ((Control) textBox.Parent).Background).Color;
+                            var textBox = (TextBox)o;
+                            VM.Color = ((SolidColorBrush)((Control)textBox.Parent).Background).Color;
                         };
                         panel.Children.Add(btn);
                     }
