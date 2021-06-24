@@ -106,7 +106,7 @@
                 </WrapPanel>
 
                 <WrapPanel Margin="5" Background="Gray" Height="90">
-                    <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
+                    <Button Margin="4" Padding="4" Content="Focus Test " FontSize="16" BorderThickness="2"
                                 effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                                 effects:ChromeEffect.Monochrome="#FF007BFF"
                                 effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
@@ -117,7 +117,7 @@
                             <RotateTransform CenterX="10" CenterY="20" Angle="10" />
                         </Button.RenderTransform>
                     </Button>
-                    <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
+                    <Button Margin="4" Padding="4" Content="Focus Test " FontSize="16" BorderThickness="2"
                                 effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                                 effects:ChromeEffect.Monochrome="#FF007BFF"
                                 effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
@@ -128,7 +128,7 @@
                             <RotateTransform CenterX="10" CenterY="20" Angle="10" />
                         </Button.RenderTransform>
                     </Button>
-                    <Button Margin="4" Padding="4" Content="Focus Test" FontSize="16" BorderThickness="2"
+                    <Button Margin="4" Padding="4" Content="Focus Test " FontSize="16" BorderThickness="2"
                                 effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                                 effects:ChromeEffect.Monochrome="#FF007BFF"
                                 effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"
@@ -139,7 +139,7 @@
                             <RotateTransform CenterX="10" CenterY="20" Angle="10" />
                         </Button.RenderTransform>
                     </Button>
-                    <Button Margin="4" Padding="4" Width="100" Height="40" Content="Focus Test" FontSize="16" BorderThickness="2"
+                    <Button Margin="4" Padding="4" Width="100" Height="40" Content="Focus Test " FontSize="16" BorderThickness="2"
                                 effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                                 effects:ChromeEffect.Monochrome="#FF007BFF"
                                 effects:ChromeEffect.ChromeMatrix="+0,100,+0,65, +0,100,+0,100, -7.5,100,+70%,100, -10,100,+70%,100"

@@ -30,7 +30,11 @@
                         <Border Margin="0" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}"
                                 BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
                                 SnapsToDevicePixels="True" UseLayoutRounding="True">
-                            <ContentControl Focusable="False" Content="{TemplateBinding Content}"
+                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" UseLayoutRounding="{TemplateBinding UseLayoutRounding}"/>
+
+                            <!--<ContentControl Focusable="False" Content="{TemplateBinding Content}"
                                             ContentTemplate="{TemplateBinding ContentTemplate}"
                                             VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -41,7 +45,7 @@
                                         <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                                     </ControlTemplate>
                                 </ContentControl.Template>
-                            </ContentControl>
+                            </ContentControl>-->
                         </Border>
                     </Grid>
                 </ControlTemplate>

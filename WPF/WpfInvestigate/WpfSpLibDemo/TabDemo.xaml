@@ -236,14 +236,14 @@
                                 <Button Grid.Row="4" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
 
                                 <controls:LabelBox Grid.Row="5" Grid.Column="0" Text="Corner (14,0,18,8) for DefaultButtonBaseStyle" TextWrapping="Wrap" MaxWidth="300"/>
-                                <Button Grid.Row="5" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" BorderThickness="2"
+                                <Button Grid.Row="5" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test  " BorderThickness="2"
                                         effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                                         Style="{StaticResource DefaultButtonBaseStyle}"
                                         ToolTip="ToolTip"/>
                                 <Button Grid.Row="5" Grid.Column="2" Margin="5" VerticalAlignment="Center" Content="Change size" Click="OnControlChangeSizeClick"/>
 
                                 <controls:LabelBox Grid.Row="6" Grid.Column="0" Text="Corner (14,0,18,8) + rotation + ChromeEffect:" TextWrapping="Wrap" MaxWidth="300"/>
-                                <Button Grid.Row="6" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test" FontSize="16" BorderThickness="2" Width="150" Height="40"
+                                <Button Grid.Row="6" Grid.Column="1" Margin="4" Padding="4" Content="CornerRadius Test " FontSize="16" BorderThickness="2" Width="150" Height="40"
                                         effects:CornerRadiusEffect.CornerRadius="14 0 18 8"
                                         effects:ChromeEffect.Monochrome="{StaticResource SecondaryColor}">
                                     <Button.RenderTransform>
