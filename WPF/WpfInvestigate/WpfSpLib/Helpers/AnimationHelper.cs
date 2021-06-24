@@ -7,7 +7,6 @@ using WpfSpLib.Common;
 
 namespace WpfSpLib.Helpers
 {
-    #region ======  AnimationHelper  =====
     public static class AnimationHelper
     {
         public const double AnimationTime = 120.0;
@@ -107,5 +106,4 @@ namespace WpfSpLib.Helpers
 
         #endregion
     }
-    #endregion 
 }

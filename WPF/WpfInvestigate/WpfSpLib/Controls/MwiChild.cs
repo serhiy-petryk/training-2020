@@ -149,21 +149,27 @@ namespace WpfSpLib.Controls
 
         public async void Close(object obj)
         {
-            var cmdCloseBinding = CommandBindings.OfType<CommandBinding>().FirstOrDefault(c => Equals(c.Command, ApplicationCommands.Close));
-            if (cmdCloseBinding == null)
-                await AnimateHide();
-            else  // Dialog
-                ((RoutedUICommand)cmdCloseBinding.Command).Execute(null, this);
-
-            // if (Content is IDisposable disposable) disposable.Dispose();
-            if (!IsWindowed && WindowState == WindowState.Maximized)
+            if (IsWindowed)
             {
-                BindingOperations.ClearBinding(this, WidthProperty);
-                BindingOperations.ClearBinding(this, HeightProperty);
+                ((Window)Parent).Close();
             }
-            if (IsWindowed) ((Window)Parent).Close();
-            MwiContainer?.Children?.Remove(this);
+            else
+            {
+                var cmdCloseBinding = CommandBindings.OfType<CommandBinding>().FirstOrDefault(c => Equals(c.Command, ApplicationCommands.Close));
+                if (cmdCloseBinding == null)
+                    await AnimateHide();
+                else // Dialog
+                    ((RoutedUICommand) cmdCloseBinding.Command).Execute(null, this);
 
+                // if (Content is IDisposable disposable) disposable.Dispose();
+                if (WindowState == WindowState.Maximized)
+                {
+                    BindingOperations.ClearBinding(this, WidthProperty);
+                    BindingOperations.ClearBinding(this, HeightProperty);
+                }
+            }
+
+            MwiContainer?.Children?.Remove(this);
             Closed?.Invoke(this, EventArgs.Empty);
         }
 

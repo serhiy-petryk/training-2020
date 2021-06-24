@@ -59,7 +59,7 @@ namespace WpfSpLib.Controls
                             if (!mwiChild.Position.HasValue)
                                 mwiChild.Position = GetStartPositionForMwiChild(mwiChild);
                             MwiPanel?.Children.Add(mwiChild);
-                            mwiChild.Activate();
+                            // mwiChild.Activate();
                         }), DispatcherPriority.Background);
                     }
                     break;
@@ -162,15 +162,9 @@ namespace WpfSpLib.Controls
             {
                 if (Children != null)
                 {
-                    foreach (var mwiChild in Children.OfType<MwiChild>().Where(c => c.IsWindowed))
-                        ((Window)mwiChild.Parent).Close();
-
-                    while (Children.Count > 0)
-                    {
-                        ((MwiChild)Children[0]).Close(null);
-                        Children.RemoveAt(0);
-                    }
                     Children.CollectionChanged -= OnChildrenCollectionChanged;
+                    foreach (MwiChild mwiChild in Children.ToArray())
+                        mwiChild.Close(null);
                 }
                 _leftPanelButton = null;
                 _leftPanelContainer = null;
