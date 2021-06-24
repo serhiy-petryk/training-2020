@@ -107,7 +107,7 @@
                                    PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                    PopupAnimation="Fade"
                                    StaysOpen="False">
-                                <controls:PopupResizeControl DoesContentSupportElasticLayout="True" effects:CornerRadiusEffect.CornerRadius="3">
+                                <controls:PopupResizeControl DoesContentSupportElasticLayout="True" effects:CornerRadiusEffect.CornerRadius="3" SettingId="NumericBoxCalculator">
                                     <controls:Calculator Focusable="True" Margin="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, Mode=TwoWay}"/>
                                 </controls:PopupResizeControl>
                             </Popup>

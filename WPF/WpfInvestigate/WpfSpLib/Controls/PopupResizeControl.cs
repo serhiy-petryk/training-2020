@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,8 +14,12 @@ namespace WpfSpLib.Controls
     /// </summary>
     public class PopupResizeControl : ContentControl
     {
+        private static Dictionary<string, Size> _settings = new Dictionary<string, Size>();
+
         private const int MaxSize = 1200;
         private const int MinSize = 50;
+
+        public string SettingId { get; set; }
 
         public PopupResizeControl()
         {
@@ -37,6 +42,15 @@ namespace WpfSpLib.Controls
             resizeThumb.DragDelta += ThumbDragDelta;
             foreach (var thumb in root.Children.OfType<Thumb>())
                 thumb.DragDelta += ThumbDragDelta;
+
+            if (!string.IsNullOrEmpty(SettingId) && _settings.ContainsKey(SettingId) && IsVisible)
+            {
+                if (this.GetVisualParents().OfType<Popup>().FirstOrDefault() is Popup popup)
+                {
+                    popup.Width = _settings[SettingId].Width;
+                    popup.Height = _settings[SettingId].Height;
+                }
+            }
         }
 
         public override void OnApplyTemplate()
@@ -66,6 +80,13 @@ namespace WpfSpLib.Controls
                 popup.Width = Math.Min(MaxSize, Math.Max(popup.Width + e.HorizontalChange, MinSize));
             if (thumb.Cursor == Cursors.SizeNS || thumb.Cursor == Cursors.SizeNWSE)
                 popup.Height = Math.Min(MaxSize, Math.Max(popup.Height + e.VerticalChange, MinSize));
+
+            if (!string.IsNullOrEmpty(SettingId) && IsVisible)
+            {
+                if (!_settings.ContainsKey(SettingId))
+                    _settings[SettingId] = new Size();
+                _settings[SettingId] = new Size(popup.Width, popup.Height);
+            }
         }
 
         #region ===========  Properties  ==============

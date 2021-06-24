@@ -155,7 +155,7 @@ namespace WpfSpLib.Effects
                     // Add popup
                     var keyboardControl = new VirtualKeyboard { Name = ElementPrefix + "KeyboardControl", Focusable = false };
                     keyboardControl.OnReturnKeyClick += KeyboardControl_OnReturnKeyClick;
-                    var shellControl = new PopupResizeControl { DoesContentSupportElasticLayout = true, Content = keyboardControl, Focusable = false };
+                    var shellControl = new PopupResizeControl { DoesContentSupportElasticLayout = true, Content = keyboardControl, Focusable = false, SettingId = "TextBoxKeyboard" };
                     CornerRadiusEffect.SetCornerRadius(shellControl, new CornerRadius(3));
                     var popup = new Popup
                     {
