@@ -31,8 +31,10 @@ namespace WpfSpLib.Controls
             KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(ColorControl), new FrameworkPropertyMetadata(false));
         }
 
+        public event EventHandler ColorChanged;
         private ColorControlViewModel VM => (ColorControlViewModel)DataContext;
 
+        #region =============  Constructor & load/unload events  ================
         // Constructor
         public ColorControl()
         {
@@ -115,9 +117,9 @@ namespace WpfSpLib.Controls
                 DataContext = null;
             }
         }
+        #endregion
 
         #region ==============  Event handlers  ====================
-
         private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             var fe = sender as FrameworkElement;
@@ -126,9 +128,7 @@ namespace WpfSpLib.Controls
 
             VM.UpdateUI();
         }
-        #endregion
 
-        #region ================  Event Handlers for Value Editor  ===============
         private void ValueEditor_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = true;
@@ -155,9 +155,7 @@ namespace WpfSpLib.Controls
             if (e.Handled)
                 Tips.Beep();
         }
-        #endregion
 
-        #region  =============  Slider event handlers  =====================
         private void Slider_MouseDown(object sender, MouseButtonEventArgs e)
         {
             (sender as UIElement).CaptureMouse();
@@ -276,8 +274,10 @@ namespace WpfSpLib.Controls
         }
         private static void OnColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ColorControl cc && e.NewValue is Color color && cc.VM.Color != color)
+            var cc = (ColorControl)d;
+            if (e.NewValue is Color color && cc.VM.Color != color)
                 cc.VM.Color = color;
+            cc.ColorChanged?.Invoke(cc, EventArgs.Empty);
         }
         //====================
         public static readonly DependencyProperty IsAlphaSliderVisibleProperty = DependencyProperty.Register("IsAlphaSliderVisible",
