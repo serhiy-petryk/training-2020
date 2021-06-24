@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.ComponentModel;
+﻿using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -49,17 +47,9 @@ namespace WpfSpLib.Effects
             void Element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e2) => OnPropertyChanged((Control)sender, e2);
         }
 
-        private static void Activate(FrameworkElement element)
-        {
-            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
-            dpd.AddValueChanged(element, OnElementFocusChanged);
-        }
+        private static void Activate(FrameworkElement element) => element.IsKeyboardFocusWithinChanged += OnElementFocusChanged;
+        private static void Deactivate(FrameworkElement element) => element.IsKeyboardFocusWithinChanged -= OnElementFocusChanged;
 
-        private static void Deactivate(FrameworkElement element)
-        {
-            var dpd = DependencyPropertyDescriptor.FromProperty(UIElement.IsKeyboardFocusWithinProperty, typeof(UIElement));
-            dpd.RemoveValueChanged(element, OnElementFocusChanged);
-        }
         #endregion
 
         #region ==============  Properties  ==============
@@ -74,7 +64,8 @@ namespace WpfSpLib.Effects
         public static void SetFocusControlStyle(DependencyObject obj, Style value) => obj.SetValue(FocusControlStyleProperty, value);
         #endregion
 
-        private static void OnElementFocusChanged(object sender, EventArgs e) => Element_ChangeFocus(sender, null);
+        #region ===============  Private methods  ===============
+        private static void OnElementFocusChanged(object sender, DependencyPropertyChangedEventArgs e) => Element_ChangeFocus(sender, null);
 
         private static void Element_ChangeFocus(object sender, SizeChangedEventArgs e)
         {
@@ -126,5 +117,6 @@ namespace WpfSpLib.Effects
         }
 
         private static bool IsKeyboardMostRecentInputDevice() => InputManager.Current.MostRecentInputDevice is KeyboardDevice;
+        #endregion
     }
 }
