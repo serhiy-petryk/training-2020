@@ -261,7 +261,7 @@ namespace WpfSpLibDemo
                 {"MwiStartupThemeSelector",  MwiStartupThemeSelectorMemoryTest},
                 {"MwiBootstrapColor",  async () => await RunSimpleTest(typeof(MwiBootstrapColorTests))},
                 {"PopupResizeControl",  PopupResizeControlMemoryTest},
-                {"BootstrapColorMemory",  BootstrapColorMemoryTest},
+                {"MwiChild",  BootstrapColorMemoryTest},
                 {"ResizingControl",  ResizingControlMemoryTest},
                 {"DatePickerEffect",  async () => await RunSimpleTest(typeof(DatePickerEffectTests))},
                 {"WatermarkEffect",  async () => await RunSimpleTest(typeof(WatermarkTests))},
@@ -380,7 +380,7 @@ namespace WpfSpLibDemo
                 await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
                 wnd.Close();
-            }, "OnKnownColorsOfColorControl");
+            }, "KnownColorsOfColorControl");
         }
 
         //==================
@@ -388,7 +388,6 @@ namespace WpfSpLibDemo
         {
             var key = (string)((ContentControl)sender).Content;
             var fn = _memoryLeakTests[key];
-            Debug.Print($"Memory leak test: {key}");
             fn();
         }
 
@@ -396,10 +395,7 @@ namespace WpfSpLibDemo
         {
             // foreach (var kvp in _memoryLeakTests.Reverse())
             foreach (var kvp in _memoryLeakTests)
-            {
-                // Debug.Print($"Memory leak test: {kvp.Key}");
                 await kvp.Value();
-            }
         }
         #endregion
 
