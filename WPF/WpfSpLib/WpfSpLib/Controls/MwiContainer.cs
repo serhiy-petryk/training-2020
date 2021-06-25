@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -60,7 +59,6 @@ namespace WpfSpLib.Controls
                             if (!mwiChild.Position.HasValue)
                                 mwiChild.Position = GetStartPositionForMwiChild(mwiChild);
                             MwiPanel?.Children.Add(mwiChild);
-                            Debug.Print($"Container.Add: {mwiChild.Title}");
                             // mwiChild.Activate();
                         }), DispatcherPriority.Background);
                     }

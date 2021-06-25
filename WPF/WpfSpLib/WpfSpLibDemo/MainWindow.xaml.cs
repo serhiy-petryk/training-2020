@@ -243,7 +243,9 @@ namespace WpfSpLibDemo
             {
                 var wnd = new MwiStartupDemo();
                 wnd.Show();
-                await Task.Delay(1000);
+
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
             }));
         }
@@ -254,7 +256,8 @@ namespace WpfSpLibDemo
                 var wnd = new MwiStartupDemo();
                 wnd.Show();
 
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
                 var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
                 timer.Start();
@@ -265,20 +268,23 @@ namespace WpfSpLibDemo
                     selectorHost.CmdClose.Execute(null);
                 };
                 wnd.TopControl.CmdSelectTheme.Execute(null);
-                await Task.Delay(1000);
+
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
                 wnd.Close();
             });
         }
         private void OnMwiContainerMemoryTestClick(object sender, RoutedEventArgs e)
         {
-            RunTests(new Func<Task>(async () =>
+            RunTests(async () =>
             {
                 var wnd = new MwiBootstrapColorTests();
                 wnd.Show();
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
-            }));
+            });
         }
         private void OnPopupResizeControlMemoryTestClick(object sender, RoutedEventArgs e)
         {
@@ -287,18 +293,21 @@ namespace WpfSpLibDemo
                 var wnd = new TextBoxTests();
                 wnd.Show();
 
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
                 var a1 = wnd.TestTextBox.GetVisualChildren().OfType<ToggleButton>().FirstOrDefault(a => a.Name.EndsWith("Keyboard"));
                 if (a1 != null)
                     a1.IsChecked = true;
 
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
                 if (a1 != null)
                     a1.IsChecked = false;
 
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
                 wnd.Close();
             }));
@@ -307,7 +316,8 @@ namespace WpfSpLibDemo
         {
             var wnd = new MwiBootstrapColorTests();
             wnd.Show();
-            await Task.Delay(1000);
+            await Task.Delay(300);
+            await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
             wnd.RunTest();
         }
 
@@ -315,7 +325,8 @@ namespace WpfSpLibDemo
         {
             var wnd = new ResizingControlTests();
             wnd.Show();
-            await Task.Delay(1000);
+            await Task.Delay(300);
+            await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
             wnd.Automate_OnClick(null, null);
         }
 
@@ -325,7 +336,8 @@ namespace WpfSpLibDemo
             {
                 var wnd = new DatePickerEffectTests();
                 wnd.Show();
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
             });
         }
@@ -336,7 +348,8 @@ namespace WpfSpLibDemo
             {
                 var wnd = new WatermarkTests();
                 wnd.Show();
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
             });
         }
@@ -347,7 +360,8 @@ namespace WpfSpLibDemo
             {
                 var wnd = new ButtonStyleTests();
                 wnd.Show();
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
             });
         }
@@ -358,7 +372,8 @@ namespace WpfSpLibDemo
             {
                 var wnd = new RippleEffectTests();
                 wnd.Show();
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
             });
         }
@@ -369,7 +384,8 @@ namespace WpfSpLibDemo
             {
                 var wnd = new CalculatorTests();
                 wnd.Show();
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
             });
         }
@@ -380,7 +396,8 @@ namespace WpfSpLibDemo
             {
                 var wnd = new NumericBoxTests();
                 wnd.Show();
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
             });
         }
@@ -391,7 +408,8 @@ namespace WpfSpLibDemo
             {
                 var wnd = new TimePickerTests();
                 wnd.Show();
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
             });
         }
@@ -402,7 +420,8 @@ namespace WpfSpLibDemo
             {
                 var wnd = new ColorControlTests();
                 wnd.Show();
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
             });
         }
@@ -414,11 +433,13 @@ namespace WpfSpLibDemo
                 var wnd = new ColorControlTests();
                 wnd.Show();
 
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
                 var a1 = wnd.ColorControl.GetVisualChildren().OfType<TabControl>().FirstOrDefault();
                 a1.SelectedIndex = 2;
-                await Task.Delay(1000);
+                await Task.Delay(300);
+                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
                 wnd.Close();
             });
