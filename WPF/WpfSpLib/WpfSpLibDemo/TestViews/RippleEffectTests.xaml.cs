@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace WpfSpLibDemo.TestViews
 {
@@ -10,6 +12,11 @@ namespace WpfSpLibDemo.TestViews
         public RippleEffectTests()
         {
             InitializeComponent();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            Debug.Print($"Click: {((ContentControl)sender).Content}");
         }
     }
 }

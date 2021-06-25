@@ -39,31 +39,31 @@
                 <Label Margin="10 0"/>
 
                 <WrapPanel>
-                    <Button Width="100" Height="30" Margin="5" Content="#FF20df20" effects:ChromeEffect.Monochrome="#FF20df20" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#ffae00" effects:ChromeEffect.Monochrome="#ffae00" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#d9a026" effects:ChromeEffect.Monochrome="#d9a026" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Red" effects:ChromeEffect.Monochrome="Red" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Green" effects:ChromeEffect.Monochrome="Green" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="GreenYellow" effects:ChromeEffect.Monochrome="GreenYellow" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Yellow" effects:ChromeEffect.Monochrome="Yellow" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="White" effects:ChromeEffect.Monochrome="White" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Black" effects:ChromeEffect.Monochrome="Black" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="Blue" effects:ChromeEffect.Monochrome="Blue" Style="{StaticResource MonochromeButtonBaseStyle}"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#FF20df20" effects:ChromeEffect.Monochrome="#FF20df20" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#ffae00" effects:ChromeEffect.Monochrome="#ffae00" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#d9a026" effects:ChromeEffect.Monochrome="#d9a026" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="Red" effects:ChromeEffect.Monochrome="Red" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="Green" effects:ChromeEffect.Monochrome="Green" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="GreenYellow" effects:ChromeEffect.Monochrome="GreenYellow" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="Yellow" effects:ChromeEffect.Monochrome="Yellow" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="White" effects:ChromeEffect.Monochrome="White" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="Black" effects:ChromeEffect.Monochrome="Black" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="Blue" effects:ChromeEffect.Monochrome="Blue" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
                     <!-- from https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp -->
-                    <Button Width="100" Height="30" Margin="5" Content="#5CB85C" effects:ChromeEffect.Monochrome="#5CB85C" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#337AB7" effects:ChromeEffect.Monochrome="#337AB7" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#5BC0DE" effects:ChromeEffect.Monochrome="#5BC0DE" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#F0AD4E" effects:ChromeEffect.Monochrome="#F0AD4E" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#D9534F" effects:ChromeEffect.Monochrome="#D9534F" Style="{StaticResource MonochromeButtonBaseStyle}"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#5CB85C" effects:ChromeEffect.Monochrome="#5CB85C" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#337AB7" effects:ChromeEffect.Monochrome="#337AB7" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#5BC0DE" effects:ChromeEffect.Monochrome="#5BC0DE" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#F0AD4E" effects:ChromeEffect.Monochrome="#F0AD4E" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#D9534F" effects:ChromeEffect.Monochrome="#D9534F" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
                     <!-- from https://getbootstrap.com/docs/4.0/utilities/colors/ -->
-                    <Button Width="100" Height="30" Margin="5" Content="#007BFF" effects:ChromeEffect.Monochrome="#007BFF" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#6C757D" effects:ChromeEffect.Monochrome="#6C757D" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#28A745" effects:ChromeEffect.Monochrome="#28A745" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#DC3545" effects:ChromeEffect.Monochrome="#DC3545" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#FFC107" effects:ChromeEffect.Monochrome="#FFC107" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#17A2B8" effects:ChromeEffect.Monochrome="#17A2B8" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="100" Height="30" Margin="5" Content="#343A40" effects:ChromeEffect.Monochrome="#343A40" Style="{StaticResource MonochromeButtonBaseStyle}"/>
-                    <Button Width="400" Height="30" Margin="5" Content="#343A40 Long button" effects:ChromeEffect.Monochrome="#343A40" Style="{StaticResource MonochromeButtonBaseStyle}"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#007BFF" effects:ChromeEffect.Monochrome="#007BFF" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#6C757D" effects:ChromeEffect.Monochrome="#6C757D" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#28A745" effects:ChromeEffect.Monochrome="#28A745" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#DC3545" effects:ChromeEffect.Monochrome="#DC3545" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#FFC107" effects:ChromeEffect.Monochrome="#FFC107" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#17A2B8" effects:ChromeEffect.Monochrome="#17A2B8" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="100" Height="30" Margin="5" Content="#343A40" effects:ChromeEffect.Monochrome="#343A40" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
+                    <Button Width="400" Height="30" Margin="5" Content="#343A40 Long button" effects:ChromeEffect.Monochrome="#343A40" Style="{StaticResource MonochromeButtonBaseStyle}" Click="ButtonBase_OnClick"/>
                 </WrapPanel>
 
                 <WrapPanel>
