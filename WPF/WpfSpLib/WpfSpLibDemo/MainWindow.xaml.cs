@@ -402,5 +402,11 @@ namespace WpfSpLibDemo
             }
         }
         #endregion
+
+        private void OnRunAllTestsAsyncClick(object sender, RoutedEventArgs e)
+        {
+            foreach (var kvp in _memoryLeakTests)
+                kvp.Value();
+        }
     }
 }

@@ -127,7 +127,8 @@
 
                 <StackPanel x:Name="MemoryLeakTests" Grid.Column="3" Orientation="Vertical" Margin="5">
                     <Label>Memory leak tests:</Label>
-                    <Button Margin="0 5 0 20" Content="Run all tests" Click="OnRunAllTestsClick"/>
+                    <Button Margin="0 5" Content="Run all tests" Click="OnRunAllTestsClick"/>
+                    <Button Margin="0 5 0 20" Content="Run all tests async" Click="OnRunAllTestsAsyncClick"/>
                 </StackPanel>
 
             </Grid>
