@@ -59,7 +59,7 @@ namespace WpfSpLib.Controls
                             if (!mwiChild.Position.HasValue)
                                 mwiChild.Position = GetStartPositionForMwiChild(mwiChild);
                             MwiPanel?.Children.Add(mwiChild);
-                            // mwiChild.Activate();
+                            mwiChild.Activate();
                         }), DispatcherPriority.Background);
                     }
                     break;

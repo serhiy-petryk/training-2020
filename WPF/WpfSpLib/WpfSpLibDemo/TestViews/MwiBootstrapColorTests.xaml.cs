@@ -44,7 +44,7 @@ namespace WpfSpLibDemo.TestViews
             container.Children.Add(mwiChild);
         }
 
-        public async void RunTest()
+        public async Task RunTest()
         {
             Debug.Print($"Run Tests"); // !!! Debug.Print decrease memory leak on ~25%
             var userControl = this.GetVisualChildren().OfType<UserControl>().FirstOrDefault();

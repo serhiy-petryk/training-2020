@@ -312,7 +312,10 @@ namespace WpfSpLibDemo
             wnd.Show();
             await Task.Delay(300);
             await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-            wnd.RunTest();
+            await wnd.RunTest();
+            await Task.Delay(300);
+            await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
+            wnd.Close();
         }
 
         private async void OnResizingControlMemoryTestClick(object sender, RoutedEventArgs e)
@@ -321,7 +324,10 @@ namespace WpfSpLibDemo
             wnd.Show();
             await Task.Delay(300);
             await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-            wnd.Automate_OnClick(null, null);
+            await wnd.AutomateAsync_OnClick(null, null);
+            await Task.Delay(300);
+            await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
+            wnd.Close();
         }
 
         private void OnDatePickerMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(DatePickerEffectTests));
