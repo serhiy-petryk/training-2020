@@ -83,7 +83,7 @@
                 <WrapPanel VerticalAlignment="Top" Orientation="Horizontal">
                     <Button Content="Test" Click="OnTestClick"/>
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource PrimaryBrush}" Tag="Primary" />
-                    <!--<UserControl Template="{StaticResource Test}" Background="{StaticResource SecondaryBrush}" Tag="Secondary" />
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource SecondaryBrush}" Tag="Secondary" />
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource SuccessBrush}" Tag="Success" />
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource DangerBrush}" Tag="Danger" />
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource WarningBrush}" Tag="Warning" />
@@ -101,7 +101,7 @@
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource CyanBrush}" Tag="Cyan"/>
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource WhiteBrush}" Tag="White"/>
                     <UserControl Template="{StaticResource Test}" Background="{StaticResource GrayBrush}" Tag="Gray"/>
-                    <UserControl Template="{StaticResource Test}" Background="{StaticResource GrayDarkBrush}" Tag="GrayDark"/>-->
+                    <UserControl Template="{StaticResource Test}" Background="{StaticResource GrayDarkBrush}" Tag="GrayDark"/>
                 </WrapPanel>
             </ScrollViewer>
         </Grid>
