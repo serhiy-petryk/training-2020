@@ -236,19 +236,21 @@ namespace WpfSpLibDemo
                 await Task.Delay(1000);
             }
         }
-        //==============
-        private void OnMwiStartupMemoryTestClick(object sender, RoutedEventArgs e)
-        {
-            RunTests(new Func<Task>(async () =>
-            {
-                var wnd = new MwiStartupDemo();
-                wnd.Show();
 
+        private void RunSimpleTest(Type wndType)
+        {
+            RunTests(async () =>
+            {
+                var wnd = Activator.CreateInstance(wndType) as Window;
+                wnd.Show();
                 await Task.Delay(300);
                 await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
-            }));
+            });
         }
+
+        //==============
+        private void OnMwiStartupMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(MwiStartupDemo));
         private void OnMwiStartupThemeSelectorMemoryTestClick(object sender, RoutedEventArgs e)
         {
             RunTests(async () =>
@@ -265,7 +267,7 @@ namespace WpfSpLibDemo
                 {
                     timer.Stop();
                     var selectorHost = Keyboard.FocusedElement as MwiChild;
-                    selectorHost.CmdClose.Execute(null);
+                    selectorHost?.CmdClose.Execute(null);
                 };
                 wnd.TopControl.CmdSelectTheme.Execute(null);
 
@@ -275,17 +277,9 @@ namespace WpfSpLibDemo
                 wnd.Close();
             });
         }
-        private void OnMwiContainerMemoryTestClick(object sender, RoutedEventArgs e)
-        {
-            RunTests(async () =>
-            {
-                var wnd = new MwiBootstrapColorTests();
-                wnd.Show();
-                await Task.Delay(300);
-                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-                wnd.Close();
-            });
-        }
+
+        private void OnMwiContainerMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(MwiBootstrapColorTests));
+
         private void OnPopupResizeControlMemoryTestClick(object sender, RoutedEventArgs e)
         {
             RunTests(new Func<Task>(async () =>
@@ -330,101 +324,14 @@ namespace WpfSpLibDemo
             wnd.Automate_OnClick(null, null);
         }
 
-        private void OnDatePickerMemoryTestClick(object sender, RoutedEventArgs e)
-        {
-            RunTests(async () =>
-            {
-                var wnd = new DatePickerEffectTests();
-                wnd.Show();
-                await Task.Delay(300);
-                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-                wnd.Close();
-            });
-        }
-
-        private void OnWatermarkMemoryTestClick(object sender, RoutedEventArgs e)
-        {
-            RunTests(async () =>
-            {
-                var wnd = new WatermarkTests();
-                wnd.Show();
-                await Task.Delay(300);
-                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-                wnd.Close();
-            });
-        }
-
-        private void OnButtonStyleMemoryTestClick(object sender, RoutedEventArgs e)
-        {
-            RunTests(async () =>
-            {
-                var wnd = new ButtonStyleTests();
-                wnd.Show();
-                await Task.Delay(300);
-                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-                wnd.Close();
-            });
-        }
-
-        private void OnRippleEffectMemoryTestClick(object sender, RoutedEventArgs e)
-        {
-            RunTests(async () =>
-            {
-                var wnd = new RippleEffectTests();
-                wnd.Show();
-                await Task.Delay(300);
-                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-                wnd.Close();
-            });
-        }
-
-        private void OnCalculatorMemoryTestClick(object sender, RoutedEventArgs e)
-        {
-            RunTests(async () =>
-            {
-                var wnd = new CalculatorTests();
-                wnd.Show();
-                await Task.Delay(300);
-                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-                wnd.Close();
-            });
-        }
-
-        private void OnNumericBoxMemoryTestClick(object sender, RoutedEventArgs e)
-        {
-            RunTests(async () =>
-            {
-                var wnd = new NumericBoxTests();
-                wnd.Show();
-                await Task.Delay(300);
-                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-                wnd.Close();
-            });
-        }
-
-        private void OnTimePickerMemoryTestClick(object sender, RoutedEventArgs e)
-        {
-            RunTests(async () =>
-            {
-                var wnd = new TimePickerTests();
-                wnd.Show();
-                await Task.Delay(300);
-                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-                wnd.Close();
-            });
-        }
-
-        private void OnColorControlMemoryTestClick(object sender, RoutedEventArgs e)
-        {
-            RunTests(async () =>
-            {
-                var wnd = new ColorControlTests();
-                wnd.Show();
-                await Task.Delay(300);
-                await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-                wnd.Close();
-            });
-        }
+        private void OnDatePickerMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(DatePickerEffectTests));
+        private void OnWatermarkMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(WatermarkTests));
+        private void OnButtonStyleMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(ButtonStyleTests));
+        private void OnRippleEffectMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(RippleEffectTests));
+        private void OnCalculatorMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(CalculatorTests));
+        private void OnNumericBoxMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(NumericBoxTests));
+        private void OnTimePickerMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(TimePickerTests));
+        private void OnColorControlMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(ColorControlTests));
 
         private void OnKnownColorsOfColorControlMemoryTestClick(object sender, RoutedEventArgs e)
         {
