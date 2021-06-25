@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Input;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WpfSpLib.Common;
@@ -33,6 +33,7 @@ namespace WpfSpLibDemo
             cbCulture.SelectedValue = Thread.CurrentThread.CurrentUICulture;
 
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
+            InitMemoryLeakTest();
         }
 
         private static string[] _cultures = { "", "sq-AL", "uk-UA", "en-US", "km-KH", "yo-NG" };
@@ -210,8 +211,10 @@ namespace WpfSpLibDemo
             Debug.Print($"Weak refs: {data.Count}");
         }
 
-        // ============  Memory leak tests =========
-        private async void RunTests(Func<Task> test)
+        #region ============  Memory leak tests  =========
+        //============================
+        //============================
+        private async Task RunTests(Func<Task> test, string testName)
         {
             for (var k = 0; k < 5; k++)
             {
@@ -230,30 +233,59 @@ namespace WpfSpLibDemo
 
                 var a12 = GC.GetTotalMemory(true);
 
-                Debug.Print($"Test{k}: {a12:N0}");
-                // Debug.Print($"Test{step}: {a12:N0}, {EventHelper._cnt1}, {EventHelper._cnt2}, {EventHelper._cnt3}, {EventHelper._cnt4}");
+                Debug.Print($"Test{k}: {a12:N0}, {testName}");
 
                 await Task.Delay(1000);
             }
         }
 
-        private void RunSimpleTest(Type wndType)
+        private async Task RunSimpleTest(Type wndType)
         {
-            RunTests(async () =>
+            await RunTests(async () =>
             {
                 var wnd = Activator.CreateInstance(wndType) as Window;
                 wnd.Show();
                 await Task.Delay(300);
                 await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
                 wnd.Close();
-            });
+            }, wndType.Name);
+        }
+
+        private Dictionary<string, Func<Task>> _memoryLeakTests;
+
+        private void InitMemoryLeakTest()
+        {
+            _memoryLeakTests = new Dictionary<string, Func<Task>>
+            {
+                {"MwiStartup",  async () => await RunSimpleTest(typeof(MwiStartupDemo))},
+                {"MwiStartupThemeSelector",  MwiStartupThemeSelectorMemoryTest},
+                {"MwiBootstrapColor",  async () => await RunSimpleTest(typeof(MwiBootstrapColorTests))},
+                {"PopupResizeControl",  PopupResizeControlMemoryTest},
+                {"BootstrapColorMemory",  BootstrapColorMemoryTest},
+                {"ResizingControl",  ResizingControlMemoryTest},
+                {"DatePickerEffect",  async () => await RunSimpleTest(typeof(DatePickerEffectTests))},
+                {"WatermarkEffect",  async () => await RunSimpleTest(typeof(WatermarkTests))},
+                {"ButtonStyles",  async () => await RunSimpleTest(typeof(ButtonStyleTests))},
+                {"RippleEffect",  async () => await RunSimpleTest(typeof(RippleEffectTests))},
+                {"Calculator",  async () => await RunSimpleTest(typeof(CalculatorTests))},
+                {"NumericBox",  async () => await RunSimpleTest(typeof(NumericBoxTests))},
+                {"TimePicker",  async () => await RunSimpleTest(typeof(TimePickerTests))},
+                {"ColorControl",  async () => await RunSimpleTest(typeof(ColorControlTests))},
+                {"KnownColorsOfColorControl",  KnownColorsOfColorControlMemoryTest},
+            };
+
+            foreach (var kvp in _memoryLeakTests)
+            {
+                var btn = new Button {Margin = new Thickness(5), Content = kvp.Key};
+                btn.Click += OnMemoryLeakTestClick;
+                MemoryLeakTests.Children.Add(btn);
+            }
         }
 
         //==============
-        private void OnMwiStartupMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(MwiStartupDemo));
-        private void OnMwiStartupThemeSelectorMemoryTestClick(object sender, RoutedEventArgs e)
+        private async Task MwiStartupThemeSelectorMemoryTest()
         {
-            RunTests(async () =>
+            await RunTests(async () =>
             {
                 var wnd = new MwiStartupDemo();
                 wnd.Show();
@@ -266,7 +298,10 @@ namespace WpfSpLibDemo
                 timer.Tick += (sender2, args) =>
                 {
                     timer.Stop();
-                    var selectorHost = Keyboard.FocusedElement as MwiChild;
+                    var a3 = wnd.TopControl.GetVisualChildren().OfType<MwiContainer>().FirstOrDefault();
+                    var a4 = AdornerLayer.GetAdornerLayer(a3);
+                    var selectorHost = a4.GetVisualChildren().OfType<MwiChild>().FirstOrDefault();
+                    // var selectorHost = Keyboard.FocusedElement as MwiChild;
                     selectorHost?.CmdClose.Execute(null);
                 };
                 wnd.TopControl.CmdSelectTheme.Execute(null);
@@ -275,14 +310,12 @@ namespace WpfSpLibDemo
                 await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
                 wnd.Close();
-            });
+            }, "MwiStartupThemeSelector");
         }
 
-        private void OnMwiContainerMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(MwiBootstrapColorTests));
-
-        private void OnPopupResizeControlMemoryTestClick(object sender, RoutedEventArgs e)
+        private async Task PopupResizeControlMemoryTest()
         {
-            RunTests(new Func<Task>(async () =>
+            await RunTests(new Func<Task>(async () =>
             {
                 var wnd = new TextBoxTests();
                 wnd.Show();
@@ -304,9 +337,10 @@ namespace WpfSpLibDemo
                 await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
                 wnd.Close();
-            }));
+            }), "PopupResizeControl");
         }
-        private async void OnBootstrapColorMemoryTestClick(object sender, RoutedEventArgs e)
+
+        private async Task BootstrapColorMemoryTest()
         {
             var wnd = new MwiBootstrapColorTests();
             wnd.Show();
@@ -318,7 +352,7 @@ namespace WpfSpLibDemo
             wnd.Close();
         }
 
-        private async void OnResizingControlMemoryTestClick(object sender, RoutedEventArgs e)
+        private async Task ResizingControlMemoryTest()
         {
             var wnd = new ResizingControlTests();
             wnd.Show();
@@ -330,18 +364,9 @@ namespace WpfSpLibDemo
             wnd.Close();
         }
 
-        private void OnDatePickerMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(DatePickerEffectTests));
-        private void OnWatermarkMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(WatermarkTests));
-        private void OnButtonStyleMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(ButtonStyleTests));
-        private void OnRippleEffectMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(RippleEffectTests));
-        private void OnCalculatorMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(CalculatorTests));
-        private void OnNumericBoxMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(NumericBoxTests));
-        private void OnTimePickerMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(TimePickerTests));
-        private void OnColorControlMemoryTestClick(object sender, RoutedEventArgs e) => RunSimpleTest(typeof(ColorControlTests));
-
-        private void OnKnownColorsOfColorControlMemoryTestClick(object sender, RoutedEventArgs e)
+        private async Task KnownColorsOfColorControlMemoryTest()
         {
-            RunTests(async () =>
+            await RunTests(async () =>
             {
                 var wnd = new ColorControlTests();
                 wnd.Show();
@@ -355,7 +380,27 @@ namespace WpfSpLibDemo
                 await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
                 wnd.Close();
-            });
+            }, "OnKnownColorsOfColorControl");
         }
+
+        //==================
+        private void OnMemoryLeakTestClick(object sender, RoutedEventArgs e)
+        {
+            var key = (string)((ContentControl)sender).Content;
+            var fn = _memoryLeakTests[key];
+            Debug.Print($"Memory leak test: {key}");
+            fn();
+        }
+
+        private async void OnRunAllTestsClick(object sender, RoutedEventArgs e)
+        {
+            // foreach (var kvp in _memoryLeakTests.Reverse())
+            foreach (var kvp in _memoryLeakTests)
+            {
+                // Debug.Print($"Memory leak test: {kvp.Key}");
+                await kvp.Value();
+            }
+        }
+        #endregion
     }
 }
