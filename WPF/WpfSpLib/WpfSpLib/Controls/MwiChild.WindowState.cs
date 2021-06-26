@@ -105,7 +105,7 @@ namespace WpfSpLib.Controls
         private async void WindowStateValueChanged(WindowState newWindowState, WindowState previousWindowState)
         {
             // if (this.IsElementDisposing() || (HostPanel == null && !IsWindowed)) return;
-            if (this.IsElementDisposing()) return; // not init or disposed
+            if (!IsArrangeValid) return; // not init or disposed
 
             if (previousWindowState == WindowState.Maximized)
             {

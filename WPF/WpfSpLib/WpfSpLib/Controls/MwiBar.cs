@@ -173,7 +173,7 @@ namespace WpfSpLib.Controls
 
         private void AnimateTabButton(TabItem tabItem)
         {
-            if (tabItem == null || tabItem.IsElementDisposing()) return;
+            if (tabItem == null || !tabItem.IsVisible) return;
 
             LinearGradientBrush newBrush;
             if (tabItem.IsSelected)

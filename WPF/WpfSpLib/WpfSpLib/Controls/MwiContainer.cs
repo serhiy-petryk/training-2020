@@ -38,7 +38,6 @@ namespace WpfSpLib.Controls
         {
             CmdSetLayout = new RelayCommand(ExecuteWindowsMenuOption, CanExecuteWindowsMenuOption);
             Children.CollectionChanged += OnChildrenCollectionChanged;
-            Unloaded += OnUnloaded;
         }
 
         private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -156,24 +155,6 @@ namespace WpfSpLib.Controls
             }
         }
 
-        public void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            if (this.IsElementDisposing())
-            {
-                if (Children != null)
-                {
-                    Children.CollectionChanged -= OnChildrenCollectionChanged;
-                    foreach (MwiChild mwiChild in Children.ToArray())
-                        mwiChild.Close(null);
-                }
-                _leftPanelButton = null;
-                _leftPanelContainer = null;
-                ScrollViewer = null;
-                MwiPanel = null;
-                Theme = null;
-            }
-        }
-
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonUp(e);
@@ -254,7 +235,7 @@ namespace WpfSpLib.Controls
         //================
         public void UpdateColorTheme(bool colorChanged, bool processChildren)
         {
-            if (this.IsElementDisposing()) return;
+            if (!IsArrangeValid) return;
 
             UpdateResources(false);
             OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
