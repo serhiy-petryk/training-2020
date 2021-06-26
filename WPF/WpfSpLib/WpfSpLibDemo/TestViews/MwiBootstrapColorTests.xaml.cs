@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Threading;
 using WpfSpLib.Common;
 using WpfSpLib.Controls;
 
@@ -44,17 +45,15 @@ namespace WpfSpLibDemo.TestViews
             container.Children.Add(mwiChild);
         }
 
-        public async Task RunTest()
+        public async Task RunTest(int numberOfTestSteps)
         {
-            Debug.Print($"Run Tests"); // !!! Debug.Print decrease memory leak on ~25%
             var userControl = this.GetVisualChildren().OfType<UserControl>().FirstOrDefault();
-            for (var k = 0; k < 5; k++)
+            for (var k = 0; k < numberOfTestSteps; k++)
                 await StepOfTest(userControl, k);
         }
 
         private async void OnRunTestClick(object sender, RoutedEventArgs e)
         {
-            Debug.Print($"Run Tests"); // !!! Debug.Print decrease memory leak on ~25%
             var btn = sender as ButtonBase;
             var userControl = btn.GetVisualParents().OfType<UserControl>().First();
             for (var k = 0; k < 5; k++)
@@ -63,8 +62,6 @@ namespace WpfSpLibDemo.TestViews
 
         private async Task StepOfTest(UserControl userControl, int step)
         {
-            //var btn = sender as ButtonBase;
-            // var userControl = btn.GetVisualParents().OfType<UserControl>().First();
             var container = userControl.GetVisualChildren().OfType<MwiContainer>().First();
 
             var mwiChild = new MwiChild { Title = userControl.Tag.ToString() };
@@ -81,7 +78,8 @@ namespace WpfSpLibDemo.TestViews
 
             container.Children.Add(mwiChild);
 
-            await Task.Delay(1000);
+            await Task.Delay(300);
+            await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -90,7 +88,8 @@ namespace WpfSpLibDemo.TestViews
 
             mwiChild.Close(null);
 
-            await Task.Delay(1000);
+            await Task.Delay(300);
+            await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
 
             GC.Collect();
             GC.WaitForPendingFinalizers();

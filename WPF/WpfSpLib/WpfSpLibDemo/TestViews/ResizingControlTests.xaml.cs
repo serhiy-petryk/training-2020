@@ -37,9 +37,9 @@ namespace WpfSpLibDemo.TestViews
             GridPanel.Children.Add(resizingControl3);
         }
 
-        public async Task AutomateAsync_OnClick(object sender, RoutedEventArgs e)
+        public async Task AutomateAsync(int numberOfTestSteps)
         {
-            for (var k = 0; k < 5; k++)
+            for (var k = 0; k < numberOfTestSteps; k++)
                 await Automate_Step(k);
         }
         private async void Automate_OnClick(object sender, RoutedEventArgs e)

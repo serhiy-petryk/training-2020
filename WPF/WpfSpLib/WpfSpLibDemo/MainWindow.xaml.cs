@@ -25,6 +25,7 @@ namespace WpfSpLibDemo
     /// </summary>
     public partial class MainWindow
     {
+        private const int NumberOfTestSteps = 5;
         public MainWindow()
         {
             InitializeComponent();
@@ -216,7 +217,7 @@ namespace WpfSpLibDemo
         //============================
         private async Task RunTests(Func<Task> test, string testName)
         {
-            for (var k = 0; k < 5; k++)
+            for (var k = 0; k < NumberOfTestSteps; k++)
             {
                 await test();
 
@@ -346,7 +347,7 @@ namespace WpfSpLibDemo
             wnd.Show();
             await Task.Delay(300);
             await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-            await wnd.RunTest();
+            await wnd.RunTest(NumberOfTestSteps);
             await Task.Delay(300);
             await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
             wnd.Close();
@@ -358,7 +359,7 @@ namespace WpfSpLibDemo
             wnd.Show();
             await Task.Delay(300);
             await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
-            await wnd.AutomateAsync_OnClick(null, null);
+            await wnd.AutomateAsync(NumberOfTestSteps);
             await Task.Delay(300);
             await wnd.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ApplicationIdle).Task;
             wnd.Close();
