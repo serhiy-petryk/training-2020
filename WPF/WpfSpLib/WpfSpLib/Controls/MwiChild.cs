@@ -369,20 +369,14 @@ namespace WpfSpLib.Controls
         //=================
         public void UpdateColorTheme(bool colorChanged, bool processChildren)
         {
-            if (!IsArrangeValid) return;
-
-            // Delay because no fill color for some icons
-            //Dispatcher.BeginInvoke(new Action(() =>
-            //{
             if (!colorChanged && ActualTheme != null)
-                {
-                    foreach (var f1 in ActualTheme.GetResources())
-                        FillResources(this, f1);
-                }
+            {
+                foreach (var f1 in ActualTheme.GetResources())
+                    FillResources(this, f1);
+            }
 
-                if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
-                    colorProxy.Value = ActualThemeColor;
-            //}), DispatcherPriority.Render);
+            if (TryFindResource("Mwi.Child.BaseColorProxy") is BindingProxy colorProxy)
+                colorProxy.Value = ActualThemeColor;
 
             OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
 

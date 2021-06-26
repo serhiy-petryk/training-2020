@@ -235,8 +235,6 @@ namespace WpfSpLib.Controls
         //================
         public void UpdateColorTheme(bool colorChanged, bool processChildren)
         {
-            if (!IsArrangeValid) return;
-
             UpdateResources(false);
             OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
 
