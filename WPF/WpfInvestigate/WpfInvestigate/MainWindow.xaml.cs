@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
@@ -48,10 +49,23 @@ namespace WpfInvestigate
             if (e.AddedItems.Count == 1)
             {
                 var newCulture = e.AddedItems[0] as CultureInfo;
+                App.Language = newCulture;
+                return;
+                Language = XmlLanguage.GetLanguage(newCulture.IetfLanguageTag);
                 Thread.CurrentThread.CurrentCulture = newCulture; // MainCulture for DatePicker
                 Thread.CurrentThread.CurrentUICulture = newCulture;
                 CultureInfo.DefaultThreadCurrentCulture = newCulture;
                 CultureInfo.DefaultThreadCurrentUICulture = newCulture;
+                Calendar.UpdateAllBindings();
+                Calendar.InvalidateArrange();
+                Calendar.InvalidateMeasure();
+                Calendar.InvalidateVisual();
+                Calendar.UpdateLayout();
+                Calendar.UpdateDefaultStyle();
+                // Application.Current.Resources["TestLang"] = "FFFFFF";
+                var a1 = Resources["TestString"] as string;
+                Resources["TestString"] = a1 + a1.Length;
+                Debug.Print($"Lang: {Language}");
             }
         }
 
@@ -76,7 +90,6 @@ namespace WpfInvestigate
         private void ButtonStyleTests_OnClick(object sender, RoutedEventArgs e) => new ButtonStyleTests().Show();
         private void FocusEffectTests_OnClick(object sender, RoutedEventArgs e) => new FocusEffectTests().Show();
         private void TextBoxTests_OnClick(object sender, RoutedEventArgs e) => new TextBoxTests().Show();
-        private void ThemeSelectorTest_OnClick(object sender, RoutedEventArgs e) => new ThemeSelectorTest().Show();
 
         private void ObsoleteNumericUpDownTest_OnClick(object sender, RoutedEventArgs e) => new NumericUpDownTests().Show();
         private void ObsoleteRippleButtonTest_OnClick(object sender, RoutedEventArgs e) => new RippleButtonTests().Show();
@@ -91,8 +104,6 @@ namespace WpfInvestigate
         private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
         private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
         private void MwiTemplate_OnClick(object sender, RoutedEventArgs e) => new MwiTemplate().Show();
-
-        private void MemoryLeakInvestigation_OnClick(object sender, RoutedEventArgs e) => new MemoryLeakInvestigation().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
@@ -334,5 +345,11 @@ namespace WpfInvestigate
             var a32 = aa11.Except(aa31).ToArray();
         }
 
+        private void OnChangeLanguageClick(object sender, RoutedEventArgs e)
+        {
+            MwiAppViewModel.Instance.Culture = Equals(MwiAppViewModel.Instance.Culture, CultureInfo.InvariantCulture) ? new CultureInfo("uk") : CultureInfo.InvariantCulture;
+            Language = XmlLanguage.GetLanguage(MwiAppViewModel.Instance.Culture.IetfLanguageTag);
+            Debug.Print($"Language: {((Button)sender).Language}");
+        }
     }
 }

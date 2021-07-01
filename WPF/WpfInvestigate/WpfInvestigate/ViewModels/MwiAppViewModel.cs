@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
+using System.Threading;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace WpfInvestigate.ViewModels
 {
@@ -17,6 +20,25 @@ namespace WpfInvestigate.ViewModels
             get => (double)GetValue(ScaleValueProperty);
             set => SetValue(ScaleValueProperty, value);
         }
+        //========
+        public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(nameof(Culture), typeof(CultureInfo), typeof(MwiAppViewModel), new UIPropertyMetadata(Thread.CurrentThread.CurrentCulture, OnCultureChanged));
+
+        private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var newCulture = e.NewValue as CultureInfo ?? CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            CultureInfo.DefaultThreadCurrentCulture = newCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = newCulture;
+            // FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
+        }
+
+        public CultureInfo Culture
+        {
+            get => (CultureInfo)GetValue(CultureProperty);
+            set => SetValue(CultureProperty, value);
+        }
+        //========
         public FrameworkElement DialogHost
         {
             get

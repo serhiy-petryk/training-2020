@@ -17,6 +17,8 @@
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MwiChild.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Styles/MwiBar.xaml" />
 
+        <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Resources/lang.xaml" />
+
         <ResourceDictionary Source="pack://application:,,,/WpfInvestigate;component/Obsolete/DialogItems.xaml" />
     </ResourceDictionary.MergedDictionaries>
 

@@ -97,9 +97,6 @@
     <Compile Include="Effects\TextBlockEffects.cs" />
     <Compile Include="Helpers\BindingHelper.cs" />
     <Compile Include="Helpers\EventHelper.Log.cs" />
-    <Compile Include="TestViews\ThemeSelectorTest.xaml.cs">
-      <DependentUpon>ThemeSelectorTest.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Useful\BindingClearing.cs" />
     <Compile Include="Helpers\UnloadingHelper.cs" />
     <Compile Include="Helpers\EventHelper.cs" />
@@ -204,9 +201,6 @@
     <Compile Include="MwiStartup.xaml.cs">
       <DependentUpon>MwiStartup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViews\MemoryLeakInvestigation.xaml.cs">
-      <DependentUpon>MemoryLeakInvestigation.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TestViews\MwiBootstrapColorTests.xaml.cs">
       <DependentUpon>MwiBootstrapColorTests.xaml</DependentUpon>
     </Compile>
@@ -301,6 +295,14 @@
     <Page Include="Obsolete\ForObsolete.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\lang.ru-RU.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\lang.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Samples\MwiCommandBarSample.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -479,10 +481,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestViews\MemoryLeakInvestigation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="TestViews\MwiBootstrapColorTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -576,10 +574,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestViews\DropDownButtonTests.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TestViews\ThemeSelectorTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,6 +6,8 @@
                     xmlns:effects="clr-namespace:WpfInvestigate.Effects"
                     xmlns:viewModels="clr-namespace:WpfInvestigate.ViewModels">
 
+    <sys:String x:Key="TestLang">Test {0} string</sys:String>
+
     <DropShadowEffect x:Key="ShadowEffect" BlurRadius="5" ShadowDepth="2" Direction="315" po:Freeze="True" />
     <ScaleTransform x:Key="Mwi.ScaleTransform" CenterX="0" CenterY="0"
                     ScaleX="{Binding Source={x:Static viewModels:MwiAppViewModel.Instance}, Path=ScaleValue}"

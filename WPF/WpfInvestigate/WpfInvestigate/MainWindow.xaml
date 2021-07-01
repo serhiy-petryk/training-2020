@@ -4,18 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
-        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
-        xmlns:effects="clr-namespace:WpfInvestigate.Effects"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:ViewModels="clr-namespace:WpfInvestigate.ViewModels"
+        xmlns:wpfInvestigate="clr-namespace:WpfInvestigate"
+        xmlns:common="clr-namespace:WpfInvestigate.Common"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="700" Width="1200">
 
     <Window.Resources>
+        <system:String x:Key="TestString">Foo</system:String>
+        <x:Array Type="{x:Type system:Object}" x:Key="TestArray">
+            <system:String>Foo</system:String>
+            <system:String>Bar</system:String>
+            <system:String>Baz</system:String>
+        </x:Array>
+        <common:LocalizationProxy x:Key="LocalizationProxy" InputValue="{DynamicResource TestLang}" Argument1="{DynamicResource TestString}"/>
+
         <SolidColorBrush x:Key="TestBrush" Color="GreenYellow"/>
         <Style x:Key="StyleRed" TargetType="Button">
             <Setter Property="Foreground" Value="Red"/>
-        </Style>
-        <Style x:Key="StyleYellow" TargetType="Button">
-            <Setter Property="Foreground" Value="Yellow"/>
         </Style>
     </Window.Resources>
 
@@ -70,18 +77,17 @@
                     <Button x:Name="ControlDemo" Width="200" Margin="0 5" Content="WiP: ControlDemo" Click="ControlDemo_OnClick"/>
                     <Button x:Name="TempControl" Width="200" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
                     <Button x:Name="MwiTemplate" Width="200" Margin="0 5" Content="WiP: Mwi Template" Click="MwiTemplate_OnClick"/>
-                    <Button x:Name="MemoryLeakInvestigation" Width="200" Margin="0 5" Content="MemoryLeakInvestigation" Click="MemoryLeakInvestigation_OnClick"/>
-                    <Button x:Name="ThemeSelectorTest" Width="200" Margin="0 5" Content="Theme Selector Test" Click="ThemeSelectorTest_OnClick"/>
 
                     <WrapPanel Margin="5" HorizontalAlignment="Stretch">
-                        <Border Width="60" Height="60" Background="Gainsboro" BorderBrush="Red" BorderThickness="1" Padding="0 0">
-                            <Viewbox>
-                                <Path Fill="Black" Width="16" Height="16"
-                                      Data="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></Path>
-                            </Viewbox>
-                        </Border>
-                        <TextBlock Text="Empty Window Using XAML and long header" Foreground="{DynamicResource Mwi.Child.Header.Unfocused.ForegroundBrush}"/>
-                        <Path Fill="{DynamicResource Mwi.Child.Header.Unfocused.ForegroundBrush}" Width="10" Height="10" Data="M0,5 10,5 10,6 0,6 0,5z"/>
+                        <Label Content="Language" Margin="5"/>
+                        <Label Margin="5" Content="{Binding Source={x:Static ViewModels:MwiAppViewModel.Instance}, Path=Culture}"/>
+                        <Button Margin="5" Content="Change language" Click="OnChangeLanguageClick"/>
+                        <DatePicker Language="{Binding RelativeSource={RelativeSource AncestorType=wpfInvestigate:MainWindow}, Path=Language}"/>
+                        <DatePicker/>
+                        <Calendar x:Name="Calendar" Height="70"/>
+                        <TextBlock Text="{DynamicResource TestLang}"/>
+                        <TextBlock x:Name="Block" Text="{Binding Source={StaticResource LocalizationProxy}, Path=Value}" Width="100" Height="30" Background="Yellow"/>
+                        <TextBlock Text="{DynamicResource m_lblHelloWorld}"/>
                     </WrapPanel>
 
                     <WrapPanel Margin="5" HorizontalAlignment="Stretch">
