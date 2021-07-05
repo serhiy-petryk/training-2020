@@ -53,4 +53,5 @@ Convert DrawingGroup to Viewbox/Canvas:
 - (искажения) 1. svg-flags-rails-master: (480x360) svg - 9549KB (265 items)
 - (искажения) 2. FlagKit-master (PNG/SVG): (21x15) svg - 811KB (255 items)
 + 3. flag-icon-css-master: svg - (640x480) 2390KB (258 items); flags are taken from Panayiotis Lipiridis and Jakob Flierl (also see https://github.com/datawrapper/datawrapper/wiki/Country-flag-icons) 
-- (different proportions) 4. country-flags-master (PNG/SVG): svg (1000x700, 60x30, 9x6, 1200x800) - 2896KB (256 items)
+- (different ratio) 4. country-flags-master (PNG/SVG): svg (1000x700, 60x30, 9x6, 1200x800) - 2896KB (256 items)
+5. https://github.com/irixapps/World-Flags/tree/master/ai (gb.ai: 902x600) - є ai format -> svg (https://www.zamzar.com/ru/converters/image/ai-to-svg/)
