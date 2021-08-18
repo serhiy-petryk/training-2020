@@ -53,6 +53,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\Tips.cs" />
+    <Compile Include="Models\TestModels.cs" />
     <Compile Include="TestViews\AttributeValidationTests.xaml.cs">
       <DependentUpon>AttributeValidationTests.xaml</DependentUpon>
     </Compile>
@@ -79,6 +80,9 @@
     </Compile>
     <Compile Include="TestViews\GridValidationTests.xaml.cs">
       <DependentUpon>GridValidationTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\NestedPropertiesTest.xaml.cs">
+      <DependentUpon>NestedPropertiesTest.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\RedefineInternalValidationTests.xaml.cs">
       <DependentUpon>RedefineInternalValidationTests.xaml</DependentUpon>
@@ -133,6 +137,10 @@
     <Page Include="TestViews\GridValidationTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\NestedPropertiesTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestViews\RedefineInternalValidationTests.xaml">
       <SubType>Designer</SubType>

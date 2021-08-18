@@ -51,5 +51,9 @@
             <Button x:Name="FilterLine_INotifyDataErrorInfo_Test" Margin="5" Content="FilterLine INotifyDataErrorInfo Test" Click="FilterLine_INotifyDataErrorInfo_Tests_OnClick"/>
         </StackPanel>
 
+        <StackPanel Grid.Column="4" Orientation="Vertical" Margin="5">
+            <Label>NestedProperties:</Label>
+            <Button x:Name="NestedPropertiesTest" Margin="5" Content="NestedProperties Test" Click="NestedProperties_OnClick"/>
+        </StackPanel>
     </Grid>
 </Window>
