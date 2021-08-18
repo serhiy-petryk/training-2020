@@ -22,11 +22,11 @@
     }
     public class Level5
     {
-        public string Id { get; set; }
+        public string Id => "Level5";
         public Level6 Level6 { get; set; }
     }
     public class Level6
     {
-        public string Id { get; set; }
+        public string Id { get; } = "Level6";
     }
 }
