@@ -6,12 +6,30 @@
         xmlns:local="clr-namespace:GridInvestigation.TestViews"
         mc:Ignorable="d"
         Title="ImageColumnTest" Height="450" Width="800">
+
+    <Window.Resources>
+        <DataGridTemplateColumn x:Key="AA" Header="Image" Width="SizeToCells" IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding Image}" />
+                </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+    </Window.Resources>
+
     <Grid>
         <DataGrid x:Name="DG" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" IsReadOnly="True" Width="30" Binding="{Binding CategoryId}"/>
                 <DataGridTextColumn Header="CategoryName" Width="100" Binding="{Binding CategoryName}"/>
                 <DataGridTextColumn Header="Description" Width="100" Binding="{Binding Description}"/>
+                <DataGridTemplateColumn Header="Picture" Width="SizeToCells" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Picture}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Icon_17" Width="100" Binding="{Binding Icon_17}"/>
                 <DataGridTextColumn Header="Icon_25" Width="100" Binding="{Binding Icon_25}"/>
             </DataGrid.Columns>
