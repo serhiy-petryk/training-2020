@@ -17,9 +17,9 @@ namespace GridInvestigation.TestViews
             DG.ItemsSource = LoadData();
         }
 
-        public List<Models.Categories> LoadData()
+        public List<Categories> LoadData()
         {
-            var data = new List<Models.Categories>();
+            var data = new List<Categories>();
             using (var conn = new OleDbConnection(ConnectionString))
             {
                 conn.Open();
