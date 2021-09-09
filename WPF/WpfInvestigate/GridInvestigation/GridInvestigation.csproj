@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml">
@@ -53,6 +54,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\Converters.cs" />
     <Compile Include="Common\Tips.cs" />
+    <Compile Include="Models\Categories.cs" />
     <Compile Include="Models\TestModels.cs" />
     <Compile Include="TestViews\AttributeValidationTests.xaml.cs">
       <DependentUpon>AttributeValidationTests.xaml</DependentUpon>
@@ -68,6 +70,9 @@
     </Compile>
     <Compile Include="TestViews\IDataErrorInfoValidationTests.xaml.cs">
       <DependentUpon>IDataErrorInfoValidationTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestViews\ImageColumnTest.xaml.cs">
+      <DependentUpon>ImageColumnTest.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestViews\INotifyDataErrorInfoValidationTests.xaml.cs">
       <DependentUpon>INotifyDataErrorInfoValidationTests.xaml</DependentUpon>
@@ -121,6 +126,10 @@
     <Page Include="TestViews\IDataErrorInfoValidationTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\ImageColumnTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestViews\INotifyDataErrorInfoValidationTests.xaml">
       <Generator>MSBuild:Compile</Generator>
