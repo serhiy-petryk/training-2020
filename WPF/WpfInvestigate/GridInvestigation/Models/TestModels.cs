@@ -4,6 +4,7 @@
     {
         public string Id { get; set; }
         public Level2 Level2 { get; set; }
+        public bool? Bool { get; set; }
     }
     public class Level2
     {

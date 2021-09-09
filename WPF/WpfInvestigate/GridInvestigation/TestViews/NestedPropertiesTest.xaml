@@ -3,13 +3,39 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GridInvestigation.TestViews"
+        xmlns:common="clr-namespace:GridInvestigation.Common"
         mc:Ignorable="d"
         Title="NestedPropertiesTest" Height="450" Width="800">
     <Grid>
         <DataGrid x:Name="DG" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Level1" IsReadOnly="True" Width="*" Binding="{Binding Id}"></DataGridTextColumn>
+                <DataGridCheckBoxColumn Header="Bool" Width="100" Binding="{Binding Bool}">
+                    <!--<DataGridCheckBoxColumn.ElementStyle>
+                        <Style TargetType="CheckBox">
+                            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridCheckBoxColumn.ElementStyle>-->
+                    <!--<DataGridCheckBoxColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left"/>
+                            <Setter Property="UIElement.Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Bool, Converter={x:Static common:DummyConverter.Instance}}"  Value="{x:Null}">
+                                    <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Bool, Converter={x:Static common:DummyConverter.Instance}}"  Value="{x:Null}">
+                                    <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridCheckBoxColumn.ElementStyle>-->
+                </DataGridCheckBoxColumn>
                 <DataGridTextColumn Header="Level2" IsReadOnly="True" Width="*" Binding="{Binding Level2.Id}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Level3" IsReadOnly="True" Width="*" Binding="{Binding Level2.Level3.Id}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Level4" IsReadOnly="True" Width="*" Binding="{Binding Level2.Level3.Level4.Id}"></DataGridTextColumn>
@@ -17,6 +43,7 @@
                 <DataGridTextColumn Header="Level6" IsReadOnly="True" Width="*" Binding="{Binding Level2.Level3.Level4.Level5.Level6.Id}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        
+
+        <TextBlock Text="{Binding Converter={x:Static common:DummyConverter.Instance}}" Margin="100 100 0 0"></TextBlock>
     </Grid>
 </Window>
