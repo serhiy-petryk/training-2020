@@ -28,15 +28,16 @@ namespace WpfInvestigate
 
                 //1. Меняем язык приложения:
                 Thread.CurrentThread.CurrentUICulture = value;
+                Thread.CurrentThread.CurrentCulture = value;
 
                 //2. Создаём ResourceDictionary для новой культуры
                 var dict = new ResourceDictionary();
-                switch (value.Name)
+                switch (value.IetfLanguageTag)
                 {
-                    case "ru-RU":
-                    case "uk-UA":
+                    case "ru":
+                    case "uk":
                         // dict.Source = new Uri(String.Format("Resources/lang.{0}.xaml", value.Name), UriKind.Relative);
-                        dict.Source = new Uri("Resources/lang.ru-RU.xaml", UriKind.Relative);
+                        dict.Source = new Uri("Resources/lang.uk.xaml", UriKind.Relative);
                         break;
                     default:
                         dict.Source = new Uri("Resources/lang.xaml", UriKind.Relative);

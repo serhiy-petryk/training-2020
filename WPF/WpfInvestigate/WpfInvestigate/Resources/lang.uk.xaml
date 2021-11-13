@@ -6,5 +6,6 @@
     <v:String x:Key="m_lblHelloWorld">Привет мир!</v:String>
     <v:String x:Key="m_menu_Language">Язык</v:String>
     <v:Double x:Key="m_Number">10.5</v:Double>
-    
+    <v:String x:Key="LocTestFormat">Привіт {0}!</v:String>
+
 </ResourceDictionary>

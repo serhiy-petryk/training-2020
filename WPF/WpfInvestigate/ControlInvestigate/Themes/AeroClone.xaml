@@ -774,13 +774,13 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <ContentControl Grid.Row="0" Grid.Column="0" Focusable="{TemplateBinding UIElement.Focusable}" TabIndex="0"
-                              Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=PUIDocumentViewerToolBarStyleKey}}"/>
+                                            Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=PUIDocumentViewerToolBarStyleKey}}"/>
                             <ScrollViewer x:Name="PART_ContentHost" Grid.Row="1" Grid.Column="0" CanContentScroll="true"
-                            HorizontalScrollBarVisibility="Auto" Focusable="{TemplateBinding UIElement.Focusable}"
-                            IsTabStop="true" TabIndex="1"/>
+                                          HorizontalScrollBarVisibility="Auto" Focusable="{TemplateBinding UIElement.Focusable}"
+                                          IsTabStop="true" TabIndex="1"/>
                             <DockPanel Grid.Row="1">
                                 <FrameworkElement DockPanel.Dock="Right"
-                                  Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+                                                  Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
                                 <Rectangle Visibility="Visible" VerticalAlignment="top" Height="10">
                                     <Shape.Fill>
                                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -795,7 +795,7 @@
                                 </Rectangle>
                             </DockPanel>
                             <ContentControl x:Name="PART_FindToolBarHost" Grid.Row="2" Grid.Column="0" TabIndex="2"
-                              Focusable="{TemplateBinding UIElement.Focusable}"/>
+                                            Focusable="{TemplateBinding UIElement.Focusable}"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>

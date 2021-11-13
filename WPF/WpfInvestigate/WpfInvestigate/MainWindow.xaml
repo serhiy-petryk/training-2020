@@ -13,12 +13,9 @@
 
     <Window.Resources>
         <system:String x:Key="TestString">Foo</system:String>
-        <x:Array Type="{x:Type system:Object}" x:Key="TestArray">
-            <system:String>Foo</system:String>
-            <system:String>Bar</system:String>
-            <system:String>Baz</system:String>
-        </x:Array>
-        <common:LocalizationProxy x:Key="LocalizationProxy" InputValue="{DynamicResource TestLang}" Argument1="{DynamicResource TestString}"/>
+
+        <!--<common:LocalizationProxy x:Key="LocalizationProxy" InputValue="{DynamicResource TestLang}" Argument1="{DynamicResource TestString}"/>-->
+        <common:LocalizationProxy x:Key="LocalizationProxy1" InputValue="{DynamicResource LocTestFormat}" Argument1="{StaticResource TestString}"/>
 
         <SolidColorBrush x:Key="TestBrush" Color="GreenYellow"/>
         <Style x:Key="StyleRed" TargetType="Button">
@@ -86,8 +83,9 @@
                         <DatePicker/>
                         <Calendar x:Name="Calendar" Height="70"/>
                         <TextBlock Text="{DynamicResource TestLang}"/>
-                        <TextBlock x:Name="Block" Text="{Binding Source={StaticResource LocalizationProxy}, Path=Value}" Width="100" Height="30" Background="Yellow"/>
+                        <!--<TextBlock x:Name="Block" Text="{Binding Source={StaticResource LocalizationProxy}, Path=Value}" Width="100" Height="30" Background="Yellow"/>-->
                         <TextBlock Text="{DynamicResource m_lblHelloWorld}"/>
+                        <TextBlock Text="{Binding Source={StaticResource LocalizationProxy1}, Path=Value}"/>
                     </WrapPanel>
 
                     <WrapPanel Margin="5" HorizontalAlignment="Stretch">

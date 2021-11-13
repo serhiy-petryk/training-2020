@@ -37,7 +37,8 @@ namespace WpfInvestigate
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
         }
 
-        private static string[] _cultures = { "", "sq-AL", "uk-UA", "en-US", "km-KH", "yo-NG" };
+        // private static string[] _cultures = { "", "sq-AL", "uk-UA", "en-US", "km-KH", "yo-NG" };
+        private static string[] _cultures = { "", "sq", "uk", "en", "km", "yo" };
 
         public List<CultureInfo> CultureAllInfos { get; set; } = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).OrderBy(c => c.DisplayName).ToList();
         public List<CultureInfo> CultureInfos { get; set; } = CultureInfo

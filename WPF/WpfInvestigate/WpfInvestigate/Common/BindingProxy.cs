@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Markup;
@@ -38,33 +39,15 @@ namespace WpfInvestigate.Common
         }
         private static void OnInputValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            Debug.Print($"OnInputValueChanged: {e.NewValue}");
             var proxy = (LocalizationProxy) d;
-            var a1 = proxy.Arguments;
-            if (proxy.Arguments == null)
+            if (proxy.Argument1 == null)
                 proxy.Value = e.NewValue;
             else
-                proxy.Value = string.Format((string)e.NewValue, proxy.Arguments);
+                proxy.Value = string.Format((string)e.NewValue, proxy.Argument1);
         }
 
         //==========
-        public static readonly DependencyProperty ArgumentsProperty = DependencyProperty.Register("Arguments",
-            typeof(object[]), typeof(LocalizationProxy), new FrameworkPropertyMetadata(null, OnArgumentsChanged));
-        public object[] Arguments
-        {
-            get => (object[])GetValue(ArgumentsProperty);
-            set => SetValue(ArgumentsProperty, value);
-        }
-        private static void OnArgumentsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var proxy = (LocalizationProxy)d;
-            if (proxy.InputValue == null)
-                proxy.Value = null;
-            else if (e.NewValue == null)
-                proxy.Value = proxy.InputValue;
-            else
-                proxy.Value = string.Format((string)proxy.InputValue, (object[])e.NewValue);
-        }
-        //==============
         public static readonly DependencyProperty Argument1Property = DependencyProperty.Register("Argument1",
             typeof(object), typeof(LocalizationProxy), new FrameworkPropertyMetadata(null, OnArgument1Changed));
         public object Argument1
@@ -74,6 +57,7 @@ namespace WpfInvestigate.Common
         }
         private static void OnArgument1Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            Debug.Print($"OnArgument1Changed: {e.NewValue}");
             var proxy = (LocalizationProxy)d;
             if (e.NewValue == null)
                 proxy.Value = proxy.InputValue;
