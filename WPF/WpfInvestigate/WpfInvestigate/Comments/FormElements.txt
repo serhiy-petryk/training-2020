@@ -1,0 +1,93 @@
+﻿
+- 1. WPF_layout - only layout window
+2. https://github.com/scheshan/WPF.Bootstrap WPF.Bootstrap.sln
+	+ progressbar with animation
+	+ checkbox with 3 states
+	- no combobox
+3.1 https://github.com/eva70881/Bootstrap.WPF forked from https://github.com/scheshan/WPF.Bootstrap
+3.2 https://github.com/flyingxu/Bootstrap.WPF forked from https://github.com/scheshan/WPF.Bootstrap
+++ 4. https://github.com/ptddqr/bootstrap-wpf-style folder:bootstrap-wpf-style-master, 5 years ago, 277 stars, Chinese
+doc: https://www.cnblogs.com/tsliwei/p/6138412.html
+	+ many controls
+	+ only xaml
+	+ 700 lines of xaml in FormControls.xaml
+	combobox: 62 lines of xaml
+
+Project list is taken from https://github.com/quozd/awesome-dotnet#gui
+======================================================================
+++ 1. https://github.com/HandyOrg/HandyControl MIT licence, 3.4K stars, fresh
+	+ very many controls
+	- very big, hard to run demo project, bad animation for combobox
+2. https://github.com/MahApps/MahApps.Metro
+3. http://materialdesigninxaml.net/
+4. https://github.com/firstfloorsoftware/mui MS-PL licence
+5. https://github.com/RandyPJ/WPFBootstrapUI 8 stars, 1 year ago, no licence
+  + many controls
+  - big project
+  combobox - 345 lines of xaml: one attribute -> one line of code
+-- 6. https://github.com/planettelex/wpf-bootstrap - uses Telerik
+-- 7. https://github.com/timheuer/callisto - for Windows.UI
+8. https://github.com/benruehl/adonis-ui - can run only .Net 4.5 version, can't run net5.0
+  - big project
+  combobox - 485 lines of xaml
+  loading circle - 110 lines of xaml: one attribute -> one line
+9. https://github.com/Kinnara/ModernWpf MIT licence, 2.6K stars, 9 months ago
+	- big project
+	combobox - 575 lines of xaml
+
+
+
+Search result in original folder:
+================================
+TargetType="ComboBox"
+-------------------
+1. E:\Apps\original\wpf-theme\InfragisticsThemesForMicrosoftControls-master
+2. E:\Apps\original\wpf-MahApps
+3. E:\Apps\original\wpf-controlset\MyCelestial, E:\Apps\original\wpf-controlset\Celestial.UIToolkit-master
+- 4. E:\Apps\original\wpf-datagrid\wpftoolkit-master (Xceed)
+5. E:\Apps\original\WPF-Samples-Microsoft\WPF-Samples-netframework
+6. E:\Apps\original\wpf-datagrid\DataGridExtensions-master
+7. E:\Apps\original\wpf-theme\adonis-ui-framework, E:\Apps\original\wpf-theme\adonis-ui-master
+8. E:\Apps\original\wpf-theme\MaterialDesignInXamlToolkit-master
+9. E:\Apps\original\wpf-controlset\HandyControl-master, E:\Apps\original\wpf-controlset\HandyControls-develop
+10. E:\Apps\original\wpf-MaterialDesign
+
+TargetType="{x:Type ComboBox}
+----------------------------
+1. E:\Apps\original\wpf-theme\WPFSkins
+2. E:\Apps\original\wpf-theme\InfragisticsThemesForMicrosoftControls-master
+3. E:\Apps\original\wpf-theme\WpfThemesCollection-master
+4. E:\Apps\original\wpf-theme\WpfOfficeTheme-master
++ 5. E:\Apps\original\wpf-theme\WPFControls-ThemePack-master
+	many controls
+	combobox: 80 lines of xaml
+
+6. E:\Apps\original\wpf-color-picker\ColorControl-master-zubetto
+7. E:\Apps\original\wpf-dynamicproperty\wpfrealtime\sourceCode\sourceCode\Src\Framework\WPF.RealTime.ResourceLibrary
+8. E:\Apps\original\wpf-MahApps
+9. E:\Apps\original\wpf-theme\WpfExpressionBlendTheme-master-my, E:\Apps\original\wpf-theme\WpfExpressionBlendTheme-master
+10. E:\Apps\original\wpf-datagrid\wpftoolkit-master\ExtendedWPFToolkitSolution (Xceed)
+11. E:\Apps\original\WPF-Samples-Microsoft\WPF-Samples-netframework
+12. E:\Apps\original\wpf-theme\MaterialDesignInXamlToolkit-master
+13. E:\Apps\original\wpf-MaterialDesign
+
+===============
+Property Grid
+===============
+1. https://github.com/HandyOrg/HandyControl 3.4K stars, fresh, MIT licence
+2. https://github.com/PropertyTools/PropertyTools PropertyTools-develop, 737 stars, 7 months ago, MIT licence
+    + 16 controls
+3. https://github.com/DenysVuika/WPG WPG-master, 94 stars, 4 years ago, Apache 2.0 licence, archived
+4. https://github.com/jaime-olivares/wpf-propertygrid wpf-propertygrid-master, 48 stars, 6 years ago, MIT licence
+  see also https://www.codeproject.com/Articles/87715/Native-WPF-PropertyGrid	Mark: 4.93/81 votes
+5. https://github.com/GuOrg/Gu.Wpf.PropertyGrid Gu.Wpf.PropertyGrid-master, 15 stars, 1 year ago, MIT licence
+6. https://github.com/CodenameColors/PropertyGridControl PropertyGridControl-master, 3 years ago, 2 stars, no licence
+
+
+
+===============
+Loading control
+===============
+1. E:\Apps\original\wpf-waiting\SimpleAdornedControlSample
+	- 70 lines of xaml & 100 lines of cs file
+
