@@ -18,7 +18,8 @@ namespace ItemsControlDragDrop.Code
         private static int cnt;
         protected override void OnRender(DrawingContext drawingContext)
         {
-            var panel = (Panel)AdornedElement;
+            var control = (ItemsControl)AdornedElement;
+            var panel = DragDropHelper.GetItemsHost(control);
             var dropInfo = DragDropHelper._dropInfo;
 
             var insertIndex = -1;
@@ -43,18 +44,18 @@ namespace ItemsControlDragDrop.Code
             double insertPosition;
             if (insertIndex == 0)
             {
-                var itemRect = new Rect(panel.Children[0].TranslatePoint(new Point(), panel), panel.Children[0].RenderSize);
+                var itemRect = new Rect(panel.Children[0].TranslatePoint(new Point(), control), panel.Children[0].RenderSize);
                 insertPosition = itemRect.Top;
             }
             else if (insertIndex < panel.Children.Count)
             {
-                var itemRect1 = new Rect(panel.Children[insertIndex - 1].TranslatePoint(new Point(), panel), panel.Children[insertIndex - 1].RenderSize);
-                var itemRect2 = new Rect(panel.Children[insertIndex].TranslatePoint(new Point(), panel), panel.Children[insertIndex].RenderSize);
+                var itemRect1 = new Rect(panel.Children[insertIndex - 1].TranslatePoint(new Point(), control), panel.Children[insertIndex - 1].RenderSize);
+                var itemRect2 = new Rect(panel.Children[insertIndex].TranslatePoint(new Point(), control), panel.Children[insertIndex].RenderSize);
                 insertPosition = (itemRect1.Top + itemRect1.Height + itemRect2.Top) / 2;
             }
             else
             {
-                var itemRect = new Rect(panel.Children[panel.Children.Count - 1].TranslatePoint(new Point(), panel), panel.Children[0].RenderSize);
+                var itemRect = new Rect(panel.Children[panel.Children.Count - 1].TranslatePoint(new Point(), control), panel.Children[0].RenderSize);
                 insertPosition = itemRect.Top + itemRect.Height;
             }
 

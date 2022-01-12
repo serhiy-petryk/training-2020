@@ -234,7 +234,7 @@ namespace ItemsControlDragDrop.Code
 
         private static PropertyInfo _piItemsHost;
 
-        private static Panel GetItemsHost(ItemsControl itemsControl)
+        public static Panel GetItemsHost(ItemsControl itemsControl)
         {
             if (_piItemsHost == null)
                 _piItemsHost = typeof(ItemsControl).GetProperty("ItemsHost",
@@ -279,7 +279,8 @@ namespace ItemsControlDragDrop.Code
             {
                 var adornedElement = GetItemsHost(control);
                 if (adornedElement != null)
-                    _dropTargetAdorner = new DropTargetInsertionAdorner(adornedElement);
+//                    _dropTargetAdorner = new DropTargetInsertionAdorner(adornedElement);
+                _dropTargetAdorner = new DropTargetInsertionAdorner(control);
             }
 
             if (_dropTargetAdorner != null)

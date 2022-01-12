@@ -44,7 +44,7 @@
             <!--DragOver="ItemsList_DragOver" Drop="DataGrid_OnDrop">-->
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">
-                    <Setter Property="Margin" Value="10 0"/>
+                    <Setter Property="Margin" Value="10 5"/>
                     <!--<EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />
                     <EventSetter Event="PreviewGiveFeedback" Handler="Item_OnPreviewGiveFeedback" />-->
                 </Style>
