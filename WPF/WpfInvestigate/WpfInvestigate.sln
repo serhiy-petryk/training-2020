@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movable", "Movable\Movable.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlInvestigate", "ControlInvestigate\ControlInvestigate.csproj", "{117DB82E-27F6-42FD-ACEF-1E8FA040FDFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemsControlDragDrop", "ItemsControlDragDrop\ItemsControlDragDrop.csproj", "{2AD98491-D757-4869-A514-A7C0B7A023DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{117DB82E-27F6-42FD-ACEF-1E8FA040FDFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{117DB82E-27F6-42FD-ACEF-1E8FA040FDFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{117DB82E-27F6-42FD-ACEF-1E8FA040FDFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AD98491-D757-4869-A514-A7C0B7A023DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AD98491-D757-4869-A514-A7C0B7A023DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AD98491-D757-4869-A514-A7C0B7A023DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AD98491-D757-4869-A514-A7C0B7A023DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

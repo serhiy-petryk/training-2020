@@ -1,0 +1,98 @@
+﻿<Window x:Class="ItemsControlDragDrop.MyClearVersion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MyClearVersion" Height="450" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+            <TextBlock Text="Drap and Drop ToDo:"/>
+            <TextBlock Margin="8 0" Text="- reoder item"/>
+            <TextBlock Margin="8 0" Text="- copy item to another list"/>
+            <TextBlock Margin="8 0" Text="- item adorner"/>
+            <TextBlock Margin="8 0" Text="- location adorner"/>
+            <TextBlock Margin="8 0" Text="- scrolling"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1" Grid.Column="0" Name="view1" ItemsSource="{Binding MyData}"
+                  IsReadOnly="True" HeadersVisibility="Column"
+                  HorizontalAlignment="Stretch" ScrollViewer.PanningMode="VerticalOnly"
+                  SelectionMode="Extended" SelectionUnit="FullRow"
+                  Background="LightBlue"
+                  ScrollViewer.CanContentScroll="True"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  DragOver="ItemsList_DragOver"
+                  AllowDrop="True"
+                  Drop="DataGrid_OnDrop">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />
+                    <EventSetter Event="PreviewGiveFeedback" Handler="Item_OnPreviewGiveFeedback" />
+                </Style>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />
+                    <EventSetter Event="PreviewGiveFeedback" Handler="Item_OnPreviewGiveFeedback" />
+                    <!--                        <EventSetter Event="Drop" Handler="Item_OnDrop" />
+                        <Setter Property="AllowDrop" Value="True" />-->
+                </Style>
+            </DataGrid.Resources>
+
+            <DataGrid.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Background="Orange"/>
+                </ItemsPanelTemplate>
+            </DataGrid.ItemsPanel>
+            <!--<DataGrid.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding}"
+                                Command="{Binding DataContext.MyCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                                CommandParameter="{Binding}"
+                                Margin="5 2" Width="150" Height="20" />
+                    </DataTemplate>
+                </DataGrid.ItemTemplate>-->
+
+            <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                    <DataGridCheckBoxColumn Header="Finished" Binding="{Binding Finished}"/>
+                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="100">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="340"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <ScrollViewer Grid.Row="1" Grid.Column="2">
+            <DataGrid Name="view2" HorizontalAlignment="Stretch" ScrollViewer.PanningMode="VerticalOnly"
+                      Background="LightBlue" AllowDrop="True"
+                      Drop="View2_OnDrop">
+                <!--                <DataGrid.Resources>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />
+                        <EventSetter Event="PreviewGiveFeedback" Handler="Item_OnPreviewGiveFeedback" />
+                        <EventSetter Event="Drop" Handler="Drop" />
+                        <Setter Property="AllowDrop" Value="True" />
+                    </Style>
+                </DataGrid.Resources>-->
+            </DataGrid>
+        </ScrollViewer>
+
+    </Grid>
+</Window>
