@@ -52,16 +52,24 @@
 
                                 <Grid Grid.Row="0" Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
+
+                                    <Viewbox Grid.Column="0" Width="20" Margin="0 0 6 0"
+                                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                        <Path Stretch="Uniform" Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon}"
+                                              Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                    </Viewbox>
+
                                     <!-- Header text -->
-                                    <TextBlock Grid.Column="0" Padding="0 5" VerticalAlignment="Top"
+                                    <TextBlock Grid.Column="1" Padding="0 5" VerticalAlignment="Top"
                                                Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
                                                Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Caption}"
                                                TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                                     <!-- Close button -->
-                                    <Button Grid.Column="1" Margin="0 0 4 0" Width="20" Padding="2"
+                                    <Button Grid.Column="2" Margin="0 0 4 0" Width="20" Padding="2"
                                             Style="{StaticResource ClearMonochromeButtonStyle}"
                                             HorizontalAlignment="Right" VerticalAlignment="Center"
                                             Focusable="True"
@@ -71,7 +79,7 @@
                                             effects:FocusVisualEffect.FocusControlStyle="{TemplateBinding FocusButtonStyle}"/>
 
                                     <!--<Thumb Grid.Column="0" Opacity="0" DragStarted="Thumb_OnDragStarted" DragDelta="MoveThumb_OnDragDelta"/>-->
-                                    <Thumb Grid.Column="0" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"/>
+                                    <Thumb Grid.Column="0" Grid.ColumnSpan="2" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"/>
                                 </Grid>
 
                                 <Grid Grid.Row="1">
@@ -80,11 +88,11 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Left icon -->
-                                    <Viewbox Grid.Column="0" Width="24" Margin="8 0 0 0"
+<!--                                    <Viewbox Grid.Column="0" Width="24" Margin="8 0 0 0"
                                              Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon, Converter={x:Static common:VisibilityConverter.Instance}}">
                                         <Path Stretch="Uniform" Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon}"
                                               Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IconColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-                                    </Viewbox>
+                                    </Viewbox>-->
                                     <!-- Message -->
                                     <controls:LabelBox Grid.Column="1" Margin="8" Padding="0" Background="Transparent"
                                                        HorizontalAlignment="Left" VerticalAlignment="Center"

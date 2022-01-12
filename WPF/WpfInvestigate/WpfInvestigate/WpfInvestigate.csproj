@@ -655,6 +655,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Resource Include="Comments\DropDownButton.txt" />
+    <Resource Include="Comments\FormElements.txt" />
     <Content Include="Comments\Layout.Investigate.txt" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
