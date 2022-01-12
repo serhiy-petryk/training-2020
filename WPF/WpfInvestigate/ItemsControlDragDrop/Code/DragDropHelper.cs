@@ -137,7 +137,14 @@ namespace ItemsControlDragDrop.Code
             if (itemsControl is TreeView treeView)
             {
                 if (treeView.SelectedItem != null)
-                    return new List<object> {treeView.SelectedItem};
+                    return new List<object> { treeView.SelectedItem };
+                return new List<object>();
+            }
+
+            if (itemsControl is TabControl tabControl)
+            {
+                if (tabControl.SelectedItem != null)
+                    return new List<object> { tabControl.SelectedItem };
                 return new List<object>();
             }
 
@@ -152,7 +159,8 @@ namespace ItemsControlDragDrop.Code
             var sourceData = e.Data.GetData("Source") as Array;
             var itemsControl = sender as ItemsControl;
             var insertIndex = GetInsertIndex(itemsControl, e.GetPosition);
-            var targetData = itemsControl.ItemsSource as IList;
+//            var targetData = itemsControl.ItemsSource as IList;
+            var targetData = (IList)itemsControl.ItemsSource ?? itemsControl.Items;
 
             var mousePosition = e.GetPosition(itemsControl);
             var item = GetItemUnderMouse(itemsControl, mousePosition);
@@ -184,8 +192,13 @@ namespace ItemsControlDragDrop.Code
             var itemsUnderMouse = Helpers.GetVisualParents(hitTestResult.VisualHit);
             if (itemsControl is DataGrid)
             {
-                var row = itemsUnderMouse.OfType<DataGridRow>().FirstOrDefault();
-                return row?.DataContext;
+                var item = itemsUnderMouse.OfType<DataGridRow>().FirstOrDefault();
+                return item?.DataContext;
+            }
+            if (itemsControl is TabControl)
+            {
+                var item = itemsUnderMouse.OfType<TabItem>().FirstOrDefault();
+                return item;
             }
 
             throw new Exception($"Trap! {itemsControl.GetType().Name} is not supported in GetItemUnderMouse");

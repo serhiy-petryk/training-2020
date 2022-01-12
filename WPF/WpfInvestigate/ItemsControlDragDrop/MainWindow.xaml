@@ -26,7 +26,16 @@
             <TextBlock Margin="8 0" Text="- scrolling"/>
         </StackPanel>
 
-        <TabControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+        <TabControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                    ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    PreviewMouseMove="View1_OnPreviewMouseMove"
+                    PreviewDragOver="View1_OnPreviewDragOver"
+                    PreviewDragEnter="View1_OnPreviewDragEnter"
+                    PreviewDragLeave="View1_OnPreviewDragLeave"
+                    PreviewDrop="View1_OnPreviewDrop"
+                    AllowDrop="True">
             <TabItem Header="Tab 1" Content="Content of Tab1"/>
             <TabItem Header="Tab 2" Content="Content of Tab2"/>
             <TabItem Header="Tab 3" Content="Content of Tab3"/>
