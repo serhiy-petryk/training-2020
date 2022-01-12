@@ -26,6 +26,15 @@
             <TextBlock Margin="8 0" Text="- scrolling"/>
         </StackPanel>
 
+        <TabControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+            <TabItem Header="Tab 1" Content="Content of Tab1"/>
+            <TabItem Header="Tab 2" Content="Content of Tab2"/>
+            <TabItem Header="Tab 3" Content="Content of Tab3"/>
+            <TabItem Header="Tab 4" Content="Content of Tab4"/>
+            <TabItem Header="Tab 5" Content="Content of Tab5"/>
+            <TabItem Header="Tab 6" Content="Content of Tab6"/>
+        </TabControl>
+
         <DataGrid Grid.Row="1" Grid.Column="0" Name="view1" ItemsSource="{Binding MyData}"
                   IsReadOnly="True" HeadersVisibility="Column"
                   HorizontalAlignment="Stretch" ScrollViewer.PanningMode="VerticalOnly"
