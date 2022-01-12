@@ -20,8 +20,9 @@ namespace ItemsControlDragDrop.Code
             var panel = DragDropHelper.GetItemsHost(control);
             var dropInfo = DragDropHelper._dropInfo;
 
+            var orientation = DragDropHelper.GetItemsPanelOrientation(control);
+
             var insertIndex = -1;
-            Debug.Print($"Render: {cnt++}");
             for (var i = 0; i < panel.Children.Count; i++)
             {
                 var item = panel.Children[i];
@@ -57,8 +58,8 @@ namespace ItemsControlDragDrop.Code
                 insertPosition = itemRect.Top + itemRect.Height;
             }
 
-            var p1 = new Point(0, insertPosition);
-            var p2 = new Point(panel.ActualWidth, insertPosition);
+            var p1 = new Point(panel.Margin.Left, insertPosition);
+            var p2 = new Point(panel.Margin.Left + panel.ActualWidth - panel.Margin.Right, insertPosition);
             var rotation1 = 0.0;
             drawingContext.DrawLine(m_Pen, p1, p2);
             this.DrawTriangle(drawingContext, p1, rotation1);

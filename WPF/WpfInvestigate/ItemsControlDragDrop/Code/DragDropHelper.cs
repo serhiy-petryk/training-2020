@@ -346,5 +346,22 @@ namespace ItemsControlDragDrop.Code
                 _dropTargetAdorner = null;
             }
         }
+
+        public static Orientation GetItemsPanelOrientation(ItemsControl itemsControl)
+        {
+            if (itemsControl is TabControl)
+            {
+                var tabControl = (TabControl)itemsControl;
+                return tabControl.TabStripPlacement == Dock.Left || tabControl.TabStripPlacement == Dock.Right ? Orientation.Vertical : Orientation.Horizontal;
+            }
+
+            var panel = GetItemsHost(itemsControl);
+            var orientationProperty = panel.GetType().GetProperty("Orientation", typeof(Orientation));
+
+            if (orientationProperty != null)
+                return (Orientation) orientationProperty.GetValue(panel, null);
+
+            throw new Exception("Trap! Can't define item panel orientation");
+        }
     }
 }
