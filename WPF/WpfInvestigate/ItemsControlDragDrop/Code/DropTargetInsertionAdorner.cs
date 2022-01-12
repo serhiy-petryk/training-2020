@@ -9,10 +9,8 @@ namespace ItemsControlDragDrop.Code
 {
     public class DropTargetInsertionAdorner : DropTargetAdorner
     {
-        public DropTargetInsertionAdorner(UIElement adornedElement)
-          : base(adornedElement)
+        public DropTargetInsertionAdorner(UIElement adornedElement) : base(adornedElement)
         {
-            // Panel.SetZIndex(this, 999999);
         }
 
         private static int cnt;
@@ -175,7 +173,6 @@ namespace ItemsControlDragDrop.Code
 
             m_Triangle = new PathGeometry();
             m_Triangle.Figures.Add(figure);
-            // Panel.SetZIndex(m_Triangle, 999999);
             m_Triangle.Freeze();
         }
 
