@@ -12,7 +12,7 @@ namespace ItemsControlDragDrop.Code
         public DropTargetInsertionAdorner(UIElement adornedElement)
           : base(adornedElement)
         {
-            Panel.SetZIndex(this, 999999);
+            // Panel.SetZIndex(this, 999999);
         }
 
         private static int cnt;
