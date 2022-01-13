@@ -78,7 +78,7 @@ namespace ItemsControlDragDrop.Code
                 _dragInfo = null;
                 return;
             }*/
-            if (!IsMouseUnderHost(itemsControl, mousePosition))
+            if (!IsMouseUnderHost(itemsControl))
             {
                 _dragInfo = null;
                 return;
@@ -173,15 +173,20 @@ namespace ItemsControlDragDrop.Code
             }
         }
 
-        private static bool IsMouseUnderHost(ItemsControl itemsControl, Point mousePosition)
+        private static bool IsMouseUnderHost(ItemsControl itemsControl)
         {
+            var itemsHost = GetItemsHost(itemsControl);
+            var p = Mouse.GetPosition(itemsHost);
+            var bounds = VisualTreeHelper.GetDescendantBounds(itemsHost);
+            return bounds.Contains(p);
+            /*
             var hitTestResult = VisualTreeHelper.HitTest(itemsControl, mousePosition);
             if (hitTestResult == null)
                 return false;
 
             var itemsUnderMouse = Helpers.GetVisualParents(hitTestResult.VisualHit).ToArray();
             var itemsHost = GetItemsHost(itemsControl);
-            return itemsUnderMouse.Contains(itemsHost);
+            return itemsUnderMouse.Contains(itemsHost);*/
         }
 
         private static PropertyInfo _piItemsHost;
