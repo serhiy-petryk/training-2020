@@ -30,12 +30,10 @@ namespace ItemsControlDragDrop.Code
                 getWidth = size => size.Height;
             }
 
-            var insertIndex = DragDropHelper.GetOffsetIndex(control);
+            var insertIndex = DragDropHelper.GetInsertIndex(control, out int firstItemOffset);
             double insertPosition;
             if (insertIndex == 0)
-            {
                 insertPosition = getX(panel.Children[0].TranslatePoint(new Point(), control));
-            }
             else if (insertIndex < panel.Children.Count)
             {
                 var p1 = panel.Children[insertIndex - 1].TranslatePoint(new Point(), control);
@@ -51,7 +49,7 @@ namespace ItemsControlDragDrop.Code
             if (orientation == Orientation.Vertical)
             {
                 var p1 = new Point(panel.Margin.Left, insertPosition);
-                var p2 = new Point(panel.Margin.Left + panel.ActualWidth - panel.Margin.Right, insertPosition);
+                var p2 = new Point(panel.Margin.Left + panel.ActualWidth, insertPosition);
                 drawingContext.DrawLine(m_Pen, p1, p2);
                 DrawTriangle(drawingContext, p1, 0);
                 DrawTriangle(drawingContext, p2, 180);
@@ -60,7 +58,7 @@ namespace ItemsControlDragDrop.Code
             {
                 // Orientation horizontal 
                 var p1 = new Point(insertPosition, panel.Margin.Top);
-                var p2 = new Point(insertPosition, panel.Margin.Top + panel.ActualHeight - panel.Margin.Bottom);
+                var p2 = new Point(insertPosition, panel.Margin.Top + panel.ActualHeight);
                 drawingContext.DrawLine(m_Pen, p1, p2);
                 DrawTriangle(drawingContext, p1, 90);
                 DrawTriangle(drawingContext, p2, 270);

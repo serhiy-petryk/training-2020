@@ -53,7 +53,6 @@ namespace ItemsControlDragDrop.Code
 
         public static void DragSource_OnPreviewMouseMove(object sender, MouseEventArgs e)
         {
-            // Debug.Print($"DragSource_OnPreviewMouseMove: {cnt++}");
             if (_isDragging) return;
             if (!(sender is ItemsControl itemsControl) || e.LeftButton == MouseButtonState.Released ||
                 GetSelectedItems(itemsControl).Count == 0)
@@ -126,25 +125,20 @@ namespace ItemsControlDragDrop.Code
 
         private static IList GetSelectedItems(ItemsControl itemsControl)
         {
-            if (itemsControl is DataGrid dataGrid)
-            {
-                return dataGrid.SelectedItems;
-            }
+            if (itemsControl is MultiSelector multiSelector)
+                return multiSelector.SelectedItems;
 
-            if (itemsControl is ListBox listBox)
-                return listBox.SelectedItems;
+            if (itemsControl is Selector selector)
+            {
+                if (selector.SelectedItem != null)
+                    return new List<object> { selector.SelectedItem };
+                return new List<object>();
+            }
 
             if (itemsControl is TreeView treeView)
             {
                 if (treeView.SelectedItem != null)
                     return new List<object> {treeView.SelectedItem};
-                return new List<object>();
-            }
-
-            if (itemsControl is TabControl tabControl)
-            {
-                if (tabControl.SelectedItem != null)
-                    return new List<object> {tabControl.SelectedItem};
                 return new List<object>();
             }
 
@@ -158,14 +152,10 @@ namespace ItemsControlDragDrop.Code
 
             var sourceData = e.Data.GetData("Source") as Array;
             var itemsControl = sender as ItemsControl;
-            var insertIndex = GetInsertIndex(itemsControl, e.GetPosition);
-//            var targetData = itemsControl.ItemsSource as IList;
+            var insertIndex = GetInsertIndex(itemsControl, out int firstItemOffset);
+            insertIndex += firstItemOffset;
+
             var targetData = (IList) itemsControl.ItemsSource ?? itemsControl.Items;
-
-            var mousePosition = e.GetPosition(itemsControl);
-            var item = GetItemUnderMouse(itemsControl, mousePosition);
-
-
             if (e.Effects == DragDropEffects.Copy)
             {
                 foreach (var o in sourceData)
@@ -183,28 +173,6 @@ namespace ItemsControlDragDrop.Code
             }
         }
 
-        //======================================
-        //======================================
-        //======================================
-        private static object GetItemUnderMouse(ItemsControl itemsControl, Point mousePosition)
-        {
-            var hitTestResult = VisualTreeHelper.HitTest(itemsControl, mousePosition);
-            var itemsUnderMouse = Helpers.GetVisualParents(hitTestResult.VisualHit);
-            if (itemsControl is DataGrid)
-            {
-                var item = itemsUnderMouse.OfType<DataGridRow>().FirstOrDefault();
-                return item?.DataContext;
-            }
-
-            if (itemsControl is TabControl)
-            {
-                var item = itemsUnderMouse.OfType<TabItem>().FirstOrDefault();
-                return item;
-            }
-
-            throw new Exception($"Trap! {itemsControl.GetType().Name} is not supported in GetItemUnderMouse");
-        }
-
         private static bool IsMouseUnderHost(ItemsControl itemsControl, Point mousePosition)
         {
             var hitTestResult = VisualTreeHelper.HitTest(itemsControl, mousePosition);
@@ -216,36 +184,6 @@ namespace ItemsControlDragDrop.Code
             return itemsUnderMouse.Contains(itemsHost);
         }
 
-        delegate Point GetPositionDelegate(IInputElement element);
-
-        private static int GetInsertIndex(ItemsControl control, GetPositionDelegate getPosition)
-        {
-            bool isUp = false;
-            for (var i = 0; i < control.Items.Count; i++)
-            {
-                var item = (Visual) control.ItemContainerGenerator.ContainerFromIndex(i);
-                if (item == null) continue;
-                var offset = MouseOverTargetOffset(item, getPosition, out isUp);
-                if (offset.HasValue)
-                    return i + offset.Value;
-            }
-
-            return isUp ? 0 : control.Items.Count;
-        }
-
-        private static int? MouseOverTargetOffset(Visual target, GetPositionDelegate getPosition, out bool isUp)
-        {
-            var bounds = VisualTreeHelper.GetDescendantBounds(target);
-            var mousePos = getPosition((IInputElement) target);
-            isUp = false;
-            if (bounds.Contains(mousePos))
-                return mousePos.Y < bounds.Top + bounds.Height / 2 ? 0 : 1;
-
-            isUp = mousePos.Y < 0;
-            return null;
-        }
-
-
         private static PropertyInfo _piItemsHost;
 
         public static Panel GetItemsHost(ItemsControl itemsControl)
@@ -255,23 +193,6 @@ namespace ItemsControlDragDrop.Code
                     BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             return (Panel) _piItemsHost.GetValue(itemsControl);
         }
-
-        /*public static void DragSource_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            return;
-            var aa1 = Helpers.GetElementsUnderMouseClick((UIElement)sender, e);
-            if (sender is ItemsControl control)
-            {
-                var itemsHost = GetItemsHost(control);
-                var a1 = aa1.Contains(itemsHost);
-                Debug.Print($"Hit: {a1}");
-            }
-
-            if (e.ClickCount == 1 && sender is ItemsControl itemsControl)
-                _dragInfo = new DragInfo(itemsControl, e);
-            else
-                _dragInfo = null;
-        }*/
 
         public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
         {
@@ -293,7 +214,6 @@ namespace ItemsControlDragDrop.Code
             {
                 var adornedElement = GetItemsHost(control);
                 if (adornedElement != null)
-//                    _dropTargetAdorner = new DropTargetInsertionAdorner(adornedElement);
                     _dropTargetAdorner = new DropTargetInsertionAdorner(control);
             }
 
@@ -320,21 +240,6 @@ namespace ItemsControlDragDrop.Code
                     scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + 1.0);
                 else if (position.Y < scrollMargin && scrollViewer.VerticalOffset > 0)
                     scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - 1.0);
-                /*var tolerance = Math.Min(scrollViewer.FontSize * 2, scrollViewer.ActualHeight / 2);
-                var verticalPos = e.GetPosition(scrollViewer).Y;
-                var offset = 1.0;
-
-                //Debug.Print($"Drag: {verticalPos}");
-                if (verticalPos < tolerance) // Top of visible list?
-                {
-                    //Debug.Print($"ScrollUp");
-                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - offset); //Scroll up.
-                }
-                else if (verticalPos > o.ActualHeight - tolerance) //Bottom of visible list?
-                {
-                    //Debug.Print($"ScrollDown");
-                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + offset); //Scroll down.    
-                }*/
             }
         }
 
@@ -369,7 +274,7 @@ namespace ItemsControlDragDrop.Code
             throw new Exception("Trap! Can't define item panel orientation");
         }
 
-        public static int GetOffsetIndex(ItemsControl control)
+        public static int GetInsertIndex(ItemsControl control, out int firstItemOffset)
         {
             var orientation = GetItemsPanelOrientation(control);
             Func<Point, double> getX;
@@ -384,6 +289,7 @@ namespace ItemsControlDragDrop.Code
                 getX = point => point.Y;
                 getWidth = size => size.Height;
             }
+
 
             var panel = GetItemsHost(control);
             var offsets = new List<double>();
@@ -407,7 +313,78 @@ namespace ItemsControlDragDrop.Code
 
             if (insertIndex == -1)
                 insertIndex = offsets.Count;
+            firstItemOffset = control.ItemContainerGenerator.IndexFromContainer(panel.Children[0]);
             return insertIndex;
         }
+
+        //==============================
+        //==============================
+        //==============================
+        /*public static void DragSource_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            return;
+            var aa1 = Helpers.GetElementsUnderMouseClick((UIElement)sender, e);
+            if (sender is ItemsControl control)
+            {
+                var itemsHost = GetItemsHost(control);
+                var a1 = aa1.Contains(itemsHost);
+                Debug.Print($"Hit: {a1}");
+            }
+
+            if (e.ClickCount == 1 && sender is ItemsControl itemsControl)
+                _dragInfo = new DragInfo(itemsControl, e);
+            else
+                _dragInfo = null;
+        }*/
+
+        /*private static object GetItemUnderMouse(ItemsControl itemsControl, Point mousePosition)
+        {
+            var hitTestResult = VisualTreeHelper.HitTest(itemsControl, mousePosition);
+            var itemsUnderMouse = Helpers.GetVisualParents(hitTestResult.VisualHit);
+            if (itemsControl is DataGrid)
+            {
+                var item = itemsUnderMouse.OfType<DataGridRow>().FirstOrDefault();
+                return item?.DataContext;
+            }
+
+            if (itemsControl is TabControl)
+            {
+                var item = itemsUnderMouse.OfType<TabItem>().FirstOrDefault();
+                return item;
+            }
+
+            throw new Exception($"Trap! {itemsControl.GetType().Name} is not supported in GetItemUnderMouse");
+        }*/
+
+        /*delegate Point GetPositionDelegate(IInputElement element);
+
+private static int GetInsertIndex(ItemsControl control, GetPositionDelegate getPosition)
+{
+    bool isUp = false;
+    for (var i = 0; i < control.Items.Count; i++)
+    {
+        var item = (Visual) control.ItemContainerGenerator.ContainerFromIndex(i);
+        if (item == null) continue;
+        var offset = MouseOverTargetOffset(item, getPosition, out isUp);
+        if (offset.HasValue)
+            return i + offset.Value;
+    }
+
+    return isUp ? 0 : control.Items.Count;
+}*/
+
+        /*private static int? MouseOverTargetOffset(Visual target, GetPositionDelegate getPosition, out bool isUp)
+        {
+            var bounds = VisualTreeHelper.GetDescendantBounds(target);
+            var mousePos = getPosition((IInputElement) target);
+            isUp = false;
+            if (bounds.Contains(mousePos))
+                return mousePos.Y < bounds.Top + bounds.Height / 2 ? 0 : 1;
+
+            isUp = mousePos.Y < 0;
+            return null;
+        }*/
+
+
     }
 }
