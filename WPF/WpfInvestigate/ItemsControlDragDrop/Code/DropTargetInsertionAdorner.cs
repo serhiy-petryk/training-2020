@@ -31,11 +31,11 @@ namespace ItemsControlDragDrop.Code
                     offsets.Add(location.Y + item.RenderSize.Height / 2.0);
                 }
 
-                var pp = dropInfo._currentEventArgs.GetPosition(control);
+                var p = dropInfo._currentEventArgs.GetPosition(control);
                 var insertIndex = -1;
                 for (var i = 0; i < offsets.Count; i++)
                 {
-                    if (pp.Y < offsets[i])
+                    if (p.Y < offsets[i])
                     {
                         insertIndex = i;
                         break;
@@ -63,10 +63,9 @@ namespace ItemsControlDragDrop.Code
 
                 var p1 = new Point(panel.Margin.Left, insertPosition);
                 var p2 = new Point(panel.Margin.Left + panel.ActualWidth - panel.Margin.Right, insertPosition);
-                var rotation1 = 0.0;
                 drawingContext.DrawLine(m_Pen, p1, p2);
-                DrawTriangle(drawingContext, p1, rotation1);
-                DrawTriangle(drawingContext, p2, 180 + rotation1);
+                DrawTriangle(drawingContext, p1, 0);
+                DrawTriangle(drawingContext, p2, 180);
             }
             else
             {
@@ -76,14 +75,14 @@ namespace ItemsControlDragDrop.Code
                 {
                     var item = panel.Children[i];
                     var location = item.TranslatePoint(new Point(), control);
-                    offsets.Add(location.Y + item.RenderSize.Height / 2.0);
+                    offsets.Add(location.X + item.RenderSize.Width / 2.0);
                 }
 
                 var pp = dropInfo._currentEventArgs.GetPosition(control);
                 var insertIndex = -1;
                 for (var i = 0; i < offsets.Count; i++)
                 {
-                    if (pp.Y < offsets[i])
+                    if (pp.X < offsets[i])
                     {
                         insertIndex = i;
                         break;
@@ -95,26 +94,25 @@ namespace ItemsControlDragDrop.Code
                 double insertPosition;
                 if (insertIndex == 0)
                 {
-                    insertPosition = panel.Children[0].TranslatePoint(new Point(), control).Y;
+                    insertPosition = panel.Children[0].TranslatePoint(new Point(), control).X;
                 }
                 else if (insertIndex < panel.Children.Count)
                 {
                     var pp1 = panel.Children[insertIndex - 1].TranslatePoint(new Point(), control);
                     var pp2 = panel.Children[insertIndex].TranslatePoint(new Point(), control);
-                    insertPosition = (pp1.Y + panel.Children[insertIndex - 1].RenderSize.Height + pp2.Y) / 2;
+                    insertPosition = (pp1.X + panel.Children[insertIndex - 1].RenderSize.Width + pp2.X) / 2;
                 }
                 else
                 {
                     var pp1 = panel.Children[panel.Children.Count - 1].TranslatePoint(new Point(), control);
-                    insertPosition = pp1.Y + panel.Children[panel.Children.Count - 1].RenderSize.Height;
+                    insertPosition = pp1.X + panel.Children[panel.Children.Count - 1].RenderSize.Width;
                 }
 
-                var p1 = new Point(panel.Margin.Left, insertPosition);
-                var p2 = new Point(panel.Margin.Left + panel.ActualWidth - panel.Margin.Right, insertPosition);
-                var rotation1 = 0.0;
+                var p1 = new Point(insertPosition, panel.Margin.Top);
+                var p2 = new Point(insertPosition, panel.Margin.Top + panel.ActualHeight - panel.Margin.Bottom);
                 drawingContext.DrawLine(m_Pen, p1, p2);
-                DrawTriangle(drawingContext, p1, rotation1);
-                DrawTriangle(drawingContext, p2, 180 + rotation1);
+                DrawTriangle(drawingContext, p1, 90);
+                DrawTriangle(drawingContext, p2, 270);
             }
 
             return;
