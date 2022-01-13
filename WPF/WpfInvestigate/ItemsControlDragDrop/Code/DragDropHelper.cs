@@ -137,14 +137,14 @@ namespace ItemsControlDragDrop.Code
             if (itemsControl is TreeView treeView)
             {
                 if (treeView.SelectedItem != null)
-                    return new List<object> { treeView.SelectedItem };
+                    return new List<object> {treeView.SelectedItem};
                 return new List<object>();
             }
 
             if (itemsControl is TabControl tabControl)
             {
                 if (tabControl.SelectedItem != null)
-                    return new List<object> { tabControl.SelectedItem };
+                    return new List<object> {tabControl.SelectedItem};
                 return new List<object>();
             }
 
@@ -160,7 +160,7 @@ namespace ItemsControlDragDrop.Code
             var itemsControl = sender as ItemsControl;
             var insertIndex = GetInsertIndex(itemsControl, e.GetPosition);
 //            var targetData = itemsControl.ItemsSource as IList;
-            var targetData = (IList)itemsControl.ItemsSource ?? itemsControl.Items;
+            var targetData = (IList) itemsControl.ItemsSource ?? itemsControl.Items;
 
             var mousePosition = e.GetPosition(itemsControl);
             var item = GetItemUnderMouse(itemsControl, mousePosition);
@@ -195,6 +195,7 @@ namespace ItemsControlDragDrop.Code
                 var item = itemsUnderMouse.OfType<DataGridRow>().FirstOrDefault();
                 return item?.DataContext;
             }
+
             if (itemsControl is TabControl)
             {
                 var item = itemsUnderMouse.OfType<TabItem>().FirstOrDefault();
@@ -293,7 +294,7 @@ namespace ItemsControlDragDrop.Code
                 var adornedElement = GetItemsHost(control);
                 if (adornedElement != null)
 //                    _dropTargetAdorner = new DropTargetInsertionAdorner(adornedElement);
-                _dropTargetAdorner = new DropTargetInsertionAdorner(control);
+                    _dropTargetAdorner = new DropTargetInsertionAdorner(control);
             }
 
             if (_dropTargetAdorner != null)
@@ -309,11 +310,13 @@ namespace ItemsControlDragDrop.Code
             {
                 var position = e.GetPosition(scrollViewer);
                 var scrollMargin = Math.Min(scrollViewer.FontSize * 2, scrollViewer.ActualHeight / 2);
-                if (position.X >= scrollViewer.ActualWidth - scrollMargin && scrollViewer.HorizontalOffset < scrollViewer.ExtentWidth - scrollViewer.ViewportWidth)
+                if (position.X >= scrollViewer.ActualWidth - scrollMargin && scrollViewer.HorizontalOffset <
+                    scrollViewer.ExtentWidth - scrollViewer.ViewportWidth)
                     scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + scrollMargin);
                 else if (position.X < scrollMargin && scrollViewer.HorizontalOffset > 0)
                     scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - scrollMargin);
-                else if (position.Y >= scrollViewer.ActualHeight - scrollMargin && scrollViewer.VerticalOffset < scrollViewer.ExtentHeight - scrollViewer.ViewportHeight)
+                else if (position.Y >= scrollViewer.ActualHeight - scrollMargin && scrollViewer.VerticalOffset <
+                         scrollViewer.ExtentHeight - scrollViewer.ViewportHeight)
                     scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + 1.0);
                 else if (position.Y < scrollMargin && scrollViewer.VerticalOffset > 0)
                     scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - 1.0);
@@ -351,8 +354,10 @@ namespace ItemsControlDragDrop.Code
         {
             if (itemsControl is TabControl)
             {
-                var tabControl = (TabControl)itemsControl;
-                return tabControl.TabStripPlacement == Dock.Left || tabControl.TabStripPlacement == Dock.Right ? Orientation.Vertical : Orientation.Horizontal;
+                var tabControl = (TabControl) itemsControl;
+                return tabControl.TabStripPlacement == Dock.Left || tabControl.TabStripPlacement == Dock.Right
+                    ? Orientation.Vertical
+                    : Orientation.Horizontal;
             }
 
             var panel = GetItemsHost(itemsControl);
@@ -362,6 +367,41 @@ namespace ItemsControlDragDrop.Code
                 return (Orientation) orientationProperty.GetValue(panel, null);
 
             throw new Exception("Trap! Can't define item panel orientation");
+        }
+
+        public static int GetOffsetIndex(ItemsControl control)
+        {
+            var orientation = GetItemsPanelOrientation(control);
+            if (orientation == Orientation.Vertical)
+                return GetOffsetIndex(control, point => point.Y, size => size.Height);
+            return GetOffsetIndex(control, point => point.X, size => size.Width);
+        }
+
+        private static int GetOffsetIndex(ItemsControl control, Func<Point, double> getX, Func<Size, double> getWidth)
+        {
+            var panel = GetItemsHost(control);
+            var offsets = new List<double>();
+            for (var i = 0; i < panel.Children.Count; i++)
+            {
+                var item = panel.Children[i];
+                var location = item.TranslatePoint(new Point(), control);
+                offsets.Add(getX(location) + getWidth(item.RenderSize) / 2.0);
+            }
+
+            var p = _dropInfo._currentEventArgs.GetPosition(control);
+            var insertIndex = -1;
+            for (var i = 0; i < offsets.Count; i++)
+            {
+                if (getX(p) < offsets[i])
+                {
+                    insertIndex = i;
+                    break;
+                }
+            }
+
+            if (insertIndex == -1)
+                insertIndex = offsets.Count;
+            return insertIndex;
         }
     }
 }
