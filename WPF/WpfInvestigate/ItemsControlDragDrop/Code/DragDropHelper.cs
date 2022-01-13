@@ -70,15 +70,8 @@ namespace ItemsControlDragDrop.Code
                 return;
             }*/
 
-            /*var itemsHost = GetItemsHost(itemsControl);
-            var a1 = e.GetPosition(itemsHost);
-            var isMouseUnderHost = Helpers.IsMouseOverTarget(itemsHost, e.GetPosition);
-            if (!isMouseUnderHost)
-            {
-                _dragInfo = null;
-                return;
-            }*/
-            if (!IsMouseUnderHost(itemsControl))
+            var itemsHost = GetItemsHost(itemsControl);
+            if (!IsMouseUnderElement(itemsHost, Mouse.GetPosition))
             {
                 _dragInfo = null;
                 return;
@@ -116,6 +109,7 @@ namespace ItemsControlDragDrop.Code
                 {
                     _isDragging = false;
                     _dragInfo = null;
+                    _dropInfo = null;
                 }
 
                 //adLayer.Remove(myAdornment);
@@ -173,40 +167,21 @@ namespace ItemsControlDragDrop.Code
             }
         }
 
-        private static bool IsMouseUnderHost(ItemsControl itemsControl)
-        {
-            var itemsHost = GetItemsHost(itemsControl);
-            var p = Mouse.GetPosition(itemsHost);
-            var bounds = VisualTreeHelper.GetDescendantBounds(itemsHost);
-            return bounds.Contains(p);
-            /*
-            var hitTestResult = VisualTreeHelper.HitTest(itemsControl, mousePosition);
-            if (hitTestResult == null)
-                return false;
-
-            var itemsUnderMouse = Helpers.GetVisualParents(hitTestResult.VisualHit).ToArray();
-            var itemsHost = GetItemsHost(itemsControl);
-            return itemsUnderMouse.Contains(itemsHost);*/
-        }
-
         private static PropertyInfo _piItemsHost;
-
         public static Panel GetItemsHost(ItemsControl itemsControl)
         {
             if (_piItemsHost == null)
-                _piItemsHost = typeof(ItemsControl).GetProperty("ItemsHost",
-                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                _piItemsHost = typeof(ItemsControl).GetProperty("ItemsHost", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             return (Panel) _piItemsHost.GetValue(itemsControl);
         }
 
         public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
         {
-            var scrolls = ((ItemsControl) sender).GetVisualChildren().OfType<ScrollBar>();
+            var control = (ItemsControl) sender;
+            var scrolls = control.GetVisualChildren().OfType<ScrollBar>();
             foreach (var sb in scrolls)
             {
-                var bounds = VisualTreeHelper.GetDescendantBounds(sb);
-                var p = e.GetPosition(sb);
-                if (bounds.Contains(p))
+                if (IsMouseUnderElement(sb, e.GetPosition))
                 {
                     e.Effects = DragDropEffects.None;
                     e.Handled = true;
@@ -215,7 +190,7 @@ namespace ItemsControlDragDrop.Code
             }
 
             _dropInfo = new DropInfo(e);
-            if (_dropTargetAdorner == null && sender is ItemsControl control)
+            if (_dropTargetAdorner == null)
             {
                 var adornedElement = GetItemsHost(control);
                 if (adornedElement != null)
@@ -225,7 +200,7 @@ namespace ItemsControlDragDrop.Code
             if (_dropTargetAdorner != null)
                 _dropTargetAdorner.InvalidateVisual();
 
-            CheckScroll((FrameworkElement) sender, e);
+            CheckScroll(control, e);
         }
 
         private static void CheckScroll(FrameworkElement o, DragEventArgs e)
@@ -320,6 +295,13 @@ namespace ItemsControlDragDrop.Code
                 insertIndex = offsets.Count;
             firstItemOffset = control.ItemContainerGenerator.IndexFromContainer(panel.Children[0]);
             return insertIndex;
+        }
+
+        private static bool IsMouseUnderElement(IInputElement element, Func<IInputElement, Point> getMousePosition)
+        {
+            var p = Mouse.GetPosition(element);
+            var bounds = VisualTreeHelper.GetDescendantBounds((Visual)element);
+            return bounds.Contains(p);
         }
 
         //==============================
