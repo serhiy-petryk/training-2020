@@ -48,8 +48,9 @@ namespace ItemsControlDragDrop.Code
 
             if (orientation == Orientation.Vertical)
             {
-                var p1 = new Point(panel.Margin.Left, insertPosition);
-                var p2 = new Point(panel.Margin.Left + panel.ActualWidth, insertPosition);
+                var p = panel.TranslatePoint(new Point(), control);
+                var p1 = new Point(p.X, insertPosition);
+                var p2 = new Point(p.X + panel.ActualWidth, insertPosition);
                 drawingContext.DrawLine(m_Pen, p1, p2);
                 DrawTriangle(drawingContext, p1, 0);
                 DrawTriangle(drawingContext, p2, 180);
@@ -57,8 +58,9 @@ namespace ItemsControlDragDrop.Code
             else
             {
                 // Orientation horizontal 
-                var p1 = new Point(insertPosition, panel.Margin.Top);
-                var p2 = new Point(insertPosition, panel.Margin.Top + panel.ActualHeight);
+                var p = panel.TranslatePoint(new Point(), control);
+                var p1 = new Point(insertPosition, p.Y);
+                var p2 = new Point(insertPosition, p.Y + panel.ActualHeight);
                 drawingContext.DrawLine(m_Pen, p1, p2);
                 DrawTriangle(drawingContext, p1, 90);
                 DrawTriangle(drawingContext, p2, 270);
@@ -81,7 +83,7 @@ namespace ItemsControlDragDrop.Code
             // Create the pen and triangle in a static constructor and freeze them to improve performance.
             const int triangleSize = 5;
 
-            m_Pen = new Pen(Brushes.Magenta, 3);
+            m_Pen = new Pen(Brushes.Magenta, 2);
             m_Pen.Freeze();
 
             var firstLine = new LineSegment(new Point(0, -triangleSize), false);
