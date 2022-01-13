@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -16,27 +17,39 @@ namespace ItemsControlDragDrop.Code
             var panel = DragDropHelper.GetItemsHost(control);
 
             var orientation = DragDropHelper.GetItemsPanelOrientation(control);
+            Func<Point, double> getX;
+            Func<Size, double> getWidth;
+            if (orientation == Orientation.Horizontal)
+            {
+                getX = point => point.X;
+                getWidth = size => size.Width;
+            }
+            else
+            {
+                getX = point => point.Y;
+                getWidth = size => size.Height;
+            }
+
+            var insertIndex = DragDropHelper.GetOffsetIndex(control);
+            double insertPosition;
+            if (insertIndex == 0)
+            {
+                insertPosition = getX(panel.Children[0].TranslatePoint(new Point(), control));
+            }
+            else if (insertIndex < panel.Children.Count)
+            {
+                var p1 = panel.Children[insertIndex - 1].TranslatePoint(new Point(), control);
+                var p2 = panel.Children[insertIndex].TranslatePoint(new Point(), control);
+                insertPosition = (getX(p1) + getWidth(panel.Children[insertIndex - 1].RenderSize) + getX(p2)) / 2;
+            }
+            else
+            {
+                var p1 = panel.Children[panel.Children.Count - 1].TranslatePoint(new Point(), control);
+                insertPosition = getX(p1) + getWidth(panel.Children[panel.Children.Count - 1].RenderSize);
+            }
 
             if (orientation == Orientation.Vertical)
             {
-                var insertIndex = DragDropHelper.GetOffsetIndex(control);
-                double insertPosition;
-                if (insertIndex == 0)
-                {
-                    insertPosition = panel.Children[0].TranslatePoint(new Point(), control).Y;
-                }
-                else if (insertIndex < panel.Children.Count)
-                {
-                    var pp1 = panel.Children[insertIndex - 1].TranslatePoint(new Point(), control);
-                    var pp2 = panel.Children[insertIndex].TranslatePoint(new Point(), control);
-                    insertPosition = (pp1.Y + panel.Children[insertIndex - 1].RenderSize.Height + pp2.Y) / 2;
-                }
-                else
-                {
-                    var pp1 = panel.Children[panel.Children.Count - 1].TranslatePoint(new Point(), control);
-                    insertPosition = pp1.Y + panel.Children[panel.Children.Count - 1].RenderSize.Height;
-                }
-
                 var p1 = new Point(panel.Margin.Left, insertPosition);
                 var p2 = new Point(panel.Margin.Left + panel.ActualWidth - panel.Margin.Right, insertPosition);
                 drawingContext.DrawLine(m_Pen, p1, p2);
@@ -46,35 +59,12 @@ namespace ItemsControlDragDrop.Code
             else
             {
                 // Orientation horizontal 
-                var insertIndex = DragDropHelper.GetOffsetIndex(control);
-                double insertPosition;
-                if (insertIndex == 0)
-                {
-                    insertPosition = panel.Children[0].TranslatePoint(new Point(), control).X;
-                }
-                else if (insertIndex < panel.Children.Count)
-                {
-                    var pp1 = panel.Children[insertIndex - 1].TranslatePoint(new Point(), control);
-                    var pp2 = panel.Children[insertIndex].TranslatePoint(new Point(), control);
-                    insertPosition = (pp1.X + panel.Children[insertIndex - 1].RenderSize.Width + pp2.X) / 2;
-                }
-                else
-                {
-                    var pp1 = panel.Children[panel.Children.Count - 1].TranslatePoint(new Point(), control);
-                    insertPosition = pp1.X + panel.Children[panel.Children.Count - 1].RenderSize.Width;
-                }
-
                 var p1 = new Point(insertPosition, panel.Margin.Top);
                 var p2 = new Point(insertPosition, panel.Margin.Top + panel.ActualHeight - panel.Margin.Bottom);
                 drawingContext.DrawLine(m_Pen, p1, p2);
                 DrawTriangle(drawingContext, p1, 90);
                 DrawTriangle(drawingContext, p2, 270);
             }
-        }
-
-        private void GetInsertPosition()
-        {
-
         }
 
         private void DrawTriangle(DrawingContext drawingContext, Point origin, double rotation)

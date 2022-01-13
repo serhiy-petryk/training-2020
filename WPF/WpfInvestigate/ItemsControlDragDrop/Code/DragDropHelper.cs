@@ -372,13 +372,19 @@ namespace ItemsControlDragDrop.Code
         public static int GetOffsetIndex(ItemsControl control)
         {
             var orientation = GetItemsPanelOrientation(control);
-            if (orientation == Orientation.Vertical)
-                return GetOffsetIndex(control, point => point.Y, size => size.Height);
-            return GetOffsetIndex(control, point => point.X, size => size.Width);
-        }
+            Func<Point, double> getX;
+            Func<Size, double> getWidth;
+            if (orientation == Orientation.Horizontal)
+            {
+                getX = point => point.X;
+                getWidth = size => size.Width;
+            }
+            else
+            {
+                getX = point => point.Y;
+                getWidth = size => size.Height;
+            }
 
-        private static int GetOffsetIndex(ItemsControl control, Func<Point, double> getX, Func<Size, double> getWidth)
-        {
             var panel = GetItemsHost(control);
             var offsets = new List<double>();
             for (var i = 0; i < panel.Children.Count; i++)
