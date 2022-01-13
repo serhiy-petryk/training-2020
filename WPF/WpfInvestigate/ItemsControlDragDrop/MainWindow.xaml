@@ -7,100 +7,128 @@
         Title="MainWindow" Height="700" Width="1100">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
-            <TextBlock Text="Drap and Drop ToDo:"/>
-            <TextBlock Margin="8 0" Text="- reoder item"/>
-            <TextBlock Margin="8 0" Text="- copy item to another list"/>
-            <TextBlock Margin="8 0" Text="- item adorner"/>
-            <TextBlock Margin="8 0" Text="- location adorner"/>
-            <TextBlock Margin="8 0" Text="- scrolling"/>
-        </StackPanel>
-
-        <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <TabControl Grid.Column="0"
-                        ScrollViewer.CanContentScroll="True"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto"
-                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                        PreviewMouseMove="View1_OnPreviewMouseMove"
-                        PreviewDragOver="View1_OnPreviewDragOver"
-                        PreviewDragEnter="View1_OnPreviewDragEnter"
-                        PreviewDragLeave="View1_OnPreviewDragLeave"
-                        PreviewDrop="View1_OnPreviewDrop"
-                        AllowDrop="True">
-                <TabItem Header="Tab 1" Content="Content of Tab1"/>
-                <TabItem Header="Tab 2" Content="Content of Tab2"/>
-                <TabItem Header="Tab 3" Content="Content of Tab3"/>
-                <TabItem Header="Tab 4" Content="Content of Tab4"/>
-                <TabItem Header="Tab 5" Content="Content of Tab5"/>
-                <TabItem Header="Tab 6" Content="Content of Tab6"/>
-            </TabControl>
-            <TabControl Grid.Column="1" TabStripPlacement="Left"
-                        ScrollViewer.CanContentScroll="True"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto"
-                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                        PreviewMouseMove="View1_OnPreviewMouseMove"
-                        PreviewDragOver="View1_OnPreviewDragOver"
-                        PreviewDragEnter="View1_OnPreviewDragEnter"
-                        PreviewDragLeave="View1_OnPreviewDragLeave"
-                        PreviewDrop="View1_OnPreviewDrop"
-                        AllowDrop="True">
-                <TabItem Header="Tab 1" Content="Content of Tab1"/>
-                <TabItem Header="Tab 2" Content="Content of Tab2"/>
-                <TabItem Header="Tab 3" Content="Content of Tab3"/>
-                <TabItem Header="Tab 4" Content="Content of Tab4"/>
-            </TabControl>
+        <Grid Grid.Column="0" Background="White">
+            <Slider Grid.Column="0"
+                    x:Name="uiScaleSlider"
+                    Focusable="False"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.5" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
         </Grid>
 
-        <DataGrid Grid.Row="1" Grid.Column="0" Name="view1" ItemsSource="{Binding MyData}"
-                  IsReadOnly="True" HeadersVisibility="Column"
-                  HorizontalAlignment="Stretch" ScrollViewer.PanningMode="VerticalOnly"
-                  SelectionMode="Extended" SelectionUnit="FullRow"
-                  Background="LightBlue"
-                  AutoGenerateColumns="False"
-                  ScrollViewer.CanContentScroll="True"
-                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                  PreviewMouseMove="View1_OnPreviewMouseMove"
-                  PreviewDragOver="View1_OnPreviewDragOver"
-                  PreviewDragEnter="View1_OnPreviewDragEnter"
-                  PreviewDragLeave="View1_OnPreviewDragLeave"
-                  PreviewDrop="View1_OnPreviewDrop"
-                  AllowDrop="True">
-            <!--DragOver="ItemsList_DragOver" Drop="DataGrid_OnDrop">-->
-            <DataGrid.Resources>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="Margin" Value="10 5"/>
-                    <!--<EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />
-                    <EventSetter Event="PreviewGiveFeedback" Handler="Item_OnPreviewGiveFeedback" />-->
-                </Style>
-                <Style TargetType="ListViewItem">
-<!--                    <EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />
-                    <EventSetter Event="PreviewGiveFeedback" Handler="Item_OnPreviewGiveFeedback" />-->
-                    <!--                        <EventSetter Event="Drop" Handler="Item_OnDrop" />
-                        <Setter Property="AllowDrop" Value="True" />-->
-                </Style>
-            </DataGrid.Resources>
+        <Grid Grid.Column="1" Margin="0 10 0 0">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
 
-            <!--<DataGrid.ItemsPanel>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+                <TextBlock Text="Drap and Drop ToDo:"/>
+                <TextBlock Margin="8 0" Text="- reoder item"/>
+                <TextBlock Margin="8 0" Text="- copy item to another list"/>
+                <TextBlock Margin="8 0" Text="- item adorner"/>
+                <TextBlock Margin="8 0" Text="- location adorner"/>
+                <TextBlock Margin="8 0" Text="- scrolling"/>
+            </StackPanel>
+
+            <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TabControl Grid.Column="0"
+                            ScrollViewer.CanContentScroll="True"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            PreviewMouseMove="View1_OnPreviewMouseMove"
+                            PreviewDragOver="View1_OnPreviewDragOver"
+                            PreviewDragEnter="View1_OnPreviewDragEnter"
+                            PreviewDragLeave="View1_OnPreviewDragLeave"
+                            PreviewDrop="View1_OnPreviewDrop"
+                            AllowDrop="True">
+                    <TabItem Header="Tab 1" Content="Content of Tab1"/>
+                    <TabItem Header="Tab 2" Content="Content of Tab2"/>
+                    <TabItem Header="Tab 3" Content="Content of Tab3"/>
+                    <TabItem Header="Tab 4" Content="Content of Tab4"/>
+                    <TabItem Header="Tab 5" Content="Content of Tab5"/>
+                    <TabItem Header="Tab 6" Content="Content of Tab6"/>
+                </TabControl>
+                <TabControl Grid.Column="1" TabStripPlacement="Left"
+                            ScrollViewer.CanContentScroll="True"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            PreviewMouseMove="View1_OnPreviewMouseMove"
+                            PreviewDragOver="View1_OnPreviewDragOver"
+                            PreviewDragEnter="View1_OnPreviewDragEnter"
+                            PreviewDragLeave="View1_OnPreviewDragLeave"
+                            PreviewDrop="View1_OnPreviewDrop"
+                            AllowDrop="True">
+                    <TabItem Header="Tab 1" Content="Content of Tab1"/>
+                    <TabItem Header="Tab 2" Content="Content of Tab2"/>
+                    <TabItem Header="Tab 3" Content="Content of Tab3"/>
+                    <TabItem Header="Tab 4" Content="Content of Tab4"/>
+                </TabControl>
+            </Grid>
+
+            <DataGrid Grid.Row="1" Grid.Column="0" Name="view1" ItemsSource="{Binding MyData}"
+                      IsReadOnly="True" HeadersVisibility="Column"
+                      HorizontalAlignment="Stretch" ScrollViewer.PanningMode="VerticalOnly"
+                      SelectionMode="Extended" SelectionUnit="FullRow"
+                      Background="LightBlue"
+                      AutoGenerateColumns="False"
+                      ScrollViewer.CanContentScroll="True"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      PreviewMouseMove="View1_OnPreviewMouseMove"
+                      PreviewDragOver="View1_OnPreviewDragOver"
+                      PreviewDragEnter="View1_OnPreviewDragEnter"
+                      PreviewDragLeave="View1_OnPreviewDragLeave"
+                      PreviewDrop="View1_OnPreviewDrop"
+                      AllowDrop="True">
+                <!--DragOver="ItemsList_DragOver" Drop="DataGrid_OnDrop">-->
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Margin" Value="10 5"/>
+                        <!--<EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />
+                    <EventSetter Event="PreviewGiveFeedback" Handler="Item_OnPreviewGiveFeedback" />-->
+                    </Style>
+                    <Style TargetType="ListViewItem">
+                        <!--                    <EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />
+                    <EventSetter Event="PreviewGiveFeedback" Handler="Item_OnPreviewGiveFeedback" />-->
+                        <!--                        <EventSetter Event="Drop" Handler="Item_OnDrop" />
+                        <Setter Property="AllowDrop" Value="True" />-->
+                    </Style>
+                </DataGrid.Resources>
+
+                <!--<DataGrid.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Background="Orange"/>
                 </ItemsPanelTemplate>
             </DataGrid.ItemsPanel>-->
-            <!--<DataGrid.ItemTemplate>
+                <!--<DataGrid.ItemTemplate>
                     <DataTemplate>
                         <Button Content="{Binding}"
                                 Command="{Binding DataContext.MyCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
@@ -109,26 +137,26 @@
                     </DataTemplate>
                 </DataGrid.ItemTemplate>-->
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
-                <DataGridCheckBoxColumn Header="Finished" Binding="{Binding Finished}"/>
-                <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="100">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style>
-                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="330"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                    <DataGridCheckBoxColumn Header="Finished" Binding="{Binding Finished}"/>
+                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="100">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="330"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <ScrollViewer Grid.Row="1" Grid.Column="2">
-            <DataGrid Name="view2" HorizontalAlignment="Stretch" ScrollViewer.PanningMode="VerticalOnly"
-                      Background="LightBlue" AllowDrop="True">
-                <!--                      Drop="View2_OnDrop">-->
-                <!--                <DataGrid.Resources>
+            <ScrollViewer Grid.Row="1" Grid.Column="2">
+                <DataGrid Name="view2" HorizontalAlignment="Stretch" ScrollViewer.PanningMode="VerticalOnly"
+                          Background="LightBlue" AllowDrop="True">
+                    <!--                      Drop="View2_OnDrop">-->
+                    <!--                <DataGrid.Resources>
                     <Style TargetType="ListViewItem">
                         <EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />
                         <EventSetter Event="PreviewGiveFeedback" Handler="Item_OnPreviewGiveFeedback" />
@@ -136,8 +164,8 @@
                         <Setter Property="AllowDrop" Value="True" />
                     </Style>
                 </DataGrid.Resources>-->
-            </DataGrid>
-        </ScrollViewer>
-
+                </DataGrid>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Window>
