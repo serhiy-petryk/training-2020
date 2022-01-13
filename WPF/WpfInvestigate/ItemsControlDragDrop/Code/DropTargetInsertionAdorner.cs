@@ -81,7 +81,7 @@ namespace ItemsControlDragDrop.Code
             // Create the pen and triangle in a static constructor and freeze them to improve performance.
             const int triangleSize = 5;
 
-            m_Pen = new Pen(Brushes.Magenta, 2);
+            m_Pen = new Pen(Brushes.Magenta, 3);
             m_Pen.Freeze();
 
             var firstLine = new LineSegment(new Point(0, -triangleSize), false);
