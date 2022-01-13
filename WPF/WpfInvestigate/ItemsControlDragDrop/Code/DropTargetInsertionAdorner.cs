@@ -7,9 +7,7 @@ namespace ItemsControlDragDrop.Code
 {
     public class DropTargetInsertionAdorner : DropTargetAdorner
     {
-        public DropTargetInsertionAdorner(UIElement adornedElement) : base(adornedElement)
-        {
-        }
+        public DropTargetInsertionAdorner(UIElement adornedElement) : base(adornedElement) {}
 
         protected override void OnRender(DrawingContext drawingContext)
         {
@@ -46,25 +44,13 @@ namespace ItemsControlDragDrop.Code
                 insertPosition = getX(p1) + getWidth(panel.Children[panel.Children.Count - 1].RenderSize);
             }
 
-            if (orientation == Orientation.Vertical)
-            {
-                var p = panel.TranslatePoint(new Point(), control);
-                var p1 = new Point(p.X, insertPosition);
-                var p2 = new Point(p.X + panel.ActualWidth, insertPosition);
-                drawingContext.DrawLine(m_Pen, p1, p2);
-                DrawTriangle(drawingContext, p1, 0);
-                DrawTriangle(drawingContext, p2, 180);
-            }
-            else
-            {
-                // Orientation horizontal 
-                var p = panel.TranslatePoint(new Point(), control);
-                var p1 = new Point(insertPosition, p.Y);
-                var p2 = new Point(insertPosition, p.Y + panel.ActualHeight);
-                drawingContext.DrawLine(m_Pen, p1, p2);
-                DrawTriangle(drawingContext, p1, 90);
-                DrawTriangle(drawingContext, p2, 270);
-            }
+            var p = panel.TranslatePoint(new Point(), control);
+            var pp1 = orientation == Orientation.Vertical ? new Point(p.X, insertPosition): new Point(insertPosition, p.Y);
+            var pp2 = orientation == Orientation.Vertical ? new Point(p.X + panel.ActualWidth, insertPosition): new Point(insertPosition, p.Y + panel.ActualHeight);
+            drawingContext.DrawLine(m_Pen, pp1, pp2);
+            var rotation = orientation == Orientation.Vertical ? 0.0 : 90.0;
+            DrawTriangle(drawingContext, pp1, rotation);
+            DrawTriangle(drawingContext, pp2, rotation + 180.0);
         }
 
         private void DrawTriangle(DrawingContext drawingContext, Point origin, double rotation)
