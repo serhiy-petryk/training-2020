@@ -7,6 +7,34 @@ namespace ItemsControlDragDrop.Code
 {
     public static class Helpers
     {
+        public static Rect GetVisibleRect(FrameworkElement item, Visual visualAncestor)
+        {
+            // based on https://social.msdn.microsoft.com/Forums/vstudio/en-US/b57531cc-fdb1-4d0e-9650-324630343d62/screen-rectangle-for-visible-part-of-wpf-uielement-windows-forms-wpf-interop?forum=wpf
+            // Visual _rootVisual = HwndSource.FromVisual(item).RootVisual;
+            var transformToRoot = item.TransformToAncestor(visualAncestor);
+            // Rect screenRect = new Rect(transformToRoot.Transform(new Point(0, 0)), transformToRoot.Transform(new Point(item.ActualWidth, item.ActualHeight)));
+            var screenRect = new Rect(transformToRoot.Transform(new Point(-item.Margin.Left, -item.Margin.Top)),
+                transformToRoot.Transform(new Point(item.ActualWidth + item.Margin.Right, item.ActualHeight + item.Margin.Bottom)));
+            var parent = VisualTreeHelper.GetParent(item);
+            while (parent != null && parent != visualAncestor)
+            {
+                var visual = parent as Visual;
+                var element = parent as FrameworkElement;
+                if (visual != null && element != null)
+                {
+                    transformToRoot = visual.TransformToAncestor(visualAncestor);
+                    var pointAncestorTopLeft = transformToRoot.Transform(new Point(0, 0));
+                    var pointAncestorBottomRight = transformToRoot.Transform(new Point(element.ActualWidth, element.ActualHeight));
+                    var ancestorRect = new Rect(pointAncestorTopLeft, pointAncestorBottomRight);
+                    screenRect.Intersect(ancestorRect);
+                }
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+
+            // at this point screenRect is the bounding rectangle for the visible portion of "this" element
+            return screenRect;
+        }
+
         public delegate Point GetPositionDelegate(IInputElement element);
         public static bool IsMouseOverTarget(Visual target, GetPositionDelegate getPosition)
         {
