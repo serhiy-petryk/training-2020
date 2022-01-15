@@ -157,7 +157,12 @@
             <ScrollViewer Grid.Row="1" Grid.Column="2">
                 <DataGrid Name="view2" HorizontalAlignment="Stretch" ScrollViewer.PanningMode="VerticalOnly"
                           Background="LightBlue" AllowDrop="True"
-                                          Drop="View2_OnDrop">
+                          PreviewMouseLeftButtonDown="View1_OnPreviewMouseLeftButtonDown"
+                          PreviewMouseMove="View1_OnPreviewMouseMove"
+                          PreviewDragOver="View1_OnPreviewDragOver"
+                          PreviewDragEnter="View1_OnPreviewDragEnter"
+                          PreviewDragLeave="View1_OnPreviewDragLeave"
+                          Drop="View2_OnDrop">
                     <!--                <DataGrid.Resources>
                     <Style TargetType="ListViewItem">
                         <EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />

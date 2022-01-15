@@ -12,6 +12,9 @@ namespace ItemsControlDragDrop.Code
         {
             var control = (ItemsControl)AdornedElement;
             var panel = DragDropHelper.GetItemsHost(control);
+            if (panel.Children.Count == 0)
+                return;
+
             var orientation = DragDropHelper.GetItemsPanelOrientation(control);
 
             var insertIndex = DragDropHelper.GetInsertIndex(control, out int firstItemOffset);
