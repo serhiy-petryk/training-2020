@@ -172,24 +172,49 @@ namespace ItemsControlDragDrop.Code
         {
             if (_piItemsHost == null)
                 _piItemsHost = typeof(ItemsControl).GetProperty("ItemsHost", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            return (Panel) _piItemsHost.GetValue(itemsControl);
+            return (Panel)_piItemsHost.GetValue(itemsControl);
+        }
+
+        private static PropertyInfo _piDataGridHeaderHost;
+        public static FrameworkElement GetHeaderHost(ItemsControl itemsControl)
+        {
+            if (itemsControl is DataGrid)
+            {
+                if (_piDataGridHeaderHost == null)
+                    _piDataGridHeaderHost = typeof(DataGrid).GetProperty("ColumnHeadersPresenter", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                return (DataGridColumnHeadersPresenter) _piDataGridHeaderHost.GetValue(itemsControl);
+            }
+            return null;
         }
 
         public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
         {
             var control = (ItemsControl) sender;
-            var scrolls = control.GetVisualChildren().OfType<ScrollBar>();
-            foreach (var sb in scrolls)
+            _dropInfo = new DropInfo(e);
+
+            var itemsHost = GetItemsHost(control);
+            var bounds = Helpers.GetBoundsOfElement(itemsHost);
+            var mousePos = _dropInfo._currentEventArgs.GetPosition(itemsHost);
+            if (!bounds.Contains(mousePos))
             {
-                if (IsMouseUnderElement(sb, e.GetPosition))
+                var headerHost = GetHeaderHost(control);
+                var flag = false;
+                if (headerHost != null)
                 {
+                    bounds = Helpers.GetBoundsOfElement(headerHost);
+                    mousePos = _dropInfo._currentEventArgs.GetPosition(headerHost);
+                    flag = bounds.Contains(mousePos);
+                }
+
+                if (!flag)
+                {
+                    // CheckScroll(control, e);
                     e.Effects = DragDropEffects.None;
                     e.Handled = true;
                     return;
                 }
             }
 
-            _dropInfo = new DropInfo(e);
             if (_dropTargetAdorner == null)
             {
                 var adornedElement = GetItemsHost(control);
@@ -203,23 +228,26 @@ namespace ItemsControlDragDrop.Code
             CheckScroll(control, e);
         }
 
-        private static void CheckScroll(FrameworkElement o, DragEventArgs e)
+        private static void CheckScroll(ItemsControl o, DragEventArgs e)
         {
             var scrollViewer = o.GetVisualChildren().OfType<ScrollViewer>().FirstOrDefault();
             if (scrollViewer != null)
             {
+                if (scrollViewer.CanContentScroll)
+                    scrollViewer.CanContentScroll = false;
+                const double scrollMargin = 25.0;
+                const double scrollStep = 8.0;
                 var position = e.GetPosition(scrollViewer);
-                var scrollMargin = Math.Min(scrollViewer.FontSize * 2, scrollViewer.ActualHeight / 2);
                 if (position.X >= scrollViewer.ActualWidth - scrollMargin && scrollViewer.HorizontalOffset <
                     scrollViewer.ExtentWidth - scrollViewer.ViewportWidth)
-                    scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + scrollMargin);
+                    scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + scrollStep);
                 else if (position.X < scrollMargin && scrollViewer.HorizontalOffset > 0)
-                    scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - scrollMargin);
+                    scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - scrollStep);
                 else if (position.Y >= scrollViewer.ActualHeight - scrollMargin && scrollViewer.VerticalOffset <
                          scrollViewer.ExtentHeight - scrollViewer.ViewportHeight)
-                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + 1.0);
+                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + scrollStep);
                 else if (position.Y < scrollMargin && scrollViewer.VerticalOffset > 0)
-                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - 1.0);
+                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - scrollStep);
             }
         }
 
@@ -257,44 +285,25 @@ namespace ItemsControlDragDrop.Code
         public static int GetInsertIndex(ItemsControl control, out int firstItemOffset)
         {
             var orientation = GetItemsPanelOrientation(control);
-            Func<Point, double> getX;
-            Func<Size, double> getWidth;
-            if (orientation == Orientation.Horizontal)
-            {
-                getX = point => point.X;
-                getWidth = size => size.Width;
-            }
-            else
-            {
-                getX = point => point.Y;
-                getWidth = size => size.Height;
-            }
-
-
             var panel = GetItemsHost(control);
-            var offsets = new List<double>();
+            firstItemOffset = panel.Children.Count == 0 ? 0 : control.ItemContainerGenerator.IndexFromContainer(panel.Children[0]);
             for (var i = 0; i < panel.Children.Count; i++)
             {
-                var item = panel.Children[i];
-                var location = item.TranslatePoint(new Point(), control);
-                offsets.Add(getX(location) + getWidth(item.RenderSize) / 2.0);
-            }
-
-            var p = _dropInfo._currentEventArgs.GetPosition(control);
-            var insertIndex = -1;
-            for (var i = 0; i < offsets.Count; i++)
-            {
-                if (getX(p) < offsets[i])
+                var item = panel.Children[i] as FrameworkElement;
+                var itemBounds = item.GetBoundsOfElement();
+                var mousePos = _dropInfo._currentEventArgs.GetPosition(item);
+                if (itemBounds.Contains(mousePos))
                 {
-                    insertIndex = i;
-                    break;
+                    if (orientation == Orientation.Vertical)
+                        return i + (mousePos.Y <= itemBounds.Bottom / 2 ? 0 : 1);
+                    return i + (mousePos.X <= itemBounds.Right / 2 ? 0 : 1);
                 }
             }
 
-            if (insertIndex == -1)
-                insertIndex = offsets.Count;
-            firstItemOffset = control.ItemContainerGenerator.IndexFromContainer(panel.Children[0]);
-            return insertIndex;
+            var panelBounds = panel.GetBoundsOfElement();
+            var mousePanelPos = _dropInfo._currentEventArgs.GetPosition(panel);
+            Debug.Print($"Index2: {(panelBounds.Contains(mousePanelPos) ? panel.Children.Count : 0)}");
+            return panelBounds.Contains(mousePanelPos) ? panel.Children.Count : 0;
         }
 
         private static bool IsMouseUnderElement(IInputElement element, Func<IInputElement, Point> getMousePosition)

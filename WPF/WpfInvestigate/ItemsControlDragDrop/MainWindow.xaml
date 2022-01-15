@@ -75,6 +75,7 @@
                     <TabItem Header="Tab 4" Content="Content of Tab4"/>
                     <TabItem Header="Tab 5" Content="Content of Tab5"/>
                     <TabItem Header="Tab 6" Content="Content of Tab6"/>
+                    <TabItem Header="Tab 7" Content="Content of Tab7"/>
                 </TabControl>
                 <TabControl Grid.Column="1" TabStripPlacement="Left"
                             ScrollViewer.CanContentScroll="True"
@@ -99,9 +100,10 @@
                       SelectionMode="Extended" SelectionUnit="FullRow"
                       Background="LightBlue"
                       AutoGenerateColumns="False"
-                      ScrollViewer.CanContentScroll="True"
+                      ScrollViewer.CanContentScroll="False"
                       ScrollViewer.VerticalScrollBarVisibility="Auto"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      PreviewMouseLeftButtonDown="View1_OnPreviewMouseLeftButtonDown"
                       PreviewMouseMove="View1_OnPreviewMouseMove"
                       PreviewDragOver="View1_OnPreviewDragOver"
                       PreviewDragEnter="View1_OnPreviewDragEnter"
@@ -111,7 +113,7 @@
                 <!--DragOver="ItemsList_DragOver" Drop="DataGrid_OnDrop">-->
                 <DataGrid.Resources>
                     <Style TargetType="DataGridRow">
-                        <Setter Property="Margin" Value="10 5"/>
+                        <Setter Property="Margin" Value="10 25 20 5"/>
                         <!--<EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />
                     <EventSetter Event="PreviewGiveFeedback" Handler="Item_OnPreviewGiveFeedback" />-->
                     </Style>
@@ -123,11 +125,11 @@
                     </Style>
                 </DataGrid.Resources>
 
-                <!--<DataGrid.ItemsPanel>
+                <DataGrid.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Background="Orange"/>
+                    <StackPanel Margin="5 7 10 3" Background="Orange"/>
                 </ItemsPanelTemplate>
-            </DataGrid.ItemsPanel>-->
+            </DataGrid.ItemsPanel>
                 <!--<DataGrid.ItemTemplate>
                     <DataTemplate>
                         <Button Content="{Binding}"
@@ -154,8 +156,8 @@
 
             <ScrollViewer Grid.Row="1" Grid.Column="2">
                 <DataGrid Name="view2" HorizontalAlignment="Stretch" ScrollViewer.PanningMode="VerticalOnly"
-                          Background="LightBlue" AllowDrop="True">
-                    <!--                      Drop="View2_OnDrop">-->
+                          Background="LightBlue" AllowDrop="True"
+                                          Drop="View2_OnDrop">
                     <!--                <DataGrid.Resources>
                     <Style TargetType="ListViewItem">
                         <EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />

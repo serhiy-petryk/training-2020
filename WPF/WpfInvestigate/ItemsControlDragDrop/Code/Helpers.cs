@@ -7,14 +7,15 @@ namespace ItemsControlDragDrop.Code
 {
     public static class Helpers
     {
-        public static Rect GetVisibleRect(FrameworkElement item, Visual visualAncestor)
+        public static Rect GetBoundsOfElement(this FrameworkElement element) => new Rect(-element.Margin.Left, -element.Margin.Top, element.ActualWidth + element.Margin.Left + element.Margin.Right, element.ActualHeight + element.Margin.Top + element.Margin.Bottom);
+
+        public static Rect GetVisibleRect(this FrameworkElement item, Visual visualAncestor)
         {
             // based on https://social.msdn.microsoft.com/Forums/vstudio/en-US/b57531cc-fdb1-4d0e-9650-324630343d62/screen-rectangle-for-visible-part-of-wpf-uielement-windows-forms-wpf-interop?forum=wpf
             // Visual _rootVisual = HwndSource.FromVisual(item).RootVisual;
             var transformToRoot = item.TransformToAncestor(visualAncestor);
             // Rect screenRect = new Rect(transformToRoot.Transform(new Point(0, 0)), transformToRoot.Transform(new Point(item.ActualWidth, item.ActualHeight)));
-            var screenRect = new Rect(transformToRoot.Transform(new Point(-item.Margin.Left, -item.Margin.Top)),
-                transformToRoot.Transform(new Point(item.ActualWidth + item.Margin.Right, item.ActualHeight + item.Margin.Bottom)));
+            var screenRect = transformToRoot.TransformBounds(GetBoundsOfElement(item));
             var parent = VisualTreeHelper.GetParent(item);
             while (parent != null && parent != visualAncestor)
             {
