@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace ItemsControlDragDrop.Code
 {
@@ -71,7 +70,7 @@ namespace ItemsControlDragDrop.Code
             }*/
 
             var itemsHost = GetItemsHost(itemsControl);
-            if (!IsMouseUnderElement(itemsHost, Mouse.GetPosition))
+            if (!Helpers.IsMouseOverElement(itemsHost, Mouse.GetPosition))
             {
                 _dragInfo = null;
                 return;
@@ -193,18 +192,12 @@ namespace ItemsControlDragDrop.Code
             _dropInfo = new DropInfo(e);
 
             var itemsHost = GetItemsHost(control);
-            var bounds = Helpers.GetBoundsOfElement(itemsHost);
-            var mousePos = _dropInfo._currentEventArgs.GetPosition(itemsHost);
-            if (!bounds.Contains(mousePos))
+            if (!itemsHost.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition))
             {
                 var headerHost = GetHeaderHost(control);
                 var flag = false;
                 if (headerHost != null)
-                {
-                    bounds = Helpers.GetBoundsOfElement(headerHost);
-                    mousePos = _dropInfo._currentEventArgs.GetPosition(headerHost);
-                    flag = bounds.Contains(mousePos);
-                }
+                    flag = headerHost.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition);
 
                 if (!flag)
                 {
@@ -290,27 +283,17 @@ namespace ItemsControlDragDrop.Code
             for (var i = 0; i < panel.Children.Count; i++)
             {
                 var item = panel.Children[i] as FrameworkElement;
-                var itemBounds = item.GetBoundsOfElement();
-                var mousePos = _dropInfo._currentEventArgs.GetPosition(item);
-                if (itemBounds.Contains(mousePos))
+                if (item.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition))
                 {
+                    var itemBounds = item.GetBoundsOfElement();
+                    var mousePos = _dropInfo._currentEventArgs.GetPosition(item);
                     if (orientation == Orientation.Vertical)
                         return i + (mousePos.Y <= itemBounds.Bottom / 2 ? 0 : 1);
                     return i + (mousePos.X <= itemBounds.Right / 2 ? 0 : 1);
                 }
             }
-
-            var panelBounds = panel.GetBoundsOfElement();
-            var mousePanelPos = _dropInfo._currentEventArgs.GetPosition(panel);
-            Debug.Print($"Index2: {(panelBounds.Contains(mousePanelPos) ? panel.Children.Count : 0)}");
-            return panelBounds.Contains(mousePanelPos) ? panel.Children.Count : 0;
-        }
-
-        private static bool IsMouseUnderElement(IInputElement element, Func<IInputElement, Point> getMousePosition)
-        {
-            var p = Mouse.GetPosition(element);
-            var bounds = VisualTreeHelper.GetDescendantBounds((Visual)element);
-            return bounds.Contains(p);
+            Debug.Print($"Index2: {(panel.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition) ? panel.Children.Count : 0)}");
+            return panel.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition) ? panel.Children.Count : 0;
         }
 
         //==============================

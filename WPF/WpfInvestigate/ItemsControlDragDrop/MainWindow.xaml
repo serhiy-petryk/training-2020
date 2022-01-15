@@ -125,11 +125,11 @@
                     </Style>
                 </DataGrid.Resources>
 
-                <DataGrid.ItemsPanel>
+                <!--<DataGrid.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Margin="5 7 10 3" Background="Orange"/>
                 </ItemsPanelTemplate>
-            </DataGrid.ItemsPanel>
+            </DataGrid.ItemsPanel>-->
                 <!--<DataGrid.ItemTemplate>
                     <DataTemplate>
                         <Button Content="{Binding}"

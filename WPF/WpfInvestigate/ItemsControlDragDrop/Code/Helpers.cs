@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -7,6 +8,13 @@ namespace ItemsControlDragDrop.Code
 {
     public static class Helpers
     {
+        public static bool IsMouseOverElement(this FrameworkElement element, Func<IInputElement, Point> getPositionOfMouse)
+        {
+            var p = getPositionOfMouse(element);
+            var bounds = GetBoundsOfElement(element);
+            return bounds.Contains(p);
+        }
+
         public static Rect GetBoundsOfElement(this FrameworkElement element) => new Rect(-element.Margin.Left, -element.Margin.Top, element.ActualWidth + element.Margin.Left + element.Margin.Right, element.ActualHeight + element.Margin.Top + element.Margin.Bottom);
 
         public static Rect GetVisibleRect(this FrameworkElement item, Visual visualAncestor)
