@@ -28,20 +28,11 @@ namespace ItemsControlDragDrop.Code
 
         internal class DropInfo
         {
-            private DragEventArgs _previousEventArgs;
             internal DragEventArgs _currentEventArgs;
-
             public DropInfo(DragEventArgs args)
             {
                 _currentEventArgs = args;
             }
-
-            public void Update(DragEventArgs args)
-            {
-                _previousEventArgs = _currentEventArgs;
-                _currentEventArgs = args;
-            }
-
         }
 
         private static DragInfo _dragInfo;
@@ -69,7 +60,7 @@ namespace ItemsControlDragDrop.Code
             }*/
 
             var itemsHost = GetItemsHost(itemsControl);
-            if (!itemsHost.IsMouseOverElement(Mouse.GetPosition))
+            if (!itemsHost.IsMouseOverElement(e.GetPosition))
             {
                 _dragInfo = null;
                 return;
@@ -190,12 +181,12 @@ namespace ItemsControlDragDrop.Code
             _dropInfo = new DropInfo(e);
 
             var itemsHost = GetItemsHost(control);
-            if (!itemsHost.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition))
+            if (!itemsHost.IsMouseOverElement(e.GetPosition))
             {
                 var headerHost = GetHeaderHost(control);
                 var flag = false;
                 if (headerHost != null)
-                    flag = headerHost.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition);
+                    flag = headerHost.IsMouseOverElement(e.GetPosition);
 
                 if (!flag)
                 {
