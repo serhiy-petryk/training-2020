@@ -129,9 +129,6 @@ namespace ItemsControlDragDrop.Code
 
         public static void DropTarget_OnPreviewDrop(object sender, DragEventArgs e)
         {
-            _dropTargetAdorner?.Detatch();
-            _dropTargetAdorner = null;
-
             var sourceData = e.Data.GetData("Source") as Array;
             var itemsControl = sender as ItemsControl;
             var insertIndex = GetInsertIndex(itemsControl, out int firstItemOffset);
@@ -153,6 +150,7 @@ namespace ItemsControlDragDrop.Code
                 foreach (var o in sourceData)
                     targetData.Insert(insertIndex++, o);
             }
+            ResetDragDrop(e);
         }
 
         private static PropertyInfo _piItemsHost;
@@ -191,9 +189,7 @@ namespace ItemsControlDragDrop.Code
                 if (!flag)
                 {
                     // CheckScroll(control, e);
-                    e.Effects = DragDropEffects.None;
-                    e.Handled = true;
-                    DropTarget_OnPreviewDragLeave(sender, e);
+                    ResetDragDrop(e);
                     return;
                 }
             }
@@ -234,14 +230,7 @@ namespace ItemsControlDragDrop.Code
 
         //============================
         private static DropTargetAdorner _dropTargetAdorner;
-        public static void DropTarget_OnPreviewDragLeave(object sender, DragEventArgs e)
-        {
-            if (_dropTargetAdorner != null)
-            {
-                _dropTargetAdorner.Detatch();
-                _dropTargetAdorner = null;
-            }
-        }
+        // public static void DropTarget_OnPreviewDragLeave(object sender, DragEventArgs e) => ResetDragDrop(e);
 
         public static Orientation GetItemsPanelOrientation(ItemsControl itemsControl)
         {
@@ -282,9 +271,26 @@ namespace ItemsControlDragDrop.Code
             return panel.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition) ? panel.Children.Count : 0;
         }
 
+        private static void ResetDragDrop(DragEventArgs e)
+        {
+            if (_dropTargetAdorner != null)
+            {
+                _dropTargetAdorner.Detatch();
+                _dropTargetAdorner = null;
+            }
+            if (_dragAdorner != null)
+            {
+                _dragAdorner.Detatch();
+                _dragAdorner = null;
+            }
+            e.Effects = DragDropEffects.None;
+            e.Handled = true;
+        }
+
         //============================
         private static DragAdorner _dragAdorner;
-
+        private static Point _adornerPos;
+        private static Size _adornerSize;
         private static void CreateDragAdorner()
         {
             var template = Application.Current.Resources["DragAdorner"] as DataTemplate;
@@ -403,8 +409,6 @@ namespace ItemsControlDragDrop.Code
             }*/
         }
 
-        private static Point _adornerPos;
-        private static Size _adornerSize;
         private static void UpdateDragAdorner(DragEventArgs e)
         {
             if (_dragAdorner != null)
@@ -435,19 +439,5 @@ namespace ItemsControlDragDrop.Code
                 _dragAdorner.InvalidateVisual();
             }
         }
-
-        public static Point GetDragMouseAnchorPoint(UIElement target)
-        {
-            return new Point(-0.1, 1);
-            // return (Point)target.GetValue(DragMouseAnchorPointProperty);
-        }
-
-        public static void SetDragMouseAnchorPoint(UIElement target, Point value)
-        {
-            // target.SetValue(DragMouseAnchorPointProperty, value);
-        }
-
-
-
     }
 }

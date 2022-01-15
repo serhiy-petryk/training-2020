@@ -39,7 +39,7 @@ namespace ItemsControlDragDrop
         private void View1_OnPreviewDragLeave(object sender, DragEventArgs e)
         {
             Debug.Print($"DragLeave");
-            DragDropHelper.DropTarget_OnPreviewDragLeave(sender, e);
+            // DragDropHelper.DropTarget_OnPreviewDragLeave(sender, e);
         }
 
         private void View1_OnPreviewDragEnter(object sender, DragEventArgs e)
