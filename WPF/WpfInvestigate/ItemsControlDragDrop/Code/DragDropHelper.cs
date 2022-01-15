@@ -199,14 +199,8 @@ namespace ItemsControlDragDrop.Code
             }
 
             if (_dropTargetAdorner == null)
-            {
-                var adornedElement = GetItemsHost(control);
-                if (adornedElement != null)
-                    _dropTargetAdorner = new DropTargetInsertionAdorner(control);
-            }
-
-            if (_dropTargetAdorner != null)
-                _dropTargetAdorner.InvalidateVisual();
+                _dropTargetAdorner = new DropTargetInsertionAdorner(control);
+            _dropTargetAdorner.InvalidateVisual();
 
             CheckScroll(control, e);
         }
@@ -283,5 +277,8 @@ namespace ItemsControlDragDrop.Code
             }
             return panel.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition) ? panel.Children.Count : 0;
         }
+
+        //============================
+        private static DragAdorner DragAdorner;
     }
 }
