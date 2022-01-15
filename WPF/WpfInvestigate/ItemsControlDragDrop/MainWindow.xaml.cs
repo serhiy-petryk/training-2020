@@ -30,9 +30,7 @@ namespace ItemsControlDragDrop
         // private void View1_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragDropHelper.DragSource_OnPreviewMouseLeftButtonDown(sender, e);
 
         private void View1_OnPreviewDragOver(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
-
         private void View1_OnPreviewDragLeave(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDragLeave(sender, e);
-
         private void View1_OnPreviewDragEnter(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
 
         private void View2_OnDrop(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDrop(sender, e);

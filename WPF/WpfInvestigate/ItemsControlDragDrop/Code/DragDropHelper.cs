@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -70,7 +69,7 @@ namespace ItemsControlDragDrop.Code
             }*/
 
             var itemsHost = GetItemsHost(itemsControl);
-            if (!Helpers.IsMouseOverElement(itemsHost, Mouse.GetPosition))
+            if (!itemsHost.IsMouseOverElement(Mouse.GetPosition))
             {
                 _dragInfo = null;
                 return;
@@ -92,7 +91,6 @@ namespace ItemsControlDragDrop.Code
                 Math.Abs(mousePosition.Y - _dragInfo.DragStart.Y) > SystemParameters.MinimumVerticalDragDistance)
             {
 
-                Debug.Print($"DragStart: {cnt++}, {GetSelectedItems(itemsControl).Count}");
                 var dataObject = new DataObject();
                 dataObject.SetData("Source", selectedItems.OfType<object>().ToArray());
                 //var adLayer = AdornerLayer.GetAdornerLayer(item);
@@ -204,6 +202,7 @@ namespace ItemsControlDragDrop.Code
                     // CheckScroll(control, e);
                     e.Effects = DragDropEffects.None;
                     e.Handled = true;
+                    DropTarget_OnPreviewDragLeave(sender, e);
                     return;
                 }
             }
@@ -246,7 +245,6 @@ namespace ItemsControlDragDrop.Code
 
         //============================
         private static DropTargetAdorner _dropTargetAdorner;
-
         public static void DropTarget_OnPreviewDragLeave(object sender, DragEventArgs e)
         {
             if (_dropTargetAdorner != null)
@@ -292,7 +290,6 @@ namespace ItemsControlDragDrop.Code
                     return i + (mousePos.X <= itemBounds.Right / 2 ? 0 : 1);
                 }
             }
-            Debug.Print($"Index2: {(panel.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition) ? panel.Children.Count : 0)}");
             return panel.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition) ? panel.Children.Count : 0;
         }
 
