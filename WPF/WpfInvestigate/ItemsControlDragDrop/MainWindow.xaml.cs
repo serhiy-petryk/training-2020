@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -29,11 +30,25 @@ namespace ItemsControlDragDrop
 
         // private void View1_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragDropHelper.DragSource_OnPreviewMouseLeftButtonDown(sender, e);
 
-        private void View1_OnPreviewDragOver(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
-        private void View1_OnPreviewDragLeave(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDragLeave(sender, e);
-        private void View1_OnPreviewDragEnter(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
+        private void View1_OnPreviewDragOver(object sender, DragEventArgs e)
+        {
+            Debug.Print($"DragOver");
+            DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
+        }
 
-        private void View2_OnDrop(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDrop(sender, e);
+        private void View1_OnPreviewDragLeave(object sender, DragEventArgs e)
+        {
+            Debug.Print($"DragLeave");
+            DragDropHelper.DropTarget_OnPreviewDragLeave(sender, e);
+        }
+
+        private void View1_OnPreviewDragEnter(object sender, DragEventArgs e)
+        {
+            Debug.Print($"DragEnter");
+            DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
+        }
+
+        private void View2_OnPreviewDrop(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDrop(sender, e);
 
         private void View1_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -57,5 +72,14 @@ namespace ItemsControlDragDrop
             return HitTestResultBehavior.Continue;
         }
 
+        private void View1_OnPreviewGiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            Debug.Print($"GiveFeedback. View1");
+        }
+
+        private void View2_OnPreviewGiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            Debug.Print($"GiveFeedback. View2");
+        }
     }
 }

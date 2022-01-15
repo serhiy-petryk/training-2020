@@ -108,6 +108,7 @@
                       PreviewDragOver="View1_OnPreviewDragOver"
                       PreviewDragEnter="View1_OnPreviewDragEnter"
                       PreviewDragLeave="View1_OnPreviewDragLeave"
+                      PreviewGiveFeedback="View1_OnPreviewGiveFeedback"
                       PreviewDrop="View1_OnPreviewDrop"
                       AllowDrop="True">
                 <!--DragOver="ItemsList_DragOver" Drop="DataGrid_OnDrop">-->
@@ -162,7 +163,8 @@
                           PreviewDragOver="View1_OnPreviewDragOver"
                           PreviewDragEnter="View1_OnPreviewDragEnter"
                           PreviewDragLeave="View1_OnPreviewDragLeave"
-                          Drop="View2_OnDrop">
+                          PreviewGiveFeedback="View2_OnPreviewGiveFeedback"
+                          PreviewDrop="View2_OnPreviewDrop">
                     <!--                <DataGrid.Resources>
                     <Style TargetType="ListViewItem">
                         <EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />

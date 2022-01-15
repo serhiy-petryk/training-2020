@@ -202,10 +202,14 @@ namespace ItemsControlDragDrop.Code
                 _dropTargetAdorner = new DropTargetInsertionAdorner(control);
             _dropTargetAdorner.InvalidateVisual();
 
+            if (_dragAdorner == null)
+                CreateDragAdorner();
+            UpdateDragAdorner(e);
+
             CheckScroll(control, e);
         }
 
-        private static void CheckScroll(ItemsControl o, DragEventArgs e)
+            private static void CheckScroll(ItemsControl o, DragEventArgs e)
         {
             var scrollViewer = o.GetVisualChildren().OfType<ScrollViewer>().FirstOrDefault();
             if (scrollViewer != null)
@@ -279,6 +283,171 @@ namespace ItemsControlDragDrop.Code
         }
 
         //============================
-        private static DragAdorner DragAdorner;
+        private static DragAdorner _dragAdorner;
+
+        private static void CreateDragAdorner()
+        {
+            var template = Application.Current.Resources["DragAdorner"] as DataTemplate;
+            var sourceData = _dropInfo._currentEventArgs.Data.GetData("Source") as Array;
+            //            if (((IEnumerable)sourceData.Length).Cast<object>().Count() <= 10)
+            // {
+            var itemsControl = new ItemsControl();
+            itemsControl.ItemsSource = sourceData;
+            itemsControl.ItemTemplate = template;
+            // itemsControl.ItemTemplateSelector = templateSelector;
+
+            // The ItemsControl doesn't display unless we create a border to contain it.
+            // Not quite sure why this is...
+            var border = new Border();
+            border.Child = itemsControl;
+            var adornment = border;
+            // }
+
+            var parentWindow = Window.GetWindow(_dragInfo.DragSource);
+            var rootElement = parentWindow != null ? parentWindow.Content as UIElement : null;
+            if (rootElement == null && Application.Current != null && Application.Current.MainWindow != null)
+            {
+                rootElement = (UIElement)Application.Current.MainWindow.Content;
+            }
+            //                i don't want the fu... windows forms reference
+            //                if (rootElement == null) {
+            //                    var elementHost = m_DragInfo.VisualSource.GetVisualAncestor<ElementHost>();
+            //                    rootElement = elementHost != null ? elementHost.Child : null;
+            //                }
+            /*if (rootElement == null)
+            {
+                rootElement = m_DragInfo.VisualSource.GetVisualAncestor<UserControl>();
+            }*/
+
+            _dragAdorner = new DragAdorner(rootElement, adornment);
+            var k = 0;
+            /*var template = GetDragAdornerTemplate(m_DragInfo.VisualSource);
+            var templateSelector = GetDragAdornerTemplateSelector(m_DragInfo.VisualSource);
+
+            UIElement adornment = null;
+
+            var useDefaultDragAdorner = GetUseDefaultDragAdorner(m_DragInfo.VisualSource);
+
+            if (template == null && templateSelector == null && useDefaultDragAdorner)
+            {
+                template = new DataTemplate();
+
+                var factory = new FrameworkElementFactory(typeof(Image));
+
+                var bs = CaptureScreen(m_DragInfo.VisualSourceItem, m_DragInfo.VisualSourceFlowDirection);
+                factory.SetValue(Image.SourceProperty, bs);
+                factory.SetValue(RenderOptions.EdgeModeProperty, EdgeMode.Aliased);
+                factory.SetValue(RenderOptions.BitmapScalingModeProperty, BitmapScalingMode.HighQuality);
+                if (m_DragInfo.VisualSourceItem is FrameworkElement)
+                {
+                    factory.SetValue(FrameworkElement.WidthProperty, ((FrameworkElement)m_DragInfo.VisualSourceItem).ActualWidth);
+                    factory.SetValue(FrameworkElement.HeightProperty, ((FrameworkElement)m_DragInfo.VisualSourceItem).ActualHeight);
+                    factory.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Left);
+                    factory.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top);
+                }
+                template.VisualTree = factory;
+            }
+
+            if (template != null || templateSelector != null)
+            {
+                if (m_DragInfo.Data is IEnumerable && !(m_DragInfo.Data is string))
+                {
+                    if (((IEnumerable)m_DragInfo.Data).Cast<object>().Count() <= 10)
+                    {
+                        var itemsControl = new ItemsControl();
+                        itemsControl.ItemsSource = (IEnumerable)m_DragInfo.Data;
+                        itemsControl.ItemTemplate = template;
+                        itemsControl.ItemTemplateSelector = templateSelector;
+
+                        // The ItemsControl doesn't display unless we create a border to contain it.
+                        // Not quite sure why this is...
+                        var border = new Border();
+                        border.Child = itemsControl;
+                        adornment = border;
+                    }
+                }
+                else
+                {
+                    var contentPresenter = new ContentPresenter();
+                    contentPresenter.Content = m_DragInfo.Data;
+                    contentPresenter.ContentTemplate = template;
+                    contentPresenter.ContentTemplateSelector = templateSelector;
+                    adornment = contentPresenter;
+                }
+            }
+
+            if (adornment != null)
+            {
+                if (useDefaultDragAdorner)
+                {
+                    adornment.Opacity = GetDefaultDragAdornerOpacity(m_DragInfo.VisualSource);
+                }
+
+                var parentWindow = m_DragInfo.VisualSource.GetVisualAncestor<Window>();
+                var rootElement = parentWindow != null ? parentWindow.Content as UIElement : null;
+                if (rootElement == null && Application.Current != null && Application.Current.MainWindow != null)
+                {
+                    rootElement = (UIElement)Application.Current.MainWindow.Content;
+                }
+                //                i don't want the fu... windows forms reference
+                //                if (rootElement == null) {
+                //                    var elementHost = m_DragInfo.VisualSource.GetVisualAncestor<ElementHost>();
+                //                    rootElement = elementHost != null ? elementHost.Child : null;
+                //                }
+                if (rootElement == null)
+                {
+                    rootElement = m_DragInfo.VisualSource.GetVisualAncestor<UserControl>();
+                }
+
+                DragAdorner = new DragAdorner(rootElement, adornment);
+            }*/
+        }
+
+        private static Point _adornerPos;
+        private static Size _adornerSize;
+        private static void UpdateDragAdorner(DragEventArgs e)
+        {
+            if (_dragAdorner != null)
+            {
+                var tempAdornerPos = e.GetPosition(_dragAdorner.AdornedElement);
+                if (tempAdornerPos.X > 0 && tempAdornerPos.Y > 0)
+                    _adornerPos = tempAdornerPos;
+
+                // Fixed the flickering adorner - Size changes to zero 'randomly'...?
+                /*if (_dragAdorner.RenderSize.Width > 0 && _dragAdorner.RenderSize.Height > 0)
+                {
+                    _adornerSize = _dragAdorner.RenderSize;
+                }*/
+
+                if (_dragInfo != null)
+                {
+                    // move the adorner
+                    var offsetX = 5;//_adornerSize.Width * -GetDragMouseAnchorPoint(_dragInfo.DragSource).X;
+                    var offsetY = - _dragAdorner.ActualHeight + 5.0;//_adornerSize.Height * -GetDragMouseAnchorPoint(_dragInfo.DragSource).Y;
+                    _adornerPos.Offset(offsetX, offsetY);
+                    var maxAdornerPosX = _dragAdorner.AdornedElement.RenderSize.Width;
+                    var adornerPosRightX = _adornerPos.X + _adornerSize.Width;
+                    if (adornerPosRightX > maxAdornerPosX)
+                        _adornerPos.Offset(-adornerPosRightX + maxAdornerPosX, 0);
+                }
+
+                _dragAdorner.MousePosition = _adornerPos;
+                _dragAdorner.InvalidateVisual();
+            }
+        }
+
+        public static Point GetDragMouseAnchorPoint(UIElement target)
+        {
+            return new Point(-0.1, 1);
+            // return (Point)target.GetValue(DragMouseAnchorPointProperty);
+        }
+
+        public static void SetDragMouseAnchorPoint(UIElement target, Point value)
+        {
+            // target.SetValue(DragMouseAnchorPointProperty, value);
+        }
+
+
+
     }
 }

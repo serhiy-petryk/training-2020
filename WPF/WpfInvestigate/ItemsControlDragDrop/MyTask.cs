@@ -59,5 +59,6 @@ namespace ItemsControlDragDrop
         public TaskDuration Duration { get; }
         public string Name { get; }
         public string Description { get; }
+        public override string ToString() => Name;
     }
 }
