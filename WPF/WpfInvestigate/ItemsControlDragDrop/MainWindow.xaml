@@ -59,7 +59,7 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <TabControl Grid.Column="0"
+                <TabControl Grid.Column="0" x:Name="TB1"
                             ScrollViewer.CanContentScroll="True"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -77,7 +77,7 @@
                     <TabItem Header="Tab 6" Content="Content of Tab6"/>
                     <TabItem Header="Tab 7" Content="Content of Tab7"/>
                 </TabControl>
-                <TabControl Grid.Column="1" TabStripPlacement="Left"
+                <TabControl Grid.Column="1" x:Name="TB2" TabStripPlacement="Left"
                             ScrollViewer.CanContentScroll="True"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -163,7 +163,7 @@
                           PreviewDragOver="View1_OnPreviewDragOver"
                           PreviewDragEnter="View1_OnPreviewDragEnter"
                           PreviewDragLeave="View1_OnPreviewDragLeave"
-                          PreviewGiveFeedback="View2_OnPreviewGiveFeedback"
+                          PreviewGiveFeedback="View1_OnPreviewGiveFeedback"
                           PreviewDrop="View2_OnPreviewDrop">
                     <!--                <DataGrid.Resources>
                     <Style TargetType="ListViewItem">

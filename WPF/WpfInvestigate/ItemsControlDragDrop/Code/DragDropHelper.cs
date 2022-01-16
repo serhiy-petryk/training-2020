@@ -131,7 +131,7 @@ namespace ItemsControlDragDrop.Code
         {
             var sourceData = e.Data.GetData("Source") as Array;
             var itemsControl = sender as ItemsControl;
-            var insertIndex = GetInsertIndex(itemsControl, out int firstItemOffset);
+            var insertIndex = GetInsertIndex(itemsControl, e, out int firstItemOffset);
             insertIndex += firstItemOffset;
 
             var targetData = (IList) itemsControl.ItemsSource ?? itemsControl.Items;
@@ -199,7 +199,7 @@ namespace ItemsControlDragDrop.Code
             _dropTargetAdorner.InvalidateVisual();
 
             if (_dragAdorner == null)
-                CreateDragAdorner();
+                CreateDragAdorner(control, e);
             UpdateDragAdorner(e);
 
             CheckScroll(control, e);
@@ -251,7 +251,7 @@ namespace ItemsControlDragDrop.Code
             throw new Exception("Trap! Can't define item panel orientation");
         }
 
-        public static int GetInsertIndex(ItemsControl control, out int firstItemOffset)
+        public static int GetInsertIndex(ItemsControl control, DragEventArgs e, out int firstItemOffset)
         {
             var orientation = GetItemsPanelOrientation(control);
             var panel = GetItemsHost(control);
@@ -259,16 +259,16 @@ namespace ItemsControlDragDrop.Code
             for (var i = 0; i < panel.Children.Count; i++)
             {
                 var item = panel.Children[i] as FrameworkElement;
-                if (item.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition))
+                if (item.IsMouseOverElement(e.GetPosition))
                 {
                     var itemBounds = item.GetBoundsOfElement();
-                    var mousePos = _dropInfo._currentEventArgs.GetPosition(item);
+                    var mousePos = e.GetPosition(item);
                     if (orientation == Orientation.Vertical)
                         return i + (mousePos.Y <= itemBounds.Bottom / 2 ? 0 : 1);
                     return i + (mousePos.X <= itemBounds.Right / 2 ? 0 : 1);
                 }
             }
-            return panel.IsMouseOverElement(_dropInfo._currentEventArgs.GetPosition) ? panel.Children.Count : 0;
+            return panel.IsMouseOverElement(e.GetPosition) ? panel.Children.Count : 0;
         }
 
         private static void ResetDragDrop(DragEventArgs e)
@@ -291,10 +291,10 @@ namespace ItemsControlDragDrop.Code
         private static DragAdorner _dragAdorner;
         private static Point _adornerPos;
         private static Size _adornerSize;
-        private static void CreateDragAdorner()
+        private static void CreateDragAdorner(UIElement adornedElement, DragEventArgs e)
         {
             var template = Application.Current.Resources["DragAdorner"] as DataTemplate;
-            var sourceData = _dropInfo._currentEventArgs.Data.GetData("Source") as Array;
+            var sourceData = e.Data.GetData("Source") as Array;
             //            if (((IEnumerable)sourceData.Length).Cast<object>().Count() <= 10)
             // {
             var itemsControl = new ItemsControl();
@@ -325,7 +325,8 @@ namespace ItemsControlDragDrop.Code
                 rootElement = m_DragInfo.VisualSource.GetVisualAncestor<UserControl>();
             }*/
 
-            _dragAdorner = new DragAdorner(rootElement, adornment);
+            // _dragAdorner = new DragAdorner(rootElement, adornment);
+            _dragAdorner = new DragAdorner(adornedElement, adornment);
             var k = 0;
             /*var template = GetDragAdornerTemplate(m_DragInfo.VisualSource);
             var templateSelector = GetDragAdornerTemplateSelector(m_DragInfo.VisualSource);

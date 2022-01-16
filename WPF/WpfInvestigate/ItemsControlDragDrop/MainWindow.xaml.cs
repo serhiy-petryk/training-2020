@@ -32,19 +32,19 @@ namespace ItemsControlDragDrop
 
         private void View1_OnPreviewDragOver(object sender, DragEventArgs e)
         {
-            Debug.Print($"DragOver");
+            Debug.Print($"DragOver: {((FrameworkElement)sender).Name}");
             DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
         }
 
         private void View1_OnPreviewDragLeave(object sender, DragEventArgs e)
         {
-            Debug.Print($"DragLeave");
+            Debug.Print($"DragLeave: {((FrameworkElement)sender).Name}");
             // DragDropHelper.DropTarget_OnPreviewDragLeave(sender, e);
         }
 
         private void View1_OnPreviewDragEnter(object sender, DragEventArgs e)
         {
-            Debug.Print($"DragEnter");
+            Debug.Print($"DragEnter: {((FrameworkElement)sender).Name}");
             DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
         }
 
@@ -74,12 +74,7 @@ namespace ItemsControlDragDrop
 
         private void View1_OnPreviewGiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
-            Debug.Print($"GiveFeedback. View1");
-        }
-
-        private void View2_OnPreviewGiveFeedback(object sender, GiveFeedbackEventArgs e)
-        {
-            Debug.Print($"GiveFeedback. View2");
+            Debug.Print($"GiveFeedback: {((FrameworkElement)sender).Name}");
         }
     }
 }

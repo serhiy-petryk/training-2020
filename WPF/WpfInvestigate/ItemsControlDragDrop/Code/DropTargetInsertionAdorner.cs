@@ -17,7 +17,7 @@ namespace ItemsControlDragDrop.Code
 
             var orientation = DragDropHelper.GetItemsPanelOrientation(control);
 
-            var insertIndex = DragDropHelper.GetInsertIndex(control, out int firstItemOffset);
+            var insertIndex = DragDropHelper.GetInsertIndex(control, DragDropHelper._dropInfo._currentEventArgs, out int firstItemOffset);
             var relativeItem = (insertIndex < panel.Children.Count
                 ? panel.Children[insertIndex]
                 : panel.Children[panel.Children.Count - 1]) as FrameworkElement;
