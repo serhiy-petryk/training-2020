@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ItemsControlDragDrop.Code
 {
@@ -33,9 +34,10 @@ namespace ItemsControlDragDrop.Code
             internal object LastDragDropSource;
         }
 
+        private static DropTargetInsertionAdorner _dropTargetAdorner;
+        private static DragAdorner _dragAdorner;
         private static DragInfo _dragInfo;
         internal static DropInfo _dropInfo;
-        private static int cnt;
         private static bool _isDragging;
 
         public static void DragSource_OnPreviewMouseMove(object sender, MouseEventArgs e)
@@ -171,10 +173,9 @@ namespace ItemsControlDragDrop.Code
             return null;
         }
 
-        // private static object _lastDragDropSource;
-
         public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
         {
+            _lastDragLeaveObject = null;
             var control = (ItemsControl) sender;
             if (_dropInfo == null)
                 _dropInfo = new DropInfo();
@@ -208,13 +209,17 @@ namespace ItemsControlDragDrop.Code
             _dropTargetAdorner.InvalidateVisual();
 
             if (_dragAdorner == null)
-                _dragAdorner = new DragAdorner(control, e.Data.GetData("Source"));
-            _dragAdorner.UpdateUI();
+            {
+                var rootElement = Window.GetWindow(control).Content as UIElement;
+                _dragAdorner = new DragAdorner(rootElement, e.Data.GetData("Source"));
+            }
+
+            _dragAdorner.UpdateUI(e);
 
             CheckScroll(control, e);
         }
 
-            private static void CheckScroll(ItemsControl o, DragEventArgs e)
+        private static void CheckScroll(ItemsControl o, DragEventArgs e)
         {
             var scrollViewer = o.GetVisualChildren().OfType<ScrollViewer>().FirstOrDefault();
             if (scrollViewer != null)
@@ -238,8 +243,17 @@ namespace ItemsControlDragDrop.Code
         }
 
         //============================
-        private static DropTargetInsertionAdorner _dropTargetAdorner;
-        // public static void DropTarget_OnPreviewDragLeave(object sender, DragEventArgs e) => ResetDragDrop(e);
+        private static object _lastDragLeaveObject;
+        public static void DropTarget_OnPreviewDragLeave(object sender, DragEventArgs e)
+        {
+            _lastDragLeaveObject = sender;
+            ((FrameworkElement) sender).Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (Equals(_lastDragLeaveObject, sender))
+                    ResetDragDrop(e);
+                _lastDragLeaveObject = null;
+            }), DispatcherPriority.Normal);
+        }
 
         public static Orientation GetItemsPanelOrientation(ItemsControl itemsControl)
         {
@@ -273,8 +287,8 @@ namespace ItemsControlDragDrop.Code
                     var itemBounds = item.GetBoundsOfElement();
                     var mousePos = e.GetPosition(item);
                     if (orientation == Orientation.Vertical)
-                        return i + (mousePos.Y <= itemBounds.Bottom / 2 ? 0 : 1);
-                    return i + (mousePos.X <= itemBounds.Right / 2 ? 0 : 1);
+                        return i + (mousePos.Y <= itemBounds.Bottom * 0.8 ? 0 : 1);
+                    return i + (mousePos.X <= itemBounds.Right * 0.8 ? 0 : 1);
                 }
             }
             return panel.IsMouseOverElement(e.GetPosition) ? panel.Children.Count : 0;
@@ -295,8 +309,5 @@ namespace ItemsControlDragDrop.Code
             e.Effects = DragDropEffects.None;
             e.Handled = true;
         }
-
-        //============================
-        private static DragAdorner _dragAdorner;
     }
 }

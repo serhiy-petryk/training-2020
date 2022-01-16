@@ -9,28 +9,25 @@ namespace ItemsControlDragDrop.Code
 {
     internal class DragAdorner : Adorner
     {
-        public DragAdorner(UIElement adornedElement, object data) : base(adornedElement)
+        public DragAdorner(UIElement adornedElement, object dragDropData) : base(adornedElement)
         {
-            var sourceData = data is IEnumerable ? ((IEnumerable) data).OfType<object>().ToArray() : new[] {data};
+            var sourceData = dragDropData is IEnumerable enumerable ? enumerable.OfType<object>().ToArray() : new[] {dragDropData};
             if (sourceData.Length > 5)
             {
                 var tempData = sourceData.Take(4).ToList();
                 tempData.Add("more items ...");
                 sourceData = tempData.ToArray();
             }
-            var template = Application.Current.Resources["DragAdorner"] as DataTemplate;
-            var itemsControl = new ItemsControl { ItemsSource = sourceData, ItemTemplate = template };
-            var border = new Border { Child = itemsControl };
-            m_Adornment = border;
+            ((ItemsControl)m_Adornment.Child).ItemsSource = sourceData;
 
             m_AdornerLayer = AdornerLayer.GetAdornerLayer(adornedElement);
             m_AdornerLayer.Add(this);
             IsHitTestVisible = false;
         }
 
-        public void UpdateUI()
+        public void UpdateUI(DragEventArgs e)
         {
-            var adornerPos = DragDropHelper._dropInfo.LastEventArgs.GetPosition(AdornedElement);
+            var adornerPos = e.GetPosition(AdornedElement);
             m_Adornment.RenderTransform = new TranslateTransform(adornerPos.X + 4.0, -m_Adornment.ActualHeight + adornerPos.Y - 1.0);
             m_AdornerLayer.Update(AdornedElement);
         }
@@ -53,6 +50,16 @@ namespace ItemsControlDragDrop.Code
         protected override int VisualChildrenCount => 1;
 
         private readonly AdornerLayer m_AdornerLayer;
-        private readonly FrameworkElement m_Adornment;
+
+        #region ===========  Static section  =============
+        static DragAdorner()
+        {
+            var template = Application.Current.Resources["DragAdorner"] as DataTemplate;
+            var itemsControl = new ItemsControl { ItemTemplate = template };
+            m_Adornment = new Border { Child = itemsControl };
+        }
+
+        private static readonly Border m_Adornment;
+        #endregion
     }
 }
