@@ -10,14 +10,14 @@
                     BorderBrush="Gray"
                     BorderThickness="1"
                     CornerRadius="2"
-                    Margin="1">
+                    Margin="1 0 1 -1">
                 <StackPanel Orientation="Horizontal">
-                    <!-- <Image Source="/icon.png"
-                           Width="16"
-                           Margin="0,0,2,0"
-                           VerticalAlignment="Center" />-->
+                    <Viewbox Width="12" Height="12" Margin="2 0">
+                        <Path Fill="DimGray" Stretch="Uniform"
+                              Data="M1468 1156c37 -37 68 -111 68 -164v-1152c0 -53 -43 -96 -96 -96h-1344c-53 0 -96 43 -96 96v1600c0 53 43 96 96 96h896c53 0 127 -31 164 -68zM1024 1400v-376h376c-6 17 -15 34 -22 41l-313 313c-7 7 -24 16 -41 22zM1408 -128v1024h-416c-53 0 -96 43 -96 96v416 h-768v-1536h1280z"></Path>
+                    </Viewbox>
                     <TextBlock Text="{Binding}"
-                               Margin="0,0,2,0"
+                               Margin="0 0 4 0"
                                VerticalAlignment="Center" />
                 </StackPanel>
             </Border>
