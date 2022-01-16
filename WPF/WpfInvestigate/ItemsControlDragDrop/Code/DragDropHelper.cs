@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -199,8 +200,8 @@ namespace ItemsControlDragDrop.Code
             _dropTargetAdorner.InvalidateVisual();
 
             if (_dragAdorner == null)
-                CreateDragAdorner(control, e);
-            UpdateDragAdorner(e);
+                _dragAdorner = new DragAdorner(control, e.Data.GetData("Source"));
+            _dragAdorner.InvalidateVisual();
 
             CheckScroll(control, e);
         }
@@ -275,12 +276,12 @@ namespace ItemsControlDragDrop.Code
         {
             if (_dropTargetAdorner != null)
             {
-                _dropTargetAdorner.Detatch();
+                _dropTargetAdorner.Detach();
                 _dropTargetAdorner = null;
             }
             if (_dragAdorner != null)
             {
-                _dragAdorner.Detatch();
+                _dragAdorner.Detach();
                 _dragAdorner = null;
             }
             e.Effects = DragDropEffects.None;
@@ -289,30 +290,5 @@ namespace ItemsControlDragDrop.Code
 
         //============================
         private static DragAdorner _dragAdorner;
-        private static void CreateDragAdorner(UIElement adornedElement, DragEventArgs e)
-        {
-            var template = Application.Current.Resources["DragAdorner"] as DataTemplate;
-            var sourceData = e.Data.GetData("Source") as Array;
-            if (sourceData.Length > 5)
-            {
-                var tempData = sourceData.OfType<object>().Take(4).ToList();
-                tempData.Add("more items ...");
-                sourceData = tempData.ToArray();
-            }
-            var itemsControl = new ItemsControl();
-            itemsControl.ItemsSource = sourceData;
-            itemsControl.ItemTemplate = template;
-            var border = new Border {Child = itemsControl};
-            _dragAdorner = new DragAdorner(adornedElement, border);
-        }
-
-        private static void UpdateDragAdorner(DragEventArgs e)
-        {
-            var adornerPos = e.GetPosition(_dragAdorner.AdornedElement);
-            adornerPos.Offset(4.0, -_dragAdorner.ActualHeight - 1.0);
-            var transforms = ((FrameworkElement)_dragAdorner.AdornedElement).GetActualLayoutTransforms();
-            _dragAdorner.MousePosition = new Point(adornerPos.X * transforms.Value.M11, adornerPos.Y * transforms.Value.M22);
-            _dragAdorner.InvalidateVisual();
-        }
     }
 }
