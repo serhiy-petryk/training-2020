@@ -25,10 +25,15 @@ namespace ItemsControlDragDrop.Code
             IsHitTestVisible = false;
         }
 
-        public void UpdateUI(DragEventArgs e)
+        public void UpdateUI(DragEventArgs e, ItemsControl itemsControl)
         {
             var adornerPos = e.GetPosition(AdornedElement);
-            m_Adornment.RenderTransform = new TranslateTransform(adornerPos.X + 4.0, -m_Adornment.ActualHeight + adornerPos.Y - 1.0);
+            var transforms = new TransformGroup();
+            var actualTransform = itemsControl.GetActualLayoutTransforms();
+            transforms.Children.Add(actualTransform);
+            transforms.Children.Add(new TranslateTransform(adornerPos.X + 4.0 * actualTransform.Value.M11,
+                adornerPos.Y - (m_Adornment.ActualHeight + 1.0) * actualTransform.Value.M22));
+            m_Adornment.RenderTransform = transforms;
             m_AdornerLayer.Update(AdornedElement);
         }
 

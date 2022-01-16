@@ -28,16 +28,10 @@ namespace ItemsControlDragDrop.Code
             }
         }
 
-        internal class DropInfo
-        {
-            internal DragEventArgs LastEventArgs;
-            internal object LastDragDropSource;
-        }
-
         private static DropTargetInsertionAdorner _dropTargetAdorner;
         private static DragAdorner _dragAdorner;
+        internal static DragEventArgs _lastDragEventArgs;
         private static DragInfo _dragInfo;
-        internal static DropInfo _dropInfo;
         private static bool _isDragging;
 
         public static void DragSource_OnPreviewMouseMove(object sender, MouseEventArgs e)
@@ -97,7 +91,7 @@ namespace ItemsControlDragDrop.Code
                 {
                     _isDragging = false;
                     _dragInfo = null;
-                    _dropInfo = null;
+                    _lastDragEventArgs = null;
                 }
 
                 //adLayer.Remove(myAdornment);
@@ -176,10 +170,8 @@ namespace ItemsControlDragDrop.Code
         public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
         {
             _lastDragLeaveObject = null;
+            _lastDragEventArgs = e;
             var control = (ItemsControl) sender;
-            if (_dropInfo == null)
-                _dropInfo = new DropInfo();
-            _dropInfo.LastEventArgs = e;
 
             var itemsHost = GetItemsHost(control);
             if (!itemsHost.IsMouseOverElement(e.GetPosition))
@@ -198,12 +190,6 @@ namespace ItemsControlDragDrop.Code
                 }
             }
 
-            if (!Equals(sender, _dropInfo.LastDragDropSource))
-            {
-                _dropInfo.LastDragDropSource = sender;
-                ResetDragDrop(e);
-            }
-
             if (_dropTargetAdorner == null)
                 _dropTargetAdorner = new DropTargetInsertionAdorner(control);
             _dropTargetAdorner.InvalidateVisual();
@@ -214,7 +200,7 @@ namespace ItemsControlDragDrop.Code
                 _dragAdorner = new DragAdorner(rootElement, e.Data.GetData("Source"));
             }
 
-            _dragAdorner.UpdateUI(e);
+            _dragAdorner.UpdateUI(e, control);
 
             CheckScroll(control, e);
         }
