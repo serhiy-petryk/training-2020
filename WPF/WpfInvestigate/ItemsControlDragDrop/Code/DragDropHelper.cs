@@ -308,14 +308,11 @@ namespace ItemsControlDragDrop.Code
 
         private static void UpdateDragAdorner(DragEventArgs e)
         {
-            if (_dragAdorner != null)
-            {
-                var adornerPos = e.GetPosition(_dragAdorner.AdornedElement);
-                adornerPos.Offset(4.0, -_dragAdorner.ActualHeight - 1.0);
-                var transforms = ((FrameworkElement)_dragAdorner.AdornedElement).GetActualLayoutTransforms();
-                _dragAdorner.MousePosition = new Point(adornerPos.X * transforms.Value.M11, adornerPos.Y * transforms.Value.M22);
-                _dragAdorner.InvalidateVisual();
-            }
+            var adornerPos = e.GetPosition(_dragAdorner.AdornedElement);
+            adornerPos.Offset(4.0, -_dragAdorner.ActualHeight - 1.0);
+            var transforms = ((FrameworkElement)_dragAdorner.AdornedElement).GetActualLayoutTransforms();
+            _dragAdorner.MousePosition = new Point(adornerPos.X * transforms.Value.M11, adornerPos.Y * transforms.Value.M22);
+            _dragAdorner.InvalidateVisual();
         }
     }
 }
