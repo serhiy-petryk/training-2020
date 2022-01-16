@@ -29,11 +29,8 @@ namespace ItemsControlDragDrop.Code
 
         internal class DropInfo
         {
-            internal DragEventArgs _currentEventArgs;
-            public DropInfo(DragEventArgs args)
-            {
-                _currentEventArgs = args;
-            }
+            internal DragEventArgs LastEventArgs;
+            internal object LastDragDropSource;
         }
 
         private static DragInfo _dragInfo;
@@ -174,10 +171,14 @@ namespace ItemsControlDragDrop.Code
             return null;
         }
 
+        // private static object _lastDragDropSource;
+
         public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
         {
             var control = (ItemsControl) sender;
-            _dropInfo = new DropInfo(e);
+            if (_dropInfo == null)
+                _dropInfo = new DropInfo();
+            _dropInfo.LastEventArgs = e;
 
             var itemsHost = GetItemsHost(control);
             if (!itemsHost.IsMouseOverElement(e.GetPosition))
@@ -190,9 +191,16 @@ namespace ItemsControlDragDrop.Code
                 if (!flag)
                 {
                     // CheckScroll(control, e);
+                    Debug.Print($"ResetDragDrop: {control.Name}");
                     ResetDragDrop(e);
                     return;
                 }
+            }
+
+            if (!Equals(sender, _dropInfo.LastDragDropSource))
+            {
+                _dropInfo.LastDragDropSource = sender;
+                ResetDragDrop(e);
             }
 
             if (_dropTargetAdorner == null)
@@ -230,7 +238,7 @@ namespace ItemsControlDragDrop.Code
         }
 
         //============================
-        private static DropTargetAdorner _dropTargetAdorner;
+        private static DropTargetInsertionAdorner _dropTargetAdorner;
         // public static void DropTarget_OnPreviewDragLeave(object sender, DragEventArgs e) => ResetDragDrop(e);
 
         public static Orientation GetItemsPanelOrientation(ItemsControl itemsControl)

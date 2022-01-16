@@ -67,10 +67,8 @@
     <Compile Include="Code\Adorners.cs" />
     <Compile Include="Code\DragAdorner.cs" />
     <Compile Include="Code\DragDropHelper.cs" />
-    <Compile Include="Code\DropTargetAdorner.cs" />
     <Compile Include="Code\DropTargetInsertionAdorner.cs" />
     <Compile Include="Code\Helpers.cs" />
-    <Compile Include="Code\ListBoxExtension.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

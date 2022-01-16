@@ -35,7 +35,7 @@ namespace ItemsControlDragDrop.Code
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            var adornerPos = DragDropHelper._dropInfo._currentEventArgs.GetPosition(AdornedElement);
+            var adornerPos = DragDropHelper._dropInfo.LastEventArgs.GetPosition(AdornedElement);
             m_Adornment.RenderTransform = new TranslateTransform(adornerPos.X + 4.0, -m_Adornment.ActualHeight + adornerPos.Y - 1.0);
             m_AdornerLayer.Update(AdornedElement);
         }

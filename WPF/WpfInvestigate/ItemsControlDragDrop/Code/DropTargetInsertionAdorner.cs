@@ -1,12 +1,18 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace ItemsControlDragDrop.Code
 {
-    public class DropTargetInsertionAdorner : DropTargetAdorner
+    public class DropTargetInsertionAdorner : Adorner
     {
-        public DropTargetInsertionAdorner(UIElement adornedElement) : base(adornedElement) {}
+        public DropTargetInsertionAdorner(UIElement adornedElement) : base(adornedElement)
+        {
+            m_AdornerLayer = AdornerLayer.GetAdornerLayer(adornedElement);
+            m_AdornerLayer.Add(this);
+            IsHitTestVisible = false;
+        }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
@@ -17,7 +23,7 @@ namespace ItemsControlDragDrop.Code
 
             var orientation = DragDropHelper.GetItemsPanelOrientation(control);
 
-            var insertIndex = DragDropHelper.GetInsertIndex(control, DragDropHelper._dropInfo._currentEventArgs, out int firstItemOffset);
+            var insertIndex = DragDropHelper.GetInsertIndex(control, DragDropHelper._dropInfo.LastEventArgs, out int firstItemOffset);
             var relativeItem = (insertIndex < panel.Children.Count
                 ? panel.Children[insertIndex]
                 : panel.Children[panel.Children.Count - 1]) as FrameworkElement;
@@ -48,6 +54,11 @@ namespace ItemsControlDragDrop.Code
             drawingContext.Pop();
         }
 
+        public void Detach() => m_AdornerLayer.Remove(this);
+
+        private readonly AdornerLayer m_AdornerLayer;
+
+        #region ===========  Static section  =============
         static DropTargetInsertionAdorner()
         {
             // Create the pen and triangle in a static constructor and freeze them to improve performance.
@@ -73,5 +84,6 @@ namespace ItemsControlDragDrop.Code
 
         private static readonly Pen m_Pen;
         private static readonly PathGeometry m_Triangle;
+        #endregion
     }
 }
