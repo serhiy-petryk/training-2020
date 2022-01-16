@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 
@@ -9,33 +10,33 @@ namespace ItemsControlDragDrop.Code
         public DragAdorner(UIElement adornedElement, UIElement adornment)
             : base(adornedElement)
         {
-            this.m_AdornerLayer = AdornerLayer.GetAdornerLayer(adornedElement);
-            this.m_AdornerLayer.Add(this);
-            this.m_Adornment = adornment;
-            this.IsHitTestVisible = false;
+            m_AdornerLayer = AdornerLayer.GetAdornerLayer(adornedElement);
+            m_AdornerLayer.Add(this);
+            m_Adornment = adornment;
+            IsHitTestVisible = false;
         }
 
         public Point MousePosition
         {
-            get { return this.m_MousePosition; }
+            get { return m_MousePosition; }
             set
             {
-                if (this.m_MousePosition != value)
+                if (m_MousePosition != value)
                 {
-                    this.m_MousePosition = value;
-                    this.m_AdornerLayer.Update(this.AdornedElement);
+                    m_MousePosition = value;
+                    m_AdornerLayer.Update(AdornedElement);
                 }
             }
         }
 
         public void Detatch()
         {
-            this.m_AdornerLayer.Remove(this);
+            m_AdornerLayer.Remove(this);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            this.m_Adornment.Arrange(new Rect(finalSize));
+            m_Adornment.Arrange(new Rect(finalSize));
             return finalSize;
         }
 
@@ -43,20 +44,16 @@ namespace ItemsControlDragDrop.Code
         {
             var result = new GeneralTransformGroup();
             result.Children.Add(base.GetDesiredTransform(transform));
-            result.Children.Add(new TranslateTransform(this.MousePosition.X - 4, this.MousePosition.Y - 4));
-
+            result.Children.Add(new TranslateTransform(MousePosition.X, MousePosition.Y));
             return result;
         }
 
-        protected override Visual GetVisualChild(int index)
-        {
-            return this.m_Adornment;
-        }
+        protected override Visual GetVisualChild(int index) => m_Adornment;
 
         protected override Size MeasureOverride(Size constraint)
         {
-            this.m_Adornment.Measure(constraint);
-            return this.m_Adornment.DesiredSize;
+            m_Adornment.Measure(constraint);
+            return m_Adornment.DesiredSize;
         }
 
         protected override int VisualChildrenCount => 1;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -53,6 +54,19 @@ namespace ItemsControlDragDrop.Code
         }
 
         // ===================================
+        public static TransformGroup GetActualLayoutTransforms(this FrameworkElement source)
+        {
+            if (source == null) return new TransformGroup();
+
+            var layoutTransform = new TransformGroup();
+            foreach (var element in source.GetVisualParents().OfType<FrameworkElement>().ToArray())
+            {
+                if (element.LayoutTransform != Transform.Identity)
+                    layoutTransform.Children.Add(element.LayoutTransform.CloneCurrentValue());
+            }
+            return layoutTransform;
+        }
+
         public static List<DependencyObject> GetElementsUnderMouseClick(UIElement sender, MouseButtonEventArgs e)
         {
             var hitTestResults = new List<DependencyObject>();
