@@ -209,7 +209,7 @@ namespace ItemsControlDragDrop.Code
 
             if (_dragAdorner == null)
                 _dragAdorner = new DragAdorner(control, e.Data.GetData("Source"));
-            _dragAdorner.InvalidateVisual();
+            _dragAdorner.UpdateUI();
 
             CheckScroll(control, e);
         }

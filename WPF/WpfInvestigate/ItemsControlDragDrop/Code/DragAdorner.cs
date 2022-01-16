@@ -28,17 +28,14 @@ namespace ItemsControlDragDrop.Code
             IsHitTestVisible = false;
         }
 
-        public void Detach()
-        {
-            m_AdornerLayer.Remove(this);
-        }
-
-        protected override void OnRender(DrawingContext drawingContext)
+        public void UpdateUI()
         {
             var adornerPos = DragDropHelper._dropInfo.LastEventArgs.GetPosition(AdornedElement);
             m_Adornment.RenderTransform = new TranslateTransform(adornerPos.X + 4.0, -m_Adornment.ActualHeight + adornerPos.Y - 1.0);
             m_AdornerLayer.Update(AdornedElement);
         }
+
+        public void Detach() => m_AdornerLayer.Remove(this);
 
         protected override Size ArrangeOverride(Size finalSize)
         {
