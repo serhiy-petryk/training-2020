@@ -19,20 +19,6 @@ namespace ItemsControlDragDrop.Code
             this.m_AdornerLayer.Remove(this);
         }
 
-        // public DropInfo DropInfo { get; set; }
-
-        internal static DropTargetAdorner Create(Type type, UIElement adornedElement)
-        {
-            if (!typeof(DropTargetAdorner).IsAssignableFrom(type))
-            {
-                throw new InvalidOperationException(
-                    "The requested adorner class does not derive from DropTargetAdorner.");
-            }
-
-            return (DropTargetAdorner)type.GetConstructor(new[] { typeof(UIElement) })
-                .Invoke(new[] { adornedElement });
-        }
-
         private readonly AdornerLayer m_AdornerLayer;
     }
 }

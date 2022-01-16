@@ -22,7 +22,7 @@ namespace ItemsControlDragDrop.Code
                 ? panel.Children[insertIndex]
                 : panel.Children[panel.Children.Count - 1]) as FrameworkElement;
 
-            var r = Helpers.GetVisibleRect(relativeItem, control);
+            var r = relativeItem.GetVisibleRect(control);
             double insertPosition;
             if (insertIndex < panel.Children.Count)
                 insertPosition = orientation == Orientation.Vertical ? r.Top : r.Left;
