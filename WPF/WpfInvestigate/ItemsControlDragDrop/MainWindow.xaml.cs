@@ -32,7 +32,7 @@ namespace ItemsControlDragDrop
 
         private void View1_OnPreviewDragOver(object sender, DragEventArgs e)
         {
-            Debug.Print($"DragOver: {((FrameworkElement)sender).Name}");
+           // Debug.Print($"DragOver: {((FrameworkElement)sender).Name}");
             DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
         }
 
