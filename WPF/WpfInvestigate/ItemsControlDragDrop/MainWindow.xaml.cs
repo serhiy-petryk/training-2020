@@ -74,7 +74,7 @@ namespace ItemsControlDragDrop
 
         private void View1_OnPreviewGiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
-            Debug.Print($"GiveFeedback: {((FrameworkElement)sender).Name}");
+           // Debug.Print($"GiveFeedback: {((FrameworkElement)sender).Name}");
         }
     }
 }
