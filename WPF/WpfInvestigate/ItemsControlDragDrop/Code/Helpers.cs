@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -9,6 +10,12 @@ namespace ItemsControlDragDrop.Code
 {
     public static class Helpers
     {
+        public static object GetDragItemLabel(this object item)
+        {
+            if (item is TabItem tabItem) return tabItem.Header;
+            return item;
+        }
+
         public static bool IsMouseOverElement(this FrameworkElement element, Func<IInputElement, Point> getPositionOfMouse)
         {
             var p = getPositionOfMouse(element);

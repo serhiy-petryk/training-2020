@@ -11,7 +11,9 @@ namespace ItemsControlDragDrop.Code
     {
         public DragAdorner(UIElement adornedElement, object dragDropData) : base(adornedElement)
         {
-            var sourceData = dragDropData is IEnumerable enumerable ? enumerable.OfType<object>().ToArray() : new[] {dragDropData};
+            var sourceData = (dragDropData is IEnumerable enumerable ? enumerable.OfType<object>().ToArray() : new[] {dragDropData})
+                .Select(a => a.GetDragItemLabel()).ToArray();
+
             if (sourceData.Length > 5)
             {
                 var tempData = sourceData.Take(4).ToList();
