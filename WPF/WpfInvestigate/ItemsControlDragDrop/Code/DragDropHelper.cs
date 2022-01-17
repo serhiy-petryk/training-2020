@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -14,34 +13,7 @@ namespace ItemsControlDragDrop.Code
 {
     public static class DragDropHelper
     {
-        internal class StartDragInfo
-        {
-            internal Point DragStart { get; private set; }
-            internal ItemsControl DragSource { get; private set; }
-            public void Init(ItemsControl dragSource, MouseEventArgs e)
-            {
-                DragSource = dragSource;
-                DragStart = e.GetPosition(dragSource);
-            }
-            public void Clear()
-            {
-                DragSource = null;
-                DragStart = new Point(-100, -100);
-            }
-        }
-
-        internal class DropInfo
-        {
-            internal DragEventArgs LastDragEventArgs;
-        }
-
-        private static DropTargetInsertionAdorner _dropTargetAdorner;
-        private static DragAdorner _dragAdorner;
-        // internal static DragEventArgs _lastDragEventArgs;
-        private static StartDragInfo _startDragInfo = new StartDragInfo();
-        internal static DropInfo _dropInfo;
-        private static bool _isDragging;
-
+        #region ==============  Event handlers  ==============
         public static void DragSource_OnPreviewMouseMove(object sender, MouseEventArgs e)
         {
             if (_isDragging) return;
@@ -51,15 +23,6 @@ namespace ItemsControlDragDrop.Code
                 _startDragInfo.Clear();
                 return;
             }
-
-            var mousePosition = e.GetPosition(itemsControl);
-            var selectedItems = GetSelectedItems(itemsControl);
-            /*var item = GetItemUnderMouse(itemsControl, mousePosition);
-            if (!selectedItems.Contains(item))
-            {
-                _dragInfo = null;
-                return;
-            }*/
 
             var itemsHost = GetItemsHost(itemsControl);
             if (!itemsHost.IsMouseOverElement(e.GetPosition))
@@ -74,17 +37,12 @@ namespace ItemsControlDragDrop.Code
                 return;
             }
 
-            /*if (GetSelectedItems(itemsControl).Count != _dragInfo.SelectedItemCount)
-            {
-                _dragInfo = null;
-                return;
-            }*/
-
+            var mousePosition = e.GetPosition(itemsControl);
             if (Math.Abs(mousePosition.X - _startDragInfo.DragStart.X) > SystemParameters.MinimumHorizontalDragDistance ||
                 Math.Abs(mousePosition.Y - _startDragInfo.DragStart.Y) > SystemParameters.MinimumVerticalDragDistance)
             {
                 var dataObject = new DataObject();
-                dataObject.SetData(sender.GetType().Name, selectedItems.OfType<object>().ToArray());
+                dataObject.SetData(sender.GetType().Name, GetSelectedItems(itemsControl).OfType<object>().ToArray());
                 //var adLayer = AdornerLayer.GetAdornerLayer(item);
                 // myAdornment = new DraggableAdorner(item);
                 //adLayer.Add(myAdornment);
@@ -98,7 +56,7 @@ namespace ItemsControlDragDrop.Code
                 {
                     _isDragging = false;
                     _startDragInfo.Clear();
-                    _dropInfo = null;
+                    _dragInfo.Clear();
                 }
 
                 //adLayer.Remove(myAdornment);
@@ -106,6 +64,85 @@ namespace ItemsControlDragDrop.Code
             }
         }
 
+        public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
+        {
+            _dragInfo.LastDragLeaveObject = null;
+
+            var a1 = e.Data.GetData(sender.GetType().Name);
+            if (a1 == null)
+            {
+                ResetDragDrop(e);
+                return;
+            }
+
+            var control = (ItemsControl)sender;
+            DefineInsertIndex(control, e);
+            if (!_dragInfo.InsertIndex.HasValue)
+            {
+                ResetDragDrop(e);
+                return;
+            }
+
+            if (_dropTargetAdorner == null)
+                _dropTargetAdorner = new DropTargetInsertionAdorner(control);
+            _dropTargetAdorner.InvalidateVisual();
+
+            if (_dragAdorner == null)
+                _dragAdorner = new DragAdorner(Window.GetWindow(control).Content as UIElement, e.Data.GetData(sender.GetType().Name));
+            _dragAdorner.UpdateUI(e, control);
+
+            CheckScroll(control, e);
+        }
+
+        public static void DropTarget_OnPreviewDragLeave(object sender, DragEventArgs e)
+        {
+            _dragInfo.LastDragLeaveObject = sender;
+            ((FrameworkElement)sender).Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (Equals(_dragInfo.LastDragLeaveObject, sender))
+                    ResetDragDrop(e);
+                _dragInfo.LastDragLeaveObject = null;
+            }), DispatcherPriority.Normal);
+        }
+
+        public static void DropTarget_OnPreviewDrop(object sender, DragEventArgs e)
+        {
+            var sourceData = e.Data.GetData(sender.GetType().Name) as Array;
+            var itemsControl = sender as ItemsControl;
+            if (!_dragInfo.InsertIndex.HasValue) return;
+
+            var insertIndex = _dragInfo.InsertIndex.Value + _dragInfo.FirstItemOffset;
+            var targetData = (IList)itemsControl.ItemsSource ?? itemsControl.Items;
+            if (e.Effects == DragDropEffects.Copy)
+            {
+                foreach (var o in sourceData)
+                {
+                    var index = targetData.IndexOf(o);
+                    if (index != -1)
+                    {
+                        targetData.RemoveAt(index);
+                        if (index < insertIndex) --insertIndex;
+                    }
+                }
+
+                foreach (var o in sourceData)
+                {
+                    if (o is TabItem tabItem)
+                        ((TabControl)tabItem.Parent).Items.Remove(tabItem);
+                    targetData.Insert(insertIndex++, o);
+                }
+            }
+            ResetDragDrop(e);
+        }
+        #endregion
+
+        private static DropTargetInsertionAdorner _dropTargetAdorner;
+        private static DragAdorner _dragAdorner;
+        private static StartDragInfo _startDragInfo = new StartDragInfo();
+        internal static DragInfo _dragInfo = new DragInfo();
+        private static bool _isDragging;
+
+        #region =============  Private methods  ================
         private static IList GetSelectedItems(ItemsControl itemsControl)
         {
             if (itemsControl is MultiSelector multiSelector)
@@ -128,38 +165,8 @@ namespace ItemsControlDragDrop.Code
             throw new Exception($"Trap! {itemsControl.GetType().Name} is not supported");
         }
 
-        public static void DropTarget_OnPreviewDrop(object sender, DragEventArgs e)
-        {
-            var sourceData = e.Data.GetData(sender.GetType().Name) as Array;
-            var itemsControl = sender as ItemsControl;
-            var insertIndex = GetInsertIndex(itemsControl, e, out int firstItemOffset);
-            insertIndex += firstItemOffset;
-
-            var targetData = (IList) itemsControl.ItemsSource ?? itemsControl.Items;
-            if (e.Effects == DragDropEffects.Copy)
-            {
-                foreach (var o in sourceData)
-                {
-                    var index = targetData.IndexOf(o);
-                    if (index != -1)
-                    {
-                        targetData.RemoveAt(index);
-                        if (index < insertIndex) --insertIndex;
-                    }
-                }
-
-                foreach (var o in sourceData)
-                {
-                    if (o is TabItem tabItem)
-                        ((TabControl)tabItem.Parent).Items.Remove(tabItem);
-                    targetData.Insert(insertIndex++, o);
-                }
-            }
-            ResetDragDrop(e);
-        }
-
         private static PropertyInfo _piItemsHost;
-        public static Panel GetItemsHost(ItemsControl itemsControl)
+        internal static Panel GetItemsHost(ItemsControl itemsControl)
         {
             if (_piItemsHost == null)
                 _piItemsHost = typeof(ItemsControl).GetProperty("ItemsHost", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -167,7 +174,7 @@ namespace ItemsControlDragDrop.Code
         }
 
         private static PropertyInfo _piDataGridHeaderHost;
-        public static FrameworkElement GetHeaderHost(ItemsControl itemsControl)
+        private static FrameworkElement GetHeaderHost(ItemsControl itemsControl)
         {
             if (itemsControl is DataGrid)
             {
@@ -176,54 +183,6 @@ namespace ItemsControlDragDrop.Code
                 return (DataGridColumnHeadersPresenter) _piDataGridHeaderHost.GetValue(itemsControl);
             }
             return null;
-        }
-
-        public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
-        {
-            _lastDragLeaveObject = null;
-            if (_dropInfo == null)
-                _dropInfo = new DropInfo();
-            _dropInfo.LastDragEventArgs = e;
-
-            var a1 = e.Data.GetData(sender.GetType().Name);
-            if (a1 == null)
-            {
-                ResetDragDrop(e);
-                return;
-            }
-
-            var control = (ItemsControl) sender;
-
-            var itemsHost = GetItemsHost(control);
-            if (!itemsHost.IsMouseOverElement(e.GetPosition))
-            {
-                var headerHost = GetHeaderHost(control);
-                var flag = false;
-                if (headerHost != null)
-                    flag = headerHost.IsMouseOverElement(e.GetPosition);
-
-                if (!flag && !GetInsertIndex(control,e).HasValue)
-                {
-                    // CheckScroll(control, e);
-                    Debug.Print($"ResetDragDrop: {control.Name}");
-                    ResetDragDrop(e);
-                    return;
-                }
-            }
-
-            if (_dropTargetAdorner == null)
-                _dropTargetAdorner = new DropTargetInsertionAdorner(control);
-            _dropTargetAdorner.InvalidateVisual();
-
-            if (_dragAdorner == null)
-            {
-                var rootElement = Window.GetWindow(control).Content as UIElement;
-                _dragAdorner = new DragAdorner(rootElement, e.Data.GetData(sender.GetType().Name));
-            }
-
-            _dragAdorner.UpdateUI(e, control);
-
-            CheckScroll(control, e);
         }
 
         private static void CheckScroll(ItemsControl o, DragEventArgs e)
@@ -249,20 +208,7 @@ namespace ItemsControlDragDrop.Code
             }
         }
 
-        //============================
-        private static object _lastDragLeaveObject;
-        public static void DropTarget_OnPreviewDragLeave(object sender, DragEventArgs e)
-        {
-            _lastDragLeaveObject = sender;
-            ((FrameworkElement) sender).Dispatcher.BeginInvoke(new Action(() =>
-            {
-                if (Equals(_lastDragLeaveObject, sender))
-                    ResetDragDrop(e);
-                _lastDragLeaveObject = null;
-            }), DispatcherPriority.Normal);
-        }
-
-        public static Orientation GetItemsPanelOrientation(ItemsControl itemsControl)
+        internal static Orientation GetItemsPanelOrientation(ItemsControl itemsControl)
         {
             if (itemsControl is TabControl)
             {
@@ -281,11 +227,11 @@ namespace ItemsControlDragDrop.Code
             throw new Exception("Trap! Can't define item panel orientation");
         }
 
-        public static int GetInsertIndex(ItemsControl control, DragEventArgs e, out int firstItemOffset)
+        private static void DefineInsertIndex(ItemsControl control, DragEventArgs e)
         {
             var orientation = GetItemsPanelOrientation(control);
             var panel = GetItemsHost(control);
-            firstItemOffset = panel.Children.Count == 0 ? 0 : control.ItemContainerGenerator.IndexFromContainer(panel.Children[0]);
+            _dragInfo.FirstItemOffset = panel.Children.Count == 0 ? 0 : control.ItemContainerGenerator.IndexFromContainer(panel.Children[0]);
             for (var i = 0; i < panel.Children.Count; i++)
             {
                 var item = panel.Children[i] as FrameworkElement;
@@ -294,11 +240,21 @@ namespace ItemsControlDragDrop.Code
                     var itemBounds = item.GetBoundsOfElement();
                     var mousePos = e.GetPosition(item);
                     if (orientation == Orientation.Vertical)
-                        return i + (mousePos.Y <= itemBounds.Bottom * 0.8 ? 0 : 1);
-                    return i + (mousePos.X <= itemBounds.Right * 0.8 ? 0 : 1);
+                        _dragInfo.InsertIndex = i + (mousePos.Y <= itemBounds.Bottom * 0.8 ? 0 : 1);
+                    else
+                        _dragInfo.InsertIndex = i + (mousePos.X <= itemBounds.Right * 0.8 ? 0 : 1);
+                    return;
                 }
             }
-            return panel.IsMouseOverElement(e.GetPosition) ? panel.Children.Count : 0;
+
+            var headerHost = GetHeaderHost(control);
+            if (headerHost != null && headerHost.IsMouseOverElement(e.GetPosition))
+            {
+                _dragInfo.InsertIndex = 0;
+                return;
+            }
+
+            _dragInfo.InsertIndex = panel.IsMouseOverElement(e.GetPosition) ? panel.Children.Count : (int?)null;
         }
 
         private static void ResetDragDrop(DragEventArgs e)
@@ -316,34 +272,36 @@ namespace ItemsControlDragDrop.Code
             e.Effects = DragDropEffects.None;
             e.Handled = true;
         }
+        #endregion
 
-        private static int? GetInsertIndex(ItemsControl control, DragEventArgs e)
+        #region =============  Helper classes  ===============
+        internal class StartDragInfo
         {
-            var panel = GetItemsHost(control);
-            var orientation = GetItemsPanelOrientation(control);
-            for (var i = 0; i < panel.Children.Count; i++)
+            internal Point DragStart { get; private set; }
+            internal ItemsControl DragSource { get; private set; }
+            public void Init(ItemsControl dragSource, MouseEventArgs e)
             {
-                var item = panel.Children[i] as FrameworkElement;
-                if (item.IsMouseOverElement(e.GetPosition))
-                    return i;
+                DragSource = dragSource;
+                DragStart = e.GetPosition(dragSource);
             }
-
-            var headerHost = GetHeaderHost(control);
-            if (headerHost != null && headerHost.IsMouseOverElement(e.GetPosition))
-                return 0;
-
-            for (var i = 0; i < panel.Children.Count; i++)
+            public void Clear()
             {
-                var item = panel.Children[i] as FrameworkElement;
-                // var visibleRect = item.GetVisibleRect(control);
-                var visibleRect = item.GetBoundsOfElement();
-                var rect = new Rect(new Point(visibleRect.X, visibleRect.Y), new Size(visibleRect.Width + (orientation == Orientation.Horizontal ? 150 : 0), visibleRect.Width + (orientation == Orientation.Vertical ? 150 : 0)));
-                var p = e.GetPosition(item);
-                if (rect.Contains(p))
-                    return i;
+                DragSource = null;
+                DragStart = new Point(-100, -100);
             }
-
-            return null;
         }
+
+        internal class DragInfo
+        {
+            internal object LastDragLeaveObject;
+            internal int? InsertIndex;
+            internal int FirstItemOffset;
+            public void Clear()
+            {
+                LastDragLeaveObject = null;
+                InsertIndex = null;
+            }
+        }
+        #endregion
     }
 }
