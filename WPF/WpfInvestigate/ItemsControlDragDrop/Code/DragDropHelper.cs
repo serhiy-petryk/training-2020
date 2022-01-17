@@ -128,7 +128,7 @@ namespace ItemsControlDragDrop.Code
                 foreach (var o in sourceData)
                 {
                     if (o is TabItem tabItem)
-                        ((TabControl)tabItem.Parent).Items.Remove(tabItem);
+                        ((TabControl) tabItem.Parent)?.Items.Remove(tabItem);
                     targetData.Insert(insertIndex++, o);
                 }
             }
