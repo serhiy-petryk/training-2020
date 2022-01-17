@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +13,9 @@ namespace ItemsControlDragDrop.Code
     {
         public static object GetDragItemLabel(this object item)
         {
-            if (item is TabItem tabItem) return tabItem.Header;
+            if (item is TabItem tabItem)
+                return tabItem.Header;
+            Debug.Print($"Label: {item.ToString()}");
             return item;
         }
 

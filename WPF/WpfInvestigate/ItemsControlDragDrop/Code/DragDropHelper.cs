@@ -77,7 +77,7 @@ namespace ItemsControlDragDrop.Code
             {
 
                 var dataObject = new DataObject();
-                dataObject.SetData("Source", selectedItems.OfType<object>().ToArray());
+                dataObject.SetData(sender.GetType().Name, selectedItems.OfType<object>().ToArray());
                 //var adLayer = AdornerLayer.GetAdornerLayer(item);
                 // myAdornment = new DraggableAdorner(item);
                 //adLayer.Add(myAdornment);
@@ -123,7 +123,7 @@ namespace ItemsControlDragDrop.Code
 
         public static void DropTarget_OnPreviewDrop(object sender, DragEventArgs e)
         {
-            var sourceData = e.Data.GetData("Source") as Array;
+            var sourceData = e.Data.GetData(sender.GetType().Name) as Array;
             var itemsControl = sender as ItemsControl;
             var insertIndex = GetInsertIndex(itemsControl, e, out int firstItemOffset);
             insertIndex += firstItemOffset;
@@ -142,7 +142,11 @@ namespace ItemsControlDragDrop.Code
                 }
 
                 foreach (var o in sourceData)
+                {
+                    if (o is TabItem tabItem)
+                        ((TabControl)tabItem.Parent).Items.Remove(tabItem);
                     targetData.Insert(insertIndex++, o);
+                }
             }
             ResetDragDrop(e);
         }
@@ -171,6 +175,13 @@ namespace ItemsControlDragDrop.Code
         {
             _lastDragLeaveObject = null;
             _lastDragEventArgs = e;
+            var a1 = e.Data.GetData(sender.GetType().Name);
+            if (a1 == null)
+            {
+                ResetDragDrop(e);
+                return;
+            }
+
             var control = (ItemsControl) sender;
 
             var itemsHost = GetItemsHost(control);
@@ -197,7 +208,7 @@ namespace ItemsControlDragDrop.Code
             if (_dragAdorner == null)
             {
                 var rootElement = Window.GetWindow(control).Content as UIElement;
-                _dragAdorner = new DragAdorner(rootElement, e.Data.GetData("Source"));
+                _dragAdorner = new DragAdorner(rootElement, e.Data.GetData(sender.GetType().Name));
             }
 
             _dragAdorner.UpdateUI(e, control);
