@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -51,12 +52,14 @@ namespace ItemsControlDragDrop.Code
                 {
                     _isDragging = true;
                     var result = DragDrop.DoDragDrop(itemsControl, dataObject, DragDropEffects.Copy);
+                    Debug.Print($"EndDrag: {result}");
                 }
                 finally
                 {
                     _isDragging = false;
                     _startDragInfo.Clear();
                     _dragInfo.Clear();
+                    ResetDragDrop(null);
                 }
 
                 //adLayer.Remove(myAdornment);
@@ -66,6 +69,7 @@ namespace ItemsControlDragDrop.Code
 
         public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
         {
+            Debug.Print($"DragOver:");
             _dragInfo.LastDragLeaveObject = null;
 
             var a1 = e.Data.GetData(sender.GetType().Name);
@@ -107,6 +111,7 @@ namespace ItemsControlDragDrop.Code
 
         public static void DropTarget_OnPreviewDrop(object sender, DragEventArgs e)
         {
+            Debug.Print($"Drop:");
             var sourceData = e.Data.GetData(sender.GetType().Name) as Array;
             var itemsControl = sender as ItemsControl;
             if (!_dragInfo.InsertIndex.HasValue) return;
@@ -269,8 +274,12 @@ namespace ItemsControlDragDrop.Code
                 _dragAdorner.Detach();
                 _dragAdorner = null;
             }
-            e.Effects = DragDropEffects.None;
-            e.Handled = true;
+
+            if (e != null)
+            {
+                e.Effects = DragDropEffects.None;
+                e.Handled = true;
+            }
         }
         #endregion
 
