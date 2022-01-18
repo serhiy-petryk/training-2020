@@ -144,7 +144,7 @@ namespace WpfInvestigate.Helpers
 
         private static DropTargetInsertionAdorner _dropTargetAdorner;
         private static DragAdorner _dragAdorner;
-        private static StartDragInfo _startDragInfo = new StartDragInfo();
+        internal static StartDragInfo _startDragInfo = new StartDragInfo();
         internal static DragInfo _dragInfo = new DragInfo();
         private static bool _isDragging;
 
