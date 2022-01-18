@@ -68,6 +68,19 @@ namespace WpfInvestigate.Helpers
             }
         }
 
+        public static void DragSource_OnPreviewGiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            if (e.Effects == DragDropEffects.Copy)
+            {
+                e.UseDefaultCursors = false;
+                Mouse.SetCursor(Cursors.Arrow);
+            }
+            else
+                e.UseDefaultCursors = true;
+
+            e.Handled = true;
+        }
+
         public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
         {
             Debug.Print($"DragOver:");

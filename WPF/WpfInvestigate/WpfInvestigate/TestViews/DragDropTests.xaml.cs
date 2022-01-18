@@ -25,6 +25,7 @@ namespace WpfInvestigate.TestViews
             view2.ItemsSource = new ObservableCollection<MyTask>();
         }
         private void View1_OnPreviewMouseMove(object sender, MouseEventArgs e) => DragDropHelper.DragSource_OnPreviewMouseMove(sender, e);
+        private void View1_OnPreviewGiveFeedback(object sender, GiveFeedbackEventArgs e) => DragDropHelper.DragSource_OnPreviewGiveFeedback(sender, e);
         private void View1_OnPreviewDrop(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDrop(sender, e);
 
         // private void View1_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragDropHelper.DragSource_OnPreviewMouseLeftButtonDown(sender, e);
@@ -72,22 +73,6 @@ namespace WpfInvestigate.TestViews
         }
 
         private Cursor customCursor = null;
-        private void View1_OnPreviewGiveFeedback(object sender, GiveFeedbackEventArgs e)
-        {
-            Debug.Print($"GiveFeedback: {((FrameworkElement)sender).Name}, {e.Effects}");
-            if (e.Effects == DragDropEffects.Copy)
-            {
-                //if (customCursor == null)
-                //      customCursor = new Cursor(new FileStream("Earth.cur", FileMode.Open));
 
-                e.UseDefaultCursors = false;
-                Mouse.SetCursor(Cursors.Arrow);
-                // Mouse.SetCursor(customCursor);
-            }
-            else
-                e.UseDefaultCursors = true;
-
-            e.Handled = true;
-        }
     }
 }
