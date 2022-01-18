@@ -8,6 +8,7 @@
         xmlns:ViewModels="clr-namespace:WpfInvestigate.ViewModels"
         xmlns:wpfInvestigate="clr-namespace:WpfInvestigate"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
+        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="700" Width="1200">
 
@@ -107,6 +108,18 @@
                     <WrapPanel Margin="5">
                         <Button x:Name="UpdateProperties" Click="OnUpdatePropertiesClick" Content="Update Properties"/>
                         <Button x:Name="TestForProperties" Click="OnTestForPropertiesClick" Content="Test for Properties"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="5">
+                        <controls:DragAdornerControl>
+                            <controls:DragAdornerControl.ItemsSource>
+                                <x:Array Type="sys:String"
+                                         xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                                    <sys:String>Hello</sys:String>
+                                    <sys:String>World</sys:String>
+                                </x:Array>
+                            </controls:DragAdornerControl.ItemsSource>
+                        </controls:DragAdornerControl>
                     </WrapPanel>
 
                 </StackPanel>

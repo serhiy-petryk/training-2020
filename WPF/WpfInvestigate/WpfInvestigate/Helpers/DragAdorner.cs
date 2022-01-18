@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using WpfInvestigate.Controls;
 
 namespace WpfInvestigate.Helpers
 {
@@ -21,6 +22,7 @@ namespace WpfInvestigate.Helpers
                 sourceData = tempData.ToArray();
             }
             ((ItemsControl)m_Adornment.Child).ItemsSource = sourceData;
+            // m_Adornment.ItemsSource = sourceData;
 
             m_AdornerLayer = AdornerLayer.GetAdornerLayer(adornedElement);
             m_AdornerLayer.Add(this);
@@ -64,6 +66,7 @@ namespace WpfInvestigate.Helpers
             var template = Application.Current.Resources["DragAdorner"] as DataTemplate;
             var itemsControl = new ItemsControl { ItemTemplate = template };
             m_Adornment = new Border { Child = itemsControl };
+            // m_Adornment = new DragAdornerControl();
         }
 
         private static object GetDragItemLabel(object item)
@@ -75,6 +78,7 @@ namespace WpfInvestigate.Helpers
 
 
         private static readonly Border m_Adornment;
+        // private static readonly ItemsControl m_Adornment;
         #endregion
     }
 }
