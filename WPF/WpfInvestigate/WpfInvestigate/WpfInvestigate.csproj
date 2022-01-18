@@ -96,7 +96,14 @@
     </Compile>
     <Compile Include="Effects\TextBlockEffects.cs" />
     <Compile Include="Helpers\BindingHelper.cs" />
+    <Compile Include="Helpers\DragAdorner.cs" />
+    <Compile Include="Helpers\DragDropHelper.cs" />
+    <Compile Include="Helpers\DropTargetInsertionAdorner.cs" />
     <Compile Include="Helpers\EventHelper.Log.cs" />
+    <Compile Include="Samples\MyTask.cs" />
+    <Compile Include="TestViews\DragDropTests.xaml.cs">
+      <DependentUpon>DragDropTests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Useful\BindingClearing.cs" />
     <Compile Include="Helpers\UnloadingHelper.cs" />
     <Compile Include="Helpers\EventHelper.cs" />
@@ -470,6 +477,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Obsolete\XButtonStyleTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestViews\DragDropTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

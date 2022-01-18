@@ -5,24 +5,25 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using ItemsControlDragDrop.Code;
+using WpfInvestigate.Common;
+using WpfInvestigate.Helpers;
+using WpfInvestigate.Samples;
 
-namespace ItemsControlDragDrop
+namespace WpfInvestigate.TestViews
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for DragDropTests.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DragDropTests : Window
     {
-        public MainWindow()
+        public DragDropTests()
         {
             InitializeComponent();
             DataContext = this;
 
-            this.view1.ItemsSource = MyTask.CreateTasks();
-            this.view2.ItemsSource = new ObservableCollection<MyTask>();
+            view1.ItemsSource = MyTask.CreateTasks();
+            view2.ItemsSource = new ObservableCollection<MyTask>();
         }
-
         private void View1_OnPreviewMouseMove(object sender, MouseEventArgs e) => DragDropHelper.DragSource_OnPreviewMouseMove(sender, e);
         private void View1_OnPreviewDrop(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDrop(sender, e);
 
@@ -51,7 +52,7 @@ namespace ItemsControlDragDrop
         private void View1_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             return;
-            var aa1 = GetElementsUnderMouseClick((UIElement) sender, e);
+            var aa1 = GetElementsUnderMouseClick((UIElement)sender, e);
             var aa2 = aa1[0].GetVisualParents().OfType<FrameworkElement>();
             var aa3 = aa2.Select(a => new Point(a.ActualWidth, a.ActualHeight));
         }
@@ -77,7 +78,7 @@ namespace ItemsControlDragDrop
             if (e.Effects == DragDropEffects.Copy)
             {
                 //if (customCursor == null)
-              //      customCursor = new Cursor(new FileStream("Earth.cur", FileMode.Open));
+                //      customCursor = new Cursor(new FileStream("Earth.cur", FileMode.Open));
 
                 e.UseDefaultCursors = false;
                 Mouse.SetCursor(Cursors.Arrow);

@@ -129,6 +129,7 @@
                     <Button x:Name="ColorControlTest" Width="200" Margin="0 5" Content="Ready: ColorControlTest" Click="ColorControlTest_OnClick"/>
                     <Button x:Name="ButtonStyleTest" Width="200" Margin="0 5" Content="Ready: ButtonStyleTests" Click="ButtonStyleTests_OnClick"/>
                     <Button x:Name="FocusEffectTest" Width="200" Margin="0 5" Content="Ready: FocusEffectTests" Click="FocusEffectTests_OnClick"/>
+                    <Button x:Name="DragDropTest" Width="200" Margin="0 5" Content="Ready: DragDropTests" Click="DragDropTests_OnClick"/>
                     <Button x:Name="TextBoxTest" Width="200" Margin="0 5" Content="WiP: TextBoxTests" Click="TextBoxTests_OnClick"/>
                 </StackPanel>
 
