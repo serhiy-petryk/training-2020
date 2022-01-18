@@ -50,5 +50,9 @@
         </Setter>
     </Style>
 
-
+    <PathGeometry x:Key="DropTargetInsertionTriangle">
+        <PathFigure StartPoint="5 0">
+            <PolyLineSegment Points="0,-5,0,5"/>
+        </PathFigure>
+    </PathGeometry>
 </ResourceDictionary>

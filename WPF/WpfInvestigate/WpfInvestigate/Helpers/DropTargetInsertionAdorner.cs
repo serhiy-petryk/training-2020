@@ -14,7 +14,7 @@ namespace WpfInvestigate.Helpers
             IsHitTestVisible = false;
         }
 
-        protected override void OnRender(DrawingContext drawingContext)
+       protected override void OnRender(DrawingContext drawingContext)
         {
             if (!DragDropHelper._dragInfo.InsertIndex.HasValue)
                 return;
@@ -22,11 +22,11 @@ namespace WpfInvestigate.Helpers
             var control = (ItemsControl)AdornedElement;
             var panel = DragDropHelper.GetItemsHost(control);
             var orientation = DragDropHelper.GetItemsPanelOrientation(control);
-            var relativeItem = panel.Children.Count == 0 ? panel
+            var hoveredItem = panel.Children.Count == 0 ? panel
                 : (DragDropHelper._dragInfo.InsertIndex.Value < panel.Children.Count
                     ? panel.Children[DragDropHelper._dragInfo.InsertIndex.Value]
                     : panel.Children[panel.Children.Count - 1]) as FrameworkElement;
-            var r = relativeItem.GetVisibleRect(control);
+            var r = hoveredItem.GetVisibleRect(control);
 
             double insertPosition;
             if (DragDropHelper._dragInfo.InsertIndex.Value < panel.Children.Count)
@@ -60,29 +60,12 @@ namespace WpfInvestigate.Helpers
         #region ===========  Static section  =============
         static DropTargetInsertionAdorner()
         {
-            // Create the pen and triangle in a static constructor and freeze them to improve performance.
-            const int triangleSize = 5;
-
-            m_Pen = new Pen(Brushes.Magenta, 2);
             m_Pen.Freeze();
-
-            var firstLine = new LineSegment(new Point(0, -triangleSize), false);
-            firstLine.Freeze();
-            var secondLine = new LineSegment(new Point(0, triangleSize), false);
-            secondLine.Freeze();
-
-            var figure = new PathFigure { StartPoint = new Point(triangleSize, 0) };
-            figure.Segments.Add(firstLine);
-            figure.Segments.Add(secondLine);
-            figure.Freeze();
-
-            m_Triangle = new PathGeometry();
-            m_Triangle.Figures.Add(figure);
             m_Triangle.Freeze();
         }
 
-        private static readonly Pen m_Pen;
-        private static readonly PathGeometry m_Triangle;
+        private static readonly Pen m_Pen = new Pen(Brushes.Magenta, 2);
+        private static readonly PathGeometry m_Triangle = Application.Current.Resources["DropTargetInsertionTriangle"] as PathGeometry;
         #endregion
     }
 }
