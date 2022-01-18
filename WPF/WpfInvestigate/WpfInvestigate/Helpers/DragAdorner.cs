@@ -14,15 +14,13 @@ namespace WpfInvestigate.Helpers
         {
             var sourceData = (dragDropData is IEnumerable enumerable ? enumerable.OfType<object>().ToArray() : new[] {dragDropData})
                 .Select(a => GetDragItemLabel(a)).ToArray();
-
             if (sourceData.Length > 5)
             {
                 var tempData = sourceData.Take(4).ToList();
                 tempData.Add("more items ...");
                 sourceData = tempData.ToArray();
             }
-            ((ItemsControl)m_Adornment.Child).ItemsSource = sourceData;
-            // m_Adornment.ItemsSource = sourceData;
+            ((DragAdornerControl)m_Adornment.Child).ItemsSource = sourceData;
 
             m_AdornerLayer = AdornerLayer.GetAdornerLayer(adornedElement);
             m_AdornerLayer.Add(this);
@@ -35,8 +33,7 @@ namespace WpfInvestigate.Helpers
             var transforms = new TransformGroup();
             var actualTransform = itemsControl.GetActualLayoutTransforms();
             transforms.Children.Add(actualTransform);
-            ((DragAdornerControl) m_Adornment.Child).DragDropEffect =
-                DragDropHelper._startDragInfo.DragSource == itemsControl ? DragDropEffects.Move : DragDropEffects.Copy;
+            ((DragAdornerControl)m_Adornment.Child).DragDropEffect = DragDropHelper._startDragInfo.DragSource == itemsControl ? DragDropEffects.Move : DragDropEffects.Copy;
             transforms.Children.Add(new TranslateTransform(adornerPos.X + 4.0 * actualTransform.Value.M11,
                 adornerPos.Y - (m_Adornment.ActualHeight + 1.0) * actualTransform.Value.M22));
             m_Adornment.RenderTransform = transforms;
@@ -63,18 +60,6 @@ namespace WpfInvestigate.Helpers
         private readonly AdornerLayer m_AdornerLayer;
 
         #region ===========  Static section  =============
-        static DragAdorner()
-        {
-            /*var template = Application.Current.Resources["DragAdorner"] as DataTemplate;
-            var itemsControl = new ItemsControl { ItemTemplate = template };
-            m_Adornment = new Border { Child = itemsControl };*/
-            // m_Adornment = new DragAdornerControl();
-            // m_Adornment = new TestBorder();
-            // m_Adornment = new Border(){Background = Brushes.Yellow, Width = 100, Height = 100};
-            // m_Adornment = new UserControl() { Background = Brushes.Yellow, Width = 100, Height = 100 };
-            m_Adornment = new Decorator{Child = new DragAdornerControl()};
-        }
-
         private static object GetDragItemLabel(object item)
         {
             if (item is TabItem tabItem)
@@ -82,10 +67,7 @@ namespace WpfInvestigate.Helpers
             return item;
         }
 
-
-        // private static readonly Border m_Adornment;
-        // private static readonly UserControl m_Adornment;
-        private static readonly Decorator m_Adornment;
+        private static readonly Border m_Adornment = new Border{BorderThickness = new Thickness(), Child = new DragAdornerControl()};
         #endregion
     }
 }
