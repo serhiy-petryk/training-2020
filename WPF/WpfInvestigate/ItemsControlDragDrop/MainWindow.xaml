@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1100">
 
@@ -45,14 +46,56 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
-                <TextBlock Text="Drap and Drop ToDo:"/>
-                <TextBlock Margin="8 0" Text="- reoder item"/>
-                <TextBlock Margin="8 0" Text="- copy item to another list"/>
-                <TextBlock Margin="8 0" Text="- item adorner"/>
-                <TextBlock Margin="8 0" Text="- location adorner"/>
-                <TextBlock Margin="8 0" Text="- scrolling"/>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+                    <TextBlock Text="Drap and Drop ToDo:"/>
+                    <TextBlock Margin="8 0" Text="- reoder item"/>
+                    <TextBlock Margin="8 0" Text="- copy item to another list"/>
+                    <TextBlock Margin="8 0" Text="- item adorner"/>
+                    <TextBlock Margin="8 0" Text="- location adorner"/>
+                    <TextBlock Margin="8 0" Text="- scrolling"/>
+                </StackPanel>
+
+                <Border Grid.Column="1" Background="Yellow" CornerRadius="3" BorderBrush="Red" BorderThickness="1"
+                        VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Width="12" Margin="2">
+<!--                            <Path Stretch="Uniform" Fill="Red"
+                                  Data="M280 150C280 146.7704 278.44 143.7398 275.812 141.8626L135.8124 41.862C132.7642 39.686 128.7548 39.394 125.4242 41.108C122.0934 42.822 120 46.254 120 50L120 100L70 100C64.4772 100 60 104.4772 60 110L60 190C60 195.5228 64.4772 200 70 200L120 200L120 250C120 253.7458 122.0934 257.1776 125.4242 258.8916C128.7548 260.6056 132.7642 260.3146 135.8124 258.1374L275.812 158.1372C278.44 156.2602 280 153.2294 280 150zM140 230.568L140 190C140 184.4772 135.5228 180 130 180L80 180L80 120L130 120C135.5228 120 140 115.5228 140 110L140 69.432L252.796 150L140 230.568z"></Path>
+    -->                        <Path Stretch="Uniform" Fill="Red"
+                                  Data="M4,9H9V4H15V9H20V15H15V20H9V15H4V9M11,13V18H13V13H18V11H13V6H11V11H6V13H11Z"></Path>
+                        </Viewbox>
+<!--                        <TextBlock Grid.Column="0" Text="⇨" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+                        <Grid Grid.Column="1" Background="Red" Width="1"/>
+                        <ItemsControl Grid.Column="2" VerticalAlignment="Center">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border x:Name="Border" BorderThickness="0 1 0 0" BorderBrush="Red" Margin="0">
+                                    <TextBlock FontSize="10" Padding="2 0" Text="{Binding}" />
+                                    </Border>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                                            <Setter TargetName="Border" Property="BorderThickness" Value="0"/>
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <system:String>AAA</system:String>
+                            <system:String>AAA 2</system:String>
+                            <system:String>AAA 3</system:String>
+                        </ItemsControl>
+                    </Grid>
+                </Border>
+            </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>

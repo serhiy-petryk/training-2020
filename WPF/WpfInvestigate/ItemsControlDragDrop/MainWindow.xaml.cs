@@ -72,9 +72,23 @@ namespace ItemsControlDragDrop
             return HitTestResultBehavior.Continue;
         }
 
+        private Cursor customCursor = null;
         private void View1_OnPreviewGiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
-           // Debug.Print($"GiveFeedback: {((FrameworkElement)sender).Name}");
+            Debug.Print($"GiveFeedback: {((FrameworkElement)sender).Name}, {e.Effects}");
+            if (e.Effects == DragDropEffects.Copy)
+            {
+                //if (customCursor == null)
+              //      customCursor = new Cursor(new FileStream("Earth.cur", FileMode.Open));
+
+                e.UseDefaultCursors = false;
+                Mouse.SetCursor(Cursors.Arrow);
+                // Mouse.SetCursor(customCursor);
+            }
+            else
+                e.UseDefaultCursors = true;
+
+            e.Handled = true;
         }
     }
 }
