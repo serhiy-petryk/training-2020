@@ -21,7 +21,7 @@ namespace WpfInvestigate.Helpers
                 tempData.Add("more items ...");
                 sourceData = tempData.ToArray();
             }
-            ((ItemsControl)m_Adornment.Children[0]).ItemsSource = sourceData;
+            ((ItemsControl)m_Adornment.Child).ItemsSource = sourceData;
             // m_Adornment.ItemsSource = sourceData;
 
             m_AdornerLayer = AdornerLayer.GetAdornerLayer(adornedElement);
@@ -35,7 +35,7 @@ namespace WpfInvestigate.Helpers
             var transforms = new TransformGroup();
             var actualTransform = itemsControl.GetActualLayoutTransforms();
             transforms.Children.Add(actualTransform);
-            ((DragAdornerControl) m_Adornment.Children[0]).DragDropEffect =
+            ((DragAdornerControl) m_Adornment.Child).DragDropEffect =
                 DragDropHelper._startDragInfo.DragSource == itemsControl ? DragDropEffects.Move : DragDropEffects.Copy;
             transforms.Children.Add(new TranslateTransform(adornerPos.X + 4.0 * actualTransform.Value.M11,
                 adornerPos.Y - (m_Adornment.ActualHeight + 1.0) * actualTransform.Value.M22));
@@ -72,8 +72,7 @@ namespace WpfInvestigate.Helpers
             // m_Adornment = new TestBorder();
             // m_Adornment = new Border(){Background = Brushes.Yellow, Width = 100, Height = 100};
             // m_Adornment = new UserControl() { Background = Brushes.Yellow, Width = 100, Height = 100 };
-            m_Adornment = new Grid();
-            m_Adornment.Children.Add(new DragAdornerControl());
+            m_Adornment = new Decorator{Child = new DragAdornerControl()};
         }
 
         private static object GetDragItemLabel(object item)
@@ -86,7 +85,7 @@ namespace WpfInvestigate.Helpers
 
         // private static readonly Border m_Adornment;
         // private static readonly UserControl m_Adornment;
-        private static readonly Grid m_Adornment;
+        private static readonly Decorator m_Adornment;
         #endregion
     }
 }
