@@ -71,6 +71,7 @@
     <Compile Include="Common\ColorConverters.cs" />
     <Compile Include="Common\ColorSpaces.cs" />
     <Compile Include="Common\DataTypeMetadata.cs" />
+    <Compile Include="Controls\DragAdornerControl.cs" />
     <Compile Include="Helpers\ColorThemeSupportHelper.cs" />
     <Compile Include="Common\NotifyPropertyChangedAbstract.cs" />
     <Compile Include="Common\RelayCommand.cs" />
@@ -405,6 +406,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\DragDropStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
