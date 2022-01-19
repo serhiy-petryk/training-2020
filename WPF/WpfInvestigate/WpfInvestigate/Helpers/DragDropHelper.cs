@@ -15,6 +15,9 @@ namespace WpfInvestigate.Helpers
 {
     public static class DragDropHelper
     {
+        public static readonly StartDragInfo StartDrag_Info = new StartDragInfo();
+        public static readonly DragInfo Drag_Info = new DragInfo();
+
         #region ==============  Event handlers  ==============
         public static void DragSource_OnPreviewMouseMove(object sender, MouseEventArgs e)
         {
@@ -22,26 +25,26 @@ namespace WpfInvestigate.Helpers
             if (!(sender is ItemsControl itemsControl) || e.LeftButton == MouseButtonState.Released ||
                 GetSelectedItems(itemsControl).Count == 0)
             {
-                _startDragInfo.Clear();
+                StartDrag_Info.Clear();
                 return;
             }
 
             var itemsHost = GetItemsHost(itemsControl);
             if (!itemsHost.IsMouseOverElement(e.GetPosition))
             {
-                _startDragInfo.Clear();
+                StartDrag_Info.Clear();
                 return;
             }
 
-            if (!Equals(itemsControl, _startDragInfo.DragSource))
+            if (!Equals(itemsControl, StartDrag_Info.DragSource))
             {
-                _startDragInfo.Init(itemsControl, e);
+                StartDrag_Info.Init(itemsControl, e);
                 return;
             }
 
             var mousePosition = e.GetPosition(itemsControl);
-            if (Math.Abs(mousePosition.X - _startDragInfo.DragStart.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                Math.Abs(mousePosition.Y - _startDragInfo.DragStart.Y) > SystemParameters.MinimumVerticalDragDistance)
+            if (Math.Abs(mousePosition.X - StartDrag_Info.DragStart.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(mousePosition.Y - StartDrag_Info.DragStart.Y) > SystemParameters.MinimumVerticalDragDistance)
             {
                 var dataObject = new DataObject();
                 dataObject.SetData(sender.GetType().Name, GetSelectedItems(itemsControl).OfType<object>().ToArray());
@@ -58,8 +61,8 @@ namespace WpfInvestigate.Helpers
                 finally
                 {
                     _isDragging = false;
-                    _startDragInfo.Clear();
-                    _dragInfo.Clear();
+                    StartDrag_Info.Clear();
+                    Drag_Info.Clear();
                     ResetDragDrop(null);
                 }
 
@@ -84,7 +87,7 @@ namespace WpfInvestigate.Helpers
         public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
         {
             Debug.Print($"DragOver:");
-            _dragInfo.LastDragLeaveObject = null;
+            Drag_Info.LastDragLeaveObject = null;
 
             var a1 = e.Data.GetData(sender.GetType().Name);
             if (a1 == null)
@@ -95,7 +98,7 @@ namespace WpfInvestigate.Helpers
 
             var control = (ItemsControl)sender;
             DefineInsertIndex(control, e);
-            if (!_dragInfo.InsertIndex.HasValue)
+            if (!Drag_Info.InsertIndex.HasValue)
             {
                 ResetDragDrop(e);
                 return;
@@ -114,12 +117,12 @@ namespace WpfInvestigate.Helpers
 
         public static void DropTarget_OnPreviewDragLeave(object sender, DragEventArgs e)
         {
-            _dragInfo.LastDragLeaveObject = sender;
+            Drag_Info.LastDragLeaveObject = sender;
             ((FrameworkElement)sender).Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (Equals(_dragInfo.LastDragLeaveObject, sender))
+                if (Equals(Drag_Info.LastDragLeaveObject, sender))
                     ResetDragDrop(e);
-                _dragInfo.LastDragLeaveObject = null;
+                Drag_Info.LastDragLeaveObject = null;
             }), DispatcherPriority.Normal);
         }
 
@@ -128,9 +131,9 @@ namespace WpfInvestigate.Helpers
             Debug.Print($"Drop:");
             var sourceData = e.Data.GetData(sender.GetType().Name) as Array;
             var itemsControl = sender as ItemsControl;
-            if (!_dragInfo.InsertIndex.HasValue) return;
+            if (!Drag_Info.InsertIndex.HasValue) return;
 
-            var insertIndex = _dragInfo.InsertIndex.Value + _dragInfo.FirstItemOffset;
+            var insertIndex = Drag_Info.InsertIndex.Value + Drag_Info.FirstItemOffset;
             var targetData = (IList)itemsControl.ItemsSource ?? itemsControl.Items;
             if (e.Effects == DragDropEffects.Copy)
             {
@@ -157,8 +160,6 @@ namespace WpfInvestigate.Helpers
 
         private static DropTargetInsertionAdorner _dropTargetAdorner;
         private static DragAdorner _dragAdorner;
-        internal static StartDragInfo _startDragInfo = new StartDragInfo();
-        internal static DragInfo _dragInfo = new DragInfo();
         private static bool _isDragging;
 
         #region =============  Private methods  ================
@@ -250,7 +251,10 @@ namespace WpfInvestigate.Helpers
         {
             var orientation = GetItemsPanelOrientation(control);
             var panel = GetItemsHost(control);
-            _dragInfo.FirstItemOffset = panel.Children.Count == 0 ? 0 : control.ItemContainerGenerator.IndexFromContainer(panel.Children[0]);
+            
+            Drag_Info.FirstItemOffset = panel.Children.Count == 0 ? 0 : control.ItemContainerGenerator.IndexFromContainer(panel.Children[0]);
+            Drag_Info.DragDropEffect = StartDrag_Info.DragSource == control ? DragDropEffects.Move : DragDropEffects.Copy;
+
             for (var i = 0; i < panel.Children.Count; i++)
             {
                 var item = panel.Children[i] as FrameworkElement;
@@ -259,9 +263,9 @@ namespace WpfInvestigate.Helpers
                     var itemBounds = item.GetBoundsOfElement();
                     var mousePos = e.GetPosition(item);
                     if (orientation == Orientation.Vertical)
-                        _dragInfo.InsertIndex = i + (mousePos.Y <= itemBounds.Bottom * 0.8 ? 0 : 1);
+                        Drag_Info.InsertIndex = i + (mousePos.Y <= itemBounds.Bottom * 0.8 ? 0 : 1);
                     else
-                        _dragInfo.InsertIndex = i + (mousePos.X <= itemBounds.Right * 0.8 ? 0 : 1);
+                        Drag_Info.InsertIndex = i + (mousePos.X <= itemBounds.Right * 0.8 ? 0 : 1);
                     return;
                 }
             }
@@ -269,11 +273,13 @@ namespace WpfInvestigate.Helpers
             var headerHost = GetHeaderHost(control);
             if (headerHost != null && headerHost.IsMouseOverElement(e.GetPosition))
             {
-                _dragInfo.InsertIndex = 0;
+                Drag_Info.InsertIndex = 0;
                 return;
             }
 
-            _dragInfo.InsertIndex = panel.IsMouseOverElement(e.GetPosition) ? panel.Children.Count : (int?)null;
+            Drag_Info.InsertIndex = panel.IsMouseOverElement(e.GetPosition) ? panel.Children.Count : (int?)null;
+            if (!Drag_Info.InsertIndex.HasValue)
+                Drag_Info.DragDropEffect = DragDropEffects.None;
         }
 
         private static void ResetDragDrop(DragEventArgs e)
@@ -298,10 +304,10 @@ namespace WpfInvestigate.Helpers
         #endregion
 
         #region =============  Helper classes  ===============
-        internal class StartDragInfo
+        public class StartDragInfo
         {
             internal Point DragStart { get; private set; }
-            internal ItemsControl DragSource { get; private set; }
+            public ItemsControl DragSource { get; private set; }
             public void Init(ItemsControl dragSource, MouseEventArgs e)
             {
                 DragSource = dragSource;
@@ -314,11 +320,23 @@ namespace WpfInvestigate.Helpers
             }
         }
 
-        internal class DragInfo
+        public class DragInfo
         {
-            internal object LastDragLeaveObject;
-            internal int? InsertIndex;
-            internal int FirstItemOffset;
+            public object LastDragLeaveObject;
+            public int? InsertIndex;
+            public int FirstItemOffset;
+            public DragDropEffects DragDropEffect;
+            public object GetHoveredItem(ItemsControl control)
+            {
+                if (!InsertIndex.HasValue) return null;
+                var panel = GetItemsHost(control);
+                if (InsertIndex.Value < panel.Children.Count)
+                    return panel.Children[InsertIndex.Value];
+                if (InsertIndex.Value == panel.Children.Count && panel.Children.Count > 0)
+                    return panel.Children[panel.Children.Count - 1];
+                return null;
+            }
+
             public void Clear()
             {
                 LastDragLeaveObject = null;

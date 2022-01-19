@@ -33,7 +33,7 @@ namespace WpfInvestigate.Helpers
             var transforms = new TransformGroup();
             var actualTransform = itemsControl.GetActualLayoutTransforms();
             transforms.Children.Add(actualTransform);
-            ((DragAdornerControl)m_Adornment.Child).DragDropEffect = DragDropHelper._startDragInfo.DragSource == itemsControl ? DragDropEffects.Move : DragDropEffects.Copy;
+            ((DragAdornerControl)m_Adornment.Child).DragDropEffect = DragDropHelper.Drag_Info.DragDropEffect;
             transforms.Children.Add(new TranslateTransform(adornerPos.X + 4.0 * actualTransform.Value.M11,
                 adornerPos.Y - (m_Adornment.ActualHeight + 1.0) * actualTransform.Value.M22));
             m_Adornment.RenderTransform = transforms;

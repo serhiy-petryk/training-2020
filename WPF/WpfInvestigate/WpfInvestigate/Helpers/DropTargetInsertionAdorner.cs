@@ -16,20 +16,17 @@ namespace WpfInvestigate.Helpers
 
        protected override void OnRender(DrawingContext drawingContext)
         {
-            if (!DragDropHelper._dragInfo.InsertIndex.HasValue)
+            if (!DragDropHelper.Drag_Info.InsertIndex.HasValue)
                 return;
 
             var control = (ItemsControl)AdornedElement;
             var panel = DragDropHelper.GetItemsHost(control);
             var orientation = DragDropHelper.GetItemsPanelOrientation(control);
-            var hoveredItem = panel.Children.Count == 0 ? panel
-                : (DragDropHelper._dragInfo.InsertIndex.Value < panel.Children.Count
-                    ? panel.Children[DragDropHelper._dragInfo.InsertIndex.Value]
-                    : panel.Children[panel.Children.Count - 1]) as FrameworkElement;
+            var hoveredItem = DragDropHelper.Drag_Info.GetHoveredItem(control) as FrameworkElement ?? panel;
             var r = hoveredItem.GetVisibleRect(control);
 
             double insertPosition;
-            if (DragDropHelper._dragInfo.InsertIndex.Value < panel.Children.Count)
+            if (DragDropHelper.Drag_Info.InsertIndex.Value < panel.Children.Count)
                 insertPosition = orientation == Orientation.Vertical ? r.Top : r.Left;
             else
                 insertPosition = orientation == Orientation.Vertical ? r.Bottom : r.Right;
@@ -58,14 +55,19 @@ namespace WpfInvestigate.Helpers
         private readonly AdornerLayer m_AdornerLayer;
 
         #region ===========  Static section  =============
+
         static DropTargetInsertionAdorner()
         {
+            var polyLine = new PolyLineSegment(new[] { new Point(0, -5), new Point(0, 5) }, false);
+            var pathFigure = new PathFigure(new Point(5, 0), new[] { polyLine }, true);
+            m_Triangle = new PathGeometry(new[] { pathFigure });
+
             m_Pen.Freeze();
             m_Triangle.Freeze();
         }
 
         private static readonly Pen m_Pen = new Pen(Brushes.Magenta, 2);
-        private static readonly PathGeometry m_Triangle = Application.Current.Resources["DropTargetInsertionTriangle"] as PathGeometry;
+        private static readonly PathGeometry m_Triangle;
         #endregion
     }
 }
