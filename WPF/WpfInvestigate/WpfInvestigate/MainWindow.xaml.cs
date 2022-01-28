@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -34,6 +35,9 @@ namespace WpfInvestigate
             cbCulture.ItemsSource = CultureInfos;
             cbCulture.SelectedValue = Thread.CurrentThread.CurrentUICulture;
 
+            InitNodes();
+            TreeView.ItemsSource = nodes;
+
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
         }
 
@@ -51,22 +55,6 @@ namespace WpfInvestigate
             {
                 var newCulture = e.AddedItems[0] as CultureInfo;
                 App.Language = newCulture;
-                return;
-                Language = XmlLanguage.GetLanguage(newCulture.IetfLanguageTag);
-                Thread.CurrentThread.CurrentCulture = newCulture; // MainCulture for DatePicker
-                Thread.CurrentThread.CurrentUICulture = newCulture;
-                CultureInfo.DefaultThreadCurrentCulture = newCulture;
-                CultureInfo.DefaultThreadCurrentUICulture = newCulture;
-                Calendar.UpdateAllBindings();
-                Calendar.InvalidateArrange();
-                Calendar.InvalidateMeasure();
-                Calendar.InvalidateVisual();
-                Calendar.UpdateLayout();
-                Calendar.UpdateDefaultStyle();
-                // Application.Current.Resources["TestLang"] = "FFFFFF";
-                var a1 = Resources["TestString"] as string;
-                Resources["TestString"] = a1 + a1.Length;
-                Debug.Print($"Lang: {Language}");
             }
         }
 
@@ -85,7 +73,6 @@ namespace WpfInvestigate
         private void NumericBoxTest_OnClick(object sender, RoutedEventArgs e) => new NumericBoxTests().Show();
         private void KeyboardTest_OnClick(object sender, RoutedEventArgs e) => new VirtualKeyboardTests().Show();
         private void ColorControlTest_OnClick(object sender, RoutedEventArgs e) => new ColorControlTests().Show();
-        private void ControlEffectTests_OnClick(object sender, RoutedEventArgs e) => new ControlEffectTests().Show();
         private void BootstrapButtonTests_OnClick(object sender, RoutedEventArgs e) => new BootstrapButtonTests().Show();
         private void ChromeTest_OnClick(object sender, RoutedEventArgs e) => new ChromeTests().Show();
         private void ButtonStyleTests_OnClick(object sender, RoutedEventArgs e) => new ButtonStyleTests().Show();
@@ -102,10 +89,6 @@ namespace WpfInvestigate
         private void ObsoleteShadowEffectTest_OnClick(object sender, RoutedEventArgs e) => new ShadowEffectTests().Show();
         private void ObsoleteDialogItemsTests_OnClick(object sender, RoutedEventArgs e) => new DialogItemsTests().Show();
         private void OldButtonStyleTest_OnClick(object sender, RoutedEventArgs e) => new XButtonStyleTests().Show();
-
-        private void ControlDemo_OnClick(object sender, RoutedEventArgs e) => new ControlDemo().Show();
-        private void TempControl_OnClick(object sender, RoutedEventArgs e) => new TempControl().Show();
-        private void MwiTemplate_OnClick(object sender, RoutedEventArgs e) => new MwiTemplate().Show();
 
         private void OnTestButtonClick(object sender, RoutedEventArgs e)
         {
@@ -315,43 +298,58 @@ namespace WpfInvestigate
         }
 
         private static Attribute[] _attrs = { new PropertyFilterAttribute(PropertyFilterOptions.All) };
-        private void OnUpdatePropertiesClick(object sender, RoutedEventArgs e)
-        {
-            PropertyInvestigation.UpdateProperties();
-            var aa1 = PropertyInvestigation.pis;
-            var aa2 = PropertyInvestigation.pds;
-            var aa3 = PropertyInvestigation.dps;
-            var aa4 = PropertyInvestigation.dpds;
-            var aa5 = PropertyInvestigation.lves;
-
-            Debug.Print($"Button props: {aa2[typeof(Button)].Count}");
-
-            var pp = TypeDescriptor.GetProperties(typeof(MwiAppViewModel), _attrs);
-            var pp2 = TypeDescriptor.GetProperties(typeof(MwiAppViewModel));
-        }
-
-        private void OnTestForPropertiesClick(object sender, RoutedEventArgs e)
-        {
-            var aa1 = PropertyInvestigation.pis;
-            var aa2 = PropertyInvestigation.pds;
-            var aa3 = PropertyInvestigation.dps;
-            var aa4 = PropertyInvestigation.dpds;
-
-            var aa11 = aa1[typeof(Button)].Select(a => a.Name).ToArray();
-            var aa21 = aa2[typeof(Button)].Select(a => a.Name).ToArray();
-            var a21 = aa21.Except(aa11).ToArray();
-            var a22 = aa11.Except(aa21).ToArray();
-
-            var aa31 = aa3[typeof(Button)].Select(a => a.Name).ToArray();
-            var a31 = aa31.Except(aa11).ToArray();
-            var a32 = aa11.Except(aa31).ToArray();
-        }
-
         private void OnChangeLanguageClick(object sender, RoutedEventArgs e)
         {
             MwiAppViewModel.Instance.Culture = Equals(MwiAppViewModel.Instance.Culture, CultureInfo.InvariantCulture) ? new CultureInfo("uk") : CultureInfo.InvariantCulture;
             Language = XmlLanguage.GetLanguage(MwiAppViewModel.Instance.Culture.IetfLanguageTag);
             Debug.Print($"Language: {((Button)sender).Language}");
+        }
+
+        public ObservableCollection<Node> nodes { get; set; }
+        private void InitNodes()
+        {
+            nodes = new ObservableCollection<Node>
+            {
+                new Node
+                {
+                    Name ="Европа",
+                    Nodes = new ObservableCollection<Node>
+                    {
+                        new Node {Name="Германия" },
+                        new Node {Name="Франция" },
+                        new Node
+                        {
+                            Name ="Великобритания",
+                            Nodes = new ObservableCollection<Node>
+                            {
+                                new Node {Name="Англия" },
+                                new Node {Name="Шотландия" },
+                                new Node {Name="Уэльс" },
+                                new Node {Name="Сев. Ирландия" },
+                            }
+                        }
+                    }
+                },
+                new Node
+                {
+                    Name ="Азия",
+                    Nodes = new ObservableCollection<Node>
+                    {
+                        new Node {Name="Китай" },
+                        new Node {Name="Япония" },
+                        new Node { Name ="Индия" }
+                    }
+                },
+                new Node { Name="Африка" },
+                new Node { Name="Америка" },
+                new Node { Name="Австралия" }
+            };
+        }
+
+        public class Node
+        {
+            public string Name { get; set; }
+            public ObservableCollection<Node> Nodes { get; set; }
         }
     }
 }
