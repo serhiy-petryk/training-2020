@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -11,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Markup;
 using System.Windows.Media;
 using WpfInvestigate.Common;
 using WpfInvestigate.Helpers;
@@ -19,7 +17,6 @@ using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
 using WpfInvestigate.Temp;
 using WpfInvestigate.TestViews;
-using WpfInvestigate.ViewModels;
 
 namespace WpfInvestigate
 {
@@ -37,7 +34,6 @@ namespace WpfInvestigate
 
             InitNodes();
             TreeView.ItemsSource = nodes;
-
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
         }
 
@@ -297,14 +293,6 @@ namespace WpfInvestigate
             Debug.Print($"Weak refs: {data.Count}");
         }
 
-        private static Attribute[] _attrs = { new PropertyFilterAttribute(PropertyFilterOptions.All) };
-        private void OnChangeLanguageClick(object sender, RoutedEventArgs e)
-        {
-            MwiAppViewModel.Instance.Culture = Equals(MwiAppViewModel.Instance.Culture, CultureInfo.InvariantCulture) ? new CultureInfo("uk") : CultureInfo.InvariantCulture;
-            Language = XmlLanguage.GetLanguage(MwiAppViewModel.Instance.Culture.IetfLanguageTag);
-            Debug.Print($"Language: {((Button)sender).Language}");
-        }
-
         public ObservableCollection<Node> nodes { get; set; }
         private void InitNodes()
         {
@@ -313,14 +301,14 @@ namespace WpfInvestigate
                 new Node
                 {
                     Name ="Европа",
-                    Nodes = new ObservableCollection<Node>
+                    Children = new ObservableCollection<Node>
                     {
                         new Node {Name="Германия" },
                         new Node {Name="Франция" },
                         new Node
                         {
                             Name ="Великобритания",
-                            Nodes = new ObservableCollection<Node>
+                            Children = new ObservableCollection<Node>
                             {
                                 new Node {Name="Англия" },
                                 new Node {Name="Шотландия" },
@@ -333,7 +321,7 @@ namespace WpfInvestigate
                 new Node
                 {
                     Name ="Азия",
-                    Nodes = new ObservableCollection<Node>
+                    Children = new ObservableCollection<Node>
                     {
                         new Node {Name="Китай" },
                         new Node {Name="Япония" },
@@ -344,12 +332,6 @@ namespace WpfInvestigate
                 new Node { Name="Америка" },
                 new Node { Name="Австралия" }
             };
-        }
-
-        public class Node
-        {
-            public string Name { get; set; }
-            public ObservableCollection<Node> Nodes { get; set; }
         }
     }
 }

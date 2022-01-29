@@ -1,14 +1,8 @@
 ﻿// see https://stackoverflow.com/questions/52145711/how-can-you-set-a-dynamicresource-in-code-behind-if-the-target-is-not-a-framewor
 // https://stackoverflow.com/questions/33816511/how-can-you-bind-to-a-dynamicresource-so-you-can-use-a-converter-or-stringformat
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.Diagnostics;
-using System.Globalization;
 using System.Windows;
-using System.Windows.Markup;
 
 namespace WpfInvestigate.Common
 {

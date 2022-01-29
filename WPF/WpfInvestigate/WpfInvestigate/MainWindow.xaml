@@ -5,10 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:ViewModels="clr-namespace:WpfInvestigate.ViewModels"
-        xmlns:wpfInvestigate="clr-namespace:WpfInvestigate"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
-        xmlns:controls="clr-namespace:WpfInvestigate.Controls"
+        xmlns:temp="clr-namespace:WpfInvestigate.Temp"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="700" Width="1200">
 
@@ -89,31 +87,97 @@
                     </WrapPanel>
 
                     <WrapPanel Margin="5">
-                        <TreeView x:Name="TreeView" Width="250" Height="200">
+                        <TreeView x:Name="TreeView" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <TreeView.Resources>
-                                <Style TargetType="{x:Type TreeViewItem}">
-                                    <Setter Property="Foreground" Value="Blue"/>
-                                    <Setter Property="FontSize" Value="16"/>
-                                </Style>
-                            </TreeView.Resources>
-                            <TreeView.ItemContainerStyle>
-                                <Style TargetType="{x:Type TreeViewItem}">
+                                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                                    <Setter Property="Padding" Value="0 0 4 0"/>
                                     <Setter Property="IsExpanded" Value="True"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                                                <Border x:Name="Border" BorderBrush="GreenYellow" BorderThickness="1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="0"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition/>
+                                                        </Grid.RowDefinitions>
+                                                        <!--<ToggleButton x:Name="Expander" Style="{StaticResource ExpandCollapseToggleStyle}"
+                                              IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                              ClickMode="Press"/>-->
+                                                        <Border Name="Bd"
+                                                                Grid.Column="1"
+                                                                Background="{TemplateBinding Background}"
+                                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                                Padding="{TemplateBinding Padding}"
+                                                                SnapsToDevicePixels="True">
+                                                            <ContentPresenter x:Name="PART_Header"
+                                                                              ContentSource="Header"
+                                                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                        </Border>
+                                                        <Border Name="ItemsHostBd" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="20 0 -1 0">
+                                                            <ItemsPresenter x:Name="ItemsHost"/>
+                                                        </Border>
+                                                    </Grid>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsExpanded" Value="False">
+                                                        <Setter TargetName="ItemsHostBd" Property="Visibility" Value="Collapsed"/>
+                                                    </Trigger>
+                                                    <Trigger Property="HasItems" Value="False">
+                                                        <!--<Setter TargetName="Expander" Property="Visibility" Value="Hidden"/>-->
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="Transparent"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Bd" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                                                    </Trigger>
+                                                    <MultiTrigger>
+                                                        <MultiTrigger.Conditions>
+                                                            <Condition Property="IsSelected" Value="True"/>
+                                                            <Condition Property="IsSelectionActive" Value="False"/>
+                                                        </MultiTrigger.Conditions>
+                                                        <Setter TargetName="Bd" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                                    </MultiTrigger>
+                                                    <Trigger Property="IsEnabled" Value="False">
+                                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                                    </Trigger>
+
+                                                    <!-- This part is customized to work with HasChildrenBorder property from data-bound object. -->
+                                                    <!--<DataTrigger Binding="{Binding HasChildrenBorder}" Value="True">
+                                    <Setter TargetName="ItemsHostBd" Property="BorderBrush" Value="Red"/>
+                                    <Setter TargetName="ItemsHostBd" Property="BorderThickness" Value="1"/>
+                                </DataTrigger>-->
+
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
                                 </Style>
-                            </TreeView.ItemContainerStyle>
-                            <TreeView.ItemTemplate>
-                                <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
-                                    <TextBlock Text="{Binding Name}" />
+
+                                <HierarchicalDataTemplate DataType="{x:Type temp:Node}" ItemsSource="{Binding Children}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Border  Grid.Row="0" BorderBrush="Blue" BorderThickness="1">
+                                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Foreground="Aqua"/>
+</Border>
+                                            <TextBlock Grid.Row="1" Padding="20 0 0 0" Text="Additional sortings:" VerticalAlignment="Center"
+                                                       HorizontalAlignment="Stretch"
+                                                       Visibility="{Binding IsSortingLabelVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                        </Grid>
                                 </HierarchicalDataTemplate>
-                            </TreeView.ItemTemplate>
-                            <!--  <TreeViewItem Header="Level 1" IsExpanded="True">
-                                <TreeViewItem Header="Level 2.1" />
-                                <TreeViewItem Header="Level 2.2" IsExpanded="True">
-                                    <TreeViewItem Header="Level 3.1" />
-                                    <TreeViewItem Header="Level 3.2" />
-                                </TreeViewItem>
-                                <TreeViewItem Header="Level 2.3" />
-                            </TreeViewItem>-->
+                            </TreeView.Resources>
                         </TreeView>
                     </WrapPanel>
 
