@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -16,6 +17,7 @@ using WpfInvestigate.Helpers;
 using WpfInvestigate.Obsolete;
 using WpfInvestigate.Obsolete.TestViews;
 using WpfInvestigate.Temp;
+using WpfInvestigate.Temp.TreeViewClasses;
 using WpfInvestigate.TestViews;
 
 namespace WpfInvestigate
@@ -33,7 +35,11 @@ namespace WpfInvestigate
             cbCulture.SelectedValue = Thread.CurrentThread.CurrentUICulture;
 
             InitNodes();
-            TreeView.ItemsSource = nodes;
+            // TreeView.ItemsSource = nodes;
+
+            InitGroupingNodes();
+            TreeView.ItemsSource = GroupNodes;
+
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
         }
 
@@ -294,6 +300,20 @@ namespace WpfInvestigate
         }
 
         public ObservableCollection<Node> nodes { get; set; }
+        public ObservableCollection<SortingItemModel> GroupNodes { get; set; }
+
+        private void InitGroupingNodes()
+        {
+            GroupNodes = new ObservableCollection<SortingItemModel>();
+            var rootItem = new PropertyItem( "SortRoot");
+            var rootGroup = new GroupingItemModel(rootItem, ListSortDirection.Ascending, null);
+            GroupNodes.Add(rootGroup);
+            var groupItem1 = new PropertyItem("Group item 1");
+            var sortGroupItem1 = new PropertyItem("Sorting item 1");
+            var group1 = new GroupingItemModel(groupItem1, ListSortDirection.Ascending, new[] {new SortingItemModel(sortGroupItem1, ListSortDirection.Descending)});
+            rootGroup.AddGroup(group1);
+        }
+
         private void InitNodes()
         {
             nodes = new ObservableCollection<Node>

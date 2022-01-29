@@ -7,6 +7,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:common="clr-namespace:WpfInvestigate.Common"
         xmlns:temp="clr-namespace:WpfInvestigate.Temp"
+        xmlns:treeViewClasses="clr-namespace:WpfInvestigate.Temp.TreeViewClasses"
         mc:Ignorable="d"
         Title="LIVE MainWindow" Height="700" Width="1200">
 
@@ -89,7 +90,8 @@
                     <WrapPanel Margin="5">
                         <!-- https://stackoverflow.com/questions/16486406/add-a-border-around-all-children-of-a-treeviewitem -->
                         <!-- also https://jike.in/?qa=854987/c%23-wpf-treeview-item-background-over-entire-row (https://github.com/mikependon/Tutorials/tree/master/WPF/TreeViewFileExplorer) -->
-                        <TreeView x:Name="TreeView" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TreeView x:Name="TreeView" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                  MinHeight="200" MinWidth="200">
                             <TreeView.Resources>
                                 <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
                                     <Setter Property="Padding" Value="0 0 4 0"/>
@@ -164,20 +166,20 @@
                                     </Setter>
                                 </Style>
 
-                                <HierarchicalDataTemplate DataType="{x:Type temp:Node}" ItemsSource="{Binding Children}">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
-
-                                            <Border  Grid.Row="0" BorderBrush="Blue" BorderThickness="1">
-                                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Foreground="Aqua"/>
-</Border>
-                                            <TextBlock Grid.Row="1" Padding="20 0 0 0" Text="Additional sortings:" VerticalAlignment="Center"
+                                <HierarchicalDataTemplate DataType="{x:Type treeViewClasses:SortingItemModel}" ItemsSource="{Binding Children}">
+                                        <Grid x:Name="Grid" Margin="40 0 0 0">
+                                            <Border BorderBrush="Blue" BorderThickness="1">
+                                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Foreground="Aqua"/>
+                                            </Border>
+                                            <!--<TextBlock Grid.Row="1" Padding="20 0 0 0" Text="Additional sortings:" VerticalAlignment="Center"
                                                        HorizontalAlignment="Stretch"
-                                                       Visibility="{Binding IsSortingLabelVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                                       Visibility="{Binding IsSortingLabelVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>-->
                                         </Grid>
+                                    <HierarchicalDataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding Type, Converter={x:Static common:DummyConverter.Instance}}" Value="Group">
+                                            <Setter TargetName="Grid" Property="Margin" Value="0"/>
+                                        </DataTrigger>
+                                    </HierarchicalDataTemplate.Triggers>
                                 </HierarchicalDataTemplate>
                             </TreeView.Resources>
                         </TreeView>

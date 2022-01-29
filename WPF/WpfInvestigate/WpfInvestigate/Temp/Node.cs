@@ -9,6 +9,4 @@ namespace WpfInvestigate.Temp
         public bool IsSortingLabelVisible => Children != null;
 //        public override string ToString() => Name;
     }
-
-
 }
