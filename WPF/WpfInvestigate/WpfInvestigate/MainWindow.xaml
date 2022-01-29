@@ -87,6 +87,8 @@
                     </WrapPanel>
 
                     <WrapPanel Margin="5">
+                        <!-- https://stackoverflow.com/questions/16486406/add-a-border-around-all-children-of-a-treeviewitem -->
+                        <!-- also https://jike.in/?qa=854987/c%23-wpf-treeview-item-background-over-entire-row (https://github.com/mikependon/Tutorials/tree/master/WPF/TreeViewFileExplorer) -->
                         <TreeView x:Name="TreeView" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <TreeView.Resources>
                                 <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
