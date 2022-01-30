@@ -180,7 +180,7 @@
                                     </Setter>
                                 </Style>
 
-                                <HierarchicalDataTemplate DataType="{x:Type treeViewClasses:SortingItemModel}" ItemsSource="{Binding Children}">
+                                <HierarchicalDataTemplate DataType="{x:Type treeViewClasses:PropertyGroupItem}" ItemsSource="{Binding Children}">
                                         <Grid x:Name="Grid" Margin="15 0 0 0">
                                             <Border BorderBrush="Blue" BorderThickness="1">
                                                 <TextBlock Text="{Binding Name}" TextWrapping="Wrap"

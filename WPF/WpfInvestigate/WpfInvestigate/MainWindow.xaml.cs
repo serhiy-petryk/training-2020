@@ -38,7 +38,10 @@ namespace WpfInvestigate
             // TreeView.ItemsSource = nodes;
 
             InitGroupingNodes();
-            TreeView.ItemsSource = GroupNodes;
+            // TreeView.ItemsSource = GroupNodes;
+
+            InitGroupItems();
+            TreeView.ItemsSource = GroupItem.Children;
 
             ControlHelper.HideInnerBorderOfDatePickerTextBox(this, true);
         }
@@ -301,19 +304,40 @@ namespace WpfInvestigate
 
         public ObservableCollection<Node> nodes { get; set; }
         public ObservableCollection<SortingItemModel> GroupNodes { get; set; }
+        public PropertyGroupItem GroupItem { get; set; }
 
         private void InitGroupingNodes()
         {
             GroupNodes = new ObservableCollection<SortingItemModel>();
-            var rootItem = new PropertyItem( "SortRoot");
+            var rootItem = new PropertyItem("SortRoot");
             var rootGroup = new GroupingItemModel(rootItem, ListSortDirection.Ascending, null);
             GroupNodes.Add(rootGroup);
             var groupItem1 = new PropertyItem("Group item 1");
             var sortGroupItem1 = new PropertyItem("Sorting item 1");
-            var group1 = new GroupingItemModel(groupItem1, ListSortDirection.Ascending, new[] {new SortingItemModel(sortGroupItem1, ListSortDirection.Descending)});
+            var group1 = new GroupingItemModel(groupItem1, ListSortDirection.Ascending, new[] { new SortingItemModel(sortGroupItem1, ListSortDirection.Descending) });
             group1.Level = 1;
             GroupNodes.Add(group1);
-//            rootGroup.AddGroup(group1);
+            //            rootGroup.AddGroup(group1);
+        }
+
+        private void InitGroupItems()
+        {
+            GroupItem = new PropertyGroupItem();
+            var groupItem1 = new PropertyItem("Group item 1");
+            var group1 = GroupItem.AddItem(groupItem1, ListSortDirection.Ascending);
+            var sortGroupItem1 = new PropertyItem("Sorting item 1");
+            group1.AddItem(sortGroupItem1, ListSortDirection.Ascending);
+
+            var groupItem2 = new PropertyItem("Group item 2");
+            var group2 = GroupItem.AddItem(groupItem2, ListSortDirection.Ascending);
+
+            /*var rootGroup = new GroupingItemModel(rootItem, ListSortDirection.Ascending, null);
+            GroupNodes.Add(rootGroup);
+            var groupItem1 = new PropertyItem("Group item 1");
+            var group1 = new GroupingItemModel(groupItem1, ListSortDirection.Ascending, new[] { new SortingItemModel(sortGroupItem1, ListSortDirection.Descending) });
+            group1.Level = 1;
+            GroupNodes.Add(group1);
+            //            rootGroup.AddGroup(group1);*/
         }
 
         private void InitNodes()

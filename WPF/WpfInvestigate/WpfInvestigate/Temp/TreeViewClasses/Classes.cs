@@ -17,6 +17,36 @@ namespace WpfInvestigate.Temp.TreeViewClasses
         }
     }
 
+    public class PropertyGroupItem
+    {
+        public PropertyGroupItem Parent { get; private set; }
+        public PropertyItem Item { get; private set; }
+        public ListSortDirection SortDirection { get; private set; }
+        public string Name => Item == null ? "Sortings:" : Item.Name;
+        public string Type => Parent == null ? "Root" : (Item == null ? "Label" : ( Parent.Type == "Root" ? "Group" : "Sort"));
+        public ObservableCollection<PropertyGroupItem> Children { get; } = new ObservableCollection<PropertyGroupItem>();
+        public PropertyGroupItem Root => Parent == null ? this : Parent.Root;
+        public System.Windows.Media.Color BaseColor
+        {
+            get
+            {
+                var groupItem = Type == "Group" ? this : Parent;
+                var groupIndex = Root.Children.IndexOf(groupItem) + 1;
+                var groupColor = Color.GroupColors[groupIndex];
+                return System.Windows.Media.Color.FromArgb(255, groupColor.R, groupColor.G, groupColor.B);
+            }
+        }
+
+        public PropertyGroupItem AddItem(PropertyItem item, ListSortDirection sortDirection)
+        {
+            var newItem = new PropertyGroupItem {Parent = this, Item = item, SortDirection = sortDirection};
+            Children.Add(newItem);
+            if (newItem.Type == "Group")
+                newItem.Children.Add(new PropertyGroupItem { Parent = newItem }); // Add "Sortings:" label
+            return newItem;
+        }
+    }
+
     public class SortingItemModel
     {
         public int Level { get; set; } = 0;
