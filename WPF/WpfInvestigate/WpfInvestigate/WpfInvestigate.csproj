@@ -104,6 +104,7 @@
     <Compile Include="Samples\MyTask.cs" />
     <Compile Include="Temp\Node.cs" />
     <Compile Include="Temp\TreeViewClasses\Classes.cs" />
+    <Compile Include="Temp\TreeViewClasses\Color.cs" />
     <Compile Include="TestViews\DragDropTests.xaml.cs">
       <DependentUpon>DragDropTests.xaml</DependentUpon>
     </Compile>

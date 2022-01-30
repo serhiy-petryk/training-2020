@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace WpfInvestigate.Temp.TreeViewClasses
 {
@@ -18,11 +19,13 @@ namespace WpfInvestigate.Temp.TreeViewClasses
 
     public class SortingItemModel
     {
+        public int Level { get; set; } = 0;
         public PropertyItem Item { get; set; }
         public ListSortDirection SortDirection { get; set; }
         public string Name => Item == null ? "Sortings:" : Item.Name;
         public virtual string Type => Item == null ? "Label" : "Sort";
         public ObservableCollection<SortingItemModel> Children { get; } = new ObservableCollection<SortingItemModel>();
+        public virtual System.Windows.Media.Color BaseColor => Colors.Transparent;
 
         public SortingItemModel(PropertyItem item, ListSortDirection sortDirection)
         {
@@ -36,6 +39,15 @@ namespace WpfInvestigate.Temp.TreeViewClasses
     public class GroupingItemModel : SortingItemModel
     {
         public override string Type => "Group";
+        public override System.Windows.Media.Color BaseColor
+        {
+            get
+            {
+                var groupColor = Color.GroupColors[Level + 1];
+                return System.Windows.Media.Color.FromArgb(255, groupColor.R, groupColor.G, groupColor.B);
+            }
+        }
+
         public GroupingItemModel(PropertyItem item, ListSortDirection sortDirection, IEnumerable<SortingItemModel> sortings): base(item, sortDirection)
         {
             Children.Add(new SortingItemModel(null, ListSortDirection.Ascending)); // Add label
@@ -48,6 +60,7 @@ namespace WpfInvestigate.Temp.TreeViewClasses
 
         public void AddGroup(GroupingItemModel groupItem)
         {
+            groupItem.Level = Level + 1;
             Children.Add(groupItem);
         }
     }

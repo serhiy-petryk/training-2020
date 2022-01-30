@@ -311,7 +311,9 @@ namespace WpfInvestigate
             var groupItem1 = new PropertyItem("Group item 1");
             var sortGroupItem1 = new PropertyItem("Sorting item 1");
             var group1 = new GroupingItemModel(groupItem1, ListSortDirection.Ascending, new[] {new SortingItemModel(sortGroupItem1, ListSortDirection.Descending)});
-            rootGroup.AddGroup(group1);
+            group1.Level = 1;
+            GroupNodes.Add(group1);
+//            rootGroup.AddGroup(group1);
         }
 
         private void InitNodes()
@@ -352,6 +354,11 @@ namespace WpfInvestigate
                 new Node { Name="Америка" },
                 new Node { Name="Австралия" }
             };
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var aa1 = TreeView.GetVisualChildren().ToArray();
         }
     }
 }
