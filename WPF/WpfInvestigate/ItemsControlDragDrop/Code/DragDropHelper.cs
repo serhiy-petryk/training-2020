@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -16,10 +15,10 @@ namespace ItemsControlDragDrop.Code
     {
         public static readonly StartDragInfo StartDrag_Info = new StartDragInfo();
         public static readonly DragInfo Drag_Info = new DragInfo();
+
         #region ==============  Examples of event handlers  ==============
         public static void DragSource_OnPreviewMouseMove(object sender, MouseEventArgs e, string dragDropFormat = null)
         {
-            Debug.Print($"MouseMove: {cnt++}");
             if (_isDragging) return;
             if (!(sender is ItemsControl itemsControl) || e.LeftButton == MouseButtonState.Released ||
                 GetSelectedItems(itemsControl, e).Count == 0)
@@ -45,6 +44,9 @@ namespace ItemsControlDragDrop.Code
             if (Math.Abs(mousePosition.X - StartDrag_Info.DragStart.X) > SystemParameters.MinimumHorizontalDragDistance ||
                 Math.Abs(mousePosition.Y - StartDrag_Info.DragStart.Y) > SystemParameters.MinimumVerticalDragDistance)
             {
+                if (itemsControl is DataGrid dataGrid)
+                    dataGrid.CommitEdit();
+
                 var dataObject = new DataObject();
                 dataObject.SetData(dragDropFormat ?? sender.GetType().Name, GetSelectedItems(itemsControl, e).ToArray());
                 try
@@ -58,11 +60,10 @@ namespace ItemsControlDragDrop.Code
                     StartDrag_Info.Clear();
                     Drag_Info.Clear();
                     ResetDragDrop(null);
-                    Debug.Print($"Finally");
                 }
 
                 //adLayer.Remove(myAdornment);
-                // e.Handled = true;
+                e.Handled = true;
             }
         }
 
@@ -74,10 +75,7 @@ namespace ItemsControlDragDrop.Code
                 Mouse.SetCursor(Cursors.Arrow);
             }
             else
-            {
-                Debug.Print($"UseDefaultCursors: {e.Effects}, {cnt++}, {sender.GetType().Name}, {Drag_Info.LastDragLeaveObject}");
                 e.UseDefaultCursors = true;
-            }
 
             e.Handled = true;
         }
@@ -86,7 +84,6 @@ namespace ItemsControlDragDrop.Code
         {
             Drag_Info.LastDragLeaveObject = null;
 
-            Debug.Print($"DragOver: {cnt++}, {sender.GetType().Name}");
             formats = formats ?? new[] { sender.GetType().Name };
             object dragData = null;
             foreach (var format in formats)
@@ -120,13 +117,11 @@ namespace ItemsControlDragDrop.Code
             CheckScroll(control, e);
         }
 
-        private static int cnt;
         public static void DropTarget_OnPreviewDragLeave(object sender, DragEventArgs e)
         {
             Drag_Info.LastDragLeaveObject = sender;
             ((FrameworkElement)sender).Dispatcher.BeginInvoke(new Action(() =>
             {
-                Debug.Print($"DragLeave: {cnt++}, {sender.GetType().Name}");
                 if (Equals(Drag_Info.LastDragLeaveObject, sender))
                     ResetDragDrop(e);
                 Drag_Info.LastDragLeaveObject = null;
@@ -135,11 +130,7 @@ namespace ItemsControlDragDrop.Code
 
         public static void DropTarget_OnPreviewDrop(object sender, DragEventArgs e, string dragDropFormat = null)
         {
-            if (!Drag_Info.InsertIndex.HasValue)
-            {
-                e.Handled = true;
-                return;
-            }
+            if (!Drag_Info.InsertIndex.HasValue) return;
             var sourceData = e.Data.GetData(dragDropFormat ?? sender.GetType().Name) as Array;
             var control = sender as ItemsControl;
 
@@ -165,6 +156,7 @@ namespace ItemsControlDragDrop.Code
                 }
             }
 
+            Mouse.OverrideCursor = null;
             e.Handled = true;
         }
         #endregion
