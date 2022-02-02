@@ -111,7 +111,7 @@
                             PreviewDragOver="View1_OnPreviewDragOver"
                             PreviewDragEnter="View1_OnPreviewDragEnter"
                             PreviewDragLeave="View1_OnPreviewDragLeave"
-                            PreviewDrop="View1_OnPreviewDrop"
+                            Drop="View1_OnPreviewDrop"
                             AllowDrop="True">
                     <TabItem Header="Tab 1" Content="Content of Tab1"/>
                     <TabItem Header="Tab 2" Content="Content of Tab2"/>
@@ -129,7 +129,7 @@
                             PreviewDragOver="View1_OnPreviewDragOver"
                             PreviewDragEnter="View1_OnPreviewDragEnter"
                             PreviewDragLeave="View1_OnPreviewDragLeave"
-                            PreviewDrop="View1_OnPreviewDrop"
+                            Drop="View1_OnPreviewDrop"
                             AllowDrop="True">
                     <TabItem Header="Tab 1" Content="Content of Tab1"/>
                     <TabItem Header="Tab 2" Content="Content of Tab2"/>
@@ -153,7 +153,7 @@
                       PreviewDragEnter="View1_OnPreviewDragEnter"
                       PreviewDragLeave="View1_OnPreviewDragLeave"
                       PreviewGiveFeedback="View1_OnPreviewGiveFeedback"
-                      PreviewDrop="View1_OnPreviewDrop"
+                      Drop="View1_OnPreviewDrop"
                       AllowDrop="True">
                 <!--DragOver="ItemsList_DragOver" Drop="DataGrid_OnDrop">-->
                 <DataGrid.Resources>
@@ -209,7 +209,7 @@
                           PreviewDragEnter="View1_OnPreviewDragEnter"
                           PreviewDragLeave="View1_OnPreviewDragLeave"
                           PreviewGiveFeedback="View1_OnPreviewGiveFeedback"
-                          PreviewDrop="View2_OnPreviewDrop">
+                          Drop="View2_OnPreviewDrop">
                     <!--                <DataGrid.Resources>
                     <Style TargetType="ListViewItem">
                         <EventSetter Event="PreviewMouseMove" Handler="Item_OnPreviewMouseMove" />

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -18,12 +17,12 @@ namespace WpfInvestigate.Helpers
         public static readonly StartDragInfo StartDrag_Info = new StartDragInfo();
         public static readonly DragInfo Drag_Info = new DragInfo();
 
-        #region ==============  Event handlers  ==============
-        public static void DragSource_OnPreviewMouseMove(object sender, MouseEventArgs e)
+        #region ==============  Examples of event handlers  ==============
+        public static void DragSource_OnPreviewMouseMove(object sender, MouseEventArgs e, string dragDropFormat = null)
         {
             if (_isDragging) return;
             if (!(sender is ItemsControl itemsControl) || e.LeftButton == MouseButtonState.Released ||
-                GetSelectedItems(itemsControl).Count == 0)
+                GetSelectedItems(itemsControl, e).Count == 0)
             {
                 StartDrag_Info.Clear();
                 return;
@@ -46,17 +45,15 @@ namespace WpfInvestigate.Helpers
             if (Math.Abs(mousePosition.X - StartDrag_Info.DragStart.X) > SystemParameters.MinimumHorizontalDragDistance ||
                 Math.Abs(mousePosition.Y - StartDrag_Info.DragStart.Y) > SystemParameters.MinimumVerticalDragDistance)
             {
+                if (itemsControl is DataGrid dataGrid)
+                    dataGrid.CommitEdit();
+
                 var dataObject = new DataObject();
-                dataObject.SetData(sender.GetType().Name, GetSelectedItems(itemsControl).OfType<object>().ToArray());
-                //var adLayer = AdornerLayer.GetAdornerLayer(item);
-                // myAdornment = new DraggableAdorner(item);
-                //adLayer.Add(myAdornment);
-                // Debug.Print($"DragDrop.DoDragDrop");
+                dataObject.SetData(dragDropFormat ?? sender.GetType().Name, GetSelectedItems(itemsControl, e).ToArray());
                 try
                 {
                     _isDragging = true;
                     var result = DragDrop.DoDragDrop(itemsControl, dataObject, DragDropEffects.Copy);
-                    Debug.Print($"EndDrag: {result}");
                 }
                 finally
                 {
@@ -84,13 +81,19 @@ namespace WpfInvestigate.Helpers
             e.Handled = true;
         }
 
-        public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e)
+        public static void DropTarget_OnPreviewDragOver(object sender, DragEventArgs e, IEnumerable<string> formats = null)
         {
-            Debug.Print($"DragOver:");
             Drag_Info.LastDragLeaveObject = null;
 
-            var a1 = e.Data.GetData(sender.GetType().Name);
-            if (a1 == null)
+            formats = formats ?? new[] { sender.GetType().Name };
+            object dragData = null;
+            foreach (var format in formats)
+            {
+                dragData = e.Data.GetData(format);
+                if (dragData != null)
+                    break;
+            }
+            if (dragData == null)
             {
                 ResetDragDrop(e);
                 return;
@@ -109,7 +112,7 @@ namespace WpfInvestigate.Helpers
             _dropTargetAdorner.InvalidateVisual();
 
             if (_dragAdorner == null)
-                _dragAdorner = new DragAdorner(Window.GetWindow(control).Content as UIElement, e.Data.GetData(sender.GetType().Name));
+                _dragAdorner = new DragAdorner(Window.GetWindow(control).Content as UIElement, dragData);
             _dragAdorner.UpdateUI(e, control);
 
             CheckScroll(control, e);
@@ -126,15 +129,14 @@ namespace WpfInvestigate.Helpers
             }), DispatcherPriority.Normal);
         }
 
-        public static void DropTarget_OnPreviewDrop(object sender, DragEventArgs e)
+        public static void DropTarget_OnPreviewDrop(object sender, DragEventArgs e, string dragDropFormat = null)
         {
-            Debug.Print($"Drop:");
-            var sourceData = e.Data.GetData(sender.GetType().Name) as Array;
-            var itemsControl = sender as ItemsControl;
             if (!Drag_Info.InsertIndex.HasValue) return;
+            var sourceData = e.Data.GetData(dragDropFormat ?? sender.GetType().Name) as Array;
+            var control = sender as ItemsControl;
 
             var insertIndex = Drag_Info.InsertIndex.Value + Drag_Info.FirstItemOffset;
-            var targetData = (IList)itemsControl.ItemsSource ?? itemsControl.Items;
+            var targetData = (IList)control.ItemsSource ?? control.Items;
             if (e.Effects == DragDropEffects.Copy)
             {
                 foreach (var o in sourceData)
@@ -150,11 +152,22 @@ namespace WpfInvestigate.Helpers
                 foreach (var o in sourceData)
                 {
                     if (o is TabItem tabItem)
-                        ((TabControl) tabItem.Parent)?.Items.Remove(tabItem);
+                        ((TabControl)tabItem.Parent)?.Items.Remove(tabItem);
                     targetData.Insert(insertIndex++, o);
                 }
             }
-            ResetDragDrop(e);
+
+            Mouse.OverrideCursor = null;
+            e.Handled = true;
+        }
+        #endregion
+
+        #region =======  Public methods  ========
+        public static Panel GetItemsHost(ItemsControl itemsControl)
+        {
+            if (_piItemsHost == null)
+                _piItemsHost = typeof(ItemsControl).GetProperty("ItemsHost", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            return (Panel)_piItemsHost.GetValue(itemsControl);
         }
         #endregion
 
@@ -163,36 +176,29 @@ namespace WpfInvestigate.Helpers
         private static bool _isDragging;
 
         #region =============  Private methods  ================
-        private static IList GetSelectedItems(ItemsControl itemsControl)
+        private static List<object> GetSelectedItems(ItemsControl control, MouseEventArgs e)
         {
-            if (itemsControl is MultiSelector multiSelector)
-                return multiSelector.SelectedItems;
+            if (control is MultiSelector multiSelector)
+                return new List<object>(multiSelector.SelectedItems.OfType<object>());
 
-            if (itemsControl is Selector selector)
+            if (control is Selector selector)
             {
                 if (selector.SelectedItem != null)
                     return new List<object> { selector.SelectedItem };
                 return new List<object>();
             }
 
-            if (itemsControl is TreeView treeView)
+            if (control is TreeView treeView)
             {
                 if (treeView.SelectedItem != null)
-                    return new List<object> {treeView.SelectedItem};
+                    return new List<object> { treeView.SelectedItem };
                 return new List<object>();
             }
 
-            throw new Exception($"Trap! {itemsControl.GetType().Name} is not supported");
+            throw new Exception($"Trap! {control.GetType().Name} is not supported");
         }
 
         private static PropertyInfo _piItemsHost;
-        internal static Panel GetItemsHost(ItemsControl itemsControl)
-        {
-            if (_piItemsHost == null)
-                _piItemsHost = typeof(ItemsControl).GetProperty("ItemsHost", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            return (Panel)_piItemsHost.GetValue(itemsControl);
-        }
-
         private static PropertyInfo _piDataGridHeaderHost;
         private static FrameworkElement GetHeaderHost(ItemsControl itemsControl)
         {
@@ -200,7 +206,7 @@ namespace WpfInvestigate.Helpers
             {
                 if (_piDataGridHeaderHost == null)
                     _piDataGridHeaderHost = typeof(DataGrid).GetProperty("ColumnHeadersPresenter", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                return (DataGridColumnHeadersPresenter) _piDataGridHeaderHost.GetValue(itemsControl);
+                return (DataGridColumnHeadersPresenter)_piDataGridHeaderHost.GetValue(itemsControl);
             }
             return null;
         }
@@ -210,21 +216,19 @@ namespace WpfInvestigate.Helpers
             var scrollViewer = o.GetVisualChildren().OfType<ScrollViewer>().FirstOrDefault();
             if (scrollViewer != null)
             {
-                if (scrollViewer.CanContentScroll)
-                    scrollViewer.CanContentScroll = false;
                 const double scrollMargin = 25.0;
-                const double scrollStep = 8.0;
+                var _scrollStep = 1.0;
                 var position = e.GetPosition(scrollViewer);
                 if (position.X >= scrollViewer.ActualWidth - scrollMargin && scrollViewer.HorizontalOffset <
                     scrollViewer.ExtentWidth - scrollViewer.ViewportWidth)
-                    scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + scrollStep);
+                    scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + _scrollStep);
                 else if (position.X < scrollMargin && scrollViewer.HorizontalOffset > 0)
-                    scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - scrollStep);
+                    scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - _scrollStep);
                 else if (position.Y >= scrollViewer.ActualHeight - scrollMargin && scrollViewer.VerticalOffset <
                          scrollViewer.ExtentHeight - scrollViewer.ViewportHeight)
-                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + scrollStep);
+                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + _scrollStep);
                 else if (position.Y < scrollMargin && scrollViewer.VerticalOffset > 0)
-                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - scrollStep);
+                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - _scrollStep);
             }
         }
 
@@ -232,7 +236,7 @@ namespace WpfInvestigate.Helpers
         {
             if (itemsControl is TabControl)
             {
-                var tabControl = (TabControl) itemsControl;
+                var tabControl = (TabControl)itemsControl;
                 return tabControl.TabStripPlacement == Dock.Left || tabControl.TabStripPlacement == Dock.Right
                     ? Orientation.Vertical
                     : Orientation.Horizontal;
@@ -242,7 +246,7 @@ namespace WpfInvestigate.Helpers
             var orientationProperty = panel.GetType().GetProperty("Orientation", typeof(Orientation));
 
             if (orientationProperty != null)
-                return (Orientation) orientationProperty.GetValue(panel, null);
+                return (Orientation)orientationProperty.GetValue(panel, null);
 
             throw new Exception("Trap! Can't define item panel orientation");
         }
@@ -251,7 +255,7 @@ namespace WpfInvestigate.Helpers
         {
             var orientation = GetItemsPanelOrientation(control);
             var panel = GetItemsHost(control);
-            
+
             Drag_Info.FirstItemOffset = panel.Children.Count == 0 ? 0 : control.ItemContainerGenerator.IndexFromContainer(panel.Children[0]);
             Drag_Info.DragDropEffect = StartDrag_Info.DragSource == control ? DragDropEffects.Move : DragDropEffects.Copy;
 
@@ -263,9 +267,9 @@ namespace WpfInvestigate.Helpers
                     var itemBounds = item.GetBoundsOfElement();
                     var mousePos = e.GetPosition(item);
                     if (orientation == Orientation.Vertical)
-                        Drag_Info.InsertIndex = i + (mousePos.Y <= itemBounds.Bottom * 0.8 ? 0 : 1);
+                        Drag_Info.InsertIndex = i + (mousePos.Y <= itemBounds.Bottom * 0.75 ? 0 : 1);
                     else
-                        Drag_Info.InsertIndex = i + (mousePos.X <= itemBounds.Right * 0.8 ? 0 : 1);
+                        Drag_Info.InsertIndex = i + (mousePos.X <= itemBounds.Right * 0.75 ? 0 : 1);
                     return;
                 }
             }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -27,27 +26,10 @@ namespace WpfInvestigate.TestViews
         private void View1_OnPreviewMouseMove(object sender, MouseEventArgs e) => DragDropHelper.DragSource_OnPreviewMouseMove(sender, e);
         private void View1_OnPreviewGiveFeedback(object sender, GiveFeedbackEventArgs e) => DragDropHelper.DragSource_OnPreviewGiveFeedback(sender, e);
         private void View1_OnPreviewDrop(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDrop(sender, e);
-
         // private void View1_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragDropHelper.DragSource_OnPreviewMouseLeftButtonDown(sender, e);
-
-        private void View1_OnPreviewDragOver(object sender, DragEventArgs e)
-        {
-            Debug.Print($"DragOver: {((FrameworkElement)sender).Name}");
-            DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
-        }
-
-        private void View1_OnPreviewDragLeave(object sender, DragEventArgs e)
-        {
-            Debug.Print($"DragLeave: {((FrameworkElement)sender).Name}");
-            DragDropHelper.DropTarget_OnPreviewDragLeave(sender, e);
-        }
-
-        private void View1_OnPreviewDragEnter(object sender, DragEventArgs e)
-        {
-            Debug.Print($"DragEnter: {((FrameworkElement)sender).Name}");
-            DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
-        }
-
+        private void View1_OnPreviewDragOver(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
+        private void View1_OnPreviewDragLeave(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDragLeave(sender, e);
+        private void View1_OnPreviewDragEnter(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDragOver(sender, e);
         private void View2_OnPreviewDrop(object sender, DragEventArgs e) => DragDropHelper.DropTarget_OnPreviewDrop(sender, e);
 
         private void View1_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
