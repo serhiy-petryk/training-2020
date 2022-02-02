@@ -16,20 +16,20 @@ namespace ItemsControlDragDrop.Code
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            if (!DragDropHelper._dragInfo.InsertIndex.HasValue)
+            if (!DragDropHelper.Drag_Info.InsertIndex.HasValue)
                 return;
 
             var control = (ItemsControl)AdornedElement;
             var panel = DragDropHelper.GetItemsHost(control);
             var orientation = DragDropHelper.GetItemsPanelOrientation(control);
             var relativeItem = panel.Children.Count == 0 ? panel
-                : (DragDropHelper._dragInfo.InsertIndex.Value < panel.Children.Count
-                    ? panel.Children[DragDropHelper._dragInfo.InsertIndex.Value]
+                : (DragDropHelper.Drag_Info.InsertIndex.Value < panel.Children.Count
+                    ? panel.Children[DragDropHelper.Drag_Info.InsertIndex.Value]
                     : panel.Children[panel.Children.Count - 1]) as FrameworkElement;
             var r = relativeItem.GetVisibleRect(control);
 
             double insertPosition;
-            if (DragDropHelper._dragInfo.InsertIndex.Value < panel.Children.Count)
+            if (DragDropHelper.Drag_Info.InsertIndex.Value < panel.Children.Count)
                 insertPosition = orientation == Orientation.Vertical ? r.Top : r.Left;
             else
                 insertPosition = orientation == Orientation.Vertical ? r.Bottom : r.Right;
