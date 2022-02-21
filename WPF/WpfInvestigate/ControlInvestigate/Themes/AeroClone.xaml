@@ -5441,38 +5441,38 @@
                             <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
                         </Grid.ColumnDefinitions>
                         <Popup Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" Placement="Bottom" Margin="1"
-                   PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
-                   IsOpen="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}">
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
+                               IsOpen="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}">
                             <themes:SystemDropShadowChrome Name="Shdw" Color="Transparent" MaxHeight="{TemplateBinding ComboBox.MaxDropDownHeight}"
-                                            MinWidth="{Binding ElementName=MainGrid, Path=ActualWidth}">
+                                                           MinWidth="{Binding ElementName=MainGrid, Path=ActualWidth}">
                                 <Border x:Name="DropDownBorder" BorderThickness="1"
-                        BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
-                        Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+                                        BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
+                                        Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
                                     <ScrollViewer Name="DropDownScrollViewer">
                                         <Grid RenderOptions.ClearTypeHint="Enabled">
                                             <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Rectangle Name="OpaqueRect" Height="{Binding ElementName=DropDownBorder, Path=ActualHeight}"
-                                   Width="{Binding ElementName=DropDownBorder, Path=ActualWidth}"
-                                   Fill="{Binding ElementName=DropDownBorder, Path=Background}"/>
+                                                           Width="{Binding ElementName=DropDownBorder, Path=ActualWidth}"
+                                                           Fill="{Binding ElementName=DropDownBorder, Path=Background}"/>
                                             </Canvas>
                                             <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained"
-                                      SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                                                            SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
                                         </Grid>
                                     </ScrollViewer>
                                 </Border>
                             </themes:SystemDropShadowChrome>
                         </Popup>
                         <ToggleButton Grid.ColumnSpan="2" Background="{TemplateBinding Control.Background}"
-                          BorderBrush="{TemplateBinding Control.BorderBrush}" Style="{StaticResource à}"
-                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                      BorderBrush="{TemplateBinding Control.BorderBrush}" Style="{StaticResource à}"
+                                      IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
                         <ContentPresenter IsHitTestVisible="false" Margin="{TemplateBinding Control.Padding}"
-                              Content="{TemplateBinding ComboBox.SelectionBoxItem}"
-                              ContentTemplate="{TemplateBinding ComboBox.SelectionBoxItemTemplate}"
-                              ContentTemplateSelector="{TemplateBinding ItemsControl.ItemTemplateSelector}"
-                              ContentStringFormat="{TemplateBinding ComboBox.SelectionBoxItemStringFormat}"
-                              VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-                              HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
-                              SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                                          Content="{TemplateBinding ComboBox.SelectionBoxItem}"
+                                          ContentTemplate="{TemplateBinding ComboBox.SelectionBoxItemTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ItemsControl.ItemTemplateSelector}"
+                                          ContentStringFormat="{TemplateBinding ComboBox.SelectionBoxItemStringFormat}"
+                                          VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger SourceName="PART_Popup" Property="Popup.HasDropShadow" Value="true">
