@@ -5296,13 +5296,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <themes:ButtonChrome Name="Chrome" Background="{TemplateBinding Control.Background}"
-                              BorderBrush="{TemplateBinding Control.BorderBrush}"
-                              RenderMouseOver="{TemplateBinding UIElement.IsMouseOver}"
-                              RenderPressed="{TemplateBinding ButtonBase.IsPressed}" SnapsToDevicePixels="true">
+                                         BorderBrush="{TemplateBinding Control.BorderBrush}"
+                                         RenderMouseOver="{TemplateBinding UIElement.IsMouseOver}"
+                                         RenderPressed="{TemplateBinding ButtonBase.IsPressed}" SnapsToDevicePixels="true">
                         <Grid Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"
-                  HorizontalAlignment="Right">
+                              HorizontalAlignment="Right">
                             <Path Name="Arrow" Margin="3,1,0,0" Fill="Black" Data="{StaticResource ß}" HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
+                                  VerticalAlignment="Center"/>
                         </Grid>
                     </themes:ButtonChrome>
                     <ControlTemplate.Triggers>
