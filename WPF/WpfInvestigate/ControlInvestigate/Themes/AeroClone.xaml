@@ -809,19 +809,16 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
-                        <Rectangle x:Name="Border" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-                       SnapsToDevicePixels="true"/>
-                        <Polygon x:Name="Arrow" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8,8,3,3"
-                     Opacity="0.15" Fill="Black" Stretch="Uniform" Points="0,10 10,10 10,0"/>
+                        <Rectangle x:Name="Border" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" SnapsToDevicePixels="true"/>
+                        <Polygon x:Name="Arrow" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8,8,3,3" 
+                                 Opacity="0.15" Fill="Black" Stretch="Uniform" Points="0,10 10,10 10,0"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="UIElement.IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
-                      Property="Shape.Stroke"/>
+                            <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Property="Shape.Stroke"/>
                         </Trigger>
                         <Trigger Property="ButtonBase.IsPressed" Value="true">
-                            <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
-                      Property="Shape.Fill"/>
+                            <Setter TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Property="Shape.Fill"/>
                         </Trigger>
                         <Trigger Property="UIElement.IsEnabled" Value="false">
                             <Setter TargetName="Arrow" Property="UIElement.Visibility" Value="Collapsed"/>
