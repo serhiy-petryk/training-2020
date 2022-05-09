@@ -844,9 +844,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGrid}">
                     <Border Background="{TemplateBinding Control.Background}"
-                  BorderBrush="{TemplateBinding Control.BorderBrush}"
-                  BorderThickness="{TemplateBinding Control.BorderThickness}" SnapsToDevicePixels="true"
-                  Padding="{TemplateBinding Control.Padding}">
+                            BorderBrush="{TemplateBinding Control.BorderBrush}"
+                            BorderThickness="{TemplateBinding Control.BorderThickness}" SnapsToDevicePixels="true"
+                            Padding="{TemplateBinding Control.Padding}">
                         <ScrollViewer Name="DG_ScrollViewer" Focusable="false">
                             <Control.Template>
                                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -862,13 +862,13 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Button Command="{x:Static DataGrid.SelectAllCommand}" Focusable="false"
-                            Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=CellsPanelHorizontalOffset}"
-                            Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type DataGrid}, ResourceId=DataGridSelectAllButtonStyle}}"
-                            Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.All}}"/>
+                                                Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=CellsPanelHorizontalOffset}"
+                                                Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type DataGrid}, ResourceId=DataGridSelectAllButtonStyle}}"
+                                                Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.All}}"/>
                                         <DataGridColumnHeadersPresenter Name="PART_ColumnHeadersPresenter" Grid.Column="1"
-                                                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Column}}"/>
+                                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Column}}"/>
                                         <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Grid.Row="1" Grid.ColumnSpan="2"
-                                            CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"/>
+                                                                CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"/>
                                         <ScrollBar Name="PART_VerticalScrollBar" Grid.Row="1" Grid.Column="2" Orientation="Vertical"
                                Maximum="{TemplateBinding ScrollViewer.ScrollableHeight}"
                                ViewportSize="{TemplateBinding ScrollViewer.ViewportHeight}"
@@ -5354,38 +5354,38 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Popup Name="PART_Popup" Grid.ColumnSpan="2" AllowsTransparency="true" Placement="Bottom"
-             PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
-             IsOpen="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}">
+                   PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
+                   IsOpen="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}">
                 <themes:SystemDropShadowChrome Name="Shdw" Color="Transparent" MaxHeight="{TemplateBinding ComboBox.MaxDropDownHeight}"
-                                      MinWidth="{Binding ElementName=Placement, Path=ActualWidth}">
+                                               MinWidth="{Binding ElementName=Placement, Path=ActualWidth}">
                     <Border x:Name="DropDownBorder" BorderThickness="1"
-                  BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
-                  Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+                            BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
+                            Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
                         <ScrollViewer Name="DropDownScrollViewer">
                             <Grid RenderOptions.ClearTypeHint="Enabled">
                                 <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
                                     <Rectangle Name="OpaqueRect" Height="{Binding ElementName=DropDownBorder, Path=ActualHeight}"
-                             Width="{Binding ElementName=DropDownBorder, Path=ActualWidth}"
-                             Fill="{Binding ElementName=DropDownBorder, Path=Background}"/>
+                                               Width="{Binding ElementName=DropDownBorder, Path=ActualWidth}"
+                                               Fill="{Binding ElementName=DropDownBorder, Path=Background}"/>
                                 </Canvas>
                                 <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained"
-                                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                                                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
                             </Grid>
                         </ScrollViewer>
                     </Border>
                 </themes:SystemDropShadowChrome>
             </Popup>
             <themes:ListBoxChrome x:Name="Border" Grid.ColumnSpan="2" BorderThickness="{TemplateBinding Control.BorderThickness}"
-                           BorderBrush="{TemplateBinding Control.BorderBrush}"
-                           Background="{TemplateBinding Control.Background}"
-                           RenderMouseOver="{TemplateBinding UIElement.IsMouseOver}"
-                           RenderFocused="{TemplateBinding UIElement.IsKeyboardFocusWithin}"/>
+                                  BorderBrush="{TemplateBinding Control.BorderBrush}"
+                                  Background="{TemplateBinding Control.Background}"
+                                  RenderMouseOver="{TemplateBinding UIElement.IsMouseOver}"
+                                  RenderFocused="{TemplateBinding UIElement.IsKeyboardFocusWithin}"/>
             <TextBox Name="PART_EditableTextBox" Margin="{TemplateBinding Control.Padding}" Style="{StaticResource Þ}"
-               HorizontalContentAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
-               VerticalContentAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-               IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"/>
+                     HorizontalContentAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                     VerticalContentAlignment="{TemplateBinding Control.VerticalContentAlignment}"
+                     IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"/>
             <ToggleButton Grid.Column="1" Style="{StaticResource á}"
-                    IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="UIElement.IsKeyboardFocusWithin" Value="true">
