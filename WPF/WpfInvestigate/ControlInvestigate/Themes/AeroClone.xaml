@@ -802,7 +802,9 @@
             </Setter.Value>
         </Setter>
     </Style>
+
     <BooleanToVisibilityConverter x:Key="å"/>
+
     <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type DataGrid}, ResourceId=DataGridSelectAllButtonStyle}"
          TargetType="{x:Type Button}">
         <Setter Property="Control.Template">
@@ -828,6 +830,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style TargetType="{x:Type DataGrid}">
         <Setter Property="Control.Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
         <Setter Property="Control.Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -901,6 +904,7 @@
             </MultiTrigger>
         </Style.Triggers>
     </Style>
+    
     <Style TargetType="{x:Type DataGridColumnHeadersPresenter}">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -913,6 +917,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="æ" TargetType="{x:Type Thumb}">
         <Setter Property="FrameworkElement.Width" Value="8"/>
         <Setter Property="Control.Background" Value="Transparent"/>
@@ -925,6 +930,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="ç" TargetType="{x:Type Thumb}">
         <Setter Property="FrameworkElement.Height" Value="8"/>
         <Setter Property="Control.Background" Value="Transparent"/>
@@ -937,6 +943,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="{x:Static DataGridColumnHeader.ColumnFloatingHeaderStyleKey}" TargetType="{x:Type Control}">
         <Setter Property="UIElement.Opacity" Value="0.6"/>
         <Setter Property="Control.BorderBrush" Value="#FF688CAF"/>
@@ -955,8 +962,8 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="{x:Static DataGridColumnHeader.ColumnHeaderDropSeparatorStyleKey}"
-         TargetType="{x:Type Separator}">
+    
+    <Style x:Key="{x:Static DataGridColumnHeader.ColumnHeaderDropSeparatorStyleKey}" TargetType="{x:Type Separator}">
         <Setter Property="Control.Background" Value="#FF000080"/>
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -968,6 +975,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style TargetType="{x:Type DataGridRow}">
         <Setter Property="Control.Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="UIElement.SnapsToDevicePixels" Value="true"/>
@@ -1012,6 +1020,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
     <Style TargetType="{x:Type DataGridCellsPresenter}">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -1021,7 +1030,9 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <SolidColorBrush x:Key="{x:Static DataGrid.FocusBorderBrushKey}" Color="#FF000000"/>
+    
     <Style TargetType="{x:Type DataGridCell}">
         <Setter Property="Control.Background" Value="Transparent"/>
         <Setter Property="Control.BorderBrush" Value="Transparent"/>
@@ -1040,8 +1051,7 @@
         <Style.Triggers>
             <Trigger Property="DataGridCell.IsSelected" Value="true">
                 <Setter Property="Control.Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                <Setter Property="Control.Foreground"
-                        Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                <Setter Property="Control.Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
                 <Setter Property="Control.BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
             </Trigger>
             <Trigger Property="UIElement.IsKeyboardFocusWithin" Value="true">
@@ -1052,18 +1062,16 @@
                     <Condition Property="DataGridCell.IsSelected" Value="true"/>
                     <Condition Property="Selector.IsSelectionActive" Value="false"/>
                 </MultiTrigger.Conditions>
-                <Setter Property="Control.Background"
-                        Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
-                <Setter Property="Control.BorderBrush"
-                        Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
-                <Setter Property="Control.Foreground"
-                        Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}"/>
+                <Setter Property="Control.Background" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                <Setter Property="Control.BorderBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                <Setter Property="Control.Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}"/>
             </MultiTrigger>
             <Trigger Property="UIElement.IsEnabled" Value="false">
                 <Setter Property="Control.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
+    
     <Style x:Key="{x:Static DataGridComboBoxColumn.TextBlockComboBoxStyleKey}" TargetType="{x:Type ComboBox}">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -1079,6 +1087,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
         <Setter Property="Control.Template">
@@ -1107,6 +1116,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style TargetType="{x:Type DataGridRowHeader}">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -1136,6 +1146,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style TargetType="{x:Type DatePicker}">
         <Setter Property="Control.Foreground" Value="#FF333333"/>
         <Setter Property="DatePicker.IsTodayHighlighted" Value="true"/>

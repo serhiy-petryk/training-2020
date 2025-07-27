@@ -1,0 +1,111 @@
+﻿<Window x:Class="AppCore.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppCore"
+        xmlns:libcore="clr-namespace:LibCore.Controls;assembly=LibCore"
+        xmlns:libframework="clr-namespace:LibFramework.Controls;assembly=LibFramework"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <Style x:Key="NumBoxCore" TargetType="libcore:NumericBox">
+            <Setter Property="Background" Value="Aqua"/>
+        </Style>
+        <Style x:Key="NumCore" TargetType="libcore:NumericUpDown">
+            <Setter Property="Background" Value="Aqua"/>
+        </Style>
+        <Style x:Key="NumUI" TargetType="ui:NumberBox">
+            <Setter Property="Background" Value="Aqua"/>
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="SpinButtonPlacementMode" Value="Compact"/>
+        </Style>
+        <Style x:Key="NumFramework" TargetType="libframework:NumericUpDown">
+            <Setter Property="Background" Value="Aqua"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" ZIndex="1" Background="White">
+            <Slider Grid.Column="0"
+                    x:Name="uiScaleSlider"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.5" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="0 10 0 0">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Orientation="Vertical" Margin="0 10 0 0">
+                    <WrapPanel Orientation="Horizontal" Margin="0 0 0 5">
+                        <Button x:Name="TempControl" Margin="0 5" Content="WiP: Temp Control" Click="TempControl_OnClick"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="0 2" Orientation="Horizontal">
+                        <Label Margin="5 0">libcore:NumericBox</Label>
+                        <libcore:NumericBox Interval="5" Value="500" />
+                        <Label Margin="5 0">libcore:NumericBox with custom style</Label>
+                        <libcore:NumericBox Interval="5" Value="500" Style="{StaticResource NumBoxCore}"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="0 2" Orientation="Horizontal">
+                        <Label Margin="5 0">libcore:NumericUpDown</Label>
+                        <libcore:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" />
+                        <Label Margin="5 0">libcore:NumericUpDown with custom style</Label>
+                        <libcore:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" Style="{StaticResource NumCore}"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="0 2" Orientation="Horizontal">
+                        <Label Margin="5 0">libframework:NumericUpDown</Label>
+                        <libframework:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" />
+                        <Label Margin="5 0">libframework:NumericUpDown with custom style</Label>
+                        <libframework:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" Style="{StaticResource NumFramework}"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="0 2" Orientation="Horizontal">
+                        <Label Margin="5 0">ui:NumberBox</Label>
+                        <ui:NumberBox Value="500" Header="AAA" SpinButtonPlacementMode="Inline"/>
+                        <Label Margin="5 0">ui:NumberBox with custom style</Label>
+                        <ui:NumberBox Value="500" Style="{StaticResource NumUI}"/>
+                    </WrapPanel>
+
+                    <!--<ui:SimpleStackPanel Margin="12" Spacing="24">
+                        <TextBlock Text="My first ModernWPF app" Style="{StaticResource HeaderTextBlockStyle}" />
+                        <Button Content="I am a button" BorderBrush="Blue" BorderThickness="1" />
+                        <Button Content="I am an accent button" Style="{StaticResource AccentButtonStyle}" />
+                    </ui:SimpleStackPanel>-->
+
+                    <WrapPanel>
+                        <Label Margin="5 0">Style MahApps.Styles.PasswordBox.Win8</Label>
+                        <PasswordBox Margin="0 5 0 0"
+                                     mah:TextBoxHelper.UseFloatingWatermark="True"
+                                     mah:TextBoxHelper.Watermark="Win8"
+                                     Password="Win8"
+                                     Style="{StaticResource MahApps.Styles.PasswordBox.Win8}" />
+                    </WrapPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>

@@ -382,6 +382,11 @@
                             <TextBlock>iPhone 6S</TextBlock>
                         </ComboBox>
                     </WrapPanel>
+                    <WrapPanel Margin="0 2" Orientation="Horizontal">
+<!--                        <controls:NumericUpDown ButtonsAlignment="Left"
+                                                Interval="5"
+                                                Value="500" />-->
+                    </WrapPanel>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

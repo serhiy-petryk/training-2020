@@ -1,0 +1,27 @@
+﻿<Application x:Class="AppCore.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AppCore"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemeResources />
+<!--                <ui:XamlControlsResources />-->
+
+                <ResourceDictionary Source="pack://application:,,,/LibCore;component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="/WPFSpark;component/Themes/ToggleSwitch.Generic.xaml"/>
+
+                <!--<ResourceDictionary Source="pack://application:,,,/LibCore;component/Themes/NumericBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LibCore;component/Themes/NumericUpDown.xaml" />                -->
+                <!--<ResourceDictionary Source="pack://application:,,,/LibFramework;component/Themes/Generic.xaml" />-->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+<!--                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.passwordbox.xaml" />-->
+<!--                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
