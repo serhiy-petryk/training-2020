@@ -1,0 +1,93 @@
+﻿<Window x:Class="AppCore5.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppCore5"
+        xmlns:libcore5="clr-namespace:LibCore5.Controls;assembly=LibCore5"
+        xmlns:libcore="clr-namespace:LibCore.Controls;assembly=LibCore"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <Style x:Key="NumBoxCore6" TargetType="libcore5:NumericBox">
+            <Setter Property="Background" Value="Aqua"/>
+        </Style>
+        <Style x:Key="NumCore6" TargetType="libcore5:NumericUpDown">
+            <Setter Property="Background" Value="Aqua"/>
+        </Style>
+        <Style x:Key="NumBoxCore" TargetType="libcore:NumericBox">
+            <Setter Property="Background" Value="Aqua"/>
+        </Style>
+        <Style x:Key="NumCore" TargetType="libcore:NumericUpDown">
+            <Setter Property="Background" Value="Aqua"/>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" ZIndex="1" Background="White">
+            <Slider Grid.Column="0"
+                    x:Name="uiScaleSlider"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    ToolTip="Determines the UI scale factor. Double-click to revert scaling back to 100%."
+                    Height="100"
+                    Value="1" Minimum="0.5" Maximum="4"
+                    Orientation="Vertical"
+                    Ticks="1"
+                    IsSnapToTickEnabled="False"
+                    TickPlacement="BottomRight"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="2"/>
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="0 10 0 0">
+            <Grid.LayoutTransform>
+                <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}"/>
+            </Grid.LayoutTransform>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Orientation="Vertical" Margin="0 10 0 0">
+                    <WrapPanel Orientation="Horizontal" Margin="0 0 0 5">
+                        <Button x:Name="TempControl" Margin="0 5" Content="WiP: Temp Control"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="0 2" Orientation="Horizontal">
+                        <Label Margin="5 0">libcore5:NumericBox</Label>
+                        <libcore5:NumericBox Interval="5" Value="500" />
+                        <Label Margin="5 0">libcore5:NumericBox with custom style</Label>
+                        <libcore5:NumericBox Interval="5" Value="500" Style="{StaticResource NumBoxCore6}"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="0 2" Orientation="Horizontal">
+                        <Label Margin="5 0">libcore:NumericBox</Label>
+                        <libcore:NumericBox Interval="5" Value="500" />
+                        <Label Margin="5 0">libcore:NumericBox with custom style</Label>
+                        <libcore:NumericBox Interval="5" Value="500" Style="{StaticResource NumBoxCore}"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="0 2" Orientation="Horizontal">
+                        <Label Margin="5 0">libcore5:NumericUpDown</Label>
+                        <libcore5:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" />
+                        <Label Margin="5 0">libcore5:NumericUpDown with custom style</Label>
+                        <libcore5:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" Style="{StaticResource NumCore6}"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="0 2" Orientation="Horizontal">
+                        <Label Margin="5 0">libcore:NumericUpDown</Label>
+                        <libcore:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" />
+                        <Label Margin="5 0">libcore:NumericUpDown with custom style</Label>
+                        <libcore:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" Style="{StaticResource NumCore}"/>
+                    </WrapPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>
