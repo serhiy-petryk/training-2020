@@ -4,11 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppCore"
+        xmlns:libcore5="clr-namespace:LibCore5.Controls;assembly=LibCore5"
         xmlns:libcore="clr-namespace:LibCore.Controls;assembly=LibCore"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
     <Window.Resources>
+        <Style x:Key="NumBoxCore5" TargetType="libcore5:NumericBox">
+            <Setter Property="Background" Value="Aqua"/>
+        </Style>
+        <Style x:Key="NumCore5" TargetType="libcore5:NumericUpDown">
+            <Setter Property="Background" Value="Aqua"/>
+        </Style>
         <Style x:Key="NumBoxCore" TargetType="libcore:NumericBox">
             <Setter Property="Background" Value="Aqua"/>
         </Style>
@@ -51,10 +58,24 @@
                     </WrapPanel>
 
                     <WrapPanel Margin="0 2" Orientation="Horizontal">
+                        <Label Margin="5 0">libcore5:NumericBox</Label>
+                        <libcore5:NumericBox Interval="5" Value="500" />
+                        <Label Margin="5 0">libcore5:NumericBox with custom style</Label>
+                        <libcore5:NumericBox Interval="5" Value="500" Style="{StaticResource NumBoxCore5}"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="0 2" Orientation="Horizontal">
                         <Label Margin="5 0">libcore:NumericBox</Label>
                         <libcore:NumericBox Interval="5" Value="500" />
                         <Label Margin="5 0">libcore:NumericBox with custom style</Label>
                         <libcore:NumericBox Interval="5" Value="500" Style="{StaticResource NumBoxCore}"/>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="0 2" Orientation="Horizontal">
+                        <Label Margin="5 0">libcore5:NumericUpDown</Label>
+                        <libcore5:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" />
+                        <Label Margin="5 0">libcore5:NumericUpDown with custom style</Label>
+                        <libcore5:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" Style="{StaticResource NumCore5}"/>
                     </WrapPanel>
 
                     <WrapPanel Margin="0 2" Orientation="Horizontal">

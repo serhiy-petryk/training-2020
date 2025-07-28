@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LibCore5\LibCore5.csproj" />
     <ProjectReference Include="..\LibCore\LibCore.csproj" />
-    <ProjectReference Include="..\LibFramework\LibFramework.csproj" />
   </ItemGroup>
 
 </Project>
