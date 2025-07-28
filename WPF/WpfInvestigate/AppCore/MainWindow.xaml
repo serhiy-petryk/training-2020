@@ -5,10 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppCore"
         xmlns:libcore="clr-namespace:LibCore.Controls;assembly=LibCore"
-        xmlns:libframework="clr-namespace:LibFramework.Controls;assembly=LibFramework"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:ui="http://schemas.modernwpf.com/2019"
-        ui:WindowHelper.UseModernWindowStyle="True"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
@@ -17,14 +13,6 @@
             <Setter Property="Background" Value="Aqua"/>
         </Style>
         <Style x:Key="NumCore" TargetType="libcore:NumericUpDown">
-            <Setter Property="Background" Value="Aqua"/>
-        </Style>
-        <Style x:Key="NumUI" TargetType="ui:NumberBox">
-            <Setter Property="Background" Value="Aqua"/>
-            <Setter Property="Foreground" Value="Red"/>
-            <Setter Property="SpinButtonPlacementMode" Value="Compact"/>
-        </Style>
-        <Style x:Key="NumFramework" TargetType="libframework:NumericUpDown">
             <Setter Property="Background" Value="Aqua"/>
         </Style>
     </Window.Resources>
@@ -74,35 +62,6 @@
                         <libcore:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" />
                         <Label Margin="5 0">libcore:NumericUpDown with custom style</Label>
                         <libcore:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" Style="{StaticResource NumCore}"/>
-                    </WrapPanel>
-
-                    <WrapPanel Margin="0 2" Orientation="Horizontal">
-                        <Label Margin="5 0">libframework:NumericUpDown</Label>
-                        <libframework:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" />
-                        <Label Margin="5 0">libframework:NumericUpDown with custom style</Label>
-                        <libframework:NumericUpDown ButtonsAlignment="Left" Interval="5" Value="500" Style="{StaticResource NumFramework}"/>
-                    </WrapPanel>
-
-                    <WrapPanel Margin="0 2" Orientation="Horizontal">
-                        <Label Margin="5 0">ui:NumberBox</Label>
-                        <ui:NumberBox Value="500" Header="AAA" SpinButtonPlacementMode="Inline"/>
-                        <Label Margin="5 0">ui:NumberBox with custom style</Label>
-                        <ui:NumberBox Value="500" Style="{StaticResource NumUI}"/>
-                    </WrapPanel>
-
-                    <!--<ui:SimpleStackPanel Margin="12" Spacing="24">
-                        <TextBlock Text="My first ModernWPF app" Style="{StaticResource HeaderTextBlockStyle}" />
-                        <Button Content="I am a button" BorderBrush="Blue" BorderThickness="1" />
-                        <Button Content="I am an accent button" Style="{StaticResource AccentButtonStyle}" />
-                    </ui:SimpleStackPanel>-->
-
-                    <WrapPanel>
-                        <Label Margin="5 0">Style MahApps.Styles.PasswordBox.Win8</Label>
-                        <PasswordBox Margin="0 5 0 0"
-                                     mah:TextBoxHelper.UseFloatingWatermark="True"
-                                     mah:TextBoxHelper.Watermark="Win8"
-                                     Password="Win8"
-                                     Style="{StaticResource MahApps.Styles.PasswordBox.Win8}" />
                     </WrapPanel>
                 </StackPanel>
             </ScrollViewer>
