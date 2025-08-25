@@ -1,14 +1,4 @@
-﻿using System.ComponentModel;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
-using System.Windows.Threading;
-using LibCore8.Common;
+﻿using LibCore8.Common;
 
 namespace LibCore8.Helpers
 {

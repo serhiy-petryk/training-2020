@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace AppCore8
+﻿namespace AppCore8
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

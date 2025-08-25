@@ -1,5 +1,3 @@
-using System.Windows;
-
 namespace LibCore6.Controls
 {
     public class NumericUpDownChangedRoutedEventArgs : RoutedEventArgs

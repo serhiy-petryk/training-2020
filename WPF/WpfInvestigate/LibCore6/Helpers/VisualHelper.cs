@@ -1,8 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Media;
-using System.Windows.Threading;
-
-namespace LibCore6.Helpers
+﻿namespace LibCore6.Helpers
 {
     public static class VisualHelper
     {

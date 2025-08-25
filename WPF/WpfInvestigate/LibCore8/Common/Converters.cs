@@ -1,10 +1,4 @@
-﻿using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Media;
-using LibCore8.Helpers;
-
-namespace LibCore8.Common;
+﻿namespace LibCore8.Common;
 
 public class OpacityForDataGridRowHeaderConverter : IValueConverter
 {

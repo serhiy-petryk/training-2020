@@ -1,11 +1,4 @@
-﻿using System.ComponentModel;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-using LibCore6.Common;
+﻿using LibCore6.Common;
 using LibCore6.Helpers;
 
 namespace LibCore6.Controls

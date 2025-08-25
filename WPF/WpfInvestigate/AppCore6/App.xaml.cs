@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace AppCore6
+﻿namespace AppCore6
 {
     /// <summary>
     /// Interaction logic for App.xaml

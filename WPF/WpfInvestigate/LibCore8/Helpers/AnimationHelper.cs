@@ -1,8 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using LibCore8.Common;
+﻿using LibCore8.Common;
 
 namespace LibCore8.Helpers
 {

@@ -1,11 +1,4 @@
-﻿using System.Media;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using LibCore8.Helpers;
-
-namespace LibCore8.Common;
+﻿namespace LibCore8.Common;
 
 public static class Tips
 {
