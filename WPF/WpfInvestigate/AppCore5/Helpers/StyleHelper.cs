@@ -5,7 +5,7 @@ namespace AppCore5.Helpers
     public static class StyleHelper
     {
         public static Style StyleClone(this Style original)
-        {
+        { // from copilot.microsoft.com: "how to get clone of style with setters and triggers in wpf?"
             var clone = new Style
             {
                 TargetType = original.TargetType,
