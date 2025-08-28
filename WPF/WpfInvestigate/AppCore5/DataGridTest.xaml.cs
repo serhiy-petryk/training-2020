@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Threading;
+using AppCore5.Helpers;
 using AppCore5.Models;
 
 namespace AppCore5
@@ -20,6 +22,16 @@ namespace AppCore5
             users.Add(new User() { Id = 3, Name = "Sammy Doe", Birthday = new DateTime(1991, 9, 2) });
 
             dgSimple.ItemsSource = users;
+
+            dgSimple.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                dgSimple.SetTextTrimming();
+            }), DispatcherPriority.Background);
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            dgSimple.SetTextTrimming();
         }
     }
 }

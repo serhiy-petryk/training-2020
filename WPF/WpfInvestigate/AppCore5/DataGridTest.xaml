@@ -7,7 +7,22 @@
         mc:Ignorable="d"
         Title="DataGridTest" Height="450" Width="800">
 
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        </Style>
+        <!--<Style TargetType="DataGridCell">
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        </Style>-->
+    </Window.Resources>
     <Grid Margin="10">
-        <DataGrid Name="dgSimple" HeadersVisibility="All" RowHeaderWidth="20"/>
+        <WrapPanel Orientation="Vertical" Width="700" Background="Yellow">
+            <Button Content="Test" Click="ButtonBase_OnClick"/>
+            <DataGrid Name="dgSimple">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="First Name" Binding="{Binding Name}" FontWeight="Bold"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </WrapPanel>
     </Grid>
 </Window>
