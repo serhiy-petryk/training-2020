@@ -4,40 +4,24 @@ namespace AppCore5.Helpers
 {
     public static class StyleHelper
     {
-        public static Style StyleClone(this Style originalStyle)
+        public static Style StyleClone(this Style original)
         {
-            var newStyle = new Style();
-
-            if (originalStyle.TargetType != null)
-                newStyle.TargetType = originalStyle.TargetType;
-
-            foreach (var setterBase in originalStyle.Setters)
+            var clone = new Style
             {
-                var setter = (Setter)setterBase;
-                // Clone the setter's value if it's a Freezable and not frozen
-                var clonedValue = (setter.Value is Freezable freezable && freezable.CanFreeze) ? freezable.Clone() : setter.Value;
-                newStyle.Setters.Add(new Setter(setter.Property, clonedValue));
-            }
+                TargetType = original.TargetType,
+                BasedOn = original.BasedOn
+            };
 
-            foreach (var triggerBase in originalStyle.Triggers)
-            {
-                if (triggerBase is Trigger trigger)
-                {
-                    var clonedTrigger = new Trigger { Property = trigger.Property, Value = trigger.Value };
-                    foreach (var setterBase in trigger.Setters)
-                    {
-                        var triggerSetter = (Setter)setterBase;
-                        var clonedTriggerValue = (triggerSetter.Value is Freezable freezable && freezable.CanFreeze) ? freezable.Clone() : triggerSetter.Value;
-                        clonedTrigger.Setters.Add(new Setter(triggerSetter.Property, clonedTriggerValue));
-                    }
-                    newStyle.Triggers.Add(clonedTrigger);
-                }
+            foreach (var setter in original.Setters)
+                clone.Setters.Add(setter);
 
-                if (originalStyle.BasedOn != null)
-                    newStyle.BasedOn = originalStyle.BasedOn;
-            }
+            foreach (var trigger in original.Triggers)
+                clone.Triggers.Add(trigger);
 
-            return newStyle;
+            foreach (var key in original.Resources.Keys)
+                clone.Resources[key] = original.Resources[key];
+
+            return clone;
         }
     }
 }
