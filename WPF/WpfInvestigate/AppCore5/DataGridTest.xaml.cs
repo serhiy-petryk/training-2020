@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 using AppCore5.Helpers;
 using AppCore5.Models;
@@ -25,13 +27,20 @@ namespace AppCore5
 
             dgSimple.Dispatcher.BeginInvoke(new Action(() =>
             {
-                dgSimple.SetTextTrimming();
+                // dgSimple.SetTextTrimming();
             }), DispatcherPriority.Background);
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             dgSimple.SetTextTrimming();
+            dgSimple.AddCellToolTipWhenTrimming();
+        }
+
+        private void DgSimple_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            // throw new NotImplementedException();
+            Debug.Print($"MouseEnter: {sender.GetType().Name}");
         }
     }
 }

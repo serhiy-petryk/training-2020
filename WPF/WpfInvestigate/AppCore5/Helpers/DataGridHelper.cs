@@ -1,11 +1,62 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace AppCore5.Helpers
 {
     public static class DataGridHelper
     {
+        private static readonly EventSetter MouseEnterEventSetter = new EventSetter
+        {
+            Event = UIElement.MouseEnterEvent,
+            Handler = new MouseEventHandler(OnDataGridCellMouseEnter)
+        };
+
+        public static void AddCellToolTipWhenTrimming(this DataGrid dataGrid)
+        {
+            var style = dataGrid.CellStyle.StyleClone() ?? new Style(typeof(DataGridCell));
+            style.Setters.Add(MouseEnterEventSetter);
+            style.Seal();
+
+            dataGrid.CellStyle = style;
+        }
+
+        private static void OnDataGridCellMouseEnter(object sender, MouseEventArgs e)
+        {
+            var cell = (DataGridCell)sender;
+            var textBlock = cell.Content as TextBlock;
+            if (textBlock == null) return;
+
+            if (!string.IsNullOrEmpty(textBlock.Text) && IsTextTrimmed(textBlock))
+                ToolTipService.SetToolTip(cell, textBlock.Text);
+            else
+                ToolTipService.SetToolTip(cell, null);
+        }
+
+        public static bool IsTextTrimmed(TextBlock textBlock)
+        {
+            const double delta = 0.00001d;
+            if (textBlock.TextTrimming == TextTrimming.None)
+                return false;
+            if (textBlock.TextWrapping == TextWrapping.NoWrap)
+            {
+                textBlock.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                var desiredWidth = textBlock.DesiredSize.Width;
+                var actualWidth = textBlock.ActualWidth + textBlock.Margin.Left + textBlock.Margin.Right + delta;
+                return desiredWidth > actualWidth;
+            }
+            else
+            {
+                textBlock.Measure(new Size(
+                    textBlock.ActualWidth + textBlock.Margin.Left + textBlock.Margin.Right + 0.0001d,
+                    double.PositiveInfinity));
+                var desiredHeight1 = textBlock.DesiredSize.Height;
+                var actualHeight1 = textBlock.ActualHeight + textBlock.Margin.Top + textBlock.Margin.Bottom + delta;
+                return desiredHeight1 > actualHeight1;
+            }
+        }
+
         public static void SetTextTrimming(this DataGrid dataGrid)
         {
             var styles = dataGrid.Columns.Where(a => a is DataGridTextColumn)
