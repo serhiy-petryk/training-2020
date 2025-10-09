@@ -64,7 +64,7 @@
                     <ContentControl Content="Bootstrap: primary"/>
                 </controls:MwiChild>
 
-                <controls:MwiChild Position="575 25" Title="Secondary" Height="150" Background="{StaticResource SecondaryBrush}"
+                <controls:MwiChild Position="575 25" Title="Secondary 1Secondary 2Secondary 1" Height="150" Background="{StaticResource SecondaryBrush}"
                                    Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}">
                     <ContentControl Content="Bootstrap: secondary"/>
                 </controls:MwiChild>

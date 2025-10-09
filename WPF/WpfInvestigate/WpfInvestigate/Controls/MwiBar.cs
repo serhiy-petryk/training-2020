@@ -156,9 +156,10 @@ namespace WpfInvestigate.Controls
             void OnTabItemToolTipOpening(object sender, ToolTipEventArgs e) => ((MwiChild)((FrameworkElement)sender).DataContext)?.RefreshThumbnail();
             void OnTabItemToolTipOnOpened(object sender, RoutedEventArgs e)
             {
+                // add TabHeaderText to thumbnail if TabHeaderText trimmed
                 var toolTip = (ToolTip)sender;
                 var tabTextBlock = toolTip.PlacementTarget.GetVisualChildren().OfType<TextBlock>().First();
-                toolTip.SetCurrentValueSmart(TagProperty, Tips.IsTextTrimmed(tabTextBlock) ? "1" : null);
+                toolTip.SetCurrentValueSmart(TagProperty, Effects.TextBlockEffects.IsTextTrimmed(tabTextBlock) ? "1" : null);
             }
         }
 

@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace WpfInvestigate.Effects
 {
@@ -60,24 +61,36 @@ namespace WpfInvestigate.Effects
             ToolTipService.SetToolTip(toolTipPlaceHolder ?? textBlock, isTextTrimmed ? textBlock.Text : null);
         }
 
-        private static bool IsTextTrimmed(TextBlock textBlock)
+        public static bool IsTextTrimmed(TextBlock textBlock)
         {
-            // From https://stackoverflow.com/questions/1041820/how-can-i-determine-if-my-textblock-text-is-being-trimmed
-            var typeface = new Typeface(textBlock.FontFamily, textBlock.FontStyle, textBlock.FontWeight, textBlock.FontStretch);
-            var formattedText =
-                new FormattedText(textBlock.Text, System.Threading.Thread.CurrentThread.CurrentCulture,
-                        textBlock.FlowDirection, typeface, textBlock.FontSize, textBlock.Foreground)
-                    {MaxTextWidth = textBlock.ActualWidth};
+            if (textBlock.TextTrimming == TextTrimming.None)
+                return false;
 
-            // When the maximum text width of the FormattedText instance is set to the actual
-            // width of the textBlock, if the textBlock is being trimmed to fit then the formatted
-            // text will report a larger height than the textBlock. Should work whether the
-            // textBlock is single or multi-line.
-            // The "formattedText.MinWidth > formattedText.MaxTextWidth" check detects if any 
-            // single line is too long to fit within the text area, this can only happen if there is a 
-            // long span of text with no spaces.
-            return (formattedText.Height > textBlock.ActualHeight || formattedText.MinWidth > formattedText.MaxTextWidth);
+            var delta = textBlock.UseLayoutRounding ? 0.00001d : 0.0d;
+            if (textBlock.TextWrapping == TextWrapping.NoWrap)
+            {
+                if (textBlock.UseLayoutRounding)
+                {
+                    textBlock.UseLayoutRounding = false;
+                    // Delay after UseLayoutRounding was change
+                    textBlock.Dispatcher.Invoke(() => { }, DispatcherPriority.Render);
+                }
+                textBlock.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity+ textBlock.ActualHeight + textBlock.Margin.Top + textBlock.Margin.Bottom));
+                var desiredWidth = textBlock.DesiredSize.Width;
+                var actualWidth = textBlock.ActualWidth + textBlock.Margin.Left + textBlock.Margin.Right + delta;
+                Debug.Print($"IsTextTrimmed: { desiredWidth}, {actualWidth}, {desiredWidth > actualWidth}");
+                return desiredWidth > actualWidth;
+            }
+            else
+            {
+                textBlock.Measure(new Size(
+                    textBlock.ActualWidth + textBlock.Margin.Left + textBlock.Margin.Right,// + 0.0001d,
+                    double.PositiveInfinity));
+                var desiredHeight1 = textBlock.DesiredSize.Height;
+                var actualHeight1 = textBlock.ActualHeight + textBlock.Margin.Top + textBlock.Margin.Bottom + delta;
+                Debug.Print($"IsTextTrimmed: { desiredHeight1}, {actualHeight1}, {desiredHeight1 > actualHeight1}");
+                return desiredHeight1 > actualHeight1;
+            }
         }
-
     }
 }

@@ -25,14 +25,6 @@ namespace WpfInvestigate.Common
         public static void Beep() => SystemSounds.Beep.Play();
 
         // ===================================
-        public static bool IsTextTrimmed(FrameworkElement textBlock)
-        {
-            textBlock.Measure(new Size(double.PositiveInfinity, height: double.PositiveInfinity));
-            return (textBlock.ActualWidth + textBlock.Margin.Left + textBlock.Margin.Right) < textBlock.DesiredSize.Width ||
-                   (textBlock.ActualHeight + textBlock.Margin.Top + textBlock.Margin.Bottom) < textBlock.DesiredSize.Height;
-        }
-
-        // ===================================
         public static List<DependencyObject> GetElementsUnderMouseClick(UIElement sender, MouseButtonEventArgs e)
         {
             var hitTestResults = new List<DependencyObject>();
